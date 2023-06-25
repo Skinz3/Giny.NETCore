@@ -208,7 +208,7 @@ namespace Giny.Pokefus
                 dropRate = 0.001;
             }
 
-            dropRate = dropRate + (dropRate * ((fighter.Stats[CharacteristicEnum.PROSPECTING].TotalInContext() / 500d) * ProspectingCoeff));
+            dropRate = dropRate + (dropRate * ((fighter.Stats[CharacteristicEnum.MAGIC_FIND].TotalInContext() / 500d) * ProspectingCoeff));
 
             var percentage = Math.Round(dropRate * 100d, 2);
 
