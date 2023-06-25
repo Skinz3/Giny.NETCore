@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace Giny.Zaap.Network
 {
+    /// <summary>
+    /// com.ankama.zaap
+    /// org.apache.thrift.TBinaryProtocol
+    /// </summary>
     public class TProtocol
     {
         private int VERSION_MASK;
@@ -43,19 +47,32 @@ namespace Giny.Zaap.Network
 
         public TMessage ReadMessageBegin(BigEndianReader reader)
         {
-            TMessage result = new TMessage();
+         
 
             var val1 = reader.ReadInt();
 
-            if ((val1 & VERSION_MASK) != VERSION_1)
+            if (val1 < 0)
             {
-                throw new Exception("Bad version in read message begin.");
-            }
+                if ((val1 & VERSION_MASK) != VERSION_1)
+                {
+                    throw new Exception("Bad version in read message begin.");
+                }
 
-            result.Type = val1 & 255;
-            result.Name = reader.ReadUTF7BitLength();
-            result.SequenceId = reader.ReadInt();
-            return result;
+                TMessage result = new TMessage();
+                result.Name = reader.ReadUTF7BitLength();
+                result.Type = val1 & 255;
+                result.SequenceId = reader.ReadInt();
+                return result;
+            }
+            else
+            {
+                TMessage result = new TMessage();
+                result.Name = reader.ReadUTFBytes((ushort)val1);
+                result.Type = reader.ReadByte();
+                result.SequenceId = reader.ReadInt();
+                return result;
+            }
+          
         }
 
         public TField ReadFieldBegin(BigEndianReader reader)

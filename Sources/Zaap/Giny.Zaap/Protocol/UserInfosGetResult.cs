@@ -11,6 +11,7 @@ namespace Giny.Zaap.Protocol
 {
     public class UserInfosGetResult : ZaapMessage
     {
+
         public string Login
         {
             get;

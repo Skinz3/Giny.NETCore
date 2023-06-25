@@ -91,6 +91,9 @@ namespace Giny.Zaap
                     case "auth_getGameToken":
                         message = new AuthGetGameToken();
                         break;
+                    case "zaapMustUpdate_get":
+                        message = new ZaapMustUpdateGet();
+                        break;
                     default:
                         Logger.Write("Receive Unknown message : " + tMessage.Name, Channels.Warning);
                         return;

@@ -51,9 +51,9 @@ namespace Giny.World.Handlers.Approach
             }
         }
         [MessageHandler]
-        public static void HandleReloginTokenRequestMessage(ReloginTokenRequestMessage message,WorldClient client)
+        public static void HandleReloginTokenRequestMessage(ReloginTokenRequestMessage message, WorldClient client)
         {
-            client.Send(new ReloginTokenStatusMessage(true, new byte[0]));
+            client.Send(new ReloginTokenStatusMessage(false, new byte[0]));
         }
     }
 }

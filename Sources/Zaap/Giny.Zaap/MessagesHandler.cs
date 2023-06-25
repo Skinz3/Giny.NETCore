@@ -1,5 +1,5 @@
 ﻿using Giny.Core;
-using Giny.Zaap;
+using Giny.Zaap.Protocol;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.Zaap.Protocol
+namespace Giny.Zaap
 {
     public class MessagesHandler
     {
@@ -26,6 +26,9 @@ namespace Giny.Zaap.Protocol
                     break;
                 case AuthGetGameToken authGetGameToken:
                     HandleAuthGetGameToken(client, authGetGameToken);
+                    break;
+                case ZaapMustUpdateGet zaapMustUpdateGet:
+                    HandleZaapMustUpdateGet(client, zaapMustUpdateGet);
                     break;
                 default:
                     Logger.Write("Unhandled message " + message.GetType().Name, Channels.Warning);
@@ -68,6 +71,11 @@ namespace Giny.Zaap.Protocol
         private static void HandleConnectArgs(ZaapClient client, ConnectArgs message)
         {
             client.Send(new ConnectResult());
+        }
+
+        private static void HandleZaapMustUpdateGet(ZaapClient client, ZaapMustUpdateGet message)
+        {
+            client.Send(new ZaapMustUpdateGetResult(true));
         }
     }
 }

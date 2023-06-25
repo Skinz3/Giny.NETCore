@@ -151,7 +151,6 @@ namespace Giny.Auth.Handlers
             {
                 username = reader.ReadUTF();
                 password = reader.ReadUTF();
-                Logger.Write("User try to log in Username : " + username + " Password :" + password);
                 client.AesKey = reader.ReadBytes(32);
             }
 
