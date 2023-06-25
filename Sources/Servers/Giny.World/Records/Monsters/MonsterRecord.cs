@@ -139,14 +139,14 @@ namespace Giny.World.Records.Monsters
         }
         [ProtoSerialize]
         [D2OField("drops")]
-        public MonsterDrop[] Drops
+        public List<MonsterDrop> Drops
         {
             get;
             set;
         }
         [ProtoSerialize]
         [D2OField("grades")]
-        public MonsterGrade[] Grades
+        public List<MonsterGrade> Grades
         {
             get;
             set;

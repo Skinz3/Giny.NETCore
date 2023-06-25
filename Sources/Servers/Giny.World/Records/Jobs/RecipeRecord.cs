@@ -89,6 +89,10 @@ namespace Giny.World.Records.Jobs
         {
             return Recipes.Values;
         }
+        public static IEnumerable<RecipeRecord> GetRecipesWithItem(short itemId)
+        {
+            return Recipes.Values.Where(x => x.Ingredients.Contains(itemId));
+        }
         public static RecipeRecord GetRecipeRecord(long resultId)
         {
             return Recipes.TryGetValue(resultId);

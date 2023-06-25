@@ -41,7 +41,7 @@ namespace Giny.World.Managers.Monsters
         public byte GetAdaptativeGrade(MonsterRecord record, short characterLevel)
         {
             double ratioLevel = (double)characterLevel / ExperienceManager.MaxLevel;
-            double grade = (record.Grades.Length) * ratioLevel;
+            double grade = (record.Grades.Count) * ratioLevel;
             byte gradeId = (byte)grade;
             if (gradeId == 0)
             {

@@ -5,8 +5,11 @@ using Giny.Core.Network.Messages;
 using Giny.IO.RawPatch;
 using Giny.Protocol;
 using Giny.Protocol.Messages;
+using Giny.World.Managers.Entities.Monsters;
 using Giny.World.Modules;
 using Giny.World.Network;
+using Giny.World.Records.Jobs;
+using Giny.World.Records.Monsters;
 using System.Reflection;
 
 
@@ -25,6 +28,8 @@ namespace Giny.World
             Logger.DrawLogo();
             StartupManager.Instance.Initialize(Assembly.GetExecutingAssembly());
             IPCManager.Instance.ConnectToAuth();
+
+
             ConsoleCommandsManager.Instance.ReadCommand();
         }
 
