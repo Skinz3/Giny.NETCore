@@ -65,7 +65,6 @@ namespace Giny.Core.Network
         {
             this.Buffer = new byte[BUFFER_LENGTH];
             this.Socket = socket;
-            BeginReceive();
         }
 
         public abstract void OnConnectionClosed();
@@ -99,7 +98,7 @@ namespace Giny.Core.Network
                 OnFailToConnect(ex);
             }
         }
-        private void BeginReceive()
+        protected void BeginReceive()
         {
             try
             {

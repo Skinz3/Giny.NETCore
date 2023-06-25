@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.Uplauncher.Network
+namespace Giny.Zaap.Network
 {
     public enum TMessageType
     {

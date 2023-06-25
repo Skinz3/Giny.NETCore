@@ -2,7 +2,8 @@
 using Giny.Core.IO;
 using Giny.Core.Network;
 using Giny.Core.Network.Messages;
-using Giny.Uplauncher.Protocol;
+using Giny.Zaap.Network;
+using Giny.Zaap.Protocol;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TcpClient = Giny.Core.Network.TcpClient;
 
-namespace Giny.Uplauncher.Network
+namespace Giny.Zaap
 {
     public class ZaapClient : TcpClient
     {
@@ -32,10 +33,12 @@ namespace Giny.Uplauncher.Network
         }
         public ZaapClient(Socket socket, string username, string password) : base(socket)
         {
-            this.TProtocol = new TProtocol();
+            TProtocol = new TProtocol();
 
-            this.Username = username;
-            this.Password = password;
+            Username = username;
+            Password = password;
+
+            this.BeginReceive();
         }
         public override void OnConnected()
         {

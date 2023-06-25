@@ -1,32 +1,34 @@
 ﻿using Giny.Core.IO;
-using Giny.Uplauncher.Network;
+using Giny.Zaap.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.Uplauncher.Protocol
+namespace Giny.Zaap.Protocol
 {
-    public class SettingsGet : ZaapMessage
+    public class AuthGetGameToken : ZaapMessage
     {
+    
+
         public enum TFieldId
         {
             GAMESESSION = 1,
-            KEY = 2,
+            GAMEID = 2,
         }
 
-        public string GameSession
-        {
-            get;
-            set;
-        }
-        public string Key
+        public string GameName
         {
             get;
             private set;
         }
-        public SettingsGet() 
+        public int GameId
+        {
+            get;
+            private set;
+        }
+        public AuthGetGameToken()  
         {
         }
 
@@ -43,16 +45,15 @@ namespace Giny.Uplauncher.Protocol
                 switch ((TFieldId)field.Id)
                 {
                     case TFieldId.GAMESESSION:
-                        this.GameSession = reader.ReadUTF7BitLength();
+                        this.GameName = reader.ReadUTF7BitLength();
                         break;
-                    case TFieldId.KEY:
-                        this.Key = reader.ReadUTF7BitLength();
+                    case TFieldId.GAMEID:
+                        this.GameId = reader.ReadInt();
                         break;
                     default:
                         break;
                 }
             }
-
         }
 
         public override void Serialize(TProtocol protocol, BigEndianWriter writer)

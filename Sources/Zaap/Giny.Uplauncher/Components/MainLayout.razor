@@ -1,6 +1,6 @@
-﻿@using Microsoft.AspNetCore.Components.Web
+﻿@using Giny.Zaap;
+@using Microsoft.AspNetCore.Components.Web
 @using MudBlazor
-@using Giny.Uplauncher.Network;
 
 @inject IDialogService DialogService
 @inherits LayoutComponentBase
@@ -121,7 +121,8 @@
     protected override void OnInitialized()
     {
         ZaapServer server = new ZaapServer();
-        server.Start();
+        server.Start(AppState.Port);
+        server.SetCredentials(AppState.Username, AppState.Password);
         SimulateProgress();
     }
 

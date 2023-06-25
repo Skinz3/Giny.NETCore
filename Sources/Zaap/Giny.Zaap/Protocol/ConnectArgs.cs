@@ -1,12 +1,12 @@
 ﻿using Giny.Core.IO;
-using Giny.Uplauncher.Network;
+using Giny.Zaap.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.Uplauncher.Protocol
+namespace Giny.Zaap.Protocol
 {
     public class ConnectArgs : ZaapMessage
     {

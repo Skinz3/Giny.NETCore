@@ -65,6 +65,7 @@ namespace Giny.World.Network
         public WorldClient(Socket socket) : base(socket)
         {
             base.Send(new HelloGameMessage());
+
         }
         public WorldClient()
         {

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
@@ -14,8 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Giny.Core\Giny.Core.csproj" />
-    <ProjectReference Include="..\..\Giny.IO\Giny.IO.csproj" />
+    <ProjectReference Include="..\Giny.Zaap\Giny.Zaap.csproj" />
   </ItemGroup>
 
 </Project>

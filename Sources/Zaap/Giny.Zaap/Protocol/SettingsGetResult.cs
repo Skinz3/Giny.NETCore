@@ -1,18 +1,24 @@
 ﻿using Giny.Core.IO;
-using Giny.Uplauncher.Network;
+using Giny.Zaap.Network;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.Uplauncher.Protocol
+namespace Giny.Zaap.Protocol
 {
-    public class ConnectResult : ZaapMessage
+    public class SettingsGetResult : ZaapMessage
     {
-        public ConnectResult()
+        public string Value
         {
-
+            get;
+            set;
+        }
+        public SettingsGetResult(string value)  
+        {
+            this.Value = value;
         }
 
         public override void Deserialize(TProtocol protocol, BigEndianReader reader)
@@ -22,15 +28,12 @@ namespace Giny.Uplauncher.Protocol
 
         public override void Serialize(TProtocol protocol, BigEndianWriter writer)
         {
-            protocol.WriteFieldBegin(new TField("success", TType.STRING, 0), writer);
-
-            string toSend = "success";
-
+            string[] values = new string[] { Value };
+            string toSend = JsonConvert.SerializeObject(values);
+            protocol.WriteFieldBegin(new TField(toSend, TType.STRING, 0), writer);
             writer.WriteInt(toSend.Length);
             writer.WriteUTFBytes(toSend);
-
             protocol.WriteFieldStop(writer);
         }
-
     }
 }

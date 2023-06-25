@@ -325,12 +325,12 @@ namespace Giny.World.Managers.Items
         [ItemEffect(EffectsEnum.Effect_AddMeleeResistance)]
         public static void AddMeleeResistances(Character character, int delta)
         {
-            character.Record.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE].Objects += (short)delta;
+            character.Record.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE].Objects -= (short)delta;
         }
         [ItemEffect(EffectsEnum.Effect_SubMeleeResistance)]
         public static void SubMeeleeResistance(Character character, int delta)
         {
-            character.Record.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE].Objects -= (short)delta;
+            character.Record.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE].Objects += (short)delta;
         }
 
 
@@ -348,12 +348,12 @@ namespace Giny.World.Managers.Items
         [ItemEffect(EffectsEnum.Effect_WeaponResistance)]
         public static void AddWeaponResistance(Character character, int delta)
         {
-            character.Record.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_WEAPON].Objects += (short)delta;
+            character.Record.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_WEAPON].Objects -= (short)delta;
         }
         [ItemEffect(EffectsEnum.Effect_SubWeaponResistance)]
         public static void SubWeaponResistance(Character character, int delta)
         {
-            character.Record.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_WEAPON].Objects -= (short)delta;
+            character.Record.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_WEAPON].Objects += (short)delta;
         }
 
         [ItemEffect(EffectsEnum.Effect_RangedDamageDonePercent)]
@@ -369,12 +369,12 @@ namespace Giny.World.Managers.Items
         [ItemEffect(EffectsEnum.Effect_AddRangedResistance)]
         public static void AddRangedResistances(Character character, int delta)
         {
-            character.Record.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_DISTANCE].Objects += (short)delta;
+            character.Record.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_DISTANCE].Objects -= (short)delta;
         }
         [ItemEffect(EffectsEnum.Effect_SubRangedResistance)]
         public static void SubRangedResistance(Character character, int delta)
         {
-            character.Record.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_DISTANCE].Objects -= (short)delta;
+            character.Record.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_DISTANCE].Objects += (short)delta;
         }
 
         [ItemEffect(EffectsEnum.Effect_SpellDamageDonePercent)]
@@ -391,12 +391,12 @@ namespace Giny.World.Managers.Items
         [ItemEffect(EffectsEnum.Effect_AddSpellResistance)]
         public static void AddSpellResistances(Character character, int delta)
         {
-            character.Record.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_SPELLS].Objects += (short)delta;
+            character.Record.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_SPELLS].Objects -= (short)delta;
         }
         [ItemEffect(EffectsEnum.Effect_SubSpellResistance)]
         public static void SubSpellResistance(Character character, int delta)
         {
-            character.Record.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_SPELLS].Objects -= (short)delta;
+            character.Record.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_SPELLS].Objects += (short)delta;
         }
 
         [ItemEffect(EffectsEnum.Effect_AddDodgeAPProbability)]

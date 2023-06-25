@@ -18,7 +18,7 @@ namespace Giny.Core.Network
         }
         public Client(Socket socket) : base(socket)
         {
-
+            this.BeginReceive();
         }
         public abstract void OnMessageReceived(NetworkMessage message);
 

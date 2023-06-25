@@ -1,34 +1,25 @@
 ﻿using Giny.Core.IO;
-using Giny.Uplauncher.Network;
+using Giny.Zaap.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.Uplauncher.Protocol
+namespace Giny.Zaap.Protocol
 {
-    public class AuthGetGameToken : ZaapMessage
+    public class UserInfoGet : ZaapMessage
     {
-    
-
         public enum TFieldId
         {
             GAMESESSION = 1,
-            GAMEID = 2,
         }
-
-        public string GameName
+        public string GameSession
         {
             get;
-            private set;
+            set;
         }
-        public int GameId
-        {
-            get;
-            private set;
-        }
-        public AuthGetGameToken()  
+        public UserInfoGet() 
         {
         }
 
@@ -45,10 +36,7 @@ namespace Giny.Uplauncher.Protocol
                 switch ((TFieldId)field.Id)
                 {
                     case TFieldId.GAMESESSION:
-                        this.GameName = reader.ReadUTF7BitLength();
-                        break;
-                    case TFieldId.GAMEID:
-                        this.GameId = reader.ReadInt();
+                        this.GameSession = reader.ReadUTF7BitLength();
                         break;
                     default:
                         break;

@@ -14,9 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Giny.Core\Giny.Core.csproj" />
-    <ProjectReference Include="..\..\Giny.IO\Giny.IO.csproj" />
-    <ProjectReference Include="..\..\Giny.ORM\Giny.ORM.csproj" />
-    <ProjectReference Include="..\..\Giny.Protocol\Giny.Protocol.csproj" />
+    <ProjectReference Include="..\Giny.Zaap\Giny.Zaap.csproj" />
   </ItemGroup>
 
 </Project>

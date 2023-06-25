@@ -72,12 +72,12 @@ namespace Giny.World.Network
 
         public void Foreach(Action<WorldClient> action)
         {
-           
-                foreach (var client in GetOnlineClients())
-                {
-                    action(client);
-                }
-            
+
+            foreach (var client in GetOnlineClients())
+            {
+                action(client);
+            }
+
         }
         public IEnumerable<WorldClient> GetOnlineClients()
         {
@@ -148,13 +148,13 @@ namespace Giny.World.Network
         }
         public void RemoveClient(WorldClient client)
         {
-           
+
 
             lock (Clients)
             {
                 if (ConfigFile.Instance.LogProtocol)
                 {
-                    Logger.Write("(World) Client disconnected.");
+                    Logger.Write("(World) Client disconnected.", Channels.Info);
                 }
 
                 Clients.Remove(client);

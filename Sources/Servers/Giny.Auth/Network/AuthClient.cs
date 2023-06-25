@@ -126,7 +126,7 @@ namespace Giny.Auth.Network
 
         public override void OnDisconnected()
         {
-            Logger.Write("Client disconnected.");
+            Logger.Write("Client disconnected.", Channels.Info);
             AuthServer.Instance.RemoveClient(this);
         }
         public void OnIdentificationFailed(IdentificationFailureReasonEnum reason)
