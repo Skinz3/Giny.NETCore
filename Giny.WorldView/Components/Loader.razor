@@ -1,0 +1,130 @@
+﻿@using Giny.ORM
+@using Giny.World.Managers.Fights.Effects
+@using Giny.World.Modules
+@using Giny.World.Records.Breeds
+@using Giny.World.Records.Effects
+@using Giny.World.Records.Items
+@using Giny.World.Records.Monsters
+@using Giny.World.Records.Spells;
+@using System.Reflection
+@using Giny.WorldView.Config
+
+@inject NavigationManager UriHelper
+@implements IDisposable
+
+<MudContainer>
+    <MudText Typo="Typo.h4">Chargement...</MudText>
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+
+    <MudPaper>
+        <MudList Clickable="false">
+            @foreach (var type in Tables)
+            {
+                var icon = Icons.Filled.CheckCircle;
+                var color = Color.Success;
+
+                if (type == Tables.Last())
+                {
+                    color = Color.Primary;
+                    icon = Icons.Filled.ArrowCircleRight;
+
+                }
+
+                <MudListItem Text="@("Chargement de : '"+ type.Name+"'")" IconColor="@color" Icon="@icon" />
+                if (type != Tables.Last())
+                {
+                    <MudDivider />
+                }
+            }
+        </MudList>
+    </MudPaper>
+
+</MudContainer>
+
+
+
+
+@code {
+    [Inject] private IDialogService DialogService { get; set; }
+
+    private int Index;
+
+    [CascadingParameter]
+    public Home Parent
+    {
+        get;
+        set;
+    }
+
+
+    private Task LoadTask
+    {
+        get;
+        set;
+    }
+
+    private List<Type> Tables
+    {
+        get;
+        set;
+    } = new();
+    protected override void OnInitialized()
+    {
+        ConfigFile.Initialize();
+
+        DatabaseManager.Instance.Initialize(Assembly.GetAssembly(typeof(SpellRecord)),
+        ConfigFile.Instance.SQLHost, ConfigFile.Instance.SQLDBName, ConfigFile.Instance.SQLUser, ConfigFile.Instance.SQLPassword);
+
+        try
+        {
+            DatabaseManager.Instance.UseProvider();
+        }
+        catch (Exception ex)
+        {
+            DialogService.ShowMessageBox(
+           "Erreur",
+           "Les paramètres actuels ne permettent pas de se connecter a la base de données. Veuillez éditer la configuration");
+            Parent.Navigate(PageEnum.Configuration);
+            return;
+        }
+
+        DatabaseManager.Instance.OnStartLoadTable += OnStartLoadTable;
+
+        LoadTask = Task.Run(() =>
+           {
+               AssemblyCore.OnAssembliesLoaded();
+
+               DatabaseManager.Instance.LoadTable<SpellRecord>();
+               DatabaseManager.Instance.LoadTable<EffectRecord>();
+               DatabaseManager.Instance.LoadTable<SpellStateRecord>();
+               DatabaseManager.Instance.LoadTable<BreedRecord>();
+               DatabaseManager.Instance.LoadTable<ItemRecord>();
+               DatabaseManager.Instance.LoadTable<MonsterRecord>();
+               DatabaseManager.Instance.LoadTable<SpellLevelRecord>();
+               SpellEffectManager.Instance.Initialize();
+               SpellRecord.Initialize();
+
+
+               InvokeAsync(() =>
+               {
+                   AppState.Initialized = true;
+                   Parent.Navigate(PageEnum.SpellExplorer);
+               });
+
+
+           });
+
+    }
+    public void Dispose()
+    {
+        // Kill Load Task
+    }
+    private void OnStartLoadTable(Type type, string name)
+    {
+        InvokeAsync(() =>
+        {
+            Tables.Add(type);
+            StateHasChanged();
+        });
+    }
+}

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <BaseOutputPath>C:\Users\Skinz\Desktop\Giny .NET Core\Giny\Giny.World\bin\Debug\net6.0\Modules</BaseOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Giny.Core\Giny.Core.csproj" />
+    <ProjectReference Include="..\..\Giny.World\Giny.World.csproj" />
+  </ItemGroup>
+
+</Project>

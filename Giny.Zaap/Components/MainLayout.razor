@@ -1,0 +1,132 @@
+﻿@using Microsoft.AspNetCore.Components.Web
+@using MudBlazor
+@using Giny.Zaap.Network;
+
+@inject IDialogService DialogService
+@inherits LayoutComponentBase
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+
+<MudLayout>
+
+    <MudPaper>
+        <MudToolBar>
+            <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Class="mr-5" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Add" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Edit" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Remove" Color="Color.Inherit" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Settings" Color="Color.Inherit" />
+            <MudSpacer />
+            <MudAvatar Color="Color.Primary">M</MudAvatar>
+            <MudIconButton Icon="@Icons.Material.Outlined.MoreVert" Color="Color.Inherit" />
+        </MudToolBar>
+
+
+    </MudPaper>
+
+
+    <MudCarousel Class="mud-width-full" Style="height:200px;" ShowArrows="true" ShowBullets="true" AutoCycle="true" TData="object">
+        <MudCarouselItem Transition="Transition.Slide" Color="@Color.Primary">
+            <div class="d-flex" style="height:100%">
+                <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" />
+            </div>
+        </MudCarouselItem>
+        <MudCarouselItem Transition="Transition.Slide" Color="@Color.Secondary">
+            <div class="d-flex" style="height:100%">
+                <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" />
+            </div>
+        </MudCarouselItem>
+        <MudCarouselItem Transition="Transition.Slide">
+            <div class="d-flex" style="height:100%">
+                <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Color="@Color.Primary" Size="@Size.Large" />
+            </div>
+        </MudCarouselItem>
+
+    </MudCarousel>
+
+
+    <MudProgressLinear Color="Color.Primary" Value="@Value" Class="my-7" />
+
+    <MudButton OnClick="OpenDialog" Variant="Variant.Filled" Color="Color.Primary">
+        Open Simple Dialog
+    </MudButton>
+
+
+    <MudButton Disabled="@_processing" OnClick="ProcessSomething" Variant="Variant.Filled" Color="Color.Primary">
+        @if (_processing)
+        {
+            <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+            <MudText Class="ms-2">Lancement en cours</MudText>
+        }
+        else
+        {
+            <MudText>Lancer Dofus</MudText>
+        }
+    </MudButton>
+
+
+</MudLayout>
+
+
+@code {
+
+    private bool _processing = false;
+
+    async Task ProcessSomething()
+    {
+        StartDofus();
+        _processing = true;
+        await Task.Delay(2000);
+        _processing = false;
+    }
+
+    private void StartDofus()
+    {
+        string ClientPath = @"C:\Users\Skinz\Desktop\Giny .NET Core\Dofus";
+        Utils.StartClient(ClientPath, AppState.Port, 1);
+    }
+
+    private void OpenDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        DialogService.Show<Dialog>("Informations", options);
+    }
+
+    public int Value { get; set; }
+
+    public async void SimulateProgress()
+    {
+        Value = 0;
+        do
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            Value += 4;
+            StateHasChanged();
+            await Task.Delay(500);
+
+
+        } while (Value < 100);
+
+
+        SimulateProgress();
+    }
+
+    protected override void OnInitialized()
+    {
+        ZaapServer server = new ZaapServer();
+        server.Start();
+        SimulateProgress();
+    }
+
+    bool _disposed;
+    public void Dispose() => _disposed = true;
+
+}
+

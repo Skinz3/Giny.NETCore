@@ -1,0 +1,100 @@
+﻿@using Giny.World.Managers.Effects
+@using Giny.World.Records.Items
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+
+<MudGrid>
+    <MudItem xs="3">
+
+        <MudPaper Outlined=true>
+            <MudList Dense="false" Clickable="true">
+                <MudListSubheader>
+                    <MudTextField Label="Search" TextChanged=OnSearchTextChanged @bind-Value="@Search"
+                                  AdornmentColor="Color.Primary" AdornmentIcon="@Icons.Filled.Search"
+                                  Adornment="Adornment.End" Immediate="true" Variant="Variant.Outlined" />
+                </MudListSubheader>
+
+                <div style="height:70vh;overflow-y:scroll">
+                    <Virtualize Items="@SearchResults">
+                        <MudListItem OnClick="() => SelectItem(context)" Text=@context.ToString() />
+                    </Virtualize>
+                </div>
+
+            </MudList>
+
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="9">
+        @if (SelectedItem != null)
+        {
+
+            <MudCard Outlined="true">
+                <MudCardContent>
+                    <MudText>@SelectedItem.Name</MudText>
+                    <MudText Typo="Typo.body2">@("Type : "+SelectedItem.TypeEnum)</MudText>
+                    <MudText Typo="Typo.body2">@("Level : "+SelectedItem.Level)</MudText>
+                    <MudIcon Icon="@Icons.Filled.Money"> @("Price : "+SelectedItem.Price)</MudIcon>
+                </MudCardContent>
+            </MudCard>
+
+            <MudGrid>
+
+
+                <MudItem Class="mt-3" xs="3">
+                    <MudPaper Outlined=true>
+                        <MudList Dense="true" Clickable="true">
+                            <MudListSubheader>
+                                Effets
+                            </MudListSubheader>
+                            @foreach (Effect effect in SelectedItem.Effects)
+                            {
+                                <MudListItem Text=@effect.ToString() />
+                            }
+
+                        </MudList>
+                    </MudPaper>
+                </MudItem>
+
+
+            </MudGrid>
+
+        }
+    </MudItem>
+
+
+
+
+</MudGrid>
+
+@code {
+
+    private ItemRecord SelectedItem
+    {
+        get;
+        set;
+    }
+    private List<ItemRecord> SearchResults
+    {
+        get;
+        set;
+    } = new List<ItemRecord>();
+
+    private string Search
+    {
+        get;
+        set;
+    } = "";
+
+    private void OnSearchTextChanged()
+    {
+        SearchResults = ItemRecord.GetItems().Where(x => x.ToString().ToLower().Contains(Search.ToLower())).ToList();
+        StateHasChanged();
+    }
+
+    public void SelectItem(ItemRecord item)
+    {
+        SelectedItem = item;
+
+    }
+
+}

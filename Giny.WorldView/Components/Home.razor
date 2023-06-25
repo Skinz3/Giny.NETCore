@@ -1,0 +1,104 @@
+﻿@page "/home"
+
+
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using MudBlazor
+@using Giny.World.Records.Spells;
+@inherits LayoutComponentBase
+@inject NavigationManager UriHelper
+@inject IDialogService DialogService
+
+@page "/"
+
+<MudThemeProvider @bind-IsDarkMode="@DarkMode" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+
+
+    <MudPaper Elevation="1">
+
+        <MudToolBar>
+            <MudIconButton OnClick="@ToggleDrawer" Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Class="mr-5" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Add" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Edit" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Remove" Color="Color.Inherit" />
+            <MudIconButton OnClick="()=> Navigate(PageEnum.Configuration)" Icon="@Icons.Material.Outlined.Settings" Color="Color.Inherit" />
+            <MudSpacer />
+            <MudToggleIconButton @bind-Toggled=@DarkMode
+                                 Icon="@Icons.Filled.LightMode" Title="Off"
+                                 ToggledIcon="@Icons.Filled.DarkMode" ToggledTitle="On" />
+
+
+            <MudIconButton Icon="@Icons.Material.Outlined.Notifications" />
+            <MudIconButton Icon="@Icons.Material.Outlined.PushPin" />
+            <MudIconButton Icon="@Icons.Material.Outlined.PeopleAlt" />
+
+            <MudIconButton Icon="@Icons.Material.Outlined.MoreVert" Color="Color.Inherit" />
+        </MudToolBar>
+        <MudDrawer @bind-Open="@DrawerOpen" Elevation="1">
+            <MudDrawerHeader>
+                <MudText Typo="Typo.h6">Giny</MudText>
+            </MudDrawerHeader>
+            <MudNavMenu>
+                <MudNavLink OnClick="() => Navigate(PageEnum.SpellExplorer)" Icon="@Icons.Filled.InvertColors" Match="NavLinkMatch.All">Spell Explorer</MudNavLink>
+                <MudNavLink OnClick="() => Navigate(PageEnum.Dungeons)" Icon="@Icons.Custom.Uncategorized.Radioactive" Match="NavLinkMatch.All">Dungeons</MudNavLink>
+                <MudNavLink OnClick="() => Navigate(PageEnum.Npcs)" Icon="@Icons.Custom.FileFormats.FileCode" Match="NavLinkMatch.All">Npcs</MudNavLink>
+                <MudNavLink OnClick="() => Navigate(PageEnum.Items)" Icon="@Icons.Custom.Uncategorized.ChessQueen" Match="NavLinkMatch.All">Items</MudNavLink>
+            </MudNavMenu>
+        </MudDrawer>
+    </MudPaper>
+
+    <MudMainContent Class="pa-4 mr-16">
+        <CascadingValue Value="this">
+            @if (AppState.Page == PageEnum.Loader)
+            {
+                <Loader></Loader>
+            }
+            else if (AppState.Page == PageEnum.SpellExplorer)
+            {
+                <SpellExplorer></SpellExplorer>
+            }
+            else if (AppState.Page == PageEnum.Items)
+            {
+                <Items></Items>
+            }
+            else if (AppState.Page == PageEnum.Configuration)
+            {
+                <Configuration></Configuration>
+            }
+        </CascadingValue>
+
+    </MudMainContent>
+</MudLayout>
+
+
+@code {
+
+    private bool DarkMode
+    {
+        get;
+        set;
+    }
+
+    bool DrawerOpen
+    {
+        get;
+        set;
+    }
+
+    public void Navigate(PageEnum page)
+    {
+        AppState.Page = page;
+        StateHasChanged();
+    }
+
+
+    void ToggleDrawer()
+    {
+        DrawerOpen = !DrawerOpen;
+    }
+}
+

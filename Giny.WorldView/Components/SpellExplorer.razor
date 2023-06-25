@@ -1,0 +1,415 @@
+﻿@using Giny.Protocol.Enums
+@using Giny.World.Managers.Effects
+@using Giny.World.Records.Monsters
+@using Giny.World.Records.Spells
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+
+
+<MudGrid>
+    <MudItem xs="3">
+
+        <MudPaper Outlined=true>
+            <MudList Dense="false" Clickable="true">
+                <MudListSubheader>
+                    <MudTextField Label="Search" TextChanged=OnSearchTextChanged @bind-Value="@Search"
+                                  AdornmentColor="Color.Primary" AdornmentIcon="@Icons.Filled.Search"
+                                  Adornment="Adornment.End" Immediate="true" Variant="Variant.Outlined" />
+                </MudListSubheader>
+
+                <div style="height:70vh;overflow-y:scroll">
+                    <Virtualize Items="@SearchResults">
+                        <MudListItem OnClick="() => SelectSpell(context)" Text=@context.ToString() />
+                    </Virtualize>
+                </div>
+
+            </MudList>
+
+        </MudPaper>
+
+    </MudItem>
+
+
+    <MudItem xs="9">
+
+        @if (SelectedSpell != null)
+        {
+
+            <MudCard Outlined="true">
+                <MudCardContent>
+                    <MudText>@SelectedSpell.ToString()</MudText>
+                    <MudText Typo="Typo.body2">@SelectedSpell.Description</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Text" Color="Color.Primary">Voir les effets</MudButton>
+                </MudCardActions>
+            </MudCard>
+            <br />
+            <MudGrid>
+
+
+                <MudItem xs="2">
+                    <MudPaper Outlined=true>
+                        <MudList Dense="true" Clickable="true">
+
+                            @foreach (SpellLevelRecord level in SelectedSpell.Levels)
+                            {
+                                <MudListItem OnClick="() => SelectSpellLevel(level)" Text=@level.ToString() />
+                            }
+
+                        </MudList>
+                    </MudPaper>
+                </MudItem>
+
+
+
+
+
+
+                @if (SelectedSpellLevel != null)
+                {
+
+                    <MudItem xs="3">
+                        <MudPaper Outlined=true>
+                            <MudList Dense="true" Clickable="true">
+                                <MudListSubheader>
+                                    <MudText>Grade @SelectedSpellLevel.Grade</MudText>
+                                </MudListSubheader>
+                                @foreach (EffectDice effect in SelectedSpellLevel.Effects)
+                                {
+                                    <MudListItem OnClick="() => SelectEffect(effect)" Text=@effect.ToString() />
+                                }
+                            </MudList>
+
+                        </MudPaper>
+
+                    </MudItem>
+                    @if (SelectedEffect != null)
+                    {
+                        <MudItem xs="7">
+                            <MudCard>
+                                <MudCardContent>
+                                    <MudText><b>@SelectedEffect.EffectEnum</b></MudText>
+                                    <br />
+
+
+                                    <MudSimpleTable Dense="true" Striped=true Elevation=10 Hover=true Bordered="true" Outlined=true>
+
+                                        <tbody Style="grid-auto-columns: minmax(10px, auto);">
+                                            <tr>
+                                                <td>Min,Max</td>
+                                                <td>@(SelectedEffect.Min+","+SelectedEffect.Max)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Value</td>
+                                                <td>@SelectedEffect.Value</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Duration</td>
+                                                <td>@SelectedEffect.Duration</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Delay</td>
+                                                <td>@SelectedEffect.Delay</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Target Masks</td>
+                                                <td>@SelectedEffect.TargetMask</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Targets</td>
+                                                <td>@GetTargets(SelectedEffect)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Triggers</td>
+                                                <td>@SelectedEffect.RawTriggers</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Triggers (Enum)</td>
+                                                <td>@(TriggersToString(SelectedEffect.Triggers))</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>RawZone</td>
+                                                <td>@SelectedEffect.RawZone</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Dispellable</td>
+                                                <td>@((FightDispellableEnum)SelectedEffect.Dispellable)</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Random</td>
+                                                <td>@SelectedEffect.Random</td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>Group</td>
+                                                <td>@SelectedEffect.Group</td>
+                                            </tr>
+
+                                            @if (IsSpellCastEffect(@SelectedEffect.EffectEnum))
+                                            {
+                                                <tr>
+                                                    <td>Casted Spell</td>
+                                                    <td>@(GetTargetSpellName(SelectedEffect))</td>
+                                                </tr>
+                                            }
+
+                                            @if (IsSummonEffect(@SelectedEffect.EffectEnum))
+                                            {
+                                                <tr>
+                                                    <td>Summoned Monster</td>
+                                                    <td>@(GetSummonedMonsterName(SelectedEffect))</td>
+                                                </tr>
+                                            }
+
+                                            @if (SelectedEffect.EffectEnum == EffectsEnum.Effect_AddState || SelectedEffect.EffectEnum == EffectsEnum.Effect_DispelState)
+                                            {
+                                                <tr>
+                                                    <td>Spell State</td>
+                                                    <td>@(GetSpellStateName(SelectedEffect))</td>
+                                                </tr>
+                                            }
+
+                                            @if (SelectedEffect.EffectEnum == EffectsEnum.Effect_SpellBoostBaseDamage ||
+                                           SelectedEffect.EffectEnum == EffectsEnum.Effect_SpellBoostMinimalRange ||
+                                           SelectedEffect.EffectEnum == EffectsEnum.Effect_SpellBoostRange)
+                                            {
+                                                <tr>
+                                                    <td>Buffed Spell</td>
+                                                    <td>@(GetTargetSpellName(SelectedEffect))</td>
+                                                </tr>
+                                            }
+
+                                            @if (SelectedEffect.EffectEnum == EffectsEnum.Effect_RemoveSpellEffects)
+                                            {
+                                                <tr>
+                                                    <td>Debuffed Spell</td>
+                                                    <td>@(GetDebuffedSpellName(SelectedEffect))</td>
+                                                </tr>
+                                            }
+
+
+
+
+                                        </tbody>
+                                    </MudSimpleTable>
+
+
+                                </MudCardContent>
+                                @if (IsSpellCastEffect(@SelectedEffect.EffectEnum))
+                                {
+                                    <MudCardActions>
+                                        <MudButton OnClick="()=> OnExploreClick(SelectedEffect)" Variant="Variant.Text" Color="Color.Primary">Explore</MudButton>
+                                    </MudCardActions>
+                                }
+                            </MudCard>
+                        </MudItem>
+                    }
+
+
+
+                }
+            </MudGrid>
+        }
+
+    </MudItem>
+
+</MudGrid>
+
+
+@code {
+    private const string UnknownDataText = "Aucune données.";
+
+    [Inject]
+    private IDialogService DialogService
+    {
+        get;
+        set;
+    }
+
+    private List<SpellRecord> SearchResults
+    {
+        get;
+        set;
+    } = new List<SpellRecord>();
+
+    private string Search
+    {
+        get;
+        set;
+    } = "";
+
+    private SpellRecord SelectedSpell
+    {
+        get;
+        set;
+    }
+    private SpellLevelRecord SelectedSpellLevel
+    {
+        get;
+        set;
+    }
+    private EffectDice SelectedEffect
+    {
+        get;
+        set;
+    }
+    private void OnExploreClick(EffectDice effect)
+    {
+        var spell = SpellRecord.GetSpellRecord((short)effect.Min);
+
+        if (spell != null)
+        {
+            SelectSpell(spell);
+            SelectSpellLevel(spell.GetLevel((byte)effect.Max));
+        }
+        else
+        {
+            DialogService.ShowMessageBox("Erreur", "Le sort demandé est introuvable.");
+        }
+
+    }
+
+    private string GetSpellStateName(EffectDice effect)
+    {
+        var state = SpellStateRecord.GetSpellStateRecord(effect.Value);
+
+        if (state == null)
+        {
+            return UnknownDataText;
+        }
+        else
+        {
+            return state.ToString();
+        }
+    }
+    private string GetSummonedMonsterName(EffectDice effect)
+    {
+        MonsterRecord monster = MonsterRecord.GetMonsterRecord((short)effect.Min);
+
+        if (monster == null)
+        {
+            return UnknownDataText;
+        }
+        else
+        {
+            return monster.ToString();
+        }
+    }
+    private bool IsSummonEffect(EffectsEnum effect)
+    {
+        switch (effect)
+        {
+            case EffectsEnum.Effect_Summon:
+            case EffectsEnum.Effect_SummonSlave:
+                return true;
+        }
+
+        return false;
+    }
+    private string GetTargetSpellName(EffectDice effect)
+    {
+        SpellRecord spell = SpellRecord.GetSpellRecord((short)effect.Min);
+
+        if (spell != null)
+        {
+            return spell.ToString();
+        }
+        else
+        {
+            return UnknownDataText;
+        }
+    }
+    private string GetDebuffedSpellName(EffectDice effect)
+    {
+        SpellRecord spell = SpellRecord.GetSpellRecord((short)effect.Value);
+
+        if (spell != null)
+        {
+            return spell.ToString();
+        }
+        else
+        {
+            return UnknownDataText;
+        }
+    }
+    private bool IsSpellCastEffect(EffectsEnum effect)
+    {
+        switch (effect)
+        {
+            case EffectsEnum.Effect_CastSpell_793:
+            case EffectsEnum.Effect_CastSpell_792:
+            case EffectsEnum.Effect_CastSpell_2794:
+            case EffectsEnum.Effect_CastSpell_2160:
+            case EffectsEnum.Effect_CastSpell_1175:
+            case EffectsEnum.Effect_CastSpell_1160:
+            case EffectsEnum.Effect_CastSpell_1019:
+            case EffectsEnum.Effect_CastSpell_1018:
+            case EffectsEnum.Effect_CastSpell_1017:
+            case EffectsEnum.Effect_CastSpell_2792:
+            case EffectsEnum.Effect_Trap:
+                return true;
+        }
+
+        return false;
+    }
+    private string TriggersToString(IEnumerable<World.Managers.Fights.Triggers.Trigger> triggers)
+    {
+        string result = string.Empty;
+
+        foreach (var trigger in triggers)
+        {
+            result += trigger.Type;
+
+            if (trigger.Value.HasValue)
+            {
+                result += " (" + trigger.Value + ")";
+            }
+
+            if (trigger != triggers.Last())
+                result += ",";
+        }
+
+        return result;
+    }
+    private string GetTargets(EffectDice effect)
+    {
+        string targets = string.Join(",", effect.GetTargets());
+
+        if (targets == string.Empty)
+        {
+            targets = "ALL";
+        }
+
+        return targets;
+    }
+    private void SelectEffect(EffectDice effect)
+    {
+        SelectedEffect = effect;
+    }
+    private void SelectSpell(SpellRecord spell)
+    {
+        SelectedSpell = spell;
+        SelectedSpellLevel = null;
+        SelectedEffect = null;
+    }
+    private void SelectSpellLevel(SpellLevelRecord level)
+    {
+        SelectedSpellLevel = level;
+        SelectedEffect = null;
+    }
+    private void OnSearchTextChanged()
+    {
+        SearchResults = SpellRecord.GetSpellRecords().Where(x => x.ToString().ToLower().Contains(Search.ToLower())).ToList();
+        StateHasChanged();
+    }
+    protected override void OnInitialized()
+    {
+
+    }
+
+}
