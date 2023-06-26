@@ -235,11 +235,7 @@ namespace Giny.World.Managers.Stats
                 {
                     var characterCharacteristic = stat.Value.GetCharacterCharacteristicDetailed(stat.Key);
 
-                    if (stat.Key == CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_DISTANCE || stat.Key == CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE
-                        || stat.Key == CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_SPELLS || stat.Key == CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_WEAPON)
-                    {
-                        characterCharacteristic.@base = 100;
-                    }
+
                     results.Add(characterCharacteristic);
                 }
             }
@@ -256,7 +252,7 @@ namespace Giny.World.Managers.Stats
 
             var c = -Math.Abs(MaxLifePoints - LifePoints);
             //results.Add(new CharacterCharacteristicValue(MaxLifePoints, (short)CharacteristicEnum.MAX_LIFE_POINTS));
-            results.Add(new CharacterCharacteristicValue(MaxLifePoints, (short)CharacteristicEnum.HIT_POINTS));
+            results.Add(new CharacterCharacteristicValue(MaxLifePoints, (short)CharacteristicEnum.HIT_POINTS)); // kinda weird
             results.Add(new CharacterCharacteristicValue(c, (short)CharacteristicEnum.HIT_POINT_LOSS));
             results.Add(new CharacterCharacteristicValue(MaxEnergyPoints, (short)CharacteristicEnum.MAX_ENERGY_POINTS));
             results.Add(new CharacterCharacteristicValue(Energy, (short)CharacteristicEnum.ENERGY_POINTS));
@@ -374,6 +370,21 @@ namespace Giny.World.Managers.Stats
             stats.Initialize();
 
             return stats;
+        }
+
+        public EffectSchoolEnum GetBestElement()
+        {
+            Dictionary<EffectSchoolEnum, Characteristic> values = new Dictionary<EffectSchoolEnum, Characteristic>
+            {
+                { EffectSchoolEnum.Earth, Strength },
+                { EffectSchoolEnum.Fire, Intelligence },
+                { EffectSchoolEnum.Air,  Agility },
+                { EffectSchoolEnum.Water,Chance },
+            };
+
+            EffectSchoolEnum result = values.OrderByDescending(x => x.Value.TotalInContext()).First().Key; // context of context free ?
+
+            return result;
         }
 
         public Dictionary<CharacteristicEnum, Characteristic> GetCharacteristics()

@@ -6,10 +6,10 @@
 
 
 <MudGrid>
-    <MudItem xs="3">
+    <MudItem xs="2">
 
         <MudPaper Outlined=true>
-            <MudList Dense="false" Clickable="true">
+            <MudList Color="Color.Primary" Dense="true" Clickable="true">
                 <MudListSubheader>
                     <MudTextField Label="Search" TextChanged=OnSearchTextChanged @bind-Value="@Search"
                                   AdornmentColor="Color.Primary" AdornmentIcon="@Icons.Filled.Search"
@@ -18,7 +18,7 @@
 
                 <div style="height:70vh;overflow-y:scroll">
                     <Virtualize Items="@SearchResults">
-                        <MudListItem OnClick="() => SelectSpell(context)" Text=@context.ToString() />
+                        <MudListItem  Typo="Typo.body2" OnClick="() => SelectSpell(context)" Text=@context.Name />
                     </Virtualize>
                 </div>
 
@@ -29,11 +29,10 @@
     </MudItem>
 
 
-    <MudItem xs="9">
+    <MudItem xs="8">
 
         @if (SelectedSpell != null)
         {
-
             <MudCard Outlined="true">
                 <MudCardContent>
                     <MudText>@SelectedSpell.ToString()</MudText>
@@ -46,9 +45,11 @@
             <br />
             <MudGrid>
 
-
                 <MudItem xs="2">
-                    <MudPaper Outlined=true>
+                    <MudPaper Outlined=true  MinHeight="600px">
+                        <MudListSubheader>
+                            <MudText>Grades</MudText>
+                        </MudListSubheader>
                         <MudList Dense="true" Clickable="true">
 
                             @foreach (SpellLevelRecord level in SelectedSpell.Levels)
@@ -69,7 +70,7 @@
                 {
 
                     <MudItem xs="3">
-                        <MudPaper Outlined=true>
+                        <MudPaper Outlined=true MinHeight="600px">
                             <MudList Dense="true" Clickable="true">
                                 <MudListSubheader>
                                     <MudText>Grade @SelectedSpellLevel.Grade</MudText>
@@ -86,18 +87,20 @@
                     @if (SelectedEffect != null)
                     {
                         <MudItem xs="7">
-                            <MudCard>
+
+
+                            <MudCard MinHeight="600px">
                                 <MudCardContent>
                                     <MudText><b>@SelectedEffect.EffectEnum</b></MudText>
                                     <br />
 
 
-                                    <MudSimpleTable Dense="true" Striped=true Elevation=10 Hover=true Bordered="true" Outlined=true>
+                                    <MudSimpleTable Dense="true" Striped=true Elevation=10 Hover=false Bordered="true" Outlined=true>
 
                                         <tbody Style="grid-auto-columns: minmax(10px, auto);">
                                             <tr>
                                                 <td>Min,Max</td>
-                                                <td>@(SelectedEffect.Min+","+SelectedEffect.Max)</td>
+                                                <td>@(SelectedEffect.Min + "," + SelectedEffect.Max)</td>
                                             </tr>
                                             <tr>
                                                 <td>Value</td>
@@ -212,9 +215,128 @@
 
 
 
+
+
+
+
+
+                    @if (SelectedEffect == null && SelectedSpellLevel != null)
+                    {
+                        <MudItem xs="7">
+
+
+                            <MudCard MinHeight="600px">
+                                <MudCardContent>
+                                    <MudText><b>@("Grade "+SelectedSpellLevel.Grade)</b></MudText>
+                                    <br />
+
+
+                                    <MudSimpleTable Dense="true" Striped=true Elevation=10 Hover=false Bordered="true" Outlined=true>
+
+                                        <tbody Style="grid-auto-columns: minmax(10px, auto);">
+                                            <tr>
+                                                <td>Cout en PA</td>
+                                                <td>@(SelectedSpellLevel.ApCost )</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Portée minimum</td>
+                                                <td>@(SelectedSpellLevel.MinRange)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Portée maximum</td>
+                                                <td>@(SelectedSpellLevel.MaxRange)</td>
+                                            </tr>
+                                           
+                                            <tr>
+                                                <td>Taux Critique</td>
+                                                <td>@(SelectedSpellLevel.CriticalHitProbability)</td>
+                                            </tr>
+
+                                            
+                                            <tr>
+                                                <td>Portée modifiable</td>
+                                                <td>@(SelectedSpellLevel.RangeCanBeBoosted)</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Stacks max</td>
+                                                <td>@(SelectedSpellLevel.MaxStack)</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Nombre de lancer par tour</td>
+                                                <td>@(SelectedSpellLevel.MaxCastPerTurn)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Nombre de lancer par cible</td>
+                                                <td>@(SelectedSpellLevel.MaxCastPerTarget)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Interval de relance mimimum</td>
+                                                <td>@(SelectedSpellLevel.MinCastInterval)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Interval de relance initial</td>
+                                                <td>@(SelectedSpellLevel.InitialCooldown)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Interval de relance global</td>
+                                                <td>@(SelectedSpellLevel.GlobalCooldown)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Zone additionelles</td>
+                                                <td>@(string.Join(',',SelectedSpellLevel.AdditionalEffectsZones))</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Etats requis</td>
+                                                <td>@GetRequiredStatesNames(SelectedSpellLevel)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Etats interdits</td>
+                                                <td>@GetForbiddenStatesNames(SelectedSpellLevel)</td>
+                                            </tr>
+                                          
+
+                                        </tbody>
+                                    </MudSimpleTable>
+
+
+                                </MudCardContent>
+                              
+                            </MudCard>
+                        </MudItem>
+                    }
+
+
+
                 }
+
+
+
+
             </MudGrid>
         }
+
+    </MudItem>
+    <MudItem xs="2">
+
+        <MudPaper Outlined=true>
+            <MudList Dense="true" Clickable="true">
+
+                <MudListSubheader>
+                    <MudButton OnClick="()=> ClearHistory()" Color="Color.Primary">Vider l'historique</MudButton>
+                </MudListSubheader>
+
+
+                <div style="height:70vh;overflow-y:scroll">
+                    <Virtualize Items="@History">
+                        <MudListItem OnClick="() => {SelectSpell(context.Key); SelectSpellLevel(context.Value);} " Text="@(context.Key+" ("+ context.Value.Grade+")")" />
+                    </Virtualize>
+                </div>
+
+            </MudList>
+
+        </MudPaper>
 
     </MudItem>
 
@@ -258,14 +380,25 @@
         get;
         set;
     }
+    private List<KeyValuePair<SpellRecord, SpellLevelRecord>> History
+    {
+        get;
+        set;
+    } = new List<KeyValuePair<SpellRecord, SpellLevelRecord>>();
+
     private void OnExploreClick(EffectDice effect)
     {
         var spell = SpellRecord.GetSpellRecord((short)effect.Min);
 
         if (spell != null)
         {
+            History.Add(new KeyValuePair<SpellRecord, SpellLevelRecord>(SelectedSpell, SelectedSpellLevel));
+
+
             SelectSpell(spell);
             SelectSpellLevel(spell.GetLevel((byte)effect.Max));
+
+            History.Add(new KeyValuePair<SpellRecord, SpellLevelRecord>(SelectedSpell, SelectedSpellLevel));
         }
         else
         {
@@ -274,6 +407,18 @@
 
     }
 
+    private void ClearHistory()
+    {
+        History = new List<KeyValuePair<SpellRecord, SpellLevelRecord>>();
+    }
+    private string GetRequiredStatesNames(SpellLevelRecord level)
+    {
+        return string.Join(',', level.StatesRequired.Select(x => SpellStateRecord.GetSpellStateRecord(x)));
+    }
+    private string GetForbiddenStatesNames(SpellLevelRecord level)
+    {
+        return string.Join(',', level.StatesForbidden.Select(x => SpellStateRecord.GetSpellStateRecord(x)));
+    }
     private string GetSpellStateName(EffectDice effect)
     {
         var state = SpellStateRecord.GetSpellStateRecord(effect.Value);
@@ -390,6 +535,7 @@
     private void SelectEffect(EffectDice effect)
     {
         SelectedEffect = effect;
+       
     }
     private void SelectSpell(SpellRecord spell)
     {

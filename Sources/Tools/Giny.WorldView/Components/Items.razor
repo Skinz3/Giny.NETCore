@@ -3,10 +3,10 @@
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 
 <MudGrid>
-    <MudItem xs="3">
+    <MudItem xs="2">
 
         <MudPaper Outlined=true>
-            <MudList Dense="false" Clickable="true">
+            <MudList Dense="true" Clickable="true">
                 <MudListSubheader>
                     <MudTextField Label="Search" TextChanged=OnSearchTextChanged @bind-Value="@Search"
                                   AdornmentColor="Color.Primary" AdornmentIcon="@Icons.Filled.Search"
@@ -15,7 +15,7 @@
 
                 <div style="height:70vh;overflow-y:scroll">
                     <Virtualize Items="@SearchResults">
-                        <MudListItem OnClick="() => SelectItem(context)" Text=@context.ToString() />
+                        <MudListItem OnClick="() => SelectItem(context)" Text=@context.Name/>
                     </Virtualize>
                 </div>
 
@@ -94,7 +94,6 @@
     public void SelectItem(ItemRecord item)
     {
         SelectedItem = item;
-
     }
 
 }

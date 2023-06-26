@@ -9,7 +9,7 @@ namespace Giny.IO.D2OClasses
     public class AbuseReasons : IDataObject , IIndexedData
     {        public const string MODULE = "AbuseReasons";
 
-        public int Id => throw new NotImplementedException();
+        public int Id => (int)abuseReasonId;
 
         public uint abuseReasonId;
         public uint mask;

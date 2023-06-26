@@ -39,7 +39,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Giny.Zaap", "Zaap\Giny.Zaap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Giny.TestLauncher", "Zaap\Giny.TestLauncher\Giny.TestLauncher.csproj", "{A837A592-3646-4B04-862E-240AF630F9CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Giny.CraftableDrop", "Modules\Giny.CraftableDrop\Giny.CraftableDrop.csproj", "{BF19993C-AD1F-43ED-9AF8-593664D0E2FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Giny.CraftableDrop", "Modules\Giny.CraftableDrop\Giny.CraftableDrop.csproj", "{BF19993C-AD1F-43ED-9AF8-593664D0E2FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -472,8 +472,8 @@ namespace Giny.World.Managers.Chat
             var stats = client.Character.Stats;
 
 
-            stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE].Objects = -50;
-            stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_DISTANCE].Objects = 50;
+            stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_MELEE].Objects = -50;
+            stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_DISTANCE].Objects = 50;
 
             client.Character.RefreshStats();
             return;

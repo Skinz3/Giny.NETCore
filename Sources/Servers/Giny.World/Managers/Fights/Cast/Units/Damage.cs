@@ -182,41 +182,33 @@ namespace Giny.World.Managers.Fights.Cast.Units
         {
             if (Source.IsMeleeWith(Target))
             {
-                jet.Min = (short)(jet.Min * (Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_MELEE].TotalInContext() / 100d));
-                jet.Max = (short)(jet.Max * (Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_MELEE].TotalInContext() / 100d));
+                jet.ApplyMultiplicator(Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_MELEE].TotalInContext());
+                jet.ApplyMultiplicator(Target.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE].TotalInContext());
 
-                // jet.Min = (short)(jet.Min * (1 - Target.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE].TotalInContext() / 100d));
-                //jet.Max = (short)(jet.Max * (1 - Target.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE].TotalInContext() / 100d));
             }
             else
             {
-                jet.Min = (short)(jet.Min * (Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_DISTANCE].TotalInContext() / 100d));
-                jet.Max = (short)(jet.Max * (Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_DISTANCE].TotalInContext() / 100d));
+                jet.ApplyMultiplicator(Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_DISTANCE].TotalInContext());
+                jet.ApplyMultiplicator(Target.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_DISTANCE].TotalInContext());
 
-                // jet.Min = (short)(jet.Min * (1 - Target.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_DISTANCE].TotalInContext() / 100d));
-                //jet.Max = (short)(jet.Max * (1 - Target.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_DISTANCE].TotalInContext() / 100d));
             }
 
             if (this.EffectHandler.CastHandler.Cast.Weapon)
             {
-                jet.Min = (short)(jet.Min * (Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_WEAPON].TotalInContext() / 100d));
-                jet.Max = (short)(jet.Max * (Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_WEAPON].TotalInContext() / 100d));
+                jet.ApplyMultiplicator(Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_WEAPON].TotalInContext());
+                jet.ApplyMultiplicator(Target.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_WEAPON].TotalInContext());
 
-                // jet.Min -= (short)(jet.Min * ((Target.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_WEAPON].TotalInContext() - 100d) / 100d));
-                //jet.Max -= (short)(jet.Max * ((Target.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_WEAPON].TotalInContext() - 100d) / 100d));
             }
 
             if (this.IsSpellDamage())
             {
-                jet.Min = (short)(jet.Min * (Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_SPELLS].TotalInContext() / 100d));
-                jet.Max = (short)(jet.Max * (Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_SPELLS].TotalInContext() / 100d));
-
-                // jet.Min -= (short)(jet.Min * ((Target.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_SPELLS].TotalInContext() - 100d) / 100d));
-                //jet.Max -= (short)(jet.Max * ((Target.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_SPELLS].TotalInContext() - 100d) / 100d));
+                jet.ApplyMultiplicator(Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_SPELLS].TotalInContext());
+                jet.ApplyMultiplicator(Target.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_SPELLS].TotalInContext());
             }
 
-            jet.Min = (short)(jet.Min * (Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER].TotalInContext() / 100d));
-            jet.Max = (short)(jet.Max * (Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER].TotalInContext() / 100d));
+
+            jet.ApplyMultiplicator(Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER].TotalInContext());
+
         }
         private void ComputeShapeEfficiencyModifiers(Jet jet)
         {

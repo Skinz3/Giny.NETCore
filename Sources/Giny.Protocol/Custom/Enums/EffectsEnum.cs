@@ -2479,7 +2479,7 @@
         /// <summary>
         /// #1{~1~2 à }#2 (dommages)
         /// </summary>
-        Effect_DamageBestElement_2828 = 2828,
+        Effect_StealHpBestElement = 2828,
         /// <summary>
         /// #1{~1~2 à }#2 (dommages)
         /// </summary>
@@ -2600,7 +2600,10 @@
         /// 
         /// </summary>
         Effect_Unknown_2877 = 2877,
-        
-        End = 2878
+
+        Effect_Autopilot = 2881,
+
+        End = 2890,
+
     }
 }

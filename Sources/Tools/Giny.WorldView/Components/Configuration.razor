@@ -10,6 +10,9 @@
     <br />
     <MudTextField @bind-Value="ConfigFile.Instance.SQLPassword" Label="Mot de passe" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Filled.Password" AdornmentColor="Color.Primary" />
     <br />
+
+    <MudTextField @bind-Value="ConfigFile.Instance.ClientPath" Label="Chemin client" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Filled.Computer" AdornmentColor="Color.Primary" />
+    <br />
     <MudButton OnClick=OnSaveClick StartIcon="@Icons.Filled.Save" Style="height: 50px;float:right" Variant="Variant.Filled" Size="Size.Large" Color="Color.Primary">Sauvegarder</MudButton>
 </MudContainer>
 

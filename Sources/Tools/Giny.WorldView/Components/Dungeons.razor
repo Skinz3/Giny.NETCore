@@ -1,0 +1,251 @@
+﻿@using Giny.IO.D2I;
+@using Giny.IO.D2O;
+@using Giny.IO.D2OClasses;
+@using Giny.World.Records.Maps;
+@using Giny.World.Records.Monsters;
+@using Giny.WorldView.Config;
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.AspNetCore.Components;
+@using MudBlazor.Services;
+@using System.Reflection;
+@using System.Collections;
+@inject IDialogService DialogService
+
+
+<MudGrid>
+    <MudItem xs="2">
+
+        <MudPaper Outlined=true>
+            <MudList Dense="true" Clickable="true">
+                <MudListSubheader>
+                    <MudTextField Label="Search" TextChanged=OnSearchTextChanged @bind-Value="@Search"
+                                  AdornmentColor="Color.Primary" AdornmentIcon="@Icons.Filled.Search"
+                                  Adornment="Adornment.End" Immediate="true" Variant="Variant.Outlined" />
+                </MudListSubheader>
+
+                <div style="height:70vh;overflow-y:scroll">
+                    <Virtualize Items="@DungeonSearchResults">
+                        <MudListItem OnClick="() => SelectDungeon(context)" Text=@context.Name />
+                    </Virtualize>
+                </div>
+
+            </MudList>
+
+        </MudPaper>
+    </MudItem>
+
+
+    @if (SelectedDungeon != null)
+    {
+        <MudItem xs="10">
+            <MudPaper MinHeight="900px" Class="d-flex flex-column flex-grow-1 gap-4 pa-6" Outlined=false Elevation="3">
+
+                <MudText Class="mb-5" Typo="Typo.h4"><MudIcon Icon="@Icons.Custom.Uncategorized.ChessKnight"></MudIcon> @SelectedDungeon.Name</MudText>
+
+                <MudGrid Class="mb-2">
+
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Outlined.LocationOn" ReadOnly=@true Value="@SelectedDungeon.EntranceMapId" Label="Entrée" />
+
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Outlined.LocationOn" ReadOnly=@true Value="@SelectedDungeon.ExitMapId" Label="Sortie" />
+                    </MudItem>
+                </MudGrid>
+
+                <MudTabs AlwaysShowScrollButtons="false" Color="Color.Surface" @bind-ActivePanelIndex="@RoomIndex" Elevation="0" Outlined=true Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+
+
+                    @foreach (var room in SelectedDungeon.Rooms)
+                    {
+                        <MudTabPanel Text="@("Salle "+(SelectedDungeon.Rooms.Keys.ToList().IndexOf(room.Key)+1).ToString())">
+
+
+                            <MudGrid Class="mb-2">
+                                <MudItem xs="12" sm="6" md="4">
+                                    <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.DriveFileRenameOutline" ReadOnly=@true Value="@MapPositionRecord.GetMapName(CurrentRoom.Key)" Label="Nom" />
+                                </MudItem>
+
+                                <MudItem xs="12" sm="6" md="4">
+                                    <MudButton Class="mt-3" StartIcon="@Icons.Material.Filled.Delete" Variant="Variant.Text" Color="Color.Error">Supprimer la salle</MudButton>
+                                </MudItem>
+
+                            </MudGrid>
+
+                            <MudGrid Class="mb-2">
+
+                                <MudItem xs="12" sm="6" md="4">
+                                    <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Outlined.LocationOn" ReadOnly=@true Value="@CurrentRoom.Key" Label="MapId" />
+                                </MudItem>
+                                <MudItem xs="12" sm="6" md="4">
+                                    <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Outlined.Timer" @bind-Value="@CurrentRoom.Value.RespawnDelay" Label="Delay de respawn" />
+                                </MudItem>
+
+                            </MudGrid>
+
+
+
+                            <MudPaper Class="pa-2" Elevation="0" Outlined=true>
+
+
+
+                                @if (room.Value.MonsterIds.Count == 0)
+                                {
+                                    <MudChip Variant="Variant.Text" Color="Color.Primary" Text="Aucune données"></MudChip>
+                                }
+
+                                <MudChipSet AllClosable="true" OnClose="Closed">
+                                    @foreach (var value in room.Value.MonsterIds)
+                                    {
+                                        <MudChip Value="@MonsterRecord.GetMonsterRecord(value)" Variant="Variant.Text" Color="Color.Primary" Text="@MonsterRecord.GetMonsterRecord(value).Name"></MudChip>
+                                    }
+
+
+
+                                </MudChipSet>
+
+                            </MudPaper>
+
+
+
+                        </MudTabPanel>
+                    }
+
+
+                </MudTabs>
+
+
+
+                <MudGrid Class="pa-3">
+                    <MudItem xs="6">
+                        <MudTextField Variant="Variant.Text" Immediate="true" Label="Nom" @bind-Value="MonsterSearch"></MudTextField>
+                    </MudItem>
+                    <MudItem xs="2">
+                        <MudButton StartIcon="@Icons.Material.Filled.Add" OnClick="AddMonster" Variant="Variant.Text" Color="Color.Primary">Ajouter</MudButton>
+                    </MudItem>
+                </MudGrid>
+
+
+
+                <MudGrid Class="pa-3">
+                    <MudItem xs="6">
+                        <MudPaper Outlined="true">
+
+                            <MudList Color="Color.Secondary" Clickable="true">
+
+
+                                @if (SearchResults.Count == 0)
+                                {
+                                    <MudText class="ml-2" Typo="Typo.caption">...</MudText>
+                                }
+                                <Virtualize Items="@SearchResults">
+                                    <MudListItem OnClick="@(()=>{AddedMonster = context;MonsterSearch = AddedMonster.ToString();})">@context.ToString()</MudListItem>
+                                </Virtualize>
+
+                            </MudList>
+
+                        </MudPaper>
+                    </MudItem>
+                </MudGrid>
+
+            </MudPaper>
+
+
+        </MudItem>
+
+
+    }
+</MudGrid>
+
+@code {
+
+    string m_searchValue
+    {
+        get;
+        set;
+    }
+    string MonsterSearch
+    {
+        get
+        {
+            return m_searchValue;
+        }
+        set
+        {
+            m_searchValue = value;
+            OnMonsterSearchChange();
+        }
+    }
+
+    MonsterRecord AddedMonster
+    {
+        get;
+        set;
+    }
+    List<MonsterRecord> SearchResults
+    {
+        get;
+        set;
+    } = new List<MonsterRecord>();
+
+    void OnMonsterSearchChange()
+    {
+        if (MonsterSearch == "")
+        {
+            this.SearchResults = new List<MonsterRecord>();
+            return;
+        }
+        this.SearchResults = MonsterRecord.GetMonsterRecords().Where(x => x.Name.ToLower().Contains(MonsterSearch.ToLower())).ToList();
+    }
+
+    void AddMonster()
+    {
+
+        CurrentRoom.Value.MonsterIds.Add((short)AddedMonster.Id);
+        StateHasChanged();
+    }
+    public void Closed(MudChip chip)
+    {
+        var record = (MonsterRecord)chip.Value;
+        CurrentRoom.Value.MonsterIds.Remove((short)record.Id);
+        StateHasChanged();
+    }
+
+
+    private string Search
+    {
+        get;
+        set;
+    } = "";
+    private DungeonRecord SelectedDungeon
+    {
+        get; set;
+    }
+    private int RoomIndex
+    {
+        get;
+        set;
+    }
+    private List<DungeonRecord> DungeonSearchResults
+    {
+        get;
+        set;
+    } = new List<DungeonRecord>();
+
+    public KeyValuePair<long, MonsterRoom> CurrentRoom => SelectedDungeon.Rooms.ElementAt(RoomIndex);
+
+    private void SelectDungeon(DungeonRecord dungeon)
+    {
+        this.SelectedDungeon = dungeon;
+    }
+    private void OnSearchTextChanged()
+    {
+        DungeonSearchResults = DungeonRecord.GetDungeonRecords().Where(x => x.ToString().ToLower().Contains(Search.ToLower())).ToList();
+        StateHasChanged();
+    }
+
+    protected override void OnInitialized()
+    {
+
+    }
+}

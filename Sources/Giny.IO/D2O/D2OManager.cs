@@ -16,6 +16,12 @@ namespace Giny.IO.D2O
 
         public static void Initialize(string path)
         {
+            foreach (var reader in m_readers)
+            {
+                reader.Value.Close();
+            }
+            m_readers = new Dictionary<string, D2OReader>();
+
             foreach (var file in Directory.GetFiles(path).Where(x => Path.GetExtension(x).ToLower() == Extension))
             {
                 m_readers.Add(Path.GetFileName(file), new D2OReader(file));

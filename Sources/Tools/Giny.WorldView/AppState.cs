@@ -7,6 +7,49 @@ using System.Threading.Tasks;
 
 namespace Giny.WorldView
 {
+    public class LoadingStep
+    {
+        public string Name
+        {
+            get;
+            set;
+        }
+        public bool Done
+        {
+            get;
+            set;
+        }
+        Action Func
+        {
+            get;
+            set;
+        }
+        public bool Running
+        {
+            get;
+            private set;
+        }
+
+        public bool Error
+        {
+            get;
+            set;
+        }
+        public LoadingStep(string name, Action func)
+        {
+            Name = name;
+            Done = false;
+            Func = func;
+        }
+
+        public void Execute()
+        {
+            this.Running = true;
+            this.Func();
+            this.Running = false;
+            this.Done = true;
+        }
+    }
     public class AppState
     {
         public static bool Initialized
@@ -20,5 +63,6 @@ namespace Giny.WorldView
             get;
             set;
         } = PageEnum.Loader;
+
     }
 }

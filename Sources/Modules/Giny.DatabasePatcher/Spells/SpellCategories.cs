@@ -110,7 +110,7 @@ namespace Giny.DatabasePatcher.Spells
             EffectsEnum.Effect_CastSpell_2794,
             EffectsEnum.Effect_CastSpell_2795,
             EffectsEnum.Effect_DamageBestElement,
-            EffectsEnum.Effect_DamageBestElement_2828,
+            EffectsEnum.Effect_StealHpBestElement,
             EffectsEnum.Effect_DamageBestElement_2829,
         };
         private static readonly EffectsEnum[] DebuffEffects = new EffectsEnum[]

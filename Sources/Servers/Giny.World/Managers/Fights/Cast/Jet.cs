@@ -1,5 +1,7 @@
 ﻿using Giny.Core;
 using Giny.Core.Time;
+using Giny.Protocol.Custom.Enums;
+using Giny.World.Managers.Fights.Zones.Sets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,8 +46,13 @@ namespace Giny.World.Managers.Fights.Cast
 
                 Max = 1;
                 Min = 1;
-
             }
+        }
+
+        public void ApplyMultiplicator(int value)
+        {
+            Min = (short)(Min * (value / 100d));
+            Max = (short)(Max * (value / 100d));
         }
         public short Generate(bool hasRandDownModifier, bool hasRandUpModifier)
         {
@@ -64,7 +71,7 @@ namespace Giny.World.Managers.Fights.Cast
                     return (short)Max;
                 }
 
-                return (short)new AsyncRandom().Next((short)Min, (short)Max + 1);
+                return (short)new Random().Next((short)Min, (short)Max + 1);
             }
         }
     }

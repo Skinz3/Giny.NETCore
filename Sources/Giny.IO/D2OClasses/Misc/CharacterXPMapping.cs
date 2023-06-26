@@ -9,7 +9,7 @@ namespace Giny.IO.D2OClasses
     public class CharacterXPMapping : IDataObject , IIndexedData
     {        public const string MODULE = "CharacterXPMappings";
 
-        public int Id => throw new NotImplementedException();
+        public int Id => Id;
 
         public int level;
         public double experiencePoints;

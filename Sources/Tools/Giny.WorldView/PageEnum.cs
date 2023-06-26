@@ -14,5 +14,10 @@ namespace Giny.WorldView
         Items,
         Npcs,
         Dungeons,
+        D2O,
+        D2I,
+        D2P,
+        SWL,
+        MapEditor,
     }
 }

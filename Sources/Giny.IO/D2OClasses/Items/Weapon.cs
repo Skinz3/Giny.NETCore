@@ -8,7 +8,7 @@ namespace Giny.IO.D2OClasses
 {    [D2OClass("Weapon", "")]
     public class Weapon : Item , IIndexedData
     {
-        public int Id => throw new NotImplementedException();
+        public int Id => this.id;
 
         public int apCost;
         public int minRange;

@@ -41,6 +41,12 @@ namespace Giny.WorldView.Config
             set;
         } = "giny_world";
 
+        public string ClientPath
+        {
+            get;
+            set;
+        } = "";
+
 
         public static void Initialize()
         {

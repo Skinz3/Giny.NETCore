@@ -1,4 +1,5 @@
 using Giny.WorldView.Components;
+using Microsoft.AspNetCore.Components.Web.Infrastructure;
 using Microsoft.AspNetCore.Components.WebView.WindowsForms;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
@@ -12,11 +13,10 @@ namespace Giny.WorldView
         {
             InitializeComponent();
 
-
-
             ServiceCollection serviceCollection = new ServiceCollection();
             serviceCollection.AddBlazorWebView();
             serviceCollection.AddMudServices();
+            serviceCollection.AddWindowsFormsBlazorWebView();
             serviceCollection.AddSingleton<AppState>();
 
             view = new BlazorWebView();

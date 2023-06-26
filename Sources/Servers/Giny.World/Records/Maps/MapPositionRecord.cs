@@ -245,6 +245,17 @@ namespace Giny.World.Records.Maps
         {
             return MapPositions.Values;
         }
+        public static string GetMapName(long id)
+        {
+            if (!MapPositions.ContainsKey(id))
+            {
+                return "[Undefined]";
+            }
+            else
+            {
+                return MapPositions[id].Name;
+            }
+        }
 
     }
 }
