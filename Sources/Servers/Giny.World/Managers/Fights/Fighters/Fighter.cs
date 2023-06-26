@@ -883,10 +883,6 @@ namespace Giny.World.Managers.Fights.Fighters
                 return false;
             }
 
-            if (cast.SpellId == 11966)
-            {
-                return false; // sort julith , + 2 mobs, stackoverflow ???
-            }
 
             if (Fight.Ended)
                 return false;
