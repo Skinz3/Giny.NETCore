@@ -9,13 +9,8 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Stats
 {
-    [ProtoInclude(4, typeof(ApCharacteristic))]
-    [ProtoInclude(5, typeof(MpCharacteristic))]
-    [ProtoInclude(6, typeof(PointDodgeCharacteristic))]
-    [ProtoInclude(7, typeof(RangeCharacteristic))]
-    [ProtoInclude(8, typeof(RelativeCharacteristic))]
-    [ProtoInclude(9, typeof(ResistanceCharacteristic))]
     [ProtoContract]
+    [ProtoInclude(3, typeof(DetailedCharacteristic))]
     public class Characteristic
     {
         public event Action<Characteristic> OnContextChanged;
@@ -26,18 +21,7 @@ namespace Giny.World.Managers.Stats
             get;
             set;
         }
-        [ProtoMember(2)]
-        public virtual short Additional
-        {
-            get;
-            set;
-        }
-        [ProtoMember(3)]
-        public virtual short Objects
-        {
-            get;
-            set;
-        }
+
         // ignore
         public virtual short Context
         {
@@ -69,9 +53,7 @@ namespace Giny.World.Managers.Stats
         {
             return new Characteristic()
             {
-                Additional = Additional,
                 Base = Base,
-                Objects = Objects
             };
         }
         public static Characteristic Zero()
@@ -83,19 +65,18 @@ namespace Giny.World.Managers.Stats
             return new Characteristic()
             {
                 Base = @base,
-                Additional = 0,
+
                 Context = 0,
-                Objects = 0
+
             };
         }
-        public virtual CharacterCharacteristicDetailed GetCharacterCharacteristicDetailed(CharacteristicEnum characteristic)
+        public virtual CharacterCharacteristic GetCharacterCharacteristic(CharacteristicEnum characteristic)
         {
-
-            return new CharacterCharacteristicDetailed(Base, Additional, Objects, 0, Context, (short)characteristic);
+            return new CharacterCharacteristicValue(TotalInContext(), (short)characteristic);
         }
         public virtual short Total()
         {
-            return (short)(Base + Additional + Objects);
+            return Base;
         }
         public virtual short TotalInContext()
         {

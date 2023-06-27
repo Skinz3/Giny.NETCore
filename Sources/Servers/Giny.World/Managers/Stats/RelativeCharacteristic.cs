@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Giny.World.Managers.Stats
 {
     [ProtoContract]
-    public class RelativeCharacteristic : Characteristic
+    public class RelativeCharacteristic : DetailedCharacteristic
     {
         protected Characteristic Relativ
         {
@@ -52,7 +52,7 @@ namespace Giny.World.Managers.Stats
         {
             this.Relativ = relative;
         }
-        public override CharacterCharacteristicDetailed GetCharacterCharacteristicDetailed(CharacteristicEnum characteristic)
+        public override CharacterCharacteristicDetailed GetCharacterCharacteristic(CharacteristicEnum characteristic)
         {
             return new CharacterCharacteristicDetailed((short)(Base + RelativDelta), Additional, Objects, Context, Context, (short)characteristic);
         }

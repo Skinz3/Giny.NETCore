@@ -2,6 +2,7 @@
 using Giny.Protocol.Enums;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Entities.Characters;
+using Giny.World.Managers.Stats;
 using Giny.World.Records.Items;
 using System;
 using System.Collections.Generic;
@@ -70,7 +71,7 @@ namespace Giny.World.Managers.Items
         [ItemUsageHandler(EffectsEnum.Effect_AddPermanentVitality)]
         public static bool PermanentVitality(Character character, EffectInteger effect)
         {
-            character.Record.Stats[CharacteristicEnum.VITALITY].Additional += (short)effect.Value;
+            character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.VITALITY).Additional += (short)effect.Value;
             character.Record.Stats.LifePoints += effect.Value;
             character.Record.Stats.MaxLifePoints += effect.Value;
             character.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_MESSAGE, 13, effect.Value);

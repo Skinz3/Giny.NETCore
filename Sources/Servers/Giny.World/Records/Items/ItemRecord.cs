@@ -203,6 +203,8 @@ namespace Giny.World.Records.Items
                     item.Price = MinimumItemPrice;
                 }
             }
+
+        
         }
         public static IEnumerable<ItemRecord> GetItems()
         {

@@ -1893,7 +1893,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
                     shieldLoss = delta;
 
-                    Stats.RemoveShield(delta);
+                    Stats.RemoveShield((short)delta);
 
                     DispellShieldBuffs(damage.Source, shieldLoss);
                 }

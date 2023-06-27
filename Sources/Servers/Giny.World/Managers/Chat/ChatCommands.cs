@@ -457,7 +457,7 @@ namespace Giny.World.Managers.Chat
                     target.Character.Inventory.SetItemPosition(item.UId, CharacterInventoryPositionEnum.INVENTORY_POSITION_NOT_EQUIPED, item.Quantity);
                 }
 
-                foreach (KeyValuePair<CharacteristicEnum, Characteristic> stat in target.Character.Stats.GetCharacteristics())
+                foreach (KeyValuePair<CharacteristicEnum, DetailedCharacteristic> stat in target.Character.Stats.GetCharacteristics<DetailedCharacteristic>())
                 {
                     stat.Value.Objects = 0;
                 }
@@ -472,8 +472,8 @@ namespace Giny.World.Managers.Chat
             var stats = client.Character.Stats;
 
 
-            stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_MELEE].Objects = -50;
-            stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_DISTANCE].Objects = 50;
+            stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_MELEE).Objects = -50;
+            stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_DISTANCE).Objects = 50;
 
             client.Character.RefreshStats();
             return;

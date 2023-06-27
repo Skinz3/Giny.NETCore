@@ -104,77 +104,77 @@ namespace Giny.World.Managers.Stats
             }
         }
 
-        public Characteristic Strength
+        public DetailedCharacteristic Strength
         {
             get
             {
-                return this[CharacteristicEnum.STRENGTH];
+                return (DetailedCharacteristic)this[CharacteristicEnum.STRENGTH];
             }
             set
             {
                 this[CharacteristicEnum.STRENGTH] = value;
             }
         }
-        public Characteristic Wisdom
+        public DetailedCharacteristic Wisdom
         {
             get
             {
-                return this[CharacteristicEnum.WISDOM];
+                return (DetailedCharacteristic)this[CharacteristicEnum.WISDOM];
             }
             set
             {
                 this[CharacteristicEnum.WISDOM] = value;
             }
         }
-        public Characteristic Chance
+        public DetailedCharacteristic Chance
         {
             get
             {
-                return this[CharacteristicEnum.CHANCE];
+                return (DetailedCharacteristic)this[CharacteristicEnum.CHANCE];
             }
             set
             {
                 this[CharacteristicEnum.CHANCE] = value;
             }
         }
-        public Characteristic Agility
+        public DetailedCharacteristic Agility
         {
             get
             {
-                return this[CharacteristicEnum.AGILITY];
+                return (DetailedCharacteristic)this[CharacteristicEnum.AGILITY];
             }
             set
             {
                 this[CharacteristicEnum.AGILITY] = value;
             }
         }
-        public Characteristic Intelligence
+        public DetailedCharacteristic Intelligence
         {
             get
             {
-                return this[CharacteristicEnum.INTELLIGENCE];
+                return (DetailedCharacteristic)this[CharacteristicEnum.INTELLIGENCE];
             }
             set
             {
                 this[CharacteristicEnum.INTELLIGENCE] = value;
             }
         }
-        public Characteristic ActionPoints
+        public DetailedCharacteristic ActionPoints
         {
             get
             {
-                return this[CharacteristicEnum.ACTION_POINTS];
+                return (DetailedCharacteristic)this[CharacteristicEnum.ACTION_POINTS];
             }
             set
             {
                 this[CharacteristicEnum.ACTION_POINTS] = value;
             }
         }
-        public Characteristic MovementPoints
+        public DetailedCharacteristic MovementPoints
         {
             get
             {
-                return this[CharacteristicEnum.MOVEMENT_POINTS];
+                return (DetailedCharacteristic)this[CharacteristicEnum.MOVEMENT_POINTS];
             }
             set
             {
@@ -231,9 +231,9 @@ namespace Giny.World.Managers.Stats
 
             if (selected == null)
             {
-                foreach (KeyValuePair<CharacteristicEnum, Characteristic> stat in this.GetCharacteristics())
+                foreach (KeyValuePair<CharacteristicEnum, Characteristic> stat in this.GetCharacteristics<Characteristic>())
                 {
-                    var characterCharacteristic = stat.Value.GetCharacterCharacteristicDetailed(stat.Key);
+                    var characterCharacteristic = stat.Value.GetCharacterCharacteristic(stat.Key);
 
 
                     results.Add(characterCharacteristic);
@@ -241,9 +241,9 @@ namespace Giny.World.Managers.Stats
             }
             else
             {
-                foreach (KeyValuePair<CharacteristicEnum, Characteristic> stat in this.GetCharacteristics().Where(x => selected.Contains(x.Key)))
+                foreach (KeyValuePair<CharacteristicEnum, Characteristic> stat in this.GetCharacteristics<Characteristic>().Where(x => selected.Contains(x.Key)))
                 {
-                    var characterCharacteristic = stat.Value.GetCharacterCharacteristicDetailed(stat.Key);
+                    var characterCharacteristic = stat.Value.GetCharacterCharacteristic(stat.Key);
                     results.Add(characterCharacteristic);
                 }
             }
@@ -251,7 +251,7 @@ namespace Giny.World.Managers.Stats
 
 
             var c = -Math.Abs(MaxLifePoints - LifePoints);
-            //results.Add(new CharacterCharacteristicValue(MaxLifePoints, (short)CharacteristicEnum.MAX_LIFE_POINTS));
+            //results.Add(new CharacterCharacteristicValue(MaxLifePoints, (short)CharacteristicEnum.MAX_LIFE_POINTS)); is detailed
             results.Add(new CharacterCharacteristicValue(MaxLifePoints, (short)CharacteristicEnum.HIT_POINTS));
 
             //results.Add(new CharacterCharacteristicValue(300, (short)CharacteristicEnum.SHIELD)); // kinda weird
@@ -315,68 +315,73 @@ namespace Giny.World.Managers.Stats
             stats[CharacteristicEnum.STATS_POINTS] = Characteristic.Zero();
             stats[CharacteristicEnum.ACTION_POINTS] = ApCharacteristic.New(ConfigFile.Instance.StartAp);
             stats[CharacteristicEnum.MOVEMENT_POINTS] = MpCharacteristic.New(ConfigFile.Instance.StartMp);
-            stats[CharacteristicEnum.AGILITY] = Characteristic.Zero();
-            stats[CharacteristicEnum.AIR_DAMAGE_BONUS] = Characteristic.Zero();
-            stats[CharacteristicEnum.AIR_ELEMENT_REDUCTION] = Characteristic.Zero();
+            stats[CharacteristicEnum.AGILITY] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.AIR_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.AIR_ELEMENT_REDUCTION] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.AIR_ELEMENT_RESIST_PERCENT] = ResistanceCharacteristic.Zero();
-            stats[CharacteristicEnum.ALL_DAMAGE_BONUS] = Characteristic.Zero();
-            stats[CharacteristicEnum.DAMAGE_PERCENT] = Characteristic.Zero();
-            stats[CharacteristicEnum.CHANCE] = Characteristic.Zero();
-            stats[CharacteristicEnum.CRITICAL_DAMAGE_BONUS] = Characteristic.Zero();
-            stats[CharacteristicEnum.CRITICAL_DAMAGE_REDUCTION] = Characteristic.Zero();
-            stats[CharacteristicEnum.CRITICAL_HIT] = Characteristic.Zero();
-            stats[CharacteristicEnum.INITIATIVE] = Characteristic.Zero();
+            stats[CharacteristicEnum.ALL_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.DAMAGE_PERCENT] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.CHANCE] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.CRITICAL_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.CRITICAL_DAMAGE_REDUCTION] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.CRITICAL_HIT] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.INITIATIVE] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.DODGE_AP_LOST_PROBABILITY] = PointDodgeCharacteristic.Zero();
             stats[CharacteristicEnum.DODGE_MP_LOST_PROBABILITY] = PointDodgeCharacteristic.Zero();
-            stats[CharacteristicEnum.EARTH_DAMAGE_BONUS] = Characteristic.Zero();
-            stats[CharacteristicEnum.EARTH_ELEMENT_REDUCTION] = Characteristic.Zero();
+            stats[CharacteristicEnum.EARTH_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.EARTH_ELEMENT_REDUCTION] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.EARTH_ELEMENT_RESIST_PERCENT] = ResistanceCharacteristic.Zero();
-            stats[CharacteristicEnum.FIRE_DAMAGE_BONUS] = Characteristic.Zero();
-            stats[CharacteristicEnum.FIRE_ELEMENT_REDUCTION] = Characteristic.Zero();
+            stats[CharacteristicEnum.FIRE_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.FIRE_ELEMENT_REDUCTION] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.FIRE_ELEMENT_RESIST_PERCENT] = ResistanceCharacteristic.Zero();
-            stats[CharacteristicEnum.GLYPH_POWER] = Characteristic.Zero();
-            stats[CharacteristicEnum.RUNE_POWER] = Characteristic.Zero();
-            stats[CharacteristicEnum.PERMANENT_DAMAGE_PERCENT] = Characteristic.Zero();
-            stats[CharacteristicEnum.HEAL_BONUS] = Characteristic.Zero();
-            stats[CharacteristicEnum.INTELLIGENCE] = Characteristic.Zero();
-            stats[CharacteristicEnum.NEUTRAL_DAMAGE_BONUS] = Characteristic.Zero();
-            stats[CharacteristicEnum.NEUTRAL_ELEMENT_REDUCTION] = Characteristic.Zero();
+            stats[CharacteristicEnum.GLYPH_POWER] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.RUNE_POWER] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.PERMANENT_DAMAGE_PERCENT] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.HEAL_BONUS] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.INTELLIGENCE] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.NEUTRAL_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.NEUTRAL_ELEMENT_REDUCTION] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.NEUTRAL_ELEMENT_RESIST_PERCENT] = ResistanceCharacteristic.Zero();
             stats[CharacteristicEnum.MAGIC_FIND] = RelativeCharacteristic.New(BreedManager.BreedDefaultProspecting);
-            stats[CharacteristicEnum.PUSH_DAMAGE_BONUS] = Characteristic.Zero();
-            stats[CharacteristicEnum.PUSH_DAMAGE_REDUCTION] = Characteristic.Zero();
+            stats[CharacteristicEnum.PUSH_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.PUSH_DAMAGE_REDUCTION] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.RANGE] = RangeCharacteristic.Zero();
-            stats[CharacteristicEnum.REFLECT_DAMAGE] = Characteristic.Zero();
-            stats[CharacteristicEnum.STRENGTH] = Characteristic.Zero();
-            stats[CharacteristicEnum.MAX_SUMMONED_CREATURES_BOOST] = Characteristic.New(BaseSummonsCount);
-            stats[CharacteristicEnum.TRAP_DAMAGE_BONUS] = Characteristic.Zero();
-            stats[CharacteristicEnum.TRAP_DAMAGE_BONUS_PERCENT] = Characteristic.Zero();
-            stats[CharacteristicEnum.VITALITY] = Characteristic.Zero();
-            stats[CharacteristicEnum.WATER_DAMAGE_BONUS] = Characteristic.Zero();
-            stats[CharacteristicEnum.WATER_ELEMENT_REDUCTION] = Characteristic.Zero();
+            stats[CharacteristicEnum.REFLECT_DAMAGE] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.STRENGTH] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.MAX_SUMMONED_CREATURES_BOOST] = DetailedCharacteristic.New(BaseSummonsCount);
+            stats[CharacteristicEnum.TRAP_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.TRAP_DAMAGE_BONUS_PERCENT] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.VITALITY] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.WATER_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.WATER_ELEMENT_REDUCTION] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.WATER_ELEMENT_RESIST_PERCENT] = ResistanceCharacteristic.Zero();
-            stats[CharacteristicEnum.WEAPON_DAMAGE_PERCENT] = Characteristic.Zero();
-            stats[CharacteristicEnum.WISDOM] = Characteristic.Zero();
+            stats[CharacteristicEnum.WEAPON_DAMAGE_PERCENT] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.WISDOM] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.TACKLE_BLOCK] = RelativeCharacteristic.Zero();
             stats[CharacteristicEnum.TACKLE_EVADE] = RelativeCharacteristic.Zero();
             stats[CharacteristicEnum.AP_REDUCTION] = RelativeCharacteristic.Zero();
             stats[CharacteristicEnum.MP_REDUCTION] = RelativeCharacteristic.Zero();
-            stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_MELEE] = Characteristic.New(100);
-            stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE] = Characteristic.New(100);
-            stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_WEAPON] = Characteristic.New(100);
-            stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_WEAPON] = Characteristic.New(100);
-            stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_DISTANCE] = Characteristic.New(100);
-            stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_DISTANCE] = Characteristic.New(100);
-            stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_SPELLS] = Characteristic.New(100);
-            stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_SPELLS] = Characteristic.New(100);
-            stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER] = Characteristic.New(100);
-            stats[CharacteristicEnum.WEIGHT] = Characteristic.Zero();
-            stats[CharacteristicEnum.DAMAGE_PERCENT_SPELL] = Characteristic.Zero();
+            stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_MELEE] = DetailedCharacteristic.New(100);
+            stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE] = DetailedCharacteristic.New(100);
+            stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_WEAPON] = DetailedCharacteristic.New(100);
+            stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_WEAPON] = DetailedCharacteristic.New(100);
+            stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_DISTANCE] = DetailedCharacteristic.New(100);
+            stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_DISTANCE] = DetailedCharacteristic.New(100);
+            stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_SPELLS] = DetailedCharacteristic.New(100);
+            stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_SPELLS] = DetailedCharacteristic.New(100);
+            stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER] = DetailedCharacteristic.New(100);
+            stats[CharacteristicEnum.WEIGHT] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.DAMAGE_PERCENT_SPELL] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.SHIELD] = Characteristic.Zero();
             stats.Initialize();
 
             return stats;
         }
 
+        public T GetCharacteristic<T>(CharacteristicEnum characteristicEnum) where T : Characteristic
+        {
+            return Characteristics[characteristicEnum] as T;
+        }
         public EffectSchoolEnum GetBestElement()
         {
             Dictionary<EffectSchoolEnum, Characteristic> values = new Dictionary<EffectSchoolEnum, Characteristic>
@@ -392,9 +397,18 @@ namespace Giny.World.Managers.Stats
             return result;
         }
 
-        public Dictionary<CharacteristicEnum, Characteristic> GetCharacteristics()
+        public Dictionary<CharacteristicEnum, T> GetCharacteristics<T>() where T : Characteristic
         {
-            return Characteristics;
+            Dictionary<CharacteristicEnum, T> results = new Dictionary<CharacteristicEnum, T>();
+
+            foreach (var characteristic in Characteristics)
+            {
+                if (characteristic.Value is T)
+                {
+                    results.Add(characteristic.Key, (T)characteristic.Value);
+                }
+            }
+            return results;
         }
 
     }

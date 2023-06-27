@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Stats
 {
-    public abstract class LimitCharacteristic : Characteristic
+    public abstract class LimitCharacteristic : DetailedCharacteristic
     {
         //ignore
         public abstract short Limit

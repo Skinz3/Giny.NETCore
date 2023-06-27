@@ -95,7 +95,7 @@ namespace Giny.World.Managers.Fights.Fighters
             this.Look = Character.Look.Clone();
             this.Stats = new FighterStats(Character);
 
-           
+
 
             if (Character.Inventory.HasWeaponEquiped)
             {
@@ -151,11 +151,11 @@ namespace Giny.World.Managers.Fights.Fighters
                 this.CastSpell(cast);
             }
 
-            foreach (var stat in Stats.GetCharacteristics())
+            foreach (var stat in Stats.GetCharacteristics<Characteristic>())
             {
                 stat.Value.OnContextChanged += ((Characteristic characteristic) =>
                 {
-                    Fight.Reply("Update stat <b>" + stat.Key+"</b>", System.Drawing.Color.CornflowerBlue);
+                    Fight.Reply("Update stat <b>" + stat.Key + "</b>", System.Drawing.Color.CornflowerBlue);
                     this.RefreshStats(stat.Key);
                 });
             }
