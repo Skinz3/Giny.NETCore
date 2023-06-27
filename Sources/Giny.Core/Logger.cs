@@ -21,8 +21,8 @@ namespace Giny.Core
 
         private static Channels Channels = DefaultChannels;
 
-        private const ConsoleColor Color1 = ConsoleColor.DarkBlue;
-        private const ConsoleColor Color2 = ConsoleColor.Blue;
+        private const ConsoleColor Color1 = ConsoleColor.DarkMagenta;
+        private const ConsoleColor Color2 = ConsoleColor.Magenta;
 
         private static Dictionary<Channels, ConsoleColor> ChannelsColors = new Dictionary<Channels, ConsoleColor>()
         {
@@ -80,17 +80,40 @@ namespace Giny.Core
                 Console.WriteLine(Environment.NewLine);
             }
         }
+       
         public static void DrawLogo()
         {
+
             Console.Title = Assembly.GetCallingAssembly().GetName().Name;
-            WriteColor1(@"   ______   _                     ");
-            WriteColor1(@" .' ___  | (_)                    ");
-            WriteColor1(@"/ .'   \_| __   _ .--.    _   __  ");
-            WriteColor2(@"| |   ____[  | [ `.-. |  [ \ [  ] ");
-            WriteColor2(@"\ `.___]   | |  | | | |   \ '/ /  ");
-            WriteColor2(@" `._____.'[___][___||__][\_:  /   ");
-            WriteColor2(@"  github.com/Skinz3/Giny \__.'    ");
             NewLine();
+
+            WriteColor2(@"    ..|'''.|   ||                    ");
+            WriteColor2(@"   .|'     '  ...  .. ...   .... ... ");
+            WriteColor2(@"   ||    ....  ||   ||  ||   '|.  |  ");
+            WriteColor1(@"   '|.    ||   ||   ||  ||    '|.|   ");
+            WriteColor1(@"    ''|...'|  .||. .||. ||.    '|    ");
+            WriteColor1(@"                            .. |     ");
+            WriteColor1(@"                             ''      ");
+            NewLine();
+
+          /*WriteColor2(@"   _|_|_|  _|                      ");
+            WriteColor2(@" _|            _|_|_|    _|    _|  ");
+            WriteColor2(@" _|  _|_|  _|  _|    _|  _|    _|  ");
+            WriteColor1(@" _|    _|  _|  _|    _|  _|    _|  ");
+            WriteColor1(@"   _|_|_|  _|  _|    _|    _|_|_|  ");
+            WriteColor1(@"             Dofus Emulator    _|  ");
+            WriteColor1(@"                            _|_|  "); */
+
+           
+           /* WriteColor2(@" ______   _                     ");
+            WriteColor2(@" .' ___  | (_)                    ");
+            WriteColor2(@"/ .'   \_| __   _ .--.    _   __  ");
+            WriteColor1(@"| |   ____[  | [ `.-. |  [ \ [  ] ");
+            WriteColor1(@"\ `.___]   | |  | | | |   \ '/ /  ");
+            WriteColor1(@" `._____.'[___][___||__][\_:  /   ");
+            WriteColor1(@"          Dofus emulator \__.'    "); */
+
+
         }
         
     }

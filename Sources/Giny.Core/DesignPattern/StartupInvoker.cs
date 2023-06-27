@@ -77,7 +77,7 @@ namespace Giny.Core.DesignPattern
 
         public void Initialize(Assembly startupAssembly)
         {
-            Logger.WriteColor2("-- Initialisation");
+            Logger.WriteColor2("- Initialisation ");
             Stopwatch watch = Stopwatch.StartNew();
 
             foreach (var pass in VALID_PRIORITIES)
