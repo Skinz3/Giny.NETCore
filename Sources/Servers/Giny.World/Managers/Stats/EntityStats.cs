@@ -24,7 +24,6 @@ namespace Giny.World.Managers.Stats
     {
         public const short BaseSummonsCount = 1;
 
-        public event Action LifePointsChanged;
 
         private int m_lifePoints;
 
@@ -32,7 +31,6 @@ namespace Giny.World.Managers.Stats
         {
             get
             {
-                LifePointsChanged?.Invoke();
                 return m_lifePoints;
             }
             set
@@ -225,39 +223,33 @@ namespace Giny.World.Managers.Stats
             return Strength.Total() + Chance.Total() + Intelligence.Total() + Agility.Total();
         }
 
-        public virtual CharacterCharacteristic[] GetCharacterCharacteristics(CharacteristicEnum[] selected = null)
+
+        public CharacterCharacteristic[] GetCharacterCharacteristics(CharacteristicEnum? characteristicEnum = null)
         {
-            List<CharacterCharacteristic> results = new List<CharacterCharacteristic>();
-
-            if (selected == null)
+            if (characteristicEnum.HasValue)
             {
-                foreach (KeyValuePair<CharacteristicEnum, Characteristic> stat in this.GetCharacteristics<Characteristic>())
-                {
-                    var characterCharacteristic = stat.Value.GetCharacterCharacteristic(stat.Key);
-
-
-                    results.Add(characterCharacteristic);
-                }
+                var characterCharateristic = this.GetCharacteristic<Characteristic>(characteristicEnum.Value).GetCharacterCharacteristic(characteristicEnum.Value);
+                return new CharacterCharacteristic[] { characterCharateristic };
             }
             else
             {
-                foreach (KeyValuePair<CharacteristicEnum, Characteristic> stat in this.GetCharacteristics<Characteristic>().Where(x => selected.Contains(x.Key)))
-                {
-                    var characterCharacteristic = stat.Value.GetCharacterCharacteristic(stat.Key);
-                    results.Add(characterCharacteristic);
-                }
+                return GetCharacterCharacteristics();
+            }
+        
+        }
+        private CharacterCharacteristic[] GetCharacterCharacteristics()
+        {
+            List<CharacterCharacteristic> results = new List<CharacterCharacteristic>();
+
+            foreach (KeyValuePair<CharacteristicEnum, Characteristic> stat in this.GetCharacteristics<Characteristic>())
+            {
+                var characterCharacteristic = stat.Value.GetCharacterCharacteristic(stat.Key);
+                results.Add(characterCharacteristic);
             }
 
-
-
-            var c = -Math.Abs(MaxLifePoints - LifePoints);
-            //results.Add(new CharacterCharacteristicValue(MaxLifePoints, (short)CharacteristicEnum.MAX_LIFE_POINTS)); is detailed
+            //results.Add(new CharacterCharacteristicDetailed(2000, 2000, 2000, 2000, 2000, (short)CharacteristicEnum.MAX_LIFE_POINTS));
             results.Add(new CharacterCharacteristicValue(MaxLifePoints, (short)CharacteristicEnum.HIT_POINTS));
-
-            //results.Add(new CharacterCharacteristicValue(300, (short)CharacteristicEnum.SHIELD)); // kinda weird
-
-
-            results.Add(new CharacterCharacteristicValue(c, (short)CharacteristicEnum.HIT_POINT_LOSS));
+            results.Add(new CharacterCharacteristicValue(-MissingLife, (short)CharacteristicEnum.HIT_POINT_LOSS));
             results.Add(new CharacterCharacteristicValue(MaxEnergyPoints, (short)CharacteristicEnum.MAX_ENERGY_POINTS));
             results.Add(new CharacterCharacteristicValue(Energy, (short)CharacteristicEnum.ENERGY_POINTS));
 
@@ -312,7 +304,7 @@ namespace Giny.World.Managers.Stats
             };
 
 
-            stats[CharacteristicEnum.STATS_POINTS] = Characteristic.Zero();
+            stats[CharacteristicEnum.STATS_POINTS] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.ACTION_POINTS] = ApCharacteristic.New(ConfigFile.Instance.StartAp);
             stats[CharacteristicEnum.MOVEMENT_POINTS] = MpCharacteristic.New(ConfigFile.Instance.StartMp);
             stats[CharacteristicEnum.AGILITY] = DetailedCharacteristic.Zero();

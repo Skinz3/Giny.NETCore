@@ -55,10 +55,10 @@ namespace Giny.Pokefus.Fight.Fighters
 
             const double statsMax = 600;
 
-            this.Stats.Wisdom = Characteristic.New((short)(statsMax * coeff));
-            this.Stats.Chance = Characteristic.New((short)(statsMax * coeff));
-            this.Stats.Agility = Characteristic.New((short)(statsMax * coeff));
-            this.Stats.Strength = Characteristic.New((short)(statsMax * coeff));
+            this.Stats.Wisdom = DetailedCharacteristic.New((short)(statsMax * coeff));
+            this.Stats.Chance = DetailedCharacteristic.New((short)(statsMax * coeff));
+            this.Stats.Agility = DetailedCharacteristic.New((short)(statsMax * coeff));
+            this.Stats.Strength = DetailedCharacteristic.New((short)(statsMax * coeff));
             this.Stats.BaseMaxLife = lifePoints;
             this.Stats.LifePoints = lifePoints;
             this.Stats.MaxLifePoints = lifePoints;

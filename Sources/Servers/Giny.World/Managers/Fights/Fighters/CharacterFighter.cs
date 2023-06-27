@@ -151,14 +151,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 this.CastSpell(cast);
             }
 
-            foreach (var stat in Stats.GetCharacteristics<Characteristic>())
-            {
-                stat.Value.OnContextChanged += ((Characteristic characteristic) =>
-                {
-                    Fight.Reply("Update stat <b>" + stat.Key + "</b>", System.Drawing.Color.CornflowerBlue);
-                    this.RefreshStats(stat.Key);
-                });
-            }
+          
 
 
             switch (Breed)

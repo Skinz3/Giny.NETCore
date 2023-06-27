@@ -27,7 +27,7 @@ namespace Giny.World.Managers.Fights.Stats
             get;
             set;
         }
-  
+
         public short ApUsed
         {
             get;
@@ -96,7 +96,7 @@ namespace Giny.World.Managers.Fights.Stats
         public void RemoveShield(short delta)
         {
             this[CharacteristicEnum.SHIELD].Context -= delta;
-            
+
 
             if (this[CharacteristicEnum.SHIELD].TotalInContext() < 0)
             {
@@ -319,7 +319,7 @@ namespace Giny.World.Managers.Fights.Stats
                 (byte)owner.GetInvisibilityStateFor(target));
         }
         [WIP]
-        public GameFightCharacteristics GetGameFightCharacteristics(Fighter owner, CharacterFighter target, CharacteristicEnum[] selected = null)
+        public GameFightCharacteristics GetGameFightCharacteristics(Fighter owner, CharacterFighter target, CharacteristicEnum? selected = null)
         {
 
             Fighter summoner = owner.GetSummoner();

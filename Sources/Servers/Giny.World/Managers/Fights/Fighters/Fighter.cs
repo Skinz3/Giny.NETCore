@@ -25,6 +25,7 @@ using Giny.World.Managers.Fights.Triggers;
 using Giny.World.Managers.Fights.Zones.Sets;
 using Giny.World.Managers.Maps;
 using Giny.World.Managers.Spells;
+using Giny.World.Managers.Stats;
 using Giny.World.Records.Maps;
 using Giny.World.Records.Spells;
 using System;
@@ -247,6 +248,14 @@ namespace Giny.World.Managers.Fights.Fighters
             this.TurnStartCell = this.Cell;
             this.MovementHistory = new MovementHistory(this);
             this.BaseLook = Look.Clone();
+
+            foreach (var stat in Stats.GetCharacteristics<Characteristic>())
+            {
+                stat.Value.OnContextChanged += ((Characteristic characteristic) =>
+                {
+                    this.RefreshStats(stat.Key);
+                });
+            }
 
         }
 
@@ -771,11 +780,11 @@ namespace Giny.World.Managers.Fights.Fighters
             }
         }
 
-        public void RefreshStats(params CharacteristicEnum[] characteristics)
+        public void RefreshStats(CharacteristicEnum characteristic)
         {
             foreach (CharacterFighter target in Fight.GetAllConnectedFighters())
             {
-                target.Character.Client.Send(new RefreshCharacterStatsMessage(Id, Stats.GetGameFightCharacteristics(this, target, characteristics)));
+                target.Character.Client.Send(new RefreshCharacterStatsMessage(Id, Stats.GetGameFightCharacteristics(this, target, characteristic)));
             }
         }
         public void RefreshStats()
@@ -1008,7 +1017,7 @@ namespace Giny.World.Managers.Fights.Fighters
             Fighter target = Fight.GetFighter(handler.Cast.TargetCell.Id);
 
             Fight.Send(new GameActionFightSpellCastMessage()
-            {   
+            {
                 actionId = (short)ActionsEnum.ACTION_FIGHT_CAST_SPELL,
                 critical = (byte)handler.Cast.Critical,
                 destinationCellId = handler.Cast.TargetCell.Id,
@@ -1524,7 +1533,7 @@ namespace Giny.World.Managers.Fights.Fighters
             {
                 var msg = new GameActionFightSlideMessage()
                 {
-                    actionId =  6,
+                    actionId = 6,
                     endCellId = destinationPoint.CellId,
                     sourceId = source.Id,
                     targetId = Id,
@@ -1657,6 +1666,8 @@ namespace Giny.World.Managers.Fights.Fighters
         public virtual void OnFightStarted()
         {
             this.FightStartCell = this.Cell;
+
+           
         }
 
         public short[] GetPreviousPositions()
