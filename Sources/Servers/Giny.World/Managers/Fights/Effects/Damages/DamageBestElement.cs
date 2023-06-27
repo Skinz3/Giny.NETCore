@@ -16,9 +16,8 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Damages
 {
-    [WIP("three effects... Same handler? weird")]
+    [WIP("Not sure about 2829")]
     [SpellEffectHandler(EffectsEnum.Effect_DamageBestElement_2829)]
- 
     [SpellEffectHandler(EffectsEnum.Effect_DamageBestElement)] // Intimidation
     public class DamageBestElement : SpellEffectHandler
     {

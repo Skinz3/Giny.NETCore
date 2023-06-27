@@ -68,11 +68,7 @@ namespace Giny.World.Managers.Fights.Stats
             get;
             set;
         }
-        public short SpellDamageBonusPercent
-        {
-            get;
-            set;
-        }
+    
         public short FinalDamagePercent
         {
             get;
@@ -304,7 +300,7 @@ namespace Giny.World.Managers.Fights.Stats
             this[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_SPELLS] = Characteristic.New(100);
             this[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER] = Characteristic.New(100);
             this[CharacteristicEnum.WEIGHT] = Characteristic.Zero();
-
+            this[CharacteristicEnum.DAMAGE_PERCENT_SPELL] = Characteristic.Zero();
 
             InvisibilityState = GameActionFightInvisibilityStateEnum.VISIBLE;
             this.BaseMaxLife = MaxLifePoints;

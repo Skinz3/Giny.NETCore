@@ -21,6 +21,7 @@ using Giny.World.Managers.Idols;
 using Giny.World.Managers.Items;
 using Giny.World.Managers.Items.Collections;
 using Giny.World.Managers.Spells;
+using Giny.World.Managers.Stats;
 using Giny.World.Records.Items;
 using Giny.World.Records.Maps;
 using Giny.World.Records.Spells;
@@ -94,6 +95,8 @@ namespace Giny.World.Managers.Fights.Fighters
             this.Look = Character.Look.Clone();
             this.Stats = new FighterStats(Character);
 
+           
+
             if (Character.Inventory.HasWeaponEquiped)
             {
                 this.WeaponRecord = WeaponRecord.GetWeapon(Character.Inventory.GetWeapon().GId);
@@ -148,7 +151,15 @@ namespace Giny.World.Managers.Fights.Fighters
                 this.CastSpell(cast);
             }
 
-          
+            foreach (var stat in Stats.GetCharacteristics())
+            {
+                stat.Value.OnContextChanged += ((Characteristic characteristic) =>
+                {
+                    Fight.Reply("Update stat <b>" + stat.Key+"</b>", System.Drawing.Color.CornflowerBlue);
+                    this.RefreshStats(stat.Key);
+                });
+            }
+
 
             switch (Breed)
             {

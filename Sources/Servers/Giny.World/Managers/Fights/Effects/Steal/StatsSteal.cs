@@ -32,31 +32,12 @@ namespace Giny.World.Managers.Fights.Effects.Steal
 
             foreach (var target in targets)
             {
-                AddStatBuff(target, (short)-Effect.Min, GetEffectCaracteristic(target), FightDispellableEnum.DISPELLABLE, (short)displayedEffects[1]);
-                AddStatBuff(Source, (short)Effect.Min, GetEffectCaracteristic(Source), FightDispellableEnum.DISPELLABLE, (short)displayedEffects[0]);
+                AddStatBuff(target, (short)-Effect.Min, target.Stats[GetAssociatedCharacteristic(Effect.EffectEnum)], FightDispellableEnum.DISPELLABLE, (short)displayedEffects[1]);
+                AddStatBuff(Source, (short)Effect.Min, Source.Stats[GetAssociatedCharacteristic(Effect.EffectEnum)], FightDispellableEnum.DISPELLABLE, (short)displayedEffects[0]);
             }
         }
 
-        private Characteristic GetEffectCaracteristic(Fighter target)
-        {
-            switch (Effect.EffectEnum)
-            {
-                case EffectsEnum.Effect_StealChance:
-                    return target.Stats.Chance;
-                case EffectsEnum.Effect_StealWisdom:
-                    return target.Stats.Wisdom;
-                case EffectsEnum.Effect_StealIntelligence:
-                    return target.Stats.Intelligence;
-                case EffectsEnum.Effect_StealAgility:
-                    return target.Stats.Agility;
-                case EffectsEnum.Effect_StealStrength:
-                    return target.Stats.Strength;
-                case EffectsEnum.Effect_StealRange:
-                    return target.Stats[CharacteristicEnum.RANGE];
-            }
 
-            return null;
-        }
         private EffectsEnum[] GetBuffDisplayedEffect()
         {
             switch (Effect.EffectEnum)

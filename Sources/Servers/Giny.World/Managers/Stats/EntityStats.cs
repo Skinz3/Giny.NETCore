@@ -254,7 +254,7 @@ namespace Giny.World.Managers.Stats
             //results.Add(new CharacterCharacteristicValue(MaxLifePoints, (short)CharacteristicEnum.MAX_LIFE_POINTS));
             results.Add(new CharacterCharacteristicValue(MaxLifePoints, (short)CharacteristicEnum.HIT_POINTS));
 
-            results.Add(new CharacterCharacteristicValue(300, (short)CharacteristicEnum.SHIELD)); // kinda weird
+            //results.Add(new CharacterCharacteristicValue(300, (short)CharacteristicEnum.SHIELD)); // kinda weird
 
 
             results.Add(new CharacterCharacteristicValue(c, (short)CharacteristicEnum.HIT_POINT_LOSS));
@@ -371,6 +371,7 @@ namespace Giny.World.Managers.Stats
             stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_SPELLS] = Characteristic.New(100);
             stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER] = Characteristic.New(100);
             stats[CharacteristicEnum.WEIGHT] = Characteristic.Zero();
+            stats[CharacteristicEnum.DAMAGE_PERCENT_SPELL] = Characteristic.Zero();
             stats.Initialize();
 
             return stats;

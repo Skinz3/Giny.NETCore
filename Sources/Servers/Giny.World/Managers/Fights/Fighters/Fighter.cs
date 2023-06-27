@@ -490,25 +490,25 @@ namespace Giny.World.Managers.Fights.Fighters
         {
             Stats.UseMp(amount);
             OnPointsVariation(source.Id, action, (short)(-amount));
-            RefreshStats(CharacteristicEnum.MOVEMENT_POINTS);
+            // RefreshStats(CharacteristicEnum.MOVEMENT_POINTS);
         }
         public void GainMp(Fighter source, short delta)
         {
             Stats.GainMp(delta);
             OnPointsVariation(source.Id, ActionsEnum.ACTION_CHARACTER_MOVEMENT_POINTS_WIN, delta);
-            RefreshStats(CharacteristicEnum.MOVEMENT_POINTS);
+            // RefreshStats(CharacteristicEnum.MOVEMENT_POINTS);
         }
         public void LooseAp(Fighter source, short amount, ActionsEnum action)
         {
             Stats.UseAp(amount);
             OnPointsVariation(source.Id, action, (short)(-amount));
-            RefreshStats(CharacteristicEnum.ACTION_POINTS);
+            // RefreshStats(CharacteristicEnum.ACTION_POINTS);
         }
         public void GainAp(Fighter source, short delta)
         {
             Stats.GainAp(delta);
             OnPointsVariation(source.Id, ActionsEnum.ACTION_CHARACTER_ACTION_POINTS_WIN, delta);
-            RefreshStats(CharacteristicEnum.ACTION_POINTS);
+            // RefreshStats(CharacteristicEnum.ACTION_POINTS);
         }
 
 
@@ -931,7 +931,7 @@ namespace Giny.World.Managers.Fights.Fighters
                     }
                 }
 
-               // this.RefreshStats();
+                // this.RefreshStats();
 
                 OnSpellCasted(handler);
             }
@@ -1008,7 +1008,7 @@ namespace Giny.World.Managers.Fights.Fighters
             Fighter target = Fight.GetFighter(handler.Cast.TargetCell.Id);
 
             Fight.Send(new GameActionFightSpellCastMessage()
-            {
+            {   
                 actionId = (short)ActionsEnum.ACTION_FIGHT_CAST_SPELL,
                 critical = (byte)handler.Cast.Critical,
                 destinationCellId = handler.Cast.TargetCell.Id,
@@ -1018,7 +1018,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 spellId = handler.Cast.Spell.Record.Id,
                 spellLevel = handler.Cast.Spell.Level.Grade,
                 targetId = target == null ? 0 : target.Id,
-                verboseCast = true,
+                verboseCast = handler.Cast.GetParent() == null, // not sure
             });
 
 
@@ -1524,7 +1524,7 @@ namespace Giny.World.Managers.Fights.Fighters
             {
                 var msg = new GameActionFightSlideMessage()
                 {
-                    actionId = 6,
+                    actionId =  6,
                     endCellId = destinationPoint.CellId,
                     sourceId = source.Id,
                     targetId = Id,
@@ -2059,6 +2059,7 @@ namespace Giny.World.Managers.Fights.Fighters
         }
         public void OnStatsBuff(EffectsEnum effectEnum)
         {
+
             switch (effectEnum)
             {
                 case EffectsEnum.Effect_SubRange:

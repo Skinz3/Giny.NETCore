@@ -294,7 +294,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
             }
             else if (IsSpellDamage())
             {
-                spellDamageBonus = Source.Stats.SpellDamageBonusPercent;
+                spellDamageBonus = Source.Stats[CharacteristicEnum.DAMAGE_PERCENT_SPELL].TotalInContext();
             }
 
             if (!IgnoreBoost)
@@ -337,7 +337,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
 
 
 
-           double result = (double)(jet * (100d + elementDelta + damageBonusPercent + weaponDamageBonus + spellDamageBonus) / 100.0d + (allDamageBonus + elementDamageBonus));
+            double result = (double)(jet * (100d + elementDelta + damageBonusPercent + weaponDamageBonus + spellDamageBonus) / 100.0d + (allDamageBonus + elementDamageBonus));
 
 
             return (short)result;                        // (short)(result < jet ? jet : result);

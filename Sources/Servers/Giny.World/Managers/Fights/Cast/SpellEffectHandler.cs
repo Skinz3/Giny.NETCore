@@ -20,6 +20,8 @@ using Giny.World.Records.Monsters;
 using Giny.World.Managers.Fights.Triggers;
 using Giny.World.Managers.Actions;
 using Giny.World.Managers.Fights.Zones;
+using Giny.Protocol.Custom.Enums;
+using Org.BouncyCastle.Asn1.X509;
 
 namespace Giny.World.Managers.Fights.Cast
 {
@@ -134,10 +136,10 @@ namespace Giny.World.Managers.Fights.Cast
 
             List<CellRecord> affectedCells = GetAffectedCells();
 
-           /* foreach (var cell in affectedCells)
-            {
-                Source.Fight.Send(new Giny.Protocol.Messages.ShowCellMessage(cell.Id, cell.Id));
-            } */
+            /* foreach (var cell in affectedCells)
+             {
+                 Source.Fight.Send(new Giny.Protocol.Messages.ShowCellMessage(cell.Id, cell.Id));
+             } */
 
 
             if (Targets.Any(x => x is TargetTypeCriterion && ((TargetTypeCriterion)x).TargetType == SpellTargetType.SELF_ONLY) && !affectedCells.Contains(Source.Cell))
@@ -319,6 +321,167 @@ namespace Giny.World.Managers.Fights.Cast
         public override string ToString()
         {
             return Effect.EffectEnum + " Z:" + Effect.RawZone + " TM:" + Effect.TargetMask + " TRIG:" + Effect.RawTriggers;
+        }
+
+
+        protected CharacteristicEnum GetAssociatedCharacteristic(EffectsEnum effect)
+        {
+            switch (effect)
+            {
+                case EffectsEnum.Effect_AddChance:
+                case EffectsEnum.Effect_StealChance:
+                    return CharacteristicEnum.CHANCE;
+
+                case EffectsEnum.Effect_StealWisdom:
+                    return CharacteristicEnum.WISDOM;
+
+                case EffectsEnum.Effect_AddIntelligence:
+                case EffectsEnum.Effect_StealIntelligence:
+                    return CharacteristicEnum.INTELLIGENCE;
+
+                case EffectsEnum.Effect_StealAgility:
+                case EffectsEnum.Effect_AddAgility:
+                    return CharacteristicEnum.AGILITY;
+
+                case EffectsEnum.Effect_AddStrength:
+                case EffectsEnum.Effect_StealStrength:
+                    return CharacteristicEnum.STRENGTH;
+
+                case EffectsEnum.Effect_AddRange:
+                case EffectsEnum.Effect_AddRange_136:
+                case EffectsEnum.Effect_StealRange:
+                    return CharacteristicEnum.RANGE;
+
+                case EffectsEnum.Effect_IncreaseDamage_138:
+                    return CharacteristicEnum.DAMAGE_PERCENT;
+
+
+
+                case EffectsEnum.Effect_AddWisdom:
+                    return CharacteristicEnum.WISDOM;
+
+                case EffectsEnum.Effect_AddWeaponDamageBonus:
+                    return CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_WEAPON;
+
+                case EffectsEnum.Effect_MeleeDamageDonePercent:
+                    return CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_MELEE;
+
+                case EffectsEnum.Effect_RangedDamageDonePercent:
+                    return CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_DISTANCE;
+
+                case EffectsEnum.Effect_AddDamageBonus:
+                    return CharacteristicEnum.ALL_DAMAGE_BONUS;
+
+                case EffectsEnum.Effect_AddCriticalHit:
+                    return CharacteristicEnum.CRITICAL_HIT;
+
+                case EffectsEnum.Effect_AddDodgeMPProbability:
+                    return CharacteristicEnum.DODGE_MP_LOST_PROBABILITY;
+
+                case EffectsEnum.Effect_AddDodgeAPProbability:
+                    return CharacteristicEnum.DODGE_AP_LOST_PROBABILITY;
+
+                case EffectsEnum.Effect_AddMeleeResistance:
+                    return CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE;
+
+                case EffectsEnum.Effect_AddRangedResistance:
+                    return CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_DISTANCE;
+
+                case EffectsEnum.Effect_AddSpellResistance:
+                    return CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_SPELLS;
+
+                case EffectsEnum.Effect_AddLock:
+                    return CharacteristicEnum.TACKLE_BLOCK;
+
+                case EffectsEnum.Effect_AddWaterDamageBonus:
+                    return CharacteristicEnum.WATER_DAMAGE_BONUS;
+
+                case EffectsEnum.Effect_AddFireDamageBonus:
+                    return CharacteristicEnum.FIRE_DAMAGE_BONUS;
+
+                case EffectsEnum.Effect_AddAirDamageBonus:
+                    return CharacteristicEnum.AIR_DAMAGE_BONUS;
+
+                case EffectsEnum.Effect_AddEarthDamageBonus:
+                    return CharacteristicEnum.EARTH_DAMAGE_BONUS;
+
+                case EffectsEnum.Effect_AddNeutralDamageBonus:
+                    return CharacteristicEnum.NEUTRAL_DAMAGE_BONUS;
+
+                case EffectsEnum.Effect_AddAPAttack:
+                    return CharacteristicEnum.AP_REDUCTION;
+
+                case EffectsEnum.Effect_AddMPAttack:
+                    return CharacteristicEnum.MP_REDUCTION;
+
+                case EffectsEnum.Effect_AddFireResistPercent:
+                    return CharacteristicEnum.FIRE_ELEMENT_RESIST_PERCENT;
+
+                case EffectsEnum.Effect_AddWaterResistPercent:
+                    return CharacteristicEnum.WATER_ELEMENT_RESIST_PERCENT;
+
+                case EffectsEnum.Effect_AddEarthResistPercent:
+                    return CharacteristicEnum.EARTH_ELEMENT_RESIST_PERCENT;
+
+                case EffectsEnum.Effect_AddAirResistPercent:
+                    return CharacteristicEnum.AIR_ELEMENT_RESIST_PERCENT;
+
+                case EffectsEnum.Effect_AddNeutralResistPercent:
+                    return CharacteristicEnum.NEUTRAL_ELEMENT_RESIST_PERCENT;
+
+                case EffectsEnum.Effect_AddEvade:
+                    return CharacteristicEnum.TACKLE_EVADE;
+
+                case EffectsEnum.Effect_AddDamageBonusPercent:
+                    return CharacteristicEnum.DAMAGE_PERCENT;
+
+                case EffectsEnum.Effect_AddNeutralElementReduction:
+                    return CharacteristicEnum.NEUTRAL_ELEMENT_REDUCTION;
+
+                case EffectsEnum.Effect_AddFireElementReduction:
+                    return CharacteristicEnum.FIRE_ELEMENT_REDUCTION;
+
+                case EffectsEnum.Effect_AddAirElementReduction:
+                    return CharacteristicEnum.AIR_ELEMENT_REDUCTION;
+
+                case EffectsEnum.Effect_AddEarthElementReduction:
+                    return CharacteristicEnum.EARTH_ELEMENT_REDUCTION;
+
+                case EffectsEnum.Effect_AddWaterElementReduction:
+                    return CharacteristicEnum.WATER_ELEMENT_REDUCTION;
+
+                case EffectsEnum.Effect_AddTrapBonusPercent:
+                    return CharacteristicEnum.TRAP_DAMAGE_BONUS_PERCENT;
+
+                case EffectsEnum.Effect_WeaponDamageDonePercent:
+                    return CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_WEAPON;
+
+                case EffectsEnum.Effect_AddPushDamageReduction:
+                    return CharacteristicEnum.PUSH_DAMAGE_REDUCTION;
+
+                case EffectsEnum.Effect_AddTrapBonus:
+                    return CharacteristicEnum.TRAP_DAMAGE_BONUS;
+
+                case EffectsEnum.Effect_AddHealBonus:
+                    return CharacteristicEnum.HEAL_BONUS;
+
+                case EffectsEnum.Effect_AddPushDamageBonus:
+                    return CharacteristicEnum.PUSH_DAMAGE_BONUS;
+
+                case EffectsEnum.Effect_AddCriticalDamageReduction:
+                    return CharacteristicEnum.CRITICAL_DAMAGE_REDUCTION;
+
+                case EffectsEnum.Effect_AddCriticalDamageBonus:
+                    return CharacteristicEnum.CRITICAL_DAMAGE_BONUS;
+
+                case EffectsEnum.Effect_SpellDamageDonePercent:
+                    return CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_SPELLS;
+
+                case EffectsEnum.Effect_IncreaseSpellDamage:
+                    return CharacteristicEnum.DAMAGE_PERCENT_SPELL;
+            }
+
+            throw new NotImplementedException("Unknown corresponding characteristic for effect " + effect);
         }
     }
 }

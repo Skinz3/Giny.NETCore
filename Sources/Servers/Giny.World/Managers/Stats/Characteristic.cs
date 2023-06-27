@@ -18,6 +18,8 @@ namespace Giny.World.Managers.Stats
     [ProtoContract]
     public class Characteristic
     {
+        public event Action<Characteristic> OnContextChanged;
+
         [ProtoMember(1)]
         public virtual short Base
         {
@@ -39,11 +41,29 @@ namespace Giny.World.Managers.Stats
         // ignore
         public virtual short Context
         {
+            get
+            {
+                return m_context;
+            }
+            set
+            {
+                bool dirty = m_context != value;
+                m_context = value;
+
+                if (dirty)
+                {
+                    OnContextChanged?.Invoke(this);
+                }
+            }
+        }
+
+        private short m_context
+        {
             get;
             set;
         }
         /// <summary>
-        /// We dont clone context.
+        /// We dont clone context...?
         /// </summary>
         public virtual Characteristic Clone()
         {
@@ -70,7 +90,7 @@ namespace Giny.World.Managers.Stats
         }
         public virtual CharacterCharacteristicDetailed GetCharacterCharacteristicDetailed(CharacteristicEnum characteristic)
         {
-  
+
             return new CharacterCharacteristicDetailed(Base, Additional, Objects, 0, Context, (short)characteristic);
         }
         public virtual short Total()

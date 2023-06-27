@@ -30,7 +30,7 @@ namespace Giny.World.Managers.Fights.Effects.Damages
             {
                 DamageResult result = target.InflictDamage(CreateDamage(target));
 
-                short healDelta = (short)(result.Total / 2d);
+                short healDelta = (short)(result.LifeLoss / 2d);
 
                 Source.Heal(new Healing(Source, target, healDelta));
             }

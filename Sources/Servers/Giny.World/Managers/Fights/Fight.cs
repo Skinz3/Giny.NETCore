@@ -542,6 +542,7 @@ namespace Giny.World.Managers.Fights
 
         private void OnTurnStarted()
         {
+
             SequenceManager.ResetSequences();
 
             if (Timeline.NewRound)
@@ -556,7 +557,6 @@ namespace Giny.World.Managers.Fights
             using (SequenceManager.StartSequence(SequenceTypeEnum.SEQUENCE_TURN_START))
             {
                 FighterPlaying.TurnStartCell = FighterPlaying.Cell;
-
                 /*
                  * Here or after decrement buff delay ? seems here, see Dofus Ocre
                  */
@@ -580,7 +580,10 @@ namespace Giny.World.Managers.Fights
 
 
                     this.DecrementBuffsDuration();
+
                     this.DecrementBuffsDelay();
+
+
                 }
                 this.DecrementMarkDurations(FighterPlaying);
                 this.TriggerMarks(FighterPlaying, MarkTriggerType.OnTurnBegin);
@@ -620,6 +623,8 @@ namespace Giny.World.Managers.Fights
             FighterPlaying.OnTurnBegin();
 
             TurnStarted?.Invoke(this, FighterPlaying);
+
+
         }
 
         private void DecrementBuffsDelay()

@@ -314,7 +314,7 @@ namespace Giny.DatabasePatcher.Spells
             EffectsEnum.Effect_ReduceSpellCooldown,
             EffectsEnum.Effect_SpellImmunity,
             EffectsEnum.Effect_CooldownSet,
-            EffectsEnum.Effect_IncreaseDamage_1054,
+            EffectsEnum.Effect_IncreaseSpellDamage,
             EffectsEnum.Effect_IncreaseSize,
             EffectsEnum.Effect_DamageSharing,
             EffectsEnum.Effect_AddResistances,

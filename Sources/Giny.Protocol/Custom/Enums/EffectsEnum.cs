@@ -1818,7 +1818,7 @@
         /// <summary>
         /// #1{~1~2 à }#2 Puissance (sorts)
         /// </summary>
-        Effect_IncreaseDamage_1054 = 1054,
+        Effect_IncreaseSpellDamage = 1054,
         /// <summary>
         /// (not found)
         /// </summary>
