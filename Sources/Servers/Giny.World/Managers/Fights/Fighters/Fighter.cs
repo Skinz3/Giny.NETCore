@@ -931,6 +931,8 @@ namespace Giny.World.Managers.Fights.Fighters
                     }
                 }
 
+               // this.RefreshStats();
+
                 OnSpellCasted(handler);
             }
 
@@ -1278,6 +1280,7 @@ namespace Giny.World.Managers.Fights.Fighters
         public void PushBack(Fighter source, CellRecord castCell, short delta, CellRecord targetCell)
         {
             DirectionsEnum direction = 0;
+            bool diagonal = false;
 
             if (targetCell.Id == Cell.Id)
             {
@@ -1285,7 +1288,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 {
                     return;
                 }
-                bool diagonal = targetCell.Point.IsOnSameDiagonal(castCell.Point);
+                diagonal = targetCell.Point.IsOnSameDiagonal(castCell.Point);
                 direction = castCell.Point.OrientationTo(targetCell.Point, diagonal);
             }
             else
@@ -1294,8 +1297,12 @@ namespace Giny.World.Managers.Fights.Fighters
                 {
                     return;
                 }
-                bool diagonal = Cell.Point.IsOnSameDiagonal(targetCell.Point);
+                diagonal = Cell.Point.IsOnSameDiagonal(targetCell.Point);
                 direction = targetCell.Point.OrientationTo(Cell.Point, diagonal);
+            }
+            if (diagonal) // Tir de barrage
+            {
+                delta /= 2;
             }
 
             Slide(source, direction, delta, MovementType.Push);

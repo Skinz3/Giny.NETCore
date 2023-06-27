@@ -230,6 +230,7 @@ namespace Giny.World.Managers.Fights.Stats
          */
         public FighterStats(MonsterGrade monsterGrade, double coeff = 1d)
         {
+            //this[CharacteristicEnum.SHIELD] = Characteristic.New(100);
             this[CharacteristicEnum.ACTION_POINTS] = ApCharacteristic.New(monsterGrade.ActionPoints);
             this[CharacteristicEnum.AIR_DAMAGE_BONUS] = Characteristic.Zero();
             this[CharacteristicEnum.AIR_ELEMENT_REDUCTION] = Characteristic.Zero();

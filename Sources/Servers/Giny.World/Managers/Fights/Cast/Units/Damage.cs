@@ -1,5 +1,6 @@
 ﻿using Giny.Core.DesignPattern;
 using Giny.Core.Time;
+using Giny.IO.D2OClasses;
 using Giny.Protocol.Custom.Enums;
 using Giny.World.Managers.Fights.Buffs.SpellBoost;
 using Giny.World.Managers.Fights.Effects.Damages;
@@ -8,6 +9,7 @@ using Giny.World.Managers.Fights.Triggers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -335,7 +337,8 @@ namespace Giny.World.Managers.Fights.Cast.Units
 
 
 
-            double result = (double)(jet * (100d + elementDelta + damageBonusPercent + weaponDamageBonus + spellDamageBonus) / 100.0d + (allDamageBonus + elementDamageBonus));
+           double result = (double)(jet * (100d + elementDelta + damageBonusPercent + weaponDamageBonus + spellDamageBonus) / 100.0d + (allDamageBonus + elementDamageBonus));
+
 
             return (short)result;                        // (short)(result < jet ? jet : result);
         }

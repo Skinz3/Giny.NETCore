@@ -252,7 +252,11 @@ namespace Giny.World.Managers.Stats
 
             var c = -Math.Abs(MaxLifePoints - LifePoints);
             //results.Add(new CharacterCharacteristicValue(MaxLifePoints, (short)CharacteristicEnum.MAX_LIFE_POINTS));
-            results.Add(new CharacterCharacteristicValue(MaxLifePoints, (short)CharacteristicEnum.HIT_POINTS)); // kinda weird
+            results.Add(new CharacterCharacteristicValue(MaxLifePoints, (short)CharacteristicEnum.HIT_POINTS));
+
+            results.Add(new CharacterCharacteristicValue(300, (short)CharacteristicEnum.SHIELD)); // kinda weird
+
+
             results.Add(new CharacterCharacteristicValue(c, (short)CharacteristicEnum.HIT_POINT_LOSS));
             results.Add(new CharacterCharacteristicValue(MaxEnergyPoints, (short)CharacteristicEnum.MAX_ENERGY_POINTS));
             results.Add(new CharacterCharacteristicValue(Energy, (short)CharacteristicEnum.ENERGY_POINTS));

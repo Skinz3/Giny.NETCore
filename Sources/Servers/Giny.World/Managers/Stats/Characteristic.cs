@@ -70,7 +70,7 @@ namespace Giny.World.Managers.Stats
         }
         public virtual CharacterCharacteristicDetailed GetCharacterCharacteristicDetailed(CharacteristicEnum characteristic)
         {
-           
+  
             return new CharacterCharacteristicDetailed(Base, Additional, Objects, 0, Context, (short)characteristic);
         }
         public virtual short Total()
