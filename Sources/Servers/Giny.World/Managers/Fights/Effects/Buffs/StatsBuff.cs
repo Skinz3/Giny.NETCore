@@ -80,7 +80,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
 
             foreach (var target in targets)
             {
-                Characteristic characteristic = target.Stats[GetAssociatedCharacteristic(Effect.EffectEnum)];
+                Characteristic characteristic = target.Stats[GetAssociatedCharacteristicEnum()];
                 AddStatBuff(target, delta, characteristic, Dispellable);
             }
 

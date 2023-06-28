@@ -18,6 +18,7 @@ namespace Giny.World.Records.Maps
         [Container]
         private static Dictionary<long, DungeonRecord> Dungeons = new Dictionary<long, DungeonRecord>();
 
+        [D2OField("id")]
         [Primary]
         public long Id
         {
@@ -48,7 +49,7 @@ namespace Giny.World.Records.Maps
             set;
         }
 
-        [D2OField("MapIds")]
+        [D2OField("mapIds")]
         [ProtoSerialize]
         [Update]
         public Dictionary<long, MonsterRoom> Rooms

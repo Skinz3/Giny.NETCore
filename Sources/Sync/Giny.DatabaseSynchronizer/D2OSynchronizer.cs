@@ -140,7 +140,7 @@ namespace Giny.DatabaseSynchronizer
                             }
                             else if (property.PropertyType == typeof(Dictionary<long, MonsterRoom>))
                             {
-                                value = ConvertMonsterRooms((List<long>)value);
+                                value = ConvertMonsterRooms((List<double>)value);
                             }
                             else if (property.PropertyType == typeof(List<Giny.World.Managers.Entities.Monsters.MonsterDrop>))
                             {
@@ -194,13 +194,13 @@ namespace Giny.DatabaseSynchronizer
             }
         }
 
-        private static Dictionary<long, MonsterRoom> ConvertMonsterRooms(List<long> mapIds)
+        private static Dictionary<long, MonsterRoom> ConvertMonsterRooms(List<double> mapIds)
         {
             var results = new Dictionary<long, MonsterRoom>();
 
             foreach (var map in mapIds)
             {
-                results.Add(map, new MonsterRoom(10f, new short[0]));
+                results.Add((long)map, new MonsterRoom(10f, new short[0]));
             }
             return results;
         }

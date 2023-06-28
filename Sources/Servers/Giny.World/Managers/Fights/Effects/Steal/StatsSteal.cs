@@ -32,8 +32,8 @@ namespace Giny.World.Managers.Fights.Effects.Steal
 
             foreach (var target in targets)
             {
-                AddStatBuff(target, (short)-Effect.Min, target.Stats[GetAssociatedCharacteristic(Effect.EffectEnum)], FightDispellableEnum.DISPELLABLE, (short)displayedEffects[1]);
-                AddStatBuff(Source, (short)Effect.Min, Source.Stats[GetAssociatedCharacteristic(Effect.EffectEnum)], FightDispellableEnum.DISPELLABLE, (short)displayedEffects[0]);
+                AddStatBuff(target, (short)-Effect.Min, target.Stats[GetAssociatedCharacteristicEnum()], FightDispellableEnum.DISPELLABLE, (short)displayedEffects[1]);
+                AddStatBuff(Source, (short)Effect.Min, Source.Stats[GetAssociatedCharacteristicEnum()], FightDispellableEnum.DISPELLABLE, (short)displayedEffects[0]);
             }
         }
 

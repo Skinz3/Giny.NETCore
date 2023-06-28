@@ -63,7 +63,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
 
             foreach (var target in targets)
             {
-                AddStatBuff(target, (short)-delta, target.Stats[GetAssociatedCharacteristic(Effect.EffectEnum)], Dispellable);
+                AddStatBuff(target, (short)-delta, target.Stats[GetAssociatedCharacteristicEnum()], Dispellable);
             }
 
         }

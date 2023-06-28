@@ -82,6 +82,7 @@ namespace Giny.DatabaseSynchronizer
             DatabaseManager.Instance.DropTableIfExists<TitleRecord>();
             DatabaseManager.Instance.DropTableIfExists<MonsterRecord>();
             DatabaseManager.Instance.DropTableIfExists<SkillRecord>();
+            DatabaseManager.Instance.DropTableIfExists<DungeonRecord>();
             DatabaseManager.Instance.DropTableIfExists<MapPositionRecord>();
             DatabaseManager.Instance.DropTableIfExists<NpcRecord>();
             DatabaseManager.Instance.DropTableIfExists<ChallengeRecord>();
