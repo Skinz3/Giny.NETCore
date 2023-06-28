@@ -284,7 +284,7 @@ namespace Giny.World.Managers.Fights.Stats
             this[CharacteristicEnum.WATER_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.WATER_ELEMENT_REDUCTION] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.WATER_ELEMENT_RESIST_PERCENT] = ResistanceCharacteristic.New(monsterGrade.WaterResistance);
-            this[CharacteristicEnum.WEAPON_DAMAGE_PERCENT] = DetailedCharacteristic.Zero();
+            this[CharacteristicEnum.WEAPON_POWER] = DetailedCharacteristic.Zero();
 
             this[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_MELEE] = DetailedCharacteristic.New(100);
             this[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE] = DetailedCharacteristic.New(100);

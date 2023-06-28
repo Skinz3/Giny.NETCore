@@ -8,25 +8,14 @@ using System.Threading.Tasks;
 namespace Giny.World.Managers.Stats
 {
     [ProtoContract]
-    public class ResistanceCharacteristic : LimitCharacteristic
+    public class ResistanceCharacteristic : DetailedCharacteristic
     {
         public const short ResistanceLimit = 50;
 
-        public override short Limit
-        {
-            get
-            {
-                return ResistanceLimit;
-            }
-        }
- 
-        public override bool ContextLimit
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public override short? Limit => ResistanceLimit;
+
+        public override bool ContextualLimit => true;
+      
 
         [ProtoMember(1)]
         public override short Base { get => base.Base; set => base.Base = value; }

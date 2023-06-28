@@ -116,8 +116,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public override int GetDroppedKamas()
         {
-            var random = new AsyncRandom();
-            return random.Next(Monster.Record.MinDroppedKamas, Monster.Record.MaxDroppedKamas + 1);
+            return this.Random.Next(Monster.Record.MinDroppedKamas, Monster.Record.MaxDroppedKamas + 1);
         }
 
         public override IEnumerable<DroppedItem> RollLoot(IFightResult looter, double bonusRatio)
@@ -126,7 +125,6 @@ namespace Giny.World.Managers.Fights.Fighters
             if (Alive)
                 return new DroppedItem[0];
 
-            var random = new AsyncRandom();
             var items = new List<DroppedItem>();
 
             var prospectingSum = EnemyTeam.GetFighters<CharacterFighter>(false).Sum(entry => entry.Stats[CharacteristicEnum.MAGIC_FIND].TotalInContext());;
@@ -138,7 +136,7 @@ namespace Giny.World.Managers.Fights.Fighters
                     if (droppableItem.DropLimit > 0 && m_dropsCount.ContainsKey(droppableItem) && m_dropsCount[droppableItem] >= droppableItem.DropLimit)
                         break;
 
-                    var chance = (random.Next(0, 100) + random.NextDouble());
+                    var chance = (Random.Next(0, 100) + Random.NextDouble());
                     var dropRate = FightFormulas.Instance.AdjustDropChance(looter, droppableItem, Monster, bonusRatio);
 
                     if (!(dropRate >= chance))

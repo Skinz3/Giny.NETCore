@@ -8,23 +8,11 @@ using System.Threading.Tasks;
 namespace Giny.World.Managers.Stats
 {
     [ProtoContract]
-    public class MpCharacteristic : LimitCharacteristic
+    public class MpCharacteristic : UsableCharacteristic
     {
-        public override short Limit
-        {
-            get
-            {
-                return ConfigFile.Instance.MpLimit;
-            }
-        }
+        public override short? Limit => ConfigFile.Instance.MpLimit;
 
-        public override bool ContextLimit
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public override bool ContextualLimit => false;
 
         [ProtoMember(1)]
         public override short Base
@@ -46,7 +34,6 @@ namespace Giny.World.Managers.Stats
             get => base.Objects;
             set => base.Objects = value;
         }
-
 
         public new static MpCharacteristic New(short @base)
         {

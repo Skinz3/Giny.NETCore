@@ -151,7 +151,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 this.CastSpell(cast);
             }
 
-          
+
 
 
             switch (Breed)
@@ -168,6 +168,9 @@ namespace Giny.World.Managers.Fights.Fighters
                     break;
 
             }
+
+         
+
         }
 
         public override void OnJoined()
@@ -436,6 +439,8 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public override void OnTurnBegin()
         {
+         
+
             if (Disconnected)
             {
                 int turnDelta = Fight.RoundNumber - LeftRound.Value;

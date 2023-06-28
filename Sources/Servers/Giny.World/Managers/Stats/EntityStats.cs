@@ -9,6 +9,7 @@ using Giny.World.Managers.Formulas;
 using Giny.World.Network;
 using Giny.World.Records;
 using Giny.World.Records.Breeds;
+using MySqlX.XDevAPI.Common;
 using ProtoBuf;
 using System;
 using System.Collections;
@@ -157,22 +158,22 @@ namespace Giny.World.Managers.Stats
                 this[CharacteristicEnum.INTELLIGENCE] = value;
             }
         }
-        public DetailedCharacteristic ActionPoints
+        public UsableCharacteristic ActionPoints
         {
             get
             {
-                return (DetailedCharacteristic)this[CharacteristicEnum.ACTION_POINTS];
+                return (UsableCharacteristic)this[CharacteristicEnum.ACTION_POINTS];
             }
             set
             {
                 this[CharacteristicEnum.ACTION_POINTS] = value;
             }
         }
-        public DetailedCharacteristic MovementPoints
+        public UsableCharacteristic MovementPoints
         {
             get
             {
-                return (DetailedCharacteristic)this[CharacteristicEnum.MOVEMENT_POINTS];
+                return (UsableCharacteristic)this[CharacteristicEnum.MOVEMENT_POINTS];
             }
             set
             {
@@ -226,6 +227,7 @@ namespace Giny.World.Managers.Stats
 
         public CharacterCharacteristic[] GetCharacterCharacteristics(CharacteristicEnum? characteristicEnum = null)
         {
+            
             if (characteristicEnum.HasValue)
             {
                 var characterCharateristic = this.GetCharacteristic<Characteristic>(characteristicEnum.Value).GetCharacterCharacteristic(characteristicEnum.Value);
@@ -347,7 +349,7 @@ namespace Giny.World.Managers.Stats
             stats[CharacteristicEnum.WATER_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.WATER_ELEMENT_REDUCTION] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.WATER_ELEMENT_RESIST_PERCENT] = ResistanceCharacteristic.Zero();
-            stats[CharacteristicEnum.WEAPON_DAMAGE_PERCENT] = DetailedCharacteristic.Zero();
+            stats[CharacteristicEnum.WEAPON_POWER] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.WISDOM] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.TACKLE_BLOCK] = RelativeCharacteristic.Zero();
             stats[CharacteristicEnum.TACKLE_EVADE] = RelativeCharacteristic.Zero();

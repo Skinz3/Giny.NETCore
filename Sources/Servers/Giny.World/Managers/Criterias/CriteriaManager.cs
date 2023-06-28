@@ -55,7 +55,7 @@ namespace Giny.World.Managers.Criterias
             if (criterias == null || criterias == string.Empty)
                 return true;
 
-            foreach (var criteria in criterias.Split('&'))
+            foreach (var criteria in criterias.Split('&','|'))
             {
                 string criteriaIndentifier = new string(criteria.Take(2).ToArray());
 

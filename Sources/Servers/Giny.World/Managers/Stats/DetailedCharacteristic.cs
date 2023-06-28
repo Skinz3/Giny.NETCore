@@ -19,6 +19,9 @@ namespace Giny.World.Managers.Stats
     public class DetailedCharacteristic : Characteristic
     {
         public event Action<Characteristic> OnContextChanged;
+        public virtual short? Limit => null;
+
+        public virtual bool ContextualLimit => false;
 
         [ProtoMember(1)]
         public override short Base
@@ -44,7 +47,7 @@ namespace Giny.World.Managers.Stats
             get;
             set;
         }
-       
+
         /// <summary>
         /// We dont clone context...?
         /// </summary>
@@ -77,11 +80,26 @@ namespace Giny.World.Managers.Stats
         }
         public override short Total()
         {
-            return (short)(Base + Additional + Objects);
+            var total = (short)(Base + Additional + Objects);
+
+            if (!Limit.HasValue)
+            {
+                return total;
+            }
+            return total > Limit.Value ? Limit.Value : total;
         }
         public override short TotalInContext()
         {
-            return (short)(Total() + Context);
+            var totalContext = (short)(Total() + Context);
+
+            if (ContextualLimit && Limit.HasValue)
+            {
+                return totalContext > Limit.Value ? Limit.Value : totalContext;
+            }
+            else
+            {
+                return totalContext;
+            }
         }
         public override string ToString()
         {

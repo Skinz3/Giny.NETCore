@@ -189,7 +189,9 @@ namespace Giny.World.Managers.Formulas
             var additionalPP = (looter.Prospecting * bonusRatio);
             var looterPP = looter.Prospecting + additionalPP;
 
-            var rate = (item.GetDropRate((int)dropper.Grade.GradeId) * (looterPP / 100d) + 1) * ConfigFile.Instance.DropRate;
+            var itemRate = item.GetDropRate((int)dropper.Grade.GradeId);
+
+            var rate = (itemRate * (looterPP / 100d)) * ConfigFile.Instance.DropRate;
 
             return rate;
         }

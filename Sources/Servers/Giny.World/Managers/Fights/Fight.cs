@@ -625,6 +625,8 @@ namespace Giny.World.Managers.Fights
             TurnStarted?.Invoke(this, FighterPlaying);
 
 
+            
+
         }
 
         private void DecrementBuffsDelay()

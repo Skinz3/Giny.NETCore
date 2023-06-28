@@ -231,6 +231,12 @@ namespace Giny.World.Managers.Fights.Fighters
             set;
         }
 
+        protected Random Random
+        {
+            get;
+            set;
+        }
+
         public Fighter(FightTeam team, CellRecord roleplayCell)
         {
             this.Team = team;
@@ -241,6 +247,7 @@ namespace Giny.World.Managers.Fights.Fighters
             this.BuffIdProvider = new UniqueIdProvider();
             this.SpellHistory = new SpellHistory(this);
             this.WasTeleportedInInvalidCell = false;
+            this.Random = new Random();
         }
 
         public virtual void Initialize()
@@ -470,6 +477,7 @@ namespace Giny.World.Managers.Fights.Fighters
                         OnMove(new Movement(MovementType.Walk, this));
 
                         this.LooseMp(this, mpCost, ActionsEnum.ACTION_CHARACTER_MOVEMENT_POINTS_USE);
+
 
 
                         IsMoving = false;
@@ -1042,9 +1050,9 @@ namespace Giny.World.Managers.Fights.Fighters
                 return critical;
             }
 
-            var random = new AsyncRandom();
 
-            if (spell.CriticalHitProbability != 0 && random.NextDouble() * 100 < spell.CriticalHitProbability + Stats[CharacteristicEnum.CRITICAL_HIT].TotalInContext())
+
+            if (spell.CriticalHitProbability != 0 && this.Random.NextDouble() * 100 < spell.CriticalHitProbability + Stats[CharacteristicEnum.CRITICAL_HIT].TotalInContext())
                 critical = FightSpellCastCriticalEnum.CRITICAL_HIT;
 
             return critical;
@@ -1667,7 +1675,7 @@ namespace Giny.World.Managers.Fights.Fighters
         {
             this.FightStartCell = this.Cell;
 
-           
+
         }
 
         public short[] GetPreviousPositions()
@@ -2274,7 +2282,7 @@ namespace Giny.World.Managers.Fights.Fighters
             else if (prob > 0.90)
                 prob = 0.90 - (0.10 * value);
 
-            var rnd = new AsyncRandom().NextDouble();
+            var rnd = this.Random.NextDouble();
 
             return rnd < prob;
         }
@@ -2289,7 +2297,7 @@ namespace Giny.World.Managers.Fights.Fighters
             else if (prob > 0.90)
                 prob = 0.90;
 
-            var rnd = new AsyncRandom().NextDouble();
+            var rnd = this.Random.NextDouble();
 
             return rnd < prob;
         }

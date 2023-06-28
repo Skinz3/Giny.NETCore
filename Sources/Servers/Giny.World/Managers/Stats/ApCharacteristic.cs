@@ -8,23 +8,11 @@ using System.Threading.Tasks;
 namespace Giny.World.Managers.Stats
 {
     [ProtoContract]
-    public class ApCharacteristic : LimitCharacteristic
+    public class ApCharacteristic : UsableCharacteristic
     {
-        public override short Limit
-        {
-            get
-            {
-                return ConfigFile.Instance.ApLimit;
-            }
-        }
+        public override short? Limit => ConfigFile.Instance.ApLimit;
 
-        public override bool ContextLimit
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public override bool ContextualLimit => false;
 
         [ProtoMember(1)]
         public override short Base { get => base.Base; set => base.Base = value; }

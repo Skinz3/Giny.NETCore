@@ -49,7 +49,7 @@ namespace Giny.World.Managers.Fights.Effects
                     return CharacteristicEnum.WISDOM;
 
                 case EffectsEnum.Effect_AddWeaponDamageBonus:
-                    return CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_WEAPON;
+                    return CharacteristicEnum.WEAPON_POWER;
 
                 case EffectsEnum.Effect_MeleeDamageDonePercent:
                     return CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_MELEE;
@@ -117,6 +117,8 @@ namespace Giny.World.Managers.Fights.Effects
                 case EffectsEnum.Effect_AddNeutralResistPercent:
                     return CharacteristicEnum.NEUTRAL_ELEMENT_RESIST_PERCENT;
 
+                case EffectsEnum.Effect_SubEvadePercent:
+                case EffectsEnum.Effect_SubEvade:
                 case EffectsEnum.Effect_AddEvade:
                     return CharacteristicEnum.TACKLE_EVADE;
 
@@ -141,6 +143,7 @@ namespace Giny.World.Managers.Fights.Effects
                 case EffectsEnum.Effect_AddTrapBonusPercent:
                     return CharacteristicEnum.TRAP_DAMAGE_BONUS_PERCENT;
 
+                case EffectsEnum.Effect_SubWeaponDamageDonePercent:
                 case EffectsEnum.Effect_WeaponDamageDonePercent:
                     return CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_WEAPON;
 
@@ -234,8 +237,8 @@ namespace Giny.World.Managers.Fights.Effects
                 case EffectsEnum.Effect_SubWaterResistPercent:
                     return CharacteristicEnum.WATER_ELEMENT_RESIST_PERCENT;
 
-                case EffectsEnum.Effect_SubEvade:
-                    return CharacteristicEnum.TACKLE_EVADE;
+
+
 
                 case EffectsEnum.Effect_SubAPAttack:
                     return CharacteristicEnum.AP_REDUCTION;

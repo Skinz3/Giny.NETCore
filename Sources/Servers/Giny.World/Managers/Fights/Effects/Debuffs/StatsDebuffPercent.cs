@@ -1,8 +1,10 @@
 ﻿using Giny.Core.DesignPattern;
 using Giny.Protocol.Enums;
 using Giny.World.Managers.Effects;
+using Giny.World.Managers.Fights.Buffs;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
+using Google.Protobuf.WellKnownTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +13,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Debuffs
 {
-    [WIP]
-    //[SpellEffectHandler(EffectsEnum.Effect_SubEvadePercent)]
+    [SpellEffectHandler(EffectsEnum.Effect_SubEvadePercent)]
     public class StatsDebuffPercent : SpellEffectHandler
     {
         public StatsDebuffPercent(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
@@ -22,7 +23,16 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
-            throw new NotImplementedException();
+            short delta = Effect.GetDelta();
+
+            foreach (var target in targets)
+            {
+                int id = target.BuffIdProvider.Pop();
+
+                var characteristic = target.Stats[GetAssociatedCharacteristicEnum()];
+                StatPercentBuff statBuff = new StatPercentBuff(id, target, this, Critical, (FightDispellableEnum)Effect.Dispellable, characteristic, (short)-delta, null);
+                target.AddBuff(statBuff);
+            }
         }
     }
 }

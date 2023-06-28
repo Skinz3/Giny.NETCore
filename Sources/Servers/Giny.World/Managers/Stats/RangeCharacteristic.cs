@@ -8,28 +8,14 @@ using System.Threading.Tasks;
 namespace Giny.World.Managers.Stats
 {
     [ProtoContract]
-    public class RangeCharacteristic : LimitCharacteristic
+    public class RangeCharacteristic : DetailedCharacteristic
     {
         public const short RangeLimit = 6;
 
-        // ignore
-        public override short Limit
-        {
-            get
-            {
-                return RangeLimit;
-            }
-        }
+        public override short? Limit => RangeLimit;
 
-        // ignore
-        public override bool ContextLimit
-        {
-            get
-            {
-                return true;
-            }
-        }
-
+        public override bool ContextualLimit => true;
+       
         [ProtoMember(1)]
         public override short Base { get => base.Base; set => base.Base = value; }
 

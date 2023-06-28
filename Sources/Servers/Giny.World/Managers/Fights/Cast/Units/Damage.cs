@@ -151,7 +151,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
 
             jet.ValidateBounds();
 
-            // Source.Fight.Reply("Min:" + jet.Min + " Max:" + jet.Max, System.Drawing.Color.Red);
+            Source.Fight.Reply("Min:" + jet.Min + " Max:" + jet.Max, System.Drawing.Color.Red);
 
             Computed = jet.Generate(Source.HasRandDownModifier(), Source.HasRandUpModifier());
 
@@ -290,7 +290,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
 
             if (this.EffectHandler.CastHandler.Cast.Weapon)
             {
-                weaponDamageBonus = Source.Stats[CharacteristicEnum.WEAPON_DAMAGE_PERCENT].TotalInContext();
+                weaponDamageBonus = Source.Stats[CharacteristicEnum.WEAPON_POWER].TotalInContext();
             }
             else if (IsSpellDamage())
             {
