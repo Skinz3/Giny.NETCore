@@ -1,5 +1,6 @@
 ﻿using Giny.Core.DesignPattern;
 using Giny.Core.IO;
+using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,58 +16,38 @@ namespace Giny.IO.ELE
     /// </summary>
     public class EleReader
     {
-        private BigEndianReader m_reader;
-        private Stream m_stream;
-
-        public EleReader(string filePath)
+        public static Dictionary<int, EleGraphicalData> ReadElements(string filePath)
         {
-            this.m_stream = File.OpenRead(filePath);
-            this.m_reader = new BigEndianReader(this.m_stream);
-        }
-
-        public EleReader(Stream stream)
-        {
-            this.m_stream = stream;
-            this.m_reader = new BigEndianReader(this.m_stream);
-        }
-
-        public Dictionary<int, EleGraphicalData> ReadElements()
-        {
-            this.m_reader.Seek(0, SeekOrigin.Begin);
-            int header = (int)this.m_reader.ReadByte();
-            this.m_reader.Seek(0, SeekOrigin.Begin);
-
-            MemoryStream output = new MemoryStream();
-            Deflate(new MemoryStream(this.m_reader.ReadBytes((int)this.m_reader.BytesAvailable)), output);
-            byte[] uncompress = output.ToArray();
-            this.m_reader = new BigEndianReader(uncompress);
-            return Elements.ReadFromStream(this.m_reader);
-        }
-        private void ChangeStream(Stream stream)
-        {
-            this.m_stream.Dispose();
-            this.m_reader.Dispose();
-            this.m_stream = stream;
-            this.m_reader = new BigEndianReader(this.m_stream);
-        }
-
-        [WIP("working?")]
-        private static void Deflate(Stream input, Stream output)
-        {
-            using (DeflateStream zoutput = new DeflateStream(output, CompressionMode.Decompress))
+            using (var stream = File.OpenRead(filePath))
             {
-                using (BinaryReader inputReader = new BinaryReader(input))
+                using (var reader = new BigEndianReader(stream))
                 {
-                    zoutput.Write(inputReader.ReadBytes((int)input.Length), 0, (int)input.Length);
-                    zoutput.Flush();
+                    reader.Seek(0, SeekOrigin.Begin);
+                    byte header = reader.ReadByte();
+                    reader.Seek(0, SeekOrigin.Begin);
+
+
+                    byte[] uncompress = Deflate(reader.BaseStream);
+                    using (var reader2 = new BigEndianReader(uncompress))
+                    {
+                        return Elements.ReadFromStream(reader2);
+                    }
                 }
+            }
+
+        }
+
+        private static byte[] Deflate(Stream compressedStream)
+        {
+            var outputStream = new MemoryStream();
+
+            using (var inputStream = new InflaterInputStream(compressedStream))
+            {
+                inputStream.CopyTo(outputStream);
+                outputStream.Position = 0;
+                return outputStream.ToArray();
             }
         }
 
-        public void Dispose()
-        {
-            this.m_stream.Dispose();
-            this.m_reader.Dispose();
-        }
     }
 }

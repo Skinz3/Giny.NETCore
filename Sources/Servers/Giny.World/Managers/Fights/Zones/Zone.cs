@@ -72,6 +72,7 @@ namespace Giny.World.Managers.Fights.Zones
                 case ZoneEnum.O:
                 case ZoneEnum.semicolon:
                 case ZoneEnum.empty:
+                case ZoneEnum.l:
                 case ZoneEnum.P:
                     return 1.0;
                 case ZoneEnum.B:

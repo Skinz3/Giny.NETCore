@@ -235,7 +235,7 @@ namespace Giny.World.Managers.Stats
             {
                 return GetCharacterCharacteristics();
             }
-        
+
         }
         private CharacterCharacteristic[] GetCharacterCharacteristics()
         {
@@ -248,7 +248,7 @@ namespace Giny.World.Managers.Stats
             }
 
             //results.Add(new CharacterCharacteristicDetailed(2000, 2000, 2000, 2000, 2000, (short)CharacteristicEnum.MAX_LIFE_POINTS));
-            results.Add(new CharacterCharacteristicValue(MaxLifePoints, (short)CharacteristicEnum.HIT_POINTS));
+            results.Add(new CharacterCharacteristicValue(MaxLifePoints - this[CharacteristicEnum.VITALITY].TotalInContext(), (short)CharacteristicEnum.HIT_POINTS));
             results.Add(new CharacterCharacteristicValue(-MissingLife, (short)CharacteristicEnum.HIT_POINT_LOSS));
             results.Add(new CharacterCharacteristicValue(MaxEnergyPoints, (short)CharacteristicEnum.MAX_ENERGY_POINTS));
             results.Add(new CharacterCharacteristicValue(Energy, (short)CharacteristicEnum.ENERGY_POINTS));

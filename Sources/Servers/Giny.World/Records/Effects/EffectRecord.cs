@@ -40,6 +40,62 @@ namespace Giny.World.Records.Effects
             set;
         }
 
+        [D2OField("characteristic")]
+        public int CharacteristicId
+        {
+            get;
+            set;
+        }
+
+        [D2OField("useDice")]
+        public bool UseDice
+        {
+            get;
+            set;
+        }
+
+        [D2OField("forceMinMax")]
+        public bool ForceMinMax
+        {
+            get;
+            set;
+        }
+        [D2OField("boost")]
+        public bool Boost
+        {
+            get;
+            set;
+        }
+
+        [D2OField("active")]
+        public bool Active
+        {
+            get;
+            set;
+        }
+
+
+        [D2OField("oppositeId")]
+        public bool OppositeId
+        {
+            get;
+            set;
+        }
+
+        [D2OField("effectPowerRate")]
+        public double EffectPowerRate
+        {
+            get;
+            set;
+        }
+
+        [D2OField("elementId")]
+        public short ElementId
+        {
+            get;
+            set;
+        }
+
         public static EffectRecord GetEffectRecord(EffectsEnum effectEnum)
         {
             return Effects[(long)effectEnum];

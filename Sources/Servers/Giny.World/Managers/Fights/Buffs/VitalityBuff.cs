@@ -1,9 +1,11 @@
-﻿using Giny.Protocol.Enums;
+﻿using Giny.Protocol.Custom.Enums;
+using Giny.Protocol.Enums;
 using Giny.Protocol.Types;
 using Giny.World.Managers.Actions;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
+using Org.BouncyCastle.Asn1.X509;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,11 +30,13 @@ namespace Giny.World.Managers.Fights.Buffs
 
         public override void Execute()
         {
+            Target.Stats[CharacteristicEnum.VITALITY].Context += GetDelta();
             Target.Stats.AddMaxVitality(GetDelta());
         }
 
         public override void Dispell()
         {
+            Target.Stats[CharacteristicEnum.VITALITY].Context -= GetDelta();
             Target.Stats.RemoveMaxVitality(GetDelta());
         }
 

@@ -479,6 +479,112 @@ namespace Giny.World.Managers.Fights.Cast
 
                 case EffectsEnum.Effect_IncreaseSpellDamage:
                     return CharacteristicEnum.DAMAGE_PERCENT_SPELL;
+
+                case EffectsEnum.Effect_SubRange:
+                    return CharacteristicEnum.RANGE;
+
+                case EffectsEnum.Effect_SubDamageBonusPercent:
+                    return CharacteristicEnum.DAMAGE_PERCENT;
+
+                case EffectsEnum.Effect_SubAgility:
+                    return CharacteristicEnum.AGILITY;
+
+                case EffectsEnum.Effect_SubChance:
+                    return CharacteristicEnum.CHANCE;
+
+                case EffectsEnum.Effect_SubIntelligence:
+                    return CharacteristicEnum.INTELLIGENCE;
+
+                case EffectsEnum.Effect_SubStrength:
+                    return CharacteristicEnum.STRENGTH;
+
+                case EffectsEnum.Effect_SubWisdom:
+                    return CharacteristicEnum.WISDOM;
+
+                case EffectsEnum.Effect_SubMeleeDamageDonePercent:
+                    return CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_MELEE;
+
+                case EffectsEnum.Effect_SubRangedDamageDonePercent:
+                    return CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_DISTANCE;
+
+                case EffectsEnum.Effect_SubDamageBonus:
+                    return CharacteristicEnum.ALL_DAMAGE_BONUS;
+
+                case EffectsEnum.Effect_SubCriticalHit:
+                    return CharacteristicEnum.CRITICAL_HIT;
+
+                case EffectsEnum.Effect_SubDodgeMPProbability:
+                    return CharacteristicEnum.DODGE_MP_LOST_PROBABILITY;
+
+                case EffectsEnum.Effect_SubDodgeAPProbability:
+                    return CharacteristicEnum.DODGE_AP_LOST_PROBABILITY;
+
+                case EffectsEnum.Effect_SubMeleeResistance:
+                    return CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE;
+
+                case EffectsEnum.Effect_SubRangedResistance:
+                    return CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_DISTANCE;
+
+                case EffectsEnum.Effect_SubSpellResistance:
+                    return CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_SPELLS;
+
+                case EffectsEnum.Effect_SubLock:
+                    return CharacteristicEnum.TACKLE_BLOCK;
+
+                case EffectsEnum.Effect_SubFireResistPercent:
+                    return CharacteristicEnum.FIRE_ELEMENT_RESIST_PERCENT;
+
+                case EffectsEnum.Effect_SubEarthResistPercent:
+                    return CharacteristicEnum.EARTH_ELEMENT_RESIST_PERCENT;
+
+                case EffectsEnum.Effect_SubNeutralResistPercent:
+                    return CharacteristicEnum.NEUTRAL_ELEMENT_RESIST_PERCENT;
+
+                case EffectsEnum.Effect_SubAirResistPercent:
+                    return CharacteristicEnum.AIR_ELEMENT_RESIST_PERCENT;
+
+                case EffectsEnum.Effect_SubWaterResistPercent:
+                    return CharacteristicEnum.WATER_ELEMENT_RESIST_PERCENT;
+
+                case EffectsEnum.Effect_SubEvade:
+                    return CharacteristicEnum.TACKLE_EVADE;
+
+                case EffectsEnum.Effect_SubAPAttack:
+                    return CharacteristicEnum.AP_REDUCTION;
+
+                case EffectsEnum.Effect_SubMPAttack:
+                    return CharacteristicEnum.MP_REDUCTION;
+
+                case EffectsEnum.Effect_SubEarthElementReduction:
+                    return CharacteristicEnum.EARTH_ELEMENT_REDUCTION;
+
+                case EffectsEnum.Effect_SubAirElementReduction:
+                    return CharacteristicEnum.AIR_ELEMENT_REDUCTION;
+
+                case EffectsEnum.Effect_SubFireElementReduction:
+                    return CharacteristicEnum.FIRE_ELEMENT_REDUCTION;
+
+                case EffectsEnum.Effect_SubWaterElementReduction:
+                    return CharacteristicEnum.WATER_ELEMENT_REDUCTION;
+
+                case EffectsEnum.Effect_SubNeutralElementReduction:
+                    return CharacteristicEnum.NEUTRAL_ELEMENT_REDUCTION;
+
+                case EffectsEnum.Effect_SubPushDamageBonus:
+                    return CharacteristicEnum.PUSH_DAMAGE_BONUS;
+
+                case EffectsEnum.Effect_SubPushDamageReduction:
+                    return CharacteristicEnum.PUSH_DAMAGE_REDUCTION;
+
+                case EffectsEnum.Effect_SubHealBonus:
+                    return CharacteristicEnum.HEAL_BONUS;
+
+                case EffectsEnum.Effect_SubCriticalDamageReduction:
+                    return CharacteristicEnum.CRITICAL_DAMAGE_REDUCTION;
+
+                case EffectsEnum.Effect_SubSpellDamageDonePercent:
+                    return CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_SPELLS;
+
             }
 
             throw new NotImplementedException("Unknown corresponding characteristic for effect " + effect);

@@ -17,12 +17,30 @@ namespace Giny.Core
     }
     public class Logger
     {
+        private static Dictionary<ConsoleColor, ConsoleColor> Colors = new Dictionary<ConsoleColor, ConsoleColor>()
+        {
+            {ConsoleColor.DarkBlue,ConsoleColor.Blue },
+            {ConsoleColor.DarkMagenta,ConsoleColor.Magenta },
+            {ConsoleColor.DarkGreen,ConsoleColor.Green },
+            {ConsoleColor.DarkRed,ConsoleColor.Red },
+            {ConsoleColor.DarkCyan,ConsoleColor.Cyan },
+            {ConsoleColor.DarkYellow,ConsoleColor.Yellow },
+            {ConsoleColor.DarkGray,ConsoleColor.White },
+        };
+        static Logger()
+        {
+            var index = new Random().Next(0, Colors.Count);
+            var sessionColors = Colors.ElementAt(index);
+
+            Color1 = sessionColors.Key;
+            Color2 = sessionColors.Value;
+        }
         public static readonly Channels DefaultChannels = Channels.Info | Channels.Warning | Channels.Critical | Channels.Log;
 
         private static Channels Channels = DefaultChannels;
 
-        private const ConsoleColor Color1 = ConsoleColor.DarkMagenta;
-        private const ConsoleColor Color2 = ConsoleColor.Magenta;
+        private static ConsoleColor Color1;
+        private static ConsoleColor Color2;
 
         private static Dictionary<Channels, ConsoleColor> ChannelsColors = new Dictionary<Channels, ConsoleColor>()
         {
@@ -80,7 +98,7 @@ namespace Giny.Core
                 Console.WriteLine(Environment.NewLine);
             }
         }
-       
+
         public static void DrawLogo()
         {
 
@@ -94,27 +112,27 @@ namespace Giny.Core
             WriteColor1(@"    ''|...'|  .||. .||. ||.    '|    ");
             WriteColor1(@"                            .. |     ");
             WriteColor1(@"                             ''      ");
-            NewLine();
+            WriteColor1("");
 
-          /*WriteColor2(@"   _|_|_|  _|                      ");
-            WriteColor2(@" _|            _|_|_|    _|    _|  ");
-            WriteColor2(@" _|  _|_|  _|  _|    _|  _|    _|  ");
-            WriteColor1(@" _|    _|  _|  _|    _|  _|    _|  ");
-            WriteColor1(@"   _|_|_|  _|  _|    _|    _|_|_|  ");
-            WriteColor1(@"             Dofus Emulator    _|  ");
-            WriteColor1(@"                            _|_|  "); */
+            /*WriteColor2(@"   _|_|_|  _|                      ");
+              WriteColor2(@" _|            _|_|_|    _|    _|  ");
+              WriteColor2(@" _|  _|_|  _|  _|    _|  _|    _|  ");
+              WriteColor1(@" _|    _|  _|  _|    _|  _|    _|  ");
+              WriteColor1(@"   _|_|_|  _|  _|    _|    _|_|_|  ");
+              WriteColor1(@"             Dofus Emulator    _|  ");
+              WriteColor1(@"                            _|_|  "); */
 
-           
-           /* WriteColor2(@" ______   _                     ");
-            WriteColor2(@" .' ___  | (_)                    ");
-            WriteColor2(@"/ .'   \_| __   _ .--.    _   __  ");
-            WriteColor1(@"| |   ____[  | [ `.-. |  [ \ [  ] ");
-            WriteColor1(@"\ `.___]   | |  | | | |   \ '/ /  ");
-            WriteColor1(@" `._____.'[___][___||__][\_:  /   ");
-            WriteColor1(@"          Dofus emulator \__.'    "); */
+
+            /* WriteColor2(@" ______   _                     ");
+             WriteColor2(@" .' ___  | (_)                    ");
+             WriteColor2(@"/ .'   \_| __   _ .--.    _   __  ");
+             WriteColor1(@"| |   ____[  | [ `.-. |  [ \ [  ] ");
+             WriteColor1(@"\ `.___]   | |  | | | |   \ '/ /  ");
+             WriteColor1(@" `._____.'[___][___||__][\_:  /   ");
+             WriteColor1(@"          Dofus emulator \__.'    "); */
 
 
         }
-        
+
     }
 }

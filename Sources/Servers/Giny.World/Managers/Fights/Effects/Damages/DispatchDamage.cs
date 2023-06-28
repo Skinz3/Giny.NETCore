@@ -3,6 +3,7 @@ using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Cast.Units;
 using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Managers.Formulas;
 using Giny.World.Records.Maps;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,9 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Damages
 {
+    /// <summary>
+    /// Massacre
+    /// </summary>
     [SpellEffectHandler(EffectsEnum.Effect_DispatchDamages)]
     public class DispatchDamage : SpellEffectHandler
     {
@@ -25,21 +29,22 @@ namespace Giny.World.Managers.Fights.Effects.Damages
         {
             Damage token = GetTriggerToken<Damage>();
 
-            if (token != null && token.Computed != null)
-            {
-                Damage damages = new Damage(token.Source, token.Target, token.EffectSchool, token.BaseMinDamages, token.BaseMaxDamages, token.GetEffectHandler());
-                damages.WontTriggerBuffs = true;
-                damages.Computed = (short)(token.Computed * (Effect.Min / 100d));
-
-                foreach (var fighter in Source.GetMeleeFighters())
-                {
-                    fighter.InflictDamage(damages);
-                }
-            }
-            else
+            if (token == null || !token.Computed.HasValue)
             {
                 OnTokenMissing<Damage>();
+                return;
             }
+
+            foreach (var target in targets)
+            {
+                Damage damages = new Damage(token.Source, target, token.EffectSchool, token.BaseMinDamages, token.BaseMaxDamages, token.GetEffectHandler());
+                damages.WontTriggerBuffs = true;
+                damages.IgnoreResistances = true;
+                damages.IgnoreBoost = true;
+                damages.Computed = (short)(token.Computed * (Effect.Min / 100d));
+                target.InflictDamage(damages);
+            }
+
         }
     }
 }

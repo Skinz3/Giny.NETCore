@@ -290,7 +290,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
 
             if (this.EffectHandler.CastHandler.Cast.Weapon)
             {
-                weaponDamageBonus = Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_WEAPON].TotalInContext();
+                weaponDamageBonus = Source.Stats[CharacteristicEnum.WEAPON_DAMAGE_PERCENT].TotalInContext();
             }
             else if (IsSpellDamage())
             {

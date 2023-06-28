@@ -183,6 +183,7 @@
                       DisplayError(ex.Message);
                       StateHasChanged();
                   });
+                       AppState.Initialized = true;
                        return;
                    }
                    OnStepReached();

@@ -1,4 +1,5 @@
 ﻿using Giny.Core.DesignPattern;
+using Giny.IO.D2O;
 using Giny.ORM.Attributes;
 using Giny.ORM.Interfaces;
 using ProtoBuf;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Records.Maps
 {
+    [D2OClass("Dungeon")]
     [Table("dungeons")]
     public class DungeonRecord : ITable
     {
@@ -22,18 +24,23 @@ namespace Giny.World.Records.Maps
             get;
             set;
         }
+        [I18NField]
+        [D2OField("nameId")]
         [Update]
         public string Name
         {
             get;
             set;
         }
+        
+        [D2OField("entranceMapId")]
         [Update]
         public long EntranceMapId
         {
             get;
             set;
         }
+        [D2OField("entranceMapId")]
         [Update]
         public long ExitMapId
         {
@@ -41,6 +48,7 @@ namespace Giny.World.Records.Maps
             set;
         }
 
+        [D2OField("MapIds")]
         [ProtoSerialize]
         [Update]
         public Dictionary<long, MonsterRoom> Rooms
