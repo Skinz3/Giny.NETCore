@@ -21,7 +21,6 @@ namespace Giny.Core
         {
             {ConsoleColor.DarkBlue,ConsoleColor.Blue },
             {ConsoleColor.DarkGreen,ConsoleColor.Green },
-            {ConsoleColor.DarkGray,ConsoleColor.White },
             {ConsoleColor.DarkMagenta,ConsoleColor.Magenta },
         };
         static Logger()
@@ -98,7 +97,6 @@ namespace Giny.Core
 
         public static void DrawLogo()
         {
-
             Console.Title = Assembly.GetCallingAssembly().GetName().Name;
             NewLine();
 

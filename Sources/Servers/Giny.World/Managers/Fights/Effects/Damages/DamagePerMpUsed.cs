@@ -28,9 +28,9 @@ namespace Giny.World.Managers.Fights.Effects.Damages
         {
             foreach (var target in targets)
             {
-                if (target.Stats.MpUsed > 0)
+                if (target.Stats.MovementPoints.Used > 0)
                 {
-                    short delta = (short)(Effect.Value * target.Stats.MpUsed);
+                    short delta = (short)(Effect.Value * target.Stats.MovementPoints.Used);
 
                     Damage damage = new Damage(Source, target, GetEffectSchool(), delta, delta, this);
 

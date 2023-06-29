@@ -31,18 +31,21 @@ namespace Giny.World.Managers.Fights.Effects.Damages
             {
                 Damage damages = new Damage(Source, target, GetEffectSchool(Effect.EffectEnum), (short)Effect.Min, (short)Effect.Max, this);
 
-                var ratio = (Source.Stats.MovementPoints.TotalInContext() / (double)Source.Stats.MovementPoints.Total());
+                var mp = (double)Source.Stats.MovementPoints.Total();
 
-                if (ratio > 1)
+                double factor = 1;
+
+                if (mp > 0)
                 {
-                    ratio = 1;
+                    factor = (mp - Source.Stats.MovementPoints.Used) / mp;
                 }
-                if (ratio < 0)
-                {
-                    ratio = 0;
-                }
-                damages.BaseMaxDamages = (short)Math.Floor(damages.BaseMaxDamages * ratio);
-                damages.BaseMinDamages = (short)Math.Floor(damages.BaseMinDamages * ratio);
+
+
+                var testo = damages.BaseMinDamages * factor;
+
+                damages.BaseMaxDamages = (short)(Math.Ceiling(damages.BaseMaxDamages * factor));
+                damages.BaseMinDamages = (short)(Math.Ceiling(damages.BaseMinDamages * factor));
+
 
                 target.InflictDamage(damages);
             }

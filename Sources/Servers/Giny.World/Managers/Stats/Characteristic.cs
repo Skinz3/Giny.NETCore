@@ -36,7 +36,7 @@ namespace Giny.World.Managers.Stats
 
                 if (dirty)
                 {
-                    OnContextChanged?.Invoke(this);
+                    this.OnContextChanged?.Invoke(this);
                 }
             }
         }
@@ -70,6 +70,8 @@ namespace Giny.World.Managers.Stats
 
             };
         }
+
+       
         public virtual CharacterCharacteristic GetCharacterCharacteristic(CharacteristicEnum characteristic)
         {
             return new CharacterCharacteristicValue(TotalInContext(), (short)characteristic);

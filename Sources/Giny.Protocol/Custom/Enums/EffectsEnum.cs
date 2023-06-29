@@ -2559,7 +2559,7 @@
         /// <summary>
         /// -{~1~2 à }#2% Fuite
         /// </summary>
-        Effect_SubEvadePercent = 2852,
+        Effect_SubEvadePercent = 2853,
         /// <summary>
         /// #1{~1~2 à }#2% Esquive PA
         /// </summary>

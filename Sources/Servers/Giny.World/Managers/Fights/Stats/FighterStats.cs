@@ -28,17 +28,6 @@ namespace Giny.World.Managers.Fights.Stats
             set;
         }
 
-        public short ApUsed
-        {
-            get;
-            private set;
-        }
-
-        public short MpUsed
-        {
-            get;
-            private set;
-        }
         public short Erosion
         {
             get;
@@ -154,34 +143,63 @@ namespace Giny.World.Managers.Fights.Stats
                 throw new Exception("Invalid shield value.");
             }
         }
+        /// <summary>
+        /// ! Dont change order ! 
+        /// Import because of MovementPoints.OnContextChanged (notify client)
+        /// needs good Used value
+        /// </summary>
         public void ResetUsedPoints()
         {
-            MovementPoints.Context += MpUsed;
-            ActionPoints.Context += ApUsed;
-            MpUsed = 0;
-            ApUsed = 0;
+            var mpUsed = MovementPoints.Used;
+            var apUsed = ActionPoints.Used;
+
+            MovementPoints.Used = 0;
+            ActionPoints.Used = 0;
+            MovementPoints.Context += mpUsed;
+            ActionPoints.Context += apUsed;
+
+
         }
+        /// <summary>
+        /// ! Dont change order ! 
+        /// Import because of MovementPoints.OnContextChanged (notify client)
+        /// needs good Used value
+        /// </summary>
         public void GainAp(short amount)
         {
+            ActionPoints.Used -= amount;
             ActionPoints.Context += amount;
-            ApUsed -= amount;
 
         }
+        /// <summary>
+        /// ! Dont change order ! 
+        /// Import because of MovementPoints.OnContextChanged (notify client)
+        /// needs good Used value
+        /// </summary>
         public void GainMp(short amount)
         {
+            MovementPoints.Used -= amount;
             MovementPoints.Context += amount;
-            MpUsed -= amount;
         }
-
+        /// <summary>
+        /// ! Dont change order ! 
+        /// Import because of MovementPoints.OnContextChanged (notify client)
+        /// needs good Used value
+        /// </summary>
         public void UseMp(short amount)
         {
+            MovementPoints.Used += amount;
             MovementPoints.Context -= amount;
-            MpUsed += amount;
         }
+        /// <summary>
+        /// ! Dont change order ! 
+        /// Import because of MovementPoints.OnContextChanged (notify client)
+        /// needs good Used value
+        /// </summary>
         public void UseAp(short amount)
         {
+            ActionPoints.Used += amount;
             ActionPoints.Context -= amount;
-            ApUsed += amount;
         }
 
         public FighterStats(Character character)

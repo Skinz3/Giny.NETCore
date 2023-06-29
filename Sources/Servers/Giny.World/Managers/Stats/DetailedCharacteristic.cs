@@ -18,7 +18,6 @@ namespace Giny.World.Managers.Stats
     [ProtoInclude(9, typeof(ResistanceCharacteristic))]
     public class DetailedCharacteristic : Characteristic
     {
-        public event Action<Characteristic> OnContextChanged;
         public virtual short? Limit => null;
 
         public virtual bool ContextualLimit => false;

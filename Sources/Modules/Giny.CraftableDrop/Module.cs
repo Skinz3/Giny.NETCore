@@ -60,12 +60,12 @@ namespace Giny.AdditionalDrop
                         newDrop.DropLimit = 1;
                         newDrop.ItemGId = (int)recipe.ResultId;
                         newDrop.ProspectingLock = 100;
-                        newDrop.PercentDropForGrade1 = 0.005;
-                        newDrop.PercentDropForGrade2 = 0.007;
-                        newDrop.PercentDropForGrade3 = 0.008;
-                        newDrop.PercentDropForGrade4 = 0.009;
-                        newDrop.PercentDropForGrade5 = 0.010;
-
+                        newDrop.PercentDropForGrade1 = 0.5;
+                        newDrop.PercentDropForGrade2 = 0.6;
+                        newDrop.PercentDropForGrade3 = 1.2;
+                        newDrop.PercentDropForGrade4 = 1.4;
+                        newDrop.PercentDropForGrade5 = 1.5;
+                            
                         monster.Drops.Add(newDrop);
                         count++;
 
