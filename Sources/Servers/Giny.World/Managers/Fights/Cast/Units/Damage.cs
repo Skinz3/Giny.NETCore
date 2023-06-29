@@ -3,7 +3,6 @@ using Giny.Core.Time;
 using Giny.IO.D2OClasses;
 using Giny.Protocol.Custom.Enums;
 using Giny.World.Managers.Fights.Buffs.SpellBoost;
-using Giny.World.Managers.Fights.Effects.Damages;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Triggers;
 using System;
@@ -27,12 +26,12 @@ namespace Giny.World.Managers.Fights.Cast.Units
             get;
             private set;
         }
-        public short BaseMinDamages
+        public double BaseMinDamages
         {
             get;
             set;
         }
-        public short BaseMaxDamages
+        public double BaseMaxDamages
         {
             get;
             set;
@@ -80,7 +79,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
 
         public event Action<DamageResult> Applied;
 
-        public Damage(Fighter source, Fighter target, EffectSchoolEnum school, short min, short max, SpellEffectHandler effectHandler = null)
+        public Damage(Fighter source, Fighter target, EffectSchoolEnum school, double min, double max, SpellEffectHandler effectHandler = null)
         {
             this.Source = source;
             this.Target = target;
@@ -110,7 +109,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
 
             if (EffectSchool == EffectSchoolEnum.Fix)
             {
-                Computed = new Jet(BaseMinDamages, BaseMaxDamages).Generate(Source.HasRandDownModifier(), Source.HasRandUpModifier());
+                Computed = new Jet(BaseMinDamages, BaseMaxDamages).Generate(Source.Random, Source.HasRandDownModifier(), Source.HasRandUpModifier());
                 return;
             }
             if (EffectSchool == EffectSchoolEnum.Pushback)
@@ -120,7 +119,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
                     throw new Exception("Invalid push damages.");
                 }
 
-                Computed = BaseMaxDamages;
+                Computed = (short)BaseMaxDamages;
                 return;
             }
 
@@ -153,7 +152,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
 
             Source.Fight.Reply("Min:" + jet.Min + " Max:" + jet.Max, System.Drawing.Color.Red);
 
-            Computed = jet.Generate(Source.HasRandDownModifier(), Source.HasRandUpModifier());
+            Computed = jet.Generate(Source.Random, Source.HasRandDownModifier(), Source.HasRandUpModifier());
 
         }
 
@@ -254,6 +253,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
 
         public Jet EvaluateConcreteJet()
         {
+      
             short boost = Source.GetSpellBoost<SpellBoostBaseDamageBuff>(EffectHandler.CastHandler.Cast.SpellId);
 
             if (BaseMaxDamages == 0 || BaseMaxDamages <= BaseMinDamages)
@@ -266,11 +266,11 @@ namespace Giny.World.Managers.Fights.Cast.Units
             }
             else
             {
-                int jetMin = BaseMinDamages + boost;
-                int jetMax = BaseMaxDamages + boost;
+                double jetMin = BaseMinDamages + boost;
+                double jetMax = BaseMaxDamages + boost;
 
-                short deltaMin = GetJetDelta((short)jetMin);
-                short deltaMax = GetJetDelta((short)jetMax);
+                short deltaMin = GetJetDelta(jetMin);
+                short deltaMax = GetJetDelta(jetMax);
 
                 return new Jet(deltaMin, deltaMax);
             }
@@ -279,7 +279,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
         {
             return EffectHandler != null && !EffectHandler.CastHandler.Cast.Weapon;
         }
-        private short GetJetDelta(short jet)
+        private short GetJetDelta(double jet)
         {
             double weaponDamageBonus = 0;
             double spellDamageBonus = 0;

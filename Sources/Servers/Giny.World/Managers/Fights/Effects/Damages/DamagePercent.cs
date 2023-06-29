@@ -29,7 +29,7 @@ namespace Giny.World.Managers.Fights.Effects.Damages
         {
             foreach (var target in targets)
             {
-                short delta = (short)((Effect.Min /100d) * Source.Stats.LifePoints);
+                double delta = (Effect.Min / 100d) * Source.Stats.LifePoints;
                 Damage damage = new Damage(Source, target, GetEffectSchool(), delta, delta, this);
                 damage.IgnoreBoost = true; // good
                 target.InflictDamage(damage);

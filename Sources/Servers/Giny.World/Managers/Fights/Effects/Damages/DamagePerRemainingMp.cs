@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Damages
 {
+    /// <summary>
+    /// Zenith (calcul légerement inexact ... ?)
+    /// </summary>
     [SpellEffectHandler(EffectsEnum.Effect_DamageNeutralRemainingMP)]
     [SpellEffectHandler(EffectsEnum.Effect_DamageAirRemainingMP)]
     [SpellEffectHandler(EffectsEnum.Effect_DamageWaterRemainingMP)]
@@ -40,12 +43,8 @@ namespace Giny.World.Managers.Fights.Effects.Damages
                     factor = (mp - Source.Stats.MovementPoints.Used) / mp;
                 }
 
-
-                var testo = damages.BaseMinDamages * factor;
-
-                damages.BaseMaxDamages = (short)(Math.Ceiling(damages.BaseMaxDamages * factor));
-                damages.BaseMinDamages = (short)(Math.Ceiling(damages.BaseMinDamages * factor));
-
+                damages.BaseMaxDamages = damages.BaseMaxDamages * factor;
+                damages.BaseMinDamages = damages.BaseMinDamages * factor;
 
                 target.InflictDamage(damages);
             }

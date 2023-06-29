@@ -51,10 +51,10 @@ namespace Giny.World.Managers.Fights.Cast
 
         public void ApplyMultiplicator(int value)
         {
-            Min = (short)(Min * (value / 100d));
-            Max = (short)(Max * (value / 100d));
+            Min = Min * (value / 100d);
+            Max = Max * (value / 100d);
         }
-        public short Generate(bool hasRandDownModifier, bool hasRandUpModifier)
+        public short Generate(Random random, bool hasRandDownModifier, bool hasRandUpModifier)
         {
             if (Min == Max)
             {
@@ -71,7 +71,8 @@ namespace Giny.World.Managers.Fights.Cast
                     return (short)Max;
                 }
 
-                return (short)new Random().Next((short)Min, (short)Max + 1);
+
+                return (short)random.Next((short)Min, (short)Max + 1);
             }
         }
     }

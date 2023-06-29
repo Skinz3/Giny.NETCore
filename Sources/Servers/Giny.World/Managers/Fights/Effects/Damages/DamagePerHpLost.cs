@@ -28,7 +28,7 @@ namespace Giny.World.Managers.Fights.Effects.Damages
         {
             foreach (var target in targets)
             {
-                short damagesAmount = (short)(Source.Stats.MissingLife * Effect.Min / 100d);
+                double damagesAmount = Source.Stats.MissingLife * Effect.Min / 100d;
                 Damage damages = new Damage(Source, target, GetEffectSchool(), damagesAmount, damagesAmount, this);
                 damages.IgnoreBoost = true; // good
                 target.InflictDamage(damages);

@@ -30,7 +30,7 @@ namespace Giny.World.Managers.Fights.Effects.Damages
             {
                 if (target.Stats.ActionPoints.Used > 0)
                 {
-                    short delta = (short)(Effect.Max * (target.Stats.ActionPoints.Used / (double)Effect.Min));
+                    double delta = Effect.Max * (target.Stats.ActionPoints.Used / (double)Effect.Min);
 
                     Damage damage = new Damage(Source, target, GetEffectSchool(), delta, delta, this);
 

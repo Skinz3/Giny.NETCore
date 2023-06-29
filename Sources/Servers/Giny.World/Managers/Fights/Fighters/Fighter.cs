@@ -231,10 +231,10 @@ namespace Giny.World.Managers.Fights.Fighters
             set;
         }
 
-        protected Random Random
+        public Random Random
         {
             get;
-            set;
+            private set;
         }
 
         public Fighter(FightTeam team, CellRecord roleplayCell)
@@ -578,7 +578,8 @@ namespace Giny.World.Managers.Fights.Fighters
         }
         public short GetSpellBoost<T>(short spellId) where T : SpellBoostBuff
         {
-            return (short)GetBuffs<T>().Where(x => x.SpellId == spellId).Sum(x => x.GetDelta());
+            var buffs = GetBuffs<T>().Where(x => x.SpellId == spellId);
+            return (short)buffs.Sum(x => x.GetDelta());
         }
 
 
@@ -710,11 +711,18 @@ namespace Giny.World.Managers.Fights.Fighters
 
             return result;
         }
+        /// <summary>
+        /// && targetMasks (Fureur Iop) correct ?
+        /// </summary>
+        /// <param name="current"></param>
+        /// <param name="reference"></param>
+        /// <returns></returns>
         private bool IsSimilar(Buff current, Buff reference)
         {
             bool result = current.Cast.SpellId == reference.Cast.SpellId &&
                  current.Effect.EffectId == reference.Effect.EffectId && current.Effect.Delay == reference.Effect.Delay
-                 && Trigger.SequenceEquals(current.GetTriggers(), reference.GetTriggers()) && current.GetType().Name == reference.GetType().Name;
+                 && Trigger.SequenceEquals(current.GetTriggers(), reference.GetTriggers()) && current.GetType().Name == reference.GetType().Name
+                 && current.Effect.TargetMask == reference.Effect.TargetMask;
 
             if (current is StateBuff && reference is StateBuff)
             {

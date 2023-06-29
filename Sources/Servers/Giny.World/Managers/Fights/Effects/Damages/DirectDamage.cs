@@ -31,6 +31,7 @@ namespace Giny.World.Managers.Fights.Effects.Damages
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
+         
             foreach (var fighter in targets)
             {
                 fighter.InflictDamage(CreateDamage(fighter));

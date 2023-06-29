@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.World.Managers.Fights.Effects.Damages
+namespace Giny.World.Managers.Fights.Cast.Units
 {
     public class DamageResult
     {
@@ -32,9 +32,9 @@ namespace Giny.World.Managers.Fights.Effects.Damages
         }
         public DamageResult(int lifeLoss, int erodedLife, int shieldLoss)
         {
-            this.LifeLoss = lifeLoss;
-            this.ErodedLife = erodedLife;
-            this.ShieldLoss = shieldLoss;
+            LifeLoss = lifeLoss;
+            ErodedLife = erodedLife;
+            ShieldLoss = shieldLoss;
         }
 
         public static DamageResult Zero()
