@@ -13,10 +13,10 @@ namespace Giny.World.Managers.Fights.Effects.Cast
     /*
      * Dofus Ebène
      */
-    [SpellEffectHandler(EffectsEnum.Effect_CastSpell_1018)]
-    public class CastSpell1018 : SpellEffectHandler
+    [SpellEffectHandler(EffectsEnum.Effect_SourceExecuteSpellOnTarget)]
+    public class SourceExecuteSpellOnTarget : SpellEffectHandler
     {
-        public CastSpell1018(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
+        public SourceExecuteSpellOnTarget(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
         {
 
         }

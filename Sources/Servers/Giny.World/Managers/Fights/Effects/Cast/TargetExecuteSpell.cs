@@ -14,26 +14,44 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Cast
 {
-    [SpellEffectHandler(EffectsEnum.Effect_CastSpell_793)]
-    public class CastSpell793 : SpellEffectHandler
+    /*
+     * Mot Interdit
+     * Rassemblement 
+     * Friction 
+     * Ségnifuge (Enutrof)
+     */
+    [SpellEffectHandler(EffectsEnum.Effect_TargetExecuteSpell)]
+    public class TargetExecuteSpell : SpellEffectHandler
     {
-        public CastSpell793(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
+        public TargetExecuteSpell(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
         {
-
         }
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
             Spell spell = CreateCastedSpell();
 
+            if (CastHandler.Cast.Spell.Level.Id == spell.Level.Id)
+            {
+                Source.Fight.Warn("Cancelling spell cast. Preventing stackoverflow.");
+                return;
+            }
+
+      
+
             foreach (var target in targets)
             {
                 SpellCast cast = new SpellCast(target, spell, target.Cell, CastHandler.Cast);
+
+                var parent = cast.GetParent();
+
                 cast.Token = this.GetTriggerToken<ITriggerToken>();
                 cast.Force = true;
                 cast.Silent = true;
-                Source.CastSpell(cast);
+                //cast.Animation = false;
+                target.CastSpell(cast);
             }
+
         }
     }
 }

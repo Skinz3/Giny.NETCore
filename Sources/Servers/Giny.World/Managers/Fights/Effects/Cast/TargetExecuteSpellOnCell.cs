@@ -2,6 +2,7 @@
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Records.Spells;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +12,12 @@ using System.Threading.Tasks;
 namespace Giny.World.Managers.Fights.Effects.Cast
 {
     /*
-     * Dofus cacao
+     * Déplacement Osamodas
      */
-    [SpellEffectHandler(EffectsEnum.Effect_CastSpell_2792)]
-    public class CastSpell2792 : SpellEffectHandler
+    [SpellEffectHandler(EffectsEnum.Effect_TargetExecuteSpellOnCell)]
+    public class TargetExecuteSpellOnCell : SpellEffectHandler 
     {
-        public CastSpell2792(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
+        public TargetExecuteSpellOnCell(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
         {
 
         }
@@ -25,16 +26,13 @@ namespace Giny.World.Managers.Fights.Effects.Cast
         {
             Spell spell = CreateCastedSpell();
 
-            var source = Source;
-
             if (spell == null)
             {
                 return;
             }
-
-            foreach (var target in targets)
+            foreach (var target in targets)  // target , sure 
             {
-                SpellCast cast = new SpellCast(target, spell, target.Cell, CastHandler.Cast); 
+                SpellCast cast = new SpellCast(target, spell, TargetCell, CastHandler.Cast);  // TargetCell, sure ! 
                 cast.Token = this.GetTriggerToken<ITriggerToken>();
                 cast.Force = true;
                 cast.Silent = true;

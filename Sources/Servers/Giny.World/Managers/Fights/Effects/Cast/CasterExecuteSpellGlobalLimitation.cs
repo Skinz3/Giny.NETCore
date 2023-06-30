@@ -2,6 +2,7 @@
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Records.Spells;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +11,10 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Cast
 {
-    /*
-     * Étreinte de Servitude , sort : Fers de la Tyrannie
-     */
-    [SpellEffectHandler(EffectsEnum.Effect_CastSpell2017)]
-    public class CastSpell2017 : SpellEffectHandler
+    [SpellEffectHandler(EffectsEnum.Effect_CasterExecuteSpellGlobalLimitation)] // Dofus Abyssal
+    public class CasterExecuteSpellGlobalLimitation : SpellEffectHandler
     {
-        public CastSpell2017(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
+        public CasterExecuteSpellGlobalLimitation(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
         {
 
         }
@@ -25,20 +23,14 @@ namespace Giny.World.Managers.Fights.Effects.Cast
         {
             Spell spell = CreateCastedSpell();
 
-            if (spell == null)
-            {
-                return;
-            }
-
             foreach (var target in targets)
             {
-                SpellCast cast = new SpellCast(Source, spell, Source.Cell, CastHandler.Cast); 
+                SpellCast cast = new SpellCast(Source, spell, target.Cell, CastHandler.Cast);
                 cast.Token = this.GetTriggerToken<ITriggerToken>();
                 cast.Force = true;
                 cast.Silent = true;
                 Source.CastSpell(cast);
             }
-
         }
     }
 }

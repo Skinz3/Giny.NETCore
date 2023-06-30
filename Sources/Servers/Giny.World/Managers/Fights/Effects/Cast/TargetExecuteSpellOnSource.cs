@@ -11,10 +11,14 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Cast
 {
-    [SpellEffectHandler(EffectsEnum.Effect_CastSpell_1160)]
-    public class CastSpell1160 : SpellEffectHandler
+    /*
+     * Mot Blessant (chaque cible lance le sort)
+     * Invocation Osamodas
+     */
+    [SpellEffectHandler(EffectsEnum.Effect_TargetExecuteSpellOnSource)]
+    public class TargetExecuteSpellOnSource : SpellEffectHandler
     {
-        public CastSpell1160(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
+        public TargetExecuteSpellOnSource(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
         {
 
         }
@@ -23,22 +27,24 @@ namespace Giny.World.Managers.Fights.Effects.Cast
         {
             Spell spell = CreateCastedSpell();
 
-            var source = Source;
+            ITriggerToken token = this.GetTriggerToken<ITriggerToken>();
 
-            if (spell == null)
+            var targetCell = Source.Cell;
+
+            if (token != null)
             {
-                return;
+                targetCell = token.GetSource().Cell;
             }
+
 
             foreach (var target in targets)
             {
-                SpellCast cast = new SpellCast(source, spell, target.Cell, CastHandler.Cast); // Initial Caster or Source ? Ebène
+                SpellCast cast = new SpellCast(target, spell, targetCell, CastHandler.Cast);
                 cast.Token = this.GetTriggerToken<ITriggerToken>();
                 cast.Force = true;
                 cast.Silent = true;
-                source.CastSpell(cast);
+                target.CastSpell(cast);
             }
-
         }
     }
 }

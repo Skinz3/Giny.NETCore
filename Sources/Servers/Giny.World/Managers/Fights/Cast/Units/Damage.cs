@@ -150,7 +150,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
 
             jet.ValidateBounds();
 
-            Source.Fight.Reply("Min:" + jet.Min + " Max:" + jet.Max, System.Drawing.Color.Red);
+            //Source.Fight.Reply("Min:" + jet.Min + " Max:" + jet.Max, System.Drawing.Color.Red);
 
             Computed = jet.Generate(Source.Random, Source.HasRandDownModifier(), Source.HasRandUpModifier());
 

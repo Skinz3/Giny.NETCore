@@ -644,6 +644,8 @@ namespace Giny.World.Managers.Fights.Fighters
                 RemoveAndDispellBuff(this, oldBuff);
             }
 
+        
+
             Fight.Buffs.Add(buff);
             Buffs.Add(buff);
 
@@ -943,7 +945,10 @@ namespace Giny.World.Managers.Fights.Fighters
 
                 UpdateInvisibility(handler);
 
-                OnSpellCasting(handler);
+                if (handler.Cast.Animation)
+                {
+                    OnSpellCasting(handler);
+                }
 
                 if (!cast.ApFree)
                     LooseAp(this, GetApCost(cast.Spell.Level), ActionsEnum.ACTION_CHARACTER_ACTION_POINTS_USE);

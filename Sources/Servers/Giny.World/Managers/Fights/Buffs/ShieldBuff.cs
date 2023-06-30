@@ -37,6 +37,10 @@ namespace Giny.World.Managers.Fights.Buffs
             Target.Stats.RemoveShield(Delta);
         }
 
+        public override string ToString()
+        {
+            return "Shield " + Delta;
+        }
         public override short GetDelta()
         {
             return Delta;

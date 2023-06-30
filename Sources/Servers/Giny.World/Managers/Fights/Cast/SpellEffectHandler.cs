@@ -136,7 +136,6 @@ namespace Giny.World.Managers.Fights.Cast
 
         private IEnumerable<Fighter> GetAffectedFighters()
         {
-
             List<CellRecord> affectedCells = GetAffectedCells();
 
             /* foreach (var cell in affectedCells)

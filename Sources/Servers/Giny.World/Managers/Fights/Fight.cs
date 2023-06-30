@@ -578,11 +578,8 @@ namespace Giny.World.Managers.Fights
                         }
                     }
 
-
                     this.DecrementBuffsDuration();
-
                     this.DecrementBuffsDelay();
-
 
                 }
                 this.DecrementMarkDurations(FighterPlaying);

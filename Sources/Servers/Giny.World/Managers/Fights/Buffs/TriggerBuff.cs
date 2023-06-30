@@ -138,6 +138,18 @@ namespace Giny.World.Managers.Fights.Buffs
             return new int[] { Effect.Min, Effect.Max, Effect.Value };
         }
 
+        public override string ToString()
+        {
+            if (HasDelay())
+            {
+                return "Delayed :" + Delay + " " + Cast.Spell.Record.Name;
+            }
+            else
+            {
+                return "Triggered " + Cast.Spell.Record.Name;
+            }
+
+        }
         public override bool HasDelay()
         {
             return Delay > 0;

@@ -1347,11 +1347,11 @@
         /// <summary>
         /// #1
         /// </summary>
-        Effect_CastSpell_792 = 792,
+        Effect_TargetExecuteSpell = 792,
         /// <summary>
         /// #1
         /// </summary>
-        Effect_CastSpell_793 = 793,
+        Effect_TargetExecuteSpellWithAnimation = 793,
         /// <summary>
         /// Arme de chasse
         /// </summary>
@@ -1671,15 +1671,15 @@
         /// <summary>
         /// #1
         /// </summary>
-        Effect_CastSpell_1017 = 1017,
+        Effect_TargetExecuteSpellOnSource = 1017,
         /// <summary>
         /// #1
         /// </summary>
-        Effect_CastSpell_1018 = 1018,
+        Effect_SourceExecuteSpellOnTarget = 1018,
         /// <summary>
         /// #1
         /// </summary>
-        Effect_CastSpell_1019 = 1019,
+        Effect_SourceExecuteSpellOnSource = 1019,
 
         Effect_AddShieldPercentLevel = 1020,
 
@@ -2170,7 +2170,7 @@
         /// <summary>
         /// #1
         /// </summary>
-        Effect_CastSpell_1160 = 1160,
+        Effect_CasterExecuteSpell = 1160,
         /// <summary>
         /// #1
         /// </summary>
@@ -2295,7 +2295,7 @@
         /// #1
         /// </summary>
         /// 
-        Effect_CastSpell2017 = 2017,
+        Effect_TargetExecuteSpellOnSourceGlobalLimitation = 2017,
         /// <summary>
         /// Something related to spells ?
         /// </summary>
@@ -2351,11 +2351,11 @@
         /// <summary>
         /// #1
         /// </summary>
-        Effect_CastSpell_2160 = 2160,
+        Effect_CasterExecuteSpellGlobalLimitation = 2160,
         /// <summary>
         /// #1
         /// </summary>
-        Effect_CastSpell_2792 = 2792,
+        Effect_TargetExecuteSpellGlobalLimitation = 2792,
         /// <summary>
         /// #1
         /// </summary>
@@ -2363,11 +2363,11 @@
         /// <summary>
         /// #1
         /// </summary>
-        Effect_CastSpell_2794 = 2794,
+        Effect_TargetExecuteSpellOnCell = 2794,
         /// <summary>
         /// #1 (Couronnes d'épines)
         /// </summary>
-        Effect_CastSpell_2795 = 2795,
+        Effect_TargetExecuteSpellOnCellGlobalLimitation = 2795,
         /// <summary>
         /// Tue la cible pour la remplacer par l'invocation : #1
         /// </summary>

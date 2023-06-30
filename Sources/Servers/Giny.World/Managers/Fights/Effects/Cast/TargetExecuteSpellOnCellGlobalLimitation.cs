@@ -14,10 +14,10 @@ namespace Giny.World.Managers.Fights.Effects.Cast
     /*
      * Courone épine
      */
-    [SpellEffectHandler(EffectsEnum.Effect_CastSpell_2795)]
-    public class CastSpell2795 : SpellEffectHandler
+    [SpellEffectHandler(EffectsEnum.Effect_TargetExecuteSpellOnCellGlobalLimitation)]
+    public class TargetExecuteSpellOnCellGlobalLimitation : SpellEffectHandler
     {
-        public CastSpell2795(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
+        public TargetExecuteSpellOnCellGlobalLimitation(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
         {
 
         }

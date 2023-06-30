@@ -2,7 +2,6 @@
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
-using Giny.World.Records.Spells;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +11,12 @@ using System.Threading.Tasks;
 namespace Giny.World.Managers.Fights.Effects.Cast
 {
     /*
-     * Déplacement Osamodas
+     * Étreinte de Servitude , sort : Fers de la Tyrannie
      */
-    [SpellEffectHandler(EffectsEnum.Effect_CastSpell_2794)]
-    public class CastSpell2794 : SpellEffectHandler 
+    [SpellEffectHandler(EffectsEnum.Effect_TargetExecuteSpellOnSourceGlobalLimitation)]
+    public class TargetExecuteSpellOnSourceGlobalLimitation : SpellEffectHandler
     {
-        public CastSpell2794(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
+        public TargetExecuteSpellOnSourceGlobalLimitation(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
         {
 
         }
@@ -30,14 +29,16 @@ namespace Giny.World.Managers.Fights.Effects.Cast
             {
                 return;
             }
-            foreach (var target in targets)  // target , sure 
+
+            foreach (var target in targets)
             {
-                SpellCast cast = new SpellCast(target, spell, TargetCell, CastHandler.Cast);  // TargetCell, sure ! 
+                SpellCast cast = new SpellCast(target, spell, Source.Cell, CastHandler.Cast); // target or Source ?
                 cast.Token = this.GetTriggerToken<ITriggerToken>();
                 cast.Force = true;
                 cast.Silent = true;
                 target.CastSpell(cast);
             }
+
         }
     }
 }

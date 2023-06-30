@@ -2,7 +2,6 @@
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
-using Giny.World.Records.Spells;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +10,13 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Cast
 {
-    [SpellEffectHandler(EffectsEnum.Effect_CastSpell_2160)] // Dofus Abyssal
-    public class CastSpell2160 : SpellEffectHandler
+    /*
+     * Dofus cacao
+     */
+    [SpellEffectHandler(EffectsEnum.Effect_TargetExecuteSpellGlobalLimitation)]
+    public class TargetExecuteSpellGlobalLimitation : SpellEffectHandler
     {
-        public CastSpell2160(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
+        public TargetExecuteSpellGlobalLimitation(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
         {
 
         }
@@ -23,13 +25,20 @@ namespace Giny.World.Managers.Fights.Effects.Cast
         {
             Spell spell = CreateCastedSpell();
 
+            var source = Source;
+
+            if (spell == null)
+            {
+                return;
+            }
+
             foreach (var target in targets)
             {
-                SpellCast cast = new SpellCast(Source, spell, target.Cell, CastHandler.Cast);
+                SpellCast cast = new SpellCast(target, spell, target.Cell, CastHandler.Cast); 
                 cast.Token = this.GetTriggerToken<ITriggerToken>();
                 cast.Force = true;
                 cast.Silent = true;
-                Source.CastSpell(cast);
+                target.CastSpell(cast);
             }
         }
     }

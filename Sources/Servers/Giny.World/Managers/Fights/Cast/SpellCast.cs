@@ -59,6 +59,7 @@ namespace Giny.World.Managers.Fights.Cast
             get;
             set;
         }
+
         public CellRecord CastCell
         {
             get;
@@ -83,6 +84,15 @@ namespace Giny.World.Managers.Fights.Cast
             get;
             set;
         }
+        /// <summary>
+        /// Balise de rappel.. A voir
+        /// </summary>
+        public bool Animation
+        {
+            get;
+            set;
+        } = true;
+
         public bool Weapon
         {
             get;
@@ -108,6 +118,7 @@ namespace Giny.World.Managers.Fights.Cast
             get;
             set;
         }
+      
         public SpellCast(Fighter source, Spell spell, CellRecord targetCell, SpellCast parent = null)
         {
             if (parent != null)

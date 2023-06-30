@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Cast
 {
-    [SpellEffectHandler(EffectsEnum.Effect_CastSpell_1019)]
-    public class CastSpell1019 : SpellEffectHandler
+    [SpellEffectHandler(EffectsEnum.Effect_SourceExecuteSpellOnSource)]
+    public class SourceExecuteSpellOnSource : SpellEffectHandler
     {
-        public CastSpell1019(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
+        public SourceExecuteSpellOnSource(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
         {
 
         }
