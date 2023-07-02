@@ -578,8 +578,9 @@ namespace Giny.World.Managers.Fights
                         }
                     }
 
-                    this.DecrementBuffsDuration();
+                    var buffs = Buffs.ToArray().Where(x => x.TurnIndex == GetTurnIndex());
                     this.DecrementBuffsDelay();
+                    this.DecrementBuffsDuration(buffs);
 
                 }
                 this.DecrementMarkDurations(FighterPlaying);
@@ -622,7 +623,7 @@ namespace Giny.World.Managers.Fights
             TurnStarted?.Invoke(this, FighterPlaying);
 
 
-            
+
 
         }
 
@@ -637,9 +638,9 @@ namespace Giny.World.Managers.Fights
                 }
             }
         }
-        private void DecrementBuffsDuration()
+        private void DecrementBuffsDuration(IEnumerable<Buff> buffs)
         {
-            foreach (var buff in Buffs.ToArray().Where(x => x.TurnIndex == GetTurnIndex()))
+            foreach (var buff in buffs)
             {
                 if (!buff.HasDelay())
                 {
