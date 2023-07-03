@@ -37,7 +37,7 @@ namespace Giny.World.Managers.Fights.Effects.Cast
                 return;
             }
 
-      
+
 
             foreach (var target in targets)
             {
@@ -48,7 +48,7 @@ namespace Giny.World.Managers.Fights.Effects.Cast
                 cast.Token = this.GetTriggerToken<ITriggerToken>();
                 cast.Force = true;
                 cast.Silent = true;
-                //cast.Animation = false;
+                cast.Animation = cast.Spell.Record.Verbose;
                 target.CastSpell(cast);
             }
 

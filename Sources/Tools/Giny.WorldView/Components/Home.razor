@@ -43,12 +43,14 @@
         <MudDrawer @bind-Open="@DrawerOpen" Elevation="1">
             <MudDrawerHeader>
                 <MudText Typo="Typo.h3">Giny</MudText>
-            
+
             </MudDrawerHeader>
             <MudNavMenu>
                 <MudTreeView T="string">
                     <MudTreeViewItem Icon="@Icons.Outlined.FilterDrama" Value="@("Serveur")">
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.SpellExplorer)" Match="NavLinkMatch.All">Sorts</MudNavLink>
+                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.EffectsRelator)" Match="NavLinkMatch.All">Sorts par effets</MudNavLink>
+
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Dungeons)" Match="NavLinkMatch.All">Donjons</MudNavLink>
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Items)" Match="NavLinkMatch.All">Objets</MudNavLink>
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Npcs)" Match="NavLinkMatch.All">PNJ's</MudNavLink>
@@ -82,6 +84,10 @@
             else if (AppState.Page == PageEnum.SpellExplorer)
             {
                 <SpellExplorer></SpellExplorer>
+            }
+            else if (AppState.Page == PageEnum.EffectsRelator)
+            {
+                <EffectsRelator></EffectsRelator>
             }
             else if (AppState.Page == PageEnum.Items)
             {

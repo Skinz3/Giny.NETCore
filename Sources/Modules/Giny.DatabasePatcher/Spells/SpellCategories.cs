@@ -282,7 +282,7 @@ namespace Giny.DatabasePatcher.Spells
             EffectsEnum.Effect_SpellBoostRange,
             EffectsEnum.Effect_IncreaseDamageOfTheSpell,
             EffectsEnum.Effect_AddHealBonusOnSpell,
-            EffectsEnum.Effect_SpellReduceApCost,
+            EffectsEnum.Effect_ReduceSpellApCost,
             EffectsEnum.Effect_ReduceSpellCooldownDelay,
             EffectsEnum.Effect_AddCriticalForSpell,
             EffectsEnum.Effect_DisableLOS,

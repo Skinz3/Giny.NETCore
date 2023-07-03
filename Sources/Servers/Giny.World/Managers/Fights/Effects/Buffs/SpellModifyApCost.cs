@@ -9,14 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.World.Managers.Fights.Effects.Debuffs
+namespace Giny.World.Managers.Fights.Effects.Buffs
 {
     [SpellEffectHandler(EffectsEnum.Effect_IncreaseSpellAPCost)]
-    public class SpellIncreaseApCost : SpellEffectHandler
+    [SpellEffectHandler(EffectsEnum.Effect_ReduceSpellApCost)]
+    public class SpellModifyApCost : SpellEffectHandler
     {
-        public SpellIncreaseApCost(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
+        public SpellModifyApCost(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
         {
-
         }
 
         protected override void Apply(IEnumerable<Fighter> targets)
@@ -24,13 +24,15 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
             short spellId = (short)Effect.Min;
             short delta = (short)Effect.Value;
 
+            bool substract = Effect.EffectEnum == EffectsEnum.Effect_ReduceSpellApCost;
+
             foreach (var target in targets)
             {
                 if (target.HasSpell(spellId))
                 {
                     int id = target.BuffIdProvider.Pop();
                     SpellBoostModifyApCostBuff buff = new SpellBoostModifyApCostBuff(id, spellId, delta,
-                        target, this, FightDispellableEnum.DISPELLABLE);
+                        target, this, FightDispellableEnum.DISPELLABLE, substract);
                     target.AddBuff(buff);
                 }
             }

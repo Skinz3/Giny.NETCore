@@ -16,17 +16,23 @@ namespace Giny.World.Managers.Fights.Buffs.SpellBoost
 {
     public class SpellBoostModifyApCostBuff : SpellBoostBuff
     {
-        public SpellBoostModifyApCostBuff(int id, short spellId, short delta, Fighter target, SpellEffectHandler effectHandler, FightDispellableEnum dispellable, short? customActionId = null) : base(id, spellId, delta, target, effectHandler, dispellable, customActionId)
+        private short EffectiveDelta
         {
+            get;
+            set;
+        }
+        public SpellBoostModifyApCostBuff(int id, short spellId, short delta, Fighter target, SpellEffectHandler effectHandler, FightDispellableEnum dispellable, bool substract, short? customActionId = null) : base(id, spellId, delta, target, effectHandler, dispellable, customActionId)
+        {
+            this.EffectiveDelta = substract ? (short)-GetDelta() : GetDelta();
         }
         public override void Execute()
         {
-            Target.SpellModifiers.ApplySpellModification(SpellId, CharacterSpellModificationTypeEnum.AP_COST, GetDelta());
+            Target.SpellModifiers.ApplySpellModification(SpellId, CharacterSpellModificationTypeEnum.AP_COST, (short)-EffectiveDelta);
             base.Execute();
         }
         public override void Dispell()
         {
-            Target.SpellModifiers.ApplySpellModification(SpellId, CharacterSpellModificationTypeEnum.AP_COST, (short)-GetDelta());
+            Target.SpellModifiers.ApplySpellModification(SpellId, CharacterSpellModificationTypeEnum.AP_COST, EffectiveDelta);
             base.Dispell();
         }
     }

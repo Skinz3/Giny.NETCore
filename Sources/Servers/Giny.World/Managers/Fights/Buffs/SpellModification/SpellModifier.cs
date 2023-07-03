@@ -37,7 +37,7 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModifiers
 
         public CharacterSpellModification GetCharacterSpellModification()
         {
-            return new CharacterSpellModification((byte)Type, this.SpellId, new CharacterCharacteristicDetailed(Value, 0, 0, 0, 0, 0));
+            return new CharacterSpellModification((byte)Type, this.SpellId, new CharacterCharacteristicDetailed(0, 0, 0, 0, Value, 0));
         }
 
         public void UpdateValue(short value)

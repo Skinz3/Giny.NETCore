@@ -10,6 +10,7 @@ using Giny.World.Managers.Entities.Look;
 using Giny.World.Managers.Entities.Npcs;
 using Giny.World.Managers.Experiences;
 using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Managers.Fights.Results;
 using Giny.World.Managers.Generic;
 using Giny.World.Managers.Items;
 using Giny.World.Managers.Maps;
@@ -473,12 +474,8 @@ namespace Giny.World.Managers.Chat
 
             var modifs = client.Character.Fighter.SpellModifiers.Modifications;
 
-            foreach (var boost in modifs.Keys)
-            {
-                client.Character.Reply(modifs[boost][CharacterSpellModificationTypeEnum.BASE_DAMAGE].Value);
-            }
+            client.Character.Reply(modifs[12949][CharacterSpellModificationTypeEnum.AP_COST].Value);
 
-            client.Character.RefreshStats();
             return;
 
             var item = client.Character.Inventory.GetEquipedItems().FirstOrDefault(x => x.Record.TypeEnum == ItemTypeEnum.RING);

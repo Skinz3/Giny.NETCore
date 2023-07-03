@@ -23,7 +23,7 @@ namespace Giny.World.Managers.Fights.Effects.Other
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
-
+         
         }
     }
 }

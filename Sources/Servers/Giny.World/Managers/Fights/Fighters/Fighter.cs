@@ -1504,7 +1504,7 @@ namespace Giny.World.Managers.Fights.Fighters
         {
             short apCost = level.ApCost;
 
-            apCost += this.SpellModifiers.GetModifier(level.SpellId, CharacterSpellModificationTypeEnum.AP_COST);
+            apCost -= this.SpellModifiers.GetModifier(level.SpellId, CharacterSpellModificationTypeEnum.AP_COST);
 
             if (apCost < 0)
             {

@@ -759,7 +759,7 @@
         /// <summary>
         /// Réduit de #3 le coût en PA du sort #1
         /// </summary>
-        Effect_SpellReduceApCost = 285,
+        Effect_ReduceSpellApCost = 285,
         /// <summary>
         /// Réduit de #3 le délai de relance du sort #1
         /// </summary>
