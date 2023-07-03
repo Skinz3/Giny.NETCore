@@ -16,41 +16,67 @@
 @inject IDialogService DialogService
 
 
-@if (Ready)
-{
-    <MudGrid>
 
-        <MudItem xs="3">
-            <MudPaper Outlined=true>
+<MudGrid>
 
-                <MudList Dense="true" Clickable="true">
+    <MudItem xs="3">
+        <MudPaper Outlined=true>
 
-                    <MudListSubheader>
-                        <MudText>@(Effects.Keys.Count) effets.</MudText>
-                        <MudCheckBox @bind-Checked="@UnhandledOnly" Color="Color.Primary">Non géré uniquement</MudCheckBox>
-                        <MudTextField Label="Search" TextChanged=OnSearchTextChanged @bind-Value="@Search"
+            <MudList Dense="true" Clickable="true">
+
+
+                <MudListSubheader>
+                    <MudCheckBox @bind-Checked="@UnhandledOnly" Color="Color.Primary">Non géré uniquement</MudCheckBox>
+                    <MudCheckBox @bind-Checked="@BreedSpellsOnly" Color="Color.Primary">Sorts de classe uniquement</MudCheckBox>
+                    <MudTextField Label="Search" TextChanged=OnSearchTextChanged @bind-Value="@Search"
                                   AdornmentColor="Color.Primary" AdornmentIcon="@Icons.Filled.Search"
                                   Adornment="Adornment.End" Immediate="true" Variant="Variant.Outlined" />
-                    </MudListSubheader>
+                </MudListSubheader>
 
-                    <div style="height:70vh;overflow-y:scroll">
+                <div style="height:70vh;overflow-y:scroll">
 
-                        <Virtualize Items="@Effects.Keys.ToArray()">
-                            <MudListItem OnClick="() => SelectEffect(context)" Text=@context.ToString() />
-                        </Virtualize>
-                    </div>
+                    <Virtualize Items="@SearchResults">
+                        <MudListItem OnClick="() => SelectEffect(context)" Text=@context.ToString() />
+                    </Virtualize>
+                </div>
 
-                </MudList>
+            </MudList>
 
-            </MudPaper>
-        </MudItem>
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="3">
+        <MudPaper Outlined=true>
+
+            <MudList Dense="true" Clickable="true">
+                <MudListSubheader>
+                    <MudText>Liste des sorts</MudText>
+                </MudListSubheader>
+
+                <div style="height:80vh;overflow-y:scroll">
+
+                    <Virtualize Items="@DisplayedSpells">
+                        <MudListItem OnClick="() => NavigateToSpell(context)" Text=@context.ToString() />
+                    </Virtualize>
+                </div>
+
+            </MudList>
+
+        </MudPaper>
+    </MudItem>
 
 
 
-    </MudGrid>
-}
+</MudGrid>
+
 
 @code {
+    [CascadingParameter]
+    public Home Parent
+    {
+        get;
+        set;
+    }
     private string Search
     {
         get;
@@ -61,7 +87,7 @@
     {
         get;
         set;
-    }
+    } = true;
 
     bool m_unhandledOnly;
 
@@ -77,7 +103,22 @@
             OnInitialized();
         }
     }
- 
+
+    bool m_breedSpellsOnly;
+
+    bool BreedSpellsOnly
+    {
+        get
+        {
+            return m_breedSpellsOnly;
+        }
+        set
+        {
+            m_breedSpellsOnly = value;
+            OnInitialized();
+        }
+    }
+
 
     CancellationTokenSource CancelSource
     {
@@ -88,29 +129,51 @@
 
     Dictionary<EffectsEnum, List<SpellRecord>> Effects = new Dictionary<EffectsEnum, List<SpellRecord>>();
 
+    List<EffectsEnum> SearchResults = new();
+
+    List<SpellRecord> DisplayedSpells = new();
+
+    private EffectsEnum SelectedEffect
+    {
+        get;
+        set;
+    }
     private void OnSearchTextChanged()
     {
-
+        if (!Ready)
+        {
+            return;
+        }
+        SearchResults = Effects.Keys.Where(x => x.ToString().ToLower().Contains(Search.ToLower())).ToList();
         StateHasChanged();
     }
     private void SelectEffect(EffectsEnum effect)
     {
+        if (!Ready)
+        {
+            return;
+        }
+        SelectedEffect = effect;
+        DisplayedSpells = Effects[effect].ToList();
+    }
+    private void NavigateToSpell(SpellRecord record)
+    {
+        AppState.SpellExplorerTarget = record;
+        Parent.Navigate(PageEnum.SpellExplorer);
 
     }
-
     private void InternalLoad()
     {
 
+        Ready = false;
         InvokeAsync(() => StateHasChanged());
 
-        Ready = false;
-
-
         Effects.Clear();
-
+        SearchResults.Clear();
         CancelSource = new CancellationTokenSource();
 
         bool unhandledOnly = UnhandledOnly;
+        bool breedSpellsOnly = BreedSpellsOnly;
 
         string searchStr = "";
 
@@ -128,6 +191,11 @@
                     foreach (var effect in level.Effects)
                     {
                         if (SpellEffectManager.Instance.Exists(effect.EffectEnum) && unhandledOnly)
+                        {
+                            continue;
+                        }
+
+                        if ((level.SpellBreed < 0 || level.SpellBreed > (short)BreedEnum.Ouginak) && breedSpellsOnly)
                         {
                             continue;
                         }
@@ -157,6 +225,7 @@
 
             }
 
+            SearchResults = Effects.Keys.ToList();
             Ready = true;
 
             InvokeAsync(() => StateHasChanged());

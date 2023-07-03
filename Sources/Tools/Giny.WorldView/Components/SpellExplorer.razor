@@ -18,7 +18,7 @@
 
                 <div style="height:70vh;overflow-y:scroll">
                     <Virtualize Items="@SearchResults">
-                        <MudListItem  Typo="Typo.body2" OnClick="() => SelectSpell(context)" Text=@context.Name />
+                        <MudListItem Typo="Typo.body2" OnClick="() => SelectSpell(context)" Text=@context.Name />
                     </Virtualize>
                 </div>
 
@@ -46,7 +46,7 @@
             <MudGrid>
 
                 <MudItem xs="2">
-                    <MudPaper Outlined=true  MinHeight="600px">
+                    <MudPaper Outlined=true MinHeight="600px">
                         <MudListSubheader>
                             <MudText>Grades</MudText>
                         </MudListSubheader>
@@ -227,7 +227,7 @@
 
                             <MudCard MinHeight="600px">
                                 <MudCardContent>
-                                    <MudText><b>@("Grade "+SelectedSpellLevel.Grade)</b></MudText>
+                                    <MudText><b>@("Grade " + SelectedSpellLevel.Grade)</b></MudText>
                                     <br />
 
 
@@ -236,7 +236,7 @@
                                         <tbody Style="grid-auto-columns: minmax(10px, auto);">
                                             <tr>
                                                 <td>Cout en PA</td>
-                                                <td>@(SelectedSpellLevel.ApCost )</td>
+                                                <td>@(SelectedSpellLevel.ApCost)</td>
                                             </tr>
                                             <tr>
                                                 <td>Portée minimum</td>
@@ -246,13 +246,13 @@
                                                 <td>Portée maximum</td>
                                                 <td>@(SelectedSpellLevel.MaxRange)</td>
                                             </tr>
-                                           
+
                                             <tr>
                                                 <td>Taux Critique</td>
                                                 <td>@(SelectedSpellLevel.CriticalHitProbability)</td>
                                             </tr>
 
-                                            
+
                                             <tr>
                                                 <td>Portée modifiable</td>
                                                 <td>@(SelectedSpellLevel.RangeCanBeBoosted)</td>
@@ -285,7 +285,7 @@
                                             </tr>
                                             <tr>
                                                 <td>Zone additionelles</td>
-                                                <td>@(string.Join(',',SelectedSpellLevel.AdditionalEffectsZones))</td>
+                                                <td>@(string.Join(',', SelectedSpellLevel.AdditionalEffectsZones))</td>
                                             </tr>
                                             <tr>
                                                 <td>Etats requis</td>
@@ -295,14 +295,14 @@
                                                 <td>Etats interdits</td>
                                                 <td>@GetForbiddenStatesNames(SelectedSpellLevel)</td>
                                             </tr>
-                                          
+
 
                                         </tbody>
                                     </MudSimpleTable>
 
 
                                 </MudCardContent>
-                              
+
                             </MudCard>
                         </MudItem>
                     }
@@ -536,7 +536,7 @@
     private void SelectEffect(EffectDice effect)
     {
         SelectedEffect = effect;
-       
+
     }
     private void SelectSpell(SpellRecord spell)
     {
@@ -556,7 +556,12 @@
     }
     protected override void OnInitialized()
     {
-
+        if (AppState.SpellExplorerTarget != null)
+        {
+            SelectedSpell = AppState.SpellExplorerTarget;
+            AppState.SpellExplorerTarget = null;
+            StateHasChanged();
+        }
     }
 
 }

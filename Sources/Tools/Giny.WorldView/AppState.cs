@@ -1,4 +1,5 @@
-﻿using MudBlazor;
+﻿using Giny.World.Records.Spells;
+using MudBlazor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,6 +59,11 @@ namespace Giny.WorldView
             set;
         } = false;
 
+        public static SpellRecord? SpellExplorerTarget
+        {
+            get;
+            set;
+        }
         public static PageEnum Page
         {
             get;
