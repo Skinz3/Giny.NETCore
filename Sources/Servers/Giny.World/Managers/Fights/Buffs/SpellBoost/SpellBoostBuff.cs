@@ -1,4 +1,5 @@
 ﻿using Giny.Protocol.Enums;
+using Giny.Protocol.Messages;
 using Giny.Protocol.Types;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
@@ -43,7 +44,7 @@ namespace Giny.World.Managers.Fights.Buffs.SpellBoost
                 boostedSpellId = SpellId,
                 delta = Delta,
                 dispelable = (byte)Dispellable,
-                effectId =  Effect.EffectId,
+                effectId = Effect.EffectId,
                 parentBoostUid = 0,
                 spellId = Cast.SpellId,
                 targetId = Target.Id,
@@ -51,6 +52,9 @@ namespace Giny.World.Managers.Fights.Buffs.SpellBoost
                 uid = Id,
             };
         }
+
+
+
         public override short GetDelta()
         {
             return Delta;

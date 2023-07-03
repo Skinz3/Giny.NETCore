@@ -69,6 +69,12 @@ namespace Giny.World.Managers.Fights.Buffs
             get;
             private set;
         }
+
+        /// <summary>
+        /// Silent or verbose ?
+        /// </summary>
+        public bool Silent => EffectHandler.CastHandler.Cast.Silent;
+
         public Buff(int id, Fighter target, SpellEffectHandler effectHandler, FightDispellableEnum dispellable, short? customActionId = null)
         {
             this.Id = id;

@@ -29,11 +29,9 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
 
             foreach (var target in targets)
             {
-                //if (target.HasSpell(spellId))  Ne fonctionne pas avec flèche fuminante
-                {
-                    Buff buff = new SpellBoostBaseDamageBuff(target.BuffIdProvider.Pop(), spellId, delta, target, this, FightDispellableEnum.DISPELLABLE);
-                    target.AddBuff(buff);
-                }
+                Buff buff = new SpellBoostBaseDamageBuff(target.BuffIdProvider.Pop(), spellId, delta, target, this, FightDispellableEnum.DISPELLABLE);
+               
+                target.AddBuff(buff);
             }
         }
 

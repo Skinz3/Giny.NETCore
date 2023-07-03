@@ -12,6 +12,7 @@ using Giny.World.Managers.Actions;
 using Giny.World.Managers.Entities.Look;
 using Giny.World.Managers.Fights.Buffs;
 using Giny.World.Managers.Fights.Buffs.SpellBoost;
+using Giny.World.Managers.Fights.Buffs.SpellModification;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Cast.Units;
 using Giny.World.Managers.Fights.Effects.Damages;
@@ -28,9 +29,11 @@ using Giny.World.Managers.Spells;
 using Giny.World.Managers.Stats;
 using Giny.World.Records.Maps;
 using Giny.World.Records.Spells;
+using Org.BouncyCastle.Asn1.X509;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Spell = Giny.World.Managers.Fights.Cast.Spell;
 
 namespace Giny.World.Managers.Fights.Fighters
 {
@@ -83,11 +86,6 @@ namespace Giny.World.Managers.Fights.Fighters
             {
                 return Team == Fight.BlueTeam ? Fight.RedTeam : Fight.BlueTeam;
             }
-        }
-        private bool IsMoving
-        {
-            get;
-            set;
         }
 
         public CellRecord Cell
@@ -237,6 +235,19 @@ namespace Giny.World.Managers.Fights.Fighters
             private set;
         }
 
+        public SpellModifiers SpellModifiers
+        {
+            get;
+            private set;
+        }
+        /// <summary>
+        /// Unused?
+        /// </summary>
+        private bool IsMoving
+        {
+            get;
+            set;
+        }
         public Fighter(FightTeam team, CellRecord roleplayCell)
         {
             this.Team = team;
@@ -246,6 +257,7 @@ namespace Giny.World.Managers.Fights.Fighters
             this.Buffs = new List<Buff>();
             this.BuffIdProvider = new UniqueIdProvider();
             this.SpellHistory = new SpellHistory(this);
+            this.SpellModifiers = new SpellModifiers(this);
             this.WasTeleportedInInvalidCell = false;
             this.Random = new Random();
         }
@@ -576,11 +588,13 @@ namespace Giny.World.Managers.Fights.Fighters
                 }
             }
         }
-        public short GetSpellBoost<T>(short spellId) where T : SpellBoostBuff
-        {
-            var buffs = GetBuffs<T>().Where(x => x.SpellId == spellId);
-            return (short)buffs.Sum(x => x.GetDelta());
-        }
+        /* public short GetSpellBoost<T>(short spellId) where T : SpellBoostBuff
+         {
+             var buffs = GetBuffs<T>().Where(x => x.SpellId == spellId);
+             return (short)buffs.Sum(x => x.GetDelta());
+         } */
+
+
 
 
         protected IEnumerable<SummonedFighter> GetSummons()
@@ -644,7 +658,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 RemoveAndDispellBuff(this, oldBuff);
             }
 
-        
+
 
             Fight.Buffs.Add(buff);
             Buffs.Add(buff);
@@ -658,14 +672,18 @@ namespace Giny.World.Managers.Fights.Fighters
         }
         public void OnBuffAdded(Buff buff)
         {
-            var abstractFightDispellableEffect = buff.GetAbstractFightDispellableEffect();
-
-            Fight.Send(new GameActionFightDispellableEffectMessage()
+            if (!buff.Silent)
             {
-                actionId = buff.GetActionId(),
-                effect = abstractFightDispellableEffect,
-                sourceId = buff.Cast.Source.Id,
-            }); ;
+                var abstractFightDispellableEffect = buff.GetAbstractFightDispellableEffect();
+
+                Fight.Send(new GameActionFightDispellableEffectMessage()
+                {
+                    actionId = buff.GetActionId(),
+                    effect = abstractFightDispellableEffect,
+                    sourceId = buff.Cast.Source.Id,
+                });
+            }
+
         }
 
         public void OnEffectDurationReduced(Fighter source, short actionId, short delta)
@@ -1196,14 +1214,13 @@ namespace Giny.World.Managers.Fights.Fighters
         private int GetSpellMinimalRange(SpellLevelRecord level)
         {
             var range = (int)level.MinRange;
-            range -= GetSpellBoost<SpellReduceMinimalRangeBuff>(level.SpellId);
+            range += SpellModifiers.GetModifier(level.SpellId, CharacterSpellModificationTypeEnum.RANGE_MIN);
             return range;
         }
         private int GetSpellRange(SpellLevelRecord level)
         {
             var range = (int)level.MaxRange;
-            range += GetSpellBoost<SpellBoostRangeBuff>(level.SpellId);
-            range -= GetSpellBoost<SpellReduceRangeBuff>(level.SpellId);
+            range += SpellModifiers.GetModifier(level.SpellId, CharacterSpellModificationTypeEnum.RANGE_MAX);
             return range;
         }
         public virtual bool HasSpell(short spellId)
@@ -1487,9 +1504,7 @@ namespace Giny.World.Managers.Fights.Fighters
         {
             short apCost = level.ApCost;
 
-            apCost -= GetSpellBoost<SpellBoostReduceApCostBuff>(level.SpellId);
-
-            apCost += GetSpellBoost<SpellBoostIncreaseApCostBuff>(level.SpellId);
+            apCost += this.SpellModifiers.GetModifier(level.SpellId, CharacterSpellModificationTypeEnum.AP_COST);
 
             if (apCost < 0)
             {
@@ -2361,6 +2376,8 @@ namespace Giny.World.Managers.Fights.Fighters
             return GetBuffs<TriggerBuff>().Any(x => x.Effect.EffectEnum == EffectsEnum.Effect_DamageSharing
             && x.Cast == effect.CastHandler.Cast);
         }
+
+
 
 
     }

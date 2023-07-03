@@ -1,4 +1,5 @@
 ﻿using Giny.Protocol.Enums;
+using Giny.Protocol.Messages;
 using Giny.World.Managers.Actions;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Buffs;
@@ -31,6 +32,7 @@ namespace Giny.World.Managers.Fights.Effects.Other
                     int id = target.BuffIdProvider.Pop();
                     Buff buff = new SpellBoostRemoveLOSBuff(id, spell.Id, (short)Effect.Value, target, this, FightDispellableEnum.DISPELLABLE,
                      (short)ActionsEnum.ACTION_BOOST_SPELL_NOLINEOFSIGHT);
+
                     target.AddBuff(buff);
                 }
             }

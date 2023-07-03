@@ -16,5 +16,16 @@ namespace Giny.World.Managers.Fights.Buffs.SpellBoost
         public SpellBoostBaseDamageBuff(int id, short spellId, short delta, Fighter target, SpellEffectHandler effectHandler, FightDispellableEnum dispellable, short? customActionId = null) : base(id, spellId, delta, target, effectHandler, dispellable, customActionId)
         {
         }
+
+        public override void Execute()
+        {
+            Target.SpellModifiers.ApplySpellModification(SpellId, CharacterSpellModificationTypeEnum.BASE_DAMAGE, GetDelta());
+            base.Execute();
+        }
+        public override void Dispell()
+        {
+            Target.SpellModifiers.ApplySpellModification(SpellId, CharacterSpellModificationTypeEnum.BASE_DAMAGE, (short)-GetDelta());
+            base.Dispell();
+        }
     }
 }

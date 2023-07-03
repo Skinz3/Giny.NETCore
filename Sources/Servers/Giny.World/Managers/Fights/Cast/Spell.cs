@@ -1,4 +1,7 @@
 ﻿using Giny.Protocol.Custom.Enums;
+using Giny.Protocol.Enums;
+using Giny.Protocol.Types;
+using Giny.World.Managers.Fights.Buffs.SpellModifiers;
 using Giny.World.Records.Spells;
 using System;
 using System.Collections.Generic;
@@ -29,7 +32,7 @@ namespace Giny.World.Managers.Fights.Cast
             }
         }
 
-        public Spell(SpellRecord record,SpellLevelRecord level)
+        public Spell(SpellRecord record, SpellLevelRecord level)
         {
             this.Record = record;
             this.Level = level;
@@ -39,6 +42,7 @@ namespace Giny.World.Managers.Fights.Cast
         {
             return Record.Name;
         }
+
 
         public SpellEnum GetSpellEnum()
         {

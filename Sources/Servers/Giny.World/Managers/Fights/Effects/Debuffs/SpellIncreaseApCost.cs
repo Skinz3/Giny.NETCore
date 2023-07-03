@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 namespace Giny.World.Managers.Fights.Effects.Debuffs
 {
     [SpellEffectHandler(EffectsEnum.Effect_IncreaseSpellAPCost)]
-    public class IncreaseSpellApCost : SpellEffectHandler
+    public class SpellIncreaseApCost : SpellEffectHandler
     {
-        public IncreaseSpellApCost(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
+        public SpellIncreaseApCost(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
         {
 
         }
@@ -29,7 +29,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
                 if (target.HasSpell(spellId))
                 {
                     int id = target.BuffIdProvider.Pop();
-                    SpellBoostIncreaseApCostBuff buff = new SpellBoostIncreaseApCostBuff(id, spellId, delta,
+                    SpellBoostModifyApCostBuff buff = new SpellBoostModifyApCostBuff(id, spellId, delta,
                         target, this, FightDispellableEnum.DISPELLABLE);
                     target.AddBuff(buff);
                 }

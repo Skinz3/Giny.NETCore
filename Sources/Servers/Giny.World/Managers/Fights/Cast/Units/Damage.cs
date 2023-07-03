@@ -2,6 +2,7 @@
 using Giny.Core.Time;
 using Giny.IO.D2OClasses;
 using Giny.Protocol.Custom.Enums;
+using Giny.Protocol.Enums;
 using Giny.World.Managers.Fights.Buffs.SpellBoost;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Triggers;
@@ -253,8 +254,8 @@ namespace Giny.World.Managers.Fights.Cast.Units
 
         public Jet EvaluateConcreteJet()
         {
-      
-            short boost = Source.GetSpellBoost<SpellBoostBaseDamageBuff>(EffectHandler.CastHandler.Cast.SpellId);
+
+            short boost = Source.SpellModifiers.GetModifier(EffectHandler.CastHandler.Cast.SpellId, CharacterSpellModificationTypeEnum.BASE_DAMAGE);
 
             if (BaseMaxDamages == 0 || BaseMaxDamages <= BaseMinDamages)
             {

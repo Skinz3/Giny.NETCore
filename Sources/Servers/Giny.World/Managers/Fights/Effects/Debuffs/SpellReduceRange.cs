@@ -11,24 +11,23 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Debuffs
 {
-    [SpellEffectHandler(EffectsEnum.Effect_ReduceSpellMinimalRange)]
-    public class ReduceSpellMinimalRange : SpellEffectHandler
+    [SpellEffectHandler(EffectsEnum.Effect_ReduceSpellRange)]
+    public class SpellReduceRange : SpellEffectHandler
     {
-        public ReduceSpellMinimalRange(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
+        public SpellReduceRange(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
         {
-
         }
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
             short spellId = (short)Effect.Min;
-            short delta = (short)Effect.Value;
+            short delta = (short)-Effect.Value;
 
             foreach (var target in targets)
             {
                 if (target.HasSpell(spellId))
                 {
-                    SpellReduceMinimalRangeBuff buff = new SpellReduceMinimalRangeBuff(target.BuffIdProvider.Pop(), spellId, delta
+                    SpellBoostModifyRangeBuff buff = new SpellBoostModifyRangeBuff(target.BuffIdProvider.Pop(), spellId, delta
                         , target, this, (FightDispellableEnum)Effect.Dispellable);
 
                     target.AddBuff(buff);

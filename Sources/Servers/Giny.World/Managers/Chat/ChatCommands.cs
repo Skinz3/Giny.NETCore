@@ -471,7 +471,12 @@ namespace Giny.World.Managers.Chat
         {
             var stats = client.Character.Stats;
 
+            var modifs = client.Character.Fighter.SpellModifiers.Modifications;
 
+            foreach (var boost in modifs.Keys)
+            {
+                client.Character.Reply(modifs[boost][CharacterSpellModificationTypeEnum.BASE_DAMAGE].Value);
+            }
 
             client.Character.RefreshStats();
             return;

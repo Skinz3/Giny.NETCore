@@ -21,14 +21,14 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
         protected override void Apply(IEnumerable<Fighter> targets)
         {
             short spellId = (short)Effect.Min;
-            short delta = (short)Effect.Value;
+            short delta = (short)-Effect.Value;
 
             foreach (var target in targets)
             {
                 if (target.HasSpell(spellId))
                 {
                     int id = target.BuffIdProvider.Pop();
-                    SpellBoostReduceApCostBuff buff = new SpellBoostReduceApCostBuff(id, spellId, delta,
+                    SpellBoostModifyApCostBuff buff = new SpellBoostModifyApCostBuff(id, spellId, delta,
                         target, this, FightDispellableEnum.DISPELLABLE);
                     target.AddBuff(buff);
                 }
