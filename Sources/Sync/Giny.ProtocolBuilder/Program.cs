@@ -45,7 +45,6 @@ namespace Giny.ProtocolBuilder
         static void BuildMessages()
         {
             Logger.Write("Building Messages...");
-            string outputPath = Path.Combine(Environment.CurrentDirectory, Constants.MESSAGES_OUTPUT_PATH);
             string path = Path.Combine(Constants.SOURCES_PATH, Constants.MESSAGES_PATH);
             MessageProfile message = new MessageProfile(path);
             message.Generate();
@@ -54,7 +53,6 @@ namespace Giny.ProtocolBuilder
         static void BuildTypes()
         {
             Logger.Write("Building Types...");
-            string outputPath = Path.Combine(Environment.CurrentDirectory, Constants.TYPES_OUTPUT_PATH);
             string path = Path.Combine(Constants.SOURCES_PATH, Constants.TYPES_PATH);
             TypeProfile type = new TypeProfile(path);
             type.Generate();
@@ -62,8 +60,6 @@ namespace Giny.ProtocolBuilder
         static void BuildDatacenter()
         {
             Logger.Write("Building Datacenter...");
-
-            string outputPath = Path.Combine(Environment.CurrentDirectory, Constants.DATACENTER_OUTPUT_PATH);
             string path = Path.Combine(Constants.SOURCES_PATH, Constants.DATACENTER_PATH);
             DatacenterProfile datacenter = new DatacenterProfile(path);
             datacenter.Generate();
