@@ -122,16 +122,20 @@
 
             var result = "";
 
-
+            if (value is MonsterBonusCharacteristics)
+            {
+                var v = (MonsterBonusCharacteristics)value;
+                return "LifePoints :" + v.lifePoints; 
+            }
             if (value is IEnumerable collection && !(value is string))
             {
                 string collectionString = string.Join(", ", collection.Cast<object>());
                 result = collectionString;
             }
-            else if (property.Name == "LongNameId" || property.Name == "NameId" || property.Name == "ShortNameId" 
+            else if (property.Name == "LongNameId" || property.Name == "NameId" || property.Name == "ShortNameId"
             || property.Name == "DescriptionId")
             {
-                result= D2IManager.GetText(int.Parse(value.ToString()));
+                result = D2IManager.GetText(int.Parse(value.ToString()));
             }
             else
             {
@@ -155,6 +159,7 @@
     {
         SelectedD2OFile = name.Split('.')[0];
         Values = D2OManager.GetObjects(name).ToList();
+
         StateHasChanged();
     }
     protected override void OnInitialized()

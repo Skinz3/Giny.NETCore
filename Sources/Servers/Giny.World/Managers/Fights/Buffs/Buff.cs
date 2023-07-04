@@ -73,7 +73,7 @@ namespace Giny.World.Managers.Fights.Buffs
         /// <summary>
         /// Silent or verbose ?
         /// </summary>
-        public bool Silent => EffectHandler.CastHandler.Cast.Silent;
+        public bool Silent => !EffectHandler.CastHandler.Cast.Spell.Record.Verbose;
 
         public Buff(int id, Fighter target, SpellEffectHandler effectHandler, FightDispellableEnum dispellable, short? customActionId = null)
         {

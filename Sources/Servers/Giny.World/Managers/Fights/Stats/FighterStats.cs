@@ -92,6 +92,7 @@ namespace Giny.World.Managers.Fights.Stats
                 this[CharacteristicEnum.SHIELD].Context = 0;
             }
         }
+   
         public void AddMaxVitality(short delta)
         {
             this.BaseMaxLife += delta;
@@ -238,6 +239,7 @@ namespace Giny.World.Managers.Fights.Stats
         }
         /*
          * Todo : Summoned / SummonerId
+         * bonusCharacteristic.lifePoints * (caster.lifePoints - caster.vitality.total)  + (grade.lifePoints * statsCoeff)
          */
         public FighterStats(MonsterGrade monsterGrade, double coeff = 1d)
         {

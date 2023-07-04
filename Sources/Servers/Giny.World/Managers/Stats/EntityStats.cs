@@ -255,7 +255,7 @@ namespace Giny.World.Managers.Stats
             results.Add(new CharacterCharacteristicValue(MaxEnergyPoints, (short)CharacteristicEnum.MAX_ENERGY_POINTS));
             results.Add(new CharacterCharacteristicValue(Energy, (short)CharacteristicEnum.ENERGY_POINTS));
 
-
+            
             return results.ToArray();
         }
         public CharacterCharacteristicsInformations GetCharacterCharacteristicsInformations(Character character)

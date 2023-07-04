@@ -17,7 +17,7 @@ namespace Giny.World.Managers.Breeds
 {
     public class BreedManager : Singleton<BreedManager>
     {
-        public const short BreedDefaultLife = 50;
+        public const short BreedDefaultLife = 55;
 
         public const short BreedDefaultProspecting = 100;
 

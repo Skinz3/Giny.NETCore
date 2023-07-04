@@ -672,10 +672,11 @@ namespace Giny.World.Managers.Fights.Fighters
         }
         public void OnBuffAdded(Buff buff)
         {
-            if (!buff.Silent)
+            //if (!buff.Silent)
             {
                 var abstractFightDispellableEffect = buff.GetAbstractFightDispellableEffect();
-
+    
+                
                 Fight.Send(new GameActionFightDispellableEffectMessage()
                 {
                     actionId = buff.GetActionId(),
@@ -2004,7 +2005,6 @@ namespace Giny.World.Managers.Fights.Fighters
             }
 
             TriggerBuffs(TriggerTypeEnum.OnLifePointsPending, null);
-
 
 
             return result;

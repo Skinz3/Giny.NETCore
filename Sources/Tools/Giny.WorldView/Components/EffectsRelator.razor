@@ -3,6 +3,7 @@
 @using Giny.IO.D2OClasses;
 @using Giny.Protocol.Enums;
 @using Giny.World.Managers.Fights.Effects;
+@using Giny.World.Records.Breeds;
 @using Giny.World.Records.Maps;
 @using Giny.World.Records.Monsters;
 @using Giny.World.Records.Spells;
@@ -56,7 +57,7 @@
                 <div style="height:80vh;overflow-y:scroll">
 
                     <Virtualize Items="@DisplayedSpells">
-                        <MudListItem OnClick="() => NavigateToSpell(context)" Text=@context.ToString() />
+                        <MudListItem OnClick="() => NavigateToSpell(context)" Text=@(context.ToString() + " ("+GetSpellBreedStr(context)+")") />
                     </Virtualize>
                 </div>
 
@@ -137,6 +138,17 @@
     {
         get;
         set;
+    }
+    string GetSpellBreedStr(SpellRecord spell)
+    {
+        foreach (var breed in BreedRecord.GetBreeds())
+        {
+            if (breed.SpellIds.Contains(spell.Id))
+            {
+                return breed.Name;
+            }
+        }
+        return "";
     }
     private void OnSearchTextChanged()
     {

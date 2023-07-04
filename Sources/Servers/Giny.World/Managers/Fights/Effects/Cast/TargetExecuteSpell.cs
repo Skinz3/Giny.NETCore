@@ -19,6 +19,8 @@ namespace Giny.World.Managers.Fights.Effects.Cast
      * Rassemblement 
      * Friction 
      * Ségnifuge (Enutrof)
+     * Multilation (Sacrieur)
+     * Balise de rappel (pb animation)
      */
     [SpellEffectHandler(EffectsEnum.Effect_TargetExecuteSpell)]
     public class TargetExecuteSpell : SpellEffectHandler
@@ -48,7 +50,7 @@ namespace Giny.World.Managers.Fights.Effects.Cast
                 cast.Token = this.GetTriggerToken<ITriggerToken>();
                 cast.Force = true;
                 cast.Silent = true;
-                cast.Animation = cast.Spell.Record.Verbose;
+                //cast.Animation = ??? Balise de rappel 
                 target.CastSpell(cast);
             }
 

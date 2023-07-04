@@ -39,14 +39,14 @@ namespace Giny.World.Managers.Fights.Fighters
         }
         public override void Initialize()
         {
-            double statsCoeff = 1 + (Summoner.Level / 100);
+            double statsCoeff = 1 + (Summoner.Level / 100d);
             this.Stats = new FighterStats(Grade, statsCoeff);
             this.Look = Record.Look.Clone();
             base.Initialize();
         }
 
         public override bool CanBePushed()
-        {
+        {   
             return base.CanBePushed() && Record.CanBePushed;
         }
         public override bool CanTackle()

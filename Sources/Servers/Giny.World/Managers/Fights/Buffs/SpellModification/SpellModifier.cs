@@ -21,7 +21,7 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModifiers
         public short Value
         {
             get;
-         private   set;
+            private set;
         }
         public short SpellId
         {
@@ -72,7 +72,8 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModifiers
                 case CharacterSpellModificationTypeEnum.MAX_CAST_PER_TARGET:
                     throw new NotImplementedException();
                 case CharacterSpellModificationTypeEnum.RANGE_MAX:
-                    throw new NotImplementedException();
+                    Value += value;
+                    break;
                 case CharacterSpellModificationTypeEnum.RANGE_MIN:
                     throw new NotImplementedException();
                 default:
