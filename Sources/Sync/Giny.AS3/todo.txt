@@ -1,0 +1,5 @@
+﻿
+
+Parse correctly AS
+Parse (!condition)
+Parse For each

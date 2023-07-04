@@ -43,7 +43,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Giny.CraftableDrop", "Modul
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sync", "Sync", "{6E5EEED7-2FC0-4EF3-A02D-5E15D62A7CB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Giny.DatabaseSynchronizer", "Sync\Giny.DatabaseSynchronizer\Giny.DatabaseSynchronizer.csproj", "{EBFA4DFF-3910-4314-A32B-BD5CB2EA56A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Giny.DatabaseSynchronizer", "Sync\Giny.DatabaseSynchronizer\Giny.DatabaseSynchronizer.csproj", "{EBFA4DFF-3910-4314-A32B-BD5CB2EA56A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Giny.ProtocolBuilder", "Sync\Giny.ProtocolBuilder\Giny.ProtocolBuilder.csproj", "{6D9FA426-AAED-4E5C-B9CB-5F6656E5F023}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Giny.AS3", "Sync\Giny.AS3\Giny.AS3.csproj", "{76D77F60-D22B-436B-9629-51EB94B302B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -115,6 +119,14 @@ Global
 		{EBFA4DFF-3910-4314-A32B-BD5CB2EA56A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBFA4DFF-3910-4314-A32B-BD5CB2EA56A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBFA4DFF-3910-4314-A32B-BD5CB2EA56A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D9FA426-AAED-4E5C-B9CB-5F6656E5F023}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D9FA426-AAED-4E5C-B9CB-5F6656E5F023}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D9FA426-AAED-4E5C-B9CB-5F6656E5F023}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D9FA426-AAED-4E5C-B9CB-5F6656E5F023}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76D77F60-D22B-436B-9629-51EB94B302B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76D77F60-D22B-436B-9629-51EB94B302B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76D77F60-D22B-436B-9629-51EB94B302B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76D77F60-D22B-436B-9629-51EB94B302B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -132,6 +144,8 @@ Global
 		{A837A592-3646-4B04-862E-240AF630F9CE} = {908EAE1C-101A-4AE7-993C-C5B950E98A25}
 		{BF19993C-AD1F-43ED-9AF8-593664D0E2FB} = {DF8156E8-03E6-4629-BEAC-B7487522D897}
 		{EBFA4DFF-3910-4314-A32B-BD5CB2EA56A9} = {6E5EEED7-2FC0-4EF3-A02D-5E15D62A7CB1}
+		{6D9FA426-AAED-4E5C-B9CB-5F6656E5F023} = {6E5EEED7-2FC0-4EF3-A02D-5E15D62A7CB1}
+		{76D77F60-D22B-436B-9629-51EB94B302B4} = {6E5EEED7-2FC0-4EF3-A02D-5E15D62A7CB1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BA783713-0DE5-461B-B1CF-8233D6F027FE}
