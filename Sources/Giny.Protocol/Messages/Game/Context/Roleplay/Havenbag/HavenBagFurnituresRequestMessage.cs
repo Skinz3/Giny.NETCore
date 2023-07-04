@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HavenBagFurnituresRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9809;
+{
+    public class HavenBagFurnituresRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 4554;
         public override ushort MessageId => Id;
 
         public short[] cellIds;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public HavenBagFurnituresRequestMessage()
         {
         }
-        public HavenBagFurnituresRequestMessage(short[] cellIds,int[] funitureIds,byte[] orientations)
+        public HavenBagFurnituresRequestMessage(short[] cellIds, int[] funitureIds, byte[] orientations)
         {
             this.cellIds = cellIds;
             this.funitureIds = funitureIds;
@@ -28,7 +28,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)cellIds.Length);
-            for (uint _i1 = 0;_i1 < cellIds.Length;_i1++)
+            for (uint _i1 = 0; _i1 < cellIds.Length; _i1++)
             {
                 if (cellIds[_i1] < 0)
                 {
@@ -39,13 +39,13 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteShort((short)funitureIds.Length);
-            for (uint _i2 = 0;_i2 < funitureIds.Length;_i2++)
+            for (uint _i2 = 0; _i2 < funitureIds.Length; _i2++)
             {
                 writer.WriteInt((int)funitureIds[_i2]);
             }
 
             writer.WriteShort((short)orientations.Length);
-            for (uint _i3 = 0;_i3 < orientations.Length;_i3++)
+            for (uint _i3 = 0; _i3 < orientations.Length; _i3++)
             {
                 if (orientations[_i3] < 0)
                 {
@@ -63,7 +63,7 @@ namespace Giny.Protocol.Messages
             uint _val3 = 0;
             uint _cellIdsLen = (uint)reader.ReadUShort();
             cellIds = new short[_cellIdsLen];
-            for (uint _i1 = 0;_i1 < _cellIdsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _cellIdsLen; _i1++)
             {
                 _val1 = (uint)reader.ReadVarUhShort();
                 if (_val1 < 0)
@@ -76,7 +76,7 @@ namespace Giny.Protocol.Messages
 
             uint _funitureIdsLen = (uint)reader.ReadUShort();
             funitureIds = new int[_funitureIdsLen];
-            for (uint _i2 = 0;_i2 < _funitureIdsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _funitureIdsLen; _i2++)
             {
                 _val2 = (int)reader.ReadInt();
                 funitureIds[_i2] = (int)_val2;
@@ -84,7 +84,7 @@ namespace Giny.Protocol.Messages
 
             uint _orientationsLen = (uint)reader.ReadUShort();
             orientations = new byte[_orientationsLen];
-            for (uint _i3 = 0;_i3 < _orientationsLen;_i3++)
+            for (uint _i3 = 0; _i3 < _orientationsLen; _i3++)
             {
                 _val3 = (uint)reader.ReadByte();
                 if (_val3 < 0)
@@ -97,14 +97,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

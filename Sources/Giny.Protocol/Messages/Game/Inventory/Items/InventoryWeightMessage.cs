@@ -6,23 +6,21 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class InventoryWeightMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4739;
+{
+    public class InventoryWeightMessage : NetworkMessage
+    {
+        public const ushort Id = 4358;
         public override ushort MessageId => Id;
 
         public int inventoryWeight;
-        public int shopWeight;
         public int weightMax;
 
         public InventoryWeightMessage()
         {
         }
-        public InventoryWeightMessage(int inventoryWeight,int shopWeight,int weightMax)
+        public InventoryWeightMessage(int inventoryWeight, int weightMax)
         {
             this.inventoryWeight = inventoryWeight;
-            this.shopWeight = shopWeight;
             this.weightMax = weightMax;
         }
         public override void Serialize(IDataWriter writer)
@@ -33,12 +31,6 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteVarInt((int)inventoryWeight);
-            if (shopWeight < 0)
-            {
-                throw new System.Exception("Forbidden value (" + shopWeight + ") on element shopWeight.");
-            }
-
-            writer.WriteVarInt((int)shopWeight);
             if (weightMax < 0)
             {
                 throw new System.Exception("Forbidden value (" + weightMax + ") on element weightMax.");
@@ -54,12 +46,6 @@ namespace Giny.Protocol.Messages
                 throw new System.Exception("Forbidden value (" + inventoryWeight + ") on element of InventoryWeightMessage.inventoryWeight.");
             }
 
-            shopWeight = (int)reader.ReadVarUhInt();
-            if (shopWeight < 0)
-            {
-                throw new System.Exception("Forbidden value (" + shopWeight + ") on element of InventoryWeightMessage.shopWeight.");
-            }
-
             weightMax = (int)reader.ReadVarUhInt();
             if (weightMax < 0)
             {
@@ -68,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

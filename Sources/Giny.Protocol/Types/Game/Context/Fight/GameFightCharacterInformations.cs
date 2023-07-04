@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameFightCharacterInformations : GameFightFighterNamedInformations  
-    { 
-        public new const ushort Id = 2596;
+{
+    public class GameFightCharacterInformations : GameFightFighterNamedInformations
+    {
+        public new const ushort Id = 9015;
         public override ushort TypeId => Id;
 
         public short level;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Types
         public GameFightCharacterInformations()
         {
         }
-        public GameFightCharacterInformations(short level,ActorAlignmentInformations alignmentInfos,byte breed,bool sex,double contextualId,EntityDispositionInformations disposition,EntityLook look,GameContextBasicSpawnInformation spawnInfo,byte wave,GameFightCharacteristics stats,short[] previousPositions,string name,PlayerStatus status,short leagueId,int ladderPosition,bool hiddenInPrefight)
+        public GameFightCharacterInformations(short level, ActorAlignmentInformations alignmentInfos, byte breed, bool sex, double contextualId, EntityDispositionInformations disposition, EntityLook look, GameContextBasicSpawnInformation spawnInfo, byte wave, GameFightCharacteristics stats, short[] previousPositions, string name, PlayerStatus status, short leagueId, int ladderPosition, bool hiddenInPrefight)
         {
             this.level = level;
             this.alignmentInfos = alignmentInfos;
@@ -68,11 +68,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

@@ -6,17 +6,17 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameActionFightTriggerEffectMessage : GameActionFightDispellEffectMessage  
-    { 
-        public new const ushort Id = 6678;
+{
+    public class GameActionFightTriggerEffectMessage : GameActionFightDispellEffectMessage
+    {
+        public new const ushort Id = 7449;
         public override ushort MessageId => Id;
 
 
         public GameActionFightTriggerEffectMessage()
         {
         }
-        public GameActionFightTriggerEffectMessage(short actionId,double sourceId,double targetId,bool verboseCast,int boostUID)
+        public GameActionFightTriggerEffectMessage(short actionId, double sourceId, double targetId, bool verboseCast, int boostUID)
         {
             this.actionId = actionId;
             this.sourceId = sourceId;
@@ -33,14 +33,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

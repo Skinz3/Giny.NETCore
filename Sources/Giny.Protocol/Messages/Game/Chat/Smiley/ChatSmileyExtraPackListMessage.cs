@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ChatSmileyExtraPackListMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1279;
+{
+    public class ChatSmileyExtraPackListMessage : NetworkMessage
+    {
+        public const ushort Id = 328;
         public override ushort MessageId => Id;
 
         public byte[] packIds;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)packIds.Length);
-            for (uint _i1 = 0;_i1 < packIds.Length;_i1++)
+            for (uint _i1 = 0; _i1 < packIds.Length; _i1++)
             {
                 if (packIds[_i1] < 0)
                 {
@@ -40,7 +40,7 @@ namespace Giny.Protocol.Messages
             uint _val1 = 0;
             uint _packIdsLen = (uint)reader.ReadUShort();
             packIds = new byte[_packIdsLen];
-            for (uint _i1 = 0;_i1 < _packIdsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _packIdsLen; _i1++)
             {
                 _val1 = (uint)reader.ReadByte();
                 if (_val1 < 0)
@@ -53,14 +53,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

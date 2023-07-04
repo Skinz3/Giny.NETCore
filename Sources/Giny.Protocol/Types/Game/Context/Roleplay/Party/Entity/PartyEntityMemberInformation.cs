@@ -4,22 +4,22 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class PartyEntityMemberInformation : PartyEntityBaseInformation  
-    { 
-        public new const ushort Id = 8077;
+{
+    public class PartyEntityMemberInformation : PartyEntityBaseInformation
+    {
+        public new const ushort Id = 1101;
         public override ushort TypeId => Id;
 
-        public short initiative;
+        public int initiative;
         public int lifePoints;
         public int maxLifePoints;
-        public short prospecting;
+        public int prospecting;
         public byte regenRate;
 
         public PartyEntityMemberInformation()
         {
         }
-        public PartyEntityMemberInformation(short initiative,int lifePoints,int maxLifePoints,short prospecting,byte regenRate,byte indexId,byte entityModelId,EntityLook entityLook)
+        public PartyEntityMemberInformation(int initiative, int lifePoints, int maxLifePoints, int prospecting, byte regenRate, byte indexId, byte entityModelId, EntityLook entityLook)
         {
             this.initiative = initiative;
             this.lifePoints = lifePoints;
@@ -38,7 +38,7 @@ namespace Giny.Protocol.Types
                 throw new System.Exception("Forbidden value (" + initiative + ") on element initiative.");
             }
 
-            writer.WriteVarShort((short)initiative);
+            writer.WriteVarInt((int)initiative);
             if (lifePoints < 0)
             {
                 throw new System.Exception("Forbidden value (" + lifePoints + ") on element lifePoints.");
@@ -56,7 +56,7 @@ namespace Giny.Protocol.Types
                 throw new System.Exception("Forbidden value (" + prospecting + ") on element prospecting.");
             }
 
-            writer.WriteVarShort((short)prospecting);
+            writer.WriteVarInt((int)prospecting);
             if (regenRate < 0 || regenRate > 255)
             {
                 throw new System.Exception("Forbidden value (" + regenRate + ") on element regenRate.");
@@ -67,7 +67,7 @@ namespace Giny.Protocol.Types
         public override void Deserialize(IDataReader reader)
         {
             base.Deserialize(reader);
-            initiative = (short)reader.ReadVarUhShort();
+            initiative = (int)reader.ReadVarUhInt();
             if (initiative < 0)
             {
                 throw new System.Exception("Forbidden value (" + initiative + ") on element of PartyEntityMemberInformation.initiative.");
@@ -85,7 +85,7 @@ namespace Giny.Protocol.Types
                 throw new System.Exception("Forbidden value (" + maxLifePoints + ") on element of PartyEntityMemberInformation.maxLifePoints.");
             }
 
-            prospecting = (short)reader.ReadVarUhShort();
+            prospecting = (int)reader.ReadVarUhInt();
             if (prospecting < 0)
             {
                 throw new System.Exception("Forbidden value (" + prospecting + ") on element of PartyEntityMemberInformation.prospecting.");
@@ -102,11 +102,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

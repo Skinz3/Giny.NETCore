@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameContextBasicSpawnInformation  
-    { 
-        public const ushort Id = 7887;
+{
+    public class GameContextBasicSpawnInformation
+    {
+        public const ushort Id = 2837;
         public virtual ushort TypeId => Id;
 
         public byte teamId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Types
         public GameContextBasicSpawnInformation()
         {
         }
-        public GameContextBasicSpawnInformation(byte teamId,bool alive,GameContextActorPositionInformations informations)
+        public GameContextBasicSpawnInformation(byte teamId, bool alive, GameContextActorPositionInformations informations)
         {
             this.teamId = teamId;
             this.alive = alive;
@@ -47,11 +47,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

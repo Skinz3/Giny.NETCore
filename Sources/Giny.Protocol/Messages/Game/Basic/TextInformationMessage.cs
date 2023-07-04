@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class TextInformationMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6875;
+{
+    public class TextInformationMessage : NetworkMessage
+    {
+        public const ushort Id = 3728;
         public override ushort MessageId => Id;
 
         public byte msgType;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public TextInformationMessage()
         {
         }
-        public TextInformationMessage(byte msgType,short msgId,string[] parameters)
+        public TextInformationMessage(byte msgType, short msgId, string[] parameters)
         {
             this.msgType = msgType;
             this.msgId = msgId;
@@ -35,7 +35,7 @@ namespace Giny.Protocol.Messages
 
             writer.WriteVarShort((short)msgId);
             writer.WriteShort((short)parameters.Length);
-            for (uint _i3 = 0;_i3 < parameters.Length;_i3++)
+            for (uint _i3 = 0; _i3 < parameters.Length; _i3++)
             {
                 writer.WriteUTF((string)parameters[_i3]);
             }
@@ -58,7 +58,7 @@ namespace Giny.Protocol.Messages
 
             uint _parametersLen = (uint)reader.ReadUShort();
             parameters = new string[_parametersLen];
-            for (uint _i3 = 0;_i3 < _parametersLen;_i3++)
+            for (uint _i3 = 0; _i3 < _parametersLen; _i3++)
             {
                 _val3 = (string)reader.ReadUTF();
                 parameters[_i3] = (string)_val3;
@@ -66,14 +66,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

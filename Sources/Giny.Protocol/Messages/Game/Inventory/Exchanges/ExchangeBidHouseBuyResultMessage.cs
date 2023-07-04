@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeBidHouseBuyResultMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1678;
+{
+    public class ExchangeBidHouseBuyResultMessage : NetworkMessage
+    {
+        public const ushort Id = 1337;
         public override ushort MessageId => Id;
 
         public int uid;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ExchangeBidHouseBuyResultMessage()
         {
         }
-        public ExchangeBidHouseBuyResultMessage(int uid,bool bought)
+        public ExchangeBidHouseBuyResultMessage(int uid, bool bought)
         {
             this.uid = uid;
             this.bought = bought;
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
             bought = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

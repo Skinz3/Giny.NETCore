@@ -6,57 +6,36 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildInvitedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9234;
+{
+    public class GuildInvitedMessage : NetworkMessage
+    {
+        public const ushort Id = 4875;
         public override ushort MessageId => Id;
 
-        public long recruterId;
         public string recruterName;
-        public BasicGuildInformations guildInfo;
+        public GuildInformations guildInfo;
 
         public GuildInvitedMessage()
         {
         }
-        public GuildInvitedMessage(long recruterId,string recruterName,BasicGuildInformations guildInfo)
+        public GuildInvitedMessage(string recruterName, GuildInformations guildInfo)
         {
-            this.recruterId = recruterId;
             this.recruterName = recruterName;
             this.guildInfo = guildInfo;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (recruterId < 0 || recruterId > 9.00719925474099E+15)
-            {
-                throw new System.Exception("Forbidden value (" + recruterId + ") on element recruterId.");
-            }
-
-            writer.WriteVarLong((long)recruterId);
             writer.WriteUTF((string)recruterName);
             guildInfo.Serialize(writer);
         }
         public override void Deserialize(IDataReader reader)
         {
-            recruterId = (long)reader.ReadVarUhLong();
-            if (recruterId < 0 || recruterId > 9.00719925474099E+15)
-            {
-                throw new System.Exception("Forbidden value (" + recruterId + ") on element of GuildInvitedMessage.recruterId.");
-            }
-
             recruterName = (string)reader.ReadUTF();
-            guildInfo = new BasicGuildInformations();
+            guildInfo = new GuildInformations();
             guildInfo.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

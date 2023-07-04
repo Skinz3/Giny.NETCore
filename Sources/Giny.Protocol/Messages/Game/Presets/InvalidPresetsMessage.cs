@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class InvalidPresetsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9244;
+{
+    public class InvalidPresetsMessage : NetworkMessage
+    {
+        public const ushort Id = 6001;
         public override ushort MessageId => Id;
 
         public short[] presetIds;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)presetIds.Length);
-            for (uint _i1 = 0;_i1 < presetIds.Length;_i1++)
+            for (uint _i1 = 0; _i1 < presetIds.Length; _i1++)
             {
                 if (presetIds[_i1] < 0)
                 {
@@ -40,7 +40,7 @@ namespace Giny.Protocol.Messages
             uint _val1 = 0;
             uint _presetIdsLen = (uint)reader.ReadUShort();
             presetIds = new short[_presetIdsLen];
-            for (uint _i1 = 0;_i1 < _presetIdsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _presetIdsLen; _i1++)
             {
                 _val1 = (uint)reader.ReadShort();
                 if (_val1 < 0)
@@ -53,14 +53,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

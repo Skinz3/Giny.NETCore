@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 using System;
 
 namespace Giny.Protocol.Enums
@@ -30,17 +23,17 @@ namespace Giny.Protocol.Enums
         Eliotrope = 16,
         Huppermage = 17,
         Ouginak = 18,
+        Forgelance = 20,
         SUMMONED = -1,
         MONSTER = -2,
         MONSTER_GROUP = -3,
         NPC = -4,
-        HUMAN_VENDOR = -5,
-        TAX_COLLECTOR = -6,
-        MUTANT = -7,
-        MUTANT_IN_DUNGEON = -8,
-        MOUNT_OUTSIDE = -9,
-        PRISM = -10,
-        INCARNATION = -11,
+        TAX_COLLECTOR = -5,
+        MUTANT = -6,
+        MUTANT_IN_DUNGEON = -7,
+        MOUNT_OUTSIDE = -8,
+        PRISM = -9,
+        INCARNATION = -10,
 
     }
 }

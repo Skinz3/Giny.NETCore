@@ -25,7 +25,7 @@ namespace Giny.World.Managers.Exchanges.Jobs
 
         }
 
-        public void SetRecipe(short gid)
+        public void SetRecipe(int gid)
         {
             RecipeRecord recipeRecord = RecipeRecord.GetRecipeRecord(gid);
 
@@ -65,7 +65,7 @@ namespace Giny.World.Managers.Exchanges.Jobs
 
         private RecipeRecord GetCurrentRecipe()
         {
-            short[] gids = Items.GetItems().Select(x => x.GId).ToArray();
+            int[] gids = Items.GetItems().Select(x => x.GId).ToArray();
             int[] quantities = Items.GetItems().Select(x => x.Quantity).ToArray();
 
             RecipeRecord recipeRecord = RecipeRecord.GetRecipeRecord(gids, quantities);

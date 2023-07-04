@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class IdolsPreset : Preset  
-    { 
-        public new const ushort Id = 2034;
+{
+    public class IdolsPreset : Preset
+    {
+        public new const ushort Id = 2099;
         public override ushort TypeId => Id;
 
         public short iconId;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public IdolsPreset()
         {
         }
-        public IdolsPreset(short iconId,short[] idolIds,short id)
+        public IdolsPreset(short iconId, short[] idolIds, short id)
         {
             this.iconId = iconId;
             this.idolIds = idolIds;
@@ -32,7 +32,7 @@ namespace Giny.Protocol.Types
 
             writer.WriteShort((short)iconId);
             writer.WriteShort((short)idolIds.Length);
-            for (uint _i2 = 0;_i2 < idolIds.Length;_i2++)
+            for (uint _i2 = 0; _i2 < idolIds.Length; _i2++)
             {
                 if (idolIds[_i2] < 0)
                 {
@@ -55,7 +55,7 @@ namespace Giny.Protocol.Types
 
             uint _idolIdsLen = (uint)reader.ReadUShort();
             idolIds = new short[_idolIdsLen];
-            for (uint _i2 = 0;_i2 < _idolIdsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _idolIdsLen; _i2++)
             {
                 _val2 = (uint)reader.ReadVarUhShort();
                 if (_val2 < 0)
@@ -71,11 +71,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

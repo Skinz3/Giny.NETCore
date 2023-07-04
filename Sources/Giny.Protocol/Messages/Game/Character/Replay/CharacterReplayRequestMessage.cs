@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class CharacterReplayRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3168;
+{
+    public class CharacterReplayRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 7933;
         public override ushort MessageId => Id;
 
         public long characterId;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (characterId < 0 || characterId > 9.00719925474099E+15)
+            if (characterId < 0 || characterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + characterId + ") on element characterId.");
             }
@@ -33,21 +33,14 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             characterId = (long)reader.ReadVarUhLong();
-            if (characterId < 0 || characterId > 9.00719925474099E+15)
+            if (characterId < 0 || characterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + characterId + ") on element of CharacterReplayRequestMessage.characterId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

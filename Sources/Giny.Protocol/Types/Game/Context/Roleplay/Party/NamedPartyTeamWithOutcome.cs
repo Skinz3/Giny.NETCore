@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class NamedPartyTeamWithOutcome  
-    { 
-        public const ushort Id = 7068;
+{
+    public class NamedPartyTeamWithOutcome
+    {
+        public const ushort Id = 980;
         public virtual ushort TypeId => Id;
 
         public NamedPartyTeam team;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public NamedPartyTeamWithOutcome()
         {
         }
-        public NamedPartyTeamWithOutcome(NamedPartyTeam team,short outcome)
+        public NamedPartyTeamWithOutcome(NamedPartyTeam team, short outcome)
         {
             this.team = team;
             this.outcome = outcome;
@@ -41,11 +41,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

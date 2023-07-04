@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameContextRemoveMultipleElementsWithEventsMessage : GameContextRemoveMultipleElementsMessage  
-    { 
-        public new const ushort Id = 409;
+{
+    public class GameContextRemoveMultipleElementsWithEventsMessage : GameContextRemoveMultipleElementsMessage
+    {
+        public new const ushort Id = 7818;
         public override ushort MessageId => Id;
 
         public byte[] elementEventIds;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public GameContextRemoveMultipleElementsWithEventsMessage()
         {
         }
-        public GameContextRemoveMultipleElementsWithEventsMessage(byte[] elementEventIds,double[] elementsIds)
+        public GameContextRemoveMultipleElementsWithEventsMessage(byte[] elementEventIds, double[] elementsIds)
         {
             this.elementEventIds = elementEventIds;
             this.elementsIds = elementsIds;
@@ -26,7 +26,7 @@ namespace Giny.Protocol.Messages
         {
             base.Serialize(writer);
             writer.WriteShort((short)elementEventIds.Length);
-            for (uint _i1 = 0;_i1 < elementEventIds.Length;_i1++)
+            for (uint _i1 = 0; _i1 < elementEventIds.Length; _i1++)
             {
                 if (elementEventIds[_i1] < 0)
                 {
@@ -43,7 +43,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
             uint _elementEventIdsLen = (uint)reader.ReadUShort();
             elementEventIds = new byte[_elementEventIdsLen];
-            for (uint _i1 = 0;_i1 < _elementEventIdsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _elementEventIdsLen; _i1++)
             {
                 _val1 = (uint)reader.ReadByte();
                 if (_val1 < 0)
@@ -56,14 +56,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

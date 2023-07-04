@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class AchievementAchieved  
-    { 
-        public const ushort Id = 7505;
+{
+    public class AchievementAchieved
+    {
+        public const ushort Id = 1163;
         public virtual ushort TypeId => Id;
 
         public short id;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public AchievementAchieved()
         {
         }
-        public AchievementAchieved(short id,long achievedBy)
+        public AchievementAchieved(short id, long achievedBy)
         {
             this.id = id;
             this.achievedBy = achievedBy;
@@ -29,7 +29,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteVarShort((short)id);
-            if (achievedBy < 0 || achievedBy > 9.00719925474099E+15)
+            if (achievedBy < 0 || achievedBy > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + achievedBy + ") on element achievedBy.");
             }
@@ -45,7 +45,7 @@ namespace Giny.Protocol.Types
             }
 
             achievedBy = (long)reader.ReadVarUhLong();
-            if (achievedBy < 0 || achievedBy > 9.00719925474099E+15)
+            if (achievedBy < 0 || achievedBy > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + achievedBy + ") on element of AchievementAchieved.achievedBy.");
             }
@@ -55,11 +55,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

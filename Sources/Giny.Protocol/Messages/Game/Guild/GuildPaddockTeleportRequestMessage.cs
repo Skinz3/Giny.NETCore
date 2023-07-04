@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildPaddockTeleportRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9763;
+{
+    public class GuildPaddockTeleportRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 2519;
         public override ushort MessageId => Id;
 
         public double paddockId;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (paddockId < 0 || paddockId > 9.00719925474099E+15)
+            if (paddockId < 0 || paddockId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + paddockId + ") on element paddockId.");
             }
@@ -33,21 +33,14 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             paddockId = (double)reader.ReadDouble();
-            if (paddockId < 0 || paddockId > 9.00719925474099E+15)
+            if (paddockId < 0 || paddockId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + paddockId + ") on element of GuildPaddockTeleportRequestMessage.paddockId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

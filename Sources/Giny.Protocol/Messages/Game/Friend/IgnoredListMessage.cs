@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class IgnoredListMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 802;
+{
+    public class IgnoredListMessage : NetworkMessage
+    {
+        public const ushort Id = 2189;
         public override ushort MessageId => Id;
 
         public IgnoredInformations[] ignoredList;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)ignoredList.Length);
-            for (uint _i1 = 0;_i1 < ignoredList.Length;_i1++)
+            for (uint _i1 = 0; _i1 < ignoredList.Length; _i1++)
             {
                 writer.WriteShort((short)(ignoredList[_i1] as IgnoredInformations).TypeId);
                 (ignoredList[_i1] as IgnoredInformations).Serialize(writer);
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Messages
             uint _id1 = 0;
             IgnoredInformations _item1 = null;
             uint _ignoredListLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _ignoredListLen;_i1++)
+            for (uint _i1 = 0; _i1 < _ignoredListLen; _i1++)
             {
                 _id1 = (uint)reader.ReadUShort();
                 _item1 = ProtocolTypeManager.GetInstance<IgnoredInformations>((short)_id1);
@@ -46,14 +46,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class JobCrafterDirectorySettingsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7632;
+{
+    public class JobCrafterDirectorySettingsMessage : NetworkMessage
+    {
+        public const ushort Id = 4121;
         public override ushort MessageId => Id;
 
         public JobCrafterDirectorySettings[] craftersSettings;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)craftersSettings.Length);
-            for (uint _i1 = 0;_i1 < craftersSettings.Length;_i1++)
+            for (uint _i1 = 0; _i1 < craftersSettings.Length; _i1++)
             {
                 (craftersSettings[_i1] as JobCrafterDirectorySettings).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             JobCrafterDirectorySettings _item1 = null;
             uint _craftersSettingsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _craftersSettingsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _craftersSettingsLen; _i1++)
             {
                 _item1 = new JobCrafterDirectorySettings();
                 _item1.Deserialize(reader);
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

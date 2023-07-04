@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class TreasureHuntFlagRemoveRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3555;
+{
+    public class TreasureHuntFlagRemoveRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 2487;
         public override ushort MessageId => Id;
 
         public byte questType;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public TreasureHuntFlagRemoveRequestMessage()
         {
         }
-        public TreasureHuntFlagRemoveRequestMessage(byte questType,byte index)
+        public TreasureHuntFlagRemoveRequestMessage(byte questType, byte index)
         {
             this.questType = questType;
             this.index = index;
@@ -49,14 +49,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

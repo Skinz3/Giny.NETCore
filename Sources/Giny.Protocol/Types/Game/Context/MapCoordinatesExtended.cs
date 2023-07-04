@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class MapCoordinatesExtended : MapCoordinatesAndId  
-    { 
-        public new const ushort Id = 7377;
+{
+    public class MapCoordinatesExtended : MapCoordinatesAndId
+    {
+        public new const ushort Id = 3485;
         public override ushort TypeId => Id;
 
         public short subAreaId;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public MapCoordinatesExtended()
         {
         }
-        public MapCoordinatesExtended(short subAreaId,short worldX,short worldY,double mapId)
+        public MapCoordinatesExtended(short subAreaId, short worldX, short worldY, double mapId)
         {
             this.subAreaId = subAreaId;
             this.worldX = worldX;
@@ -46,11 +46,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

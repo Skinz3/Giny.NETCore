@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeItemAutoCraftStopedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 321;
+{
+    public class ExchangeItemAutoCraftStopedMessage : NetworkMessage
+    {
+        public const ushort Id = 2138;
         public override ushort MessageId => Id;
 
         public byte reason;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             reason = (byte)reader.ReadByte();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

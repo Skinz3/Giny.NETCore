@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class LocalizedChatSmileyMessage : ChatSmileyMessage  
-    { 
-        public new const ushort Id = 5993;
+{
+    public class LocalizedChatSmileyMessage : ChatSmileyMessage
+    {
+        public new const ushort Id = 8063;
         public override ushort MessageId => Id;
 
         public short cellId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public LocalizedChatSmileyMessage()
         {
         }
-        public LocalizedChatSmileyMessage(short cellId,double entityId,short smileyId,int accountId)
+        public LocalizedChatSmileyMessage(short cellId, double entityId, short smileyId, int accountId)
         {
             this.cellId = cellId;
             this.entityId = entityId;
@@ -45,14 +45,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

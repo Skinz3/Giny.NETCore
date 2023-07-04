@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class FightResultMutantListEntry : FightResultFighterListEntry  
-    { 
-        public new const ushort Id = 2535;
+{
+    public class FightResultMutantListEntry : FightResultFighterListEntry
+    {
+        public new const ushort Id = 9882;
         public override ushort TypeId => Id;
 
         public short level;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public FightResultMutantListEntry()
         {
         }
-        public FightResultMutantListEntry(short level,short outcome,byte wave,FightLoot rewards,double id,bool alive)
+        public FightResultMutantListEntry(short level, short outcome, byte wave, FightLoot rewards, double id, bool alive)
         {
             this.level = level;
             this.outcome = outcome;
@@ -48,11 +48,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

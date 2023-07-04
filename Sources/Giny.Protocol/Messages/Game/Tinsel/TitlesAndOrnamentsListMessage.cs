@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class TitlesAndOrnamentsListMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3990;
+{
+    public class TitlesAndOrnamentsListMessage : NetworkMessage
+    {
+        public const ushort Id = 3786;
         public override ushort MessageId => Id;
 
         public short[] titles;
@@ -20,7 +20,7 @@ namespace Giny.Protocol.Messages
         public TitlesAndOrnamentsListMessage()
         {
         }
-        public TitlesAndOrnamentsListMessage(short[] titles,short[] ornaments,short activeTitle,short activeOrnament)
+        public TitlesAndOrnamentsListMessage(short[] titles, short[] ornaments, short activeTitle, short activeOrnament)
         {
             this.titles = titles;
             this.ornaments = ornaments;
@@ -30,7 +30,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)titles.Length);
-            for (uint _i1 = 0;_i1 < titles.Length;_i1++)
+            for (uint _i1 = 0; _i1 < titles.Length; _i1++)
             {
                 if (titles[_i1] < 0)
                 {
@@ -41,7 +41,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteShort((short)ornaments.Length);
-            for (uint _i2 = 0;_i2 < ornaments.Length;_i2++)
+            for (uint _i2 = 0; _i2 < ornaments.Length; _i2++)
             {
                 if (ornaments[_i2] < 0)
                 {
@@ -70,7 +70,7 @@ namespace Giny.Protocol.Messages
             uint _val2 = 0;
             uint _titlesLen = (uint)reader.ReadUShort();
             titles = new short[_titlesLen];
-            for (uint _i1 = 0;_i1 < _titlesLen;_i1++)
+            for (uint _i1 = 0; _i1 < _titlesLen; _i1++)
             {
                 _val1 = (uint)reader.ReadVarUhShort();
                 if (_val1 < 0)
@@ -83,7 +83,7 @@ namespace Giny.Protocol.Messages
 
             uint _ornamentsLen = (uint)reader.ReadUShort();
             ornaments = new short[_ornamentsLen];
-            for (uint _i2 = 0;_i2 < _ornamentsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _ornamentsLen; _i2++)
             {
                 _val2 = (uint)reader.ReadVarUhShort();
                 if (_val2 < 0)
@@ -108,14 +108,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

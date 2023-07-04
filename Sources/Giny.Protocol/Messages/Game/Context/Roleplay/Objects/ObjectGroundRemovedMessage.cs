@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ObjectGroundRemovedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5373;
+{
+    public class ObjectGroundRemovedMessage : NetworkMessage
+    {
+        public const ushort Id = 7056;
         public override ushort MessageId => Id;
 
         public short cell;
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

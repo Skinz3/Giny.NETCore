@@ -6,17 +6,17 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HouseSellFromInsideRequestMessage : HouseSellRequestMessage  
-    { 
-        public new const ushort Id = 2789;
+{
+    public class HouseSellFromInsideRequestMessage : HouseSellRequestMessage
+    {
+        public new const ushort Id = 9965;
         public override ushort MessageId => Id;
 
 
         public HouseSellFromInsideRequestMessage()
         {
         }
-        public HouseSellFromInsideRequestMessage(int instanceId,long amount,bool forSale)
+        public HouseSellFromInsideRequestMessage(int instanceId, long amount, bool forSale)
         {
             this.instanceId = instanceId;
             this.amount = amount;
@@ -31,14 +31,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

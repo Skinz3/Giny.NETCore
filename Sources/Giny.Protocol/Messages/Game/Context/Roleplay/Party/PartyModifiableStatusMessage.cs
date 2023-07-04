@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PartyModifiableStatusMessage : AbstractPartyMessage  
-    { 
-        public new const ushort Id = 9235;
+{
+    public class PartyModifiableStatusMessage : AbstractPartyMessage
+    {
+        public new const ushort Id = 9566;
         public override ushort MessageId => Id;
 
         public bool enabled;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public PartyModifiableStatusMessage()
         {
         }
-        public PartyModifiableStatusMessage(bool enabled,int partyId)
+        public PartyModifiableStatusMessage(bool enabled, int partyId)
         {
             this.enabled = enabled;
             this.partyId = partyId;
@@ -33,14 +33,7 @@ namespace Giny.Protocol.Messages
             enabled = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

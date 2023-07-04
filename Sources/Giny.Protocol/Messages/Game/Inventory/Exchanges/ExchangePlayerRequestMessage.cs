@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangePlayerRequestMessage : ExchangeRequestMessage  
-    { 
-        public new const ushort Id = 4119;
+{
+    public class ExchangePlayerRequestMessage : ExchangeRequestMessage
+    {
+        public new const ushort Id = 6375;
         public override ushort MessageId => Id;
 
         public long target;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public ExchangePlayerRequestMessage()
         {
         }
-        public ExchangePlayerRequestMessage(long target,byte exchangeType)
+        public ExchangePlayerRequestMessage(long target, byte exchangeType)
         {
             this.target = target;
             this.exchangeType = exchangeType;
@@ -25,7 +25,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (target < 0 || target > 9.00719925474099E+15)
+            if (target < 0 || target > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + target + ") on element target.");
             }
@@ -36,21 +36,14 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             target = (long)reader.ReadVarUhLong();
-            if (target < 0 || target > 9.00719925474099E+15)
+            if (target < 0 || target > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + target + ") on element of ExchangePlayerRequestMessage.target.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

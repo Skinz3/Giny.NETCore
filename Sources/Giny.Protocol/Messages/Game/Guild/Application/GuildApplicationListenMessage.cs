@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildApplicationListenMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1646;
+{
+    public class GuildApplicationListenMessage : NetworkMessage
+    {
+        public const ushort Id = 5498;
         public override ushort MessageId => Id;
 
         public bool listen;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             listen = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

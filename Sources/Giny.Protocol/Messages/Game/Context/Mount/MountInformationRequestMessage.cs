@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class MountInformationRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4913;
+{
+    public class MountInformationRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 4256;
         public override ushort MessageId => Id;
 
         public double id;
@@ -18,20 +18,20 @@ namespace Giny.Protocol.Messages
         public MountInformationRequestMessage()
         {
         }
-        public MountInformationRequestMessage(double id,double time)
+        public MountInformationRequestMessage(double id, double time)
         {
             this.id = id;
             this.time = time;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (id < -9.00719925474099E+15 || id > 9.00719925474099E+15)
+            if (id < -9007199254740992 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element id.");
             }
 
             writer.WriteDouble((double)id);
-            if (time < -9.00719925474099E+15 || time > 9.00719925474099E+15)
+            if (time < -9007199254740992 || time > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + time + ") on element time.");
             }
@@ -41,27 +41,20 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             id = (double)reader.ReadDouble();
-            if (id < -9.00719925474099E+15 || id > 9.00719925474099E+15)
+            if (id < -9007199254740992 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element of MountInformationRequestMessage.id.");
             }
 
             time = (double)reader.ReadDouble();
-            if (time < -9.00719925474099E+15 || time > 9.00719925474099E+15)
+            if (time < -9007199254740992 || time > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + time + ") on element of MountInformationRequestMessage.time.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -240,7 +240,7 @@ namespace Giny.World.Managers.Items.Collections
         {
             return m_items.Values.Contains(item);
         }
-        protected virtual T GetSameItem(short gid, EffectCollection effects)
+        protected virtual T GetSameItem(int gid, EffectCollection effects)
         {
             return GetItems().FirstOrDefault(x => x.GId == gid && x.Effects.SequenceEqual(effects));
         }
@@ -249,7 +249,7 @@ namespace Giny.World.Managers.Items.Collections
             m_items.TryGetValue(uid, out var item);
             return item;
         }
-        public T GetItem(short gid, EffectCollection effects)
+        public T GetItem(int gid, EffectCollection effects)
         {
             return GetSameItem(gid, effects);
         }

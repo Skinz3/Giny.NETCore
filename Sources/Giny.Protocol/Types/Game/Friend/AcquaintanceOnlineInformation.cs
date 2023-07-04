@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class AcquaintanceOnlineInformation : AcquaintanceInformation  
-    { 
-        public new const ushort Id = 4753;
+{
+    public class AcquaintanceOnlineInformation : AcquaintanceInformation
+    {
+        public new const ushort Id = 248;
         public override ushort TypeId => Id;
 
         public long playerId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Types
         public AcquaintanceOnlineInformation()
         {
         }
-        public AcquaintanceOnlineInformation(long playerId,string playerName,short moodSmileyId,PlayerStatus status,int accountId,AccountTagInformation accountTag,byte playerState)
+        public AcquaintanceOnlineInformation(long playerId, string playerName, short moodSmileyId, PlayerStatus status, int accountId, AccountTagInformation accountTag, byte playerState)
         {
             this.playerId = playerId;
             this.playerName = playerName;
@@ -31,7 +31,7 @@ namespace Giny.Protocol.Types
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
@@ -51,7 +51,7 @@ namespace Giny.Protocol.Types
         {
             base.Deserialize(reader);
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of AcquaintanceOnlineInformation.playerId.");
             }
@@ -71,11 +71,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

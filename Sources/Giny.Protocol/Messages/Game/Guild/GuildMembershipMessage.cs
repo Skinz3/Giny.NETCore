@@ -6,17 +6,17 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildMembershipMessage : GuildJoinedMessage  
-    { 
-        public new const ushort Id = 2565;
+{
+    public class GuildMembershipMessage : GuildJoinedMessage
+    {
+        public new const ushort Id = 5975;
         public override ushort MessageId => Id;
 
 
         public GuildMembershipMessage()
         {
         }
-        public GuildMembershipMessage(GuildInformations guildInfo,int rankId)
+        public GuildMembershipMessage(GuildInformations guildInfo, int rankId)
         {
             this.guildInfo = guildInfo;
             this.rankId = rankId;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class EmotePlayAbstractMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 610;
+{
+    public class EmotePlayAbstractMessage : NetworkMessage
+    {
+        public const ushort Id = 1042;
         public override ushort MessageId => Id;
 
         public short emoteId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public EmotePlayAbstractMessage()
         {
         }
-        public EmotePlayAbstractMessage(short emoteId,double emoteStartTime)
+        public EmotePlayAbstractMessage(short emoteId, double emoteStartTime)
         {
             this.emoteId = emoteId;
             this.emoteStartTime = emoteStartTime;
@@ -31,7 +31,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteShort((short)emoteId);
-            if (emoteStartTime < -9.00719925474099E+15 || emoteStartTime > 9.00719925474099E+15)
+            if (emoteStartTime < -9007199254740992 || emoteStartTime > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + emoteStartTime + ") on element emoteStartTime.");
             }
@@ -47,21 +47,14 @@ namespace Giny.Protocol.Messages
             }
 
             emoteStartTime = (double)reader.ReadDouble();
-            if (emoteStartTime < -9.00719925474099E+15 || emoteStartTime > 9.00719925474099E+15)
+            if (emoteStartTime < -9007199254740992 || emoteStartTime > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + emoteStartTime + ") on element of EmotePlayAbstractMessage.emoteStartTime.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class FightResultFighterListEntry : FightResultListEntry  
-    { 
-        public new const ushort Id = 1826;
+{
+    public class FightResultFighterListEntry : FightResultListEntry
+    {
+        public new const ushort Id = 9754;
         public override ushort TypeId => Id;
 
         public double id;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public FightResultFighterListEntry()
         {
         }
-        public FightResultFighterListEntry(double id,bool alive,short outcome,byte wave,FightLoot rewards)
+        public FightResultFighterListEntry(double id, bool alive, short outcome, byte wave, FightLoot rewards)
         {
             this.id = id;
             this.alive = alive;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Types
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (id < -9.00719925474099E+15 || id > 9.00719925474099E+15)
+            if (id < -9007199254740992 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element id.");
             }
@@ -39,7 +39,7 @@ namespace Giny.Protocol.Types
         {
             base.Deserialize(reader);
             id = (double)reader.ReadDouble();
-            if (id < -9.00719925474099E+15 || id > 9.00719925474099E+15)
+            if (id < -9007199254740992 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element of FightResultFighterListEntry.id.");
             }
@@ -50,11 +50,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

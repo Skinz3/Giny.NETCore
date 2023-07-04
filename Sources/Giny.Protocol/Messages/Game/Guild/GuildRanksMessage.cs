@@ -6,51 +6,44 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildRanksMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1680;
+{
+    public class GuildRanksMessage : NetworkMessage
+    {
+        public const ushort Id = 3167;
         public override ushort MessageId => Id;
 
-        public GuildRankInformation[] ranks;
+        public RankInformation[] ranks;
 
         public GuildRanksMessage()
         {
         }
-        public GuildRanksMessage(GuildRankInformation[] ranks)
+        public GuildRanksMessage(RankInformation[] ranks)
         {
             this.ranks = ranks;
         }
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)ranks.Length);
-            for (uint _i1 = 0;_i1 < ranks.Length;_i1++)
+            for (uint _i1 = 0; _i1 < ranks.Length; _i1++)
             {
-                (ranks[_i1] as GuildRankInformation).Serialize(writer);
+                (ranks[_i1] as RankInformation).Serialize(writer);
             }
 
         }
         public override void Deserialize(IDataReader reader)
         {
-            GuildRankInformation _item1 = null;
+            RankInformation _item1 = null;
             uint _ranksLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _ranksLen;_i1++)
+            for (uint _i1 = 0; _i1 < _ranksLen; _i1++)
             {
-                _item1 = new GuildRankInformation();
+                _item1 = new RankInformation();
                 _item1.Deserialize(reader);
                 ranks[_i1] = _item1;
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class NicknameChoiceRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8378;
+{
+    public class NicknameChoiceRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 3003;
         public override ushort MessageId => Id;
 
         public string nickname;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             nickname = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

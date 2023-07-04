@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class HouseInformations  
-    { 
-        public const ushort Id = 1025;
+{
+    public class HouseInformations
+    {
+        public const ushort Id = 867;
         public virtual ushort TypeId => Id;
 
         public int houseId;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public HouseInformations()
         {
         }
-        public HouseInformations(int houseId,short modelId)
+        public HouseInformations(int houseId, short modelId)
         {
             this.houseId = houseId;
             this.modelId = modelId;
@@ -55,11 +55,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

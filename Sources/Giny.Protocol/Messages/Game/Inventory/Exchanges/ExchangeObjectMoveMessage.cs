@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeObjectMoveMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 150;
+{
+    public class ExchangeObjectMoveMessage : NetworkMessage
+    {
+        public const ushort Id = 1020;
         public override ushort MessageId => Id;
 
         public int objectUID;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ExchangeObjectMoveMessage()
         {
         }
-        public ExchangeObjectMoveMessage(int objectUID,int quantity)
+        public ExchangeObjectMoveMessage(int objectUID, int quantity)
         {
             this.objectUID = objectUID;
             this.quantity = quantity;
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
             quantity = (int)reader.ReadVarInt();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

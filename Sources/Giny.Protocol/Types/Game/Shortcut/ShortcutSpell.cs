@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ShortcutSpell : Shortcut  
-    { 
-        public new const ushort Id = 6385;
+{
+    public class ShortcutSpell : Shortcut
+    {
+        public new const ushort Id = 8581;
         public override ushort TypeId => Id;
 
         public short spellId;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public ShortcutSpell()
         {
         }
-        public ShortcutSpell(short spellId,byte slot)
+        public ShortcutSpell(short spellId, byte slot)
         {
             this.spellId = spellId;
             this.slot = slot;
@@ -44,11 +44,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

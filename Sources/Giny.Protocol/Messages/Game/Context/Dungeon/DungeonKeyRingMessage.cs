@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class DungeonKeyRingMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8007;
+{
+    public class DungeonKeyRingMessage : NetworkMessage
+    {
+        public const ushort Id = 8833;
         public override ushort MessageId => Id;
 
         public short[] availables;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public DungeonKeyRingMessage()
         {
         }
-        public DungeonKeyRingMessage(short[] availables,short[] unavailables)
+        public DungeonKeyRingMessage(short[] availables, short[] unavailables)
         {
             this.availables = availables;
             this.unavailables = unavailables;
@@ -26,7 +26,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)availables.Length);
-            for (uint _i1 = 0;_i1 < availables.Length;_i1++)
+            for (uint _i1 = 0; _i1 < availables.Length; _i1++)
             {
                 if (availables[_i1] < 0)
                 {
@@ -37,7 +37,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteShort((short)unavailables.Length);
-            for (uint _i2 = 0;_i2 < unavailables.Length;_i2++)
+            for (uint _i2 = 0; _i2 < unavailables.Length; _i2++)
             {
                 if (unavailables[_i2] < 0)
                 {
@@ -54,7 +54,7 @@ namespace Giny.Protocol.Messages
             uint _val2 = 0;
             uint _availablesLen = (uint)reader.ReadUShort();
             availables = new short[_availablesLen];
-            for (uint _i1 = 0;_i1 < _availablesLen;_i1++)
+            for (uint _i1 = 0; _i1 < _availablesLen; _i1++)
             {
                 _val1 = (uint)reader.ReadVarUhShort();
                 if (_val1 < 0)
@@ -67,7 +67,7 @@ namespace Giny.Protocol.Messages
 
             uint _unavailablesLen = (uint)reader.ReadUShort();
             unavailables = new short[_unavailablesLen];
-            for (uint _i2 = 0;_i2 < _unavailablesLen;_i2++)
+            for (uint _i2 = 0; _i2 < _unavailablesLen; _i2++)
             {
                 _val2 = (uint)reader.ReadVarUhShort();
                 if (_val2 < 0)
@@ -80,14 +80,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

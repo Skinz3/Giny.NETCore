@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PaginationAnswerAbstractMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2497;
+{
+    public class PaginationAnswerAbstractMessage : NetworkMessage
+    {
+        public const ushort Id = 500;
         public override ushort MessageId => Id;
 
         public double offset;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public PaginationAnswerAbstractMessage()
         {
         }
-        public PaginationAnswerAbstractMessage(double offset,uint count,uint total)
+        public PaginationAnswerAbstractMessage(double offset, uint count, uint total)
         {
             this.offset = offset;
             this.count = count;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (offset < 0 || offset > 9.00719925474099E+15)
+            if (offset < 0 || offset > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + offset + ") on element offset.");
             }
@@ -49,7 +49,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             offset = (double)reader.ReadDouble();
-            if (offset < 0 || offset > 9.00719925474099E+15)
+            if (offset < 0 || offset > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + offset + ") on element of PaginationAnswerAbstractMessage.offset.");
             }
@@ -68,14 +68,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

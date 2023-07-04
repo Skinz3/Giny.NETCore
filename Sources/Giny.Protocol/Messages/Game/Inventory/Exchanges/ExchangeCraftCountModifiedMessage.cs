@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeCraftCountModifiedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1816;
+{
+    public class ExchangeCraftCountModifiedMessage : NetworkMessage
+    {
+        public const ushort Id = 8113;
         public override ushort MessageId => Id;
 
         public int count;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             count = (int)reader.ReadVarInt();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

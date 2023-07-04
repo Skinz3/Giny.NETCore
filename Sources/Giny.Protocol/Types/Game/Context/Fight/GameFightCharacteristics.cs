@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameFightCharacteristics  
-    { 
-        public const ushort Id = 3807;
+{
+    public class GameFightCharacteristics
+    {
+        public const ushort Id = 6446;
         public virtual ushort TypeId => Id;
 
         public CharacterCharacteristics characteristics;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Types
         public GameFightCharacteristics()
         {
         }
-        public GameFightCharacteristics(CharacterCharacteristics characteristics,double summoner,bool summoned,byte invisibilityState)
+        public GameFightCharacteristics(CharacterCharacteristics characteristics, double summoner, bool summoned, byte invisibilityState)
         {
             this.characteristics = characteristics;
             this.summoner = summoner;
@@ -28,7 +28,7 @@ namespace Giny.Protocol.Types
         public virtual void Serialize(IDataWriter writer)
         {
             characteristics.Serialize(writer);
-            if (summoner < -9.00719925474099E+15 || summoner > 9.00719925474099E+15)
+            if (summoner < -9007199254740992 || summoner > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + summoner + ") on element summoner.");
             }
@@ -42,7 +42,7 @@ namespace Giny.Protocol.Types
             characteristics = new CharacterCharacteristics();
             characteristics.Deserialize(reader);
             summoner = (double)reader.ReadDouble();
-            if (summoner < -9.00719925474099E+15 || summoner > 9.00719925474099E+15)
+            if (summoner < -9007199254740992 || summoner > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + summoner + ") on element of GameFightCharacteristics.summoner.");
             }
@@ -59,11 +59,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

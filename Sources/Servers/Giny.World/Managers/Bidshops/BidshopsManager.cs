@@ -17,7 +17,7 @@ namespace Giny.World.Managers.Bidshops
     {
         private ConcurrentDictionary<long, ConcurrentDictionary<long, BidShopItemRecord>> m_bidshopItems = new ConcurrentDictionary<long, ConcurrentDictionary<long, BidShopItemRecord>>();
 
-        private ConcurrentDictionary<short, long> m_averagePrices = new ConcurrentDictionary<short, long>();
+        private ConcurrentDictionary<int, long> m_averagePrices = new ConcurrentDictionary<int, long>();
 
         [StartupInvoke("Bidshops", StartupInvokePriority.SixthPath)]
         public void Initialize()
@@ -53,7 +53,7 @@ namespace Giny.World.Managers.Bidshops
             return result;
         }
 
-        public long GetAveragePrice(short genId)
+        public long GetAveragePrice(int genId)
         {
             if (m_averagePrices.ContainsKey(genId))
             {
@@ -65,7 +65,7 @@ namespace Giny.World.Managers.Bidshops
             }
         }
 
-        public ConcurrentDictionary<short,long> GetAveragePrices()
+        public ConcurrentDictionary<int, long> GetAveragePrices()
         {
             return m_averagePrices;
         }
@@ -73,7 +73,7 @@ namespace Giny.World.Managers.Bidshops
         {
             m_averagePrices.Clear();
 
-            Dictionary<short, List<long>> prices = new Dictionary<short, List<long>>();
+            Dictionary<int, List<long>> prices = new Dictionary<int, List<long>>();
 
             foreach (var bidshop in m_bidshopItems)
             {

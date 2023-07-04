@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AlliancePrismDialogQuestionMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6389;
+{
+    public class AlliancePrismDialogQuestionMessage : NetworkMessage
+    {
+        public const ushort Id = 806;
         public override ushort MessageId => Id;
 
 
@@ -23,14 +23,7 @@ namespace Giny.Protocol.Messages
         {
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

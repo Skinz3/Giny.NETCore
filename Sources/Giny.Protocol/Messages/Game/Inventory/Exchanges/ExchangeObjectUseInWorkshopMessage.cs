@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeObjectUseInWorkshopMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4324;
+{
+    public class ExchangeObjectUseInWorkshopMessage : NetworkMessage
+    {
+        public const ushort Id = 4707;
         public override ushort MessageId => Id;
 
         public int objectUID;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ExchangeObjectUseInWorkshopMessage()
         {
         }
-        public ExchangeObjectUseInWorkshopMessage(int objectUID,int quantity)
+        public ExchangeObjectUseInWorkshopMessage(int objectUID, int quantity)
         {
             this.objectUID = objectUID;
             this.quantity = quantity;
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
             quantity = (int)reader.ReadVarInt();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BreachRewardsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6368;
+{
+    public class BreachRewardsMessage : NetworkMessage
+    {
+        public const ushort Id = 971;
         public override ushort MessageId => Id;
 
         public BreachReward[] rewards;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)rewards.Length);
-            for (uint _i1 = 0;_i1 < rewards.Length;_i1++)
+            for (uint _i1 = 0; _i1 < rewards.Length; _i1++)
             {
                 (rewards[_i1] as BreachReward).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             BreachReward _item1 = null;
             uint _rewardsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _rewardsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _rewardsLen; _i1++)
             {
                 _item1 = new BreachReward();
                 _item1.Deserialize(reader);
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

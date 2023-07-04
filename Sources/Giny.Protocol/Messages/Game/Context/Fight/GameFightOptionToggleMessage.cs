@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightOptionToggleMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1236;
+{
+    public class GameFightOptionToggleMessage : NetworkMessage
+    {
+        public const ushort Id = 6395;
         public override ushort MessageId => Id;
 
         public byte option;
@@ -35,14 +35,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AllianceMotdSetRequestMessage : SocialNoticeSetRequestMessage  
-    { 
-        public new const ushort Id = 1591;
+{
+    public class AllianceMotdSetRequestMessage : SocialNoticeSetRequestMessage
+    {
+        public new const ushort Id = 7489;
         public override ushort MessageId => Id;
 
         public string content;
@@ -32,14 +32,7 @@ namespace Giny.Protocol.Messages
             content = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class LivingObjectDissociateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8132;
+{
+    public class LivingObjectDissociateMessage : NetworkMessage
+    {
+        public const ushort Id = 2542;
         public override ushort MessageId => Id;
 
         public int livingUID;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public LivingObjectDissociateMessage()
         {
         }
-        public LivingObjectDissociateMessage(int livingUID,byte livingPosition)
+        public LivingObjectDissociateMessage(int livingUID, byte livingPosition)
         {
             this.livingUID = livingUID;
             this.livingPosition = livingPosition;
@@ -54,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

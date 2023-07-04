@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class CharacterReplayWithRemodelRequestMessage : CharacterReplayRequestMessage  
-    { 
-        public new const ushort Id = 9757;
+{
+    public class CharacterReplayWithRemodelRequestMessage : CharacterReplayRequestMessage
+    {
+        public new const ushort Id = 6123;
         public override ushort MessageId => Id;
 
         public RemodelingInformation remodel;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public CharacterReplayWithRemodelRequestMessage()
         {
         }
-        public CharacterReplayWithRemodelRequestMessage(RemodelingInformation remodel,long characterId)
+        public CharacterReplayWithRemodelRequestMessage(RemodelingInformation remodel, long characterId)
         {
             this.remodel = remodel;
             this.characterId = characterId;
@@ -34,14 +34,7 @@ namespace Giny.Protocol.Messages
             remodel.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

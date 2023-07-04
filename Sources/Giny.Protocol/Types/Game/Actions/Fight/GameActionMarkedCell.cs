@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameActionMarkedCell  
-    { 
-        public const ushort Id = 4763;
+{
+    public class GameActionMarkedCell
+    {
+        public const ushort Id = 8558;
         public virtual ushort TypeId => Id;
 
         public short cellId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Types
         public GameActionMarkedCell()
         {
         }
-        public GameActionMarkedCell(short cellId,byte zoneSize,int cellColor,byte cellsType)
+        public GameActionMarkedCell(short cellId, byte zoneSize, int cellColor, byte cellsType)
         {
             this.cellId = cellId;
             this.zoneSize = zoneSize;
@@ -53,11 +53,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

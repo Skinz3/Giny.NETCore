@@ -6,48 +6,41 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AllianceKickRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2717;
+{
+    public class AllianceKickRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 3218;
         public override ushort MessageId => Id;
 
-        public int kickedId;
+        public long kickedId;
 
         public AllianceKickRequestMessage()
         {
         }
-        public AllianceKickRequestMessage(int kickedId)
+        public AllianceKickRequestMessage(long kickedId)
         {
             this.kickedId = kickedId;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (kickedId < 0)
+            if (kickedId < -9007199254740992 || kickedId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + kickedId + ") on element kickedId.");
             }
 
-            writer.WriteVarInt((int)kickedId);
+            writer.WriteVarLong((long)kickedId);
         }
         public override void Deserialize(IDataReader reader)
         {
-            kickedId = (int)reader.ReadVarUhInt();
-            if (kickedId < 0)
+            kickedId = (long)reader.ReadVarLong();
+            if (kickedId < -9007199254740992 || kickedId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + kickedId + ") on element of AllianceKickRequestMessage.kickedId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

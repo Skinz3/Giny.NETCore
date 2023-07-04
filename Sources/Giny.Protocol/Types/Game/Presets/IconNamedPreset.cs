@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class IconNamedPreset : PresetsContainerPreset  
-    { 
-        public new const ushort Id = 1919;
+{
+    public class IconNamedPreset : PresetsContainerPreset
+    {
+        public new const ushort Id = 4724;
         public override ushort TypeId => Id;
 
         public short iconId;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public IconNamedPreset()
         {
         }
-        public IconNamedPreset(short iconId,string name,short id,Preset[] presets)
+        public IconNamedPreset(short iconId, string name, short id, Preset[] presets)
         {
             this.iconId = iconId;
             this.name = name;
@@ -49,11 +49,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

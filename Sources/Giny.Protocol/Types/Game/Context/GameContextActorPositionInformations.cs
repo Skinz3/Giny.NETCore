@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameContextActorPositionInformations  
-    { 
-        public const ushort Id = 261;
+{
+    public class GameContextActorPositionInformations
+    {
+        public const ushort Id = 6153;
         public virtual ushort TypeId => Id;
 
         public double contextualId;
@@ -16,14 +16,14 @@ namespace Giny.Protocol.Types
         public GameContextActorPositionInformations()
         {
         }
-        public GameContextActorPositionInformations(double contextualId,EntityDispositionInformations disposition)
+        public GameContextActorPositionInformations(double contextualId, EntityDispositionInformations disposition)
         {
             this.contextualId = contextualId;
             this.disposition = disposition;
         }
         public virtual void Serialize(IDataWriter writer)
         {
-            if (contextualId < -9.00719925474099E+15 || contextualId > 9.00719925474099E+15)
+            if (contextualId < -9007199254740992 || contextualId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + contextualId + ") on element contextualId.");
             }
@@ -35,7 +35,7 @@ namespace Giny.Protocol.Types
         public virtual void Deserialize(IDataReader reader)
         {
             contextualId = (double)reader.ReadDouble();
-            if (contextualId < -9.00719925474099E+15 || contextualId > 9.00719925474099E+15)
+            if (contextualId < -9007199254740992 || contextualId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + contextualId + ") on element of GameContextActorPositionInformations.contextualId.");
             }
@@ -48,11 +48,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

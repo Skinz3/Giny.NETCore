@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class InteractiveElement  
-    { 
-        public const ushort Id = 2235;
+{
+    public class InteractiveElement
+    {
+        public const ushort Id = 6125;
         public virtual ushort TypeId => Id;
 
         public int elementId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Types
         public InteractiveElement()
         {
         }
-        public InteractiveElement(int elementId,int elementTypeId,InteractiveElementSkill[] enabledSkills,InteractiveElementSkill[] disabledSkills,bool onCurrentMap)
+        public InteractiveElement(int elementId, int elementTypeId, InteractiveElementSkill[] enabledSkills, InteractiveElementSkill[] disabledSkills, bool onCurrentMap)
         {
             this.elementId = elementId;
             this.elementTypeId = elementTypeId;
@@ -37,14 +37,14 @@ namespace Giny.Protocol.Types
             writer.WriteInt((int)elementId);
             writer.WriteInt((int)elementTypeId);
             writer.WriteShort((short)enabledSkills.Length);
-            for (uint _i3 = 0;_i3 < enabledSkills.Length;_i3++)
+            for (uint _i3 = 0; _i3 < enabledSkills.Length; _i3++)
             {
                 writer.WriteShort((short)(enabledSkills[_i3] as InteractiveElementSkill).TypeId);
                 (enabledSkills[_i3] as InteractiveElementSkill).Serialize(writer);
             }
 
             writer.WriteShort((short)disabledSkills.Length);
-            for (uint _i4 = 0;_i4 < disabledSkills.Length;_i4++)
+            for (uint _i4 = 0; _i4 < disabledSkills.Length; _i4++)
             {
                 writer.WriteShort((short)(disabledSkills[_i4] as InteractiveElementSkill).TypeId);
                 (disabledSkills[_i4] as InteractiveElementSkill).Serialize(writer);
@@ -66,7 +66,7 @@ namespace Giny.Protocol.Types
 
             elementTypeId = (int)reader.ReadInt();
             uint _enabledSkillsLen = (uint)reader.ReadUShort();
-            for (uint _i3 = 0;_i3 < _enabledSkillsLen;_i3++)
+            for (uint _i3 = 0; _i3 < _enabledSkillsLen; _i3++)
             {
                 _id3 = (uint)reader.ReadUShort();
                 _item3 = ProtocolTypeManager.GetInstance<InteractiveElementSkill>((short)_id3);
@@ -75,7 +75,7 @@ namespace Giny.Protocol.Types
             }
 
             uint _disabledSkillsLen = (uint)reader.ReadUShort();
-            for (uint _i4 = 0;_i4 < _disabledSkillsLen;_i4++)
+            for (uint _i4 = 0; _i4 < _disabledSkillsLen; _i4++)
             {
                 _id4 = (uint)reader.ReadUShort();
                 _item4 = ProtocolTypeManager.GetInstance<InteractiveElementSkill>((short)_id4);
@@ -89,11 +89,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

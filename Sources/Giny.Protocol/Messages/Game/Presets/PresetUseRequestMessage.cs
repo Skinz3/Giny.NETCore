@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PresetUseRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8428;
+{
+    public class PresetUseRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 6550;
         public override ushort MessageId => Id;
 
         public short presetId;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             presetId = (short)reader.ReadShort();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

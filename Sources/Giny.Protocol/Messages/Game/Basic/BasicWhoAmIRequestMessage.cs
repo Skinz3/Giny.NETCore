@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BasicWhoAmIRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3187;
+{
+    public class BasicWhoAmIRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 1429;
         public override ushort MessageId => Id;
 
         public bool verbose;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             verbose = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

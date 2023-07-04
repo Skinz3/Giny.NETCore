@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeCraftResultWithObjectDescMessage : ExchangeCraftResultMessage  
-    { 
-        public new const ushort Id = 1134;
+{
+    public class ExchangeCraftResultWithObjectDescMessage : ExchangeCraftResultMessage
+    {
+        public new const ushort Id = 6151;
         public override ushort MessageId => Id;
 
         public ObjectItemNotInContainer objectInfo;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public ExchangeCraftResultWithObjectDescMessage()
         {
         }
-        public ExchangeCraftResultWithObjectDescMessage(ObjectItemNotInContainer objectInfo,byte craftResult)
+        public ExchangeCraftResultWithObjectDescMessage(ObjectItemNotInContainer objectInfo, byte craftResult)
         {
             this.objectInfo = objectInfo;
             this.craftResult = craftResult;
@@ -34,14 +34,7 @@ namespace Giny.Protocol.Messages
             objectInfo.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

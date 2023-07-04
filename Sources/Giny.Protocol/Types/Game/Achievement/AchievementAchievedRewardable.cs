@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class AchievementAchievedRewardable : AchievementAchieved  
-    { 
-        public new const ushort Id = 7808;
+{
+    public class AchievementAchievedRewardable : AchievementAchieved
+    {
+        public new const ushort Id = 2287;
         public override ushort TypeId => Id;
 
         public short finishedlevel;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public AchievementAchievedRewardable()
         {
         }
-        public AchievementAchievedRewardable(short finishedlevel,short id,long achievedBy)
+        public AchievementAchievedRewardable(short finishedlevel, short id, long achievedBy)
         {
             this.finishedlevel = finishedlevel;
             this.id = id;
@@ -45,11 +45,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

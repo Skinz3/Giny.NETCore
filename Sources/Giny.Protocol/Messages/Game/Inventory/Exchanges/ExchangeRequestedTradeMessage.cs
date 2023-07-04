@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeRequestedTradeMessage : ExchangeRequestedMessage  
-    { 
-        public new const ushort Id = 6276;
+{
+    public class ExchangeRequestedTradeMessage : ExchangeRequestedMessage
+    {
+        public new const ushort Id = 5092;
         public override ushort MessageId => Id;
 
         public long source;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ExchangeRequestedTradeMessage()
         {
         }
-        public ExchangeRequestedTradeMessage(long source,long target,byte exchangeType)
+        public ExchangeRequestedTradeMessage(long source, long target, byte exchangeType)
         {
             this.source = source;
             this.target = target;
@@ -27,13 +27,13 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (source < 0 || source > 9.00719925474099E+15)
+            if (source < 0 || source > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + source + ") on element source.");
             }
 
             writer.WriteVarLong((long)source);
-            if (target < 0 || target > 9.00719925474099E+15)
+            if (target < 0 || target > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + target + ") on element target.");
             }
@@ -44,27 +44,20 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             source = (long)reader.ReadVarUhLong();
-            if (source < 0 || source > 9.00719925474099E+15)
+            if (source < 0 || source > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + source + ") on element of ExchangeRequestedTradeMessage.source.");
             }
 
             target = (long)reader.ReadVarUhLong();
-            if (target < 0 || target > 9.00719925474099E+15)
+            if (target < 0 || target > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + target + ") on element of ExchangeRequestedTradeMessage.target.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

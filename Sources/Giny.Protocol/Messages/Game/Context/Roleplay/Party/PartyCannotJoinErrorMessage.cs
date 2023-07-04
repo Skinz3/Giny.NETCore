@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PartyCannotJoinErrorMessage : AbstractPartyMessage  
-    { 
-        public new const ushort Id = 1903;
+{
+    public class PartyCannotJoinErrorMessage : AbstractPartyMessage
+    {
+        public new const ushort Id = 512;
         public override ushort MessageId => Id;
 
         public byte reason;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public PartyCannotJoinErrorMessage()
         {
         }
-        public PartyCannotJoinErrorMessage(byte reason,int partyId)
+        public PartyCannotJoinErrorMessage(byte reason, int partyId)
         {
             this.reason = reason;
             this.partyId = partyId;
@@ -38,14 +38,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

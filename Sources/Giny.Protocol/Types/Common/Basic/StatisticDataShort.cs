@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class StatisticDataShort : StatisticData  
-    { 
-        public new const ushort Id = 7316;
+{
+    public class StatisticDataShort : StatisticData
+    {
+        public new const ushort Id = 8460;
         public override ushort TypeId => Id;
 
         public short value;
@@ -33,11 +33,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ClientUIOpenedByObjectMessage : ClientUIOpenedMessage  
-    { 
-        public new const ushort Id = 9520;
+{
+    public class ClientUIOpenedByObjectMessage : ClientUIOpenedMessage
+    {
+        public new const ushort Id = 953;
         public override ushort MessageId => Id;
 
         public int uid;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public ClientUIOpenedByObjectMessage()
         {
         }
-        public ClientUIOpenedByObjectMessage(int uid,byte type)
+        public ClientUIOpenedByObjectMessage(int uid, byte type)
         {
             this.uid = uid;
             this.type = type;
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AnomalySubareaInformationResponseMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8497;
+{
+    public class AnomalySubareaInformationResponseMessage : NetworkMessage
+    {
+        public const ushort Id = 4250;
         public override ushort MessageId => Id;
 
         public AnomalySubareaInformation[] subareas;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)subareas.Length);
-            for (uint _i1 = 0;_i1 < subareas.Length;_i1++)
+            for (uint _i1 = 0; _i1 < subareas.Length; _i1++)
             {
                 (subareas[_i1] as AnomalySubareaInformation).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             AnomalySubareaInformation _item1 = null;
             uint _subareasLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _subareasLen;_i1++)
+            for (uint _i1 = 0; _i1 < _subareasLen; _i1++)
             {
                 _item1 = new AnomalySubareaInformation();
                 _item1.Deserialize(reader);
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

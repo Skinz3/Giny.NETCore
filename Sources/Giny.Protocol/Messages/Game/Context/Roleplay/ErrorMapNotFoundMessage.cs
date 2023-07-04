@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ErrorMapNotFoundMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6809;
+{
+    public class ErrorMapNotFoundMessage : NetworkMessage
+    {
+        public const ushort Id = 8995;
         public override ushort MessageId => Id;
 
         public double mapId;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element mapId.");
             }
@@ -33,21 +33,14 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             mapId = (double)reader.ReadDouble();
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element of System.ExceptionMapNotFoundMessage.mapId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class StatedMapUpdateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1576;
+{
+    public class StatedMapUpdateMessage : NetworkMessage
+    {
+        public const ushort Id = 7934;
         public override ushort MessageId => Id;
 
         public StatedElement[] statedElements;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)statedElements.Length);
-            for (uint _i1 = 0;_i1 < statedElements.Length;_i1++)
+            for (uint _i1 = 0; _i1 < statedElements.Length; _i1++)
             {
                 (statedElements[_i1] as StatedElement).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             StatedElement _item1 = null;
             uint _statedElementsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _statedElementsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _statedElementsLen; _i1++)
             {
                 _item1 = new StatedElement();
                 _item1.Deserialize(reader);
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

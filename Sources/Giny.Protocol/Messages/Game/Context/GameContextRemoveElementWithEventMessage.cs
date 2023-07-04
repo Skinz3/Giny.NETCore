@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameContextRemoveElementWithEventMessage : GameContextRemoveElementMessage  
-    { 
-        public new const ushort Id = 2969;
+{
+    public class GameContextRemoveElementWithEventMessage : GameContextRemoveElementMessage
+    {
+        public new const ushort Id = 7148;
         public override ushort MessageId => Id;
 
         public byte elementEventId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public GameContextRemoveElementWithEventMessage()
         {
         }
-        public GameContextRemoveElementWithEventMessage(byte elementEventId,double id)
+        public GameContextRemoveElementWithEventMessage(byte elementEventId, double id)
         {
             this.elementEventId = elementEventId;
             this.id = id;
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

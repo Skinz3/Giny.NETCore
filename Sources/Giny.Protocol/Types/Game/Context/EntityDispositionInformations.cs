@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class EntityDispositionInformations  
-    { 
-        public const ushort Id = 2227;
+{
+    public class EntityDispositionInformations
+    {
+        public const ushort Id = 3882;
         public virtual ushort TypeId => Id;
 
         public short cellId;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public EntityDispositionInformations()
         {
         }
-        public EntityDispositionInformations(short cellId,byte direction)
+        public EntityDispositionInformations(short cellId, byte direction)
         {
             this.cellId = cellId;
             this.direction = direction;
@@ -50,11 +50,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

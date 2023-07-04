@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class SpawnCharacterInformation : SpawnInformation  
-    { 
-        public new const ushort Id = 6870;
+{
+    public class SpawnCharacterInformation : SpawnInformation
+    {
+        public new const ushort Id = 7232;
         public override ushort TypeId => Id;
 
         public string name;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public SpawnCharacterInformation()
         {
         }
-        public SpawnCharacterInformation(string name,short level)
+        public SpawnCharacterInformation(string name, short level)
         {
             this.name = name;
             this.level = level;
@@ -47,11 +47,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

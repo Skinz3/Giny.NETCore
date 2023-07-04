@@ -6,17 +6,17 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeObjectModifyPricedMessage : ExchangeObjectMovePricedMessage  
-    { 
-        public new const ushort Id = 6429;
+{
+    public class ExchangeObjectModifyPricedMessage : ExchangeObjectMovePricedMessage
+    {
+        public new const ushort Id = 3970;
         public override ushort MessageId => Id;
 
 
         public ExchangeObjectModifyPricedMessage()
         {
         }
-        public ExchangeObjectModifyPricedMessage(int objectUID,int quantity,long price)
+        public ExchangeObjectModifyPricedMessage(int objectUID, int quantity, long price)
         {
             this.objectUID = objectUID;
             this.quantity = quantity;
@@ -31,14 +31,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

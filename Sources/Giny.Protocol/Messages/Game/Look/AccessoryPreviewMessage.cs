@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AccessoryPreviewMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5662;
+{
+    public class AccessoryPreviewMessage : NetworkMessage
+    {
+        public const ushort Id = 879;
         public override ushort MessageId => Id;
 
         public EntityLook look;
@@ -31,14 +31,7 @@ namespace Giny.Protocol.Messages
             look.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

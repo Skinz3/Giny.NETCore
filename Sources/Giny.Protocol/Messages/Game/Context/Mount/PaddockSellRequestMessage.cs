@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PaddockSellRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8060;
+{
+    public class PaddockSellRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 6182;
         public override ushort MessageId => Id;
 
         public long price;
@@ -18,14 +18,14 @@ namespace Giny.Protocol.Messages
         public PaddockSellRequestMessage()
         {
         }
-        public PaddockSellRequestMessage(long price,bool forSale)
+        public PaddockSellRequestMessage(long price, bool forSale)
         {
             this.price = price;
             this.forSale = forSale;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (price < 0 || price > 9.00719925474099E+15)
+            if (price < 0 || price > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + price + ") on element price.");
             }
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             price = (long)reader.ReadVarUhLong();
-            if (price < 0 || price > 9.00719925474099E+15)
+            if (price < 0 || price > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + price + ") on element of PaddockSellRequestMessage.price.");
             }
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
             forSale = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

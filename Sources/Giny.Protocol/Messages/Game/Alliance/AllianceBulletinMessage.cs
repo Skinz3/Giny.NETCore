@@ -6,23 +6,22 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AllianceBulletinMessage : BulletinMessage  
-    { 
-        public new const ushort Id = 661;
+{
+    public class AllianceBulletinMessage : BulletinMessage
+    {
+        public new const ushort Id = 3372;
         public override ushort MessageId => Id;
 
 
         public AllianceBulletinMessage()
         {
         }
-        public AllianceBulletinMessage(string content,int timestamp,long memberId,string memberName,int lastNotifiedTimestamp)
+        public AllianceBulletinMessage(string content, int timestamp, long memberId, string memberName)
         {
             this.content = content;
             this.timestamp = timestamp;
             this.memberId = memberId;
             this.memberName = memberName;
-            this.lastNotifiedTimestamp = lastNotifiedTimestamp;
         }
         public override void Serialize(IDataWriter writer)
         {
@@ -33,14 +32,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

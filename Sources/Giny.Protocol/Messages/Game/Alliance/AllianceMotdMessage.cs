@@ -6,17 +6,17 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AllianceMotdMessage : SocialNoticeMessage  
-    { 
-        public new const ushort Id = 9564;
+{
+    public class AllianceMotdMessage : SocialNoticeMessage
+    {
+        public new const ushort Id = 9519;
         public override ushort MessageId => Id;
 
 
         public AllianceMotdMessage()
         {
         }
-        public AllianceMotdMessage(string content,int timestamp,long memberId,string memberName)
+        public AllianceMotdMessage(string content, int timestamp, long memberId, string memberName)
         {
             this.content = content;
             this.timestamp = timestamp;
@@ -32,14 +32,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

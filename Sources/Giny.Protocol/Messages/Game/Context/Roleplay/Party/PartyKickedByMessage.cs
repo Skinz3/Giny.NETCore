@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PartyKickedByMessage : AbstractPartyMessage  
-    { 
-        public new const ushort Id = 2835;
+{
+    public class PartyKickedByMessage : AbstractPartyMessage
+    {
+        public new const ushort Id = 3806;
         public override ushort MessageId => Id;
 
         public long kickerId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public PartyKickedByMessage()
         {
         }
-        public PartyKickedByMessage(long kickerId,int partyId)
+        public PartyKickedByMessage(long kickerId, int partyId)
         {
             this.kickerId = kickerId;
             this.partyId = partyId;
@@ -25,7 +25,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (kickerId < 0 || kickerId > 9.00719925474099E+15)
+            if (kickerId < 0 || kickerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + kickerId + ") on element kickerId.");
             }
@@ -36,21 +36,14 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             kickerId = (long)reader.ReadVarUhLong();
-            if (kickerId < 0 || kickerId > 9.00719925474099E+15)
+            if (kickerId < 0 || kickerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + kickerId + ") on element of PartyKickedByMessage.kickerId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

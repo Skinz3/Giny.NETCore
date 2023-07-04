@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class FriendSpouseInformations  
-    { 
-        public const ushort Id = 9223;
+{
+    public class FriendSpouseInformations
+    {
+        public const ushort Id = 8911;
         public virtual ushort TypeId => Id;
 
         public int spouseAccountId;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Types
         public FriendSpouseInformations()
         {
         }
-        public FriendSpouseInformations(int spouseAccountId,long spouseId,string spouseName,short spouseLevel,byte breed,byte sex,EntityLook spouseEntityLook,GuildInformations guildInfo,byte alignmentSide)
+        public FriendSpouseInformations(int spouseAccountId, long spouseId, string spouseName, short spouseLevel, byte breed, byte sex, EntityLook spouseEntityLook, GuildInformations guildInfo, byte alignmentSide)
         {
             this.spouseAccountId = spouseAccountId;
             this.spouseId = spouseId;
@@ -43,7 +43,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteInt((int)spouseAccountId);
-            if (spouseId < 0 || spouseId > 9.00719925474099E+15)
+            if (spouseId < 0 || spouseId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + spouseId + ") on element spouseId.");
             }
@@ -71,7 +71,7 @@ namespace Giny.Protocol.Types
             }
 
             spouseId = (long)reader.ReadVarUhLong();
-            if (spouseId < 0 || spouseId > 9.00719925474099E+15)
+            if (spouseId < 0 || spouseId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + spouseId + ") on element of FriendSpouseInformations.spouseId.");
             }
@@ -95,11 +95,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

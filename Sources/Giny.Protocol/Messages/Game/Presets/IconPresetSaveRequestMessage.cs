@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class IconPresetSaveRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7054;
+{
+    public class IconPresetSaveRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 9389;
         public override ushort MessageId => Id;
 
         public short presetId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public IconPresetSaveRequestMessage()
         {
         }
-        public IconPresetSaveRequestMessage(short presetId,byte symbolId,bool updateData)
+        public IconPresetSaveRequestMessage(short presetId, byte symbolId, bool updateData)
         {
             this.presetId = presetId;
             this.symbolId = symbolId;
@@ -48,14 +48,7 @@ namespace Giny.Protocol.Messages
             updateData = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

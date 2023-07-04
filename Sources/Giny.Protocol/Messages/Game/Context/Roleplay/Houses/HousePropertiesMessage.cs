@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HousePropertiesMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1755;
+{
+    public class HousePropertiesMessage : NetworkMessage
+    {
+        public const ushort Id = 6142;
         public override ushort MessageId => Id;
 
         public int houseId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public HousePropertiesMessage()
         {
         }
-        public HousePropertiesMessage(int houseId,int[] doorsOnMap,HouseInstanceInformations properties)
+        public HousePropertiesMessage(int houseId, int[] doorsOnMap, HouseInstanceInformations properties)
         {
             this.houseId = houseId;
             this.doorsOnMap = doorsOnMap;
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
 
             writer.WriteVarInt((int)houseId);
             writer.WriteShort((short)doorsOnMap.Length);
-            for (uint _i2 = 0;_i2 < doorsOnMap.Length;_i2++)
+            for (uint _i2 = 0; _i2 < doorsOnMap.Length; _i2++)
             {
                 if (doorsOnMap[_i2] < 0)
                 {
@@ -58,7 +58,7 @@ namespace Giny.Protocol.Messages
 
             uint _doorsOnMapLen = (uint)reader.ReadUShort();
             doorsOnMap = new int[_doorsOnMapLen];
-            for (uint _i2 = 0;_i2 < _doorsOnMapLen;_i2++)
+            for (uint _i2 = 0; _i2 < _doorsOnMapLen; _i2++)
             {
                 _val2 = (uint)reader.ReadInt();
                 if (_val2 < 0)
@@ -74,14 +74,7 @@ namespace Giny.Protocol.Messages
             properties.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

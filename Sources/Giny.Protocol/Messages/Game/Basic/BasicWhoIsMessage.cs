@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BasicWhoIsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3406;
+{
+    public class BasicWhoIsMessage : NetworkMessage
+    {
+        public const ushort Id = 8224;
         public override ushort MessageId => Id;
 
         public bool self;
@@ -28,7 +28,7 @@ namespace Giny.Protocol.Messages
         public BasicWhoIsMessage()
         {
         }
-        public BasicWhoIsMessage(bool self,byte position,AccountTagInformation accountTag,int accountId,string playerName,long playerId,short areaId,short serverId,short originServerId,AbstractSocialGroupInfos[] socialGroups,bool verbose,byte playerState)
+        public BasicWhoIsMessage(bool self, byte position, AccountTagInformation accountTag, int accountId, string playerName, long playerId, short areaId, short serverId, short originServerId, AbstractSocialGroupInfos[] socialGroups, bool verbose, byte playerState)
         {
             this.self = self;
             this.position = position;
@@ -46,8 +46,8 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             byte _box0 = 0;
-            _box0 = BooleanByteWrapper.SetFlag(_box0,0,self);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,1,verbose);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 0, self);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 1, verbose);
             writer.WriteByte((byte)_box0);
             writer.WriteByte((byte)position);
             accountTag.Serialize(writer);
@@ -58,7 +58,7 @@ namespace Giny.Protocol.Messages
 
             writer.WriteInt((int)accountId);
             writer.WriteUTF((string)playerName);
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
@@ -68,7 +68,7 @@ namespace Giny.Protocol.Messages
             writer.WriteShort((short)serverId);
             writer.WriteShort((short)originServerId);
             writer.WriteShort((short)socialGroups.Length);
-            for (uint _i10 = 0;_i10 < socialGroups.Length;_i10++)
+            for (uint _i10 = 0; _i10 < socialGroups.Length; _i10++)
             {
                 writer.WriteShort((short)(socialGroups[_i10] as AbstractSocialGroupInfos).TypeId);
                 (socialGroups[_i10] as AbstractSocialGroupInfos).Serialize(writer);
@@ -81,8 +81,8 @@ namespace Giny.Protocol.Messages
             uint _id10 = 0;
             AbstractSocialGroupInfos _item10 = null;
             byte _box0 = reader.ReadByte();
-            self = BooleanByteWrapper.GetFlag(_box0,0);
-            verbose = BooleanByteWrapper.GetFlag(_box0,1);
+            self = BooleanByteWrapper.GetFlag(_box0, 0);
+            verbose = BooleanByteWrapper.GetFlag(_box0, 1);
             position = (byte)reader.ReadByte();
             accountTag = new AccountTagInformation();
             accountTag.Deserialize(reader);
@@ -94,7 +94,7 @@ namespace Giny.Protocol.Messages
 
             playerName = (string)reader.ReadUTF();
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of BasicWhoIsMessage.playerId.");
             }
@@ -103,7 +103,7 @@ namespace Giny.Protocol.Messages
             serverId = (short)reader.ReadShort();
             originServerId = (short)reader.ReadShort();
             uint _socialGroupsLen = (uint)reader.ReadUShort();
-            for (uint _i10 = 0;_i10 < _socialGroupsLen;_i10++)
+            for (uint _i10 = 0; _i10 < _socialGroupsLen; _i10++)
             {
                 _id10 = (uint)reader.ReadUShort();
                 _item10 = ProtocolTypeManager.GetInstance<AbstractSocialGroupInfos>((short)_id10);
@@ -119,14 +119,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

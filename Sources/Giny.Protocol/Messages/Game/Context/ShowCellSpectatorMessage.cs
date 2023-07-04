@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ShowCellSpectatorMessage : ShowCellMessage  
-    { 
-        public new const ushort Id = 4547;
+{
+    public class ShowCellSpectatorMessage : ShowCellMessage
+    {
+        public new const ushort Id = 5766;
         public override ushort MessageId => Id;
 
         public string playerName;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public ShowCellSpectatorMessage()
         {
         }
-        public ShowCellSpectatorMessage(string playerName,double sourceId,short cellId)
+        public ShowCellSpectatorMessage(string playerName, double sourceId, short cellId)
         {
             this.playerName = playerName;
             this.sourceId = sourceId;
@@ -34,14 +34,7 @@ namespace Giny.Protocol.Messages
             playerName = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

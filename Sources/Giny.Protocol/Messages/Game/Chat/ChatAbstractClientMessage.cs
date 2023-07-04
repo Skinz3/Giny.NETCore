@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ChatAbstractClientMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9074;
+{
+    public class ChatAbstractClientMessage : NetworkMessage
+    {
+        public const ushort Id = 7913;
         public override ushort MessageId => Id;
 
         public string content;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             content = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

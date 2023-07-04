@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class DecraftResultMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3524;
+{
+    public class DecraftResultMessage : NetworkMessage
+    {
+        public const ushort Id = 3725;
         public override ushort MessageId => Id;
 
         public DecraftedItemStackInfo[] results;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)results.Length);
-            for (uint _i1 = 0;_i1 < results.Length;_i1++)
+            for (uint _i1 = 0; _i1 < results.Length; _i1++)
             {
                 (results[_i1] as DecraftedItemStackInfo).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             DecraftedItemStackInfo _item1 = null;
             uint _resultsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _resultsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _resultsLen; _i1++)
             {
                 _item1 = new DecraftedItemStackInfo();
                 _item1.Deserialize(reader);
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

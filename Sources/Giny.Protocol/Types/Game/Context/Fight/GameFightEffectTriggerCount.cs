@@ -4,20 +4,20 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameFightEffectTriggerCount  
-    { 
-        public const ushort Id = 463;
+{
+    public class GameFightEffectTriggerCount
+    {
+        public const ushort Id = 840;
         public virtual ushort TypeId => Id;
 
         public int effectId;
         public double targetId;
-        public byte count;
+        public short count;
 
         public GameFightEffectTriggerCount()
         {
         }
-        public GameFightEffectTriggerCount(int effectId,double targetId,byte count)
+        public GameFightEffectTriggerCount(int effectId, double targetId, short count)
         {
             this.effectId = effectId;
             this.targetId = targetId;
@@ -31,7 +31,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteVarInt((int)effectId);
-            if (targetId < -9.00719925474099E+15 || targetId > 9.00719925474099E+15)
+            if (targetId < -9007199254740992 || targetId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + targetId + ") on element targetId.");
             }
@@ -42,7 +42,7 @@ namespace Giny.Protocol.Types
                 throw new System.Exception("Forbidden value (" + count + ") on element count.");
             }
 
-            writer.WriteByte((byte)count);
+            writer.WriteShort((short)count);
         }
         public virtual void Deserialize(IDataReader reader)
         {
@@ -53,12 +53,12 @@ namespace Giny.Protocol.Types
             }
 
             targetId = (double)reader.ReadDouble();
-            if (targetId < -9.00719925474099E+15 || targetId > 9.00719925474099E+15)
+            if (targetId < -9007199254740992 || targetId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + targetId + ") on element of GameFightEffectTriggerCount.targetId.");
             }
 
-            count = (byte)reader.ReadByte();
+            count = (short)reader.ReadShort();
             if (count < 0)
             {
                 throw new System.Exception("Forbidden value (" + count + ") on element of GameFightEffectTriggerCount.count.");
@@ -69,11 +69,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

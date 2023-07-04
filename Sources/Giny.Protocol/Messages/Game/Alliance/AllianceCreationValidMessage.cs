@@ -6,20 +6,20 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AllianceCreationValidMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6054;
+{
+    public class AllianceCreationValidMessage : NetworkMessage
+    {
+        public const ushort Id = 8890;
         public override ushort MessageId => Id;
 
         public string allianceName;
         public string allianceTag;
-        public GuildEmblem allianceEmblem;
+        public SocialEmblem allianceEmblem;
 
         public AllianceCreationValidMessage()
         {
         }
-        public AllianceCreationValidMessage(string allianceName,string allianceTag,GuildEmblem allianceEmblem)
+        public AllianceCreationValidMessage(string allianceName, string allianceTag, SocialEmblem allianceEmblem)
         {
             this.allianceName = allianceName;
             this.allianceTag = allianceTag;
@@ -35,18 +35,11 @@ namespace Giny.Protocol.Messages
         {
             allianceName = (string)reader.ReadUTF();
             allianceTag = (string)reader.ReadUTF();
-            allianceEmblem = new GuildEmblem();
+            allianceEmblem = new SocialEmblem();
             allianceEmblem.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

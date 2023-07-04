@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class NpcGenericActionRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6477;
+{
+    public class NpcGenericActionRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 2663;
         public override ushort MessageId => Id;
 
         public int npcId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public NpcGenericActionRequestMessage()
         {
         }
-        public NpcGenericActionRequestMessage(int npcId,byte npcActionId,double npcMapId)
+        public NpcGenericActionRequestMessage(int npcId, byte npcActionId, double npcMapId)
         {
             this.npcId = npcId;
             this.npcActionId = npcActionId;
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteByte((byte)npcActionId);
-            if (npcMapId < 0 || npcMapId > 9.00719925474099E+15)
+            if (npcMapId < 0 || npcMapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + npcMapId + ") on element npcMapId.");
             }
@@ -51,21 +51,14 @@ namespace Giny.Protocol.Messages
             }
 
             npcMapId = (double)reader.ReadDouble();
-            if (npcMapId < 0 || npcMapId > 9.00719925474099E+15)
+            if (npcMapId < 0 || npcMapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + npcMapId + ") on element of NpcGenericActionRequestMessage.npcMapId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

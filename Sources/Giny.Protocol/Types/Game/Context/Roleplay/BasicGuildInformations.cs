@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class BasicGuildInformations : AbstractSocialGroupInfos  
-    { 
-        public new const ushort Id = 9709;
+{
+    public class BasicGuildInformations : AbstractSocialGroupInfos
+    {
+        public new const ushort Id = 1665;
         public override ushort TypeId => Id;
 
         public int guildId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Types
         public BasicGuildInformations()
         {
         }
-        public BasicGuildInformations(int guildId,string guildName,byte guildLevel)
+        public BasicGuildInformations(int guildId, string guildName, byte guildLevel)
         {
             this.guildId = guildId;
             this.guildName = guildName;
@@ -61,11 +61,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

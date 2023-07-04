@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class HouseInformationsInside : HouseInformations  
-    { 
-        public new const ushort Id = 8706;
+{
+    public class HouseInformationsInside : HouseInformations
+    {
+        public new const ushort Id = 8990;
         public override ushort TypeId => Id;
 
         public HouseInstanceInformations houseInfos;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Types
         public HouseInformationsInside()
         {
         }
-        public HouseInformationsInside(HouseInstanceInformations houseInfos,short worldX,short worldY,int houseId,short modelId)
+        public HouseInformationsInside(HouseInstanceInformations houseInfos, short worldX, short worldY, int houseId, short modelId)
         {
             this.houseInfos = houseInfos;
             this.worldX = worldX;
@@ -66,11 +66,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

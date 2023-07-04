@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class AtlasPointsInformations  
-    { 
-        public const ushort Id = 6354;
+{
+    public class AtlasPointsInformations
+    {
+        public const ushort Id = 3635;
         public virtual ushort TypeId => Id;
 
         public byte type;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public AtlasPointsInformations()
         {
         }
-        public AtlasPointsInformations(byte type,MapCoordinatesExtended[] coords)
+        public AtlasPointsInformations(byte type, MapCoordinatesExtended[] coords)
         {
             this.type = type;
             this.coords = coords;
@@ -25,7 +25,7 @@ namespace Giny.Protocol.Types
         {
             writer.WriteByte((byte)type);
             writer.WriteShort((short)coords.Length);
-            for (uint _i2 = 0;_i2 < coords.Length;_i2++)
+            for (uint _i2 = 0; _i2 < coords.Length; _i2++)
             {
                 (coords[_i2] as MapCoordinatesExtended).Serialize(writer);
             }
@@ -41,7 +41,7 @@ namespace Giny.Protocol.Types
             }
 
             uint _coordsLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _coordsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _coordsLen; _i2++)
             {
                 _item2 = new MapCoordinatesExtended();
                 _item2.Deserialize(reader);
@@ -53,11 +53,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

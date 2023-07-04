@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class DungeonKeyRingUpdateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6572;
+{
+    public class DungeonKeyRingUpdateMessage : NetworkMessage
+    {
+        public const ushort Id = 9186;
         public override ushort MessageId => Id;
 
         public short dungeonId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public DungeonKeyRingUpdateMessage()
         {
         }
-        public DungeonKeyRingUpdateMessage(short dungeonId,bool available)
+        public DungeonKeyRingUpdateMessage(short dungeonId, bool available)
         {
             this.dungeonId = dungeonId;
             this.available = available;
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
             available = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

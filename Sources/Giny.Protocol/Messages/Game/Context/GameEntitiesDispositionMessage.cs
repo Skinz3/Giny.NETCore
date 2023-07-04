@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameEntitiesDispositionMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3000;
+{
+    public class GameEntitiesDispositionMessage : NetworkMessage
+    {
+        public const ushort Id = 3566;
         public override ushort MessageId => Id;
 
         public IdentifiedEntityDispositionInformations[] dispositions;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)dispositions.Length);
-            for (uint _i1 = 0;_i1 < dispositions.Length;_i1++)
+            for (uint _i1 = 0; _i1 < dispositions.Length; _i1++)
             {
                 (dispositions[_i1] as IdentifiedEntityDispositionInformations).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             IdentifiedEntityDispositionInformations _item1 = null;
             uint _dispositionsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _dispositionsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _dispositionsLen; _i1++)
             {
                 _item1 = new IdentifiedEntityDispositionInformations();
                 _item1.Deserialize(reader);
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class CompassUpdateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1473;
+{
+    public class CompassUpdateMessage : NetworkMessage
+    {
+        public const ushort Id = 6807;
         public override ushort MessageId => Id;
 
         public byte type;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public CompassUpdateMessage()
         {
         }
-        public CompassUpdateMessage(byte type,MapCoordinates coords)
+        public CompassUpdateMessage(byte type, MapCoordinates coords)
         {
             this.type = type;
             this.coords = coords;
@@ -42,14 +42,7 @@ namespace Giny.Protocol.Messages
             coords.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

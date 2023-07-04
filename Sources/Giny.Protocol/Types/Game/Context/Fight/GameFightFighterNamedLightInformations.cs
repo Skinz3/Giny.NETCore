@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameFightFighterNamedLightInformations : GameFightFighterLightInformations  
-    { 
-        public new const ushort Id = 7053;
+{
+    public class GameFightFighterNamedLightInformations : GameFightFighterLightInformations
+    {
+        public new const ushort Id = 7477;
         public override ushort TypeId => Id;
 
         public string name;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public GameFightFighterNamedLightInformations()
         {
         }
-        public GameFightFighterNamedLightInformations(string name,double id,byte wave,short level,byte breed,bool sex,bool alive)
+        public GameFightFighterNamedLightInformations(string name, double id, byte wave, short level, byte breed, bool sex, bool alive)
         {
             this.name = name;
             this.id = id;
@@ -39,11 +39,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

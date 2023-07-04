@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HaapiConfirmationMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7202;
+{
+    public class HaapiConfirmationMessage : NetworkMessage
+    {
+        public const ushort Id = 1734;
         public override ushort MessageId => Id;
 
         public long kamas;
@@ -21,7 +21,7 @@ namespace Giny.Protocol.Messages
         public HaapiConfirmationMessage()
         {
         }
-        public HaapiConfirmationMessage(long kamas,long amount,short rate,byte action,string transaction)
+        public HaapiConfirmationMessage(long kamas, long amount, short rate, byte action, string transaction)
         {
             this.kamas = kamas;
             this.amount = amount;
@@ -31,13 +31,13 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (kamas < 0 || kamas > 9.00719925474099E+15)
+            if (kamas < 0 || kamas > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + kamas + ") on element kamas.");
             }
 
             writer.WriteVarLong((long)kamas);
-            if (amount < 0 || amount > 9.00719925474099E+15)
+            if (amount < 0 || amount > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + amount + ") on element amount.");
             }
@@ -55,13 +55,13 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             kamas = (long)reader.ReadVarUhLong();
-            if (kamas < 0 || kamas > 9.00719925474099E+15)
+            if (kamas < 0 || kamas > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + kamas + ") on element of HaapiConfirmationMessage.kamas.");
             }
 
             amount = (long)reader.ReadVarUhLong();
-            if (amount < 0 || amount > 9.00719925474099E+15)
+            if (amount < 0 || amount > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + amount + ") on element of HaapiConfirmationMessage.amount.");
             }
@@ -81,14 +81,7 @@ namespace Giny.Protocol.Messages
             transaction = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

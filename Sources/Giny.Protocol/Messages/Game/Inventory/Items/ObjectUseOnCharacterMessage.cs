@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ObjectUseOnCharacterMessage : ObjectUseMessage  
-    { 
-        public new const ushort Id = 4424;
+{
+    public class ObjectUseOnCharacterMessage : ObjectUseMessage
+    {
+        public new const ushort Id = 6271;
         public override ushort MessageId => Id;
 
         public long characterId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public ObjectUseOnCharacterMessage()
         {
         }
-        public ObjectUseOnCharacterMessage(long characterId,int objectUID)
+        public ObjectUseOnCharacterMessage(long characterId, int objectUID)
         {
             this.characterId = characterId;
             this.objectUID = objectUID;
@@ -25,7 +25,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (characterId < 0 || characterId > 9.00719925474099E+15)
+            if (characterId < 0 || characterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + characterId + ") on element characterId.");
             }
@@ -36,21 +36,14 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             characterId = (long)reader.ReadVarUhLong();
-            if (characterId < 0 || characterId > 9.00719925474099E+15)
+            if (characterId < 0 || characterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + characterId + ") on element of ObjectUseOnCharacterMessage.characterId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

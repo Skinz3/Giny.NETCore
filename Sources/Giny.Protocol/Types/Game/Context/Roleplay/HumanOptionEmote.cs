@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class HumanOptionEmote : HumanOption  
-    { 
-        public new const ushort Id = 3948;
+{
+    public class HumanOptionEmote : HumanOption
+    {
+        public new const ushort Id = 1901;
         public override ushort TypeId => Id;
 
         public short emoteId;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public HumanOptionEmote()
         {
         }
-        public HumanOptionEmote(short emoteId,double emoteStartTime)
+        public HumanOptionEmote(short emoteId, double emoteStartTime)
         {
             this.emoteId = emoteId;
             this.emoteStartTime = emoteStartTime;
@@ -30,7 +30,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteShort((short)emoteId);
-            if (emoteStartTime < -9.00719925474099E+15 || emoteStartTime > 9.00719925474099E+15)
+            if (emoteStartTime < -9007199254740992 || emoteStartTime > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + emoteStartTime + ") on element emoteStartTime.");
             }
@@ -47,7 +47,7 @@ namespace Giny.Protocol.Types
             }
 
             emoteStartTime = (double)reader.ReadDouble();
-            if (emoteStartTime < -9.00719925474099E+15 || emoteStartTime > 9.00719925474099E+15)
+            if (emoteStartTime < -9007199254740992 || emoteStartTime > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + emoteStartTime + ") on element of HumanOptionEmote.emoteStartTime.");
             }
@@ -57,11 +57,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

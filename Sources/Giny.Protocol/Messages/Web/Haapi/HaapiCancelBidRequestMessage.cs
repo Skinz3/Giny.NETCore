@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HaapiCancelBidRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5316;
+{
+    public class HaapiCancelBidRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 9597;
         public override ushort MessageId => Id;
 
         public long id;
@@ -18,14 +18,14 @@ namespace Giny.Protocol.Messages
         public HaapiCancelBidRequestMessage()
         {
         }
-        public HaapiCancelBidRequestMessage(long id,byte type)
+        public HaapiCancelBidRequestMessage(long id, byte type)
         {
             this.id = id;
             this.type = type;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (id < 0 || id > 9.00719925474099E+15)
+            if (id < 0 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element id.");
             }
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             id = (long)reader.ReadVarUhLong();
-            if (id < 0 || id > 9.00719925474099E+15)
+            if (id < 0 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element of HaapiCancelBidRequestMessage.id.");
             }
@@ -49,14 +49,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

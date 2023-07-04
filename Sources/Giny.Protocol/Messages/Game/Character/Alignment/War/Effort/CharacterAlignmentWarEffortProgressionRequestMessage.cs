@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class CharacterAlignmentWarEffortProgressionRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6884;
+{
+    public class CharacterAlignmentWarEffortProgressionRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 3309;
         public override ushort MessageId => Id;
 
 
@@ -23,14 +23,7 @@ namespace Giny.Protocol.Messages
         {
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

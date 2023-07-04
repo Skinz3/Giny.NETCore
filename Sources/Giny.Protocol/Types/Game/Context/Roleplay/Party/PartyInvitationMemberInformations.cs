@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class PartyInvitationMemberInformations : CharacterBaseInformations  
-    { 
-        public new const ushort Id = 3864;
+{
+    public class PartyInvitationMemberInformations : CharacterBaseInformations
+    {
+        public new const ushort Id = 962;
         public override ushort TypeId => Id;
 
         public short worldX;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Types
         public PartyInvitationMemberInformations()
         {
         }
-        public PartyInvitationMemberInformations(short worldX,short worldY,double mapId,short subAreaId,PartyEntityBaseInformation[] entities,long id,string name,short level,EntityLook entityLook,byte breed,bool sex)
+        public PartyInvitationMemberInformations(short worldX, short worldY, double mapId, short subAreaId, PartyEntityBaseInformation[] entities, long id, string name, short level, EntityLook entityLook, byte breed, bool sex)
         {
             this.worldX = worldX;
             this.worldY = worldY;
@@ -48,7 +48,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteShort((short)worldY);
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element mapId.");
             }
@@ -61,7 +61,7 @@ namespace Giny.Protocol.Types
 
             writer.WriteVarShort((short)subAreaId);
             writer.WriteShort((short)entities.Length);
-            for (uint _i5 = 0;_i5 < entities.Length;_i5++)
+            for (uint _i5 = 0; _i5 < entities.Length; _i5++)
             {
                 (entities[_i5] as PartyEntityBaseInformation).Serialize(writer);
             }
@@ -84,7 +84,7 @@ namespace Giny.Protocol.Types
             }
 
             mapId = (double)reader.ReadDouble();
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element of PartyInvitationMemberInformations.mapId.");
             }
@@ -96,7 +96,7 @@ namespace Giny.Protocol.Types
             }
 
             uint _entitiesLen = (uint)reader.ReadUShort();
-            for (uint _i5 = 0;_i5 < _entitiesLen;_i5++)
+            for (uint _i5 = 0; _i5 < _entitiesLen; _i5++)
             {
                 _item5 = new PartyEntityBaseInformation();
                 _item5.Deserialize(reader);
@@ -108,11 +108,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

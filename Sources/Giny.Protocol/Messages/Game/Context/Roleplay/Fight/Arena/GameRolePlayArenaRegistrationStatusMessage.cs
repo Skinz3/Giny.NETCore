@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameRolePlayArenaRegistrationStatusMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6165;
+{
+    public class GameRolePlayArenaRegistrationStatusMessage : NetworkMessage
+    {
+        public const ushort Id = 1173;
         public override ushort MessageId => Id;
 
         public bool registered;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public GameRolePlayArenaRegistrationStatusMessage()
         {
         }
-        public GameRolePlayArenaRegistrationStatusMessage(bool registered,byte step,int battleMode)
+        public GameRolePlayArenaRegistrationStatusMessage(bool registered, byte step, int battleMode)
         {
             this.registered = registered;
             this.step = step;
@@ -48,14 +48,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -14,7 +14,6 @@ using Giny.World.Managers.Dialogs;
 using Giny.World.Managers.Dialogs.DialogBox;
 using Giny.World.Managers.Entities.Characters.HumanOptions;
 using Giny.World.Managers.Entities.Look;
-using Giny.World.Managers.Entities.Merchants;
 using Giny.World.Managers.Entities.Npcs;
 using Giny.World.Managers.Exchanges;
 using Giny.World.Managers.Exchanges.Jobs;
@@ -315,11 +314,7 @@ namespace Giny.World.Managers.Entities.Characters
 
 
 
-        public MerchantItemCollection MerchantItems
-        {
-            get;
-            private set;
-        }
+    
         public BankItemCollection BankItems
         {
             get;
@@ -378,7 +373,6 @@ namespace Giny.World.Managers.Entities.Characters
             this.Breed = BreedRecord.GetBreed(record.BreedId);
 
             this.Inventory = new Inventory(this, CharacterItemRecord.GetCharacterItems(Id));
-            this.MerchantItems = new MerchantItemCollection(this, MerchantItemRecord.GetMerchantItems(Id));
             this.BankItems = new BankItemCollection(this, BankItemRecord.GetBankItems(Client.Account.Id));
             this.GuestedParties = new List<Party>();
             this.GeneralShortcutBar = new GeneralShortcutBar(this);
@@ -389,24 +383,12 @@ namespace Giny.World.Managers.Entities.Characters
             this.Collecting = false;
         }
 
-        public void CheckMerchantState()
-        {
-            MerchantRecord merchant = MerchantRecord.GetMerchant(Id);
-
-            if (merchant != null)
-            {
-                MerchantsManager.Instance.RemoveMerchant(merchant);
-                merchant.RemoveElement();
-            }
-
-        }
-
+      
         private void CheckSoldItems()
         {
             BidShopItemRecord[] bidHouseItems = BidshopsManager.Instance.GetSoldItem(this).ToArray();
-            MerchantItemRecord[] merchantItems = MerchantItemRecord.GetMerchantItemsSolded(this.Id).ToArray();
 
-            if (bidHouseItems.Count() > 0 || merchantItems.Count() > 0)
+            if (bidHouseItems.Count() > 0)
             {
                 foreach (var item in bidHouseItems)
                 {
@@ -415,24 +397,7 @@ namespace Giny.World.Managers.Entities.Characters
                     BidshopsManager.Instance.RemoveItem(item.BidShopId, item);
                 }
 
-                Client.Send(new ExchangeOfflineSoldItemsMessage(bidHouseItems.Select(x => x.GetObjectItemQuantityPriceDateEffects()).ToArray(),
-                  merchantItems.Select(x => x.GetObjectItemQuantityPriceDateEffects()).ToArray()));
-
-                foreach (var item in merchantItems)
-                {
-                    this.AddKamas(item.Price * item.QuantitySold);
-
-                    if (item.Sold)
-                    {
-                        MerchantItems.RemoveItem(item.UId);
-                        item.RemoveElement();
-                    }
-
-                    item.QuantitySold = 0;
-
-                    item.UpdateElement();
-                }
-
+                Client.Send(new ExchangeOfflineSoldItemsMessage(bidHouseItems.Select(x => x.GetObjectItemQuantityPriceDateEffects()).ToArray()));
 
             }
 
@@ -646,14 +611,7 @@ namespace Giny.World.Managers.Entities.Characters
             }
 
         }
-        public void OpenMerchantAsSellerExchange(CharacterMerchant merchant)
-        {
-            this.OpenDialog(new MerchantSellerExchange(this, merchant));
-        }
-        public void OpenMerchantAsVendorExchange()
-        {
-            this.OpenDialog(new MerchantVendorExchange(this));
-        }
+    
         public void OpenCraftExchange(SkillRecord skill)
         {
             this.OpenDialog(new CraftExchange(this, skill));
@@ -1029,15 +987,15 @@ namespace Giny.World.Managers.Entities.Characters
                 Party.IdolsInventory.Update(this);
             }
         }
-        public void NotifyItemGained(short gid, int quantity)
+        public void NotifyItemGained(int gid, int quantity)
         {
             this.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_MESSAGE, 21, new object[] { quantity, gid });
         }
-        public void NotifyItemSelled(short gid, int quantity, long price)
+        public void NotifyItemSelled(int gid, int quantity, long price)
         {
             this.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_MESSAGE, 65, new object[] { price, string.Empty, gid, quantity });
         }
-        public void NotifyItemLost(short gid, int quantity)
+        public void NotifyItemLost(int gid, int quantity)
         {
             this.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_MESSAGE, 22, new object[] { quantity, gid });
         }
@@ -1357,7 +1315,7 @@ namespace Giny.World.Managers.Entities.Characters
         public ActorRestrictionsInformations GetActorRestrictions()
         {
             return new ActorRestrictionsInformations(false, false, false, false, false, false, false, false, false, false, false,
-                false, false, false, false, false, false, false, false, false);
+                false, false, false, false, false, false, false, false);
         }
 
         public void SetExperience(long value)
@@ -1504,10 +1462,11 @@ namespace Giny.World.Managers.Entities.Characters
             }
 
         }
+        [WIP]
         private void SendGameFightStartingMessage(Fight fight)
         {
             this.Client.Send(new GameFightStartingMessage((byte)fight.FightType,
-            (short)fight.Id, (double)fight.BlueTeam.TeamId, (double)fight.RedTeam.TeamId, fight.ContainsBoss()));
+            (short)fight.Id, (double)fight.BlueTeam.TeamId, (double)fight.RedTeam.TeamId, fight.ContainsBoss(),new int[0]));
         }
         public void DisplayNotification(string message)
         {
@@ -1533,55 +1492,8 @@ namespace Giny.World.Managers.Entities.Characters
         {
             return "Character: " + Name;
         }
-        public bool CanEnableMerchantMode()
-        {
-            if (MerchantItems.Count == 0)
-            {
-                TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 23);
-                return false;
-            }
-
-            /*  if (!Map.Position.AllowHumanVendor)
-              {
-                  TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 237);
-                  return false;
-              } */
-
-            if (Map.Instance.IsMerchantLimitReached())
-            {
-                TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 25, ConfigFile.Instance.MaxMerchantPerMap);
-                return false;
-            }
-
-            if (!Map.Instance.IsCellFree(CellId, CellId))
-            {
-                TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 24);
-                return false;
-            }
-
-            if (Record.Kamas < MerchantItems.GetMerchantTax())
-            {
-                TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 76);
-                return false;
-            }
-
-            return true;
-        }
-        public void EnterMerchantMode()
-        {
-            if (!CanEnableMerchantMode())
-            {
-                return;
-            }
-
-            if (!RemoveKamas(MerchantItems.GetMerchantTax()))
-            {
-                return;
-            }
-            Client.Disconnect();
-            MerchantsManager.Instance.AddMerchant(this);
-        }
-
+       
+       
         public void AddFollower(ServerEntityLook look)
         {
             GetHumanOption<CharacterHumanOptionFollowers>().Add(look);

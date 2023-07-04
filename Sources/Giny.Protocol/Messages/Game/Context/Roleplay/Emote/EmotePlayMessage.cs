@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class EmotePlayMessage : EmotePlayAbstractMessage  
-    { 
-        public new const ushort Id = 792;
+{
+    public class EmotePlayMessage : EmotePlayAbstractMessage
+    {
+        public new const ushort Id = 2498;
         public override ushort MessageId => Id;
 
         public double actorId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public EmotePlayMessage()
         {
         }
-        public EmotePlayMessage(double actorId,int accountId,short emoteId,double emoteStartTime)
+        public EmotePlayMessage(double actorId, int accountId, short emoteId, double emoteStartTime)
         {
             this.actorId = actorId;
             this.accountId = accountId;
@@ -28,7 +28,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (actorId < -9.00719925474099E+15 || actorId > 9.00719925474099E+15)
+            if (actorId < -9007199254740992 || actorId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + actorId + ") on element actorId.");
             }
@@ -45,7 +45,7 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             actorId = (double)reader.ReadDouble();
-            if (actorId < -9.00719925474099E+15 || actorId > 9.00719925474099E+15)
+            if (actorId < -9007199254740992 || actorId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + actorId + ") on element of EmotePlayMessage.actorId.");
             }
@@ -58,14 +58,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

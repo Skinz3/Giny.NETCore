@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class MountHarnessDissociateRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7217;
+{
+    public class MountHarnessDissociateRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 1389;
         public override ushort MessageId => Id;
 
 
@@ -23,14 +23,7 @@ namespace Giny.Protocol.Messages
         {
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

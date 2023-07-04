@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ObjectErrorMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9352;
+{
+    public class ObjectErrorMessage : NetworkMessage
+    {
+        public const ushort Id = 3805;
         public override ushort MessageId => Id;
 
         public byte reason;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             reason = (byte)reader.ReadByte();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

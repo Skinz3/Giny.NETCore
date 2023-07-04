@@ -4,18 +4,18 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GuildInformations : BasicGuildInformations  
-    { 
-        public new const ushort Id = 4148;
+{
+    public class GuildInformations : BasicGuildInformations
+    {
+        public new const ushort Id = 1185;
         public override ushort TypeId => Id;
 
-        public GuildEmblem guildEmblem;
+        public SocialEmblem guildEmblem;
 
         public GuildInformations()
         {
         }
-        public GuildInformations(GuildEmblem guildEmblem,int guildId,string guildName,byte guildLevel)
+        public GuildInformations(SocialEmblem guildEmblem, int guildId, string guildName, byte guildLevel)
         {
             this.guildEmblem = guildEmblem;
             this.guildId = guildId;
@@ -30,18 +30,12 @@ namespace Giny.Protocol.Types
         public override void Deserialize(IDataReader reader)
         {
             base.Deserialize(reader);
-            guildEmblem = new GuildEmblem();
+            guildEmblem = new SocialEmblem();
             guildEmblem.Deserialize(reader);
         }
 
 
     }
 }
-
-
-
-
-
-
 
 

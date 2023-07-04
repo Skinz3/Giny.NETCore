@@ -6,18 +6,18 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildInformationsMemberUpdateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2768;
+{
+    public class GuildInformationsMemberUpdateMessage : NetworkMessage
+    {
+        public const ushort Id = 8691;
         public override ushort MessageId => Id;
 
-        public GuildMember member;
+        public GuildMemberInfo member;
 
         public GuildInformationsMemberUpdateMessage()
         {
         }
-        public GuildInformationsMemberUpdateMessage(GuildMember member)
+        public GuildInformationsMemberUpdateMessage(GuildMemberInfo member)
         {
             this.member = member;
         }
@@ -27,18 +27,11 @@ namespace Giny.Protocol.Messages
         }
         public override void Deserialize(IDataReader reader)
         {
-            member = new GuildMember();
+            member = new GuildMemberInfo();
             member.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

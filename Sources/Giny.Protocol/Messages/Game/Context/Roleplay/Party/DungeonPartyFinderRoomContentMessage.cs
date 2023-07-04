@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class DungeonPartyFinderRoomContentMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 726;
+{
+    public class DungeonPartyFinderRoomContentMessage : NetworkMessage
+    {
+        public const ushort Id = 3736;
         public override ushort MessageId => Id;
 
         public short dungeonId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public DungeonPartyFinderRoomContentMessage()
         {
         }
-        public DungeonPartyFinderRoomContentMessage(short dungeonId,DungeonPartyFinderPlayer[] players)
+        public DungeonPartyFinderRoomContentMessage(short dungeonId, DungeonPartyFinderPlayer[] players)
         {
             this.dungeonId = dungeonId;
             this.players = players;
@@ -32,7 +32,7 @@ namespace Giny.Protocol.Messages
 
             writer.WriteVarShort((short)dungeonId);
             writer.WriteShort((short)players.Length);
-            for (uint _i2 = 0;_i2 < players.Length;_i2++)
+            for (uint _i2 = 0; _i2 < players.Length; _i2++)
             {
                 (players[_i2] as DungeonPartyFinderPlayer).Serialize(writer);
             }
@@ -48,7 +48,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _playersLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _playersLen;_i2++)
+            for (uint _i2 = 0; _i2 < _playersLen; _i2++)
             {
                 _item2 = new DungeonPartyFinderPlayer();
                 _item2.Deserialize(reader);
@@ -57,14 +57,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

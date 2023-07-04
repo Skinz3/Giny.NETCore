@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class LockableShowCodeDialogMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5125;
+{
+    public class LockableShowCodeDialogMessage : NetworkMessage
+    {
+        public const ushort Id = 6201;
         public override ushort MessageId => Id;
 
         public bool changeOrUse;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public LockableShowCodeDialogMessage()
         {
         }
-        public LockableShowCodeDialogMessage(bool changeOrUse,byte codeSize)
+        public LockableShowCodeDialogMessage(bool changeOrUse, byte codeSize)
         {
             this.changeOrUse = changeOrUse;
             this.codeSize = codeSize;
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

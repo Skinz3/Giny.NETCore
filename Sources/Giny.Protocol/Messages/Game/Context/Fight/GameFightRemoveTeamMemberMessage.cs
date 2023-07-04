@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightRemoveTeamMemberMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6771;
+{
+    public class GameFightRemoveTeamMemberMessage : NetworkMessage
+    {
+        public const ushort Id = 2209;
         public override ushort MessageId => Id;
 
         public short fightId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public GameFightRemoveTeamMemberMessage()
         {
         }
-        public GameFightRemoveTeamMemberMessage(short fightId,byte teamId,double charId)
+        public GameFightRemoveTeamMemberMessage(short fightId, byte teamId, double charId)
         {
             this.fightId = fightId;
             this.teamId = teamId;
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
 
             writer.WriteVarShort((short)fightId);
             writer.WriteByte((byte)teamId);
-            if (charId < -9.00719925474099E+15 || charId > 9.00719925474099E+15)
+            if (charId < -9007199254740992 || charId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + charId + ") on element charId.");
             }
@@ -56,21 +56,14 @@ namespace Giny.Protocol.Messages
             }
 
             charId = (double)reader.ReadDouble();
-            if (charId < -9.00719925474099E+15 || charId > 9.00719925474099E+15)
+            if (charId < -9007199254740992 || charId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + charId + ") on element of GameFightRemoveTeamMemberMessage.charId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

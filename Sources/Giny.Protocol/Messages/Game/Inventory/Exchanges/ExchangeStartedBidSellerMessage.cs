@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeStartedBidSellerMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2021;
+{
+    public class ExchangeStartedBidSellerMessage : NetworkMessage
+    {
+        public const ushort Id = 5177;
         public override ushort MessageId => Id;
 
         public SellerBuyerDescriptor sellerDescriptor;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ExchangeStartedBidSellerMessage()
         {
         }
-        public ExchangeStartedBidSellerMessage(SellerBuyerDescriptor sellerDescriptor,ObjectItemToSellInBid[] objectsInfos)
+        public ExchangeStartedBidSellerMessage(SellerBuyerDescriptor sellerDescriptor, ObjectItemToSellInBid[] objectsInfos)
         {
             this.sellerDescriptor = sellerDescriptor;
             this.objectsInfos = objectsInfos;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         {
             sellerDescriptor.Serialize(writer);
             writer.WriteShort((short)objectsInfos.Length);
-            for (uint _i2 = 0;_i2 < objectsInfos.Length;_i2++)
+            for (uint _i2 = 0; _i2 < objectsInfos.Length; _i2++)
             {
                 (objectsInfos[_i2] as ObjectItemToSellInBid).Serialize(writer);
             }
@@ -39,7 +39,7 @@ namespace Giny.Protocol.Messages
             sellerDescriptor = new SellerBuyerDescriptor();
             sellerDescriptor.Deserialize(reader);
             uint _objectsInfosLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _objectsInfosLen;_i2++)
+            for (uint _i2 = 0; _i2 < _objectsInfosLen; _i2++)
             {
                 _item2 = new ObjectItemToSellInBid();
                 _item2.Deserialize(reader);
@@ -48,14 +48,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class MapRunningFightDetailsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7296;
+{
+    public class MapRunningFightDetailsMessage : NetworkMessage
+    {
+        public const ushort Id = 8143;
         public override ushort MessageId => Id;
 
         public short fightId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public MapRunningFightDetailsMessage()
         {
         }
-        public MapRunningFightDetailsMessage(short fightId,GameFightFighterLightInformations[] attackers,GameFightFighterLightInformations[] defenders)
+        public MapRunningFightDetailsMessage(short fightId, GameFightFighterLightInformations[] attackers, GameFightFighterLightInformations[] defenders)
         {
             this.fightId = fightId;
             this.attackers = attackers;
@@ -34,14 +34,14 @@ namespace Giny.Protocol.Messages
 
             writer.WriteVarShort((short)fightId);
             writer.WriteShort((short)attackers.Length);
-            for (uint _i2 = 0;_i2 < attackers.Length;_i2++)
+            for (uint _i2 = 0; _i2 < attackers.Length; _i2++)
             {
                 writer.WriteShort((short)(attackers[_i2] as GameFightFighterLightInformations).TypeId);
                 (attackers[_i2] as GameFightFighterLightInformations).Serialize(writer);
             }
 
             writer.WriteShort((short)defenders.Length);
-            for (uint _i3 = 0;_i3 < defenders.Length;_i3++)
+            for (uint _i3 = 0; _i3 < defenders.Length; _i3++)
             {
                 writer.WriteShort((short)(defenders[_i3] as GameFightFighterLightInformations).TypeId);
                 (defenders[_i3] as GameFightFighterLightInformations).Serialize(writer);
@@ -61,7 +61,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _attackersLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _attackersLen;_i2++)
+            for (uint _i2 = 0; _i2 < _attackersLen; _i2++)
             {
                 _id2 = (uint)reader.ReadUShort();
                 _item2 = ProtocolTypeManager.GetInstance<GameFightFighterLightInformations>((short)_id2);
@@ -70,7 +70,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _defendersLen = (uint)reader.ReadUShort();
-            for (uint _i3 = 0;_i3 < _defendersLen;_i3++)
+            for (uint _i3 = 0; _i3 < _defendersLen; _i3++)
             {
                 _id3 = (uint)reader.ReadUShort();
                 _item3 = ProtocolTypeManager.GetInstance<GameFightFighterLightInformations>((short)_id3);
@@ -80,14 +80,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

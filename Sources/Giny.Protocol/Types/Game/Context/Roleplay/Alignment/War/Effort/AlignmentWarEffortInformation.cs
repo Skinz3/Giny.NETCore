@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class AlignmentWarEffortInformation  
-    { 
-        public const ushort Id = 9705;
+{
+    public class AlignmentWarEffortInformation
+    {
+        public const ushort Id = 2868;
         public virtual ushort TypeId => Id;
 
         public byte alignmentSide;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public AlignmentWarEffortInformation()
         {
         }
-        public AlignmentWarEffortInformation(byte alignmentSide,long alignmentWarEffort)
+        public AlignmentWarEffortInformation(byte alignmentSide, long alignmentWarEffort)
         {
             this.alignmentSide = alignmentSide;
             this.alignmentWarEffort = alignmentWarEffort;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Types
         public virtual void Serialize(IDataWriter writer)
         {
             writer.WriteByte((byte)alignmentSide);
-            if (alignmentWarEffort < 0 || alignmentWarEffort > 9.00719925474099E+15)
+            if (alignmentWarEffort < 0 || alignmentWarEffort > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + alignmentWarEffort + ") on element alignmentWarEffort.");
             }
@@ -35,7 +35,7 @@ namespace Giny.Protocol.Types
         {
             alignmentSide = (byte)reader.ReadByte();
             alignmentWarEffort = (long)reader.ReadVarUhLong();
-            if (alignmentWarEffort < 0 || alignmentWarEffort > 9.00719925474099E+15)
+            if (alignmentWarEffort < 0 || alignmentWarEffort > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + alignmentWarEffort + ") on element of AlignmentWarEffortInformation.alignmentWarEffort.");
             }
@@ -45,11 +45,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

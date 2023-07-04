@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class SelectedServerRefusedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2315;
+{
+    public class SelectedServerRefusedMessage : NetworkMessage
+    {
+        public const ushort Id = 8451;
         public override ushort MessageId => Id;
 
         public short serverId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public SelectedServerRefusedMessage()
         {
         }
-        public SelectedServerRefusedMessage(short serverId,byte error,byte serverStatus)
+        public SelectedServerRefusedMessage(short serverId, byte error, byte serverStatus)
         {
             this.serverId = serverId;
             this.error = error;
@@ -58,14 +58,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

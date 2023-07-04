@@ -4,17 +4,17 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameFightAIInformations : GameFightFighterInformations  
-    { 
-        public new const ushort Id = 1060;
+{
+    public class GameFightAIInformations : GameFightFighterInformations
+    {
+        public new const ushort Id = 7652;
         public override ushort TypeId => Id;
 
 
         public GameFightAIInformations()
         {
         }
-        public GameFightAIInformations(double contextualId,EntityDispositionInformations disposition,EntityLook look,GameContextBasicSpawnInformation spawnInfo,byte wave,GameFightCharacteristics stats,short[] previousPositions)
+        public GameFightAIInformations(double contextualId, EntityDispositionInformations disposition, EntityLook look, GameContextBasicSpawnInformation spawnInfo, byte wave, GameFightCharacteristics stats, short[] previousPositions)
         {
             this.contextualId = contextualId;
             this.disposition = disposition;
@@ -36,11 +36,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

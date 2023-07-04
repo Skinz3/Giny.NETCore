@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildMemberOnlineStatusMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4229;
+{
+    public class GuildMemberOnlineStatusMessage : NetworkMessage
+    {
+        public const ushort Id = 4218;
         public override ushort MessageId => Id;
 
         public long memberId;
@@ -18,14 +18,14 @@ namespace Giny.Protocol.Messages
         public GuildMemberOnlineStatusMessage()
         {
         }
-        public GuildMemberOnlineStatusMessage(long memberId,bool online)
+        public GuildMemberOnlineStatusMessage(long memberId, bool online)
         {
             this.memberId = memberId;
             this.online = online;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (memberId < 0 || memberId > 9.00719925474099E+15)
+            if (memberId < 0 || memberId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + memberId + ") on element memberId.");
             }
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             memberId = (long)reader.ReadVarUhLong();
-            if (memberId < 0 || memberId > 9.00719925474099E+15)
+            if (memberId < 0 || memberId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + memberId + ") on element of GuildMemberOnlineStatusMessage.memberId.");
             }
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
             online = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

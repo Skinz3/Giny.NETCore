@@ -6,18 +6,18 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class UpdateGuildRankRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1215;
+{
+    public class UpdateGuildRankRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 8973;
         public override ushort MessageId => Id;
 
-        public GuildRankInformation rank;
+        public RankInformation rank;
 
         public UpdateGuildRankRequestMessage()
         {
         }
-        public UpdateGuildRankRequestMessage(GuildRankInformation rank)
+        public UpdateGuildRankRequestMessage(RankInformation rank)
         {
             this.rank = rank;
         }
@@ -27,18 +27,11 @@ namespace Giny.Protocol.Messages
         }
         public override void Deserialize(IDataReader reader)
         {
-            rank = new GuildRankInformation();
+            rank = new RankInformation();
             rank.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

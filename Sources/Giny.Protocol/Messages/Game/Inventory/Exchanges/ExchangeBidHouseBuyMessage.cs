@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeBidHouseBuyMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6750;
+{
+    public class ExchangeBidHouseBuyMessage : NetworkMessage
+    {
+        public const ushort Id = 3869;
         public override ushort MessageId => Id;
 
         public int uid;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public ExchangeBidHouseBuyMessage()
         {
         }
-        public ExchangeBidHouseBuyMessage(int uid,int qty,long price)
+        public ExchangeBidHouseBuyMessage(int uid, int qty, long price)
         {
             this.uid = uid;
             this.qty = qty;
@@ -39,7 +39,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteVarInt((int)qty);
-            if (price < 0 || price > 9.00719925474099E+15)
+            if (price < 0 || price > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + price + ") on element price.");
             }
@@ -61,21 +61,14 @@ namespace Giny.Protocol.Messages
             }
 
             price = (long)reader.ReadVarUhLong();
-            if (price < 0 || price > 9.00719925474099E+15)
+            if (price < 0 || price > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + price + ") on element of ExchangeBidHouseBuyMessage.price.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

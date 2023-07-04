@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class CurrentMapInstanceMessage : CurrentMapMessage  
-    { 
-        public new const ushort Id = 7813;
+{
+    public class CurrentMapInstanceMessage : CurrentMapMessage
+    {
+        public new const ushort Id = 4130;
         public override ushort MessageId => Id;
 
         public double instantiatedMapId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public CurrentMapInstanceMessage()
         {
         }
-        public CurrentMapInstanceMessage(double instantiatedMapId,double mapId)
+        public CurrentMapInstanceMessage(double instantiatedMapId, double mapId)
         {
             this.instantiatedMapId = instantiatedMapId;
             this.mapId = mapId;
@@ -25,7 +25,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (instantiatedMapId < 0 || instantiatedMapId > 9.00719925474099E+15)
+            if (instantiatedMapId < 0 || instantiatedMapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + instantiatedMapId + ") on element instantiatedMapId.");
             }
@@ -36,21 +36,14 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             instantiatedMapId = (double)reader.ReadDouble();
-            if (instantiatedMapId < 0 || instantiatedMapId > 9.00719925474099E+15)
+            if (instantiatedMapId < 0 || instantiatedMapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + instantiatedMapId + ") on element of CurrentMapInstanceMessage.instantiatedMapId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

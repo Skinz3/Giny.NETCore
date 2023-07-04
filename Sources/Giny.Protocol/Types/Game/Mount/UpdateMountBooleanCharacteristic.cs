@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class UpdateMountBooleanCharacteristic : UpdateMountCharacteristic  
-    { 
-        public new const ushort Id = 7582;
+{
+    public class UpdateMountBooleanCharacteristic : UpdateMountCharacteristic
+    {
+        public new const ushort Id = 8363;
         public override ushort TypeId => Id;
 
         public bool value;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public UpdateMountBooleanCharacteristic()
         {
         }
-        public UpdateMountBooleanCharacteristic(bool value,byte type)
+        public UpdateMountBooleanCharacteristic(bool value, byte type)
         {
             this.value = value;
             this.type = type;
@@ -34,11 +34,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

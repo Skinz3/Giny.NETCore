@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HaapiValidationRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6667;
+{
+    public class HaapiValidationRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 4854;
         public override ushort MessageId => Id;
 
         public string transaction;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             transaction = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

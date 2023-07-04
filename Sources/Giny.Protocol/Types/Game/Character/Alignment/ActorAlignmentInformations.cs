@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ActorAlignmentInformations  
-    { 
-        public const ushort Id = 560;
+{
+    public class ActorAlignmentInformations
+    {
+        public const ushort Id = 8361;
         public virtual ushort TypeId => Id;
 
         public byte alignmentSide;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Types
         public ActorAlignmentInformations()
         {
         }
-        public ActorAlignmentInformations(byte alignmentSide,byte alignmentValue,byte alignmentGrade,double characterPower)
+        public ActorAlignmentInformations(byte alignmentSide, byte alignmentValue, byte alignmentGrade, double characterPower)
         {
             this.alignmentSide = alignmentSide;
             this.alignmentValue = alignmentValue;
@@ -40,7 +40,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteByte((byte)alignmentGrade);
-            if (characterPower < -9.00719925474099E+15 || characterPower > 9.00719925474099E+15)
+            if (characterPower < -9007199254740992 || characterPower > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + characterPower + ") on element characterPower.");
             }
@@ -63,7 +63,7 @@ namespace Giny.Protocol.Types
             }
 
             characterPower = (double)reader.ReadDouble();
-            if (characterPower < -9.00719925474099E+15 || characterPower > 9.00719925474099E+15)
+            if (characterPower < -9007199254740992 || characterPower > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + characterPower + ") on element of ActorAlignmentInformations.characterPower.");
             }
@@ -73,11 +73,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

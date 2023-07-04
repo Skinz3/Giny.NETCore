@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 using System;
 
 namespace Giny.Protocol.Enums
@@ -30,6 +23,7 @@ namespace Giny.Protocol.Enums
         Eliotrope = 16,
         Huppermage = 17,
         Ouginak = 18,
+        Forgelance = 20,
 
     }
 }

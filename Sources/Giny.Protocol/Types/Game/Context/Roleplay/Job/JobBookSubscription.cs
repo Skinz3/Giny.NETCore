@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class JobBookSubscription  
-    { 
-        public const ushort Id = 2471;
+{
+    public class JobBookSubscription
+    {
+        public const ushort Id = 125;
         public virtual ushort TypeId => Id;
 
         public byte jobId;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public JobBookSubscription()
         {
         }
-        public JobBookSubscription(byte jobId,bool subscribed)
+        public JobBookSubscription(byte jobId, bool subscribed)
         {
             this.jobId = jobId;
             this.subscribed = subscribed;
@@ -45,11 +45,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

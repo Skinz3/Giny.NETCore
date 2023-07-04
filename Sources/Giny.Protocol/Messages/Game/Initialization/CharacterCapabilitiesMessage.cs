@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class CharacterCapabilitiesMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1887;
+{
+    public class CharacterCapabilitiesMessage : NetworkMessage
+    {
+        public const ushort Id = 8946;
         public override ushort MessageId => Id;
 
         public int guildEmblemSymbolCategories;
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

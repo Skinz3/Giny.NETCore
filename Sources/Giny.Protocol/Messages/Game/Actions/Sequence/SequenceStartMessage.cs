@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class SequenceStartMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1744;
+{
+    public class SequenceStartMessage : NetworkMessage
+    {
+        public const ushort Id = 3397;
         public override ushort MessageId => Id;
 
         public byte sequenceType;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public SequenceStartMessage()
         {
         }
-        public SequenceStartMessage(byte sequenceType,double authorId)
+        public SequenceStartMessage(byte sequenceType, double authorId)
         {
             this.sequenceType = sequenceType;
             this.authorId = authorId;
@@ -26,7 +26,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteByte((byte)sequenceType);
-            if (authorId < -9.00719925474099E+15 || authorId > 9.00719925474099E+15)
+            if (authorId < -9007199254740992 || authorId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + authorId + ") on element authorId.");
             }
@@ -37,21 +37,14 @@ namespace Giny.Protocol.Messages
         {
             sequenceType = (byte)reader.ReadByte();
             authorId = (double)reader.ReadDouble();
-            if (authorId < -9.00719925474099E+15 || authorId > 9.00719925474099E+15)
+            if (authorId < -9007199254740992 || authorId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + authorId + ") on element of SequenceStartMessage.authorId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

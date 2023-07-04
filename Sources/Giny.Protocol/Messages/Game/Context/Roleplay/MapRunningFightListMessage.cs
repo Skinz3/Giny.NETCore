@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class MapRunningFightListMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9279;
+{
+    public class MapRunningFightListMessage : NetworkMessage
+    {
+        public const ushort Id = 4622;
         public override ushort MessageId => Id;
 
         public FightExternalInformations[] fights;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)fights.Length);
-            for (uint _i1 = 0;_i1 < fights.Length;_i1++)
+            for (uint _i1 = 0; _i1 < fights.Length; _i1++)
             {
                 (fights[_i1] as FightExternalInformations).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             FightExternalInformations _item1 = null;
             uint _fightsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _fightsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _fightsLen; _i1++)
             {
                 _item1 = new FightExternalInformations();
                 _item1.Deserialize(reader);
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

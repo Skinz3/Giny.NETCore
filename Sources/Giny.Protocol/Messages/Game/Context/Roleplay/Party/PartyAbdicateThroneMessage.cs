@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PartyAbdicateThroneMessage : AbstractPartyMessage  
-    { 
-        public new const ushort Id = 1039;
+{
+    public class PartyAbdicateThroneMessage : AbstractPartyMessage
+    {
+        public new const ushort Id = 368;
         public override ushort MessageId => Id;
 
         public long playerId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public PartyAbdicateThroneMessage()
         {
         }
-        public PartyAbdicateThroneMessage(long playerId,int partyId)
+        public PartyAbdicateThroneMessage(long playerId, int partyId)
         {
             this.playerId = playerId;
             this.partyId = partyId;
@@ -25,7 +25,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
@@ -36,21 +36,14 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of PartyAbdicateThroneMessage.playerId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HouseToSellFilterMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1342;
+{
+    public class HouseToSellFilterMessage : NetworkMessage
+    {
+        public const ushort Id = 8252;
         public override ushort MessageId => Id;
 
         public int areaId;
@@ -22,7 +22,7 @@ namespace Giny.Protocol.Messages
         public HouseToSellFilterMessage()
         {
         }
-        public HouseToSellFilterMessage(int areaId,byte atLeastNbRoom,byte atLeastNbChest,short skillRequested,long maxPrice,byte orderBy)
+        public HouseToSellFilterMessage(int areaId, byte atLeastNbRoom, byte atLeastNbChest, short skillRequested, long maxPrice, byte orderBy)
         {
             this.areaId = areaId;
             this.atLeastNbRoom = atLeastNbRoom;
@@ -52,7 +52,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteVarShort((short)skillRequested);
-            if (maxPrice < 0 || maxPrice > 9.00719925474099E+15)
+            if (maxPrice < 0 || maxPrice > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + maxPrice + ") on element maxPrice.");
             }
@@ -82,7 +82,7 @@ namespace Giny.Protocol.Messages
             }
 
             maxPrice = (long)reader.ReadVarUhLong();
-            if (maxPrice < 0 || maxPrice > 9.00719925474099E+15)
+            if (maxPrice < 0 || maxPrice > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + maxPrice + ") on element of HouseToSellFilterMessage.maxPrice.");
             }
@@ -95,14 +95,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

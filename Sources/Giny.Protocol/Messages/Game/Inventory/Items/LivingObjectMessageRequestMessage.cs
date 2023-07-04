@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class LivingObjectMessageRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9662;
+{
+    public class LivingObjectMessageRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 684;
         public override ushort MessageId => Id;
 
         public short msgId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public LivingObjectMessageRequestMessage()
         {
         }
-        public LivingObjectMessageRequestMessage(short msgId,string[] parameters,int livingObject)
+        public LivingObjectMessageRequestMessage(short msgId, string[] parameters, int livingObject)
         {
             this.msgId = msgId;
             this.parameters = parameters;
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
 
             writer.WriteVarShort((short)msgId);
             writer.WriteShort((short)parameters.Length);
-            for (uint _i2 = 0;_i2 < parameters.Length;_i2++)
+            for (uint _i2 = 0; _i2 < parameters.Length; _i2++)
             {
                 writer.WriteUTF((string)parameters[_i2]);
             }
@@ -57,7 +57,7 @@ namespace Giny.Protocol.Messages
 
             uint _parametersLen = (uint)reader.ReadUShort();
             parameters = new string[_parametersLen];
-            for (uint _i2 = 0;_i2 < _parametersLen;_i2++)
+            for (uint _i2 = 0; _i2 < _parametersLen; _i2++)
             {
                 _val2 = (string)reader.ReadUTF();
                 parameters[_i2] = (string)_val2;
@@ -71,14 +71,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

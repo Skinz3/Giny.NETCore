@@ -6,17 +6,17 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ChatAdminServerMessage : ChatServerMessage  
-    { 
-        public new const ushort Id = 6906;
+{
+    public class ChatAdminServerMessage : ChatServerMessage
+    {
+        public new const ushort Id = 3464;
         public override ushort MessageId => Id;
 
 
         public ChatAdminServerMessage()
         {
         }
-        public ChatAdminServerMessage(byte channel,string content,int timestamp,string fingerprint,double senderId,string senderName,string prefix,int senderAccountId)
+        public ChatAdminServerMessage(byte channel, string content, int timestamp, string fingerprint, double senderId, string senderName, string prefix, int senderAccountId)
         {
             this.channel = channel;
             this.content = content;
@@ -36,14 +36,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

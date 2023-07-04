@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class KamaDebtInformation : DebtInformation  
-    { 
-        public new const ushort Id = 5055;
+{
+    public class KamaDebtInformation : DebtInformation
+    {
+        public new const ushort Id = 348;
         public override ushort TypeId => Id;
 
         public long kamas;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public KamaDebtInformation()
         {
         }
-        public KamaDebtInformation(long kamas,double id,double timestamp)
+        public KamaDebtInformation(long kamas, double id, double timestamp)
         {
             this.kamas = kamas;
             this.id = id;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Types
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (kamas < 0 || kamas > 9.00719925474099E+15)
+            if (kamas < 0 || kamas > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + kamas + ") on element kamas.");
             }
@@ -35,7 +35,7 @@ namespace Giny.Protocol.Types
         {
             base.Deserialize(reader);
             kamas = (long)reader.ReadVarUhLong();
-            if (kamas < 0 || kamas > 9.00719925474099E+15)
+            if (kamas < 0 || kamas > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + kamas + ") on element of KamaDebtInformation.kamas.");
             }
@@ -45,11 +45,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

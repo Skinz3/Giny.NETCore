@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameFightFighterLightInformations  
-    { 
-        public const ushort Id = 3196;
+{
+    public class GameFightFighterLightInformations
+    {
+        public const ushort Id = 3588;
         public virtual ushort TypeId => Id;
 
         public double id;
@@ -20,7 +20,7 @@ namespace Giny.Protocol.Types
         public GameFightFighterLightInformations()
         {
         }
-        public GameFightFighterLightInformations(double id,byte wave,short level,byte breed,bool sex,bool alive)
+        public GameFightFighterLightInformations(double id, byte wave, short level, byte breed, bool sex, bool alive)
         {
             this.id = id;
             this.wave = wave;
@@ -32,10 +32,10 @@ namespace Giny.Protocol.Types
         public virtual void Serialize(IDataWriter writer)
         {
             byte _box0 = 0;
-            _box0 = BooleanByteWrapper.SetFlag(_box0,0,sex);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,1,alive);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 0, sex);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 1, alive);
             writer.WriteByte((byte)_box0);
-            if (id < -9.00719925474099E+15 || id > 9.00719925474099E+15)
+            if (id < -9007199254740992 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element id.");
             }
@@ -58,10 +58,10 @@ namespace Giny.Protocol.Types
         public virtual void Deserialize(IDataReader reader)
         {
             byte _box0 = reader.ReadByte();
-            sex = BooleanByteWrapper.GetFlag(_box0,0);
-            alive = BooleanByteWrapper.GetFlag(_box0,1);
+            sex = BooleanByteWrapper.GetFlag(_box0, 0);
+            alive = BooleanByteWrapper.GetFlag(_box0, 1);
             id = (double)reader.ReadDouble();
-            if (id < -9.00719925474099E+15 || id > 9.00719925474099E+15)
+            if (id < -9007199254740992 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element of GameFightFighterLightInformations.id.");
             }
@@ -84,11 +84,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

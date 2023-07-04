@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeMoneyMovementInformationMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 98;
+{
+    public class ExchangeMoneyMovementInformationMessage : NetworkMessage
+    {
+        public const ushort Id = 5589;
         public override ushort MessageId => Id;
 
         public long limit;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (limit < 0 || limit > 9.00719925474099E+15)
+            if (limit < 0 || limit > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + limit + ") on element limit.");
             }
@@ -33,21 +33,14 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             limit = (long)reader.ReadVarUhLong();
-            if (limit < 0 || limit > 9.00719925474099E+15)
+            if (limit < 0 || limit > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + limit + ") on element of ExchangeMoneyMovementInformationMessage.limit.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

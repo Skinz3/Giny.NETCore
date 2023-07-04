@@ -6,24 +6,27 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class CharacterCreationResultMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8035;
+{
+    public class CharacterCreationResultMessage : NetworkMessage
+    {
+        public const ushort Id = 5421;
         public override ushort MessageId => Id;
 
         public byte result;
+        public byte reason;
 
         public CharacterCreationResultMessage()
         {
         }
-        public CharacterCreationResultMessage(byte result)
+        public CharacterCreationResultMessage(byte result, byte reason)
         {
             this.result = result;
+            this.reason = reason;
         }
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteByte((byte)result);
+            writer.WriteByte((byte)reason);
         }
         public override void Deserialize(IDataReader reader)
         {
@@ -33,16 +36,15 @@ namespace Giny.Protocol.Messages
                 throw new System.Exception("Forbidden value (" + result + ") on element of CharacterCreationResultMessage.result.");
             }
 
-        }
+            reason = (byte)reader.ReadByte();
+            if (reason < 0)
+            {
+                throw new System.Exception("Forbidden value (" + reason + ") on element of CharacterCreationResultMessage.reason.");
+            }
 
+        }
 
     }
 }
-
-
-
-
-
-
 
 

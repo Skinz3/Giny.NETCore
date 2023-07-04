@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ChallengeInfoMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5420;
+{
+    public class ChallengeInfoMessage : NetworkMessage
+    {
+        public const ushort Id = 8147;
         public override ushort MessageId => Id;
 
         public short challengeId;
@@ -20,7 +20,7 @@ namespace Giny.Protocol.Messages
         public ChallengeInfoMessage()
         {
         }
-        public ChallengeInfoMessage(short challengeId,double targetId,int xpBonus,int dropBonus)
+        public ChallengeInfoMessage(short challengeId, double targetId, int xpBonus, int dropBonus)
         {
             this.challengeId = challengeId;
             this.targetId = targetId;
@@ -35,7 +35,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteVarShort((short)challengeId);
-            if (targetId < -9.00719925474099E+15 || targetId > 9.00719925474099E+15)
+            if (targetId < -9007199254740992 || targetId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + targetId + ") on element targetId.");
             }
@@ -63,7 +63,7 @@ namespace Giny.Protocol.Messages
             }
 
             targetId = (double)reader.ReadDouble();
-            if (targetId < -9.00719925474099E+15 || targetId > 9.00719925474099E+15)
+            if (targetId < -9007199254740992 || targetId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + targetId + ") on element of ChallengeInfoMessage.targetId.");
             }
@@ -82,14 +82,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

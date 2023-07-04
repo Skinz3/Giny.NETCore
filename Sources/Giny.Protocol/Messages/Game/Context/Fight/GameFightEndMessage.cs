@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightEndMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1798;
+{
+    public class GameFightEndMessage : NetworkMessage
+    {
+        public const ushort Id = 4634;
         public override ushort MessageId => Id;
 
         public int duration;
@@ -21,7 +21,7 @@ namespace Giny.Protocol.Messages
         public GameFightEndMessage()
         {
         }
-        public GameFightEndMessage(int duration,short rewardRate,short lootShareLimitMalus,FightResultListEntry[] results,NamedPartyTeamWithOutcome[] namedPartyTeamsOutcomes)
+        public GameFightEndMessage(int duration, short rewardRate, short lootShareLimitMalus, FightResultListEntry[] results, NamedPartyTeamWithOutcome[] namedPartyTeamsOutcomes)
         {
             this.duration = duration;
             this.rewardRate = rewardRate;
@@ -40,14 +40,14 @@ namespace Giny.Protocol.Messages
             writer.WriteVarShort((short)rewardRate);
             writer.WriteShort((short)lootShareLimitMalus);
             writer.WriteShort((short)results.Length);
-            for (uint _i4 = 0;_i4 < results.Length;_i4++)
+            for (uint _i4 = 0; _i4 < results.Length; _i4++)
             {
                 writer.WriteShort((short)(results[_i4] as FightResultListEntry).TypeId);
                 (results[_i4] as FightResultListEntry).Serialize(writer);
             }
 
             writer.WriteShort((short)namedPartyTeamsOutcomes.Length);
-            for (uint _i5 = 0;_i5 < namedPartyTeamsOutcomes.Length;_i5++)
+            for (uint _i5 = 0; _i5 < namedPartyTeamsOutcomes.Length; _i5++)
             {
                 (namedPartyTeamsOutcomes[_i5] as NamedPartyTeamWithOutcome).Serialize(writer);
             }
@@ -67,7 +67,7 @@ namespace Giny.Protocol.Messages
             rewardRate = (short)reader.ReadVarShort();
             lootShareLimitMalus = (short)reader.ReadShort();
             uint _resultsLen = (uint)reader.ReadUShort();
-            for (uint _i4 = 0;_i4 < _resultsLen;_i4++)
+            for (uint _i4 = 0; _i4 < _resultsLen; _i4++)
             {
                 _id4 = (uint)reader.ReadUShort();
                 _item4 = ProtocolTypeManager.GetInstance<FightResultListEntry>((short)_id4);
@@ -76,7 +76,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _namedPartyTeamsOutcomesLen = (uint)reader.ReadUShort();
-            for (uint _i5 = 0;_i5 < _namedPartyTeamsOutcomesLen;_i5++)
+            for (uint _i5 = 0; _i5 < _namedPartyTeamsOutcomesLen; _i5++)
             {
                 _item5 = new NamedPartyTeamWithOutcome();
                 _item5.Deserialize(reader);
@@ -85,14 +85,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

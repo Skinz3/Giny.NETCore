@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class FriendUpdateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7984;
+{
+    public class FriendUpdateMessage : NetworkMessage
+    {
+        public const ushort Id = 2915;
         public override ushort MessageId => Id;
 
         public FriendInformations friendUpdated;
@@ -33,14 +33,7 @@ namespace Giny.Protocol.Messages
             friendUpdated.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

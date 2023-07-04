@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HaapiTokenMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 876;
+{
+    public class HaapiTokenMessage : NetworkMessage
+    {
+        public const ushort Id = 9753;
         public override ushort MessageId => Id;
 
         public string token;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             token = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

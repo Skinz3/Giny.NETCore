@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameRolePlayArenaPlayerBehavioursMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2244;
+{
+    public class GameRolePlayArenaPlayerBehavioursMessage : NetworkMessage
+    {
+        public const ushort Id = 4479;
         public override ushort MessageId => Id;
 
         public string[] flags;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public GameRolePlayArenaPlayerBehavioursMessage()
         {
         }
-        public GameRolePlayArenaPlayerBehavioursMessage(string[] flags,string[] sanctions,int banDuration)
+        public GameRolePlayArenaPlayerBehavioursMessage(string[] flags, string[] sanctions, int banDuration)
         {
             this.flags = flags;
             this.sanctions = sanctions;
@@ -28,13 +28,13 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)flags.Length);
-            for (uint _i1 = 0;_i1 < flags.Length;_i1++)
+            for (uint _i1 = 0; _i1 < flags.Length; _i1++)
             {
                 writer.WriteUTF((string)flags[_i1]);
             }
 
             writer.WriteShort((short)sanctions.Length);
-            for (uint _i2 = 0;_i2 < sanctions.Length;_i2++)
+            for (uint _i2 = 0; _i2 < sanctions.Length; _i2++)
             {
                 writer.WriteUTF((string)sanctions[_i2]);
             }
@@ -52,7 +52,7 @@ namespace Giny.Protocol.Messages
             string _val2 = null;
             uint _flagsLen = (uint)reader.ReadUShort();
             flags = new string[_flagsLen];
-            for (uint _i1 = 0;_i1 < _flagsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _flagsLen; _i1++)
             {
                 _val1 = (string)reader.ReadUTF();
                 flags[_i1] = (string)_val1;
@@ -60,7 +60,7 @@ namespace Giny.Protocol.Messages
 
             uint _sanctionsLen = (uint)reader.ReadUShort();
             sanctions = new string[_sanctionsLen];
-            for (uint _i2 = 0;_i2 < _sanctionsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _sanctionsLen; _i2++)
             {
                 _val2 = (string)reader.ReadUTF();
                 sanctions[_i2] = (string)_val2;
@@ -74,14 +74,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

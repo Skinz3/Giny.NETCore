@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameRolePlayPlayerFightFriendlyRequestedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6157;
+{
+    public class GameRolePlayPlayerFightFriendlyRequestedMessage : NetworkMessage
+    {
+        public const ushort Id = 7362;
         public override ushort MessageId => Id;
 
         public short fightId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public GameRolePlayPlayerFightFriendlyRequestedMessage()
         {
         }
-        public GameRolePlayPlayerFightFriendlyRequestedMessage(short fightId,long sourceId,long targetId)
+        public GameRolePlayPlayerFightFriendlyRequestedMessage(short fightId, long sourceId, long targetId)
         {
             this.fightId = fightId;
             this.sourceId = sourceId;
@@ -33,13 +33,13 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteVarShort((short)fightId);
-            if (sourceId < 0 || sourceId > 9.00719925474099E+15)
+            if (sourceId < 0 || sourceId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + sourceId + ") on element sourceId.");
             }
 
             writer.WriteVarLong((long)sourceId);
-            if (targetId < 0 || targetId > 9.00719925474099E+15)
+            if (targetId < 0 || targetId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + targetId + ") on element targetId.");
             }
@@ -55,27 +55,20 @@ namespace Giny.Protocol.Messages
             }
 
             sourceId = (long)reader.ReadVarUhLong();
-            if (sourceId < 0 || sourceId > 9.00719925474099E+15)
+            if (sourceId < 0 || sourceId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + sourceId + ") on element of GameRolePlayPlayerFightFriendlyRequestedMessage.sourceId.");
             }
 
             targetId = (long)reader.ReadVarUhLong();
-            if (targetId < 0 || targetId > 9.00719925474099E+15)
+            if (targetId < 0 || targetId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + targetId + ") on element of GameRolePlayPlayerFightFriendlyRequestedMessage.targetId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

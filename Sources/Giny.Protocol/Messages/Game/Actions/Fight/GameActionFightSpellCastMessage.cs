@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameActionFightSpellCastMessage : AbstractGameActionFightTargetedAbilityMessage  
-    { 
-        public new const ushort Id = 65;
+{
+    public class GameActionFightSpellCastMessage : AbstractGameActionFightTargetedAbilityMessage
+    {
+        public new const ushort Id = 4608;
         public override ushort MessageId => Id;
 
         public short spellId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public GameActionFightSpellCastMessage()
         {
         }
-        public GameActionFightSpellCastMessage(short spellId,short spellLevel,short[] portalsIds,short actionId,double sourceId,double targetId,short destinationCellId,byte critical,bool silentCast,bool verboseCast)
+        public GameActionFightSpellCastMessage(short spellId, short spellLevel, short[] portalsIds, short actionId, double sourceId, double targetId, short destinationCellId, byte critical, bool silentCast, bool verboseCast)
         {
             this.spellId = spellId;
             this.spellLevel = spellLevel;
@@ -48,7 +48,7 @@ namespace Giny.Protocol.Messages
 
             writer.WriteShort((short)spellLevel);
             writer.WriteShort((short)portalsIds.Length);
-            for (uint _i3 = 0;_i3 < portalsIds.Length;_i3++)
+            for (uint _i3 = 0; _i3 < portalsIds.Length; _i3++)
             {
                 writer.WriteShort((short)portalsIds[_i3]);
             }
@@ -72,7 +72,7 @@ namespace Giny.Protocol.Messages
 
             uint _portalsIdsLen = (uint)reader.ReadUShort();
             portalsIds = new short[_portalsIdsLen];
-            for (uint _i3 = 0;_i3 < _portalsIdsLen;_i3++)
+            for (uint _i3 = 0; _i3 < _portalsIdsLen; _i3++)
             {
                 _val3 = (int)reader.ReadShort();
                 portalsIds[_i3] = (short)_val3;
@@ -80,14 +80,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

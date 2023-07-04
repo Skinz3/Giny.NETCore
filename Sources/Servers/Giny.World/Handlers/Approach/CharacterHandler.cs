@@ -39,7 +39,7 @@ namespace Giny.World.Handlers.Approach
 
             if (canCreateCharacter != CharacterCreationResultEnum.OK)
             {
-                client.Send(new CharacterCreationResultMessage((byte)canCreateCharacter));
+                client.Send(new CharacterCreationResultMessage(0, (byte)canCreateCharacter));
                 return;
             }
 
@@ -50,16 +50,16 @@ namespace Giny.World.Handlers.Approach
             {
                 if (!result.succes)
                 {
-                    client.Send(new CharacterCreationResultMessage((byte)CharacterCreationResultEnum.ERR_NO_REASON));
+                    client.Send(new CharacterCreationResultMessage(0,(byte)CharacterCreationResultEnum.ERR_NO_REASON));
                     return;
                 }
 
-                client.Send(new CharacterCreationResultMessage((byte)CharacterCreationResultEnum.OK));
+                client.Send(new CharacterCreationResultMessage(0, (byte)CharacterCreationResultEnum.OK));
                 CreateCharacter(message, client, nextId);
             },
             delegate ()
             {
-                client.Send(new CharacterCreationResultMessage((byte)CharacterCreationResultEnum.ERR_NO_REASON));
+                client.Send(new CharacterCreationResultMessage(0, (byte)CharacterCreationResultEnum.ERR_NO_REASON));
             });
         }
         static void CreateCharacter(CharacterCreationRequestMessage message, WorldClient client, long id)
@@ -132,7 +132,7 @@ namespace Giny.World.Handlers.Approach
 
                 client.Characters.Remove(character);
                 CharacterManager.Instance.DeleteCharacter(character);
-                client.Send(new CharacterCreationResultMessage((byte)CharacterCreationResultEnum.OK));
+                client.Send(new CharacterCreationResultMessage(0, (byte)CharacterCreationResultEnum.OK));
                 client.SendCharactersList();
             },
             delegate ()
@@ -174,7 +174,6 @@ namespace Giny.World.Handlers.Approach
             client.Character.CreateHumanOptions();
             client.Character.RefreshArenaInfos();
             client.Character.SendServerExperienceModificator();
-            client.Character.CheckMerchantState();
             client.Character.OnCharacterLoadingComplete();
         }
 

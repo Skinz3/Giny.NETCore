@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightPlacementSwapPositionsRequestMessage : GameFightPlacementPositionRequestMessage  
-    { 
-        public new const ushort Id = 8289;
+{
+    public class GameFightPlacementSwapPositionsRequestMessage : GameFightPlacementPositionRequestMessage
+    {
+        public new const ushort Id = 2825;
         public override ushort MessageId => Id;
 
         public double requestedId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public GameFightPlacementSwapPositionsRequestMessage()
         {
         }
-        public GameFightPlacementSwapPositionsRequestMessage(double requestedId,short cellId)
+        public GameFightPlacementSwapPositionsRequestMessage(double requestedId, short cellId)
         {
             this.requestedId = requestedId;
             this.cellId = cellId;
@@ -25,7 +25,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (requestedId < -9.00719925474099E+15 || requestedId > 9.00719925474099E+15)
+            if (requestedId < -9007199254740992 || requestedId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + requestedId + ") on element requestedId.");
             }
@@ -36,21 +36,14 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             requestedId = (double)reader.ReadDouble();
-            if (requestedId < -9.00719925474099E+15 || requestedId > 9.00719925474099E+15)
+            if (requestedId < -9007199254740992 || requestedId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + requestedId + ") on element of GameFightPlacementSwapPositionsRequestMessage.requestedId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

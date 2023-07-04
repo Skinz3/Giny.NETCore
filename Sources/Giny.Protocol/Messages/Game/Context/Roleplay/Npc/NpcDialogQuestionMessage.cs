@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class NpcDialogQuestionMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2122;
+{
+    public class NpcDialogQuestionMessage : NetworkMessage
+    {
+        public const ushort Id = 2383;
         public override ushort MessageId => Id;
 
         public int messageId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public NpcDialogQuestionMessage()
         {
         }
-        public NpcDialogQuestionMessage(int messageId,string[] dialogParams,int[] visibleReplies)
+        public NpcDialogQuestionMessage(int messageId, string[] dialogParams, int[] visibleReplies)
         {
             this.messageId = messageId;
             this.dialogParams = dialogParams;
@@ -34,13 +34,13 @@ namespace Giny.Protocol.Messages
 
             writer.WriteVarInt((int)messageId);
             writer.WriteShort((short)dialogParams.Length);
-            for (uint _i2 = 0;_i2 < dialogParams.Length;_i2++)
+            for (uint _i2 = 0; _i2 < dialogParams.Length; _i2++)
             {
                 writer.WriteUTF((string)dialogParams[_i2]);
             }
 
             writer.WriteShort((short)visibleReplies.Length);
-            for (uint _i3 = 0;_i3 < visibleReplies.Length;_i3++)
+            for (uint _i3 = 0; _i3 < visibleReplies.Length; _i3++)
             {
                 if (visibleReplies[_i3] < 0)
                 {
@@ -63,7 +63,7 @@ namespace Giny.Protocol.Messages
 
             uint _dialogParamsLen = (uint)reader.ReadUShort();
             dialogParams = new string[_dialogParamsLen];
-            for (uint _i2 = 0;_i2 < _dialogParamsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _dialogParamsLen; _i2++)
             {
                 _val2 = (string)reader.ReadUTF();
                 dialogParams[_i2] = (string)_val2;
@@ -71,7 +71,7 @@ namespace Giny.Protocol.Messages
 
             uint _visibleRepliesLen = (uint)reader.ReadUShort();
             visibleReplies = new int[_visibleRepliesLen];
-            for (uint _i3 = 0;_i3 < _visibleRepliesLen;_i3++)
+            for (uint _i3 = 0; _i3 < _visibleRepliesLen; _i3++)
             {
                 _val3 = (uint)reader.ReadVarUhInt();
                 if (_val3 < 0)
@@ -84,14 +84,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

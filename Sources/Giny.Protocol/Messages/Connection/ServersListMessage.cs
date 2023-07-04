@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ServersListMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4863;
+{
+    public class ServersListMessage : NetworkMessage
+    {
+        public const ushort Id = 3434;
         public override ushort MessageId => Id;
 
         public GameServerInformations[] servers;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ServersListMessage()
         {
         }
-        public ServersListMessage(GameServerInformations[] servers,bool canCreateNewCharacter)
+        public ServersListMessage(GameServerInformations[] servers, bool canCreateNewCharacter)
         {
             this.servers = servers;
             this.canCreateNewCharacter = canCreateNewCharacter;
@@ -26,7 +26,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)servers.Length);
-            for (uint _i1 = 0;_i1 < servers.Length;_i1++)
+            for (uint _i1 = 0; _i1 < servers.Length; _i1++)
             {
                 (servers[_i1] as GameServerInformations).Serialize(writer);
             }
@@ -37,7 +37,7 @@ namespace Giny.Protocol.Messages
         {
             GameServerInformations _item1 = null;
             uint _serversLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _serversLen;_i1++)
+            for (uint _i1 = 0; _i1 < _serversLen; _i1++)
             {
                 _item1 = new GameServerInformations();
                 _item1.Deserialize(reader);
@@ -47,14 +47,7 @@ namespace Giny.Protocol.Messages
             canCreateNewCharacter = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

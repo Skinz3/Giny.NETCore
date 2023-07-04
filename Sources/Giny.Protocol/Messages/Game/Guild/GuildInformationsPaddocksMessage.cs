@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildInformationsPaddocksMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1386;
+{
+    public class GuildInformationsPaddocksMessage : NetworkMessage
+    {
+        public const ushort Id = 1938;
         public override ushort MessageId => Id;
 
         public byte nbPaddockMax;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public GuildInformationsPaddocksMessage()
         {
         }
-        public GuildInformationsPaddocksMessage(byte nbPaddockMax,PaddockContentInformations[] paddocksInformations)
+        public GuildInformationsPaddocksMessage(byte nbPaddockMax, PaddockContentInformations[] paddocksInformations)
         {
             this.nbPaddockMax = nbPaddockMax;
             this.paddocksInformations = paddocksInformations;
@@ -32,7 +32,7 @@ namespace Giny.Protocol.Messages
 
             writer.WriteByte((byte)nbPaddockMax);
             writer.WriteShort((short)paddocksInformations.Length);
-            for (uint _i2 = 0;_i2 < paddocksInformations.Length;_i2++)
+            for (uint _i2 = 0; _i2 < paddocksInformations.Length; _i2++)
             {
                 (paddocksInformations[_i2] as PaddockContentInformations).Serialize(writer);
             }
@@ -48,7 +48,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _paddocksInformationsLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _paddocksInformationsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _paddocksInformationsLen; _i2++)
             {
                 _item2 = new PaddockContentInformations();
                 _item2.Deserialize(reader);
@@ -57,14 +57,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class HouseOnMapInformations : HouseInformations  
-    { 
-        public new const ushort Id = 7144;
+{
+    public class HouseOnMapInformations : HouseInformations
+    {
+        public new const ushort Id = 799;
         public override ushort TypeId => Id;
 
         public int[] doorsOnMap;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public HouseOnMapInformations()
         {
         }
-        public HouseOnMapInformations(int[] doorsOnMap,HouseInstanceInformations[] houseInstances,int houseId,short modelId)
+        public HouseOnMapInformations(int[] doorsOnMap, HouseInstanceInformations[] houseInstances, int houseId, short modelId)
         {
             this.doorsOnMap = doorsOnMap;
             this.houseInstances = houseInstances;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Types
         {
             base.Serialize(writer);
             writer.WriteShort((short)doorsOnMap.Length);
-            for (uint _i1 = 0;_i1 < doorsOnMap.Length;_i1++)
+            for (uint _i1 = 0; _i1 < doorsOnMap.Length; _i1++)
             {
                 if (doorsOnMap[_i1] < 0)
                 {
@@ -38,7 +38,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteShort((short)houseInstances.Length);
-            for (uint _i2 = 0;_i2 < houseInstances.Length;_i2++)
+            for (uint _i2 = 0; _i2 < houseInstances.Length; _i2++)
             {
                 (houseInstances[_i2] as HouseInstanceInformations).Serialize(writer);
             }
@@ -51,7 +51,7 @@ namespace Giny.Protocol.Types
             base.Deserialize(reader);
             uint _doorsOnMapLen = (uint)reader.ReadUShort();
             doorsOnMap = new int[_doorsOnMapLen];
-            for (uint _i1 = 0;_i1 < _doorsOnMapLen;_i1++)
+            for (uint _i1 = 0; _i1 < _doorsOnMapLen; _i1++)
             {
                 _val1 = (uint)reader.ReadInt();
                 if (_val1 < 0)
@@ -63,7 +63,7 @@ namespace Giny.Protocol.Types
             }
 
             uint _houseInstancesLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _houseInstancesLen;_i2++)
+            for (uint _i2 = 0; _i2 < _houseInstancesLen; _i2++)
             {
                 _item2 = new HouseInstanceInformations();
                 _item2.Deserialize(reader);
@@ -75,11 +75,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

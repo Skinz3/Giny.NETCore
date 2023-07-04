@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class TreasureHuntMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7652;
+{
+    public class TreasureHuntMessage : NetworkMessage
+    {
+        public const ushort Id = 9317;
         public override ushort MessageId => Id;
 
         public byte questType;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public TreasureHuntMessage()
         {
         }
-        public TreasureHuntMessage(byte questType,double startMapId,TreasureHuntStep[] knownStepsList,byte totalStepCount,int checkPointCurrent,int checkPointTotal,int availableRetryCount,TreasureHuntFlag[] flags)
+        public TreasureHuntMessage(byte questType, double startMapId, TreasureHuntStep[] knownStepsList, byte totalStepCount, int checkPointCurrent, int checkPointTotal, int availableRetryCount, TreasureHuntFlag[] flags)
         {
             this.questType = questType;
             this.startMapId = startMapId;
@@ -38,14 +38,14 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteByte((byte)questType);
-            if (startMapId < 0 || startMapId > 9.00719925474099E+15)
+            if (startMapId < 0 || startMapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + startMapId + ") on element startMapId.");
             }
 
             writer.WriteDouble((double)startMapId);
             writer.WriteShort((short)knownStepsList.Length);
-            for (uint _i3 = 0;_i3 < knownStepsList.Length;_i3++)
+            for (uint _i3 = 0; _i3 < knownStepsList.Length; _i3++)
             {
                 writer.WriteShort((short)(knownStepsList[_i3] as TreasureHuntStep).TypeId);
                 (knownStepsList[_i3] as TreasureHuntStep).Serialize(writer);
@@ -71,7 +71,7 @@ namespace Giny.Protocol.Messages
             writer.WriteVarInt((int)checkPointTotal);
             writer.WriteInt((int)availableRetryCount);
             writer.WriteShort((short)flags.Length);
-            for (uint _i8 = 0;_i8 < flags.Length;_i8++)
+            for (uint _i8 = 0; _i8 < flags.Length; _i8++)
             {
                 (flags[_i8] as TreasureHuntFlag).Serialize(writer);
             }
@@ -89,13 +89,13 @@ namespace Giny.Protocol.Messages
             }
 
             startMapId = (double)reader.ReadDouble();
-            if (startMapId < 0 || startMapId > 9.00719925474099E+15)
+            if (startMapId < 0 || startMapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + startMapId + ") on element of TreasureHuntMessage.startMapId.");
             }
 
             uint _knownStepsListLen = (uint)reader.ReadUShort();
-            for (uint _i3 = 0;_i3 < _knownStepsListLen;_i3++)
+            for (uint _i3 = 0; _i3 < _knownStepsListLen; _i3++)
             {
                 _id3 = (uint)reader.ReadUShort();
                 _item3 = ProtocolTypeManager.GetInstance<TreasureHuntStep>((short)_id3);
@@ -123,7 +123,7 @@ namespace Giny.Protocol.Messages
 
             availableRetryCount = (int)reader.ReadInt();
             uint _flagsLen = (uint)reader.ReadUShort();
-            for (uint _i8 = 0;_i8 < _flagsLen;_i8++)
+            for (uint _i8 = 0; _i8 < _flagsLen; _i8++)
             {
                 _item8 = new TreasureHuntFlag();
                 _item8.Deserialize(reader);
@@ -132,14 +132,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class SlaveSwitchContextMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1189;
+{
+    public class SlaveSwitchContextMessage : NetworkMessage
+    {
+        public const ushort Id = 4157;
         public override ushort MessageId => Id;
 
         public double masterId;
@@ -22,7 +22,7 @@ namespace Giny.Protocol.Messages
         public SlaveSwitchContextMessage()
         {
         }
-        public SlaveSwitchContextMessage(double masterId,double slaveId,short slaveTurn,SpellItem[] slaveSpells,CharacterCharacteristicsInformations slaveStats,Shortcut[] shortcuts)
+        public SlaveSwitchContextMessage(double masterId, double slaveId, short slaveTurn, SpellItem[] slaveSpells, CharacterCharacteristicsInformations slaveStats, Shortcut[] shortcuts)
         {
             this.masterId = masterId;
             this.slaveId = slaveId;
@@ -33,13 +33,13 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (masterId < -9.00719925474099E+15 || masterId > 9.00719925474099E+15)
+            if (masterId < -9007199254740992 || masterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + masterId + ") on element masterId.");
             }
 
             writer.WriteDouble((double)masterId);
-            if (slaveId < -9.00719925474099E+15 || slaveId > 9.00719925474099E+15)
+            if (slaveId < -9007199254740992 || slaveId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + slaveId + ") on element slaveId.");
             }
@@ -52,14 +52,14 @@ namespace Giny.Protocol.Messages
 
             writer.WriteVarShort((short)slaveTurn);
             writer.WriteShort((short)slaveSpells.Length);
-            for (uint _i4 = 0;_i4 < slaveSpells.Length;_i4++)
+            for (uint _i4 = 0; _i4 < slaveSpells.Length; _i4++)
             {
                 (slaveSpells[_i4] as SpellItem).Serialize(writer);
             }
 
             slaveStats.Serialize(writer);
             writer.WriteShort((short)shortcuts.Length);
-            for (uint _i6 = 0;_i6 < shortcuts.Length;_i6++)
+            for (uint _i6 = 0; _i6 < shortcuts.Length; _i6++)
             {
                 writer.WriteShort((short)(shortcuts[_i6] as Shortcut).TypeId);
                 (shortcuts[_i6] as Shortcut).Serialize(writer);
@@ -72,13 +72,13 @@ namespace Giny.Protocol.Messages
             uint _id6 = 0;
             Shortcut _item6 = null;
             masterId = (double)reader.ReadDouble();
-            if (masterId < -9.00719925474099E+15 || masterId > 9.00719925474099E+15)
+            if (masterId < -9007199254740992 || masterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + masterId + ") on element of SlaveSwitchContextMessage.masterId.");
             }
 
             slaveId = (double)reader.ReadDouble();
-            if (slaveId < -9.00719925474099E+15 || slaveId > 9.00719925474099E+15)
+            if (slaveId < -9007199254740992 || slaveId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + slaveId + ") on element of SlaveSwitchContextMessage.slaveId.");
             }
@@ -90,7 +90,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _slaveSpellsLen = (uint)reader.ReadUShort();
-            for (uint _i4 = 0;_i4 < _slaveSpellsLen;_i4++)
+            for (uint _i4 = 0; _i4 < _slaveSpellsLen; _i4++)
             {
                 _item4 = new SpellItem();
                 _item4.Deserialize(reader);
@@ -100,7 +100,7 @@ namespace Giny.Protocol.Messages
             slaveStats = new CharacterCharacteristicsInformations();
             slaveStats.Deserialize(reader);
             uint _shortcutsLen = (uint)reader.ReadUShort();
-            for (uint _i6 = 0;_i6 < _shortcutsLen;_i6++)
+            for (uint _i6 = 0; _i6 < _shortcutsLen; _i6++)
             {
                 _id6 = (uint)reader.ReadUShort();
                 _item6 = ProtocolTypeManager.GetInstance<Shortcut>((short)_id6);
@@ -110,14 +110,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

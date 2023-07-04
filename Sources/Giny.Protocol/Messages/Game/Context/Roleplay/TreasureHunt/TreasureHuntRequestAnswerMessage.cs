@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class TreasureHuntRequestAnswerMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6318;
+{
+    public class TreasureHuntRequestAnswerMessage : NetworkMessage
+    {
+        public const ushort Id = 4172;
         public override ushort MessageId => Id;
 
         public byte questType;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public TreasureHuntRequestAnswerMessage()
         {
         }
-        public TreasureHuntRequestAnswerMessage(byte questType,byte result)
+        public TreasureHuntRequestAnswerMessage(byte questType, byte result)
         {
             this.questType = questType;
             this.result = result;
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

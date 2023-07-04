@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameMapMovementRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6371;
+{
+    public class GameMapMovementRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 3257;
         public override ushort MessageId => Id;
 
         public short[] keyMovements;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public GameMapMovementRequestMessage()
         {
         }
-        public GameMapMovementRequestMessage(short[] keyMovements,double mapId)
+        public GameMapMovementRequestMessage(short[] keyMovements, double mapId)
         {
             this.keyMovements = keyMovements;
             this.mapId = mapId;
@@ -26,7 +26,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)keyMovements.Length);
-            for (uint _i1 = 0;_i1 < keyMovements.Length;_i1++)
+            for (uint _i1 = 0; _i1 < keyMovements.Length; _i1++)
             {
                 if (keyMovements[_i1] < 0)
                 {
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Messages
                 writer.WriteShort((short)keyMovements[_i1]);
             }
 
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element mapId.");
             }
@@ -48,7 +48,7 @@ namespace Giny.Protocol.Messages
             uint _val1 = 0;
             uint _keyMovementsLen = (uint)reader.ReadUShort();
             keyMovements = new short[_keyMovementsLen];
-            for (uint _i1 = 0;_i1 < _keyMovementsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _keyMovementsLen; _i1++)
             {
                 _val1 = (uint)reader.ReadShort();
                 if (_val1 < 0)
@@ -60,21 +60,14 @@ namespace Giny.Protocol.Messages
             }
 
             mapId = (double)reader.ReadDouble();
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element of GameMapMovementRequestMessage.mapId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

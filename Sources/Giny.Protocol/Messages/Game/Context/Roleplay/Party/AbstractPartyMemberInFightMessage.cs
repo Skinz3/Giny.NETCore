@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AbstractPartyMemberInFightMessage : AbstractPartyMessage  
-    { 
-        public new const ushort Id = 1165;
+{
+    public class AbstractPartyMemberInFightMessage : AbstractPartyMessage
+    {
+        public new const ushort Id = 7440;
         public override ushort MessageId => Id;
 
         public byte reason;
@@ -22,7 +22,7 @@ namespace Giny.Protocol.Messages
         public AbstractPartyMemberInFightMessage()
         {
         }
-        public AbstractPartyMemberInFightMessage(byte reason,long memberId,int memberAccountId,string memberName,short fightId,short timeBeforeFightStart,int partyId)
+        public AbstractPartyMemberInFightMessage(byte reason, long memberId, int memberAccountId, string memberName, short fightId, short timeBeforeFightStart, int partyId)
         {
             this.reason = reason;
             this.memberId = memberId;
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Messages
         {
             base.Serialize(writer);
             writer.WriteByte((byte)reason);
-            if (memberId < 0 || memberId > 9.00719925474099E+15)
+            if (memberId < 0 || memberId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + memberId + ") on element memberId.");
             }
@@ -67,7 +67,7 @@ namespace Giny.Protocol.Messages
             }
 
             memberId = (long)reader.ReadVarUhLong();
-            if (memberId < 0 || memberId > 9.00719925474099E+15)
+            if (memberId < 0 || memberId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + memberId + ") on element of AbstractPartyMemberInFightMessage.memberId.");
             }
@@ -88,14 +88,7 @@ namespace Giny.Protocol.Messages
             timeBeforeFightStart = (short)reader.ReadVarShort();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PartyLocateMembersRequestMessage : AbstractPartyMessage  
-    { 
-        public new const ushort Id = 3969;
+{
+    public class PartyLocateMembersRequestMessage : AbstractPartyMessage
+    {
+        public new const ushort Id = 9244;
         public override ushort MessageId => Id;
 
 
@@ -29,14 +29,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

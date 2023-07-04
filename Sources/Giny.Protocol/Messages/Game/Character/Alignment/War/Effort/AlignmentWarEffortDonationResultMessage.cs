@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AlignmentWarEffortDonationResultMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9607;
+{
+    public class AlignmentWarEffortDonationResultMessage : NetworkMessage
+    {
+        public const ushort Id = 7571;
         public override ushort MessageId => Id;
 
         public byte result;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             result = (byte)reader.ReadByte();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

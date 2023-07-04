@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class TeleportToBuddyCloseMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 332;
+{
+    public class TeleportToBuddyCloseMessage : NetworkMessage
+    {
+        public const ushort Id = 3865;
         public override ushort MessageId => Id;
 
         public short dungeonId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public TeleportToBuddyCloseMessage()
         {
         }
-        public TeleportToBuddyCloseMessage(short dungeonId,long buddyId)
+        public TeleportToBuddyCloseMessage(short dungeonId, long buddyId)
         {
             this.dungeonId = dungeonId;
             this.buddyId = buddyId;
@@ -31,7 +31,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteVarShort((short)dungeonId);
-            if (buddyId < 0 || buddyId > 9.00719925474099E+15)
+            if (buddyId < 0 || buddyId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + buddyId + ") on element buddyId.");
             }
@@ -47,21 +47,14 @@ namespace Giny.Protocol.Messages
             }
 
             buddyId = (long)reader.ReadVarUhLong();
-            if (buddyId < 0 || buddyId > 9.00719925474099E+15)
+            if (buddyId < 0 || buddyId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + buddyId + ") on element of TeleportToBuddyCloseMessage.buddyId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

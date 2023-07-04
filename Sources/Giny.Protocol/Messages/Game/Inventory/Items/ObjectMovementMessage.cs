@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ObjectMovementMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5879;
+{
+    public class ObjectMovementMessage : NetworkMessage
+    {
+        public const ushort Id = 7541;
         public override ushort MessageId => Id;
 
         public int objectUID;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ObjectMovementMessage()
         {
         }
-        public ObjectMovementMessage(int objectUID,short position)
+        public ObjectMovementMessage(int objectUID, short position)
         {
             this.objectUID = objectUID;
             this.position = position;
@@ -49,14 +49,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

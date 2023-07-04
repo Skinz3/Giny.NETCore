@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameServerInformations  
-    { 
-        public const ushort Id = 7410;
+{
+    public class GameServerInformations
+    {
+        public const ushort Id = 8602;
         public virtual ushort TypeId => Id;
 
         public short id;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Types
         public GameServerInformations()
         {
         }
-        public GameServerInformations(short id,byte type,bool isMonoAccount,byte status,byte completion,bool isSelectable,byte charactersCount,byte charactersSlots,double date)
+        public GameServerInformations(short id, byte type, bool isMonoAccount, byte status, byte completion, bool isSelectable, byte charactersCount, byte charactersSlots, double date)
         {
             this.id = id;
             this.type = type;
@@ -38,8 +38,8 @@ namespace Giny.Protocol.Types
         public virtual void Serialize(IDataWriter writer)
         {
             byte _box0 = 0;
-            _box0 = BooleanByteWrapper.SetFlag(_box0,0,isMonoAccount);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,1,isSelectable);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 0, isMonoAccount);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 1, isSelectable);
             writer.WriteByte((byte)_box0);
             if (id < 0)
             {
@@ -62,7 +62,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteByte((byte)charactersSlots);
-            if (date < -9.00719925474099E+15 || date > 9.00719925474099E+15)
+            if (date < -9007199254740992 || date > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + date + ") on element date.");
             }
@@ -72,8 +72,8 @@ namespace Giny.Protocol.Types
         public virtual void Deserialize(IDataReader reader)
         {
             byte _box0 = reader.ReadByte();
-            isMonoAccount = BooleanByteWrapper.GetFlag(_box0,0);
-            isSelectable = BooleanByteWrapper.GetFlag(_box0,1);
+            isMonoAccount = BooleanByteWrapper.GetFlag(_box0, 0);
+            isSelectable = BooleanByteWrapper.GetFlag(_box0, 1);
             id = (short)reader.ReadVarUhShort();
             if (id < 0)
             {
@@ -106,7 +106,7 @@ namespace Giny.Protocol.Types
             }
 
             date = (double)reader.ReadDouble();
-            if (date < -9.00719925474099E+15 || date > 9.00719925474099E+15)
+            if (date < -9007199254740992 || date > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + date + ") on element of GameServerInformations.date.");
             }
@@ -116,11 +116,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

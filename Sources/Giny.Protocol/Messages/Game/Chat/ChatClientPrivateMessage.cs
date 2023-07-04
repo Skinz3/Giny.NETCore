@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ChatClientPrivateMessage : ChatAbstractClientMessage  
-    { 
-        public new const ushort Id = 9337;
+{
+    public class ChatClientPrivateMessage : ChatAbstractClientMessage
+    {
+        public new const ushort Id = 787;
         public override ushort MessageId => Id;
 
         public AbstractPlayerSearchInformation receiver;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public ChatClientPrivateMessage()
         {
         }
-        public ChatClientPrivateMessage(AbstractPlayerSearchInformation receiver,string content)
+        public ChatClientPrivateMessage(AbstractPlayerSearchInformation receiver, string content)
         {
             this.receiver = receiver;
             this.content = content;
@@ -36,14 +36,7 @@ namespace Giny.Protocol.Messages
             receiver.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

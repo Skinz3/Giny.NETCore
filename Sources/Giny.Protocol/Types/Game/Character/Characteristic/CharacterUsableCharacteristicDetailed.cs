@@ -4,18 +4,18 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class CharacterUsableCharacteristicDetailed : CharacterCharacteristicDetailed  
-    { 
-        public new const ushort Id = 3142;
+{
+    public class CharacterUsableCharacteristicDetailed : CharacterCharacteristicDetailed
+    {
+        public new const ushort Id = 6224;
         public override ushort TypeId => Id;
 
-        public short used;
+        public int used;
 
         public CharacterUsableCharacteristicDetailed()
         {
         }
-        public CharacterUsableCharacteristicDetailed(short used,short characteristicId,short @base,short additional,short objectsAndMountBonus,short alignGiftBonus,short contextModif)
+        public CharacterUsableCharacteristicDetailed(int used, short characteristicId, int @base, int additional, int objectsAndMountBonus, int alignGiftBonus, int contextModif)
         {
             this.used = used;
             this.characteristicId = characteristicId;
@@ -33,12 +33,12 @@ namespace Giny.Protocol.Types
                 throw new System.Exception("Forbidden value (" + used + ") on element used.");
             }
 
-            writer.WriteVarShort((short)used);
+            writer.WriteVarInt((int)used);
         }
         public override void Deserialize(IDataReader reader)
         {
             base.Deserialize(reader);
-            used = (short)reader.ReadVarUhShort();
+            used = (int)reader.ReadVarUhInt();
             if (used < 0)
             {
                 throw new System.Exception("Forbidden value (" + used + ") on element of CharacterUsableCharacteristicDetailed.used.");
@@ -49,11 +49,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

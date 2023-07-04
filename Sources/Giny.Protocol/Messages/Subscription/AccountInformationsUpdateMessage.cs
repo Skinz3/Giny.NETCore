@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AccountInformationsUpdateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6679;
+{
+    public class AccountInformationsUpdateMessage : NetworkMessage
+    {
+        public const ushort Id = 7360;
         public override ushort MessageId => Id;
 
         public double subscriptionEndDate;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (subscriptionEndDate < 0 || subscriptionEndDate > 9.00719925474099E+15)
+            if (subscriptionEndDate < 0 || subscriptionEndDate > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + subscriptionEndDate + ") on element subscriptionEndDate.");
             }
@@ -33,21 +33,14 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             subscriptionEndDate = (double)reader.ReadDouble();
-            if (subscriptionEndDate < 0 || subscriptionEndDate > 9.00719925474099E+15)
+            if (subscriptionEndDate < 0 || subscriptionEndDate > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + subscriptionEndDate + ") on element of AccountInformationsUpdateMessage.subscriptionEndDate.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

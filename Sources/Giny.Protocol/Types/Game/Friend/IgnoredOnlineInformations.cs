@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class IgnoredOnlineInformations : IgnoredInformations  
-    { 
-        public new const ushort Id = 6999;
+{
+    public class IgnoredOnlineInformations : IgnoredInformations
+    {
+        public new const ushort Id = 1962;
         public override ushort TypeId => Id;
 
         public long playerId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Types
         public IgnoredOnlineInformations()
         {
         }
-        public IgnoredOnlineInformations(long playerId,string playerName,byte breed,bool sex,int accountId,AccountTagInformation accountTag)
+        public IgnoredOnlineInformations(long playerId, string playerName, byte breed, bool sex, int accountId, AccountTagInformation accountTag)
         {
             this.playerId = playerId;
             this.playerName = playerName;
@@ -30,7 +30,7 @@ namespace Giny.Protocol.Types
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
@@ -44,14 +44,14 @@ namespace Giny.Protocol.Types
         {
             base.Deserialize(reader);
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of IgnoredOnlineInformations.playerId.");
             }
 
             playerName = (string)reader.ReadUTF();
             breed = (byte)reader.ReadByte();
-            if (breed < (byte)PlayableBreedEnum.Feca || breed > (byte)PlayableBreedEnum.Ouginak)
+            if (breed < (byte)PlayableBreedEnum.Feca || breed > (byte)PlayableBreedEnum.Forgelance)
             {
                 throw new System.Exception("Forbidden value (" + breed + ") on element of IgnoredOnlineInformations.breed.");
             }
@@ -62,11 +62,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

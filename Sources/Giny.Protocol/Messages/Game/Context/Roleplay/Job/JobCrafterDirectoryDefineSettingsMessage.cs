@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class JobCrafterDirectoryDefineSettingsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1027;
+{
+    public class JobCrafterDirectoryDefineSettingsMessage : NetworkMessage
+    {
+        public const ushort Id = 9256;
         public override ushort MessageId => Id;
 
         public JobCrafterDirectorySettings settings;
@@ -31,14 +31,7 @@ namespace Giny.Protocol.Messages
             settings.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

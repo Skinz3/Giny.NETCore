@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class MapComplementaryInformationsDataInHavenBagMessage : MapComplementaryInformationsDataMessage  
-    { 
-        public new const ushort Id = 2912;
+{
+    public class MapComplementaryInformationsDataInHavenBagMessage : MapComplementaryInformationsDataMessage
+    {
+        public new const ushort Id = 559;
         public override ushort MessageId => Id;
 
         public CharacterMinimalInformations ownerInformations;
@@ -20,7 +20,7 @@ namespace Giny.Protocol.Messages
         public MapComplementaryInformationsDataInHavenBagMessage()
         {
         }
-        public MapComplementaryInformationsDataInHavenBagMessage(CharacterMinimalInformations ownerInformations,byte theme,byte roomId,byte maxRoomId,short subAreaId,double mapId,HouseInformations[] houses,GameRolePlayActorInformations[] actors,InteractiveElement[] interactiveElements,StatedElement[] statedElements,MapObstacle[] obstacles,FightCommonInformations[] fights,bool hasAggressiveMonsters,FightStartingPositions fightStartPositions)
+        public MapComplementaryInformationsDataInHavenBagMessage(CharacterMinimalInformations ownerInformations, byte theme, byte roomId, byte maxRoomId, short subAreaId, double mapId, HouseInformations[] houses, GameRolePlayActorInformations[] actors, InteractiveElement[] interactiveElements, StatedElement[] statedElements, MapObstacle[] obstacles, FightCommonInformations[] fights, bool hasAggressiveMonsters, FightStartingPositions fightStartPositions)
         {
             this.ownerInformations = ownerInformations;
             this.theme = theme;
@@ -75,14 +75,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

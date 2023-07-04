@@ -17,7 +17,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Giny.World.Managers.Generic;
-using Giny.World.Managers.Entities.Merchants;
 using Giny.Core.Time;
 using Giny.Core.Extensions;
 using System.Collections.Concurrent;
@@ -390,10 +389,7 @@ namespace Giny.World.Managers.Maps.Instances
             }
         }
 
-        public bool IsMerchantLimitReached()
-        {
-            return GetEntities<CharacterMerchant>().Count() >= ConfigFile.Instance.MaxMerchantPerMap;
-        }
+      
 
         /* public void RemoveDropItem(DropItem dropItem)
          {

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class FriendGuildSetWarnOnAchievementCompleteMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5935;
+{
+    public class FriendGuildSetWarnOnAchievementCompleteMessage : NetworkMessage
+    {
+        public const ushort Id = 6809;
         public override ushort MessageId => Id;
 
         public bool enable;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             enable = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

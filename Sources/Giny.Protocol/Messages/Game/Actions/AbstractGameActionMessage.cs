@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AbstractGameActionMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9188;
+{
+    public class AbstractGameActionMessage : NetworkMessage
+    {
+        public const ushort Id = 7655;
         public override ushort MessageId => Id;
 
         public short actionId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public AbstractGameActionMessage()
         {
         }
-        public AbstractGameActionMessage(short actionId,double sourceId)
+        public AbstractGameActionMessage(short actionId, double sourceId)
         {
             this.actionId = actionId;
             this.sourceId = sourceId;
@@ -31,7 +31,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteVarShort((short)actionId);
-            if (sourceId < -9.00719925474099E+15 || sourceId > 9.00719925474099E+15)
+            if (sourceId < -9007199254740992 || sourceId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + sourceId + ") on element sourceId.");
             }
@@ -47,21 +47,14 @@ namespace Giny.Protocol.Messages
             }
 
             sourceId = (double)reader.ReadDouble();
-            if (sourceId < -9.00719925474099E+15 || sourceId > 9.00719925474099E+15)
+            if (sourceId < -9007199254740992 || sourceId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + sourceId + ") on element of AbstractGameActionMessage.sourceId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class CharacterHardcoreOrEpicInformations : CharacterBaseInformations  
-    { 
-        public new const ushort Id = 8481;
+{
+    public class CharacterHardcoreOrEpicInformations : CharacterBaseInformations
+    {
+        public new const ushort Id = 3199;
         public override ushort TypeId => Id;
 
         public byte deathState;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Types
         public CharacterHardcoreOrEpicInformations()
         {
         }
-        public CharacterHardcoreOrEpicInformations(byte deathState,short deathCount,short deathMaxLevel,long id,string name,short level,EntityLook entityLook,byte breed,bool sex)
+        public CharacterHardcoreOrEpicInformations(byte deathState, short deathCount, short deathMaxLevel, long id, string name, short level, EntityLook entityLook, byte breed, bool sex)
         {
             this.deathState = deathState;
             this.deathCount = deathCount;
@@ -72,11 +72,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

@@ -6,18 +6,18 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeCraftResultWithObjectIdMessage : ExchangeCraftResultMessage  
-    { 
-        public new const ushort Id = 7497;
+{
+    public class ExchangeCraftResultWithObjectIdMessage : ExchangeCraftResultMessage
+    {
+        public new const ushort Id = 2277;
         public override ushort MessageId => Id;
 
-        public short objectGenericId;
+        public int objectGenericId;
 
         public ExchangeCraftResultWithObjectIdMessage()
         {
         }
-        public ExchangeCraftResultWithObjectIdMessage(short objectGenericId,byte craftResult)
+        public ExchangeCraftResultWithObjectIdMessage(int objectGenericId, byte craftResult)
         {
             this.objectGenericId = objectGenericId;
             this.craftResult = craftResult;
@@ -30,12 +30,12 @@ namespace Giny.Protocol.Messages
                 throw new System.Exception("Forbidden value (" + objectGenericId + ") on element objectGenericId.");
             }
 
-            writer.WriteVarShort((short)objectGenericId);
+            writer.WriteVarInt((int)objectGenericId);
         }
         public override void Deserialize(IDataReader reader)
         {
             base.Deserialize(reader);
-            objectGenericId = (short)reader.ReadVarUhShort();
+            objectGenericId = (int)reader.ReadVarUhInt();
             if (objectGenericId < 0)
             {
                 throw new System.Exception("Forbidden value (" + objectGenericId + ") on element of ExchangeCraftResultWithObjectIdMessage.objectGenericId.");
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

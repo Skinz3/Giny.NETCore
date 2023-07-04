@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildInformationsGeneralMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3873;
+{
+    public class GuildInformationsGeneralMessage : NetworkMessage
+    {
+        public const ushort Id = 8823;
         public override ushort MessageId => Id;
 
         public bool abandonnedPaddock;
@@ -18,13 +18,11 @@ namespace Giny.Protocol.Messages
         public long experience;
         public long expNextLevelFloor;
         public int creationDate;
-        public short nbTotalMembers;
-        public short nbConnectedMembers;
 
         public GuildInformationsGeneralMessage()
         {
         }
-        public GuildInformationsGeneralMessage(bool abandonnedPaddock,byte level,long expLevelFloor,long experience,long expNextLevelFloor,int creationDate,short nbTotalMembers,short nbConnectedMembers)
+        public GuildInformationsGeneralMessage(bool abandonnedPaddock, byte level, long expLevelFloor, long experience, long expNextLevelFloor, int creationDate)
         {
             this.abandonnedPaddock = abandonnedPaddock;
             this.level = level;
@@ -32,8 +30,6 @@ namespace Giny.Protocol.Messages
             this.experience = experience;
             this.expNextLevelFloor = expNextLevelFloor;
             this.creationDate = creationDate;
-            this.nbTotalMembers = nbTotalMembers;
-            this.nbConnectedMembers = nbConnectedMembers;
         }
         public override void Serialize(IDataWriter writer)
         {
@@ -44,19 +40,19 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteByte((byte)level);
-            if (expLevelFloor < 0 || expLevelFloor > 9.00719925474099E+15)
+            if (expLevelFloor < 0 || expLevelFloor > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + expLevelFloor + ") on element expLevelFloor.");
             }
 
             writer.WriteVarLong((long)expLevelFloor);
-            if (experience < 0 || experience > 9.00719925474099E+15)
+            if (experience < 0 || experience > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + experience + ") on element experience.");
             }
 
             writer.WriteVarLong((long)experience);
-            if (expNextLevelFloor < 0 || expNextLevelFloor > 9.00719925474099E+15)
+            if (expNextLevelFloor < 0 || expNextLevelFloor > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + expNextLevelFloor + ") on element expNextLevelFloor.");
             }
@@ -68,18 +64,6 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteInt((int)creationDate);
-            if (nbTotalMembers < 0)
-            {
-                throw new System.Exception("Forbidden value (" + nbTotalMembers + ") on element nbTotalMembers.");
-            }
-
-            writer.WriteVarShort((short)nbTotalMembers);
-            if (nbConnectedMembers < 0)
-            {
-                throw new System.Exception("Forbidden value (" + nbConnectedMembers + ") on element nbConnectedMembers.");
-            }
-
-            writer.WriteVarShort((short)nbConnectedMembers);
         }
         public override void Deserialize(IDataReader reader)
         {
@@ -91,19 +75,19 @@ namespace Giny.Protocol.Messages
             }
 
             expLevelFloor = (long)reader.ReadVarUhLong();
-            if (expLevelFloor < 0 || expLevelFloor > 9.00719925474099E+15)
+            if (expLevelFloor < 0 || expLevelFloor > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + expLevelFloor + ") on element of GuildInformationsGeneralMessage.expLevelFloor.");
             }
 
             experience = (long)reader.ReadVarUhLong();
-            if (experience < 0 || experience > 9.00719925474099E+15)
+            if (experience < 0 || experience > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + experience + ") on element of GuildInformationsGeneralMessage.experience.");
             }
 
             expNextLevelFloor = (long)reader.ReadVarUhLong();
-            if (expNextLevelFloor < 0 || expNextLevelFloor > 9.00719925474099E+15)
+            if (expNextLevelFloor < 0 || expNextLevelFloor > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + expNextLevelFloor + ") on element of GuildInformationsGeneralMessage.expNextLevelFloor.");
             }
@@ -114,28 +98,9 @@ namespace Giny.Protocol.Messages
                 throw new System.Exception("Forbidden value (" + creationDate + ") on element of GuildInformationsGeneralMessage.creationDate.");
             }
 
-            nbTotalMembers = (short)reader.ReadVarUhShort();
-            if (nbTotalMembers < 0)
-            {
-                throw new System.Exception("Forbidden value (" + nbTotalMembers + ") on element of GuildInformationsGeneralMessage.nbTotalMembers.");
-            }
-
-            nbConnectedMembers = (short)reader.ReadVarUhShort();
-            if (nbConnectedMembers < 0)
-            {
-                throw new System.Exception("Forbidden value (" + nbConnectedMembers + ") on element of GuildInformationsGeneralMessage.nbConnectedMembers.");
-            }
-
         }
-
 
     }
 }
-
-
-
-
-
-
 
 

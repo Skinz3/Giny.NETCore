@@ -4,19 +4,19 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ObjectItemInRolePlay  
-    { 
-        public const ushort Id = 572;
+{
+    public class ObjectItemInRolePlay
+    {
+        public const ushort Id = 6080;
         public virtual ushort TypeId => Id;
 
         public short cellId;
-        public short objectGID;
+        public int objectGID;
 
         public ObjectItemInRolePlay()
         {
         }
-        public ObjectItemInRolePlay(short cellId,short objectGID)
+        public ObjectItemInRolePlay(short cellId, int objectGID)
         {
             this.cellId = cellId;
             this.objectGID = objectGID;
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Types
                 throw new System.Exception("Forbidden value (" + objectGID + ") on element objectGID.");
             }
 
-            writer.WriteVarShort((short)objectGID);
+            writer.WriteVarInt((int)objectGID);
         }
         public virtual void Deserialize(IDataReader reader)
         {
@@ -44,7 +44,7 @@ namespace Giny.Protocol.Types
                 throw new System.Exception("Forbidden value (" + cellId + ") on element of ObjectItemInRolePlay.cellId.");
             }
 
-            objectGID = (short)reader.ReadVarUhShort();
+            objectGID = (int)reader.ReadVarUhInt();
             if (objectGID < 0)
             {
                 throw new System.Exception("Forbidden value (" + objectGID + ") on element of ObjectItemInRolePlay.objectGID.");
@@ -55,11 +55,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

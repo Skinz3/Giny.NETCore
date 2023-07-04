@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PaddockToSellListMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7367;
+{
+    public class PaddockToSellListMessage : NetworkMessage
+    {
+        public const ushort Id = 3311;
         public override ushort MessageId => Id;
 
         public short pageIndex;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public PaddockToSellListMessage()
         {
         }
-        public PaddockToSellListMessage(short pageIndex,short totalPage,PaddockInformationsForSell[] paddockList)
+        public PaddockToSellListMessage(short pageIndex, short totalPage, PaddockInformationsForSell[] paddockList)
         {
             this.pageIndex = pageIndex;
             this.totalPage = totalPage;
@@ -40,7 +40,7 @@ namespace Giny.Protocol.Messages
 
             writer.WriteVarShort((short)totalPage);
             writer.WriteShort((short)paddockList.Length);
-            for (uint _i3 = 0;_i3 < paddockList.Length;_i3++)
+            for (uint _i3 = 0; _i3 < paddockList.Length; _i3++)
             {
                 (paddockList[_i3] as PaddockInformationsForSell).Serialize(writer);
             }
@@ -62,7 +62,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _paddockListLen = (uint)reader.ReadUShort();
-            for (uint _i3 = 0;_i3 < _paddockListLen;_i3++)
+            for (uint _i3 = 0; _i3 < _paddockListLen; _i3++)
             {
                 _item3 = new PaddockInformationsForSell();
                 _item3.Deserialize(reader);
@@ -71,14 +71,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

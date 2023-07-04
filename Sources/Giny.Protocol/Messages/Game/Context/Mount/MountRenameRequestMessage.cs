@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class MountRenameRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2190;
+{
+    public class MountRenameRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 7542;
         public override ushort MessageId => Id;
 
         public string name;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public MountRenameRequestMessage()
         {
         }
-        public MountRenameRequestMessage(string name,int mountId)
+        public MountRenameRequestMessage(string name, int mountId)
         {
             this.name = name;
             this.mountId = mountId;
@@ -34,14 +34,7 @@ namespace Giny.Protocol.Messages
             mountId = (int)reader.ReadVarInt();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

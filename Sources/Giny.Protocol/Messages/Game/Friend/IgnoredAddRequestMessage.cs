@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class IgnoredAddRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5826;
+{
+    public class IgnoredAddRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 7867;
         public override ushort MessageId => Id;
 
         public AbstractPlayerSearchInformation target;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public IgnoredAddRequestMessage()
         {
         }
-        public IgnoredAddRequestMessage(AbstractPlayerSearchInformation target,bool session)
+        public IgnoredAddRequestMessage(AbstractPlayerSearchInformation target, bool session)
         {
             this.target = target;
             this.session = session;
@@ -37,14 +37,7 @@ namespace Giny.Protocol.Messages
             session = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

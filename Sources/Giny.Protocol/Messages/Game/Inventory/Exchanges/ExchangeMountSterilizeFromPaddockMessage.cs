@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeMountSterilizeFromPaddockMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7786;
+{
+    public class ExchangeMountSterilizeFromPaddockMessage : NetworkMessage
+    {
+        public const ushort Id = 4860;
         public override ushort MessageId => Id;
 
         public string name;
@@ -20,7 +20,7 @@ namespace Giny.Protocol.Messages
         public ExchangeMountSterilizeFromPaddockMessage()
         {
         }
-        public ExchangeMountSterilizeFromPaddockMessage(string name,short worldX,short worldY,string sterilizator)
+        public ExchangeMountSterilizeFromPaddockMessage(string name, short worldX, short worldY, string sterilizator)
         {
             this.name = name;
             this.worldX = worldX;
@@ -62,14 +62,7 @@ namespace Giny.Protocol.Messages
             sterilizator = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

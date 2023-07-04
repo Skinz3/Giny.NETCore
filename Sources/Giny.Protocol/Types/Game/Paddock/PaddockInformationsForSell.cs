@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class PaddockInformationsForSell  
-    { 
-        public const ushort Id = 3003;
+{
+    public class PaddockInformationsForSell
+    {
+        public const ushort Id = 7481;
         public virtual ushort TypeId => Id;
 
         public string guildOwner;
@@ -21,7 +21,7 @@ namespace Giny.Protocol.Types
         public PaddockInformationsForSell()
         {
         }
-        public PaddockInformationsForSell(string guildOwner,short worldX,short worldY,short subAreaId,byte nbMount,byte nbObject,long price)
+        public PaddockInformationsForSell(string guildOwner, short worldX, short worldY, short subAreaId, byte nbMount, byte nbObject, long price)
         {
             this.guildOwner = guildOwner;
             this.worldX = worldX;
@@ -54,7 +54,7 @@ namespace Giny.Protocol.Types
             writer.WriteVarShort((short)subAreaId);
             writer.WriteByte((byte)nbMount);
             writer.WriteByte((byte)nbObject);
-            if (price < 0 || price > 9.00719925474099E+15)
+            if (price < 0 || price > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + price + ") on element price.");
             }
@@ -85,7 +85,7 @@ namespace Giny.Protocol.Types
             nbMount = (byte)reader.ReadByte();
             nbObject = (byte)reader.ReadByte();
             price = (long)reader.ReadVarUhLong();
-            if (price < 0 || price > 9.00719925474099E+15)
+            if (price < 0 || price > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + price + ") on element of PaddockInformationsForSell.price.");
             }
@@ -95,11 +95,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

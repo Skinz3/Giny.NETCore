@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeStartOkNpcTradeMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2342;
+{
+    public class ExchangeStartOkNpcTradeMessage : NetworkMessage
+    {
+        public const ushort Id = 6958;
         public override ushort MessageId => Id;
 
         public double npcId;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (npcId < -9.00719925474099E+15 || npcId > 9.00719925474099E+15)
+            if (npcId < -9007199254740992 || npcId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + npcId + ") on element npcId.");
             }
@@ -33,21 +33,14 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             npcId = (double)reader.ReadDouble();
-            if (npcId < -9.00719925474099E+15 || npcId > 9.00719925474099E+15)
+            if (npcId < -9007199254740992 || npcId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + npcId + ") on element of ExchangeStartOkNpcTradeMessage.npcId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ObjectDropMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3978;
+{
+    public class ObjectDropMessage : NetworkMessage
+    {
+        public const ushort Id = 8779;
         public override ushort MessageId => Id;
 
         public int objectUID;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ObjectDropMessage()
         {
         }
-        public ObjectDropMessage(int objectUID,int quantity)
+        public ObjectDropMessage(int objectUID, int quantity)
         {
             this.objectUID = objectUID;
             this.quantity = quantity;
@@ -54,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

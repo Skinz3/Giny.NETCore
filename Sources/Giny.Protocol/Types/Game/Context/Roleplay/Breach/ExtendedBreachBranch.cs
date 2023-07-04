@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ExtendedBreachBranch : BreachBranch  
-    { 
-        public new const ushort Id = 8484;
+{
+    public class ExtendedBreachBranch : BreachBranch
+    {
+        public new const ushort Id = 4911;
         public override ushort TypeId => Id;
 
         public BreachReward[] rewards;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Types
         public ExtendedBreachBranch()
         {
         }
-        public ExtendedBreachBranch(BreachReward[] rewards,int modifier,int prize,byte room,int element,MonsterInGroupLightInformations[] bosses,double map,short score,short relativeScore,MonsterInGroupLightInformations[] monsters)
+        public ExtendedBreachBranch(BreachReward[] rewards, int modifier, int prize, byte room, int element, MonsterInGroupLightInformations[] bosses, double map, short score, short relativeScore, MonsterInGroupLightInformations[] monsters)
         {
             this.rewards = rewards;
             this.modifier = modifier;
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Types
         {
             base.Serialize(writer);
             writer.WriteShort((short)rewards.Length);
-            for (uint _i1 = 0;_i1 < rewards.Length;_i1++)
+            for (uint _i1 = 0; _i1 < rewards.Length; _i1++)
             {
                 (rewards[_i1] as BreachReward).Serialize(writer);
             }
@@ -52,7 +52,7 @@ namespace Giny.Protocol.Types
             BreachReward _item1 = null;
             base.Deserialize(reader);
             uint _rewardsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _rewardsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _rewardsLen; _i1++)
             {
                 _item1 = new BreachReward();
                 _item1.Deserialize(reader);
@@ -71,11 +71,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

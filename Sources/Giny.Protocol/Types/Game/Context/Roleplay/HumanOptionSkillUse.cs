@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class HumanOptionSkillUse : HumanOption  
-    { 
-        public new const ushort Id = 1568;
+{
+    public class HumanOptionSkillUse : HumanOption
+    {
+        public new const ushort Id = 782;
         public override ushort TypeId => Id;
 
         public int elementId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Types
         public HumanOptionSkillUse()
         {
         }
-        public HumanOptionSkillUse(int elementId,short skillId,double skillEndTime)
+        public HumanOptionSkillUse(int elementId, short skillId, double skillEndTime)
         {
             this.elementId = elementId;
             this.skillId = skillId;
@@ -38,7 +38,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteVarShort((short)skillId);
-            if (skillEndTime < -9.00719925474099E+15 || skillEndTime > 9.00719925474099E+15)
+            if (skillEndTime < -9007199254740992 || skillEndTime > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + skillEndTime + ") on element skillEndTime.");
             }
@@ -61,7 +61,7 @@ namespace Giny.Protocol.Types
             }
 
             skillEndTime = (double)reader.ReadDouble();
-            if (skillEndTime < -9.00719925474099E+15 || skillEndTime > 9.00719925474099E+15)
+            if (skillEndTime < -9007199254740992 || skillEndTime > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + skillEndTime + ") on element of HumanOptionSkillUse.skillEndTime.");
             }
@@ -71,11 +71,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

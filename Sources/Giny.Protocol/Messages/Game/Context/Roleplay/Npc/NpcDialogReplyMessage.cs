@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class NpcDialogReplyMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 821;
+{
+    public class NpcDialogReplyMessage : NetworkMessage
+    {
+        public const ushort Id = 9495;
         public override ushort MessageId => Id;
 
         public int replyId;
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

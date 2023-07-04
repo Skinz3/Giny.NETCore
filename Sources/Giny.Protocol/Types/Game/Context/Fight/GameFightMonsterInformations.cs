@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameFightMonsterInformations : GameFightAIInformations  
-    { 
-        public new const ushort Id = 9097;
+{
+    public class GameFightMonsterInformations : GameFightAIInformations
+    {
+        public new const ushort Id = 5342;
         public override ushort TypeId => Id;
 
         public short creatureGenericId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Types
         public GameFightMonsterInformations()
         {
         }
-        public GameFightMonsterInformations(short creatureGenericId,byte creatureGrade,short creatureLevel,double contextualId,EntityDispositionInformations disposition,EntityLook look,GameContextBasicSpawnInformation spawnInfo,byte wave,GameFightCharacteristics stats,short[] previousPositions)
+        public GameFightMonsterInformations(short creatureGenericId, byte creatureGrade, short creatureLevel, double contextualId, EntityDispositionInformations disposition, EntityLook look, GameContextBasicSpawnInformation spawnInfo, byte wave, GameFightCharacteristics stats, short[] previousPositions)
         {
             this.creatureGenericId = creatureGenericId;
             this.creatureGrade = creatureGrade;
@@ -78,11 +78,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

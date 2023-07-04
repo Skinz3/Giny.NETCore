@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameContextRefreshEntityLookMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7169;
+{
+    public class GameContextRefreshEntityLookMessage : NetworkMessage
+    {
+        public const ushort Id = 7804;
         public override ushort MessageId => Id;
 
         public double id;
@@ -18,14 +18,14 @@ namespace Giny.Protocol.Messages
         public GameContextRefreshEntityLookMessage()
         {
         }
-        public GameContextRefreshEntityLookMessage(double id,EntityLook look)
+        public GameContextRefreshEntityLookMessage(double id, EntityLook look)
         {
             this.id = id;
             this.look = look;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (id < -9.00719925474099E+15 || id > 9.00719925474099E+15)
+            if (id < -9007199254740992 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element id.");
             }
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             id = (double)reader.ReadDouble();
-            if (id < -9.00719925474099E+15 || id > 9.00719925474099E+15)
+            if (id < -9007199254740992 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element of GameContextRefreshEntityLookMessage.id.");
             }
@@ -45,14 +45,7 @@ namespace Giny.Protocol.Messages
             look.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -4,75 +4,63 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class PrismInformation  
-    { 
-        public const ushort Id = 2401;
+{
+    public class PrismInformation
+    {
+        public const ushort Id = 7681;
         public virtual ushort TypeId => Id;
 
-        public byte typeId;
         public byte state;
-        public int nextVulnerabilityDate;
         public int placementDate;
-        public int rewardTokenCount;
+        public int nuggetsCount;
+        public int durability;
+        public double nextEvolutionDate;
 
         public PrismInformation()
         {
         }
-        public PrismInformation(byte typeId,byte state,int nextVulnerabilityDate,int placementDate,int rewardTokenCount)
+        public PrismInformation(byte state, int placementDate, int nuggetsCount, int durability, double nextEvolutionDate)
         {
-            this.typeId = typeId;
             this.state = state;
-            this.nextVulnerabilityDate = nextVulnerabilityDate;
             this.placementDate = placementDate;
-            this.rewardTokenCount = rewardTokenCount;
+            this.nuggetsCount = nuggetsCount;
+            this.durability = durability;
+            this.nextEvolutionDate = nextEvolutionDate;
         }
         public virtual void Serialize(IDataWriter writer)
         {
-            if (typeId < 0)
-            {
-                throw new System.Exception("Forbidden value (" + typeId + ") on element typeId.");
-            }
-
-            writer.WriteByte((byte)typeId);
             writer.WriteByte((byte)state);
-            if (nextVulnerabilityDate < 0)
-            {
-                throw new System.Exception("Forbidden value (" + nextVulnerabilityDate + ") on element nextVulnerabilityDate.");
-            }
-
-            writer.WriteInt((int)nextVulnerabilityDate);
             if (placementDate < 0)
             {
                 throw new System.Exception("Forbidden value (" + placementDate + ") on element placementDate.");
             }
 
             writer.WriteInt((int)placementDate);
-            if (rewardTokenCount < 0)
+            if (nuggetsCount < 0)
             {
-                throw new System.Exception("Forbidden value (" + rewardTokenCount + ") on element rewardTokenCount.");
+                throw new System.Exception("Forbidden value (" + nuggetsCount + ") on element nuggetsCount.");
             }
 
-            writer.WriteVarInt((int)rewardTokenCount);
+            writer.WriteVarInt((int)nuggetsCount);
+            if (durability < 0)
+            {
+                throw new System.Exception("Forbidden value (" + durability + ") on element durability.");
+            }
+
+            writer.WriteInt((int)durability);
+            if (nextEvolutionDate < 0 || nextEvolutionDate > 9007199254740992)
+            {
+                throw new System.Exception("Forbidden value (" + nextEvolutionDate + ") on element nextEvolutionDate.");
+            }
+
+            writer.WriteDouble((double)nextEvolutionDate);
         }
         public virtual void Deserialize(IDataReader reader)
         {
-            typeId = (byte)reader.ReadByte();
-            if (typeId < 0)
-            {
-                throw new System.Exception("Forbidden value (" + typeId + ") on element of PrismInformation.typeId.");
-            }
-
             state = (byte)reader.ReadByte();
             if (state < 0)
             {
                 throw new System.Exception("Forbidden value (" + state + ") on element of PrismInformation.state.");
-            }
-
-            nextVulnerabilityDate = (int)reader.ReadInt();
-            if (nextVulnerabilityDate < 0)
-            {
-                throw new System.Exception("Forbidden value (" + nextVulnerabilityDate + ") on element of PrismInformation.nextVulnerabilityDate.");
             }
 
             placementDate = (int)reader.ReadInt();
@@ -81,10 +69,22 @@ namespace Giny.Protocol.Types
                 throw new System.Exception("Forbidden value (" + placementDate + ") on element of PrismInformation.placementDate.");
             }
 
-            rewardTokenCount = (int)reader.ReadVarUhInt();
-            if (rewardTokenCount < 0)
+            nuggetsCount = (int)reader.ReadVarUhInt();
+            if (nuggetsCount < 0)
             {
-                throw new System.Exception("Forbidden value (" + rewardTokenCount + ") on element of PrismInformation.rewardTokenCount.");
+                throw new System.Exception("Forbidden value (" + nuggetsCount + ") on element of PrismInformation.nuggetsCount.");
+            }
+
+            durability = (int)reader.ReadInt();
+            if (durability < 0)
+            {
+                throw new System.Exception("Forbidden value (" + durability + ") on element of PrismInformation.durability.");
+            }
+
+            nextEvolutionDate = (double)reader.ReadDouble();
+            if (nextEvolutionDate < 0 || nextEvolutionDate > 9007199254740992)
+            {
+                throw new System.Exception("Forbidden value (" + nextEvolutionDate + ") on element of PrismInformation.nextEvolutionDate.");
             }
 
         }
@@ -92,11 +92,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

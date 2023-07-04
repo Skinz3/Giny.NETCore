@@ -6,17 +6,17 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ClientYouAreDrunkMessage : DebugInClientMessage  
-    { 
-        public new const ushort Id = 367;
+{
+    public class ClientYouAreDrunkMessage : DebugInClientMessage
+    {
+        public new const ushort Id = 8568;
         public override ushort MessageId => Id;
 
 
         public ClientYouAreDrunkMessage()
         {
         }
-        public ClientYouAreDrunkMessage(byte level,string message)
+        public ClientYouAreDrunkMessage(byte level, string message)
         {
             this.level = level;
             this.message = message;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

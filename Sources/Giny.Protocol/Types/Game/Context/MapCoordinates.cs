@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class MapCoordinates  
-    { 
-        public const ushort Id = 5479;
+{
+    public class MapCoordinates
+    {
+        public const ushort Id = 41;
         public virtual ushort TypeId => Id;
 
         public short worldX;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public MapCoordinates()
         {
         }
-        public MapCoordinates(short worldX,short worldY)
+        public MapCoordinates(short worldX, short worldY)
         {
             this.worldX = worldX;
             this.worldY = worldY;
@@ -55,11 +55,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

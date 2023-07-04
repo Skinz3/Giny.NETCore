@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HavenBagDailyLoteryMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2601;
+{
+    public class HavenBagDailyLoteryMessage : NetworkMessage
+    {
+        public const ushort Id = 3596;
         public override ushort MessageId => Id;
 
         public byte returnType;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public HavenBagDailyLoteryMessage()
         {
         }
-        public HavenBagDailyLoteryMessage(byte returnType,string gameActionId)
+        public HavenBagDailyLoteryMessage(byte returnType, string gameActionId)
         {
             this.returnType = returnType;
             this.gameActionId = gameActionId;
@@ -39,14 +39,7 @@ namespace Giny.Protocol.Messages
             gameActionId = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

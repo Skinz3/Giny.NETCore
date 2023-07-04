@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class PaddockContentInformations : PaddockInformations  
-    { 
-        public new const ushort Id = 6719;
+{
+    public class PaddockContentInformations : PaddockInformations
+    {
+        public new const ushort Id = 6187;
         public override ushort TypeId => Id;
 
         public double paddockId;
@@ -21,7 +21,7 @@ namespace Giny.Protocol.Types
         public PaddockContentInformations()
         {
         }
-        public PaddockContentInformations(double paddockId,short worldX,short worldY,double mapId,short subAreaId,bool abandonned,MountInformationsForPaddock[] mountsInformations,short maxOutdoorMount,short maxItems)
+        public PaddockContentInformations(double paddockId, short worldX, short worldY, double mapId, short subAreaId, bool abandonned, MountInformationsForPaddock[] mountsInformations, short maxOutdoorMount, short maxItems)
         {
             this.paddockId = paddockId;
             this.worldX = worldX;
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Types
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (paddockId < 0 || paddockId > 9.00719925474099E+15)
+            if (paddockId < 0 || paddockId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + paddockId + ") on element paddockId.");
             }
@@ -54,7 +54,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteShort((short)worldY);
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element mapId.");
             }
@@ -68,7 +68,7 @@ namespace Giny.Protocol.Types
             writer.WriteVarShort((short)subAreaId);
             writer.WriteBoolean((bool)abandonned);
             writer.WriteShort((short)mountsInformations.Length);
-            for (uint _i7 = 0;_i7 < mountsInformations.Length;_i7++)
+            for (uint _i7 = 0; _i7 < mountsInformations.Length; _i7++)
             {
                 (mountsInformations[_i7] as MountInformationsForPaddock).Serialize(writer);
             }
@@ -79,7 +79,7 @@ namespace Giny.Protocol.Types
             MountInformationsForPaddock _item7 = null;
             base.Deserialize(reader);
             paddockId = (double)reader.ReadDouble();
-            if (paddockId < 0 || paddockId > 9.00719925474099E+15)
+            if (paddockId < 0 || paddockId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + paddockId + ") on element of PaddockContentInformations.paddockId.");
             }
@@ -97,7 +97,7 @@ namespace Giny.Protocol.Types
             }
 
             mapId = (double)reader.ReadDouble();
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element of PaddockContentInformations.mapId.");
             }
@@ -110,7 +110,7 @@ namespace Giny.Protocol.Types
 
             abandonned = (bool)reader.ReadBoolean();
             uint _mountsInformationsLen = (uint)reader.ReadUShort();
-            for (uint _i7 = 0;_i7 < _mountsInformationsLen;_i7++)
+            for (uint _i7 = 0; _i7 < _mountsInformationsLen; _i7++)
             {
                 _item7 = new MountInformationsForPaddock();
                 _item7.Deserialize(reader);
@@ -122,11 +122,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

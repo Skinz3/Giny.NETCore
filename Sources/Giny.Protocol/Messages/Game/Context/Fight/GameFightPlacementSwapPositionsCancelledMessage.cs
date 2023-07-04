@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightPlacementSwapPositionsCancelledMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5655;
+{
+    public class GameFightPlacementSwapPositionsCancelledMessage : NetworkMessage
+    {
+        public const ushort Id = 299;
         public override ushort MessageId => Id;
 
         public int requestId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public GameFightPlacementSwapPositionsCancelledMessage()
         {
         }
-        public GameFightPlacementSwapPositionsCancelledMessage(int requestId,double cancellerId)
+        public GameFightPlacementSwapPositionsCancelledMessage(int requestId, double cancellerId)
         {
             this.requestId = requestId;
             this.cancellerId = cancellerId;
@@ -31,7 +31,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteInt((int)requestId);
-            if (cancellerId < -9.00719925474099E+15 || cancellerId > 9.00719925474099E+15)
+            if (cancellerId < -9007199254740992 || cancellerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + cancellerId + ") on element cancellerId.");
             }
@@ -47,21 +47,14 @@ namespace Giny.Protocol.Messages
             }
 
             cancellerId = (double)reader.ReadDouble();
-            if (cancellerId < -9.00719925474099E+15 || cancellerId > 9.00719925474099E+15)
+            if (cancellerId < -9007199254740992 || cancellerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + cancellerId + ") on element of GameFightPlacementSwapPositionsCancelledMessage.cancellerId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

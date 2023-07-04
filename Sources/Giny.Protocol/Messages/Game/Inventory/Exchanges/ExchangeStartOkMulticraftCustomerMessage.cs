@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeStartOkMulticraftCustomerMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3366;
+{
+    public class ExchangeStartOkMulticraftCustomerMessage : NetworkMessage
+    {
+        public const ushort Id = 839;
         public override ushort MessageId => Id;
 
         public int skillId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ExchangeStartOkMulticraftCustomerMessage()
         {
         }
-        public ExchangeStartOkMulticraftCustomerMessage(int skillId,byte crafterJobLevel)
+        public ExchangeStartOkMulticraftCustomerMessage(int skillId, byte crafterJobLevel)
         {
             this.skillId = skillId;
             this.crafterJobLevel = crafterJobLevel;
@@ -54,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

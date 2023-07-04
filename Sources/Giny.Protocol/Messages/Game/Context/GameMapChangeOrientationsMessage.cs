@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameMapChangeOrientationsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3831;
+{
+    public class GameMapChangeOrientationsMessage : NetworkMessage
+    {
+        public const ushort Id = 4421;
         public override ushort MessageId => Id;
 
         public ActorOrientation[] orientations;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)orientations.Length);
-            for (uint _i1 = 0;_i1 < orientations.Length;_i1++)
+            for (uint _i1 = 0; _i1 < orientations.Length; _i1++)
             {
                 (orientations[_i1] as ActorOrientation).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             ActorOrientation _item1 = null;
             uint _orientationsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _orientationsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _orientationsLen; _i1++)
             {
                 _item1 = new ActorOrientation();
                 _item1.Deserialize(reader);
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

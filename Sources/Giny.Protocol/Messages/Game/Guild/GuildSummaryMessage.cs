@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildSummaryMessage : PaginationAnswerAbstractMessage  
-    { 
-        public new const ushort Id = 912;
+{
+    public class GuildSummaryMessage : PaginationAnswerAbstractMessage
+    {
+        public new const ushort Id = 9716;
         public override ushort MessageId => Id;
 
         public GuildFactSheetInformations[] guilds;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public GuildSummaryMessage()
         {
         }
-        public GuildSummaryMessage(GuildFactSheetInformations[] guilds,double offset,uint count,uint total)
+        public GuildSummaryMessage(GuildFactSheetInformations[] guilds, double offset, uint count, uint total)
         {
             this.guilds = guilds;
             this.offset = offset;
@@ -28,7 +28,7 @@ namespace Giny.Protocol.Messages
         {
             base.Serialize(writer);
             writer.WriteShort((short)guilds.Length);
-            for (uint _i1 = 0;_i1 < guilds.Length;_i1++)
+            for (uint _i1 = 0; _i1 < guilds.Length; _i1++)
             {
                 (guilds[_i1] as GuildFactSheetInformations).Serialize(writer);
             }
@@ -39,7 +39,7 @@ namespace Giny.Protocol.Messages
             GuildFactSheetInformations _item1 = null;
             base.Deserialize(reader);
             uint _guildsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _guildsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _guildsLen; _i1++)
             {
                 _item1 = new GuildFactSheetInformations();
                 _item1.Deserialize(reader);
@@ -48,14 +48,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

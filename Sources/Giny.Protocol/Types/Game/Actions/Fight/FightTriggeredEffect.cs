@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class FightTriggeredEffect : AbstractFightDispellableEffect  
-    { 
-        public new const ushort Id = 5476;
+{
+    public class FightTriggeredEffect : AbstractFightDispellableEffect
+    {
+        public new const ushort Id = 2847;
         public override ushort TypeId => Id;
 
         public int param1;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Types
         public FightTriggeredEffect()
         {
         }
-        public FightTriggeredEffect(int param1,int param2,int param3,short delay,int uid,double targetId,short turnDuration,byte dispelable,short spellId,int effectId,int parentBoostUid)
+        public FightTriggeredEffect(int param1, int param2, int param3, short delay, int uid, double targetId, short turnDuration, byte dispelable, short spellId, int effectId, int parentBoostUid)
         {
             this.param1 = param1;
             this.param2 = param2;
@@ -52,11 +52,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

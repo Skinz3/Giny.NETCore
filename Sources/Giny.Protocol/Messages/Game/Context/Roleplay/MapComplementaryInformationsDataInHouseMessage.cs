@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class MapComplementaryInformationsDataInHouseMessage : MapComplementaryInformationsDataMessage  
-    { 
-        public new const ushort Id = 7853;
+{
+    public class MapComplementaryInformationsDataInHouseMessage : MapComplementaryInformationsDataMessage
+    {
+        public new const ushort Id = 1446;
         public override ushort MessageId => Id;
 
         public HouseInformationsInside currentHouse;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public MapComplementaryInformationsDataInHouseMessage()
         {
         }
-        public MapComplementaryInformationsDataInHouseMessage(HouseInformationsInside currentHouse,short subAreaId,double mapId,HouseInformations[] houses,GameRolePlayActorInformations[] actors,InteractiveElement[] interactiveElements,StatedElement[] statedElements,MapObstacle[] obstacles,FightCommonInformations[] fights,bool hasAggressiveMonsters,FightStartingPositions fightStartPositions)
+        public MapComplementaryInformationsDataInHouseMessage(HouseInformationsInside currentHouse, short subAreaId, double mapId, HouseInformations[] houses, GameRolePlayActorInformations[] actors, InteractiveElement[] interactiveElements, StatedElement[] statedElements, MapObstacle[] obstacles, FightCommonInformations[] fights, bool hasAggressiveMonsters, FightStartingPositions fightStartPositions)
         {
             this.currentHouse = currentHouse;
             this.subAreaId = subAreaId;
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
             currentHouse.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

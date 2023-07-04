@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class StatsUpgradeResultMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 99;
+{
+    public class StatsUpgradeResultMessage : NetworkMessage
+    {
+        public const ushort Id = 8603;
         public override ushort MessageId => Id;
 
         public byte result;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public StatsUpgradeResultMessage()
         {
         }
-        public StatsUpgradeResultMessage(byte result,short nbCharacBoost)
+        public StatsUpgradeResultMessage(byte result, short nbCharacBoost)
         {
             this.result = result;
             this.nbCharacBoost = nbCharacBoost;
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

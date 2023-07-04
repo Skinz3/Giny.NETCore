@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AlignmentWarEffortDonatePreviewMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9897;
+{
+    public class AlignmentWarEffortDonatePreviewMessage : NetworkMessage
+    {
+        public const ushort Id = 9403;
         public override ushort MessageId => Id;
 
         public double xp;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (xp < -9.00719925474099E+15 || xp > 9.00719925474099E+15)
+            if (xp < -9007199254740992 || xp > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + xp + ") on element xp.");
             }
@@ -33,21 +33,14 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             xp = (double)reader.ReadDouble();
-            if (xp < -9.00719925474099E+15 || xp > 9.00719925474099E+15)
+            if (xp < -9007199254740992 || xp > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + xp + ") on element of AlignmentWarEffortDonatePreviewMessage.xp.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BreachTeleportResponseMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2050;
+{
+    public class BreachTeleportResponseMessage : NetworkMessage
+    {
+        public const ushort Id = 7633;
         public override ushort MessageId => Id;
 
         public bool teleported;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             teleported = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

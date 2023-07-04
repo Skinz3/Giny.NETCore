@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class PartyEntityBaseInformation  
-    { 
-        public const ushort Id = 8549;
+{
+    public class PartyEntityBaseInformation
+    {
+        public const ushort Id = 2574;
         public virtual ushort TypeId => Id;
 
         public byte indexId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Types
         public PartyEntityBaseInformation()
         {
         }
-        public PartyEntityBaseInformation(byte indexId,byte entityModelId,EntityLook entityLook)
+        public PartyEntityBaseInformation(byte indexId, byte entityModelId, EntityLook entityLook)
         {
             this.indexId = indexId;
             this.entityModelId = entityModelId;
@@ -60,11 +60,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

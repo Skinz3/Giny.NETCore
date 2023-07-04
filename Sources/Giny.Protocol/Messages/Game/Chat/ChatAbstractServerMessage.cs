@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ChatAbstractServerMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8034;
+{
+    public class ChatAbstractServerMessage : NetworkMessage
+    {
+        public const ushort Id = 6746;
         public override ushort MessageId => Id;
 
         public byte channel;
@@ -20,7 +20,7 @@ namespace Giny.Protocol.Messages
         public ChatAbstractServerMessage()
         {
         }
-        public ChatAbstractServerMessage(byte channel,string content,int timestamp,string fingerprint)
+        public ChatAbstractServerMessage(byte channel, string content, int timestamp, string fingerprint)
         {
             this.channel = channel;
             this.content = content;
@@ -57,14 +57,7 @@ namespace Giny.Protocol.Messages
             fingerprint = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class DiceRollRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6852;
+{
+    public class DiceRollRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 7241;
         public override ushort MessageId => Id;
 
         public int dice;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public DiceRollRequestMessage()
         {
         }
-        public DiceRollRequestMessage(int dice,int faces,byte channel)
+        public DiceRollRequestMessage(int dice, int faces, byte channel)
         {
             this.dice = dice;
             this.faces = faces;
@@ -63,14 +63,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

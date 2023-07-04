@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class FightStartingPositions  
-    { 
-        public const ushort Id = 4728;
+{
+    public class FightStartingPositions
+    {
+        public const ushort Id = 4886;
         public virtual ushort TypeId => Id;
 
         public short[] positionsForChallengers;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public FightStartingPositions()
         {
         }
-        public FightStartingPositions(short[] positionsForChallengers,short[] positionsForDefenders)
+        public FightStartingPositions(short[] positionsForChallengers, short[] positionsForDefenders)
         {
             this.positionsForChallengers = positionsForChallengers;
             this.positionsForDefenders = positionsForDefenders;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Types
         public virtual void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)positionsForChallengers.Length);
-            for (uint _i1 = 0;_i1 < positionsForChallengers.Length;_i1++)
+            for (uint _i1 = 0; _i1 < positionsForChallengers.Length; _i1++)
             {
                 if (positionsForChallengers[_i1] < 0 || positionsForChallengers[_i1] > 559)
                 {
@@ -35,7 +35,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteShort((short)positionsForDefenders.Length);
-            for (uint _i2 = 0;_i2 < positionsForDefenders.Length;_i2++)
+            for (uint _i2 = 0; _i2 < positionsForDefenders.Length; _i2++)
             {
                 if (positionsForDefenders[_i2] < 0 || positionsForDefenders[_i2] > 559)
                 {
@@ -52,7 +52,7 @@ namespace Giny.Protocol.Types
             uint _val2 = 0;
             uint _positionsForChallengersLen = (uint)reader.ReadUShort();
             positionsForChallengers = new short[_positionsForChallengersLen];
-            for (uint _i1 = 0;_i1 < _positionsForChallengersLen;_i1++)
+            for (uint _i1 = 0; _i1 < _positionsForChallengersLen; _i1++)
             {
                 _val1 = (uint)reader.ReadVarUhShort();
                 if (_val1 < 0 || _val1 > 559)
@@ -65,7 +65,7 @@ namespace Giny.Protocol.Types
 
             uint _positionsForDefendersLen = (uint)reader.ReadUShort();
             positionsForDefenders = new short[_positionsForDefendersLen];
-            for (uint _i2 = 0;_i2 < _positionsForDefendersLen;_i2++)
+            for (uint _i2 = 0; _i2 < _positionsForDefendersLen; _i2++)
             {
                 _val2 = (uint)reader.ReadVarUhShort();
                 if (_val2 < 0 || _val2 > 559)
@@ -81,11 +81,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

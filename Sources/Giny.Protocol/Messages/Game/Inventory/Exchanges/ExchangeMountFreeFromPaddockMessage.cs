@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeMountFreeFromPaddockMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3489;
+{
+    public class ExchangeMountFreeFromPaddockMessage : NetworkMessage
+    {
+        public const ushort Id = 3266;
         public override ushort MessageId => Id;
 
         public string name;
@@ -20,7 +20,7 @@ namespace Giny.Protocol.Messages
         public ExchangeMountFreeFromPaddockMessage()
         {
         }
-        public ExchangeMountFreeFromPaddockMessage(string name,short worldX,short worldY,string liberator)
+        public ExchangeMountFreeFromPaddockMessage(string name, short worldX, short worldY, string liberator)
         {
             this.name = name;
             this.worldX = worldX;
@@ -62,14 +62,7 @@ namespace Giny.Protocol.Messages
             liberator = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

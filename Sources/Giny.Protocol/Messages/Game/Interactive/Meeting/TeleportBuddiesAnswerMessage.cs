@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class TeleportBuddiesAnswerMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9417;
+{
+    public class TeleportBuddiesAnswerMessage : NetworkMessage
+    {
+        public const ushort Id = 1629;
         public override ushort MessageId => Id;
 
         public bool accept;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             accept = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

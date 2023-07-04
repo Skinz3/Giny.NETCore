@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeIsReadyMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3414;
+{
+    public class ExchangeIsReadyMessage : NetworkMessage
+    {
+        public const ushort Id = 1240;
         public override ushort MessageId => Id;
 
         public double id;
@@ -18,14 +18,14 @@ namespace Giny.Protocol.Messages
         public ExchangeIsReadyMessage()
         {
         }
-        public ExchangeIsReadyMessage(double id,bool ready)
+        public ExchangeIsReadyMessage(double id, bool ready)
         {
             this.id = id;
             this.ready = ready;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (id < -9.00719925474099E+15 || id > 9.00719925474099E+15)
+            if (id < -9007199254740992 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element id.");
             }
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             id = (double)reader.ReadDouble();
-            if (id < -9.00719925474099E+15 || id > 9.00719925474099E+15)
+            if (id < -9007199254740992 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element of ExchangeIsReadyMessage.id.");
             }
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
             ready = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

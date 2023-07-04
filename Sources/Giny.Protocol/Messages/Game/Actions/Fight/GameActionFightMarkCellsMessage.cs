@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameActionFightMarkCellsMessage : AbstractGameActionMessage  
-    { 
-        public new const ushort Id = 6848;
+{
+    public class GameActionFightMarkCellsMessage : AbstractGameActionMessage
+    {
+        public new const ushort Id = 8242;
         public override ushort MessageId => Id;
 
         public GameActionMark mark;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public GameActionFightMarkCellsMessage()
         {
         }
-        public GameActionFightMarkCellsMessage(GameActionMark mark,short actionId,double sourceId)
+        public GameActionFightMarkCellsMessage(GameActionMark mark, short actionId, double sourceId)
         {
             this.mark = mark;
             this.actionId = actionId;
@@ -35,14 +35,7 @@ namespace Giny.Protocol.Messages
             mark.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

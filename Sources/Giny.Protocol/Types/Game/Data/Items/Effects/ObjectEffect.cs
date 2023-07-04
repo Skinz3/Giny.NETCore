@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ObjectEffect  
-    { 
-        public const ushort Id = 9255;
+{
+    public class ObjectEffect
+    {
+        public const ushort Id = 4580;
         public virtual ushort TypeId => Id;
 
         public short actionId;
@@ -41,11 +41,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

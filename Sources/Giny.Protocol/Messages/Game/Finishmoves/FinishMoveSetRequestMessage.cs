@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class FinishMoveSetRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7408;
+{
+    public class FinishMoveSetRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 4215;
         public override ushort MessageId => Id;
 
         public int finishMoveId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public FinishMoveSetRequestMessage()
         {
         }
-        public FinishMoveSetRequestMessage(int finishMoveId,bool finishMoveState)
+        public FinishMoveSetRequestMessage(int finishMoveId, bool finishMoveState)
         {
             this.finishMoveId = finishMoveId;
             this.finishMoveState = finishMoveState;
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
             finishMoveState = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

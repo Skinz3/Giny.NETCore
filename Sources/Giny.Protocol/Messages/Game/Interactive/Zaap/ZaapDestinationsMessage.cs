@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ZaapDestinationsMessage : TeleportDestinationsMessage  
-    { 
-        public new const ushort Id = 4986;
+{
+    public class ZaapDestinationsMessage : TeleportDestinationsMessage
+    {
+        public new const ushort Id = 4676;
         public override ushort MessageId => Id;
 
         public double spawnMapId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public ZaapDestinationsMessage()
         {
         }
-        public ZaapDestinationsMessage(double spawnMapId,byte type,TeleportDestination[] destinations)
+        public ZaapDestinationsMessage(double spawnMapId, byte type, TeleportDestination[] destinations)
         {
             this.spawnMapId = spawnMapId;
             this.type = type;
@@ -26,7 +26,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (spawnMapId < 0 || spawnMapId > 9.00719925474099E+15)
+            if (spawnMapId < 0 || spawnMapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + spawnMapId + ") on element spawnMapId.");
             }
@@ -37,21 +37,14 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             spawnMapId = (double)reader.ReadDouble();
-            if (spawnMapId < 0 || spawnMapId > 9.00719925474099E+15)
+            if (spawnMapId < 0 || spawnMapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + spawnMapId + ") on element of ZaapDestinationsMessage.spawnMapId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

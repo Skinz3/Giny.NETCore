@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameRolePlayAttackMonsterRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6826;
+{
+    public class GameRolePlayAttackMonsterRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 850;
         public override ushort MessageId => Id;
 
         public double monsterGroupId;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (monsterGroupId < -9.00719925474099E+15 || monsterGroupId > 9.00719925474099E+15)
+            if (monsterGroupId < -9007199254740992 || monsterGroupId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + monsterGroupId + ") on element monsterGroupId.");
             }
@@ -33,21 +33,14 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             monsterGroupId = (double)reader.ReadDouble();
-            if (monsterGroupId < -9.00719925474099E+15 || monsterGroupId > 9.00719925474099E+15)
+            if (monsterGroupId < -9007199254740992 || monsterGroupId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + monsterGroupId + ") on element of GameRolePlayAttackMonsterRequestMessage.monsterGroupId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

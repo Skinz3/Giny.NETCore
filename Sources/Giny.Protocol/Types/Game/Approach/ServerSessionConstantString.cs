@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ServerSessionConstantString : ServerSessionConstant  
-    { 
-        public new const ushort Id = 3340;
+{
+    public class ServerSessionConstantString : ServerSessionConstant
+    {
+        public new const ushort Id = 5706;
         public override ushort TypeId => Id;
 
         public string value;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public ServerSessionConstantString()
         {
         }
-        public ServerSessionConstantString(string value,short id)
+        public ServerSessionConstantString(string value, short id)
         {
             this.value = value;
             this.id = id;
@@ -34,11 +34,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BreachKickRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 155;
+{
+    public class BreachKickRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 5258;
         public override ushort MessageId => Id;
 
         public long target;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (target < 0 || target > 9.00719925474099E+15)
+            if (target < 0 || target > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + target + ") on element target.");
             }
@@ -33,21 +33,14 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             target = (long)reader.ReadVarUhLong();
-            if (target < 0 || target > 9.00719925474099E+15)
+            if (target < 0 || target > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + target + ") on element of BreachKickRequestMessage.target.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

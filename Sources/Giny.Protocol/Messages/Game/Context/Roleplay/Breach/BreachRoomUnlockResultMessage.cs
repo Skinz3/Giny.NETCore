@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BreachRoomUnlockResultMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5488;
+{
+    public class BreachRoomUnlockResultMessage : NetworkMessage
+    {
+        public const ushort Id = 998;
         public override ushort MessageId => Id;
 
         public byte roomId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public BreachRoomUnlockResultMessage()
         {
         }
-        public BreachRoomUnlockResultMessage(byte roomId,byte result)
+        public BreachRoomUnlockResultMessage(byte roomId, byte result)
         {
             this.roomId = roomId;
             this.result = result;
@@ -49,14 +49,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

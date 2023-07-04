@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class CheckFileMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3494;
+{
+    public class CheckFileMessage : NetworkMessage
+    {
+        public const ushort Id = 9355;
         public override ushort MessageId => Id;
 
         public string filenameHash;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public CheckFileMessage()
         {
         }
-        public CheckFileMessage(string filenameHash,byte type,string value)
+        public CheckFileMessage(string filenameHash, byte type, string value)
         {
             this.filenameHash = filenameHash;
             this.type = type;
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
             value = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

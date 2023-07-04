@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class MapCoordinatesAndId : MapCoordinates  
-    { 
-        public new const ushort Id = 1303;
+{
+    public class MapCoordinatesAndId : MapCoordinates
+    {
+        public new const ushort Id = 8150;
         public override ushort TypeId => Id;
 
         public double mapId;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public MapCoordinatesAndId()
         {
         }
-        public MapCoordinatesAndId(double mapId,short worldX,short worldY)
+        public MapCoordinatesAndId(double mapId, short worldX, short worldY)
         {
             this.mapId = mapId;
             this.worldX = worldX;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Types
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element mapId.");
             }
@@ -35,7 +35,7 @@ namespace Giny.Protocol.Types
         {
             base.Deserialize(reader);
             mapId = (double)reader.ReadDouble();
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element of MapCoordinatesAndId.mapId.");
             }
@@ -45,11 +45,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

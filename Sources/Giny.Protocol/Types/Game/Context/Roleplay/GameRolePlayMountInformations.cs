@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameRolePlayMountInformations : GameRolePlayNamedActorInformations  
-    { 
-        public new const ushort Id = 3190;
+{
+    public class GameRolePlayMountInformations : GameRolePlayNamedActorInformations
+    {
+        public new const ushort Id = 1610;
         public override ushort TypeId => Id;
 
         public string ownerName;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public GameRolePlayMountInformations()
         {
         }
-        public GameRolePlayMountInformations(string ownerName,byte level,double contextualId,EntityDispositionInformations disposition,EntityLook look,string name)
+        public GameRolePlayMountInformations(string ownerName, byte level, double contextualId, EntityDispositionInformations disposition, EntityLook look, string name)
         {
             this.ownerName = ownerName;
             this.level = level;
@@ -51,11 +51,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

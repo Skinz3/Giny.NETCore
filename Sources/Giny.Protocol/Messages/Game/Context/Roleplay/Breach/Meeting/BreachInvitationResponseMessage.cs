@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BreachInvitationResponseMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 995;
+{
+    public class BreachInvitationResponseMessage : NetworkMessage
+    {
+        public const ushort Id = 6696;
         public override ushort MessageId => Id;
 
         public CharacterMinimalInformations guest;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public BreachInvitationResponseMessage()
         {
         }
-        public BreachInvitationResponseMessage(CharacterMinimalInformations guest,bool accept)
+        public BreachInvitationResponseMessage(CharacterMinimalInformations guest, bool accept)
         {
             this.guest = guest;
             this.accept = accept;
@@ -35,14 +35,7 @@ namespace Giny.Protocol.Messages
             accept = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

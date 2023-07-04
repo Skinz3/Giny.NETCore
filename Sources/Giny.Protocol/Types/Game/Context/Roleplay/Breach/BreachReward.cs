@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class BreachReward  
-    { 
-        public const ushort Id = 1476;
+{
+    public class BreachReward
+    {
+        public const ushort Id = 5672;
         public virtual ushort TypeId => Id;
 
         public int id;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Types
         public BreachReward()
         {
         }
-        public BreachReward(int id,byte[] buyLocks,string buyCriterion,int remainingQty,int price)
+        public BreachReward(int id, byte[] buyLocks, string buyCriterion, int remainingQty, int price)
         {
             this.id = id;
             this.buyLocks = buyLocks;
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Types
 
             writer.WriteVarInt((int)id);
             writer.WriteShort((short)buyLocks.Length);
-            for (uint _i2 = 0;_i2 < buyLocks.Length;_i2++)
+            for (uint _i2 = 0; _i2 < buyLocks.Length; _i2++)
             {
                 writer.WriteByte((byte)buyLocks[_i2]);
             }
@@ -61,7 +61,7 @@ namespace Giny.Protocol.Types
 
             uint _buyLocksLen = (uint)reader.ReadUShort();
             buyLocks = new byte[_buyLocksLen];
-            for (uint _i2 = 0;_i2 < _buyLocksLen;_i2++)
+            for (uint _i2 = 0; _i2 < _buyLocksLen; _i2++)
             {
                 _val2 = (uint)reader.ReadByte();
                 if (_val2 < 0)
@@ -85,11 +85,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

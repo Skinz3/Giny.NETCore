@@ -4,27 +4,25 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class FightTeamMemberTaxCollectorInformations : FightTeamMemberInformations  
-    { 
-        public new const ushort Id = 5019;
+{
+    public class FightTeamMemberTaxCollectorInformations : FightTeamMemberInformations
+    {
+        public new const ushort Id = 6760;
         public override ushort TypeId => Id;
 
         public short firstNameId;
         public short lastNameId;
-        public byte level;
-        public int guildId;
+        public int groupId;
         public double uid;
 
         public FightTeamMemberTaxCollectorInformations()
         {
         }
-        public FightTeamMemberTaxCollectorInformations(short firstNameId,short lastNameId,byte level,int guildId,double uid,double id)
+        public FightTeamMemberTaxCollectorInformations(short firstNameId, short lastNameId, int groupId, double uid, double id)
         {
             this.firstNameId = firstNameId;
             this.lastNameId = lastNameId;
-            this.level = level;
-            this.guildId = guildId;
+            this.groupId = groupId;
             this.uid = uid;
             this.id = id;
         }
@@ -43,19 +41,13 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteVarShort((short)lastNameId);
-            if (level < 1 || level > 200)
+            if (groupId < 0)
             {
-                throw new System.Exception("Forbidden value (" + level + ") on element level.");
+                throw new System.Exception("Forbidden value (" + groupId + ") on element groupId.");
             }
 
-            writer.WriteByte((byte)level);
-            if (guildId < 0)
-            {
-                throw new System.Exception("Forbidden value (" + guildId + ") on element guildId.");
-            }
-
-            writer.WriteVarInt((int)guildId);
-            if (uid < 0 || uid > 9.00719925474099E+15)
+            writer.WriteVarInt((int)groupId);
+            if (uid < 0 || uid > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + uid + ") on element uid.");
             }
@@ -77,20 +69,14 @@ namespace Giny.Protocol.Types
                 throw new System.Exception("Forbidden value (" + lastNameId + ") on element of FightTeamMemberTaxCollectorInformations.lastNameId.");
             }
 
-            level = (byte)reader.ReadSByte();
-            if (level < 1 || level > 200)
+            groupId = (int)reader.ReadVarUhInt();
+            if (groupId < 0)
             {
-                throw new System.Exception("Forbidden value (" + level + ") on element of FightTeamMemberTaxCollectorInformations.level.");
-            }
-
-            guildId = (int)reader.ReadVarUhInt();
-            if (guildId < 0)
-            {
-                throw new System.Exception("Forbidden value (" + guildId + ") on element of FightTeamMemberTaxCollectorInformations.guildId.");
+                throw new System.Exception("Forbidden value (" + groupId + ") on element of FightTeamMemberTaxCollectorInformations.groupId.");
             }
 
             uid = (double)reader.ReadDouble();
-            if (uid < 0 || uid > 9.00719925474099E+15)
+            if (uid < 0 || uid > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + uid + ") on element of FightTeamMemberTaxCollectorInformations.uid.");
             }
@@ -100,11 +86,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

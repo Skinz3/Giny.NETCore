@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class KickHavenBagRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1774;
+{
+    public class KickHavenBagRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 7889;
         public override ushort MessageId => Id;
 
         public long guestId;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (guestId < 0 || guestId > 9.00719925474099E+15)
+            if (guestId < 0 || guestId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + guestId + ") on element guestId.");
             }
@@ -33,21 +33,14 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             guestId = (long)reader.ReadVarUhLong();
-            if (guestId < 0 || guestId > 9.00719925474099E+15)
+            if (guestId < 0 || guestId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + guestId + ") on element of KickHavenBagRequestMessage.guestId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

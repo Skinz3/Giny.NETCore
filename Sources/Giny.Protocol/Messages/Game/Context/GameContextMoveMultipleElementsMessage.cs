@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameContextMoveMultipleElementsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5560;
+{
+    public class GameContextMoveMultipleElementsMessage : NetworkMessage
+    {
+        public const ushort Id = 4844;
         public override ushort MessageId => Id;
 
         public EntityMovementInformations[] movements;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)movements.Length);
-            for (uint _i1 = 0;_i1 < movements.Length;_i1++)
+            for (uint _i1 = 0; _i1 < movements.Length; _i1++)
             {
                 (movements[_i1] as EntityMovementInformations).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             EntityMovementInformations _item1 = null;
             uint _movementsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _movementsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _movementsLen; _i1++)
             {
                 _item1 = new EntityMovementInformations();
                 _item1.Deserialize(reader);
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

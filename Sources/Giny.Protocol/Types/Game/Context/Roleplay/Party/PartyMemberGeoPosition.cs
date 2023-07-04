@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class PartyMemberGeoPosition  
-    { 
-        public const ushort Id = 6539;
+{
+    public class PartyMemberGeoPosition
+    {
+        public const ushort Id = 3032;
         public virtual ushort TypeId => Id;
 
         public int memberId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Types
         public PartyMemberGeoPosition()
         {
         }
-        public PartyMemberGeoPosition(int memberId,short worldX,short worldY,double mapId,short subAreaId)
+        public PartyMemberGeoPosition(int memberId, short worldX, short worldY, double mapId, short subAreaId)
         {
             this.memberId = memberId;
             this.worldX = worldX;
@@ -47,7 +47,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteShort((short)worldY);
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element mapId.");
             }
@@ -81,7 +81,7 @@ namespace Giny.Protocol.Types
             }
 
             mapId = (double)reader.ReadDouble();
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element of PartyMemberGeoPosition.mapId.");
             }
@@ -97,11 +97,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

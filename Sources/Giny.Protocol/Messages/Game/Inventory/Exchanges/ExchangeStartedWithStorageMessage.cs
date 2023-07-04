@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeStartedWithStorageMessage : ExchangeStartedMessage  
-    { 
-        public new const ushort Id = 4535;
+{
+    public class ExchangeStartedWithStorageMessage : ExchangeStartedMessage
+    {
+        public new const ushort Id = 2384;
         public override ushort MessageId => Id;
 
         public int storageMaxSlot;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public ExchangeStartedWithStorageMessage()
         {
         }
-        public ExchangeStartedWithStorageMessage(int storageMaxSlot,byte exchangeType)
+        public ExchangeStartedWithStorageMessage(int storageMaxSlot, byte exchangeType)
         {
             this.storageMaxSlot = storageMaxSlot;
             this.exchangeType = exchangeType;
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

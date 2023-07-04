@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class FightTeamMemberInformations  
-    { 
-        public const ushort Id = 6434;
+{
+    public class FightTeamMemberInformations
+    {
+        public const ushort Id = 9234;
         public virtual ushort TypeId => Id;
 
         public double id;
@@ -21,7 +21,7 @@ namespace Giny.Protocol.Types
         }
         public virtual void Serialize(IDataWriter writer)
         {
-            if (id < -9.00719925474099E+15 || id > 9.00719925474099E+15)
+            if (id < -9007199254740992 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element id.");
             }
@@ -31,7 +31,7 @@ namespace Giny.Protocol.Types
         public virtual void Deserialize(IDataReader reader)
         {
             id = (double)reader.ReadDouble();
-            if (id < -9.00719925474099E+15 || id > 9.00719925474099E+15)
+            if (id < -9007199254740992 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element of FightTeamMemberInformations.id.");
             }
@@ -41,11 +41,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

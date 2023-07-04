@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AbstractGameActionFightTargetedAbilityMessage : AbstractGameActionMessage  
-    { 
-        public new const ushort Id = 1710;
+{
+    public class AbstractGameActionFightTargetedAbilityMessage : AbstractGameActionMessage
+    {
+        public new const ushort Id = 3673;
         public override ushort MessageId => Id;
 
         public double targetId;
@@ -21,7 +21,7 @@ namespace Giny.Protocol.Messages
         public AbstractGameActionFightTargetedAbilityMessage()
         {
         }
-        public AbstractGameActionFightTargetedAbilityMessage(double targetId,short destinationCellId,byte critical,bool silentCast,bool verboseCast,short actionId,double sourceId)
+        public AbstractGameActionFightTargetedAbilityMessage(double targetId, short destinationCellId, byte critical, bool silentCast, bool verboseCast, short actionId, double sourceId)
         {
             this.targetId = targetId;
             this.destinationCellId = destinationCellId;
@@ -35,10 +35,10 @@ namespace Giny.Protocol.Messages
         {
             base.Serialize(writer);
             byte _box0 = 0;
-            _box0 = BooleanByteWrapper.SetFlag(_box0,0,silentCast);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,1,verboseCast);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 0, silentCast);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 1, verboseCast);
             writer.WriteByte((byte)_box0);
-            if (targetId < -9.00719925474099E+15 || targetId > 9.00719925474099E+15)
+            if (targetId < -9007199254740992 || targetId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + targetId + ") on element targetId.");
             }
@@ -56,10 +56,10 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             byte _box0 = reader.ReadByte();
-            silentCast = BooleanByteWrapper.GetFlag(_box0,0);
-            verboseCast = BooleanByteWrapper.GetFlag(_box0,1);
+            silentCast = BooleanByteWrapper.GetFlag(_box0, 0);
+            verboseCast = BooleanByteWrapper.GetFlag(_box0, 1);
             targetId = (double)reader.ReadDouble();
-            if (targetId < -9.00719925474099E+15 || targetId > 9.00719925474099E+15)
+            if (targetId < -9007199254740992 || targetId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + targetId + ") on element of AbstractGameActionFightTargetedAbilityMessage.targetId.");
             }
@@ -78,14 +78,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class CharacterSelectedSuccessMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2878;
+{
+    public class CharacterSelectedSuccessMessage : NetworkMessage
+    {
+        public const ushort Id = 3795;
         public override ushort MessageId => Id;
 
         public CharacterBaseInformations infos;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public CharacterSelectedSuccessMessage()
         {
         }
-        public CharacterSelectedSuccessMessage(CharacterBaseInformations infos,bool isCollectingStats)
+        public CharacterSelectedSuccessMessage(CharacterBaseInformations infos, bool isCollectingStats)
         {
             this.infos = infos;
             this.isCollectingStats = isCollectingStats;
@@ -35,14 +35,7 @@ namespace Giny.Protocol.Messages
             isCollectingStats = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

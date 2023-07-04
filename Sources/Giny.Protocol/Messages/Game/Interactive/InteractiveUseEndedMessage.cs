@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class InteractiveUseEndedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4987;
+{
+    public class InteractiveUseEndedMessage : NetworkMessage
+    {
+        public const ushort Id = 4990;
         public override ushort MessageId => Id;
 
         public int elemId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public InteractiveUseEndedMessage()
         {
         }
-        public InteractiveUseEndedMessage(int elemId,short skillId)
+        public InteractiveUseEndedMessage(int elemId, short skillId)
         {
             this.elemId = elemId;
             this.skillId = skillId;
@@ -54,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

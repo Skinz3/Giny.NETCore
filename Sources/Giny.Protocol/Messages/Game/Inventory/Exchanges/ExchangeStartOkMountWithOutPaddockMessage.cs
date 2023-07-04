@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeStartOkMountWithOutPaddockMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 257;
+{
+    public class ExchangeStartOkMountWithOutPaddockMessage : NetworkMessage
+    {
+        public const ushort Id = 7515;
         public override ushort MessageId => Id;
 
         public MountClientData[] stabledMountsDescription;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)stabledMountsDescription.Length);
-            for (uint _i1 = 0;_i1 < stabledMountsDescription.Length;_i1++)
+            for (uint _i1 = 0; _i1 < stabledMountsDescription.Length; _i1++)
             {
                 (stabledMountsDescription[_i1] as MountClientData).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             MountClientData _item1 = null;
             uint _stabledMountsDescriptionLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _stabledMountsDescriptionLen;_i1++)
+            for (uint _i1 = 0; _i1 < _stabledMountsDescriptionLen; _i1++)
             {
                 _item1 = new MountClientData();
                 _item1.Deserialize(reader);
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

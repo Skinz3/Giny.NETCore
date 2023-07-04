@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PresetsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6378;
+{
+    public class PresetsMessage : NetworkMessage
+    {
+        public const ushort Id = 2275;
         public override ushort MessageId => Id;
 
         public Preset[] presets;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)presets.Length);
-            for (uint _i1 = 0;_i1 < presets.Length;_i1++)
+            for (uint _i1 = 0; _i1 < presets.Length; _i1++)
             {
                 writer.WriteShort((short)(presets[_i1] as Preset).TypeId);
                 (presets[_i1] as Preset).Serialize(writer);
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Messages
             uint _id1 = 0;
             Preset _item1 = null;
             uint _presetsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _presetsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _presetsLen; _i1++)
             {
                 _id1 = (uint)reader.ReadUShort();
                 _item1 = ProtocolTypeManager.GetInstance<Preset>((short)_id1);
@@ -46,14 +46,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

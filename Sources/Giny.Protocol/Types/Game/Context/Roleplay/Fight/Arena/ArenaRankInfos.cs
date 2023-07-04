@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ArenaRankInfos  
-    { 
-        public const ushort Id = 9582;
+{
+    public class ArenaRankInfos
+    {
+        public const ushort Id = 5316;
         public virtual ushort TypeId => Id;
 
         public ArenaRanking ranking;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Types
         public ArenaRankInfos()
         {
         }
-        public ArenaRankInfos(ArenaRanking ranking,ArenaLeagueRanking leagueRanking,short victoryCount,short fightcount,short numFightNeededForLadder)
+        public ArenaRankInfos(ArenaRanking ranking, ArenaLeagueRanking leagueRanking, short victoryCount, short fightcount, short numFightNeededForLadder)
         {
             this.ranking = ranking;
             this.leagueRanking = leagueRanking;
@@ -117,11 +117,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

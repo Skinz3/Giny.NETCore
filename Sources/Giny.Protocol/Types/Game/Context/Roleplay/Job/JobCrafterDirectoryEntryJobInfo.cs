@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class JobCrafterDirectoryEntryJobInfo  
-    { 
-        public const ushort Id = 491;
+{
+    public class JobCrafterDirectoryEntryJobInfo
+    {
+        public const ushort Id = 1391;
         public virtual ushort TypeId => Id;
 
         public byte jobId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Types
         public JobCrafterDirectoryEntryJobInfo()
         {
         }
-        public JobCrafterDirectoryEntryJobInfo(byte jobId,byte jobLevel,bool free,byte minLevel)
+        public JobCrafterDirectoryEntryJobInfo(byte jobId, byte jobLevel, bool free, byte minLevel)
         {
             this.jobId = jobId;
             this.jobLevel = jobLevel;
@@ -73,11 +73,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

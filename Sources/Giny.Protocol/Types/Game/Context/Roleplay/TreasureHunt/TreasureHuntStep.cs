@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class TreasureHuntStep  
-    { 
-        public const ushort Id = 725;
+{
+    public class TreasureHuntStep
+    {
+        public const ushort Id = 7201;
         public virtual ushort TypeId => Id;
 
 
@@ -24,11 +24,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

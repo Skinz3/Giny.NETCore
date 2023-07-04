@@ -7,10 +7,10 @@ using Giny.Protocol.Enums;
 using Version = Giny.Protocol.Types.Version;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class IdentificationFailedForBadVersionMessage : IdentificationFailedMessage  
-    { 
-        public new const ushort Id = 6103;
+{
+    public class IdentificationFailedForBadVersionMessage : IdentificationFailedMessage
+    {
+        public new const ushort Id = 7968;
         public override ushort MessageId => Id;
 
         public Version requiredVersion;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public IdentificationFailedForBadVersionMessage()
         {
         }
-        public IdentificationFailedForBadVersionMessage(Version requiredVersion,byte reason)
+        public IdentificationFailedForBadVersionMessage(Version requiredVersion, byte reason)
         {
             this.requiredVersion = requiredVersion;
             this.reason = reason;
@@ -35,14 +35,7 @@ namespace Giny.Protocol.Messages
             requiredVersion.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

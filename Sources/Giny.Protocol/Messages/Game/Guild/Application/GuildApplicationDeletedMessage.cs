@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildApplicationDeletedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2156;
+{
+    public class GuildApplicationDeletedMessage : NetworkMessage
+    {
+        public const ushort Id = 7009;
         public override ushort MessageId => Id;
 
         public bool deleted;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             deleted = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

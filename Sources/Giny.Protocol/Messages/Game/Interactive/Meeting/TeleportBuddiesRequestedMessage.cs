@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class TeleportBuddiesRequestedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2968;
+{
+    public class TeleportBuddiesRequestedMessage : NetworkMessage
+    {
+        public const ushort Id = 4673;
         public override ushort MessageId => Id;
 
         public short dungeonId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public TeleportBuddiesRequestedMessage()
         {
         }
-        public TeleportBuddiesRequestedMessage(short dungeonId,long inviterId,long[] invalidBuddiesIds)
+        public TeleportBuddiesRequestedMessage(short dungeonId, long inviterId, long[] invalidBuddiesIds)
         {
             this.dungeonId = dungeonId;
             this.inviterId = inviterId;
@@ -33,16 +33,16 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteVarShort((short)dungeonId);
-            if (inviterId < 0 || inviterId > 9.00719925474099E+15)
+            if (inviterId < 0 || inviterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + inviterId + ") on element inviterId.");
             }
 
             writer.WriteVarLong((long)inviterId);
             writer.WriteShort((short)invalidBuddiesIds.Length);
-            for (uint _i3 = 0;_i3 < invalidBuddiesIds.Length;_i3++)
+            for (uint _i3 = 0; _i3 < invalidBuddiesIds.Length; _i3++)
             {
-                if (invalidBuddiesIds[_i3] < 0 || invalidBuddiesIds[_i3] > 9.00719925474099E+15)
+                if (invalidBuddiesIds[_i3] < 0 || invalidBuddiesIds[_i3] > 9007199254740992)
                 {
                     throw new System.Exception("Forbidden value (" + invalidBuddiesIds[_i3] + ") on element 3 (starting at 1) of invalidBuddiesIds.");
                 }
@@ -61,17 +61,17 @@ namespace Giny.Protocol.Messages
             }
 
             inviterId = (long)reader.ReadVarUhLong();
-            if (inviterId < 0 || inviterId > 9.00719925474099E+15)
+            if (inviterId < 0 || inviterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + inviterId + ") on element of TeleportBuddiesRequestedMessage.inviterId.");
             }
 
             uint _invalidBuddiesIdsLen = (uint)reader.ReadUShort();
             invalidBuddiesIds = new long[_invalidBuddiesIdsLen];
-            for (uint _i3 = 0;_i3 < _invalidBuddiesIdsLen;_i3++)
+            for (uint _i3 = 0; _i3 < _invalidBuddiesIdsLen; _i3++)
             {
                 _val3 = (double)reader.ReadVarUhLong();
-                if (_val3 < 0 || _val3 > 9.00719925474099E+15)
+                if (_val3 < 0 || _val3 > 9007199254740992)
                 {
                     throw new System.Exception("Forbidden value (" + _val3 + ") on elements of invalidBuddiesIds.");
                 }
@@ -81,14 +81,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

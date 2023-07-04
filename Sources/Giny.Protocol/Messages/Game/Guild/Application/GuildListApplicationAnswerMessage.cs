@@ -6,18 +6,18 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildListApplicationAnswerMessage : PaginationAnswerAbstractMessage  
-    { 
-        public new const ushort Id = 169;
+{
+    public class GuildListApplicationAnswerMessage : PaginationAnswerAbstractMessage
+    {
+        public new const ushort Id = 692;
         public override ushort MessageId => Id;
 
-        public GuildApplicationInformation[] applies;
+        public SocialApplicationInformation[] applies;
 
         public GuildListApplicationAnswerMessage()
         {
         }
-        public GuildListApplicationAnswerMessage(GuildApplicationInformation[] applies,double offset,uint count,uint total)
+        public GuildListApplicationAnswerMessage(SocialApplicationInformation[] applies, double offset, uint count, uint total)
         {
             this.applies = applies;
             this.offset = offset;
@@ -28,34 +28,27 @@ namespace Giny.Protocol.Messages
         {
             base.Serialize(writer);
             writer.WriteShort((short)applies.Length);
-            for (uint _i1 = 0;_i1 < applies.Length;_i1++)
+            for (uint _i1 = 0; _i1 < applies.Length; _i1++)
             {
-                (applies[_i1] as GuildApplicationInformation).Serialize(writer);
+                (applies[_i1] as SocialApplicationInformation).Serialize(writer);
             }
 
         }
         public override void Deserialize(IDataReader reader)
         {
-            GuildApplicationInformation _item1 = null;
+            SocialApplicationInformation _item1 = null;
             base.Deserialize(reader);
             uint _appliesLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _appliesLen;_i1++)
+            for (uint _i1 = 0; _i1 < _appliesLen; _i1++)
             {
-                _item1 = new GuildApplicationInformation();
+                _item1 = new SocialApplicationInformation();
                 _item1.Deserialize(reader);
                 applies[_i1] = _item1;
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

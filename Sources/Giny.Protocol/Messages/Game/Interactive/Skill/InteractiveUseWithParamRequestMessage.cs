@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class InteractiveUseWithParamRequestMessage : InteractiveUseRequestMessage  
-    { 
-        public new const ushort Id = 6428;
+{
+    public class InteractiveUseWithParamRequestMessage : InteractiveUseRequestMessage
+    {
+        public new const ushort Id = 7419;
         public override ushort MessageId => Id;
 
         public int id;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public InteractiveUseWithParamRequestMessage()
         {
         }
-        public InteractiveUseWithParamRequestMessage(int id,int elemId,int skillInstanceUid)
+        public InteractiveUseWithParamRequestMessage(int id, int elemId, int skillInstanceUid)
         {
             this.id = id;
             this.elemId = elemId;
@@ -34,14 +34,7 @@ namespace Giny.Protocol.Messages
             id = (int)reader.ReadInt();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

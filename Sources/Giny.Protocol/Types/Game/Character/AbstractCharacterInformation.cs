@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class AbstractCharacterInformation  
-    { 
-        public const ushort Id = 776;
+{
+    public class AbstractCharacterInformation
+    {
+        public const ushort Id = 3917;
         public virtual ushort TypeId => Id;
 
         public long id;
@@ -21,7 +21,7 @@ namespace Giny.Protocol.Types
         }
         public virtual void Serialize(IDataWriter writer)
         {
-            if (id < 0 || id > 9.00719925474099E+15)
+            if (id < 0 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element id.");
             }
@@ -31,7 +31,7 @@ namespace Giny.Protocol.Types
         public virtual void Deserialize(IDataReader reader)
         {
             id = (long)reader.ReadVarUhLong();
-            if (id < 0 || id > 9.00719925474099E+15)
+            if (id < 0 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element of AbstractCharacterInformation.id.");
             }
@@ -41,11 +41,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

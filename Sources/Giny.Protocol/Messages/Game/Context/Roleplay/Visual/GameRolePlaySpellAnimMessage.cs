@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameRolePlaySpellAnimMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6811;
+{
+    public class GameRolePlaySpellAnimMessage : NetworkMessage
+    {
+        public const ushort Id = 168;
         public override ushort MessageId => Id;
 
         public long casterId;
@@ -21,7 +21,7 @@ namespace Giny.Protocol.Messages
         public GameRolePlaySpellAnimMessage()
         {
         }
-        public GameRolePlaySpellAnimMessage(long casterId,short targetCellId,short spellId,short spellLevel,short direction)
+        public GameRolePlaySpellAnimMessage(long casterId, short targetCellId, short spellId, short spellLevel, short direction)
         {
             this.casterId = casterId;
             this.targetCellId = targetCellId;
@@ -31,7 +31,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (casterId < 0 || casterId > 9.00719925474099E+15)
+            if (casterId < 0 || casterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + casterId + ") on element casterId.");
             }
@@ -65,7 +65,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             casterId = (long)reader.ReadVarUhLong();
-            if (casterId < 0 || casterId > 9.00719925474099E+15)
+            if (casterId < 0 || casterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + casterId + ") on element of GameRolePlaySpellAnimMessage.casterId.");
             }
@@ -96,14 +96,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

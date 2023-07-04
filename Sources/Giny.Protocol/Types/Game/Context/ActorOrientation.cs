@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ActorOrientation  
-    { 
-        public const ushort Id = 6283;
+{
+    public class ActorOrientation
+    {
+        public const ushort Id = 5698;
         public virtual ushort TypeId => Id;
 
         public double id;
@@ -16,14 +16,14 @@ namespace Giny.Protocol.Types
         public ActorOrientation()
         {
         }
-        public ActorOrientation(double id,byte direction)
+        public ActorOrientation(double id, byte direction)
         {
             this.id = id;
             this.direction = direction;
         }
         public virtual void Serialize(IDataWriter writer)
         {
-            if (id < -9.00719925474099E+15 || id > 9.00719925474099E+15)
+            if (id < -9007199254740992 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element id.");
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Types
         public virtual void Deserialize(IDataReader reader)
         {
             id = (double)reader.ReadDouble();
-            if (id < -9.00719925474099E+15 || id > 9.00719925474099E+15)
+            if (id < -9007199254740992 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element of ActorOrientation.id.");
             }
@@ -50,11 +50,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

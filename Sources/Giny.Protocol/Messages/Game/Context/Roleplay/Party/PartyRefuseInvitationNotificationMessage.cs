@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PartyRefuseInvitationNotificationMessage : AbstractPartyEventMessage  
-    { 
-        public new const ushort Id = 9315;
+{
+    public class PartyRefuseInvitationNotificationMessage : AbstractPartyEventMessage
+    {
+        public new const ushort Id = 1547;
         public override ushort MessageId => Id;
 
         public long guestId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public PartyRefuseInvitationNotificationMessage()
         {
         }
-        public PartyRefuseInvitationNotificationMessage(long guestId,int partyId)
+        public PartyRefuseInvitationNotificationMessage(long guestId, int partyId)
         {
             this.guestId = guestId;
             this.partyId = partyId;
@@ -25,7 +25,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (guestId < 0 || guestId > 9.00719925474099E+15)
+            if (guestId < 0 || guestId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + guestId + ") on element guestId.");
             }
@@ -36,21 +36,14 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             guestId = (long)reader.ReadVarUhLong();
-            if (guestId < 0 || guestId > 9.00719925474099E+15)
+            if (guestId < 0 || guestId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + guestId + ") on element of PartyRefuseInvitationNotificationMessage.guestId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

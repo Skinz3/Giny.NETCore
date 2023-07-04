@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeCraftResultMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5921;
+{
+    public class ExchangeCraftResultMessage : NetworkMessage
+    {
+        public const ushort Id = 3038;
         public override ushort MessageId => Id;
 
         public byte craftResult;
@@ -35,14 +35,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,57 +6,46 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AllianceJoinedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8742;
+{
+    public class AllianceJoinedMessage : NetworkMessage
+    {
+        public const ushort Id = 7614;
         public override ushort MessageId => Id;
 
-        public AllianceInformations allianceInfo;
-        public bool enabled;
-        public int leadingGuildId;
+        public AllianceInformation allianceInfo;
+        public int rankId;
 
         public AllianceJoinedMessage()
         {
         }
-        public AllianceJoinedMessage(AllianceInformations allianceInfo,bool enabled,int leadingGuildId)
+        public AllianceJoinedMessage(AllianceInformation allianceInfo, int rankId)
         {
             this.allianceInfo = allianceInfo;
-            this.enabled = enabled;
-            this.leadingGuildId = leadingGuildId;
+            this.rankId = rankId;
         }
         public override void Serialize(IDataWriter writer)
         {
             allianceInfo.Serialize(writer);
-            writer.WriteBoolean((bool)enabled);
-            if (leadingGuildId < 0)
+            if (rankId < 0)
             {
-                throw new System.Exception("Forbidden value (" + leadingGuildId + ") on element leadingGuildId.");
+                throw new System.Exception("Forbidden value (" + rankId + ") on element rankId.");
             }
 
-            writer.WriteVarInt((int)leadingGuildId);
+            writer.WriteVarInt((int)rankId);
         }
         public override void Deserialize(IDataReader reader)
         {
-            allianceInfo = new AllianceInformations();
+            allianceInfo = new AllianceInformation();
             allianceInfo.Deserialize(reader);
-            enabled = (bool)reader.ReadBoolean();
-            leadingGuildId = (int)reader.ReadVarUhInt();
-            if (leadingGuildId < 0)
+            rankId = (int)reader.ReadVarUhInt();
+            if (rankId < 0)
             {
-                throw new System.Exception("Forbidden value (" + leadingGuildId + ") on element of AllianceJoinedMessage.leadingGuildId.");
+                throw new System.Exception("Forbidden value (" + rankId + ") on element of AllianceJoinedMessage.rankId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

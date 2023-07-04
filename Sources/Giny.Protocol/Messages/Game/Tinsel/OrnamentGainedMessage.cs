@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class OrnamentGainedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8779;
+{
+    public class OrnamentGainedMessage : NetworkMessage
+    {
+        public const ushort Id = 7317;
         public override ushort MessageId => Id;
 
         public short ornamentId;
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

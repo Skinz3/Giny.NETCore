@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeMountsTakenFromPaddockMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 836;
+{
+    public class ExchangeMountsTakenFromPaddockMessage : NetworkMessage
+    {
+        public const ushort Id = 9477;
         public override ushort MessageId => Id;
 
         public string name;
@@ -20,7 +20,7 @@ namespace Giny.Protocol.Messages
         public ExchangeMountsTakenFromPaddockMessage()
         {
         }
-        public ExchangeMountsTakenFromPaddockMessage(string name,short worldX,short worldY,string ownername)
+        public ExchangeMountsTakenFromPaddockMessage(string name, short worldX, short worldY, string ownername)
         {
             this.name = name;
             this.worldX = worldX;
@@ -62,14 +62,7 @@ namespace Giny.Protocol.Messages
             ownername = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

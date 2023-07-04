@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ObjectFeedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9950;
+{
+    public class ObjectFeedMessage : NetworkMessage
+    {
+        public const ushort Id = 8641;
         public override ushort MessageId => Id;
 
         public int objectUID;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ObjectFeedMessage()
         {
         }
-        public ObjectFeedMessage(int objectUID,ObjectItemQuantity[] meal)
+        public ObjectFeedMessage(int objectUID, ObjectItemQuantity[] meal)
         {
             this.objectUID = objectUID;
             this.meal = meal;
@@ -32,7 +32,7 @@ namespace Giny.Protocol.Messages
 
             writer.WriteVarInt((int)objectUID);
             writer.WriteShort((short)meal.Length);
-            for (uint _i2 = 0;_i2 < meal.Length;_i2++)
+            for (uint _i2 = 0; _i2 < meal.Length; _i2++)
             {
                 (meal[_i2] as ObjectItemQuantity).Serialize(writer);
             }
@@ -49,7 +49,7 @@ namespace Giny.Protocol.Messages
 
             uint _mealLen = (uint)reader.ReadUShort();
             meal = new ObjectItemQuantity[_mealLen];
-            for (uint _i2 = 0;_i2 < _mealLen;_i2++)
+            for (uint _i2 = 0; _i2 < _mealLen; _i2++)
             {
                 _item2 = new ObjectItemQuantity();
                 _item2.Deserialize(reader);
@@ -58,14 +58,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

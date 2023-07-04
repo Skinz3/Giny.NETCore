@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameRolePlayArenaInvitationCandidatesAnswerMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5498;
+{
+    public class GameRolePlayArenaInvitationCandidatesAnswerMessage : NetworkMessage
+    {
+        public const ushort Id = 9162;
         public override ushort MessageId => Id;
 
         public LeagueFriendInformations[] candidates;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)candidates.Length);
-            for (uint _i1 = 0;_i1 < candidates.Length;_i1++)
+            for (uint _i1 = 0; _i1 < candidates.Length; _i1++)
             {
                 (candidates[_i1] as LeagueFriendInformations).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             LeagueFriendInformations _item1 = null;
             uint _candidatesLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _candidatesLen;_i1++)
+            for (uint _i1 = 0; _i1 < _candidatesLen; _i1++)
             {
                 _item1 = new LeagueFriendInformations();
                 _item1.Deserialize(reader);
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

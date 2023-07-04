@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ActorExtendedAlignmentInformations : ActorAlignmentInformations  
-    { 
-        public new const ushort Id = 5635;
+{
+    public class ActorExtendedAlignmentInformations : ActorAlignmentInformations
+    {
+        public new const ushort Id = 6190;
         public override ushort TypeId => Id;
 
         public short honor;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Types
         public ActorExtendedAlignmentInformations()
         {
         }
-        public ActorExtendedAlignmentInformations(short honor,short honorGradeFloor,short honorNextGradeFloor,byte aggressable,byte alignmentSide,byte alignmentValue,byte alignmentGrade,double characterPower)
+        public ActorExtendedAlignmentInformations(short honor, short honorGradeFloor, short honorNextGradeFloor, byte aggressable, byte alignmentSide, byte alignmentValue, byte alignmentGrade, double characterPower)
         {
             this.honor = honor;
             this.honorGradeFloor = honorGradeFloor;
@@ -84,11 +84,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

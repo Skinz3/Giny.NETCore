@@ -71,15 +71,15 @@ namespace Giny.World.Records.Guilds
         }
 
         [WIP]
-        public GuildMember ToGuildMember(Guild guild)
+        public GuildMemberInfo ToGuildMember(Guild guild)
         {
             bool connected = guild.IsMemberConnected(CharacterId);
 
             CharacterRecord record = CharacterRecord.GetCharacterRecord(CharacterId);
 
             WorldClient client = WorldServer.Instance.GetOnlineClient(x => x.Character.Name == record.Name);
-
-            return new GuildMember()
+            
+            return new GuildMemberInfo()
             {
                 accountId = connected ? client.Account.Id : 0,
                 achievementPoints = 0,
@@ -97,7 +97,8 @@ namespace Giny.World.Records.Guilds
                 rankId = Rank,
                 note = new PlayerNote("test", 0),
                 sex = record.Sex,
-                status = connected ? client.Character.GetPlayerStatus() : new PlayerStatus()
+                status = connected ? client.Character.GetPlayerStatus() : new PlayerStatus(),
+                enrollmentDate = 0, // ??????
             };
         }
 

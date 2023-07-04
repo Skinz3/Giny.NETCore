@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class InteractiveElementNamedSkill : InteractiveElementSkill  
-    { 
-        public new const ushort Id = 8189;
+{
+    public class InteractiveElementNamedSkill : InteractiveElementSkill
+    {
+        public new const ushort Id = 4290;
         public override ushort TypeId => Id;
 
         public int nameId;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public InteractiveElementNamedSkill()
         {
         }
-        public InteractiveElementNamedSkill(int nameId,int skillId,int skillInstanceUid)
+        public InteractiveElementNamedSkill(int nameId, int skillId, int skillInstanceUid)
         {
             this.nameId = nameId;
             this.skillId = skillId;
@@ -45,11 +45,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

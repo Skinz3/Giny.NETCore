@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ListenersOfSynchronizedStorageMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8019;
+{
+    public class ListenersOfSynchronizedStorageMessage : NetworkMessage
+    {
+        public const ushort Id = 557;
         public override ushort MessageId => Id;
 
         public string[] players;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)players.Length);
-            for (uint _i1 = 0;_i1 < players.Length;_i1++)
+            for (uint _i1 = 0; _i1 < players.Length; _i1++)
             {
                 writer.WriteUTF((string)players[_i1]);
             }
@@ -35,7 +35,7 @@ namespace Giny.Protocol.Messages
             string _val1 = null;
             uint _playersLen = (uint)reader.ReadUShort();
             players = new string[_playersLen];
-            for (uint _i1 = 0;_i1 < _playersLen;_i1++)
+            for (uint _i1 = 0; _i1 < _playersLen; _i1++)
             {
                 _val1 = (string)reader.ReadUTF();
                 players[_i1] = (string)_val1;
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildPaddockBoughtMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5835;
+{
+    public class GuildPaddockBoughtMessage : NetworkMessage
+    {
+        public const ushort Id = 3932;
         public override ushort MessageId => Id;
 
         public PaddockContentInformations paddockInfo;
@@ -31,14 +31,7 @@ namespace Giny.Protocol.Messages
             paddockInfo.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

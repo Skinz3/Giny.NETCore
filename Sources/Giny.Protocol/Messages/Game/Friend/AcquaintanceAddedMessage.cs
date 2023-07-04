@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AcquaintanceAddedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2313;
+{
+    public class AcquaintanceAddedMessage : NetworkMessage
+    {
+        public const ushort Id = 1396;
         public override ushort MessageId => Id;
 
         public AcquaintanceInformation acquaintanceAdded;
@@ -33,14 +33,7 @@ namespace Giny.Protocol.Messages
             acquaintanceAdded.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

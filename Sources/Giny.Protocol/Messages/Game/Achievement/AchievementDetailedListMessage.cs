@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AchievementDetailedListMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8447;
+{
+    public class AchievementDetailedListMessage : NetworkMessage
+    {
+        public const ushort Id = 3252;
         public override ushort MessageId => Id;
 
         public Achievement[] startedAchievements;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public AchievementDetailedListMessage()
         {
         }
-        public AchievementDetailedListMessage(Achievement[] startedAchievements,Achievement[] finishedAchievements)
+        public AchievementDetailedListMessage(Achievement[] startedAchievements, Achievement[] finishedAchievements)
         {
             this.startedAchievements = startedAchievements;
             this.finishedAchievements = finishedAchievements;
@@ -26,13 +26,13 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)startedAchievements.Length);
-            for (uint _i1 = 0;_i1 < startedAchievements.Length;_i1++)
+            for (uint _i1 = 0; _i1 < startedAchievements.Length; _i1++)
             {
                 (startedAchievements[_i1] as Achievement).Serialize(writer);
             }
 
             writer.WriteShort((short)finishedAchievements.Length);
-            for (uint _i2 = 0;_i2 < finishedAchievements.Length;_i2++)
+            for (uint _i2 = 0; _i2 < finishedAchievements.Length; _i2++)
             {
                 (finishedAchievements[_i2] as Achievement).Serialize(writer);
             }
@@ -43,7 +43,7 @@ namespace Giny.Protocol.Messages
             Achievement _item1 = null;
             Achievement _item2 = null;
             uint _startedAchievementsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _startedAchievementsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _startedAchievementsLen; _i1++)
             {
                 _item1 = new Achievement();
                 _item1.Deserialize(reader);
@@ -51,7 +51,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _finishedAchievementsLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _finishedAchievementsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _finishedAchievementsLen; _i2++)
             {
                 _item2 = new Achievement();
                 _item2.Deserialize(reader);
@@ -60,14 +60,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

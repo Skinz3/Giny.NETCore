@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PaddockMoveItemRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9794;
+{
+    public class PaddockMoveItemRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 8223;
         public override ushort MessageId => Id;
 
         public short oldCellId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public PaddockMoveItemRequestMessage()
         {
         }
-        public PaddockMoveItemRequestMessage(short oldCellId,short newCellId)
+        public PaddockMoveItemRequestMessage(short oldCellId, short newCellId)
         {
             this.oldCellId = oldCellId;
             this.newCellId = newCellId;
@@ -54,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

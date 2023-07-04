@@ -6,20 +6,20 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildListApplicationModifiedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4943;
+{
+    public class GuildListApplicationModifiedMessage : NetworkMessage
+    {
+        public const ushort Id = 4720;
         public override ushort MessageId => Id;
 
-        public GuildApplicationInformation apply;
+        public SocialApplicationInformation apply;
         public byte state;
         public long playerId;
 
         public GuildListApplicationModifiedMessage()
         {
         }
-        public GuildListApplicationModifiedMessage(GuildApplicationInformation apply,byte state,long playerId)
+        public GuildListApplicationModifiedMessage(SocialApplicationInformation apply, byte state, long playerId)
         {
             this.apply = apply;
             this.state = state;
@@ -29,7 +29,7 @@ namespace Giny.Protocol.Messages
         {
             apply.Serialize(writer);
             writer.WriteByte((byte)state);
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
@@ -38,7 +38,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Deserialize(IDataReader reader)
         {
-            apply = new GuildApplicationInformation();
+            apply = new SocialApplicationInformation();
             apply.Deserialize(reader);
             state = (byte)reader.ReadByte();
             if (state < 0)
@@ -47,21 +47,14 @@ namespace Giny.Protocol.Messages
             }
 
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of GuildListApplicationModifiedMessage.playerId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

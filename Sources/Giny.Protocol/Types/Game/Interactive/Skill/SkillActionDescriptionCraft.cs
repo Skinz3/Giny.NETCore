@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class SkillActionDescriptionCraft : SkillActionDescription  
-    { 
-        public new const ushort Id = 2607;
+{
+    public class SkillActionDescriptionCraft : SkillActionDescription
+    {
+        public new const ushort Id = 2003;
         public override ushort TypeId => Id;
 
         public byte probability;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public SkillActionDescriptionCraft()
         {
         }
-        public SkillActionDescriptionCraft(byte probability,short skillId)
+        public SkillActionDescriptionCraft(byte probability, short skillId)
         {
             this.probability = probability;
             this.skillId = skillId;
@@ -44,11 +44,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

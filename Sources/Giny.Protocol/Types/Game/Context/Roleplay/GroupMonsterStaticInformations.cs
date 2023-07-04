@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GroupMonsterStaticInformations  
-    { 
-        public const ushort Id = 1594;
+{
+    public class GroupMonsterStaticInformations
+    {
+        public const ushort Id = 1192;
         public virtual ushort TypeId => Id;
 
         public MonsterInGroupLightInformations mainCreatureLightInfos;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public GroupMonsterStaticInformations()
         {
         }
-        public GroupMonsterStaticInformations(MonsterInGroupLightInformations mainCreatureLightInfos,MonsterInGroupInformations[] underlings)
+        public GroupMonsterStaticInformations(MonsterInGroupLightInformations mainCreatureLightInfos, MonsterInGroupInformations[] underlings)
         {
             this.mainCreatureLightInfos = mainCreatureLightInfos;
             this.underlings = underlings;
@@ -25,7 +25,7 @@ namespace Giny.Protocol.Types
         {
             mainCreatureLightInfos.Serialize(writer);
             writer.WriteShort((short)underlings.Length);
-            for (uint _i2 = 0;_i2 < underlings.Length;_i2++)
+            for (uint _i2 = 0; _i2 < underlings.Length; _i2++)
             {
                 (underlings[_i2] as MonsterInGroupInformations).Serialize(writer);
             }
@@ -37,7 +37,7 @@ namespace Giny.Protocol.Types
             mainCreatureLightInfos = new MonsterInGroupLightInformations();
             mainCreatureLightInfos.Deserialize(reader);
             uint _underlingsLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _underlingsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _underlingsLen; _i2++)
             {
                 _item2 = new MonsterInGroupInformations();
                 _item2.Deserialize(reader);
@@ -49,11 +49,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

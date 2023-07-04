@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AccountLoggingKickedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3647;
+{
+    public class AccountLoggingKickedMessage : NetworkMessage
+    {
+        public const ushort Id = 7055;
         public override ushort MessageId => Id;
 
         public short days;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public AccountLoggingKickedMessage()
         {
         }
-        public AccountLoggingKickedMessage(short days,byte hours,byte minutes)
+        public AccountLoggingKickedMessage(short days, byte hours, byte minutes)
         {
             this.days = days;
             this.hours = hours;
@@ -68,14 +68,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

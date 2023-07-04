@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class SlaveNoLongerControledMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9600;
+{
+    public class SlaveNoLongerControledMessage : NetworkMessage
+    {
+        public const ushort Id = 6277;
         public override ushort MessageId => Id;
 
         public double masterId;
@@ -18,20 +18,20 @@ namespace Giny.Protocol.Messages
         public SlaveNoLongerControledMessage()
         {
         }
-        public SlaveNoLongerControledMessage(double masterId,double slaveId)
+        public SlaveNoLongerControledMessage(double masterId, double slaveId)
         {
             this.masterId = masterId;
             this.slaveId = slaveId;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (masterId < -9.00719925474099E+15 || masterId > 9.00719925474099E+15)
+            if (masterId < -9007199254740992 || masterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + masterId + ") on element masterId.");
             }
 
             writer.WriteDouble((double)masterId);
-            if (slaveId < -9.00719925474099E+15 || slaveId > 9.00719925474099E+15)
+            if (slaveId < -9007199254740992 || slaveId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + slaveId + ") on element slaveId.");
             }
@@ -41,27 +41,20 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             masterId = (double)reader.ReadDouble();
-            if (masterId < -9.00719925474099E+15 || masterId > 9.00719925474099E+15)
+            if (masterId < -9007199254740992 || masterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + masterId + ") on element of SlaveNoLongerControledMessage.masterId.");
             }
 
             slaveId = (double)reader.ReadDouble();
-            if (slaveId < -9.00719925474099E+15 || slaveId > 9.00719925474099E+15)
+            if (slaveId < -9007199254740992 || slaveId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + slaveId + ") on element of SlaveNoLongerControledMessage.slaveId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

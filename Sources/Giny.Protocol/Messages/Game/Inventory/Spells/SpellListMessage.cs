@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class SpellListMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 967;
+{
+    public class SpellListMessage : NetworkMessage
+    {
+        public const ushort Id = 2313;
         public override ushort MessageId => Id;
 
         public bool spellPrevisualization;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public SpellListMessage()
         {
         }
-        public SpellListMessage(bool spellPrevisualization,SpellItem[] spells)
+        public SpellListMessage(bool spellPrevisualization, SpellItem[] spells)
         {
             this.spellPrevisualization = spellPrevisualization;
             this.spells = spells;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         {
             writer.WriteBoolean((bool)spellPrevisualization);
             writer.WriteShort((short)spells.Length);
-            for (uint _i2 = 0;_i2 < spells.Length;_i2++)
+            for (uint _i2 = 0; _i2 < spells.Length; _i2++)
             {
                 (spells[_i2] as SpellItem).Serialize(writer);
             }
@@ -38,7 +38,7 @@ namespace Giny.Protocol.Messages
             SpellItem _item2 = null;
             spellPrevisualization = (bool)reader.ReadBoolean();
             uint _spellsLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _spellsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _spellsLen; _i2++)
             {
                 _item2 = new SpellItem();
                 _item2.Deserialize(reader);
@@ -47,14 +47,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

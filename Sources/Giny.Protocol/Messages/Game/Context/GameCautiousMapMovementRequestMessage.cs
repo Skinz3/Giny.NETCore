@@ -6,17 +6,17 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameCautiousMapMovementRequestMessage : GameMapMovementRequestMessage  
-    { 
-        public new const ushort Id = 6590;
+{
+    public class GameCautiousMapMovementRequestMessage : GameMapMovementRequestMessage
+    {
+        public new const ushort Id = 3920;
         public override ushort MessageId => Id;
 
 
         public GameCautiousMapMovementRequestMessage()
         {
         }
-        public GameCautiousMapMovementRequestMessage(short[] keyMovements,double mapId)
+        public GameCautiousMapMovementRequestMessage(short[] keyMovements, double mapId)
         {
             this.keyMovements = keyMovements;
             this.mapId = mapId;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

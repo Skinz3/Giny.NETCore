@@ -49,9 +49,9 @@ namespace Giny.World.Records.Guilds
             this.BackgroundColor = backgroundColor;
         }
 
-        public GuildEmblem ToGuildEmblem()
+        public SocialEmblem ToGuildEmblem()
         {
-            return new GuildEmblem()
+            return new SocialEmblem()
             {
                 backgroundColor = BackgroundColor,
                 backgroundShape = BackgroundShape,

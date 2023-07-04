@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameActionFightDispellableEffectMessage : AbstractGameActionMessage  
-    { 
-        public new const ushort Id = 1706;
+{
+    public class GameActionFightDispellableEffectMessage : AbstractGameActionMessage
+    {
+        public new const ushort Id = 7996;
         public override ushort MessageId => Id;
 
         public AbstractFightDispellableEffect effect;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public GameActionFightDispellableEffectMessage()
         {
         }
-        public GameActionFightDispellableEffectMessage(AbstractFightDispellableEffect effect,short actionId,double sourceId)
+        public GameActionFightDispellableEffectMessage(AbstractFightDispellableEffect effect, short actionId, double sourceId)
         {
             this.effect = effect;
             this.actionId = actionId;
@@ -37,14 +37,7 @@ namespace Giny.Protocol.Messages
             effect.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

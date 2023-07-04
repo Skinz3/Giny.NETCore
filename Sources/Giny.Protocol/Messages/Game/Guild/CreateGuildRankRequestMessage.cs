@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class CreateGuildRankRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6955;
+{
+    public class CreateGuildRankRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 720;
         public override ushort MessageId => Id;
 
         public int parentRankId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public CreateGuildRankRequestMessage()
         {
         }
-        public CreateGuildRankRequestMessage(int parentRankId,int gfxId,string name)
+        public CreateGuildRankRequestMessage(int parentRankId, int gfxId, string name)
         {
             this.parentRankId = parentRankId;
             this.gfxId = gfxId;
@@ -58,14 +58,7 @@ namespace Giny.Protocol.Messages
             name = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

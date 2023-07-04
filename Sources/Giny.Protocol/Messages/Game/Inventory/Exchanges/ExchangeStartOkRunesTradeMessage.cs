@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeStartOkRunesTradeMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 927;
+{
+    public class ExchangeStartOkRunesTradeMessage : NetworkMessage
+    {
+        public const ushort Id = 3250;
         public override ushort MessageId => Id;
 
 
@@ -23,14 +23,7 @@ namespace Giny.Protocol.Messages
         {
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

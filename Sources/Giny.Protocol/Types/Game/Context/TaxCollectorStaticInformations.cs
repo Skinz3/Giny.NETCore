@@ -4,25 +4,25 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class TaxCollectorStaticInformations  
-    { 
-        public const ushort Id = 3183;
+{
+    public class TaxCollectorStaticInformations
+    {
+        public const ushort Id = 2283;
         public virtual ushort TypeId => Id;
 
         public short firstNameId;
         public short lastNameId;
-        public GuildInformations guildIdentity;
+        public AllianceInformation allianceIdentity;
         public long callerId;
 
         public TaxCollectorStaticInformations()
         {
         }
-        public TaxCollectorStaticInformations(short firstNameId,short lastNameId,GuildInformations guildIdentity,long callerId)
+        public TaxCollectorStaticInformations(short firstNameId, short lastNameId, AllianceInformation allianceIdentity, long callerId)
         {
             this.firstNameId = firstNameId;
             this.lastNameId = lastNameId;
-            this.guildIdentity = guildIdentity;
+            this.allianceIdentity = allianceIdentity;
             this.callerId = callerId;
         }
         public virtual void Serialize(IDataWriter writer)
@@ -39,8 +39,8 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteVarShort((short)lastNameId);
-            guildIdentity.Serialize(writer);
-            if (callerId < 0 || callerId > 9.00719925474099E+15)
+            allianceIdentity.Serialize(writer);
+            if (callerId < 0 || callerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + callerId + ") on element callerId.");
             }
@@ -61,10 +61,10 @@ namespace Giny.Protocol.Types
                 throw new System.Exception("Forbidden value (" + lastNameId + ") on element of TaxCollectorStaticInformations.lastNameId.");
             }
 
-            guildIdentity = new GuildInformations();
-            guildIdentity.Deserialize(reader);
+            allianceIdentity = new AllianceInformation();
+            allianceIdentity.Deserialize(reader);
             callerId = (long)reader.ReadVarUhLong();
-            if (callerId < 0 || callerId > 9.00719925474099E+15)
+            if (callerId < 0 || callerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + callerId + ") on element of TaxCollectorStaticInformations.callerId.");
             }
@@ -74,11 +74,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

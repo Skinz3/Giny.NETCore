@@ -1,4 +1,3 @@
-
 using System;
 
 namespace Giny.Protocol.Enums
@@ -20,6 +19,13 @@ namespace Giny.Protocol.Enums
         MAX_CAST_PER_TARGET = 12,
         RANGE_MAX = 13,
         RANGE_MIN = 14,
+        OCCUPIED_CELL = 15,
+        FREE_CELL = 16,
+        SET_RANGE_MAX = 17,
+        SET_RANGE_MIN = 18,
+        VISIBLE_TARGET = 19,
+        PORTAL_FREE_CELL = 20,
+        PORTAL_PROJECTION = 21,
 
     }
 }

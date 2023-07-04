@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class HavenBagRoomPreviewInformation  
-    { 
-        public const ushort Id = 4433;
+{
+    public class HavenBagRoomPreviewInformation
+    {
+        public const ushort Id = 7411;
         public virtual ushort TypeId => Id;
 
         public byte roomId;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public HavenBagRoomPreviewInformation()
         {
         }
-        public HavenBagRoomPreviewInformation(byte roomId,byte themeId)
+        public HavenBagRoomPreviewInformation(byte roomId, byte themeId)
         {
             this.roomId = roomId;
             this.themeId = themeId;
@@ -45,11 +45,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

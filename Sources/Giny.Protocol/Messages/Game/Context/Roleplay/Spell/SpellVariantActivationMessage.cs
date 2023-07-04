@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class SpellVariantActivationMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6118;
+{
+    public class SpellVariantActivationMessage : NetworkMessage
+    {
+        public const ushort Id = 9799;
         public override ushort MessageId => Id;
 
         public short spellId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public SpellVariantActivationMessage()
         {
         }
-        public SpellVariantActivationMessage(short spellId,bool result)
+        public SpellVariantActivationMessage(short spellId, bool result)
         {
             this.spellId = spellId;
             this.result = result;
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
             result = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

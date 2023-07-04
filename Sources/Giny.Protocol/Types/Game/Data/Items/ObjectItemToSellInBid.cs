@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ObjectItemToSellInBid : ObjectItemToSell  
-    { 
-        public new const ushort Id = 712;
+{
+    public class ObjectItemToSellInBid : ObjectItemToSell
+    {
+        public new const ushort Id = 6737;
         public override ushort TypeId => Id;
 
         public int unsoldDelay;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public ObjectItemToSellInBid()
         {
         }
-        public ObjectItemToSellInBid(int unsoldDelay,short objectGID,ObjectEffect[] effects,int objectUID,int quantity,long objectPrice)
+        public ObjectItemToSellInBid(int unsoldDelay, int objectGID, ObjectEffect[] effects, int objectUID, int quantity, long objectPrice)
         {
             this.unsoldDelay = unsoldDelay;
             this.objectGID = objectGID;
@@ -48,11 +48,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

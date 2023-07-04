@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HouseTeleportRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4212;
+{
+    public class HouseTeleportRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 6456;
         public override ushort MessageId => Id;
 
         public int houseId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public HouseTeleportRequestMessage()
         {
         }
-        public HouseTeleportRequestMessage(int houseId,int houseInstanceId)
+        public HouseTeleportRequestMessage(int houseId, int houseInstanceId)
         {
             this.houseId = houseId;
             this.houseInstanceId = houseInstanceId;
@@ -54,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

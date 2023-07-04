@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ServerSettingsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1715;
+{
+    public class ServerSettingsMessage : NetworkMessage
+    {
+        public const ushort Id = 8027;
         public override ushort MessageId => Id;
 
         public string lang;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         public ServerSettingsMessage()
         {
         }
-        public ServerSettingsMessage(string lang,byte community,byte gameType,bool isMonoAccount,short arenaLeaveBanTime,int itemMaxLevel,bool hasFreeAutopilot)
+        public ServerSettingsMessage(string lang, byte community, byte gameType, bool isMonoAccount, short arenaLeaveBanTime, int itemMaxLevel, bool hasFreeAutopilot)
         {
             this.lang = lang;
             this.community = community;
@@ -36,8 +36,8 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             byte _box0 = 0;
-            _box0 = BooleanByteWrapper.SetFlag(_box0,0,isMonoAccount);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,1,hasFreeAutopilot);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 0, isMonoAccount);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 1, hasFreeAutopilot);
             writer.WriteByte((byte)_box0);
             writer.WriteUTF((string)lang);
             if (community < 0)
@@ -63,8 +63,8 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             byte _box0 = reader.ReadByte();
-            isMonoAccount = BooleanByteWrapper.GetFlag(_box0,0);
-            hasFreeAutopilot = BooleanByteWrapper.GetFlag(_box0,1);
+            isMonoAccount = BooleanByteWrapper.GetFlag(_box0, 0);
+            hasFreeAutopilot = BooleanByteWrapper.GetFlag(_box0, 1);
             lang = (string)reader.ReadUTF();
             community = (byte)reader.ReadByte();
             if (community < 0)
@@ -87,14 +87,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

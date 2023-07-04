@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ShortcutBarContentMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3367;
+{
+    public class ShortcutBarContentMessage : NetworkMessage
+    {
+        public const ushort Id = 7898;
         public override ushort MessageId => Id;
 
         public byte barType;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ShortcutBarContentMessage()
         {
         }
-        public ShortcutBarContentMessage(byte barType,Shortcut[] shortcuts)
+        public ShortcutBarContentMessage(byte barType, Shortcut[] shortcuts)
         {
             this.barType = barType;
             this.shortcuts = shortcuts;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         {
             writer.WriteByte((byte)barType);
             writer.WriteShort((short)shortcuts.Length);
-            for (uint _i2 = 0;_i2 < shortcuts.Length;_i2++)
+            for (uint _i2 = 0; _i2 < shortcuts.Length; _i2++)
             {
                 writer.WriteShort((short)(shortcuts[_i2] as Shortcut).TypeId);
                 (shortcuts[_i2] as Shortcut).Serialize(writer);
@@ -45,7 +45,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _shortcutsLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _shortcutsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _shortcutsLen; _i2++)
             {
                 _id2 = (uint)reader.ReadUShort();
                 _item2 = ProtocolTypeManager.GetInstance<Shortcut>((short)_id2);
@@ -55,14 +55,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameContextCreateRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2168;
+{
+    public class GameContextCreateRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 6062;
         public override ushort MessageId => Id;
 
 
@@ -23,14 +23,7 @@ namespace Giny.Protocol.Messages
         {
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

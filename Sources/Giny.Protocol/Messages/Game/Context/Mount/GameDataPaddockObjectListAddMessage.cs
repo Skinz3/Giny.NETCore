@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameDataPaddockObjectListAddMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 11;
+{
+    public class GameDataPaddockObjectListAddMessage : NetworkMessage
+    {
+        public const ushort Id = 1254;
         public override ushort MessageId => Id;
 
         public PaddockItem[] paddockItemDescription;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)paddockItemDescription.Length);
-            for (uint _i1 = 0;_i1 < paddockItemDescription.Length;_i1++)
+            for (uint _i1 = 0; _i1 < paddockItemDescription.Length; _i1++)
             {
                 (paddockItemDescription[_i1] as PaddockItem).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             PaddockItem _item1 = null;
             uint _paddockItemDescriptionLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _paddockItemDescriptionLen;_i1++)
+            for (uint _i1 = 0; _i1 < _paddockItemDescriptionLen; _i1++)
             {
                 _item1 = new PaddockItem();
                 _item1.Deserialize(reader);
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

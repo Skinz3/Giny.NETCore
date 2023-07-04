@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class JobMultiCraftAvailableSkillsMessage : JobAllowMultiCraftRequestMessage  
-    { 
-        public new const ushort Id = 5866;
+{
+    public class JobMultiCraftAvailableSkillsMessage : JobAllowMultiCraftRequestMessage
+    {
+        public new const ushort Id = 7757;
         public override ushort MessageId => Id;
 
         public long playerId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public JobMultiCraftAvailableSkillsMessage()
         {
         }
-        public JobMultiCraftAvailableSkillsMessage(long playerId,short[] skills,bool enabled)
+        public JobMultiCraftAvailableSkillsMessage(long playerId, short[] skills, bool enabled)
         {
             this.playerId = playerId;
             this.skills = skills;
@@ -27,14 +27,14 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
 
             writer.WriteVarLong((long)playerId);
             writer.WriteShort((short)skills.Length);
-            for (uint _i2 = 0;_i2 < skills.Length;_i2++)
+            for (uint _i2 = 0; _i2 < skills.Length; _i2++)
             {
                 if (skills[_i2] < 0)
                 {
@@ -50,14 +50,14 @@ namespace Giny.Protocol.Messages
             uint _val2 = 0;
             base.Deserialize(reader);
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of JobMultiCraftAvailableSkillsMessage.playerId.");
             }
 
             uint _skillsLen = (uint)reader.ReadUShort();
             skills = new short[_skillsLen];
-            for (uint _i2 = 0;_i2 < _skillsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _skillsLen; _i2++)
             {
                 _val2 = (uint)reader.ReadVarUhShort();
                 if (_val2 < 0)
@@ -70,14 +70,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

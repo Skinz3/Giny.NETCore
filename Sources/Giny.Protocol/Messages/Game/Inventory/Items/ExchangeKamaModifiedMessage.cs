@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeKamaModifiedMessage : ExchangeObjectMessage  
-    { 
-        public new const ushort Id = 4572;
+{
+    public class ExchangeKamaModifiedMessage : ExchangeObjectMessage
+    {
+        public new const ushort Id = 3819;
         public override ushort MessageId => Id;
 
         public long quantity;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public ExchangeKamaModifiedMessage()
         {
         }
-        public ExchangeKamaModifiedMessage(long quantity,bool remote)
+        public ExchangeKamaModifiedMessage(long quantity, bool remote)
         {
             this.quantity = quantity;
             this.remote = remote;
@@ -25,7 +25,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (quantity < 0 || quantity > 9.00719925474099E+15)
+            if (quantity < 0 || quantity > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + quantity + ") on element quantity.");
             }
@@ -36,21 +36,14 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             quantity = (long)reader.ReadVarUhLong();
-            if (quantity < 0 || quantity > 9.00719925474099E+15)
+            if (quantity < 0 || quantity > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + quantity + ") on element of ExchangeKamaModifiedMessage.quantity.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

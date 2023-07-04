@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class FightDispellableEffectExtendedInformations  
-    { 
-        public const ushort Id = 9766;
+{
+    public class FightDispellableEffectExtendedInformations
+    {
+        public const ushort Id = 4526;
         public virtual ushort TypeId => Id;
 
         public short actionId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Types
         public FightDispellableEffectExtendedInformations()
         {
         }
-        public FightDispellableEffectExtendedInformations(short actionId,double sourceId,AbstractFightDispellableEffect effect)
+        public FightDispellableEffectExtendedInformations(short actionId, double sourceId, AbstractFightDispellableEffect effect)
         {
             this.actionId = actionId;
             this.sourceId = sourceId;
@@ -31,7 +31,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteVarShort((short)actionId);
-            if (sourceId < -9.00719925474099E+15 || sourceId > 9.00719925474099E+15)
+            if (sourceId < -9007199254740992 || sourceId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + sourceId + ") on element sourceId.");
             }
@@ -49,7 +49,7 @@ namespace Giny.Protocol.Types
             }
 
             sourceId = (double)reader.ReadDouble();
-            if (sourceId < -9.00719925474099E+15 || sourceId > 9.00719925474099E+15)
+            if (sourceId < -9007199254740992 || sourceId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + sourceId + ") on element of FightDispellableEffectExtendedInformations.sourceId.");
             }
@@ -62,11 +62,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

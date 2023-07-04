@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class FightTeamLightInformations : AbstractFightTeamInformations  
-    { 
-        public new const ushort Id = 1600;
+{
+    public class FightTeamLightInformations : AbstractFightTeamInformations
+    {
+        public new const ushort Id = 5212;
         public override ushort TypeId => Id;
 
         public byte teamMembersCount;
@@ -21,7 +21,7 @@ namespace Giny.Protocol.Types
         public FightTeamLightInformations()
         {
         }
-        public FightTeamLightInformations(byte teamMembersCount,int meanLevel,bool hasFriend,bool hasGuildMember,bool hasAllianceMember,bool hasGroupMember,bool hasMyTaxCollector,byte teamId,double leaderId,byte teamSide,byte teamTypeId,byte nbWaves)
+        public FightTeamLightInformations(byte teamMembersCount, int meanLevel, bool hasFriend, bool hasGuildMember, bool hasAllianceMember, bool hasGroupMember, bool hasMyTaxCollector, byte teamId, double leaderId, byte teamSide, byte teamTypeId, byte nbWaves)
         {
             this.teamMembersCount = teamMembersCount;
             this.meanLevel = meanLevel;
@@ -40,11 +40,11 @@ namespace Giny.Protocol.Types
         {
             base.Serialize(writer);
             byte _box0 = 0;
-            _box0 = BooleanByteWrapper.SetFlag(_box0,0,hasFriend);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,1,hasGuildMember);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,2,hasAllianceMember);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,3,hasGroupMember);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,4,hasMyTaxCollector);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 0, hasFriend);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 1, hasGuildMember);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 2, hasAllianceMember);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 3, hasGroupMember);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 4, hasMyTaxCollector);
             writer.WriteByte((byte)_box0);
             if (teamMembersCount < 0)
             {
@@ -63,11 +63,11 @@ namespace Giny.Protocol.Types
         {
             base.Deserialize(reader);
             byte _box0 = reader.ReadByte();
-            hasFriend = BooleanByteWrapper.GetFlag(_box0,0);
-            hasGuildMember = BooleanByteWrapper.GetFlag(_box0,1);
-            hasAllianceMember = BooleanByteWrapper.GetFlag(_box0,2);
-            hasGroupMember = BooleanByteWrapper.GetFlag(_box0,3);
-            hasMyTaxCollector = BooleanByteWrapper.GetFlag(_box0,4);
+            hasFriend = BooleanByteWrapper.GetFlag(_box0, 0);
+            hasGuildMember = BooleanByteWrapper.GetFlag(_box0, 1);
+            hasAllianceMember = BooleanByteWrapper.GetFlag(_box0, 2);
+            hasGroupMember = BooleanByteWrapper.GetFlag(_box0, 3);
+            hasMyTaxCollector = BooleanByteWrapper.GetFlag(_box0, 4);
             teamMembersCount = (byte)reader.ReadByte();
             if (teamMembersCount < 0)
             {
@@ -85,11 +85,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

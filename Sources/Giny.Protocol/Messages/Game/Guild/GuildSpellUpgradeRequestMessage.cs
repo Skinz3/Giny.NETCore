@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildSpellUpgradeRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6495;
+{
+    public class GuildSpellUpgradeRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 8774;
         public override ushort MessageId => Id;
 
         public int spellId;
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

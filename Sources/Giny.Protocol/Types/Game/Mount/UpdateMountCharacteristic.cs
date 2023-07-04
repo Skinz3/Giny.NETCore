@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class UpdateMountCharacteristic  
-    { 
-        public const ushort Id = 7198;
+{
+    public class UpdateMountCharacteristic
+    {
+        public const ushort Id = 3174;
         public virtual ushort TypeId => Id;
 
         public byte type;
@@ -36,11 +36,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

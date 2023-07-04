@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class SetCharacterRestrictionsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1254;
+{
+    public class SetCharacterRestrictionsMessage : NetworkMessage
+    {
+        public const ushort Id = 1657;
         public override ushort MessageId => Id;
 
         public double actorId;
@@ -18,14 +18,14 @@ namespace Giny.Protocol.Messages
         public SetCharacterRestrictionsMessage()
         {
         }
-        public SetCharacterRestrictionsMessage(double actorId,ActorRestrictionsInformations restrictions)
+        public SetCharacterRestrictionsMessage(double actorId, ActorRestrictionsInformations restrictions)
         {
             this.actorId = actorId;
             this.restrictions = restrictions;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (actorId < -9.00719925474099E+15 || actorId > 9.00719925474099E+15)
+            if (actorId < -9007199254740992 || actorId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + actorId + ") on element actorId.");
             }
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             actorId = (double)reader.ReadDouble();
-            if (actorId < -9.00719925474099E+15 || actorId > 9.00719925474099E+15)
+            if (actorId < -9007199254740992 || actorId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + actorId + ") on element of SetCharacterRestrictionsMessage.actorId.");
             }
@@ -45,14 +45,7 @@ namespace Giny.Protocol.Messages
             restrictions.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

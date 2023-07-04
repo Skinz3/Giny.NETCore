@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ContactLookRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9877;
+{
+    public class ContactLookRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 8442;
         public override ushort MessageId => Id;
 
         public byte requestId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ContactLookRequestMessage()
         {
         }
-        public ContactLookRequestMessage(byte requestId,byte contactType)
+        public ContactLookRequestMessage(byte requestId, byte contactType)
         {
             this.requestId = requestId;
             this.contactType = contactType;
@@ -49,14 +49,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class IndexedEntityLook  
-    { 
-        public const ushort Id = 8126;
+{
+    public class IndexedEntityLook
+    {
+        public const ushort Id = 8722;
         public virtual ushort TypeId => Id;
 
         public EntityLook look;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public IndexedEntityLook()
         {
         }
-        public IndexedEntityLook(EntityLook look,byte index)
+        public IndexedEntityLook(EntityLook look, byte index)
         {
             this.look = look;
             this.index = index;
@@ -46,11 +46,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

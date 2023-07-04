@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class DebtsUpdateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7615;
+{
+    public class DebtsUpdateMessage : NetworkMessage
+    {
+        public const ushort Id = 5682;
         public override ushort MessageId => Id;
 
         public byte action;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public DebtsUpdateMessage()
         {
         }
-        public DebtsUpdateMessage(byte action,DebtInformation[] debts)
+        public DebtsUpdateMessage(byte action, DebtInformation[] debts)
         {
             this.action = action;
             this.debts = debts;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         {
             writer.WriteByte((byte)action);
             writer.WriteShort((short)debts.Length);
-            for (uint _i2 = 0;_i2 < debts.Length;_i2++)
+            for (uint _i2 = 0; _i2 < debts.Length; _i2++)
             {
                 writer.WriteShort((short)(debts[_i2] as DebtInformation).TypeId);
                 (debts[_i2] as DebtInformation).Serialize(writer);
@@ -45,7 +45,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _debtsLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _debtsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _debtsLen; _i2++)
             {
                 _id2 = (uint)reader.ReadUShort();
                 _item2 = ProtocolTypeManager.GetInstance<DebtInformation>((short)_id2);
@@ -55,14 +55,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

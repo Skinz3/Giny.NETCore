@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameActionFightActivateGlyphTrapMessage : AbstractGameActionMessage  
-    { 
-        public new const ushort Id = 6444;
+{
+    public class GameActionFightActivateGlyphTrapMessage : AbstractGameActionMessage
+    {
+        public new const ushort Id = 2648;
         public override ushort MessageId => Id;
 
         public short markId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public GameActionFightActivateGlyphTrapMessage()
         {
         }
-        public GameActionFightActivateGlyphTrapMessage(short markId,bool active,short actionId,double sourceId)
+        public GameActionFightActivateGlyphTrapMessage(short markId, bool active, short actionId, double sourceId)
         {
             this.markId = markId;
             this.active = active;
@@ -38,14 +38,7 @@ namespace Giny.Protocol.Messages
             active = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

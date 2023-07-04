@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class CharactersListWithRemodelingMessage : CharactersListMessage  
-    { 
-        public new const ushort Id = 6666;
+{
+    public class CharactersListWithRemodelingMessage : CharactersListMessage
+    {
+        public new const ushort Id = 6771;
         public override ushort MessageId => Id;
 
         public CharacterToRemodelInformations[] charactersToRemodel;
@@ -17,17 +17,16 @@ namespace Giny.Protocol.Messages
         public CharactersListWithRemodelingMessage()
         {
         }
-        public CharactersListWithRemodelingMessage(CharacterToRemodelInformations[] charactersToRemodel,CharacterBaseInformations[] characters,bool hasStartupActions)
+        public CharactersListWithRemodelingMessage(CharacterToRemodelInformations[] charactersToRemodel, CharacterBaseInformations[] characters)
         {
             this.charactersToRemodel = charactersToRemodel;
             this.characters = characters;
-            this.hasStartupActions = hasStartupActions;
         }
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
             writer.WriteShort((short)charactersToRemodel.Length);
-            for (uint _i1 = 0;_i1 < charactersToRemodel.Length;_i1++)
+            for (uint _i1 = 0; _i1 < charactersToRemodel.Length; _i1++)
             {
                 (charactersToRemodel[_i1] as CharacterToRemodelInformations).Serialize(writer);
             }
@@ -38,7 +37,7 @@ namespace Giny.Protocol.Messages
             CharacterToRemodelInformations _item1 = null;
             base.Deserialize(reader);
             uint _charactersToRemodelLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _charactersToRemodelLen;_i1++)
+            for (uint _i1 = 0; _i1 < _charactersToRemodelLen; _i1++)
             {
                 _item1 = new CharacterToRemodelInformations();
                 _item1.Deserialize(reader);
@@ -47,14 +46,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

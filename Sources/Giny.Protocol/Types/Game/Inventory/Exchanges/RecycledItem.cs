@@ -4,19 +4,19 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class RecycledItem  
-    { 
-        public const ushort Id = 2393;
+{
+    public class RecycledItem
+    {
+        public const ushort Id = 6675;
         public virtual ushort TypeId => Id;
 
-        public short id;
+        public int id;
         public uint qty;
 
         public RecycledItem()
         {
         }
-        public RecycledItem(short id,uint qty)
+        public RecycledItem(int id, uint qty)
         {
             this.id = id;
             this.qty = qty;
@@ -28,7 +28,7 @@ namespace Giny.Protocol.Types
                 throw new System.Exception("Forbidden value (" + id + ") on element id.");
             }
 
-            writer.WriteVarShort((short)id);
+            writer.WriteVarInt((int)id);
             if (qty < 0 || qty > 4294967295)
             {
                 throw new System.Exception("Forbidden value (" + qty + ") on element qty.");
@@ -38,7 +38,7 @@ namespace Giny.Protocol.Types
         }
         public virtual void Deserialize(IDataReader reader)
         {
-            id = (short)reader.ReadVarUhShort();
+            id = (int)reader.ReadVarUhInt();
             if (id < 0)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element of RecycledItem.id.");
@@ -55,11 +55,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

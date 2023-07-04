@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameActionUpdateEffectTriggerCountMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5582;
+{
+    public class GameActionUpdateEffectTriggerCountMessage : NetworkMessage
+    {
+        public const ushort Id = 3346;
         public override ushort MessageId => Id;
 
         public GameFightEffectTriggerCount[] targetIds;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)targetIds.Length);
-            for (uint _i1 = 0;_i1 < targetIds.Length;_i1++)
+            for (uint _i1 = 0; _i1 < targetIds.Length; _i1++)
             {
                 (targetIds[_i1] as GameFightEffectTriggerCount).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             GameFightEffectTriggerCount _item1 = null;
             uint _targetIdsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _targetIdsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _targetIdsLen; _i1++)
             {
                 _item1 = new GameFightEffectTriggerCount();
                 _item1.Deserialize(reader);
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

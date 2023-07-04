@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class RefreshCharacterStatsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8208;
+{
+    public class RefreshCharacterStatsMessage : NetworkMessage
+    {
+        public const ushort Id = 4610;
         public override ushort MessageId => Id;
 
         public double fighterId;
@@ -18,14 +18,14 @@ namespace Giny.Protocol.Messages
         public RefreshCharacterStatsMessage()
         {
         }
-        public RefreshCharacterStatsMessage(double fighterId,GameFightCharacteristics stats)
+        public RefreshCharacterStatsMessage(double fighterId, GameFightCharacteristics stats)
         {
             this.fighterId = fighterId;
             this.stats = stats;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (fighterId < -9.00719925474099E+15 || fighterId > 9.00719925474099E+15)
+            if (fighterId < -9007199254740992 || fighterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + fighterId + ") on element fighterId.");
             }
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             fighterId = (double)reader.ReadDouble();
-            if (fighterId < -9.00719925474099E+15 || fighterId > 9.00719925474099E+15)
+            if (fighterId < -9007199254740992 || fighterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + fighterId + ") on element of RefreshCharacterStatsMessage.fighterId.");
             }
@@ -45,14 +45,7 @@ namespace Giny.Protocol.Messages
             stats.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

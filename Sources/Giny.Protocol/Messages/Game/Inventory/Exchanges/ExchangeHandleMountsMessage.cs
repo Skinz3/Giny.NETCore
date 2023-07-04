@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeHandleMountsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4518;
+{
+    public class ExchangeHandleMountsMessage : NetworkMessage
+    {
+        public const ushort Id = 4536;
         public override ushort MessageId => Id;
 
         public byte actionType;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ExchangeHandleMountsMessage()
         {
         }
-        public ExchangeHandleMountsMessage(byte actionType,int[] ridesId)
+        public ExchangeHandleMountsMessage(byte actionType, int[] ridesId)
         {
             this.actionType = actionType;
             this.ridesId = ridesId;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         {
             writer.WriteByte((byte)actionType);
             writer.WriteShort((short)ridesId.Length);
-            for (uint _i2 = 0;_i2 < ridesId.Length;_i2++)
+            for (uint _i2 = 0; _i2 < ridesId.Length; _i2++)
             {
                 if (ridesId[_i2] < 0)
                 {
@@ -44,7 +44,7 @@ namespace Giny.Protocol.Messages
             actionType = (byte)reader.ReadByte();
             uint _ridesIdLen = (uint)reader.ReadUShort();
             ridesId = new int[_ridesIdLen];
-            for (uint _i2 = 0;_i2 < _ridesIdLen;_i2++)
+            for (uint _i2 = 0; _i2 < _ridesIdLen; _i2++)
             {
                 _val2 = (uint)reader.ReadVarUhInt();
                 if (_val2 < 0)
@@ -57,14 +57,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

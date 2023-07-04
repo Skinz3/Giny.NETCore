@@ -4,17 +4,17 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class IgnoredInformations : AbstractContactInformations  
-    { 
-        public new const ushort Id = 7442;
+{
+    public class IgnoredInformations : AbstractContactInformations
+    {
+        public new const ushort Id = 1855;
         public override ushort TypeId => Id;
 
 
         public IgnoredInformations()
         {
         }
-        public IgnoredInformations(int accountId,AccountTagInformation accountTag)
+        public IgnoredInformations(int accountId, AccountTagInformation accountTag)
         {
             this.accountId = accountId;
             this.accountTag = accountTag;
@@ -31,11 +31,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

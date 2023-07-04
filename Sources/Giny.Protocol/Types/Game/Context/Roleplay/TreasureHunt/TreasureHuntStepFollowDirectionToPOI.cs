@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class TreasureHuntStepFollowDirectionToPOI : TreasureHuntStep  
-    { 
-        public new const ushort Id = 6869;
+{
+    public class TreasureHuntStepFollowDirectionToPOI : TreasureHuntStep
+    {
+        public new const ushort Id = 9962;
         public override ushort TypeId => Id;
 
         public byte direction;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public TreasureHuntStepFollowDirectionToPOI()
         {
         }
-        public TreasureHuntStepFollowDirectionToPOI(byte direction,short poiLabelId)
+        public TreasureHuntStepFollowDirectionToPOI(byte direction, short poiLabelId)
         {
             this.direction = direction;
             this.poiLabelId = poiLabelId;
@@ -52,11 +52,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuidedModeReturnRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6605;
+{
+    public class GuidedModeReturnRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 2391;
         public override ushort MessageId => Id;
 
 
@@ -23,14 +23,7 @@ namespace Giny.Protocol.Messages
         {
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

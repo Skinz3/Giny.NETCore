@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameActionFightTriggerGlyphTrapMessage : AbstractGameActionMessage  
-    { 
-        public new const ushort Id = 7749;
+{
+    public class GameActionFightTriggerGlyphTrapMessage : AbstractGameActionMessage
+    {
+        public new const ushort Id = 773;
         public override ushort MessageId => Id;
 
         public short markId;
@@ -20,7 +20,7 @@ namespace Giny.Protocol.Messages
         public GameActionFightTriggerGlyphTrapMessage()
         {
         }
-        public GameActionFightTriggerGlyphTrapMessage(short markId,short markImpactCell,double triggeringCharacterId,short triggeredSpellId,short actionId,double sourceId)
+        public GameActionFightTriggerGlyphTrapMessage(short markId, short markImpactCell, double triggeringCharacterId, short triggeredSpellId, short actionId, double sourceId)
         {
             this.markId = markId;
             this.markImpactCell = markImpactCell;
@@ -39,7 +39,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteVarShort((short)markImpactCell);
-            if (triggeringCharacterId < -9.00719925474099E+15 || triggeringCharacterId > 9.00719925474099E+15)
+            if (triggeringCharacterId < -9007199254740992 || triggeringCharacterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + triggeringCharacterId + ") on element triggeringCharacterId.");
             }
@@ -63,7 +63,7 @@ namespace Giny.Protocol.Messages
             }
 
             triggeringCharacterId = (double)reader.ReadDouble();
-            if (triggeringCharacterId < -9.00719925474099E+15 || triggeringCharacterId > 9.00719925474099E+15)
+            if (triggeringCharacterId < -9007199254740992 || triggeringCharacterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + triggeringCharacterId + ") on element of GameActionFightTriggerGlyphTrapMessage.triggeringCharacterId.");
             }
@@ -76,14 +76,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class Idol  
-    { 
-        public const ushort Id = 9682;
+{
+    public class Idol
+    {
+        public const ushort Id = 2308;
         public virtual ushort TypeId => Id;
 
         public short id;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Types
         public Idol()
         {
         }
-        public Idol(short id,short xpBonusPercent,short dropBonusPercent)
+        public Idol(short id, short xpBonusPercent, short dropBonusPercent)
         {
             this.id = id;
             this.xpBonusPercent = xpBonusPercent;
@@ -69,11 +69,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

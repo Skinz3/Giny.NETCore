@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class SellerBuyerDescriptor  
-    { 
-        public const ushort Id = 632;
+{
+    public class SellerBuyerDescriptor
+    {
+        public const ushort Id = 2598;
         public virtual ushort TypeId => Id;
 
         public int[] quantities;
@@ -22,7 +22,7 @@ namespace Giny.Protocol.Types
         public SellerBuyerDescriptor()
         {
         }
-        public SellerBuyerDescriptor(int[] quantities,int[] types,float taxPercentage,float taxModificationPercentage,byte maxItemLevel,int maxItemPerAccount,int npcContextualId,short unsoldDelay)
+        public SellerBuyerDescriptor(int[] quantities, int[] types, float taxPercentage, float taxModificationPercentage, byte maxItemLevel, int maxItemPerAccount, int npcContextualId, short unsoldDelay)
         {
             this.quantities = quantities;
             this.types = types;
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Types
         public virtual void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)quantities.Length);
-            for (uint _i1 = 0;_i1 < quantities.Length;_i1++)
+            for (uint _i1 = 0; _i1 < quantities.Length; _i1++)
             {
                 if (quantities[_i1] < 0)
                 {
@@ -47,7 +47,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteShort((short)types.Length);
-            for (uint _i2 = 0;_i2 < types.Length;_i2++)
+            for (uint _i2 = 0; _i2 < types.Length; _i2++)
             {
                 if (types[_i2] < 0)
                 {
@@ -85,7 +85,7 @@ namespace Giny.Protocol.Types
             uint _val2 = 0;
             uint _quantitiesLen = (uint)reader.ReadUShort();
             quantities = new int[_quantitiesLen];
-            for (uint _i1 = 0;_i1 < _quantitiesLen;_i1++)
+            for (uint _i1 = 0; _i1 < _quantitiesLen; _i1++)
             {
                 _val1 = (uint)reader.ReadVarUhInt();
                 if (_val1 < 0)
@@ -98,7 +98,7 @@ namespace Giny.Protocol.Types
 
             uint _typesLen = (uint)reader.ReadUShort();
             types = new int[_typesLen];
-            for (uint _i2 = 0;_i2 < _typesLen;_i2++)
+            for (uint _i2 = 0; _i2 < _typesLen; _i2++)
             {
                 _val2 = (uint)reader.ReadVarUhInt();
                 if (_val2 < 0)
@@ -135,11 +135,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

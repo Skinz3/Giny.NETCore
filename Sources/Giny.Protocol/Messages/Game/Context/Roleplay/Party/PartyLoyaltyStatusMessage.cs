@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PartyLoyaltyStatusMessage : AbstractPartyMessage  
-    { 
-        public new const ushort Id = 9291;
+{
+    public class PartyLoyaltyStatusMessage : AbstractPartyMessage
+    {
+        public new const ushort Id = 1580;
         public override ushort MessageId => Id;
 
         public bool loyal;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public PartyLoyaltyStatusMessage()
         {
         }
-        public PartyLoyaltyStatusMessage(bool loyal,int partyId)
+        public PartyLoyaltyStatusMessage(bool loyal, int partyId)
         {
             this.loyal = loyal;
             this.partyId = partyId;
@@ -33,14 +33,7 @@ namespace Giny.Protocol.Messages
             loyal = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

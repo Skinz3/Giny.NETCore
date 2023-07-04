@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class DungeonPartyFinderAvailableDungeonsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1688;
+{
+    public class DungeonPartyFinderAvailableDungeonsMessage : NetworkMessage
+    {
+        public const ushort Id = 2269;
         public override ushort MessageId => Id;
 
         public short[] dungeonIds;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)dungeonIds.Length);
-            for (uint _i1 = 0;_i1 < dungeonIds.Length;_i1++)
+            for (uint _i1 = 0; _i1 < dungeonIds.Length; _i1++)
             {
                 if (dungeonIds[_i1] < 0)
                 {
@@ -40,7 +40,7 @@ namespace Giny.Protocol.Messages
             uint _val1 = 0;
             uint _dungeonIdsLen = (uint)reader.ReadUShort();
             dungeonIds = new short[_dungeonIdsLen];
-            for (uint _i1 = 0;_i1 < _dungeonIdsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _dungeonIdsLen; _i1++)
             {
                 _val1 = (uint)reader.ReadVarUhShort();
                 if (_val1 < 0)
@@ -53,14 +53,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class JobCrafterDirectoryEntryRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6521;
+{
+    public class JobCrafterDirectoryEntryRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 3176;
         public override ushort MessageId => Id;
 
         public long playerId;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
@@ -33,21 +33,14 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of JobCrafterDirectoryEntryRequestMessage.playerId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

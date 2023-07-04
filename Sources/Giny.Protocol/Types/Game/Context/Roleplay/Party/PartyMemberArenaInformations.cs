@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class PartyMemberArenaInformations : PartyMemberInformations  
-    { 
-        public new const ushort Id = 5261;
+{
+    public class PartyMemberArenaInformations : PartyMemberInformations
+    {
+        public new const ushort Id = 9215;
         public override ushort TypeId => Id;
 
         public short rank;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public PartyMemberArenaInformations()
         {
         }
-        public PartyMemberArenaInformations(short rank,long id,string name,short level,EntityLook entityLook,byte breed,bool sex,int lifePoints,int maxLifePoints,short prospecting,byte regenRate,short initiative,byte alignmentSide,short worldX,short worldY,double mapId,short subAreaId,PlayerStatus status,PartyEntityBaseInformation[] entities)
+        public PartyMemberArenaInformations(short rank, long id, string name, short level, EntityLook entityLook, byte breed, bool sex, int lifePoints, int maxLifePoints, int prospecting, byte regenRate, int initiative, byte alignmentSide, short worldX, short worldY, double mapId, short subAreaId, PlayerStatus status, PartyEntityBaseInformation[] entities)
         {
             this.rank = rank;
             this.id = id;
@@ -61,11 +61,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

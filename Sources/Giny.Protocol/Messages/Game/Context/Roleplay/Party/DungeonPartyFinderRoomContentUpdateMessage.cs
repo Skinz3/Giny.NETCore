@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class DungeonPartyFinderRoomContentUpdateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7648;
+{
+    public class DungeonPartyFinderRoomContentUpdateMessage : NetworkMessage
+    {
+        public const ushort Id = 317;
         public override ushort MessageId => Id;
 
         public short dungeonId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public DungeonPartyFinderRoomContentUpdateMessage()
         {
         }
-        public DungeonPartyFinderRoomContentUpdateMessage(short dungeonId,DungeonPartyFinderPlayer[] addedPlayers,long[] removedPlayersIds)
+        public DungeonPartyFinderRoomContentUpdateMessage(short dungeonId, DungeonPartyFinderPlayer[] addedPlayers, long[] removedPlayersIds)
         {
             this.dungeonId = dungeonId;
             this.addedPlayers = addedPlayers;
@@ -34,15 +34,15 @@ namespace Giny.Protocol.Messages
 
             writer.WriteVarShort((short)dungeonId);
             writer.WriteShort((short)addedPlayers.Length);
-            for (uint _i2 = 0;_i2 < addedPlayers.Length;_i2++)
+            for (uint _i2 = 0; _i2 < addedPlayers.Length; _i2++)
             {
                 (addedPlayers[_i2] as DungeonPartyFinderPlayer).Serialize(writer);
             }
 
             writer.WriteShort((short)removedPlayersIds.Length);
-            for (uint _i3 = 0;_i3 < removedPlayersIds.Length;_i3++)
+            for (uint _i3 = 0; _i3 < removedPlayersIds.Length; _i3++)
             {
-                if (removedPlayersIds[_i3] < 0 || removedPlayersIds[_i3] > 9.00719925474099E+15)
+                if (removedPlayersIds[_i3] < 0 || removedPlayersIds[_i3] > 9007199254740992)
                 {
                     throw new System.Exception("Forbidden value (" + removedPlayersIds[_i3] + ") on element 3 (starting at 1) of removedPlayersIds.");
                 }
@@ -62,7 +62,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _addedPlayersLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _addedPlayersLen;_i2++)
+            for (uint _i2 = 0; _i2 < _addedPlayersLen; _i2++)
             {
                 _item2 = new DungeonPartyFinderPlayer();
                 _item2.Deserialize(reader);
@@ -71,10 +71,10 @@ namespace Giny.Protocol.Messages
 
             uint _removedPlayersIdsLen = (uint)reader.ReadUShort();
             removedPlayersIds = new long[_removedPlayersIdsLen];
-            for (uint _i3 = 0;_i3 < _removedPlayersIdsLen;_i3++)
+            for (uint _i3 = 0; _i3 < _removedPlayersIdsLen; _i3++)
             {
                 _val3 = (double)reader.ReadVarUhLong();
-                if (_val3 < 0 || _val3 > 9.00719925474099E+15)
+                if (_val3 < 0 || _val3 > 9007199254740992)
                 {
                     throw new System.Exception("Forbidden value (" + _val3 + ") on elements of removedPlayersIds.");
                 }
@@ -84,14 +84,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

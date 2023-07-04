@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class IdentifiedEntityDispositionInformations : EntityDispositionInformations  
-    { 
-        public new const ushort Id = 4549;
+{
+    public class IdentifiedEntityDispositionInformations : EntityDispositionInformations
+    {
+        public new const ushort Id = 8082;
         public override ushort TypeId => Id;
 
         public double id;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public IdentifiedEntityDispositionInformations()
         {
         }
-        public IdentifiedEntityDispositionInformations(double id,short cellId,byte direction)
+        public IdentifiedEntityDispositionInformations(double id, short cellId, byte direction)
         {
             this.id = id;
             this.cellId = cellId;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Types
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (id < -9.00719925474099E+15 || id > 9.00719925474099E+15)
+            if (id < -9007199254740992 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element id.");
             }
@@ -35,7 +35,7 @@ namespace Giny.Protocol.Types
         {
             base.Deserialize(reader);
             id = (double)reader.ReadDouble();
-            if (id < -9.00719925474099E+15 || id > 9.00719925474099E+15)
+            if (id < -9007199254740992 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element of IdentifiedEntityDispositionInformations.id.");
             }
@@ -45,11 +45,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

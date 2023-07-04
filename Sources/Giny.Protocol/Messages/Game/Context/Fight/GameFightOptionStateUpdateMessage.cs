@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightOptionStateUpdateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2151;
+{
+    public class GameFightOptionStateUpdateMessage : NetworkMessage
+    {
+        public const ushort Id = 4152;
         public override ushort MessageId => Id;
 
         public short fightId;
@@ -20,7 +20,7 @@ namespace Giny.Protocol.Messages
         public GameFightOptionStateUpdateMessage()
         {
         }
-        public GameFightOptionStateUpdateMessage(short fightId,byte teamId,byte option,bool state)
+        public GameFightOptionStateUpdateMessage(short fightId, byte teamId, byte option, bool state)
         {
             this.fightId = fightId;
             this.teamId = teamId;
@@ -62,14 +62,7 @@ namespace Giny.Protocol.Messages
             state = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

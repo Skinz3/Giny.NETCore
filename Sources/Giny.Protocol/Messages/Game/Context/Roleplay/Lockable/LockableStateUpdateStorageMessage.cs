@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class LockableStateUpdateStorageMessage : LockableStateUpdateAbstractMessage  
-    { 
-        public new const ushort Id = 9912;
+{
+    public class LockableStateUpdateStorageMessage : LockableStateUpdateAbstractMessage
+    {
+        public new const ushort Id = 4602;
         public override ushort MessageId => Id;
 
         public double mapId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public LockableStateUpdateStorageMessage()
         {
         }
-        public LockableStateUpdateStorageMessage(double mapId,int elementId,bool locked)
+        public LockableStateUpdateStorageMessage(double mapId, int elementId, bool locked)
         {
             this.mapId = mapId;
             this.elementId = elementId;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element mapId.");
             }
@@ -44,7 +44,7 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             mapId = (double)reader.ReadDouble();
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element of LockableStateUpdateStorageMessage.mapId.");
             }
@@ -57,14 +57,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

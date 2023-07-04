@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ChatServerCopyWithObjectMessage : ChatServerCopyMessage  
-    { 
-        public new const ushort Id = 500;
+{
+    public class ChatServerCopyWithObjectMessage : ChatServerCopyMessage
+    {
+        public new const ushort Id = 6444;
         public override ushort MessageId => Id;
 
         public ObjectItem[] objects;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public ChatServerCopyWithObjectMessage()
         {
         }
-        public ChatServerCopyWithObjectMessage(ObjectItem[] objects,byte channel,string content,int timestamp,string fingerprint,long receiverId,string receiverName)
+        public ChatServerCopyWithObjectMessage(ObjectItem[] objects, byte channel, string content, int timestamp, string fingerprint, long receiverId, string receiverName)
         {
             this.objects = objects;
             this.channel = channel;
@@ -31,7 +31,7 @@ namespace Giny.Protocol.Messages
         {
             base.Serialize(writer);
             writer.WriteShort((short)objects.Length);
-            for (uint _i1 = 0;_i1 < objects.Length;_i1++)
+            for (uint _i1 = 0; _i1 < objects.Length; _i1++)
             {
                 (objects[_i1] as ObjectItem).Serialize(writer);
             }
@@ -42,7 +42,7 @@ namespace Giny.Protocol.Messages
             ObjectItem _item1 = null;
             base.Deserialize(reader);
             uint _objectsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _objectsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _objectsLen; _i1++)
             {
                 _item1 = new ObjectItem();
                 _item1.Deserialize(reader);
@@ -51,14 +51,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

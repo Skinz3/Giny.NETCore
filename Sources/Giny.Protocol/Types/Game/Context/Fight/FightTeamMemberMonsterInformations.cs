@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class FightTeamMemberMonsterInformations : FightTeamMemberInformations  
-    { 
-        public new const ushort Id = 6698;
+{
+    public class FightTeamMemberMonsterInformations : FightTeamMemberInformations
+    {
+        public new const ushort Id = 1583;
         public override ushort TypeId => Id;
 
         public int monsterId;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public FightTeamMemberMonsterInformations()
         {
         }
-        public FightTeamMemberMonsterInformations(int monsterId,byte grade,double id)
+        public FightTeamMemberMonsterInformations(int monsterId, byte grade, double id)
         {
             this.monsterId = monsterId;
             this.grade = grade;
@@ -48,11 +48,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

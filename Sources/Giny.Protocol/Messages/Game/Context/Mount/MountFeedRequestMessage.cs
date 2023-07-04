@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class MountFeedRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9085;
+{
+    public class MountFeedRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 8008;
         public override ushort MessageId => Id;
 
         public int mountUid;
@@ -20,7 +20,7 @@ namespace Giny.Protocol.Messages
         public MountFeedRequestMessage()
         {
         }
-        public MountFeedRequestMessage(int mountUid,byte mountLocation,int mountFoodUid,int quantity)
+        public MountFeedRequestMessage(int mountUid, byte mountLocation, int mountFoodUid, int quantity)
         {
             this.mountUid = mountUid;
             this.mountLocation = mountLocation;
@@ -72,14 +72,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

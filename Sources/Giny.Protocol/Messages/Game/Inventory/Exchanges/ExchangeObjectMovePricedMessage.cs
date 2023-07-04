@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeObjectMovePricedMessage : ExchangeObjectMoveMessage  
-    { 
-        public new const ushort Id = 3046;
+{
+    public class ExchangeObjectMovePricedMessage : ExchangeObjectMoveMessage
+    {
+        public new const ushort Id = 8913;
         public override ushort MessageId => Id;
 
         public long price;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public ExchangeObjectMovePricedMessage()
         {
         }
-        public ExchangeObjectMovePricedMessage(long price,int objectUID,int quantity)
+        public ExchangeObjectMovePricedMessage(long price, int objectUID, int quantity)
         {
             this.price = price;
             this.objectUID = objectUID;
@@ -26,7 +26,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (price < 0 || price > 9.00719925474099E+15)
+            if (price < 0 || price > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + price + ") on element price.");
             }
@@ -37,21 +37,14 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             price = (long)reader.ReadVarUhLong();
-            if (price < 0 || price > 9.00719925474099E+15)
+            if (price < 0 || price > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + price + ") on element of ExchangeObjectMovePricedMessage.price.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

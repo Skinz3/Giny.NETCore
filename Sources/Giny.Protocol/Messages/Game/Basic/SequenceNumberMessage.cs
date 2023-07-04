@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class SequenceNumberMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 116;
+{
+    public class SequenceNumberMessage : NetworkMessage
+    {
+        public const ushort Id = 8687;
         public override ushort MessageId => Id;
 
         public short number;
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

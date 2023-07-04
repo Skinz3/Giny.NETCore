@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameDataPaddockObjectRemoveMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2442;
+{
+    public class GameDataPaddockObjectRemoveMessage : NetworkMessage
+    {
+        public const ushort Id = 490;
         public override ushort MessageId => Id;
 
         public short cellId;
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

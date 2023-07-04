@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class InteractiveElementWithAgeBonus : InteractiveElement  
-    { 
-        public new const ushort Id = 2318;
+{
+    public class InteractiveElementWithAgeBonus : InteractiveElement
+    {
+        public new const ushort Id = 4350;
         public override ushort TypeId => Id;
 
         public short ageBonus;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public InteractiveElementWithAgeBonus()
         {
         }
-        public InteractiveElementWithAgeBonus(short ageBonus,int elementId,int elementTypeId,InteractiveElementSkill[] enabledSkills,InteractiveElementSkill[] disabledSkills,bool onCurrentMap)
+        public InteractiveElementWithAgeBonus(short ageBonus, int elementId, int elementTypeId, InteractiveElementSkill[] enabledSkills, InteractiveElementSkill[] disabledSkills, bool onCurrentMap)
         {
             this.ageBonus = ageBonus;
             this.elementId = elementId;
@@ -48,11 +48,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

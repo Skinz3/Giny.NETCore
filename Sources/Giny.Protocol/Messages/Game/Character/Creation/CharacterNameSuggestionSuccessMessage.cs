@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class CharacterNameSuggestionSuccessMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9366;
+{
+    public class CharacterNameSuggestionSuccessMessage : NetworkMessage
+    {
+        public const ushort Id = 1653;
         public override ushort MessageId => Id;
 
         public string suggestion;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             suggestion = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

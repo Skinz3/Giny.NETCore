@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class JobLevelUpMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3922;
+{
+    public class JobLevelUpMessage : NetworkMessage
+    {
+        public const ushort Id = 7209;
         public override ushort MessageId => Id;
 
         public byte newLevel;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public JobLevelUpMessage()
         {
         }
-        public JobLevelUpMessage(byte newLevel,JobDescription jobsDescription)
+        public JobLevelUpMessage(byte newLevel, JobDescription jobsDescription)
         {
             this.newLevel = newLevel;
             this.jobsDescription = jobsDescription;
@@ -45,14 +45,7 @@ namespace Giny.Protocol.Messages
             jobsDescription.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

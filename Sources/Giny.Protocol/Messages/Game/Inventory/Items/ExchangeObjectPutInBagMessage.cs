@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeObjectPutInBagMessage : ExchangeObjectMessage  
-    { 
-        public new const ushort Id = 315;
+{
+    public class ExchangeObjectPutInBagMessage : ExchangeObjectMessage
+    {
+        public new const ushort Id = 400;
         public override ushort MessageId => Id;
 
         public ObjectItem @object;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public ExchangeObjectPutInBagMessage()
         {
         }
-        public ExchangeObjectPutInBagMessage(ObjectItem @object,bool remote)
+        public ExchangeObjectPutInBagMessage(ObjectItem @object, bool remote)
         {
             this.@object = @object;
             this.remote = remote;
@@ -34,14 +34,7 @@ namespace Giny.Protocol.Messages
             @object.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

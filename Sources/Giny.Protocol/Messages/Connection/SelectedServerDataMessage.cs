@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class SelectedServerDataMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9579;
+{
+    public class SelectedServerDataMessage : NetworkMessage
+    {
+        public const ushort Id = 7106;
         public override ushort MessageId => Id;
 
         public short serverId;
@@ -21,7 +21,7 @@ namespace Giny.Protocol.Messages
         public SelectedServerDataMessage()
         {
         }
-        public SelectedServerDataMessage(short serverId,string address,short[] ports,bool canCreateNewCharacter,byte[] ticket)
+        public SelectedServerDataMessage(short serverId, string address, short[] ports, bool canCreateNewCharacter, byte[] ticket)
         {
             this.serverId = serverId;
             this.address = address;
@@ -39,7 +39,7 @@ namespace Giny.Protocol.Messages
             writer.WriteVarShort((short)serverId);
             writer.WriteUTF((string)address);
             writer.WriteShort((short)ports.Length);
-            for (uint _i3 = 0;_i3 < ports.Length;_i3++)
+            for (uint _i3 = 0; _i3 < ports.Length; _i3++)
             {
                 if (ports[_i3] < 0)
                 {
@@ -51,7 +51,7 @@ namespace Giny.Protocol.Messages
 
             writer.WriteBoolean((bool)canCreateNewCharacter);
             writer.WriteVarInt((int)ticket.Length);
-            for (uint _i5 = 0;_i5 < ticket.Length;_i5++)
+            for (uint _i5 = 0; _i5 < ticket.Length; _i5++)
             {
                 writer.WriteByte((byte)ticket[_i5]);
             }
@@ -70,7 +70,7 @@ namespace Giny.Protocol.Messages
             address = (string)reader.ReadUTF();
             uint _portsLen = (uint)reader.ReadUShort();
             ports = new short[_portsLen];
-            for (uint _i3 = 0;_i3 < _portsLen;_i3++)
+            for (uint _i3 = 0; _i3 < _portsLen; _i3++)
             {
                 _val3 = (uint)reader.ReadVarUhShort();
                 if (_val3 < 0)
@@ -84,7 +84,7 @@ namespace Giny.Protocol.Messages
             canCreateNewCharacter = (bool)reader.ReadBoolean();
             uint _ticketLen = (uint)reader.ReadVarInt();
             ticket = new byte[_ticketLen];
-            for (uint _i5 = 0;_i5 < _ticketLen;_i5++)
+            for (uint _i5 = 0; _i5 < _ticketLen; _i5++)
             {
                 _val5 = (int)reader.ReadByte();
                 ticket[_i5] = (byte)_val5;
@@ -92,14 +92,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

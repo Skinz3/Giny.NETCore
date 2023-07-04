@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class BaseSpawnMonsterInformation : SpawnInformation  
-    { 
-        public new const ushort Id = 5339;
+{
+    public class BaseSpawnMonsterInformation : SpawnInformation
+    {
+        public new const ushort Id = 2475;
         public override ushort TypeId => Id;
 
         public short creatureGenericId;
@@ -43,11 +43,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

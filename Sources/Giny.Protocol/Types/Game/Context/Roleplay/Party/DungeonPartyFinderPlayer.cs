@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class DungeonPartyFinderPlayer  
-    { 
-        public const ushort Id = 1848;
+{
+    public class DungeonPartyFinderPlayer
+    {
+        public const ushort Id = 360;
         public virtual ushort TypeId => Id;
 
         public long playerId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Types
         public DungeonPartyFinderPlayer()
         {
         }
-        public DungeonPartyFinderPlayer(long playerId,string playerName,byte breed,bool sex,short level)
+        public DungeonPartyFinderPlayer(long playerId, string playerName, byte breed, bool sex, short level)
         {
             this.playerId = playerId;
             this.playerName = playerName;
@@ -29,7 +29,7 @@ namespace Giny.Protocol.Types
         }
         public virtual void Serialize(IDataWriter writer)
         {
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
@@ -48,14 +48,14 @@ namespace Giny.Protocol.Types
         public virtual void Deserialize(IDataReader reader)
         {
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of DungeonPartyFinderPlayer.playerId.");
             }
 
             playerName = (string)reader.ReadUTF();
             breed = (byte)reader.ReadByte();
-            if (breed < (byte)PlayableBreedEnum.Feca || breed > (byte)PlayableBreedEnum.Ouginak)
+            if (breed < (byte)PlayableBreedEnum.Feca || breed > (byte)PlayableBreedEnum.Forgelance)
             {
                 throw new System.Exception("Forbidden value (" + breed + ") on element of DungeonPartyFinderPlayer.breed.");
             }
@@ -72,11 +72,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

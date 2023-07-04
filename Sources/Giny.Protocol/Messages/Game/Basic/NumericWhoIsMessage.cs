@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class NumericWhoIsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7063;
+{
+    public class NumericWhoIsMessage : NetworkMessage
+    {
+        public const ushort Id = 5477;
         public override ushort MessageId => Id;
 
         public long playerId;
@@ -18,14 +18,14 @@ namespace Giny.Protocol.Messages
         public NumericWhoIsMessage()
         {
         }
-        public NumericWhoIsMessage(long playerId,int accountId)
+        public NumericWhoIsMessage(long playerId, int accountId)
         {
             this.playerId = playerId;
             this.accountId = accountId;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
@@ -41,7 +41,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of NumericWhoIsMessage.playerId.");
             }
@@ -54,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

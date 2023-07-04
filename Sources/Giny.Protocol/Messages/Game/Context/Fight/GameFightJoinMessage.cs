@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightJoinMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3603;
+{
+    public class GameFightJoinMessage : NetworkMessage
+    {
+        public const ushort Id = 7476;
         public override ushort MessageId => Id;
 
         public bool isTeamPhase;
@@ -22,7 +22,7 @@ namespace Giny.Protocol.Messages
         public GameFightJoinMessage()
         {
         }
-        public GameFightJoinMessage(bool isTeamPhase,bool canBeCancelled,bool canSayReady,bool isFightStarted,short timeMaxBeforeFightStart,byte fightType)
+        public GameFightJoinMessage(bool isTeamPhase, bool canBeCancelled, bool canSayReady, bool isFightStarted, short timeMaxBeforeFightStart, byte fightType)
         {
             this.isTeamPhase = isTeamPhase;
             this.canBeCancelled = canBeCancelled;
@@ -34,10 +34,10 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             byte _box0 = 0;
-            _box0 = BooleanByteWrapper.SetFlag(_box0,0,isTeamPhase);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,1,canBeCancelled);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,2,canSayReady);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,3,isFightStarted);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 0, isTeamPhase);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 1, canBeCancelled);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 2, canSayReady);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 3, isFightStarted);
             writer.WriteByte((byte)_box0);
             if (timeMaxBeforeFightStart < 0)
             {
@@ -50,10 +50,10 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             byte _box0 = reader.ReadByte();
-            isTeamPhase = BooleanByteWrapper.GetFlag(_box0,0);
-            canBeCancelled = BooleanByteWrapper.GetFlag(_box0,1);
-            canSayReady = BooleanByteWrapper.GetFlag(_box0,2);
-            isFightStarted = BooleanByteWrapper.GetFlag(_box0,3);
+            isTeamPhase = BooleanByteWrapper.GetFlag(_box0, 0);
+            canBeCancelled = BooleanByteWrapper.GetFlag(_box0, 1);
+            canSayReady = BooleanByteWrapper.GetFlag(_box0, 2);
+            isFightStarted = BooleanByteWrapper.GetFlag(_box0, 3);
             timeMaxBeforeFightStart = (short)reader.ReadShort();
             if (timeMaxBeforeFightStart < 0)
             {
@@ -68,14 +68,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

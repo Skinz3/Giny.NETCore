@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ActivitySuggestionsRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3475;
+{
+    public class ActivitySuggestionsRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 4158;
         public override ushort MessageId => Id;
 
         public short minLevel;
@@ -21,7 +21,7 @@ namespace Giny.Protocol.Messages
         public ActivitySuggestionsRequestMessage()
         {
         }
-        public ActivitySuggestionsRequestMessage(short minLevel,short maxLevel,short areaId,short activityCategoryId,short nbCards)
+        public ActivitySuggestionsRequestMessage(short minLevel, short maxLevel, short areaId, short activityCategoryId, short nbCards)
         {
             this.minLevel = minLevel;
             this.maxLevel = maxLevel;
@@ -96,14 +96,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

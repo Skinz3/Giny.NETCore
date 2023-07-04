@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class WrapperObjectDissociateRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8460;
+{
+    public class WrapperObjectDissociateRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 5678;
         public override ushort MessageId => Id;
 
         public int hostUID;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public WrapperObjectDissociateRequestMessage()
         {
         }
-        public WrapperObjectDissociateRequestMessage(int hostUID,byte hostPos)
+        public WrapperObjectDissociateRequestMessage(int hostUID, byte hostPos)
         {
             this.hostUID = hostUID;
             this.hostPos = hostPos;
@@ -54,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

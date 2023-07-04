@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class DebugInClientMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2158;
+{
+    public class DebugInClientMessage : NetworkMessage
+    {
+        public const ushort Id = 9199;
         public override ushort MessageId => Id;
 
         public byte level;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public DebugInClientMessage()
         {
         }
-        public DebugInClientMessage(byte level,string message)
+        public DebugInClientMessage(byte level, string message)
         {
             this.level = level;
             this.message = message;
@@ -39,14 +39,7 @@ namespace Giny.Protocol.Messages
             message = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

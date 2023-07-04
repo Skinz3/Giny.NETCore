@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeWeightMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1225;
+{
+    public class ExchangeWeightMessage : NetworkMessage
+    {
+        public const ushort Id = 5457;
         public override ushort MessageId => Id;
 
         public int currentWeight;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ExchangeWeightMessage()
         {
         }
-        public ExchangeWeightMessage(int currentWeight,int maxWeight)
+        public ExchangeWeightMessage(int currentWeight, int maxWeight)
         {
             this.currentWeight = currentWeight;
             this.maxWeight = maxWeight;
@@ -54,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

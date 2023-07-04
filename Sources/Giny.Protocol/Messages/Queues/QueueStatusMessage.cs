@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class QueueStatusMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1298;
+{
+    public class QueueStatusMessage : NetworkMessage
+    {
+        public const ushort Id = 5220;
         public override ushort MessageId => Id;
 
         public short position;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public QueueStatusMessage()
         {
         }
-        public QueueStatusMessage(short position,short total)
+        public QueueStatusMessage(short position, short total)
         {
             this.position = position;
             this.total = total;
@@ -54,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

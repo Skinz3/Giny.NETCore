@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeObjectMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8683;
+{
+    public class ExchangeObjectMessage : NetworkMessage
+    {
+        public const ushort Id = 5508;
         public override ushort MessageId => Id;
 
         public bool remote;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             remote = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

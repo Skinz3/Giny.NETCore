@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AccessoryPreviewErrorMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6646;
+{
+    public class AccessoryPreviewErrorMessage : NetworkMessage
+    {
+        public const ushort Id = 4776;
         public override ushort MessageId => Id;
 
         public byte error;
@@ -35,14 +35,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

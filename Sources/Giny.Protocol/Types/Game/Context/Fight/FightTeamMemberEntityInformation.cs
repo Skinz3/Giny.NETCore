@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class FightTeamMemberEntityInformation : FightTeamMemberInformations  
-    { 
-        public new const ushort Id = 9031;
+{
+    public class FightTeamMemberEntityInformation : FightTeamMemberInformations
+    {
+        public new const ushort Id = 236;
         public override ushort TypeId => Id;
 
         public byte entityModelId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Types
         public FightTeamMemberEntityInformation()
         {
         }
-        public FightTeamMemberEntityInformation(byte entityModelId,short level,double masterId,double id)
+        public FightTeamMemberEntityInformation(byte entityModelId, short level, double masterId, double id)
         {
             this.entityModelId = entityModelId;
             this.level = level;
@@ -39,7 +39,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteVarShort((short)level);
-            if (masterId < -9.00719925474099E+15 || masterId > 9.00719925474099E+15)
+            if (masterId < -9007199254740992 || masterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + masterId + ") on element masterId.");
             }
@@ -62,7 +62,7 @@ namespace Giny.Protocol.Types
             }
 
             masterId = (double)reader.ReadDouble();
-            if (masterId < -9.00719925474099E+15 || masterId > 9.00719925474099E+15)
+            if (masterId < -9007199254740992 || masterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + masterId + ") on element of FightTeamMemberEntityInformation.masterId.");
             }
@@ -72,11 +72,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

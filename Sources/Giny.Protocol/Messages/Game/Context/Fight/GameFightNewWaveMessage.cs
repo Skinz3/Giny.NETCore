@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightNewWaveMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 283;
+{
+    public class GameFightNewWaveMessage : NetworkMessage
+    {
+        public const ushort Id = 4991;
         public override ushort MessageId => Id;
 
         public byte id;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public GameFightNewWaveMessage()
         {
         }
-        public GameFightNewWaveMessage(byte id,byte teamId,short nbTurnBeforeNextWave)
+        public GameFightNewWaveMessage(byte id, byte teamId, short nbTurnBeforeNextWave)
         {
             this.id = id;
             this.teamId = teamId;
@@ -53,14 +53,7 @@ namespace Giny.Protocol.Messages
             nbTurnBeforeNextWave = (short)reader.ReadShort();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

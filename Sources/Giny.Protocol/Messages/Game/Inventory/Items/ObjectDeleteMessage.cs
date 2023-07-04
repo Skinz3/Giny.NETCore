@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ObjectDeleteMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3038;
+{
+    public class ObjectDeleteMessage : NetworkMessage
+    {
+        public const ushort Id = 3499;
         public override ushort MessageId => Id;
 
         public int objectUID;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ObjectDeleteMessage()
         {
         }
-        public ObjectDeleteMessage(int objectUID,int quantity)
+        public ObjectDeleteMessage(int objectUID, int quantity)
         {
             this.objectUID = objectUID;
             this.quantity = quantity;
@@ -54,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

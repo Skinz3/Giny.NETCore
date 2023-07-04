@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeWaitingResultMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1456;
+{
+    public class ExchangeWaitingResultMessage : NetworkMessage
+    {
+        public const ushort Id = 6631;
         public override ushort MessageId => Id;
 
         public bool bwait;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             bwait = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

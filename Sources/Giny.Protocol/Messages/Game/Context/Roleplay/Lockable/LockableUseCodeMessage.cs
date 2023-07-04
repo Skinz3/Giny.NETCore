@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class LockableUseCodeMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3312;
+{
+    public class LockableUseCodeMessage : NetworkMessage
+    {
+        public const ushort Id = 5480;
         public override ushort MessageId => Id;
 
         public string code;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             code = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

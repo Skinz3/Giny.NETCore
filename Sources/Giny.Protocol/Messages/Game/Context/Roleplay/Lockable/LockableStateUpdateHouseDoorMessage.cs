@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class LockableStateUpdateHouseDoorMessage : LockableStateUpdateAbstractMessage  
-    { 
-        public new const ushort Id = 990;
+{
+    public class LockableStateUpdateHouseDoorMessage : LockableStateUpdateAbstractMessage
+    {
+        public new const ushort Id = 9404;
         public override ushort MessageId => Id;
 
         public int houseId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public LockableStateUpdateHouseDoorMessage()
         {
         }
-        public LockableStateUpdateHouseDoorMessage(int houseId,int instanceId,bool secondHand,bool locked)
+        public LockableStateUpdateHouseDoorMessage(int houseId, int instanceId, bool secondHand, bool locked)
         {
             this.houseId = houseId;
             this.instanceId = instanceId;
@@ -61,14 +61,7 @@ namespace Giny.Protocol.Messages
             secondHand = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

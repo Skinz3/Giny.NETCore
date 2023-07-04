@@ -6,25 +6,23 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildFactsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1750;
+{
+    public class GuildFactsMessage : NetworkMessage
+    {
+        public const ushort Id = 6266;
         public override ushort MessageId => Id;
 
         public GuildFactSheetInformations infos;
         public int creationDate;
-        public short nbTaxCollectors;
-        public CharacterMinimalGuildPublicInformations[] members;
+        public CharacterMinimalSocialPublicInformations[] members;
 
         public GuildFactsMessage()
         {
         }
-        public GuildFactsMessage(GuildFactSheetInformations infos,int creationDate,short nbTaxCollectors,CharacterMinimalGuildPublicInformations[] members)
+        public GuildFactsMessage(GuildFactSheetInformations infos, int creationDate, CharacterMinimalSocialPublicInformations[] members)
         {
             this.infos = infos;
             this.creationDate = creationDate;
-            this.nbTaxCollectors = nbTaxCollectors;
             this.members = members;
         }
         public override void Serialize(IDataWriter writer)
@@ -37,22 +35,16 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteInt((int)creationDate);
-            if (nbTaxCollectors < 0)
-            {
-                throw new System.Exception("Forbidden value (" + nbTaxCollectors + ") on element nbTaxCollectors.");
-            }
-
-            writer.WriteVarShort((short)nbTaxCollectors);
             writer.WriteShort((short)members.Length);
-            for (uint _i4 = 0;_i4 < members.Length;_i4++)
+            for (uint _i3 = 0; _i3 < members.Length; _i3++)
             {
-                (members[_i4] as CharacterMinimalGuildPublicInformations).Serialize(writer);
+                (members[_i3] as CharacterMinimalSocialPublicInformations).Serialize(writer);
             }
 
         }
         public override void Deserialize(IDataReader reader)
         {
-            CharacterMinimalGuildPublicInformations _item4 = null;
+            CharacterMinimalSocialPublicInformations _item3 = null;
             uint _id1 = (uint)reader.ReadUShort();
             infos = ProtocolTypeManager.GetInstance<GuildFactSheetInformations>((short)_id1);
             infos.Deserialize(reader);
@@ -62,30 +54,17 @@ namespace Giny.Protocol.Messages
                 throw new System.Exception("Forbidden value (" + creationDate + ") on element of GuildFactsMessage.creationDate.");
             }
 
-            nbTaxCollectors = (short)reader.ReadVarUhShort();
-            if (nbTaxCollectors < 0)
-            {
-                throw new System.Exception("Forbidden value (" + nbTaxCollectors + ") on element of GuildFactsMessage.nbTaxCollectors.");
-            }
-
             uint _membersLen = (uint)reader.ReadUShort();
-            for (uint _i4 = 0;_i4 < _membersLen;_i4++)
+            for (uint _i3 = 0; _i3 < _membersLen; _i3++)
             {
-                _item4 = new CharacterMinimalGuildPublicInformations();
-                _item4.Deserialize(reader);
-                members[_i4] = _item4;
+                _item3 = new CharacterMinimalSocialPublicInformations();
+                _item3.Deserialize(reader);
+                members[_i3] = _item3;
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

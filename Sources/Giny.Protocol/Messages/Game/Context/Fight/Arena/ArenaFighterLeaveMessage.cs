@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ArenaFighterLeaveMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8201;
+{
+    public class ArenaFighterLeaveMessage : NetworkMessage
+    {
+        public const ushort Id = 6448;
         public override ushort MessageId => Id;
 
         public CharacterBasicMinimalInformations leaver;
@@ -31,14 +31,7 @@ namespace Giny.Protocol.Messages
             leaver.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

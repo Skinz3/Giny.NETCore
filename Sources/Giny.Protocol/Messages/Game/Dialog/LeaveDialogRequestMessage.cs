@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class LeaveDialogRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6179;
+{
+    public class LeaveDialogRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 2076;
         public override ushort MessageId => Id;
 
 
@@ -23,14 +23,7 @@ namespace Giny.Protocol.Messages
         {
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

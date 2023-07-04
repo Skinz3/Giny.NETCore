@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ChatServerCopyMessage : ChatAbstractServerMessage  
-    { 
-        public new const ushort Id = 5300;
+{
+    public class ChatServerCopyMessage : ChatAbstractServerMessage
+    {
+        public new const ushort Id = 5231;
         public override ushort MessageId => Id;
 
         public long receiverId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ChatServerCopyMessage()
         {
         }
-        public ChatServerCopyMessage(long receiverId,string receiverName,byte channel,string content,int timestamp,string fingerprint)
+        public ChatServerCopyMessage(long receiverId, string receiverName, byte channel, string content, int timestamp, string fingerprint)
         {
             this.receiverId = receiverId;
             this.receiverName = receiverName;
@@ -30,7 +30,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (receiverId < 0 || receiverId > 9.00719925474099E+15)
+            if (receiverId < 0 || receiverId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + receiverId + ") on element receiverId.");
             }
@@ -42,7 +42,7 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             receiverId = (long)reader.ReadVarUhLong();
-            if (receiverId < 0 || receiverId > 9.00719925474099E+15)
+            if (receiverId < 0 || receiverId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + receiverId + ") on element of ChatServerCopyMessage.receiverId.");
             }
@@ -50,14 +50,7 @@ namespace Giny.Protocol.Messages
             receiverName = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

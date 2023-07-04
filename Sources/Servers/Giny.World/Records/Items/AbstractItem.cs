@@ -41,7 +41,7 @@ namespace Giny.World.Records.Items
             set;
         }
 
-        public short GId
+        public int GId
         {
             get;
             set;
@@ -110,22 +110,7 @@ namespace Giny.World.Records.Items
 
         public abstract void Initialize();
 
-        public MerchantItemRecord ToMerchantItemRecord(long characterId, long price, int quantity)
-        {
-            return new MerchantItemRecord()
-            {
-                CharacterId = characterId,
-                UId = UId,
-                AppearanceId = AppearanceId,
-                Effects = Effects.Clone(), /* Clone each effects */
-                GId = GId,
-                Look = Look,
-                Position = Position,
-                Quantity = quantity,
-                Price = price,
-                QuantitySold = 0,
-            };
-        }
+      
         public CharacterItemRecord ToCharacterItemRecord(long characterId)
         {
             return new CharacterItemRecord()

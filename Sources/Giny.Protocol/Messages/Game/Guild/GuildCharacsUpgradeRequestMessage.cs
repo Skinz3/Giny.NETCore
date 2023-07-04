@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildCharacsUpgradeRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7782;
+{
+    public class GuildCharacsUpgradeRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 8175;
         public override ushort MessageId => Id;
 
         public byte charaTypeTarget;
@@ -35,14 +35,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

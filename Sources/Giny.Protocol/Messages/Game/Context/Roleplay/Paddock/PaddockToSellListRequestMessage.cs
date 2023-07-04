@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PaddockToSellListRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8767;
+{
+    public class PaddockToSellListRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 766;
         public override ushort MessageId => Id;
 
         public short pageIndex;
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

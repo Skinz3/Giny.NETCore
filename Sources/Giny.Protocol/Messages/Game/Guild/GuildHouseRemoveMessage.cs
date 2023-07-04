@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildHouseRemoveMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1663;
+{
+    public class GuildHouseRemoveMessage : NetworkMessage
+    {
+        public const ushort Id = 3511;
         public override ushort MessageId => Id;
 
         public int houseId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public GuildHouseRemoveMessage()
         {
         }
-        public GuildHouseRemoveMessage(int houseId,int instanceId,bool secondHand)
+        public GuildHouseRemoveMessage(int houseId, int instanceId, bool secondHand)
         {
             this.houseId = houseId;
             this.instanceId = instanceId;
@@ -58,14 +58,7 @@ namespace Giny.Protocol.Messages
             secondHand = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

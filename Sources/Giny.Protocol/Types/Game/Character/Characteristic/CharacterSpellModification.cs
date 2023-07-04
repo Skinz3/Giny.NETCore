@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class CharacterSpellModification  
-    { 
-        public const ushort Id = 5654;
+{
+    public class CharacterSpellModification
+    {
+        public const ushort Id = 8596;
         public virtual ushort TypeId => Id;
 
         public byte modificationType;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Types
         public CharacterSpellModification()
         {
         }
-        public CharacterSpellModification(byte modificationType,short spellId,CharacterCharacteristicDetailed value)
+        public CharacterSpellModification(byte modificationType, short spellId, CharacterCharacteristicDetailed value)
         {
             this.modificationType = modificationType;
             this.spellId = spellId;
@@ -55,11 +55,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

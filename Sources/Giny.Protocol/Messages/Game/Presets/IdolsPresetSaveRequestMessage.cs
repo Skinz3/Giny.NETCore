@@ -6,17 +6,17 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class IdolsPresetSaveRequestMessage : IconPresetSaveRequestMessage  
-    { 
-        public new const ushort Id = 1959;
+{
+    public class IdolsPresetSaveRequestMessage : IconPresetSaveRequestMessage
+    {
+        public new const ushort Id = 7140;
         public override ushort MessageId => Id;
 
 
         public IdolsPresetSaveRequestMessage()
         {
         }
-        public IdolsPresetSaveRequestMessage(short presetId,byte symbolId,bool updateData)
+        public IdolsPresetSaveRequestMessage(short presetId, byte symbolId, bool updateData)
         {
             this.presetId = presetId;
             this.symbolId = symbolId;
@@ -31,14 +31,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

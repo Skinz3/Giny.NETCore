@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class BreachBranch  
-    { 
-        public const ushort Id = 9447;
+{
+    public class BreachBranch
+    {
+        public const ushort Id = 1986;
         public virtual ushort TypeId => Id;
 
         public byte room;
@@ -21,7 +21,7 @@ namespace Giny.Protocol.Types
         public BreachBranch()
         {
         }
-        public BreachBranch(byte room,int element,MonsterInGroupLightInformations[] bosses,double map,short score,short relativeScore,MonsterInGroupLightInformations[] monsters)
+        public BreachBranch(byte room, int element, MonsterInGroupLightInformations[] bosses, double map, short score, short relativeScore, MonsterInGroupLightInformations[] monsters)
         {
             this.room = room;
             this.element = element;
@@ -46,12 +46,12 @@ namespace Giny.Protocol.Types
 
             writer.WriteInt((int)element);
             writer.WriteShort((short)bosses.Length);
-            for (uint _i3 = 0;_i3 < bosses.Length;_i3++)
+            for (uint _i3 = 0; _i3 < bosses.Length; _i3++)
             {
                 (bosses[_i3] as MonsterInGroupLightInformations).Serialize(writer);
             }
 
-            if (map < 0 || map > 9.00719925474099E+15)
+            if (map < 0 || map > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + map + ") on element map.");
             }
@@ -60,7 +60,7 @@ namespace Giny.Protocol.Types
             writer.WriteShort((short)score);
             writer.WriteShort((short)relativeScore);
             writer.WriteShort((short)monsters.Length);
-            for (uint _i7 = 0;_i7 < monsters.Length;_i7++)
+            for (uint _i7 = 0; _i7 < monsters.Length; _i7++)
             {
                 (monsters[_i7] as MonsterInGroupLightInformations).Serialize(writer);
             }
@@ -83,7 +83,7 @@ namespace Giny.Protocol.Types
             }
 
             uint _bossesLen = (uint)reader.ReadUShort();
-            for (uint _i3 = 0;_i3 < _bossesLen;_i3++)
+            for (uint _i3 = 0; _i3 < _bossesLen; _i3++)
             {
                 _item3 = new MonsterInGroupLightInformations();
                 _item3.Deserialize(reader);
@@ -91,7 +91,7 @@ namespace Giny.Protocol.Types
             }
 
             map = (double)reader.ReadDouble();
-            if (map < 0 || map > 9.00719925474099E+15)
+            if (map < 0 || map > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + map + ") on element of BreachBranch.map.");
             }
@@ -99,7 +99,7 @@ namespace Giny.Protocol.Types
             score = (short)reader.ReadShort();
             relativeScore = (short)reader.ReadShort();
             uint _monstersLen = (uint)reader.ReadUShort();
-            for (uint _i7 = 0;_i7 < _monstersLen;_i7++)
+            for (uint _i7 = 0; _i7 < _monstersLen; _i7++)
             {
                 _item7 = new MonsterInGroupLightInformations();
                 _item7.Deserialize(reader);
@@ -111,11 +111,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

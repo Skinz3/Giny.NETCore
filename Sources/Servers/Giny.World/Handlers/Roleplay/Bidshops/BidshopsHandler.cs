@@ -27,7 +27,7 @@ namespace Giny.World.Handlers.Roleplay.Bidshops
         {
             if (client.Character.IsInDialog<BuyExchange>())
             {
-                client.Character.GetDialog<BuyExchange>().ShowList(message.id);
+                client.Character.GetDialog<BuyExchange>().ShowList(message.objectGID, message.follow);
             }
         }
         [MessageHandler]
@@ -45,16 +45,16 @@ namespace Giny.World.Handlers.Roleplay.Bidshops
         {
             if (client.Character.IsInDialog<BuyExchange>())
             {
-                client.Character.GetDialog<BuyExchange>().ShowList(message.genId);
+                client.Character.GetDialog<BuyExchange>().ShowList(message.objectGID, message.follow);
             }
         }
 
         [MessageHandler]
         public static void HandleExchangeBidHousePrice(ExchangeBidHousePriceMessage message, WorldClient client)
         {
-            long price = BidshopsManager.Instance.GetAveragePrice(message.genId);
+            long price = BidshopsManager.Instance.GetAveragePrice(message.objectGID);
 
-            client.Send(new ObjectAveragePricesMessage(new short[] { message.genId }, new long[] { price }));
+            client.Send(new ObjectAveragePricesMessage(new int[] { message.objectGID }, new long[] { price }));
         }
 
         [MessageHandler]

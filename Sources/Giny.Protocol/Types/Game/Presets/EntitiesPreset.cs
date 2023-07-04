@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class EntitiesPreset : Preset  
-    { 
-        public new const ushort Id = 5598;
+{
+    public class EntitiesPreset : Preset
+    {
+        public new const ushort Id = 651;
         public override ushort TypeId => Id;
 
         public short iconId;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public EntitiesPreset()
         {
         }
-        public EntitiesPreset(short iconId,short[] entityIds,short id)
+        public EntitiesPreset(short iconId, short[] entityIds, short id)
         {
             this.iconId = iconId;
             this.entityIds = entityIds;
@@ -32,7 +32,7 @@ namespace Giny.Protocol.Types
 
             writer.WriteShort((short)iconId);
             writer.WriteShort((short)entityIds.Length);
-            for (uint _i2 = 0;_i2 < entityIds.Length;_i2++)
+            for (uint _i2 = 0; _i2 < entityIds.Length; _i2++)
             {
                 if (entityIds[_i2] < 0)
                 {
@@ -55,7 +55,7 @@ namespace Giny.Protocol.Types
 
             uint _entityIdsLen = (uint)reader.ReadUShort();
             entityIds = new short[_entityIdsLen];
-            for (uint _i2 = 0;_i2 < _entityIdsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _entityIdsLen; _i2++)
             {
                 _val2 = (uint)reader.ReadVarUhShort();
                 if (_val2 < 0)
@@ -71,11 +71,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

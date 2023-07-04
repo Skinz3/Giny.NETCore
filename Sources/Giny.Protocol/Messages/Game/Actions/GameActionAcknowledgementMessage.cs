@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameActionAcknowledgementMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2893;
+{
+    public class GameActionAcknowledgementMessage : NetworkMessage
+    {
+        public const ushort Id = 2057;
         public override ushort MessageId => Id;
 
         public bool valid;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public GameActionAcknowledgementMessage()
         {
         }
-        public GameActionAcknowledgementMessage(bool valid,byte actionId)
+        public GameActionAcknowledgementMessage(bool valid, byte actionId)
         {
             this.valid = valid;
             this.actionId = actionId;
@@ -34,14 +34,7 @@ namespace Giny.Protocol.Messages
             actionId = (byte)reader.ReadByte();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

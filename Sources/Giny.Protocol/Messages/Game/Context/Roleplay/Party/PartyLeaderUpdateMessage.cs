@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PartyLeaderUpdateMessage : AbstractPartyEventMessage  
-    { 
-        public new const ushort Id = 1866;
+{
+    public class PartyLeaderUpdateMessage : AbstractPartyEventMessage
+    {
+        public new const ushort Id = 3225;
         public override ushort MessageId => Id;
 
         public long partyLeaderId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public PartyLeaderUpdateMessage()
         {
         }
-        public PartyLeaderUpdateMessage(long partyLeaderId,int partyId)
+        public PartyLeaderUpdateMessage(long partyLeaderId, int partyId)
         {
             this.partyLeaderId = partyLeaderId;
             this.partyId = partyId;
@@ -25,7 +25,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (partyLeaderId < 0 || partyLeaderId > 9.00719925474099E+15)
+            if (partyLeaderId < 0 || partyLeaderId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + partyLeaderId + ") on element partyLeaderId.");
             }
@@ -36,21 +36,14 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             partyLeaderId = (long)reader.ReadVarUhLong();
-            if (partyLeaderId < 0 || partyLeaderId > 9.00719925474099E+15)
+            if (partyLeaderId < 0 || partyLeaderId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + partyLeaderId + ") on element of PartyLeaderUpdateMessage.partyLeaderId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

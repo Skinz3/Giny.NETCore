@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameFightFighterTaxCollectorLightInformations : GameFightFighterLightInformations  
-    { 
-        public new const ushort Id = 55;
+{
+    public class GameFightFighterTaxCollectorLightInformations : GameFightFighterLightInformations
+    {
+        public new const ushort Id = 6431;
         public override ushort TypeId => Id;
 
         public short firstNameId;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public GameFightFighterTaxCollectorLightInformations()
         {
         }
-        public GameFightFighterTaxCollectorLightInformations(short firstNameId,short lastNameId,double id,byte wave,short level,byte breed,bool sex,bool alive)
+        public GameFightFighterTaxCollectorLightInformations(short firstNameId, short lastNameId, double id, byte wave, short level, byte breed, bool sex, bool alive)
         {
             this.firstNameId = firstNameId;
             this.lastNameId = lastNameId;
@@ -63,11 +63,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

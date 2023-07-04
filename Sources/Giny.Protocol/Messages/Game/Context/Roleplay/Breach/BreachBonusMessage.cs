@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BreachBonusMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1240;
+{
+    public class BreachBonusMessage : NetworkMessage
+    {
+        public const ushort Id = 914;
         public override ushort MessageId => Id;
 
         public ObjectEffectInteger bonus;
@@ -31,14 +31,7 @@ namespace Giny.Protocol.Messages
             bonus.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

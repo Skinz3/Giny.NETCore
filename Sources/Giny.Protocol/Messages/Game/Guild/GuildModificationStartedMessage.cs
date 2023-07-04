@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildModificationStartedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4342;
+{
+    public class GuildModificationStartedMessage : NetworkMessage
+    {
+        public const ushort Id = 8475;
         public override ushort MessageId => Id;
 
         public bool canChangeName;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public GuildModificationStartedMessage()
         {
         }
-        public GuildModificationStartedMessage(bool canChangeName,bool canChangeEmblem)
+        public GuildModificationStartedMessage(bool canChangeName, bool canChangeEmblem)
         {
             this.canChangeName = canChangeName;
             this.canChangeEmblem = canChangeEmblem;
@@ -26,25 +26,18 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             byte _box0 = 0;
-            _box0 = BooleanByteWrapper.SetFlag(_box0,0,canChangeName);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,1,canChangeEmblem);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 0, canChangeName);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 1, canChangeEmblem);
             writer.WriteByte((byte)_box0);
         }
         public override void Deserialize(IDataReader reader)
         {
             byte _box0 = reader.ReadByte();
-            canChangeName = BooleanByteWrapper.GetFlag(_box0,0);
-            canChangeEmblem = BooleanByteWrapper.GetFlag(_box0,1);
+            canChangeName = BooleanByteWrapper.GetFlag(_box0, 0);
+            canChangeEmblem = BooleanByteWrapper.GetFlag(_box0, 1);
         }
-
 
     }
 }
-
-
-
-
-
-
 
 

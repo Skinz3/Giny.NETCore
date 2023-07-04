@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class DocumentReadingBeginMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2676;
+{
+    public class DocumentReadingBeginMessage : NetworkMessage
+    {
+        public const ushort Id = 8292;
         public override ushort MessageId => Id;
 
         public short documentId;
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

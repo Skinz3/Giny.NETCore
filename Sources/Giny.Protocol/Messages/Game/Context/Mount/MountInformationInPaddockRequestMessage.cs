@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class MountInformationInPaddockRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4981;
+{
+    public class MountInformationInPaddockRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 4759;
         public override ushort MessageId => Id;
 
         public int mapRideId;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             mapRideId = (int)reader.ReadVarInt();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

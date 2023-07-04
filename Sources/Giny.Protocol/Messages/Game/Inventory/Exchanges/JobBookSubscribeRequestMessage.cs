@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class JobBookSubscribeRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7407;
+{
+    public class JobBookSubscribeRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 4734;
         public override ushort MessageId => Id;
 
         public byte[] jobIds;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)jobIds.Length);
-            for (uint _i1 = 0;_i1 < jobIds.Length;_i1++)
+            for (uint _i1 = 0; _i1 < jobIds.Length; _i1++)
             {
                 if (jobIds[_i1] < 0)
                 {
@@ -40,7 +40,7 @@ namespace Giny.Protocol.Messages
             uint _val1 = 0;
             uint _jobIdsLen = (uint)reader.ReadUShort();
             jobIds = new byte[_jobIdsLen];
-            for (uint _i1 = 0;_i1 < _jobIdsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _jobIdsLen; _i1++)
             {
                 _val1 = (uint)reader.ReadByte();
                 if (_val1 < 0)
@@ -53,14 +53,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

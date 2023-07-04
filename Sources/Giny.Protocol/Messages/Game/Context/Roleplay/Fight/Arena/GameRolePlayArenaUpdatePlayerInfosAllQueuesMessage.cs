@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameRolePlayArenaUpdatePlayerInfosAllQueuesMessage : GameRolePlayArenaUpdatePlayerInfosMessage  
-    { 
-        public new const ushort Id = 3033;
+{
+    public class GameRolePlayArenaUpdatePlayerInfosAllQueuesMessage : GameRolePlayArenaUpdatePlayerInfosMessage
+    {
+        public new const ushort Id = 7676;
         public override ushort MessageId => Id;
 
         public ArenaRankInfos team;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public GameRolePlayArenaUpdatePlayerInfosAllQueuesMessage()
         {
         }
-        public GameRolePlayArenaUpdatePlayerInfosAllQueuesMessage(ArenaRankInfos team,ArenaRankInfos duel,ArenaRankInfos solo)
+        public GameRolePlayArenaUpdatePlayerInfosAllQueuesMessage(ArenaRankInfos team, ArenaRankInfos duel, ArenaRankInfos solo)
         {
             this.team = team;
             this.duel = duel;
@@ -39,14 +39,7 @@ namespace Giny.Protocol.Messages
             duel.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

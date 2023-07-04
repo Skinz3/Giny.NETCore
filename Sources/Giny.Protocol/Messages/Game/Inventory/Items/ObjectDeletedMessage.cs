@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ObjectDeletedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6390;
+{
+    public class ObjectDeletedMessage : NetworkMessage
+    {
+        public const ushort Id = 3193;
         public override ushort MessageId => Id;
 
         public int objectUID;
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,17 +6,17 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class WrapperObjectErrorMessage : SymbioticObjectErrorMessage  
-    { 
-        public new const ushort Id = 1427;
+{
+    public class WrapperObjectErrorMessage : SymbioticObjectErrorMessage
+    {
+        public new const ushort Id = 2697;
         public override ushort MessageId => Id;
 
 
         public WrapperObjectErrorMessage()
         {
         }
-        public WrapperObjectErrorMessage(byte reason,byte errorCode)
+        public WrapperObjectErrorMessage(byte reason, byte errorCode)
         {
             this.reason = reason;
             this.errorCode = errorCode;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

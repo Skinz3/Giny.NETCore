@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class PlayerNote  
-    { 
-        public const ushort Id = 6851;
+{
+    public class PlayerNote
+    {
+        public const ushort Id = 9466;
         public virtual ushort TypeId => Id;
 
         public string content;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public PlayerNote()
         {
         }
-        public PlayerNote(string content,double lastEditDate)
+        public PlayerNote(string content, double lastEditDate)
         {
             this.content = content;
             this.lastEditDate = lastEditDate;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Types
         public virtual void Serialize(IDataWriter writer)
         {
             writer.WriteUTF((string)content);
-            if (lastEditDate < -9.00719925474099E+15 || lastEditDate > 9.00719925474099E+15)
+            if (lastEditDate < -9007199254740992 || lastEditDate > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + lastEditDate + ") on element lastEditDate.");
             }
@@ -35,7 +35,7 @@ namespace Giny.Protocol.Types
         {
             content = (string)reader.ReadUTF();
             lastEditDate = (double)reader.ReadDouble();
-            if (lastEditDate < -9.00719925474099E+15 || lastEditDate > 9.00719925474099E+15)
+            if (lastEditDate < -9007199254740992 || lastEditDate > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + lastEditDate + ") on element of PlayerNote.lastEditDate.");
             }
@@ -45,11 +45,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

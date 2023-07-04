@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class UpdateMountCharacteristicsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4691;
+{
+    public class UpdateMountCharacteristicsMessage : NetworkMessage
+    {
+        public const ushort Id = 2009;
         public override ushort MessageId => Id;
 
         public int rideId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public UpdateMountCharacteristicsMessage()
         {
         }
-        public UpdateMountCharacteristicsMessage(int rideId,UpdateMountCharacteristic[] boostToUpdateList)
+        public UpdateMountCharacteristicsMessage(int rideId, UpdateMountCharacteristic[] boostToUpdateList)
         {
             this.rideId = rideId;
             this.boostToUpdateList = boostToUpdateList;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         {
             writer.WriteVarInt((int)rideId);
             writer.WriteShort((short)boostToUpdateList.Length);
-            for (uint _i2 = 0;_i2 < boostToUpdateList.Length;_i2++)
+            for (uint _i2 = 0; _i2 < boostToUpdateList.Length; _i2++)
             {
                 writer.WriteShort((short)(boostToUpdateList[_i2] as UpdateMountCharacteristic).TypeId);
                 (boostToUpdateList[_i2] as UpdateMountCharacteristic).Serialize(writer);
@@ -40,7 +40,7 @@ namespace Giny.Protocol.Messages
             UpdateMountCharacteristic _item2 = null;
             rideId = (int)reader.ReadVarInt();
             uint _boostToUpdateListLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _boostToUpdateListLen;_i2++)
+            for (uint _i2 = 0; _i2 < _boostToUpdateListLen; _i2++)
             {
                 _id2 = (uint)reader.ReadUShort();
                 _item2 = ProtocolTypeManager.GetInstance<UpdateMountCharacteristic>((short)_id2);
@@ -50,14 +50,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

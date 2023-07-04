@@ -6,18 +6,18 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameRolePlayDelayedObjectUseMessage : GameRolePlayDelayedActionMessage  
-    { 
-        public new const ushort Id = 1610;
+{
+    public class GameRolePlayDelayedObjectUseMessage : GameRolePlayDelayedActionMessage
+    {
+        public new const ushort Id = 486;
         public override ushort MessageId => Id;
 
-        public short objectGID;
+        public int objectGID;
 
         public GameRolePlayDelayedObjectUseMessage()
         {
         }
-        public GameRolePlayDelayedObjectUseMessage(short objectGID,double delayedCharacterId,byte delayTypeId,double delayEndTime)
+        public GameRolePlayDelayedObjectUseMessage(int objectGID, double delayedCharacterId, byte delayTypeId, double delayEndTime)
         {
             this.objectGID = objectGID;
             this.delayedCharacterId = delayedCharacterId;
@@ -32,12 +32,12 @@ namespace Giny.Protocol.Messages
                 throw new System.Exception("Forbidden value (" + objectGID + ") on element objectGID.");
             }
 
-            writer.WriteVarShort((short)objectGID);
+            writer.WriteVarInt((int)objectGID);
         }
         public override void Deserialize(IDataReader reader)
         {
             base.Deserialize(reader);
-            objectGID = (short)reader.ReadVarUhShort();
+            objectGID = (int)reader.ReadVarUhInt();
             if (objectGID < 0)
             {
                 throw new System.Exception("Forbidden value (" + objectGID + ") on element of GameRolePlayDelayedObjectUseMessage.objectGID.");
@@ -45,14 +45,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildApplicationReceivedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8561;
+{
+    public class GuildApplicationReceivedMessage : NetworkMessage
+    {
+        public const ushort Id = 3195;
         public override ushort MessageId => Id;
 
         public string playerName;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public GuildApplicationReceivedMessage()
         {
         }
-        public GuildApplicationReceivedMessage(string playerName,long playerId)
+        public GuildApplicationReceivedMessage(string playerName, long playerId)
         {
             this.playerName = playerName;
             this.playerId = playerId;
@@ -26,7 +26,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteUTF((string)playerName);
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
@@ -37,21 +37,14 @@ namespace Giny.Protocol.Messages
         {
             playerName = (string)reader.ReadUTF();
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of GuildApplicationReceivedMessage.playerId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

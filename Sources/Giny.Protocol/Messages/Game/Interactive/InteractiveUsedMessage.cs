@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class InteractiveUsedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1847;
+{
+    public class InteractiveUsedMessage : NetworkMessage
+    {
+        public const ushort Id = 9892;
         public override ushort MessageId => Id;
 
         public long entityId;
@@ -21,7 +21,7 @@ namespace Giny.Protocol.Messages
         public InteractiveUsedMessage()
         {
         }
-        public InteractiveUsedMessage(long entityId,int elemId,short skillId,short duration,bool canMove)
+        public InteractiveUsedMessage(long entityId, int elemId, short skillId, short duration, bool canMove)
         {
             this.entityId = entityId;
             this.elemId = elemId;
@@ -31,7 +31,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (entityId < 0 || entityId > 9.00719925474099E+15)
+            if (entityId < 0 || entityId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + entityId + ") on element entityId.");
             }
@@ -60,7 +60,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             entityId = (long)reader.ReadVarUhLong();
-            if (entityId < 0 || entityId > 9.00719925474099E+15)
+            if (entityId < 0 || entityId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + entityId + ") on element of InteractiveUsedMessage.entityId.");
             }
@@ -86,14 +86,7 @@ namespace Giny.Protocol.Messages
             canMove = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

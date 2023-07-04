@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BasicStatMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2297;
+{
+    public class BasicStatMessage : NetworkMessage
+    {
+        public const ushort Id = 1793;
         public override ushort MessageId => Id;
 
         public double timeSpent;
@@ -18,14 +18,14 @@ namespace Giny.Protocol.Messages
         public BasicStatMessage()
         {
         }
-        public BasicStatMessage(double timeSpent,short statId)
+        public BasicStatMessage(double timeSpent, short statId)
         {
             this.timeSpent = timeSpent;
             this.statId = statId;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (timeSpent < 0 || timeSpent > 9.00719925474099E+15)
+            if (timeSpent < 0 || timeSpent > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + timeSpent + ") on element timeSpent.");
             }
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             timeSpent = (double)reader.ReadDouble();
-            if (timeSpent < 0 || timeSpent > 9.00719925474099E+15)
+            if (timeSpent < 0 || timeSpent > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + timeSpent + ") on element of BasicStatMessage.timeSpent.");
             }
@@ -49,14 +49,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

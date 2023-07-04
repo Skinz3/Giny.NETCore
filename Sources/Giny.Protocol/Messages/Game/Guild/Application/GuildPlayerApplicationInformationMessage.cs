@@ -6,19 +6,19 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildPlayerApplicationInformationMessage : GuildPlayerApplicationAbstractMessage  
-    { 
-        public new const ushort Id = 1200;
+{
+    public class GuildPlayerApplicationInformationMessage : GuildPlayerApplicationAbstractMessage
+    {
+        public new const ushort Id = 8868;
         public override ushort MessageId => Id;
 
         public GuildInformations guildInformation;
-        public GuildApplicationInformation apply;
+        public SocialApplicationInformation apply;
 
         public GuildPlayerApplicationInformationMessage()
         {
         }
-        public GuildPlayerApplicationInformationMessage(GuildInformations guildInformation,GuildApplicationInformation apply)
+        public GuildPlayerApplicationInformationMessage(GuildInformations guildInformation, SocialApplicationInformation apply)
         {
             this.guildInformation = guildInformation;
             this.apply = apply;
@@ -34,18 +34,11 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
             guildInformation = new GuildInformations();
             guildInformation.Deserialize(reader);
-            apply = new GuildApplicationInformation();
+            apply = new SocialApplicationInformation();
             apply.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

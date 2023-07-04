@@ -51,12 +51,6 @@ namespace Giny.World.Handlers.Roleplay.Guilds
                     break;
                 case GuildInformationsTypeEnum.INFO_HOUSES:
                     break;
-                case GuildInformationsTypeEnum.INFO_TAX_COLLECTOR_GUILD_ONLY:
-                    break;
-                case GuildInformationsTypeEnum.INFO_TAX_COLLECTOR_ALLIANCE:
-                    break;
-                case GuildInformationsTypeEnum.INFO_TAX_COLLECTOR_LEAVE:
-                    break;
                 default:
                     break;
             }

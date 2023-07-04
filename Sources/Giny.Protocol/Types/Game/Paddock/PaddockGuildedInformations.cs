@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class PaddockGuildedInformations : PaddockBuyableInformations  
-    { 
-        public new const ushort Id = 1293;
+{
+    public class PaddockGuildedInformations : PaddockBuyableInformations
+    {
+        public new const ushort Id = 7576;
         public override ushort TypeId => Id;
 
         public bool deserted;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public PaddockGuildedInformations()
         {
         }
-        public PaddockGuildedInformations(bool deserted,GuildInformations guildInfo,long price,bool locked)
+        public PaddockGuildedInformations(bool deserted, GuildInformations guildInfo, long price, bool locked)
         {
             this.deserted = deserted;
             this.guildInfo = guildInfo;
@@ -40,11 +40,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

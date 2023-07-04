@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class InteractiveElementUpdatedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 322;
+{
+    public class InteractiveElementUpdatedMessage : NetworkMessage
+    {
+        public const ushort Id = 9569;
         public override ushort MessageId => Id;
 
         public InteractiveElement interactiveElement;
@@ -31,14 +31,7 @@ namespace Giny.Protocol.Messages
             interactiveElement.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

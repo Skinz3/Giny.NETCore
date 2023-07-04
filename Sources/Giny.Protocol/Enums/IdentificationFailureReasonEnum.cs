@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 using System;
 
 namespace Giny.Protocol.Enums
@@ -24,6 +17,8 @@ namespace Giny.Protocol.Enums
         OTP_TIMEOUT = 11,
         LOCKED = 12,
         ANONYMOUS_IP_FORBIDDEN = 13,
+        INVALID_SHIELD_CERTIFICATE = 14,
+        ALREADY_CONNECTED = 15,
         SERVICE_UNAVAILABLE = 53,
         EXTERNAL_ACCOUNT_LINK_REFUSED = 61,
         EXTERNAL_ACCOUNT_ALREADY_LINKED = 62,

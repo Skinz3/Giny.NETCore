@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PlayerStatusUpdateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6964;
+{
+    public class PlayerStatusUpdateMessage : NetworkMessage
+    {
+        public const ushort Id = 1620;
         public override ushort MessageId => Id;
 
         public int accountId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public PlayerStatusUpdateMessage()
         {
         }
-        public PlayerStatusUpdateMessage(int accountId,long playerId,PlayerStatus status)
+        public PlayerStatusUpdateMessage(int accountId, long playerId, PlayerStatus status)
         {
             this.accountId = accountId;
             this.playerId = playerId;
@@ -33,7 +33,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteInt((int)accountId);
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
@@ -51,7 +51,7 @@ namespace Giny.Protocol.Messages
             }
 
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of PlayerStatusUpdateMessage.playerId.");
             }
@@ -61,14 +61,7 @@ namespace Giny.Protocol.Messages
             status.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

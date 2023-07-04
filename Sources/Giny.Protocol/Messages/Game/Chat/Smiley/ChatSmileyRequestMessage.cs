@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ChatSmileyRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 943;
+{
+    public class ChatSmileyRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 5661;
         public override ushort MessageId => Id;
 
         public short smileyId;
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

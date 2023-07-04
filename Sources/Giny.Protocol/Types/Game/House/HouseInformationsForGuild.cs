@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class HouseInformationsForGuild : HouseInformations  
-    { 
-        public new const ushort Id = 8788;
+{
+    public class HouseInformationsForGuild : HouseInformations
+    {
+        public new const ushort Id = 7264;
         public override ushort TypeId => Id;
 
         public int instanceId;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Types
         public HouseInformationsForGuild()
         {
         }
-        public HouseInformationsForGuild(int instanceId,bool secondHand,AccountTagInformation ownerTag,short worldX,short worldY,double mapId,short subAreaId,int[] skillListIds,int guildshareParams,int houseId,short modelId)
+        public HouseInformationsForGuild(int instanceId, bool secondHand, AccountTagInformation ownerTag, short worldX, short worldY, double mapId, short subAreaId, int[] skillListIds, int guildshareParams, int houseId, short modelId)
         {
             this.instanceId = instanceId;
             this.secondHand = secondHand;
@@ -60,7 +60,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteShort((short)worldY);
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element mapId.");
             }
@@ -73,7 +73,7 @@ namespace Giny.Protocol.Types
 
             writer.WriteVarShort((short)subAreaId);
             writer.WriteShort((short)skillListIds.Length);
-            for (uint _i8 = 0;_i8 < skillListIds.Length;_i8++)
+            for (uint _i8 = 0; _i8 < skillListIds.Length; _i8++)
             {
                 writer.WriteInt((int)skillListIds[_i8]);
             }
@@ -111,7 +111,7 @@ namespace Giny.Protocol.Types
             }
 
             mapId = (double)reader.ReadDouble();
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element of HouseInformationsForGuild.mapId.");
             }
@@ -124,7 +124,7 @@ namespace Giny.Protocol.Types
 
             uint _skillListIdsLen = (uint)reader.ReadUShort();
             skillListIds = new int[_skillListIdsLen];
-            for (uint _i8 = 0;_i8 < _skillListIdsLen;_i8++)
+            for (uint _i8 = 0; _i8 < _skillListIdsLen; _i8++)
             {
                 _val8 = (int)reader.ReadInt();
                 skillListIds[_i8] = (int)_val8;
@@ -141,11 +141,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

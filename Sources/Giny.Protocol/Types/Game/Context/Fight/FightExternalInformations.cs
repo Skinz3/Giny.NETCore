@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class FightExternalInformations  
-    { 
-        public const ushort Id = 7549;
+{
+    public class FightExternalInformations
+    {
+        public const ushort Id = 3458;
         public virtual ushort TypeId => Id;
 
         public short fightId;
@@ -20,7 +20,7 @@ namespace Giny.Protocol.Types
         public FightExternalInformations()
         {
         }
-        public FightExternalInformations(short fightId,byte fightType,int fightStart,bool fightSpectatorLocked,FightTeamLightInformations[] fightTeams,FightOptionsInformations[] fightTeamsOptions)
+        public FightExternalInformations(short fightId, byte fightType, int fightStart, bool fightSpectatorLocked, FightTeamLightInformations[] fightTeams, FightOptionsInformations[] fightTeamsOptions)
         {
             this.fightId = fightId;
             this.fightType = fightType;
@@ -45,12 +45,12 @@ namespace Giny.Protocol.Types
 
             writer.WriteInt((int)fightStart);
             writer.WriteBoolean((bool)fightSpectatorLocked);
-            for (uint _i5 = 0;_i5 < 2;_i5++)
+            for (uint _i5 = 0; _i5 < 2; _i5++)
             {
                 fightTeams[_i5].Serialize(writer);
             }
 
-            for (uint _i6 = 0;_i6 < 2;_i6++)
+            for (uint _i6 = 0; _i6 < 2; _i6++)
             {
                 fightTeamsOptions[_i6].Serialize(writer);
             }
@@ -77,13 +77,13 @@ namespace Giny.Protocol.Types
             }
 
             fightSpectatorLocked = (bool)reader.ReadBoolean();
-            for (uint _i5 = 0;_i5 < 2;_i5++)
+            for (uint _i5 = 0; _i5 < 2; _i5++)
             {
                 fightTeams[_i5] = new FightTeamLightInformations();
                 fightTeams[_i5].Deserialize(reader);
             }
 
-            for (uint _i6 = 0;_i6 < 2;_i6++)
+            for (uint _i6 = 0; _i6 < 2; _i6++)
             {
                 fightTeamsOptions[_i6] = new FightOptionsInformations();
                 fightTeamsOptions[_i6].Deserialize(reader);
@@ -94,11 +94,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

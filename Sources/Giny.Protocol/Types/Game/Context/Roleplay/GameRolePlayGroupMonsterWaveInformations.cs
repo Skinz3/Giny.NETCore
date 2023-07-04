@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameRolePlayGroupMonsterWaveInformations : GameRolePlayGroupMonsterInformations  
-    { 
-        public new const ushort Id = 7122;
+{
+    public class GameRolePlayGroupMonsterWaveInformations : GameRolePlayGroupMonsterInformations
+    {
+        public new const ushort Id = 496;
         public override ushort TypeId => Id;
 
         public byte nbWaves;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public GameRolePlayGroupMonsterWaveInformations()
         {
         }
-        public GameRolePlayGroupMonsterWaveInformations(byte nbWaves,GroupMonsterStaticInformations[] alternatives,double contextualId,EntityDispositionInformations disposition,EntityLook look,GroupMonsterStaticInformations staticInfos,byte lootShare,byte alignmentSide,bool keyRingBonus,bool hasHardcoreDrop,bool hasAVARewardToken)
+        public GameRolePlayGroupMonsterWaveInformations(byte nbWaves, GroupMonsterStaticInformations[] alternatives, double contextualId, EntityDispositionInformations disposition, EntityLook look, GroupMonsterStaticInformations staticInfos, byte lootShare, byte alignmentSide, bool hasHardcoreDrop)
         {
             this.nbWaves = nbWaves;
             this.alternatives = alternatives;
@@ -26,9 +26,7 @@ namespace Giny.Protocol.Types
             this.staticInfos = staticInfos;
             this.lootShare = lootShare;
             this.alignmentSide = alignmentSide;
-            this.keyRingBonus = keyRingBonus;
             this.hasHardcoreDrop = hasHardcoreDrop;
-            this.hasAVARewardToken = hasAVARewardToken;
         }
         public override void Serialize(IDataWriter writer)
         {
@@ -40,7 +38,7 @@ namespace Giny.Protocol.Types
 
             writer.WriteByte((byte)nbWaves);
             writer.WriteShort((short)alternatives.Length);
-            for (uint _i2 = 0;_i2 < alternatives.Length;_i2++)
+            for (uint _i2 = 0; _i2 < alternatives.Length; _i2++)
             {
                 writer.WriteShort((short)(alternatives[_i2] as GroupMonsterStaticInformations).TypeId);
                 (alternatives[_i2] as GroupMonsterStaticInformations).Serialize(writer);
@@ -59,7 +57,7 @@ namespace Giny.Protocol.Types
             }
 
             uint _alternativesLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _alternativesLen;_i2++)
+            for (uint _i2 = 0; _i2 < _alternativesLen; _i2++)
             {
                 _id2 = (uint)reader.ReadUShort();
                 _item2 = ProtocolTypeManager.GetInstance<GroupMonsterStaticInformations>((short)_id2);
@@ -72,11 +70,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

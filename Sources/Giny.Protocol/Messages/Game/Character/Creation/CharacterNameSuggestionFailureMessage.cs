@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class CharacterNameSuggestionFailureMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 527;
+{
+    public class CharacterNameSuggestionFailureMessage : NetworkMessage
+    {
+        public const ushort Id = 7460;
         public override ushort MessageId => Id;
 
         public byte reason;
@@ -35,14 +35,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

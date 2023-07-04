@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightJoinRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8671;
+{
+    public class GameFightJoinRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 6242;
         public override ushort MessageId => Id;
 
         public double fighterId;
@@ -18,14 +18,14 @@ namespace Giny.Protocol.Messages
         public GameFightJoinRequestMessage()
         {
         }
-        public GameFightJoinRequestMessage(double fighterId,short fightId)
+        public GameFightJoinRequestMessage(double fighterId, short fightId)
         {
             this.fighterId = fighterId;
             this.fightId = fightId;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (fighterId < -9.00719925474099E+15 || fighterId > 9.00719925474099E+15)
+            if (fighterId < -9007199254740992 || fighterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + fighterId + ") on element fighterId.");
             }
@@ -41,7 +41,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             fighterId = (double)reader.ReadDouble();
-            if (fighterId < -9.00719925474099E+15 || fighterId > 9.00719925474099E+15)
+            if (fighterId < -9007199254740992 || fighterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + fighterId + ") on element of GameFightJoinRequestMessage.fighterId.");
             }
@@ -54,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

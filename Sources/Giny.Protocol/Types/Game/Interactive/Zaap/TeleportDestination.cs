@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class TeleportDestination  
-    { 
-        public const ushort Id = 6958;
+{
+    public class TeleportDestination
+    {
+        public const ushort Id = 2969;
         public virtual ushort TypeId => Id;
 
         public byte type;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Types
         public TeleportDestination()
         {
         }
-        public TeleportDestination(byte type,double mapId,short subAreaId,short level,short cost)
+        public TeleportDestination(byte type, double mapId, short subAreaId, short level, short cost)
         {
             this.type = type;
             this.mapId = mapId;
@@ -30,7 +30,7 @@ namespace Giny.Protocol.Types
         public virtual void Serialize(IDataWriter writer)
         {
             writer.WriteByte((byte)type);
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element mapId.");
             }
@@ -64,7 +64,7 @@ namespace Giny.Protocol.Types
             }
 
             mapId = (double)reader.ReadDouble();
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element of TeleportDestination.mapId.");
             }
@@ -92,11 +92,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

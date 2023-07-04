@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ObjectEffectMinMax : ObjectEffect  
-    { 
-        public new const ushort Id = 9563;
+{
+    public class ObjectEffectMinMax : ObjectEffect
+    {
+        public new const ushort Id = 1424;
         public override ushort TypeId => Id;
 
         public int min;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public ObjectEffectMinMax()
         {
         }
-        public ObjectEffectMinMax(int min,int max,short actionId)
+        public ObjectEffectMinMax(int min, int max, short actionId)
         {
             this.min = min;
             this.max = max;
@@ -58,11 +58,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

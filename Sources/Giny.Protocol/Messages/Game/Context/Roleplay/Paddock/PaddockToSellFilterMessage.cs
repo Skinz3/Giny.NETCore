@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PaddockToSellFilterMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6894;
+{
+    public class PaddockToSellFilterMessage : NetworkMessage
+    {
+        public const ushort Id = 1882;
         public override ushort MessageId => Id;
 
         public int areaId;
@@ -21,7 +21,7 @@ namespace Giny.Protocol.Messages
         public PaddockToSellFilterMessage()
         {
         }
-        public PaddockToSellFilterMessage(int areaId,byte atLeastNbMount,byte atLeastNbMachine,long maxPrice,byte orderBy)
+        public PaddockToSellFilterMessage(int areaId, byte atLeastNbMount, byte atLeastNbMachine, long maxPrice, byte orderBy)
         {
             this.areaId = areaId;
             this.atLeastNbMount = atLeastNbMount;
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
             writer.WriteInt((int)areaId);
             writer.WriteByte((byte)atLeastNbMount);
             writer.WriteByte((byte)atLeastNbMachine);
-            if (maxPrice < 0 || maxPrice > 9.00719925474099E+15)
+            if (maxPrice < 0 || maxPrice > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + maxPrice + ") on element maxPrice.");
             }
@@ -48,7 +48,7 @@ namespace Giny.Protocol.Messages
             atLeastNbMount = (byte)reader.ReadByte();
             atLeastNbMachine = (byte)reader.ReadByte();
             maxPrice = (long)reader.ReadVarUhLong();
-            if (maxPrice < 0 || maxPrice > 9.00719925474099E+15)
+            if (maxPrice < 0 || maxPrice > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + maxPrice + ") on element of PaddockToSellFilterMessage.maxPrice.");
             }
@@ -61,14 +61,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

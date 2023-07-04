@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class MountClientData  
-    { 
-        public const ushort Id = 7643;
+{
+    public class MountClientData
+    {
+        public const ushort Id = 7823;
         public virtual ushort TypeId => Id;
 
         public double id;
@@ -41,14 +41,14 @@ namespace Giny.Protocol.Types
         public double boostMax;
         public int reproductionCount;
         public int reproductionCountMax;
-        public short harnessGID;
+        public int harnessGID;
         public bool useHarnessColors;
         public ObjectEffectInteger[] effectList;
 
         public MountClientData()
         {
         }
-        public MountClientData(double id,int model,int[] ancestor,int[] behaviors,string name,bool sex,int ownerId,long experience,long experienceForLevel,double experienceForNextLevel,byte level,bool isRideable,int maxPods,bool isWild,int stamina,int staminaMax,int maturity,int maturityForAdult,int energy,int energyMax,int serenity,int aggressivityMax,int serenityMax,int love,int loveMax,int fecondationTime,bool isFecondationReady,int boostLimiter,double boostMax,int reproductionCount,int reproductionCountMax,short harnessGID,bool useHarnessColors,ObjectEffectInteger[] effectList)
+        public MountClientData(double id, int model, int[] ancestor, int[] behaviors, string name, bool sex, int ownerId, long experience, long experienceForLevel, double experienceForNextLevel, byte level, bool isRideable, int maxPods, bool isWild, int stamina, int staminaMax, int maturity, int maturityForAdult, int energy, int energyMax, int serenity, int aggressivityMax, int serenityMax, int love, int loveMax, int fecondationTime, bool isFecondationReady, int boostLimiter, double boostMax, int reproductionCount, int reproductionCountMax, int harnessGID, bool useHarnessColors, ObjectEffectInteger[] effectList)
         {
             this.id = id;
             this.model = model;
@@ -88,13 +88,13 @@ namespace Giny.Protocol.Types
         public virtual void Serialize(IDataWriter writer)
         {
             byte _box0 = 0;
-            _box0 = BooleanByteWrapper.SetFlag(_box0,0,sex);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,1,isRideable);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,2,isWild);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,3,isFecondationReady);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,4,useHarnessColors);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 0, sex);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 1, isRideable);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 2, isWild);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 3, isFecondationReady);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 4, useHarnessColors);
             writer.WriteByte((byte)_box0);
-            if (id < -9.00719925474099E+15 || id > 9.00719925474099E+15)
+            if (id < -9007199254740992 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element id.");
             }
@@ -107,7 +107,7 @@ namespace Giny.Protocol.Types
 
             writer.WriteVarInt((int)model);
             writer.WriteShort((short)ancestor.Length);
-            for (uint _i3 = 0;_i3 < ancestor.Length;_i3++)
+            for (uint _i3 = 0; _i3 < ancestor.Length; _i3++)
             {
                 if (ancestor[_i3] < 0)
                 {
@@ -118,7 +118,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteShort((short)behaviors.Length);
-            for (uint _i4 = 0;_i4 < behaviors.Length;_i4++)
+            for (uint _i4 = 0; _i4 < behaviors.Length; _i4++)
             {
                 if (behaviors[_i4] < 0)
                 {
@@ -135,19 +135,19 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteInt((int)ownerId);
-            if (experience < 0 || experience > 9.00719925474099E+15)
+            if (experience < 0 || experience > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + experience + ") on element experience.");
             }
 
             writer.WriteVarLong((long)experience);
-            if (experienceForLevel < 0 || experienceForLevel > 9.00719925474099E+15)
+            if (experienceForLevel < 0 || experienceForLevel > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + experienceForLevel + ") on element experienceForLevel.");
             }
 
             writer.WriteVarLong((long)experienceForLevel);
-            if (experienceForNextLevel < -9.00719925474099E+15 || experienceForNextLevel > 9.00719925474099E+15)
+            if (experienceForNextLevel < -9007199254740992 || experienceForNextLevel > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + experienceForNextLevel + ") on element experienceForNextLevel.");
             }
@@ -228,7 +228,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteInt((int)boostLimiter);
-            if (boostMax < -9.00719925474099E+15 || boostMax > 9.00719925474099E+15)
+            if (boostMax < -9007199254740992 || boostMax > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + boostMax + ") on element boostMax.");
             }
@@ -246,9 +246,9 @@ namespace Giny.Protocol.Types
                 throw new System.Exception("Forbidden value (" + harnessGID + ") on element harnessGID.");
             }
 
-            writer.WriteVarShort((short)harnessGID);
+            writer.WriteVarInt((int)harnessGID);
             writer.WriteShort((short)effectList.Length);
-            for (uint _i34 = 0;_i34 < effectList.Length;_i34++)
+            for (uint _i34 = 0; _i34 < effectList.Length; _i34++)
             {
                 (effectList[_i34] as ObjectEffectInteger).Serialize(writer);
             }
@@ -260,13 +260,13 @@ namespace Giny.Protocol.Types
             uint _val4 = 0;
             ObjectEffectInteger _item34 = null;
             byte _box0 = reader.ReadByte();
-            sex = BooleanByteWrapper.GetFlag(_box0,0);
-            isRideable = BooleanByteWrapper.GetFlag(_box0,1);
-            isWild = BooleanByteWrapper.GetFlag(_box0,2);
-            isFecondationReady = BooleanByteWrapper.GetFlag(_box0,3);
-            useHarnessColors = BooleanByteWrapper.GetFlag(_box0,4);
+            sex = BooleanByteWrapper.GetFlag(_box0, 0);
+            isRideable = BooleanByteWrapper.GetFlag(_box0, 1);
+            isWild = BooleanByteWrapper.GetFlag(_box0, 2);
+            isFecondationReady = BooleanByteWrapper.GetFlag(_box0, 3);
+            useHarnessColors = BooleanByteWrapper.GetFlag(_box0, 4);
             id = (double)reader.ReadDouble();
-            if (id < -9.00719925474099E+15 || id > 9.00719925474099E+15)
+            if (id < -9007199254740992 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element of MountClientData.id.");
             }
@@ -279,7 +279,7 @@ namespace Giny.Protocol.Types
 
             uint _ancestorLen = (uint)reader.ReadUShort();
             ancestor = new int[_ancestorLen];
-            for (uint _i3 = 0;_i3 < _ancestorLen;_i3++)
+            for (uint _i3 = 0; _i3 < _ancestorLen; _i3++)
             {
                 _val3 = (uint)reader.ReadInt();
                 if (_val3 < 0)
@@ -292,7 +292,7 @@ namespace Giny.Protocol.Types
 
             uint _behaviorsLen = (uint)reader.ReadUShort();
             behaviors = new int[_behaviorsLen];
-            for (uint _i4 = 0;_i4 < _behaviorsLen;_i4++)
+            for (uint _i4 = 0; _i4 < _behaviorsLen; _i4++)
             {
                 _val4 = (uint)reader.ReadInt();
                 if (_val4 < 0)
@@ -311,19 +311,19 @@ namespace Giny.Protocol.Types
             }
 
             experience = (long)reader.ReadVarUhLong();
-            if (experience < 0 || experience > 9.00719925474099E+15)
+            if (experience < 0 || experience > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + experience + ") on element of MountClientData.experience.");
             }
 
             experienceForLevel = (long)reader.ReadVarUhLong();
-            if (experienceForLevel < 0 || experienceForLevel > 9.00719925474099E+15)
+            if (experienceForLevel < 0 || experienceForLevel > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + experienceForLevel + ") on element of MountClientData.experienceForLevel.");
             }
 
             experienceForNextLevel = (double)reader.ReadDouble();
-            if (experienceForNextLevel < -9.00719925474099E+15 || experienceForNextLevel > 9.00719925474099E+15)
+            if (experienceForNextLevel < -9007199254740992 || experienceForNextLevel > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + experienceForNextLevel + ") on element of MountClientData.experienceForNextLevel.");
             }
@@ -404,7 +404,7 @@ namespace Giny.Protocol.Types
             }
 
             boostMax = (double)reader.ReadDouble();
-            if (boostMax < -9.00719925474099E+15 || boostMax > 9.00719925474099E+15)
+            if (boostMax < -9007199254740992 || boostMax > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + boostMax + ") on element of MountClientData.boostMax.");
             }
@@ -416,14 +416,14 @@ namespace Giny.Protocol.Types
                 throw new System.Exception("Forbidden value (" + reproductionCountMax + ") on element of MountClientData.reproductionCountMax.");
             }
 
-            harnessGID = (short)reader.ReadVarUhShort();
+            harnessGID = (int)reader.ReadVarUhInt();
             if (harnessGID < 0)
             {
                 throw new System.Exception("Forbidden value (" + harnessGID + ") on element of MountClientData.harnessGID.");
             }
 
             uint _effectListLen = (uint)reader.ReadUShort();
-            for (uint _i34 = 0;_i34 < _effectListLen;_i34++)
+            for (uint _i34 = 0; _i34 < _effectListLen; _i34++)
             {
                 _item34 = new ObjectEffectInteger();
                 _item34.Deserialize(reader);
@@ -435,11 +435,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

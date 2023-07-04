@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameFightResumeSlaveInfo  
-    { 
-        public const ushort Id = 7784;
+{
+    public class GameFightResumeSlaveInfo
+    {
+        public const ushort Id = 4066;
         public virtual ushort TypeId => Id;
 
         public double slaveId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Types
         public GameFightResumeSlaveInfo()
         {
         }
-        public GameFightResumeSlaveInfo(double slaveId,GameFightSpellCooldown[] spellCooldowns,byte summonCount,byte bombCount)
+        public GameFightResumeSlaveInfo(double slaveId, GameFightSpellCooldown[] spellCooldowns, byte summonCount, byte bombCount)
         {
             this.slaveId = slaveId;
             this.spellCooldowns = spellCooldowns;
@@ -27,14 +27,14 @@ namespace Giny.Protocol.Types
         }
         public virtual void Serialize(IDataWriter writer)
         {
-            if (slaveId < -9.00719925474099E+15 || slaveId > 9.00719925474099E+15)
+            if (slaveId < -9007199254740992 || slaveId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + slaveId + ") on element slaveId.");
             }
 
             writer.WriteDouble((double)slaveId);
             writer.WriteShort((short)spellCooldowns.Length);
-            for (uint _i2 = 0;_i2 < spellCooldowns.Length;_i2++)
+            for (uint _i2 = 0; _i2 < spellCooldowns.Length; _i2++)
             {
                 (spellCooldowns[_i2] as GameFightSpellCooldown).Serialize(writer);
             }
@@ -56,13 +56,13 @@ namespace Giny.Protocol.Types
         {
             GameFightSpellCooldown _item2 = null;
             slaveId = (double)reader.ReadDouble();
-            if (slaveId < -9.00719925474099E+15 || slaveId > 9.00719925474099E+15)
+            if (slaveId < -9007199254740992 || slaveId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + slaveId + ") on element of GameFightResumeSlaveInfo.slaveId.");
             }
 
             uint _spellCooldownsLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _spellCooldownsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _spellCooldownsLen; _i2++)
             {
                 _item2 = new GameFightSpellCooldown();
                 _item2.Deserialize(reader);
@@ -86,11 +86,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

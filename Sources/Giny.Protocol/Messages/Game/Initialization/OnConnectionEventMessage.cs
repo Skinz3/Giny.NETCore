@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class OnConnectionEventMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2940;
+{
+    public class OnConnectionEventMessage : NetworkMessage
+    {
+        public const ushort Id = 4804;
         public override ushort MessageId => Id;
 
         public byte eventType;
@@ -35,14 +35,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

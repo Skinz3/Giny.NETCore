@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ObjectAddedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7116;
+{
+    public class ObjectAddedMessage : NetworkMessage
+    {
+        public const ushort Id = 5435;
         public override ushort MessageId => Id;
 
         public ObjectItem @object;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ObjectAddedMessage()
         {
         }
-        public ObjectAddedMessage(ObjectItem @object,byte origin)
+        public ObjectAddedMessage(ObjectItem @object, byte origin)
         {
             this.@object = @object;
             this.origin = origin;
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

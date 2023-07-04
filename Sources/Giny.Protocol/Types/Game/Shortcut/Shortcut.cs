@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class Shortcut  
-    { 
-        public const ushort Id = 3342;
+{
+    public class Shortcut
+    {
+        public const ushort Id = 1969;
         public virtual ushort TypeId => Id;
 
         public byte slot;
@@ -41,11 +41,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

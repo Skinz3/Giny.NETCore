@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeCraftPaymentModifiedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9955;
+{
+    public class ExchangeCraftPaymentModifiedMessage : NetworkMessage
+    {
+        public const ushort Id = 3395;
         public override ushort MessageId => Id;
 
         public long goldSum;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (goldSum < 0 || goldSum > 9.00719925474099E+15)
+            if (goldSum < 0 || goldSum > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + goldSum + ") on element goldSum.");
             }
@@ -33,21 +33,14 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             goldSum = (long)reader.ReadVarUhLong();
-            if (goldSum < 0 || goldSum > 9.00719925474099E+15)
+            if (goldSum < 0 || goldSum > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + goldSum + ") on element of ExchangeCraftPaymentModifiedMessage.goldSum.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

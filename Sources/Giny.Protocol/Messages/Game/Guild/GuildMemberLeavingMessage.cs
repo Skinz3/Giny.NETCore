@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildMemberLeavingMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6137;
+{
+    public class GuildMemberLeavingMessage : NetworkMessage
+    {
+        public const ushort Id = 6168;
         public override ushort MessageId => Id;
 
         public bool kicked;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public GuildMemberLeavingMessage()
         {
         }
-        public GuildMemberLeavingMessage(bool kicked,long memberId)
+        public GuildMemberLeavingMessage(bool kicked, long memberId)
         {
             this.kicked = kicked;
             this.memberId = memberId;
@@ -26,7 +26,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteBoolean((bool)kicked);
-            if (memberId < 0 || memberId > 9.00719925474099E+15)
+            if (memberId < 0 || memberId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + memberId + ") on element memberId.");
             }
@@ -37,21 +37,14 @@ namespace Giny.Protocol.Messages
         {
             kicked = (bool)reader.ReadBoolean();
             memberId = (long)reader.ReadVarUhLong();
-            if (memberId < 0 || memberId > 9.00719925474099E+15)
+            if (memberId < 0 || memberId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + memberId + ") on element of GuildMemberLeavingMessage.memberId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

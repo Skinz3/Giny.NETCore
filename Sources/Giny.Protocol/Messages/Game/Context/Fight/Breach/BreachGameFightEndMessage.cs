@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BreachGameFightEndMessage : GameFightEndMessage  
-    { 
-        public new const ushort Id = 1483;
+{
+    public class BreachGameFightEndMessage : GameFightEndMessage
+    {
+        public new const ushort Id = 7322;
         public override ushort MessageId => Id;
 
         public int budget;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public BreachGameFightEndMessage()
         {
         }
-        public BreachGameFightEndMessage(int budget,int duration,short rewardRate,short lootShareLimitMalus,FightResultListEntry[] results,NamedPartyTeamWithOutcome[] namedPartyTeamsOutcomes)
+        public BreachGameFightEndMessage(int budget, int duration, short rewardRate, short lootShareLimitMalus, FightResultListEntry[] results, NamedPartyTeamWithOutcome[] namedPartyTeamsOutcomes)
         {
             this.budget = budget;
             this.duration = duration;
@@ -37,14 +37,7 @@ namespace Giny.Protocol.Messages
             budget = (int)reader.ReadInt();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

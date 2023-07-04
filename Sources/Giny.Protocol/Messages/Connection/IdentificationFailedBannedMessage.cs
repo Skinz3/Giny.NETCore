@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class IdentificationFailedBannedMessage : IdentificationFailedMessage  
-    { 
-        public new const ushort Id = 4724;
+{
+    public class IdentificationFailedBannedMessage : IdentificationFailedMessage
+    {
+        public new const ushort Id = 1044;
         public override ushort MessageId => Id;
 
         public double banEndDate;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public IdentificationFailedBannedMessage()
         {
         }
-        public IdentificationFailedBannedMessage(double banEndDate,byte reason)
+        public IdentificationFailedBannedMessage(double banEndDate, byte reason)
         {
             this.banEndDate = banEndDate;
             this.reason = reason;
@@ -25,7 +25,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (banEndDate < 0 || banEndDate > 9.00719925474099E+15)
+            if (banEndDate < 0 || banEndDate > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + banEndDate + ") on element banEndDate.");
             }
@@ -36,21 +36,14 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             banEndDate = (double)reader.ReadDouble();
-            if (banEndDate < 0 || banEndDate > 9.00719925474099E+15)
+            if (banEndDate < 0 || banEndDate > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + banEndDate + ") on element of IdentificationFailedBannedMessage.banEndDate.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

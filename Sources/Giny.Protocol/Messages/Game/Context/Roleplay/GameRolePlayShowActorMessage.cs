@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameRolePlayShowActorMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6549;
+{
+    public class GameRolePlayShowActorMessage : NetworkMessage
+    {
+        public const ushort Id = 1026;
         public override ushort MessageId => Id;
 
         public GameRolePlayActorInformations informations;
@@ -33,14 +33,7 @@ namespace Giny.Protocol.Messages
             informations.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

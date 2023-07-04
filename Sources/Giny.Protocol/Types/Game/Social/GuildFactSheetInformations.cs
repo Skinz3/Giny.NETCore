@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GuildFactSheetInformations : GuildInformations  
-    { 
-        public new const ushort Id = 9183;
+{
+    public class GuildFactSheetInformations : GuildInformations
+    {
+        public new const ushort Id = 7035;
         public override ushort TypeId => Id;
 
         public long leaderId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Types
         public GuildFactSheetInformations()
         {
         }
-        public GuildFactSheetInformations(long leaderId,short nbMembers,short lastActivityDay,GuildRecruitmentInformation recruitment,int nbPendingApply,int guildId,string guildName,byte guildLevel,GuildEmblem guildEmblem)
+        public GuildFactSheetInformations(long leaderId, short nbMembers, short lastActivityDay, GuildRecruitmentInformation recruitment, int nbPendingApply, int guildId, string guildName, byte guildLevel, SocialEmblem guildEmblem)
         {
             this.leaderId = leaderId;
             this.nbMembers = nbMembers;
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Types
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (leaderId < 0 || leaderId > 9.00719925474099E+15)
+            if (leaderId < 0 || leaderId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + leaderId + ") on element leaderId.");
             }
@@ -64,7 +64,7 @@ namespace Giny.Protocol.Types
         {
             base.Deserialize(reader);
             leaderId = (long)reader.ReadVarUhLong();
-            if (leaderId < 0 || leaderId > 9.00719925474099E+15)
+            if (leaderId < 0 || leaderId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + leaderId + ") on element of GuildFactSheetInformations.leaderId.");
             }
@@ -94,11 +94,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

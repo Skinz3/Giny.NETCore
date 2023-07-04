@@ -129,12 +129,7 @@ namespace Giny.World.Network
                 characters[i] = Characters[i].GetCharacterBaseInformations();
             }
 
-            var message = new CharactersListMessage()
-            {
-                characters = characters,
-                hasStartupActions = false,
-            };
-            Send(message);
+            Send(new CharactersListMessage(characters));
         }
 
         public override void OnDisconnected()
@@ -188,8 +183,7 @@ namespace Giny.World.Network
                }
            }));
 
-            Send(new AccountCapabilitiesMessage(Account.Id, true, BreedManager.Instance.AvailableBreedsFlags,
-                BreedManager.Instance.AvailableBreedsFlags, 0, true));
+            Send(new AccountCapabilitiesMessage(Account.Id, true, 0,true));
 
             Send(new TrustStatusMessage(true, true));
 

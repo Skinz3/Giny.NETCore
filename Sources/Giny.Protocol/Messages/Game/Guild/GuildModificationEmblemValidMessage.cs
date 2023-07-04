@@ -6,18 +6,18 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildModificationEmblemValidMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4216;
+{
+    public class GuildModificationEmblemValidMessage : NetworkMessage
+    {
+        public const ushort Id = 5777;
         public override ushort MessageId => Id;
 
-        public GuildEmblem guildEmblem;
+        public SocialEmblem guildEmblem;
 
         public GuildModificationEmblemValidMessage()
         {
         }
-        public GuildModificationEmblemValidMessage(GuildEmblem guildEmblem)
+        public GuildModificationEmblemValidMessage(SocialEmblem guildEmblem)
         {
             this.guildEmblem = guildEmblem;
         }
@@ -27,18 +27,11 @@ namespace Giny.Protocol.Messages
         }
         public override void Deserialize(IDataReader reader)
         {
-            guildEmblem = new GuildEmblem();
+            guildEmblem = new SocialEmblem();
             guildEmblem.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

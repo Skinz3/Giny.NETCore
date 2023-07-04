@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightSpectatorJoinMessage : GameFightJoinMessage  
-    { 
-        public new const ushort Id = 4519;
+{
+    public class GameFightSpectatorJoinMessage : GameFightJoinMessage
+    {
+        public new const ushort Id = 7197;
         public override ushort MessageId => Id;
 
         public NamedPartyTeam[] namedPartyTeams;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public GameFightSpectatorJoinMessage()
         {
         }
-        public GameFightSpectatorJoinMessage(NamedPartyTeam[] namedPartyTeams,bool isTeamPhase,bool canBeCancelled,bool canSayReady,bool isFightStarted,short timeMaxBeforeFightStart,byte fightType)
+        public GameFightSpectatorJoinMessage(NamedPartyTeam[] namedPartyTeams, bool isTeamPhase, bool canBeCancelled, bool canSayReady, bool isFightStarted, short timeMaxBeforeFightStart, byte fightType)
         {
             this.namedPartyTeams = namedPartyTeams;
             this.isTeamPhase = isTeamPhase;
@@ -31,7 +31,7 @@ namespace Giny.Protocol.Messages
         {
             base.Serialize(writer);
             writer.WriteShort((short)namedPartyTeams.Length);
-            for (uint _i1 = 0;_i1 < namedPartyTeams.Length;_i1++)
+            for (uint _i1 = 0; _i1 < namedPartyTeams.Length; _i1++)
             {
                 (namedPartyTeams[_i1] as NamedPartyTeam).Serialize(writer);
             }
@@ -42,7 +42,7 @@ namespace Giny.Protocol.Messages
             NamedPartyTeam _item1 = null;
             base.Deserialize(reader);
             uint _namedPartyTeamsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _namedPartyTeamsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _namedPartyTeamsLen; _i1++)
             {
                 _item1 = new NamedPartyTeam();
                 _item1.Deserialize(reader);
@@ -51,14 +51,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

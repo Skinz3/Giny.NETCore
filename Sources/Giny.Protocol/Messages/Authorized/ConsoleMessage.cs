@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ConsoleMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 806;
+{
+    public class ConsoleMessage : NetworkMessage
+    {
+        public const ushort Id = 9365;
         public override ushort MessageId => Id;
 
         public byte type;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ConsoleMessage()
         {
         }
-        public ConsoleMessage(byte type,string content)
+        public ConsoleMessage(byte type, string content)
         {
             this.type = type;
             this.content = content;
@@ -39,14 +39,7 @@ namespace Giny.Protocol.Messages
             content = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

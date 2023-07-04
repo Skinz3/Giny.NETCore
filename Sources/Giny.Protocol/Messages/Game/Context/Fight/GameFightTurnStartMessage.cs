@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightTurnStartMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 575;
+{
+    public class GameFightTurnStartMessage : NetworkMessage
+    {
+        public const ushort Id = 4715;
         public override ushort MessageId => Id;
 
         public double id;
@@ -18,14 +18,14 @@ namespace Giny.Protocol.Messages
         public GameFightTurnStartMessage()
         {
         }
-        public GameFightTurnStartMessage(double id,int waitTime)
+        public GameFightTurnStartMessage(double id, int waitTime)
         {
             this.id = id;
             this.waitTime = waitTime;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (id < -9.00719925474099E+15 || id > 9.00719925474099E+15)
+            if (id < -9007199254740992 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element id.");
             }
@@ -41,7 +41,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             id = (double)reader.ReadDouble();
-            if (id < -9.00719925474099E+15 || id > 9.00719925474099E+15)
+            if (id < -9007199254740992 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element of GameFightTurnStartMessage.id.");
             }
@@ -54,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -37,7 +37,7 @@ namespace Giny.World.Managers.Dialogs
             SendGuildInvitationRecruter(Source, GuildInvitationStateEnum.GUILD_INVITATION_SENT);
             Target.Client.Send(new GuildInvitationStateRecrutedMessage((byte)GuildInvitationStateEnum.GUILD_INVITATION_SENT));
 
-            Target.Client.Send(new GuildInvitedMessage(Source.Id, Source.Name, Source.Guild.GetBasicGuildInformations()));
+            Target.Client.Send(new GuildInvitedMessage(Source.Name, Source.Guild.GetBasicGuildInformations()));
 
             base.OnOpen();
         }

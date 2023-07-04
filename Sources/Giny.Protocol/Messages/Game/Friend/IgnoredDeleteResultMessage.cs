@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class IgnoredDeleteResultMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2242;
+{
+    public class IgnoredDeleteResultMessage : NetworkMessage
+    {
+        public const ushort Id = 4017;
         public override ushort MessageId => Id;
 
         public bool success;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public IgnoredDeleteResultMessage()
         {
         }
-        public IgnoredDeleteResultMessage(bool success,AccountTagInformation tag,bool session)
+        public IgnoredDeleteResultMessage(bool success, AccountTagInformation tag, bool session)
         {
             this.success = success;
             this.tag = tag;
@@ -28,28 +28,21 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             byte _box0 = 0;
-            _box0 = BooleanByteWrapper.SetFlag(_box0,0,success);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,1,session);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 0, success);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 1, session);
             writer.WriteByte((byte)_box0);
             tag.Serialize(writer);
         }
         public override void Deserialize(IDataReader reader)
         {
             byte _box0 = reader.ReadByte();
-            success = BooleanByteWrapper.GetFlag(_box0,0);
-            session = BooleanByteWrapper.GetFlag(_box0,1);
+            success = BooleanByteWrapper.GetFlag(_box0, 0);
+            session = BooleanByteWrapper.GetFlag(_box0, 1);
             tag = new AccountTagInformation();
             tag.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

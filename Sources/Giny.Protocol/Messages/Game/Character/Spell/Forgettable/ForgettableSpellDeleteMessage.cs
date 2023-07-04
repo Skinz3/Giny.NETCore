@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ForgettableSpellDeleteMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3832;
+{
+    public class ForgettableSpellDeleteMessage : NetworkMessage
+    {
+        public const ushort Id = 7051;
         public override ushort MessageId => Id;
 
         public byte reason;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ForgettableSpellDeleteMessage()
         {
         }
-        public ForgettableSpellDeleteMessage(byte reason,int[] spells)
+        public ForgettableSpellDeleteMessage(byte reason, int[] spells)
         {
             this.reason = reason;
             this.spells = spells;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         {
             writer.WriteByte((byte)reason);
             writer.WriteShort((short)spells.Length);
-            for (uint _i2 = 0;_i2 < spells.Length;_i2++)
+            for (uint _i2 = 0; _i2 < spells.Length; _i2++)
             {
                 if (spells[_i2] < 0)
                 {
@@ -49,7 +49,7 @@ namespace Giny.Protocol.Messages
 
             uint _spellsLen = (uint)reader.ReadUShort();
             spells = new int[_spellsLen];
-            for (uint _i2 = 0;_i2 < _spellsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _spellsLen; _i2++)
             {
                 _val2 = (uint)reader.ReadInt();
                 if (_val2 < 0)
@@ -62,14 +62,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

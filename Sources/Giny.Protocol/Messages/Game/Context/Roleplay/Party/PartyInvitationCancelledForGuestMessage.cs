@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PartyInvitationCancelledForGuestMessage : AbstractPartyMessage  
-    { 
-        public new const ushort Id = 3125;
+{
+    public class PartyInvitationCancelledForGuestMessage : AbstractPartyMessage
+    {
+        public new const ushort Id = 718;
         public override ushort MessageId => Id;
 
         public long cancelerId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public PartyInvitationCancelledForGuestMessage()
         {
         }
-        public PartyInvitationCancelledForGuestMessage(long cancelerId,int partyId)
+        public PartyInvitationCancelledForGuestMessage(long cancelerId, int partyId)
         {
             this.cancelerId = cancelerId;
             this.partyId = partyId;
@@ -25,7 +25,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (cancelerId < 0 || cancelerId > 9.00719925474099E+15)
+            if (cancelerId < 0 || cancelerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + cancelerId + ") on element cancelerId.");
             }
@@ -36,21 +36,14 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             cancelerId = (long)reader.ReadVarUhLong();
-            if (cancelerId < 0 || cancelerId > 9.00719925474099E+15)
+            if (cancelerId < 0 || cancelerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + cancelerId + ") on element of PartyInvitationCancelledForGuestMessage.cancelerId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

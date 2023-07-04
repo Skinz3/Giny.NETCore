@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class PresetsContainerPreset : Preset  
-    { 
-        public new const ushort Id = 9466;
+{
+    public class PresetsContainerPreset : Preset
+    {
+        public new const ushort Id = 9112;
         public override ushort TypeId => Id;
 
         public Preset[] presets;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public PresetsContainerPreset()
         {
         }
-        public PresetsContainerPreset(Preset[] presets,short id)
+        public PresetsContainerPreset(Preset[] presets, short id)
         {
             this.presets = presets;
             this.id = id;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Types
         {
             base.Serialize(writer);
             writer.WriteShort((short)presets.Length);
-            for (uint _i1 = 0;_i1 < presets.Length;_i1++)
+            for (uint _i1 = 0; _i1 < presets.Length; _i1++)
             {
                 writer.WriteShort((short)(presets[_i1] as Preset).TypeId);
                 (presets[_i1] as Preset).Serialize(writer);
@@ -37,7 +37,7 @@ namespace Giny.Protocol.Types
             Preset _item1 = null;
             base.Deserialize(reader);
             uint _presetsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _presetsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _presetsLen; _i1++)
             {
                 _id1 = (uint)reader.ReadUShort();
                 _item1 = ProtocolTypeManager.GetInstance<Preset>((short)_id1);
@@ -50,11 +50,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

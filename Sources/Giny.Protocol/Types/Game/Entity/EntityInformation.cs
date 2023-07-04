@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class EntityInformation  
-    { 
-        public const ushort Id = 9471;
+{
+    public class EntityInformation
+    {
+        public const ushort Id = 5260;
         public virtual ushort TypeId => Id;
 
         public short id;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Types
         public EntityInformation()
         {
         }
-        public EntityInformation(short id,int experience,bool status)
+        public EntityInformation(short id, int experience, bool status)
         {
             this.id = id;
             this.experience = experience;
@@ -59,11 +59,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

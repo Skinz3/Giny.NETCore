@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class StorageKamasUpdateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8712;
+{
+    public class StorageKamasUpdateMessage : NetworkMessage
+    {
+        public const ushort Id = 3512;
         public override ushort MessageId => Id;
 
         public long kamasTotal;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (kamasTotal < 0 || kamasTotal > 9.00719925474099E+15)
+            if (kamasTotal < 0 || kamasTotal > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + kamasTotal + ") on element kamasTotal.");
             }
@@ -33,21 +33,14 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             kamasTotal = (long)reader.ReadVarUhLong();
-            if (kamasTotal < 0 || kamasTotal > 9.00719925474099E+15)
+            if (kamasTotal < 0 || kamasTotal > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + kamasTotal + ") on element of StorageKamasUpdateMessage.kamasTotal.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

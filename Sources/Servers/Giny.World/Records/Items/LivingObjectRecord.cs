@@ -80,12 +80,12 @@ namespace Giny.World.Records.Items
         {
             return SkinIds[skinIndex - 1];
         }
-        public static LivingObjectRecord GetLivingObjectRecord(short id)
+        public static LivingObjectRecord GetLivingObjectRecord(int id)
         {
             return LivingObjects[id];
         }
 
-        public static bool IsLivingObject(short gid)
+        public static bool IsLivingObject(int gid)
         {
             return LivingObjects.ContainsKey(gid);
         }

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PartyInvitationDungeonDetailsMessage : PartyInvitationDetailsMessage  
-    { 
-        public new const ushort Id = 9163;
+{
+    public class PartyInvitationDungeonDetailsMessage : PartyInvitationDetailsMessage
+    {
+        public new const ushort Id = 521;
         public override ushort MessageId => Id;
 
         public short dungeonId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public PartyInvitationDungeonDetailsMessage()
         {
         }
-        public PartyInvitationDungeonDetailsMessage(short dungeonId,bool[] playersDungeonReady,int partyId,byte partyType,string partyName,long fromId,string fromName,long leaderId,PartyInvitationMemberInformations[] members,PartyGuestInformations[] guests)
+        public PartyInvitationDungeonDetailsMessage(short dungeonId, bool[] playersDungeonReady, int partyId, byte partyType, string partyName, long fromId, string fromName, long leaderId, PartyInvitationMemberInformations[] members, PartyGuestInformations[] guests)
         {
             this.dungeonId = dungeonId;
             this.playersDungeonReady = playersDungeonReady;
@@ -41,7 +41,7 @@ namespace Giny.Protocol.Messages
 
             writer.WriteVarShort((short)dungeonId);
             writer.WriteShort((short)playersDungeonReady.Length);
-            for (uint _i2 = 0;_i2 < playersDungeonReady.Length;_i2++)
+            for (uint _i2 = 0; _i2 < playersDungeonReady.Length; _i2++)
             {
                 writer.WriteBoolean((bool)playersDungeonReady[_i2]);
             }
@@ -59,7 +59,7 @@ namespace Giny.Protocol.Messages
 
             uint _playersDungeonReadyLen = (uint)reader.ReadUShort();
             playersDungeonReady = new bool[_playersDungeonReadyLen];
-            for (uint _i2 = 0;_i2 < _playersDungeonReadyLen;_i2++)
+            for (uint _i2 = 0; _i2 < _playersDungeonReadyLen; _i2++)
             {
                 _val2 = (bool)reader.ReadBoolean();
                 playersDungeonReady[_i2] = (bool)_val2;
@@ -67,14 +67,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

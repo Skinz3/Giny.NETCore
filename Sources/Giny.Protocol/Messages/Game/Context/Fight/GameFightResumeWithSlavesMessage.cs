@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightResumeWithSlavesMessage : GameFightResumeMessage  
-    { 
-        public new const ushort Id = 1683;
+{
+    public class GameFightResumeWithSlavesMessage : GameFightResumeMessage
+    {
+        public new const ushort Id = 1237;
         public override ushort MessageId => Id;
 
         public GameFightResumeSlaveInfo[] slavesInfo;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public GameFightResumeWithSlavesMessage()
         {
         }
-        public GameFightResumeWithSlavesMessage(GameFightResumeSlaveInfo[] slavesInfo,FightDispellableEffectExtendedInformations[] effects,GameActionMark[] marks,short gameTurn,int fightStart,Idol[] idols,GameFightEffectTriggerCount[] fxTriggerCounts,GameFightSpellCooldown[] spellCooldowns,byte summonCount,byte bombCount)
+        public GameFightResumeWithSlavesMessage(GameFightResumeSlaveInfo[] slavesInfo, FightDispellableEffectExtendedInformations[] effects, GameActionMark[] marks, short gameTurn, int fightStart, Idol[] idols, GameFightEffectTriggerCount[] fxTriggerCounts, GameFightSpellCooldown[] spellCooldowns, byte summonCount, byte bombCount)
         {
             this.slavesInfo = slavesInfo;
             this.effects = effects;
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             base.Serialize(writer);
             writer.WriteShort((short)slavesInfo.Length);
-            for (uint _i1 = 0;_i1 < slavesInfo.Length;_i1++)
+            for (uint _i1 = 0; _i1 < slavesInfo.Length; _i1++)
             {
                 (slavesInfo[_i1] as GameFightResumeSlaveInfo).Serialize(writer);
             }
@@ -45,7 +45,7 @@ namespace Giny.Protocol.Messages
             GameFightResumeSlaveInfo _item1 = null;
             base.Deserialize(reader);
             uint _slavesInfoLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _slavesInfoLen;_i1++)
+            for (uint _i1 = 0; _i1 < _slavesInfoLen; _i1++)
             {
                 _item1 = new GameFightResumeSlaveInfo();
                 _item1.Deserialize(reader);
@@ -54,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

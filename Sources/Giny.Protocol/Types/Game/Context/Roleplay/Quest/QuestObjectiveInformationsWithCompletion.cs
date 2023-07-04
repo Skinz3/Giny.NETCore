@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class QuestObjectiveInformationsWithCompletion : QuestObjectiveInformations  
-    { 
-        public new const ushort Id = 5684;
+{
+    public class QuestObjectiveInformationsWithCompletion : QuestObjectiveInformations
+    {
+        public new const ushort Id = 1671;
         public override ushort TypeId => Id;
 
         public short curCompletion;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public QuestObjectiveInformationsWithCompletion()
         {
         }
-        public QuestObjectiveInformationsWithCompletion(short curCompletion,short maxCompletion,short objectiveId,bool objectiveStatus,string[] dialogParams)
+        public QuestObjectiveInformationsWithCompletion(short curCompletion, short maxCompletion, short objectiveId, bool objectiveStatus, string[] dialogParams)
         {
             this.curCompletion = curCompletion;
             this.maxCompletion = maxCompletion;
@@ -60,11 +60,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

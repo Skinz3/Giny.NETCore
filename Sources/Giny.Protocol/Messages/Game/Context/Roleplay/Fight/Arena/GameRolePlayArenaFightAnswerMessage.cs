@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameRolePlayArenaFightAnswerMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8880;
+{
+    public class GameRolePlayArenaFightAnswerMessage : NetworkMessage
+    {
+        public const ushort Id = 1730;
         public override ushort MessageId => Id;
 
         public short fightId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public GameRolePlayArenaFightAnswerMessage()
         {
         }
-        public GameRolePlayArenaFightAnswerMessage(short fightId,bool accept)
+        public GameRolePlayArenaFightAnswerMessage(short fightId, bool accept)
         {
             this.fightId = fightId;
             this.accept = accept;
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
             accept = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

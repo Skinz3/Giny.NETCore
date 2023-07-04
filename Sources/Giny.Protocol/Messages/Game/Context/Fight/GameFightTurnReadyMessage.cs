@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightTurnReadyMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3349;
+{
+    public class GameFightTurnReadyMessage : NetworkMessage
+    {
+        public const ushort Id = 8591;
         public override ushort MessageId => Id;
 
         public bool isReady;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             isReady = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

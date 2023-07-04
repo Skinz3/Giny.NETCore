@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameRolePlayPlayerLifeStatusMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8586;
+{
+    public class GameRolePlayPlayerLifeStatusMessage : NetworkMessage
+    {
+        public const ushort Id = 8105;
         public override ushort MessageId => Id;
 
         public byte state;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public GameRolePlayPlayerLifeStatusMessage()
         {
         }
-        public GameRolePlayPlayerLifeStatusMessage(byte state,double phenixMapId)
+        public GameRolePlayPlayerLifeStatusMessage(byte state, double phenixMapId)
         {
             this.state = state;
             this.phenixMapId = phenixMapId;
@@ -26,7 +26,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteByte((byte)state);
-            if (phenixMapId < 0 || phenixMapId > 9.00719925474099E+15)
+            if (phenixMapId < 0 || phenixMapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + phenixMapId + ") on element phenixMapId.");
             }
@@ -42,21 +42,14 @@ namespace Giny.Protocol.Messages
             }
 
             phenixMapId = (double)reader.ReadDouble();
-            if (phenixMapId < 0 || phenixMapId > 9.00719925474099E+15)
+            if (phenixMapId < 0 || phenixMapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + phenixMapId + ") on element of GameRolePlayPlayerLifeStatusMessage.phenixMapId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

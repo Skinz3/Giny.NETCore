@@ -39,7 +39,7 @@ namespace Giny.World.Managers.Exchanges
         }
 
 
-        private short GIdWatched
+        private int GIdWatched
         {
             get;
             set;
@@ -62,7 +62,8 @@ namespace Giny.World.Managers.Exchanges
             var gids = GetGIDs(TypeWatched);
             Character.Client.Send(new ExchangeTypesExchangerDescriptionForUserMessage(type, gids));
         }
-        public void ShowList(short gid)
+        [WIP]
+        public void ShowList(int gid,bool follow) // follow?
         {
             GIdWatched = gid;
 
@@ -129,7 +130,7 @@ namespace Giny.World.Managers.Exchanges
                 uid = uid
             });
         }
-        private void OnGIdRemoved(short gid)
+        private void OnGIdRemoved(int gid)
         {
             Character.Client.Send(new ExchangeBidHouseGenericItemRemovedMessage()
             {
@@ -145,7 +146,7 @@ namespace Giny.World.Managers.Exchanges
                 objectType = (short)TypeWatched,
             });
         }
-        private IEnumerable<BidShopItemRecord> GetItemsByGId(short gid)
+        private IEnumerable<BidShopItemRecord> GetItemsByGId(int gid)
         {
             return Items.Where(x => x.GId == gid);
         }

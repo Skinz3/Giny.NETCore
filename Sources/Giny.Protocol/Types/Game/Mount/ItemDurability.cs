@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ItemDurability  
-    { 
-        public const ushort Id = 6808;
+{
+    public class ItemDurability
+    {
+        public const ushort Id = 6082;
         public virtual ushort TypeId => Id;
 
         public short durability;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public ItemDurability()
         {
         }
-        public ItemDurability(short durability,short durabilityMax)
+        public ItemDurability(short durability, short durabilityMax)
         {
             this.durability = durability;
             this.durabilityMax = durabilityMax;
@@ -35,11 +35,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

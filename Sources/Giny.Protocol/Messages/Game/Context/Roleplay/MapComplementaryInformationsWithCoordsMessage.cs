@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class MapComplementaryInformationsWithCoordsMessage : MapComplementaryInformationsDataMessage  
-    { 
-        public new const ushort Id = 8598;
+{
+    public class MapComplementaryInformationsWithCoordsMessage : MapComplementaryInformationsDataMessage
+    {
+        public new const ushort Id = 3562;
         public override ushort MessageId => Id;
 
         public short worldX;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public MapComplementaryInformationsWithCoordsMessage()
         {
         }
-        public MapComplementaryInformationsWithCoordsMessage(short worldX,short worldY,short subAreaId,double mapId,HouseInformations[] houses,GameRolePlayActorInformations[] actors,InteractiveElement[] interactiveElements,StatedElement[] statedElements,MapObstacle[] obstacles,FightCommonInformations[] fights,bool hasAggressiveMonsters,FightStartingPositions fightStartPositions)
+        public MapComplementaryInformationsWithCoordsMessage(short worldX, short worldY, short subAreaId, double mapId, HouseInformations[] houses, GameRolePlayActorInformations[] actors, InteractiveElement[] interactiveElements, StatedElement[] statedElements, MapObstacle[] obstacles, FightCommonInformations[] fights, bool hasAggressiveMonsters, FightStartingPositions fightStartPositions)
         {
             this.worldX = worldX;
             this.worldY = worldY;
@@ -66,14 +66,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

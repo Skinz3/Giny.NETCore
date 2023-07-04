@@ -6,17 +6,17 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PartyNewMemberMessage : PartyUpdateMessage  
-    { 
-        public new const ushort Id = 8047;
+{
+    public class PartyNewMemberMessage : PartyUpdateMessage
+    {
+        public new const ushort Id = 5390;
         public override ushort MessageId => Id;
 
 
         public PartyNewMemberMessage()
         {
         }
-        public PartyNewMemberMessage(int partyId,PartyMemberInformations memberInformations)
+        public PartyNewMemberMessage(int partyId, PartyMemberInformations memberInformations)
         {
             this.partyId = partyId;
             this.memberInformations = memberInformations;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -4,34 +4,34 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class HumanOptionAlliance : HumanOption  
-    { 
-        public new const ushort Id = 6829;
+{
+    public class HumanOptionAlliance : HumanOption
+    {
+        public new const ushort Id = 8074;
         public override ushort TypeId => Id;
 
-        public AllianceInformations allianceInformations;
+        public AllianceInformation allianceInformation;
         public byte aggressable;
 
         public HumanOptionAlliance()
         {
         }
-        public HumanOptionAlliance(AllianceInformations allianceInformations,byte aggressable)
+        public HumanOptionAlliance(AllianceInformation allianceInformation, byte aggressable)
         {
-            this.allianceInformations = allianceInformations;
+            this.allianceInformation = allianceInformation;
             this.aggressable = aggressable;
         }
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            allianceInformations.Serialize(writer);
+            allianceInformation.Serialize(writer);
             writer.WriteByte((byte)aggressable);
         }
         public override void Deserialize(IDataReader reader)
         {
             base.Deserialize(reader);
-            allianceInformations = new AllianceInformations();
-            allianceInformations.Deserialize(reader);
+            allianceInformation = new AllianceInformation();
+            allianceInformation.Deserialize(reader);
             aggressable = (byte)reader.ReadByte();
             if (aggressable < 0)
             {
@@ -43,11 +43,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ContactLookErrorMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8688;
+{
+    public class ContactLookErrorMessage : NetworkMessage
+    {
+        public const ushort Id = 3592;
         public override ushort MessageId => Id;
 
         public int requestId;
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

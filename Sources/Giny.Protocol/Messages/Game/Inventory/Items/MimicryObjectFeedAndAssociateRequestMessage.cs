@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class MimicryObjectFeedAndAssociateRequestMessage : SymbioticObjectAssociateRequestMessage  
-    { 
-        public new const ushort Id = 3920;
+{
+    public class MimicryObjectFeedAndAssociateRequestMessage : SymbioticObjectAssociateRequestMessage
+    {
+        public new const ushort Id = 8003;
         public override ushort MessageId => Id;
 
         public int foodUID;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public MimicryObjectFeedAndAssociateRequestMessage()
         {
         }
-        public MimicryObjectFeedAndAssociateRequestMessage(int foodUID,byte foodPos,bool preview,int symbioteUID,byte symbiotePos,int hostUID,byte hostPos)
+        public MimicryObjectFeedAndAssociateRequestMessage(int foodUID, byte foodPos, bool preview, int symbioteUID, byte symbiotePos, int hostUID, byte hostPos)
         {
             this.foodUID = foodUID;
             this.foodPos = foodPos;
@@ -64,14 +64,7 @@ namespace Giny.Protocol.Messages
             preview = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

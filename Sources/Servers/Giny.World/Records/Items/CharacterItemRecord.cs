@@ -32,7 +32,7 @@ namespace Giny.World.Records.Items
 
         long ITable.Id => base.UId;
 
-        public CharacterItemRecord(long characterId, int uid, short gid, byte position, int quantity, EffectCollection effects, short appearanceId, string look)
+        public CharacterItemRecord(long characterId, int uid, int gid, byte position, int quantity, EffectCollection effects, short appearanceId, string look)
         {
             this.UId = uid;
             this.GId = gid;

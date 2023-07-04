@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BasicTimeMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 430;
+{
+    public class BasicTimeMessage : NetworkMessage
+    {
+        public const ushort Id = 3382;
         public override ushort MessageId => Id;
 
         public double timestamp;
@@ -18,14 +18,14 @@ namespace Giny.Protocol.Messages
         public BasicTimeMessage()
         {
         }
-        public BasicTimeMessage(double timestamp,short timezoneOffset)
+        public BasicTimeMessage(double timestamp, short timezoneOffset)
         {
             this.timestamp = timestamp;
             this.timezoneOffset = timezoneOffset;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (timestamp < 0 || timestamp > 9.00719925474099E+15)
+            if (timestamp < 0 || timestamp > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + timestamp + ") on element timestamp.");
             }
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             timestamp = (double)reader.ReadDouble();
-            if (timestamp < 0 || timestamp > 9.00719925474099E+15)
+            if (timestamp < 0 || timestamp > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + timestamp + ") on element of BasicTimeMessage.timestamp.");
             }
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
             timezoneOffset = (short)reader.ReadShort();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

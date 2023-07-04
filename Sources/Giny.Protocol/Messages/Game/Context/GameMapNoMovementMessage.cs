@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameMapNoMovementMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6929;
+{
+    public class GameMapNoMovementMessage : NetworkMessage
+    {
+        public const ushort Id = 7166;
         public override ushort MessageId => Id;
 
         public short cellX;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public GameMapNoMovementMessage()
         {
         }
-        public GameMapNoMovementMessage(short cellX,short cellY)
+        public GameMapNoMovementMessage(short cellX, short cellY)
         {
             this.cellX = cellX;
             this.cellY = cellY;
@@ -34,14 +34,7 @@ namespace Giny.Protocol.Messages
             cellY = (short)reader.ReadShort();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

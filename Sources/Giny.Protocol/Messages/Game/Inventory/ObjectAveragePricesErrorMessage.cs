@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ObjectAveragePricesErrorMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6484;
+{
+    public class ObjectAveragePricesErrorMessage : NetworkMessage
+    {
+        public const ushort Id = 2012;
         public override ushort MessageId => Id;
 
 
@@ -23,14 +23,7 @@ namespace Giny.Protocol.Messages
         {
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

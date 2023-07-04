@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class FightResultPvpData : FightResultAdditionalData  
-    { 
-        public new const ushort Id = 9448;
+{
+    public class FightResultPvpData : FightResultAdditionalData
+    {
+        public new const ushort Id = 6157;
         public override ushort TypeId => Id;
 
         public byte grade;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Types
         public FightResultPvpData()
         {
         }
-        public FightResultPvpData(byte grade,short minHonorForGrade,short maxHonorForGrade,short honor,short honorDelta)
+        public FightResultPvpData(byte grade, short minHonorForGrade, short maxHonorForGrade, short honor, short honorDelta)
         {
             this.grade = grade;
             this.minHonorForGrade = minHonorForGrade;
@@ -89,11 +89,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

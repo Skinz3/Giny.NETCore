@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class InviteInHavenBagOfferMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7339;
+{
+    public class InviteInHavenBagOfferMessage : NetworkMessage
+    {
+        public const ushort Id = 2399;
         public override ushort MessageId => Id;
 
         public CharacterMinimalInformations hostInformations;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public InviteInHavenBagOfferMessage()
         {
         }
-        public InviteInHavenBagOfferMessage(CharacterMinimalInformations hostInformations,int timeLeftBeforeCancel)
+        public InviteInHavenBagOfferMessage(CharacterMinimalInformations hostInformations, int timeLeftBeforeCancel)
         {
             this.hostInformations = hostInformations;
             this.timeLeftBeforeCancel = timeLeftBeforeCancel;
@@ -35,14 +35,7 @@ namespace Giny.Protocol.Messages
             timeLeftBeforeCancel = (int)reader.ReadVarInt();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

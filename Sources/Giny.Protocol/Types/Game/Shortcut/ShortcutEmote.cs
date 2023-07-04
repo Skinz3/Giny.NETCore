@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ShortcutEmote : Shortcut  
-    { 
-        public new const ushort Id = 3071;
+{
+    public class ShortcutEmote : Shortcut
+    {
+        public new const ushort Id = 9342;
         public override ushort TypeId => Id;
 
         public short emoteId;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public ShortcutEmote()
         {
         }
-        public ShortcutEmote(short emoteId,byte slot)
+        public ShortcutEmote(short emoteId, byte slot)
         {
             this.emoteId = emoteId;
             this.slot = slot;
@@ -44,11 +44,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

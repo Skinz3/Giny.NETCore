@@ -97,9 +97,9 @@ namespace Giny.World.Records.Jobs
         {
             return Recipes.TryGetValue(resultId);
         }
-        public static RecipeRecord GetRecipeRecord(short[] gids, int[] quantities)
+        public static RecipeRecord GetRecipeRecord(int[] gids, int[] quantities)
         {
-            Dictionary<short, int> ingredientsQuantities = new Dictionary<short, int>();
+            Dictionary<int, int> ingredientsQuantities = new Dictionary<int, int>();
 
             for (int i = 0; i < gids.Length; i++)
             {
@@ -118,7 +118,7 @@ namespace Giny.World.Records.Jobs
         }
 
         [PerformanceIssue]
-        private bool IsValidRecipe(Dictionary<short, int> ingredientsQuantities)
+        private bool IsValidRecipe(Dictionary<int, int> ingredientsQuantities)
         {
             if (ingredientsQuantities.Count != IngredientsQuantities.Count)
                 return false;

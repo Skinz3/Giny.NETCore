@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameContextRemoveMultipleElementsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3528;
+{
+    public class GameContextRemoveMultipleElementsMessage : NetworkMessage
+    {
+        public const ushort Id = 6059;
         public override ushort MessageId => Id;
 
         public double[] elementsIds;
@@ -24,9 +24,9 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)elementsIds.Length);
-            for (uint _i1 = 0;_i1 < elementsIds.Length;_i1++)
+            for (uint _i1 = 0; _i1 < elementsIds.Length; _i1++)
             {
-                if (elementsIds[_i1] < -9.00719925474099E+15 || elementsIds[_i1] > 9.00719925474099E+15)
+                if (elementsIds[_i1] < -9007199254740992 || elementsIds[_i1] > 9007199254740992)
                 {
                     throw new System.Exception("Forbidden value (" + elementsIds[_i1] + ") on element 1 (starting at 1) of elementsIds.");
                 }
@@ -40,10 +40,10 @@ namespace Giny.Protocol.Messages
             double _val1 = double.NaN;
             uint _elementsIdsLen = (uint)reader.ReadUShort();
             elementsIds = new double[_elementsIdsLen];
-            for (uint _i1 = 0;_i1 < _elementsIdsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _elementsIdsLen; _i1++)
             {
                 _val1 = (double)reader.ReadDouble();
-                if (_val1 < -9.00719925474099E+15 || _val1 > 9.00719925474099E+15)
+                if (_val1 < -9007199254740992 || _val1 > 9007199254740992)
                 {
                     throw new System.Exception("Forbidden value (" + _val1 + ") on elements of elementsIds.");
                 }
@@ -53,14 +53,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

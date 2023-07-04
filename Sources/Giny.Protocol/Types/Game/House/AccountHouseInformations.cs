@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class AccountHouseInformations : HouseInformations  
-    { 
-        public new const ushort Id = 588;
+{
+    public class AccountHouseInformations : HouseInformations
+    {
+        public new const ushort Id = 5253;
         public override ushort TypeId => Id;
 
         public HouseInstanceInformations houseInfos;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Types
         public AccountHouseInformations()
         {
         }
-        public AccountHouseInformations(HouseInstanceInformations houseInfos,short worldX,short worldY,double mapId,short subAreaId,int houseId,short modelId)
+        public AccountHouseInformations(HouseInstanceInformations houseInfos, short worldX, short worldY, double mapId, short subAreaId, int houseId, short modelId)
         {
             this.houseInfos = houseInfos;
             this.worldX = worldX;
@@ -46,7 +46,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteShort((short)worldY);
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element mapId.");
             }
@@ -78,7 +78,7 @@ namespace Giny.Protocol.Types
             }
 
             mapId = (double)reader.ReadDouble();
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element of AccountHouseInformations.mapId.");
             }
@@ -94,11 +94,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

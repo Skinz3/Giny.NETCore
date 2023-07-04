@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameActionFightLifeAndShieldPointsLostMessage : GameActionFightLifePointsLostMessage  
-    { 
-        public new const ushort Id = 894;
+{
+    public class GameActionFightLifeAndShieldPointsLostMessage : GameActionFightLifePointsLostMessage
+    {
+        public new const ushort Id = 1097;
         public override ushort MessageId => Id;
 
         public short shieldLoss;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public GameActionFightLifeAndShieldPointsLostMessage()
         {
         }
-        public GameActionFightLifeAndShieldPointsLostMessage(short shieldLoss,short actionId,double sourceId,double targetId,int loss,int permanentDamages,int elementId)
+        public GameActionFightLifeAndShieldPointsLostMessage(short shieldLoss, short actionId, double sourceId, double targetId, int loss, int permanentDamages, int elementId)
         {
             this.shieldLoss = shieldLoss;
             this.actionId = actionId;
@@ -48,14 +48,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

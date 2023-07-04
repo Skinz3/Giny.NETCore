@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameRefreshMonsterBoostsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8657;
+{
+    public class GameRefreshMonsterBoostsMessage : NetworkMessage
+    {
+        public const ushort Id = 4104;
         public override ushort MessageId => Id;
 
         public MonsterBoosts[] monsterBoosts;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public GameRefreshMonsterBoostsMessage()
         {
         }
-        public GameRefreshMonsterBoostsMessage(MonsterBoosts[] monsterBoosts,MonsterBoosts[] familyBoosts)
+        public GameRefreshMonsterBoostsMessage(MonsterBoosts[] monsterBoosts, MonsterBoosts[] familyBoosts)
         {
             this.monsterBoosts = monsterBoosts;
             this.familyBoosts = familyBoosts;
@@ -26,13 +26,13 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)monsterBoosts.Length);
-            for (uint _i1 = 0;_i1 < monsterBoosts.Length;_i1++)
+            for (uint _i1 = 0; _i1 < monsterBoosts.Length; _i1++)
             {
                 (monsterBoosts[_i1] as MonsterBoosts).Serialize(writer);
             }
 
             writer.WriteShort((short)familyBoosts.Length);
-            for (uint _i2 = 0;_i2 < familyBoosts.Length;_i2++)
+            for (uint _i2 = 0; _i2 < familyBoosts.Length; _i2++)
             {
                 (familyBoosts[_i2] as MonsterBoosts).Serialize(writer);
             }
@@ -43,7 +43,7 @@ namespace Giny.Protocol.Messages
             MonsterBoosts _item1 = null;
             MonsterBoosts _item2 = null;
             uint _monsterBoostsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _monsterBoostsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _monsterBoostsLen; _i1++)
             {
                 _item1 = new MonsterBoosts();
                 _item1.Deserialize(reader);
@@ -51,7 +51,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _familyBoostsLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _familyBoostsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _familyBoostsLen; _i2++)
             {
                 _item2 = new MonsterBoosts();
                 _item2.Deserialize(reader);
@@ -60,14 +60,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

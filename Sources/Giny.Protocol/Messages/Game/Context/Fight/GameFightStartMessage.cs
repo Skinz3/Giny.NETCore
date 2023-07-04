@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightStartMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8247;
+{
+    public class GameFightStartMessage : NetworkMessage
+    {
+        public const ushort Id = 4014;
         public override ushort MessageId => Id;
 
         public Idol[] idols;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)idols.Length);
-            for (uint _i1 = 0;_i1 < idols.Length;_i1++)
+            for (uint _i1 = 0; _i1 < idols.Length; _i1++)
             {
                 (idols[_i1] as Idol).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             Idol _item1 = null;
             uint _idolsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _idolsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _idolsLen; _i1++)
             {
                 _item1 = new Idol();
                 _item1.Deserialize(reader);
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

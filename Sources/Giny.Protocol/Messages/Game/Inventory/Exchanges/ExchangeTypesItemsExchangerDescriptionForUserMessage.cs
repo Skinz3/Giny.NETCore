@@ -6,25 +6,33 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeTypesItemsExchangerDescriptionForUserMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5554;
+{
+    public class ExchangeTypesItemsExchangerDescriptionForUserMessage : NetworkMessage
+    {
+        public const ushort Id = 3289;
         public override ushort MessageId => Id;
 
+        public int objectGID;
         public int objectType;
         public BidExchangerObjectInfo[] itemTypeDescriptions;
 
         public ExchangeTypesItemsExchangerDescriptionForUserMessage()
         {
         }
-        public ExchangeTypesItemsExchangerDescriptionForUserMessage(int objectType,BidExchangerObjectInfo[] itemTypeDescriptions)
+        public ExchangeTypesItemsExchangerDescriptionForUserMessage(int objectGID, int objectType, BidExchangerObjectInfo[] itemTypeDescriptions)
         {
+            this.objectGID = objectGID;
             this.objectType = objectType;
             this.itemTypeDescriptions = itemTypeDescriptions;
         }
         public override void Serialize(IDataWriter writer)
         {
+            if (objectGID < 0)
+            {
+                throw new System.Exception("Forbidden value (" + objectGID + ") on element objectGID.");
+            }
+
+            writer.WriteVarInt((int)objectGID);
             if (objectType < 0)
             {
                 throw new System.Exception("Forbidden value (" + objectType + ") on element objectType.");
@@ -32,15 +40,21 @@ namespace Giny.Protocol.Messages
 
             writer.WriteInt((int)objectType);
             writer.WriteShort((short)itemTypeDescriptions.Length);
-            for (uint _i2 = 0;_i2 < itemTypeDescriptions.Length;_i2++)
+            for (uint _i3 = 0; _i3 < itemTypeDescriptions.Length; _i3++)
             {
-                (itemTypeDescriptions[_i2] as BidExchangerObjectInfo).Serialize(writer);
+                (itemTypeDescriptions[_i3] as BidExchangerObjectInfo).Serialize(writer);
             }
 
         }
         public override void Deserialize(IDataReader reader)
         {
-            BidExchangerObjectInfo _item2 = null;
+            BidExchangerObjectInfo _item3 = null;
+            objectGID = (int)reader.ReadVarUhInt();
+            if (objectGID < 0)
+            {
+                throw new System.Exception("Forbidden value (" + objectGID + ") on element of ExchangeTypesItemsExchangerDescriptionForUserMessage.objectGID.");
+            }
+
             objectType = (int)reader.ReadInt();
             if (objectType < 0)
             {
@@ -48,23 +62,16 @@ namespace Giny.Protocol.Messages
             }
 
             uint _itemTypeDescriptionsLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _itemTypeDescriptionsLen;_i2++)
+            for (uint _i3 = 0; _i3 < _itemTypeDescriptionsLen; _i3++)
             {
-                _item2 = new BidExchangerObjectInfo();
-                _item2.Deserialize(reader);
-                itemTypeDescriptions[_i2] = _item2;
+                _item3 = new BidExchangerObjectInfo();
+                _item3.Deserialize(reader);
+                itemTypeDescriptions[_i3] = _item3;
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

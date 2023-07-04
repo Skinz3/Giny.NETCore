@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HouseSellingUpdateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9319;
+{
+    public class HouseSellingUpdateMessage : NetworkMessage
+    {
+        public const ushort Id = 7328;
         public override ushort MessageId => Id;
 
         public int houseId;
@@ -21,7 +21,7 @@ namespace Giny.Protocol.Messages
         public HouseSellingUpdateMessage()
         {
         }
-        public HouseSellingUpdateMessage(int houseId,int instanceId,bool secondHand,long realPrice,AccountTagInformation buyerTag)
+        public HouseSellingUpdateMessage(int houseId, int instanceId, bool secondHand, long realPrice, AccountTagInformation buyerTag)
         {
             this.houseId = houseId;
             this.instanceId = instanceId;
@@ -44,7 +44,7 @@ namespace Giny.Protocol.Messages
 
             writer.WriteInt((int)instanceId);
             writer.WriteBoolean((bool)secondHand);
-            if (realPrice < 0 || realPrice > 9.00719925474099E+15)
+            if (realPrice < 0 || realPrice > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + realPrice + ") on element realPrice.");
             }
@@ -68,7 +68,7 @@ namespace Giny.Protocol.Messages
 
             secondHand = (bool)reader.ReadBoolean();
             realPrice = (long)reader.ReadVarUhLong();
-            if (realPrice < 0 || realPrice > 9.00719925474099E+15)
+            if (realPrice < 0 || realPrice > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + realPrice + ") on element of HouseSellingUpdateMessage.realPrice.");
             }
@@ -77,14 +77,7 @@ namespace Giny.Protocol.Messages
             buyerTag.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

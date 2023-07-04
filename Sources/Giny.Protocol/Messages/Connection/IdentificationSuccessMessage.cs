@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class IdentificationSuccessMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6384;
+{
+    public class IdentificationSuccessMessage : NetworkMessage
+    {
+        public const ushort Id = 7045;
         public override ushort MessageId => Id;
 
         public string login;
@@ -17,41 +17,34 @@ namespace Giny.Protocol.Messages
         public int accountId;
         public byte communityId;
         public bool hasRights;
-        public bool hasConsoleRight;
-        public string secretQuestion;
+        public bool hasForceRight;
         public double accountCreation;
-        public double subscriptionElapsedDuration;
         public double subscriptionEndDate;
         public bool wasAlreadyConnected;
         public byte havenbagAvailableRoom;
-        public bool isAccountForced;
 
         public IdentificationSuccessMessage()
         {
         }
-        public IdentificationSuccessMessage(string login,AccountTagInformation accountTag,int accountId,byte communityId,bool hasRights,bool hasConsoleRight,string secretQuestion,double accountCreation,double subscriptionElapsedDuration,double subscriptionEndDate,bool wasAlreadyConnected,byte havenbagAvailableRoom,bool isAccountForced)
+        public IdentificationSuccessMessage(string login, AccountTagInformation accountTag, int accountId, byte communityId, bool hasRights, bool hasForceRight, double accountCreation, double subscriptionEndDate, bool wasAlreadyConnected, byte havenbagAvailableRoom)
         {
             this.login = login;
             this.accountTag = accountTag;
             this.accountId = accountId;
             this.communityId = communityId;
             this.hasRights = hasRights;
-            this.hasConsoleRight = hasConsoleRight;
-            this.secretQuestion = secretQuestion;
+            this.hasForceRight = hasForceRight;
             this.accountCreation = accountCreation;
-            this.subscriptionElapsedDuration = subscriptionElapsedDuration;
             this.subscriptionEndDate = subscriptionEndDate;
             this.wasAlreadyConnected = wasAlreadyConnected;
             this.havenbagAvailableRoom = havenbagAvailableRoom;
-            this.isAccountForced = isAccountForced;
         }
         public override void Serialize(IDataWriter writer)
         {
             byte _box0 = 0;
-            _box0 = BooleanByteWrapper.SetFlag(_box0,0,hasRights);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,1,hasConsoleRight);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,2,wasAlreadyConnected);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,3,isAccountForced);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 0, hasRights);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 1, hasForceRight);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 2, wasAlreadyConnected);
             writer.WriteByte((byte)_box0);
             writer.WriteUTF((string)login);
             accountTag.Serialize(writer);
@@ -67,20 +60,13 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteByte((byte)communityId);
-            writer.WriteUTF((string)secretQuestion);
-            if (accountCreation < 0 || accountCreation > 9.00719925474099E+15)
+            if (accountCreation < 0 || accountCreation > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + accountCreation + ") on element accountCreation.");
             }
 
             writer.WriteDouble((double)accountCreation);
-            if (subscriptionElapsedDuration < 0 || subscriptionElapsedDuration > 9.00719925474099E+15)
-            {
-                throw new System.Exception("Forbidden value (" + subscriptionElapsedDuration + ") on element subscriptionElapsedDuration.");
-            }
-
-            writer.WriteDouble((double)subscriptionElapsedDuration);
-            if (subscriptionEndDate < 0 || subscriptionEndDate > 9.00719925474099E+15)
+            if (subscriptionEndDate < 0 || subscriptionEndDate > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + subscriptionEndDate + ") on element subscriptionEndDate.");
             }
@@ -96,10 +82,9 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             byte _box0 = reader.ReadByte();
-            hasRights = BooleanByteWrapper.GetFlag(_box0,0);
-            hasConsoleRight = BooleanByteWrapper.GetFlag(_box0,1);
-            wasAlreadyConnected = BooleanByteWrapper.GetFlag(_box0,2);
-            isAccountForced = BooleanByteWrapper.GetFlag(_box0,3);
+            hasRights = BooleanByteWrapper.GetFlag(_box0, 0);
+            hasForceRight = BooleanByteWrapper.GetFlag(_box0, 1);
+            wasAlreadyConnected = BooleanByteWrapper.GetFlag(_box0, 2);
             login = (string)reader.ReadUTF();
             accountTag = new AccountTagInformation();
             accountTag.Deserialize(reader);
@@ -115,21 +100,14 @@ namespace Giny.Protocol.Messages
                 throw new System.Exception("Forbidden value (" + communityId + ") on element of IdentificationSuccessMessage.communityId.");
             }
 
-            secretQuestion = (string)reader.ReadUTF();
             accountCreation = (double)reader.ReadDouble();
-            if (accountCreation < 0 || accountCreation > 9.00719925474099E+15)
+            if (accountCreation < 0 || accountCreation > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + accountCreation + ") on element of IdentificationSuccessMessage.accountCreation.");
             }
 
-            subscriptionElapsedDuration = (double)reader.ReadDouble();
-            if (subscriptionElapsedDuration < 0 || subscriptionElapsedDuration > 9.00719925474099E+15)
-            {
-                throw new System.Exception("Forbidden value (" + subscriptionElapsedDuration + ") on element of IdentificationSuccessMessage.subscriptionElapsedDuration.");
-            }
-
             subscriptionEndDate = (double)reader.ReadDouble();
-            if (subscriptionEndDate < 0 || subscriptionEndDate > 9.00719925474099E+15)
+            if (subscriptionEndDate < 0 || subscriptionEndDate > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + subscriptionEndDate + ") on element of IdentificationSuccessMessage.subscriptionEndDate.");
             }
@@ -142,14 +120,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

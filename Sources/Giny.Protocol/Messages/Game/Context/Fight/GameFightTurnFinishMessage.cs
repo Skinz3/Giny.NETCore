@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightTurnFinishMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2650;
+{
+    public class GameFightTurnFinishMessage : NetworkMessage
+    {
+        public const ushort Id = 7512;
         public override ushort MessageId => Id;
 
         public bool isAfk;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             isAfk = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

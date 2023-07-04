@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BreachStateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6075;
+{
+    public class BreachStateMessage : NetworkMessage
+    {
+        public const ushort Id = 3942;
         public override ushort MessageId => Id;
 
         public CharacterMinimalInformations owner;
@@ -20,7 +20,7 @@ namespace Giny.Protocol.Messages
         public BreachStateMessage()
         {
         }
-        public BreachStateMessage(CharacterMinimalInformations owner,ObjectEffectInteger[] bonuses,int bugdet,bool saved)
+        public BreachStateMessage(CharacterMinimalInformations owner, ObjectEffectInteger[] bonuses, int bugdet, bool saved)
         {
             this.owner = owner;
             this.bonuses = bonuses;
@@ -31,7 +31,7 @@ namespace Giny.Protocol.Messages
         {
             owner.Serialize(writer);
             writer.WriteShort((short)bonuses.Length);
-            for (uint _i2 = 0;_i2 < bonuses.Length;_i2++)
+            for (uint _i2 = 0; _i2 < bonuses.Length; _i2++)
             {
                 (bonuses[_i2] as ObjectEffectInteger).Serialize(writer);
             }
@@ -50,7 +50,7 @@ namespace Giny.Protocol.Messages
             owner = new CharacterMinimalInformations();
             owner.Deserialize(reader);
             uint _bonusesLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _bonusesLen;_i2++)
+            for (uint _i2 = 0; _i2 < _bonusesLen; _i2++)
             {
                 _item2 = new ObjectEffectInteger();
                 _item2.Deserialize(reader);
@@ -66,14 +66,7 @@ namespace Giny.Protocol.Messages
             saved = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

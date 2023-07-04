@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class SkillActionDescription  
-    { 
-        public const ushort Id = 8190;
+{
+    public class SkillActionDescription
+    {
+        public const ushort Id = 7502;
         public virtual ushort TypeId => Id;
 
         public short skillId;
@@ -41,11 +41,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

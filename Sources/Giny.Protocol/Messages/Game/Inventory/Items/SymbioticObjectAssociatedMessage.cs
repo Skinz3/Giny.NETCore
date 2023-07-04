@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class SymbioticObjectAssociatedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6447;
+{
+    public class SymbioticObjectAssociatedMessage : NetworkMessage
+    {
+        public const ushort Id = 5135;
         public override ushort MessageId => Id;
 
         public int hostUID;
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

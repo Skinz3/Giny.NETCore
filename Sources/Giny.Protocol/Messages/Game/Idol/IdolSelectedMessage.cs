@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class IdolSelectedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2306;
+{
+    public class IdolSelectedMessage : NetworkMessage
+    {
+        public const ushort Id = 4793;
         public override ushort MessageId => Id;
 
         public short idolId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public IdolSelectedMessage()
         {
         }
-        public IdolSelectedMessage(short idolId,bool activate,bool party)
+        public IdolSelectedMessage(short idolId, bool activate, bool party)
         {
             this.idolId = idolId;
             this.activate = activate;
@@ -28,8 +28,8 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             byte _box0 = 0;
-            _box0 = BooleanByteWrapper.SetFlag(_box0,0,activate);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,1,party);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 0, activate);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 1, party);
             writer.WriteByte((byte)_box0);
             if (idolId < 0)
             {
@@ -41,8 +41,8 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             byte _box0 = reader.ReadByte();
-            activate = BooleanByteWrapper.GetFlag(_box0,0);
-            party = BooleanByteWrapper.GetFlag(_box0,1);
+            activate = BooleanByteWrapper.GetFlag(_box0, 0);
+            party = BooleanByteWrapper.GetFlag(_box0, 1);
             idolId = (short)reader.ReadVarUhShort();
             if (idolId < 0)
             {
@@ -51,14 +51,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

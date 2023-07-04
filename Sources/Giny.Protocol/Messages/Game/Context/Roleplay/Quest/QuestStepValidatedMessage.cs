@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class QuestStepValidatedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3032;
+{
+    public class QuestStepValidatedMessage : NetworkMessage
+    {
+        public const ushort Id = 6383;
         public override ushort MessageId => Id;
 
         public short questId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public QuestStepValidatedMessage()
         {
         }
-        public QuestStepValidatedMessage(short questId,short stepId)
+        public QuestStepValidatedMessage(short questId, short stepId)
         {
             this.questId = questId;
             this.stepId = stepId;
@@ -54,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

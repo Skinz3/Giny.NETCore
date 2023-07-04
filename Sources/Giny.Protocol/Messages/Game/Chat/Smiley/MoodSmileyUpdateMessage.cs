@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class MoodSmileyUpdateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6990;
+{
+    public class MoodSmileyUpdateMessage : NetworkMessage
+    {
+        public const ushort Id = 8630;
         public override ushort MessageId => Id;
 
         public int accountId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public MoodSmileyUpdateMessage()
         {
         }
-        public MoodSmileyUpdateMessage(int accountId,long playerId,short smileyId)
+        public MoodSmileyUpdateMessage(int accountId, long playerId, short smileyId)
         {
             this.accountId = accountId;
             this.playerId = playerId;
@@ -33,7 +33,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteInt((int)accountId);
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
@@ -55,7 +55,7 @@ namespace Giny.Protocol.Messages
             }
 
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of MoodSmileyUpdateMessage.playerId.");
             }
@@ -68,14 +68,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

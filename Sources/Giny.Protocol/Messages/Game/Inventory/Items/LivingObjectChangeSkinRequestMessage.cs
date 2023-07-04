@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class LivingObjectChangeSkinRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 908;
+{
+    public class LivingObjectChangeSkinRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 3753;
         public override ushort MessageId => Id;
 
         public int livingUID;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public LivingObjectChangeSkinRequestMessage()
         {
         }
-        public LivingObjectChangeSkinRequestMessage(int livingUID,byte livingPosition,int skinId)
+        public LivingObjectChangeSkinRequestMessage(int livingUID, byte livingPosition, int skinId)
         {
             this.livingUID = livingUID;
             this.livingPosition = livingPosition;
@@ -68,14 +68,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

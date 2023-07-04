@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class FightEntityDispositionInformations : EntityDispositionInformations  
-    { 
-        public new const ushort Id = 827;
+{
+    public class FightEntityDispositionInformations : EntityDispositionInformations
+    {
+        public new const ushort Id = 6330;
         public override ushort TypeId => Id;
 
         public double carryingCharacterId;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public FightEntityDispositionInformations()
         {
         }
-        public FightEntityDispositionInformations(double carryingCharacterId,short cellId,byte direction)
+        public FightEntityDispositionInformations(double carryingCharacterId, short cellId, byte direction)
         {
             this.carryingCharacterId = carryingCharacterId;
             this.cellId = cellId;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Types
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (carryingCharacterId < -9.00719925474099E+15 || carryingCharacterId > 9.00719925474099E+15)
+            if (carryingCharacterId < -9007199254740992 || carryingCharacterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + carryingCharacterId + ") on element carryingCharacterId.");
             }
@@ -35,7 +35,7 @@ namespace Giny.Protocol.Types
         {
             base.Deserialize(reader);
             carryingCharacterId = (double)reader.ReadDouble();
-            if (carryingCharacterId < -9.00719925474099E+15 || carryingCharacterId > 9.00719925474099E+15)
+            if (carryingCharacterId < -9007199254740992 || carryingCharacterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + carryingCharacterId + ") on element of FightEntityDispositionInformations.carryingCharacterId.");
             }
@@ -45,11 +45,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

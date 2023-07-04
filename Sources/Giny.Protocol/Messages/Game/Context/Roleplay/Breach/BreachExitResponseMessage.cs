@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BreachExitResponseMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1265;
+{
+    public class BreachExitResponseMessage : NetworkMessage
+    {
+        public const ushort Id = 6768;
         public override ushort MessageId => Id;
 
         public bool exited;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             exited = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

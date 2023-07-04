@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameRolePlayArenaRegistrationWarningMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9396;
+{
+    public class GameRolePlayArenaRegistrationWarningMessage : NetworkMessage
+    {
+        public const ushort Id = 5831;
         public override ushort MessageId => Id;
 
         public int battleMode;
@@ -35,14 +35,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

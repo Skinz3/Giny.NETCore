@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AbstractGameActionWithAckMessage : AbstractGameActionMessage  
-    { 
-        public new const ushort Id = 8218;
+{
+    public class AbstractGameActionWithAckMessage : AbstractGameActionMessage
+    {
+        public new const ushort Id = 8107;
         public override ushort MessageId => Id;
 
         public short waitAckId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public AbstractGameActionWithAckMessage()
         {
         }
-        public AbstractGameActionWithAckMessage(short waitAckId,short actionId,double sourceId)
+        public AbstractGameActionWithAckMessage(short waitAckId, short actionId, double sourceId)
         {
             this.waitAckId = waitAckId;
             this.actionId = actionId;
@@ -34,14 +34,7 @@ namespace Giny.Protocol.Messages
             waitAckId = (short)reader.ReadShort();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

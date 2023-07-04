@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildSubmitApplicationMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6315;
+{
+    public class GuildSubmitApplicationMessage : NetworkMessage
+    {
+        public const ushort Id = 6982;
         public override ushort MessageId => Id;
 
         public string applyText;
@@ -29,7 +29,7 @@ namespace Giny.Protocol.Messages
         public GuildSubmitApplicationMessage()
         {
         }
-        public GuildSubmitApplicationMessage(string applyText,int guildId,int timeSpent,string filterLanguage,string filterAmbiance,string filterPlaytime,string filterInterest,string filterMinMaxGuildLevel,string filterRecruitmentType,string filterMinMaxCharacterLevel,string filterMinMaxAchievement,string filterSearchName,string filterLastSort)
+        public GuildSubmitApplicationMessage(string applyText, int guildId, int timeSpent, string filterLanguage, string filterAmbiance, string filterPlaytime, string filterInterest, string filterMinMaxGuildLevel, string filterRecruitmentType, string filterMinMaxCharacterLevel, string filterMinMaxAchievement, string filterSearchName, string filterLastSort)
         {
             this.applyText = applyText;
             this.guildId = guildId;
@@ -98,14 +98,7 @@ namespace Giny.Protocol.Messages
             filterLastSort = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

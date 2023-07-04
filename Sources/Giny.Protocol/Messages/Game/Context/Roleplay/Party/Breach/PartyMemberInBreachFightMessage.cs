@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PartyMemberInBreachFightMessage : AbstractPartyMemberInFightMessage  
-    { 
-        public new const ushort Id = 1630;
+{
+    public class PartyMemberInBreachFightMessage : AbstractPartyMemberInFightMessage
+    {
+        public new const ushort Id = 7439;
         public override ushort MessageId => Id;
 
         public int floor;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public PartyMemberInBreachFightMessage()
         {
         }
-        public PartyMemberInBreachFightMessage(int floor,byte room,int partyId,byte reason,long memberId,int memberAccountId,string memberName,short fightId,short timeBeforeFightStart)
+        public PartyMemberInBreachFightMessage(int floor, byte room, int partyId, byte reason, long memberId, int memberAccountId, string memberName, short fightId, short timeBeforeFightStart)
         {
             this.floor = floor;
             this.room = room;
@@ -63,14 +63,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

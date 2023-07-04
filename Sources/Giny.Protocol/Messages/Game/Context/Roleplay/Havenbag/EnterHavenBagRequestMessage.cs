@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class EnterHavenBagRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 180;
+{
+    public class EnterHavenBagRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 2212;
         public override ushort MessageId => Id;
 
         public long havenBagOwner;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (havenBagOwner < 0 || havenBagOwner > 9.00719925474099E+15)
+            if (havenBagOwner < 0 || havenBagOwner > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + havenBagOwner + ") on element havenBagOwner.");
             }
@@ -33,21 +33,14 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             havenBagOwner = (long)reader.ReadVarUhLong();
-            if (havenBagOwner < 0 || havenBagOwner > 9.00719925474099E+15)
+            if (havenBagOwner < 0 || havenBagOwner > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + havenBagOwner + ") on element of EnterHavenBagRequestMessage.havenBagOwner.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

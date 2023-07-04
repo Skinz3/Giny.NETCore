@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ChatSmileyMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1197;
+{
+    public class ChatSmileyMessage : NetworkMessage
+    {
+        public const ushort Id = 9869;
         public override ushort MessageId => Id;
 
         public double entityId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public ChatSmileyMessage()
         {
         }
-        public ChatSmileyMessage(double entityId,short smileyId,int accountId)
+        public ChatSmileyMessage(double entityId, short smileyId, int accountId)
         {
             this.entityId = entityId;
             this.smileyId = smileyId;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (entityId < -9.00719925474099E+15 || entityId > 9.00719925474099E+15)
+            if (entityId < -9007199254740992 || entityId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + entityId + ") on element entityId.");
             }
@@ -49,7 +49,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             entityId = (double)reader.ReadDouble();
-            if (entityId < -9.00719925474099E+15 || entityId > 9.00719925474099E+15)
+            if (entityId < -9007199254740992 || entityId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + entityId + ") on element of ChatSmileyMessage.entityId.");
             }
@@ -68,14 +68,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

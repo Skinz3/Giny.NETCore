@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class InviteInHavenBagMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8351;
+{
+    public class InviteInHavenBagMessage : NetworkMessage
+    {
+        public const ushort Id = 5693;
         public override ushort MessageId => Id;
 
         public CharacterMinimalInformations guestInformations;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public InviteInHavenBagMessage()
         {
         }
-        public InviteInHavenBagMessage(CharacterMinimalInformations guestInformations,bool accept)
+        public InviteInHavenBagMessage(CharacterMinimalInformations guestInformations, bool accept)
         {
             this.guestInformations = guestInformations;
             this.accept = accept;
@@ -35,14 +35,7 @@ namespace Giny.Protocol.Messages
             accept = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

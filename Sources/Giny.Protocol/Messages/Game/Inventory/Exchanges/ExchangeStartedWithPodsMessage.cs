@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeStartedWithPodsMessage : ExchangeStartedMessage  
-    { 
-        public new const ushort Id = 5367;
+{
+    public class ExchangeStartedWithPodsMessage : ExchangeStartedMessage
+    {
+        public new const ushort Id = 2583;
         public override ushort MessageId => Id;
 
         public double firstCharacterId;
@@ -22,7 +22,7 @@ namespace Giny.Protocol.Messages
         public ExchangeStartedWithPodsMessage()
         {
         }
-        public ExchangeStartedWithPodsMessage(double firstCharacterId,int firstCharacterCurrentWeight,int firstCharacterMaxWeight,double secondCharacterId,int secondCharacterCurrentWeight,int secondCharacterMaxWeight,byte exchangeType)
+        public ExchangeStartedWithPodsMessage(double firstCharacterId, int firstCharacterCurrentWeight, int firstCharacterMaxWeight, double secondCharacterId, int secondCharacterCurrentWeight, int secondCharacterMaxWeight, byte exchangeType)
         {
             this.firstCharacterId = firstCharacterId;
             this.firstCharacterCurrentWeight = firstCharacterCurrentWeight;
@@ -35,7 +35,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (firstCharacterId < -9.00719925474099E+15 || firstCharacterId > 9.00719925474099E+15)
+            if (firstCharacterId < -9007199254740992 || firstCharacterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + firstCharacterId + ") on element firstCharacterId.");
             }
@@ -53,7 +53,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteVarInt((int)firstCharacterMaxWeight);
-            if (secondCharacterId < -9.00719925474099E+15 || secondCharacterId > 9.00719925474099E+15)
+            if (secondCharacterId < -9007199254740992 || secondCharacterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + secondCharacterId + ") on element secondCharacterId.");
             }
@@ -76,7 +76,7 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             firstCharacterId = (double)reader.ReadDouble();
-            if (firstCharacterId < -9.00719925474099E+15 || firstCharacterId > 9.00719925474099E+15)
+            if (firstCharacterId < -9007199254740992 || firstCharacterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + firstCharacterId + ") on element of ExchangeStartedWithPodsMessage.firstCharacterId.");
             }
@@ -94,7 +94,7 @@ namespace Giny.Protocol.Messages
             }
 
             secondCharacterId = (double)reader.ReadDouble();
-            if (secondCharacterId < -9.00719925474099E+15 || secondCharacterId > 9.00719925474099E+15)
+            if (secondCharacterId < -9007199254740992 || secondCharacterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + secondCharacterId + ") on element of ExchangeStartedWithPodsMessage.secondCharacterId.");
             }
@@ -113,14 +113,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

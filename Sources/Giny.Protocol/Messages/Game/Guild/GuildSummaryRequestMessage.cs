@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildSummaryRequestMessage : PaginationRequestAbstractMessage  
-    { 
-        public new const ushort Id = 7603;
+{
+    public class GuildSummaryRequestMessage : PaginationRequestAbstractMessage
+    {
+        public new const ushort Id = 6701;
         public override ushort MessageId => Id;
 
         public string nameFilter;
@@ -29,7 +29,7 @@ namespace Giny.Protocol.Messages
         public GuildSummaryRequestMessage()
         {
         }
-        public GuildSummaryRequestMessage(string nameFilter,bool hideFullFilter,int[] criterionFilter,int[] languagesFilter,byte[] recruitmentTypeFilter,short minLevelFilter,short maxLevelFilter,short minPlayerLevelFilter,short maxPlayerLevelFilter,int minSuccessFilter,int maxSuccessFilter,byte sortType,bool sortDescending,double offset,uint count)
+        public GuildSummaryRequestMessage(string nameFilter, bool hideFullFilter, int[] criterionFilter, int[] languagesFilter, byte[] recruitmentTypeFilter, short minLevelFilter, short maxLevelFilter, short minPlayerLevelFilter, short maxPlayerLevelFilter, int minSuccessFilter, int maxSuccessFilter, byte sortType, bool sortDescending, double offset, uint count)
         {
             this.nameFilter = nameFilter;
             this.hideFullFilter = hideFullFilter;
@@ -51,12 +51,12 @@ namespace Giny.Protocol.Messages
         {
             base.Serialize(writer);
             byte _box0 = 0;
-            _box0 = BooleanByteWrapper.SetFlag(_box0,0,hideFullFilter);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,1,sortDescending);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 0, hideFullFilter);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 1, sortDescending);
             writer.WriteByte((byte)_box0);
             writer.WriteUTF((string)nameFilter);
             writer.WriteShort((short)criterionFilter.Length);
-            for (uint _i3 = 0;_i3 < criterionFilter.Length;_i3++)
+            for (uint _i3 = 0; _i3 < criterionFilter.Length; _i3++)
             {
                 if (criterionFilter[_i3] < 0)
                 {
@@ -67,7 +67,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteShort((short)languagesFilter.Length);
-            for (uint _i4 = 0;_i4 < languagesFilter.Length;_i4++)
+            for (uint _i4 = 0; _i4 < languagesFilter.Length; _i4++)
             {
                 if (languagesFilter[_i4] < 0)
                 {
@@ -78,7 +78,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteShort((short)recruitmentTypeFilter.Length);
-            for (uint _i5 = 0;_i5 < recruitmentTypeFilter.Length;_i5++)
+            for (uint _i5 = 0; _i5 < recruitmentTypeFilter.Length; _i5++)
             {
                 writer.WriteByte((byte)recruitmentTypeFilter[_i5]);
             }
@@ -128,12 +128,12 @@ namespace Giny.Protocol.Messages
             uint _val5 = 0;
             base.Deserialize(reader);
             byte _box0 = reader.ReadByte();
-            hideFullFilter = BooleanByteWrapper.GetFlag(_box0,0);
-            sortDescending = BooleanByteWrapper.GetFlag(_box0,1);
+            hideFullFilter = BooleanByteWrapper.GetFlag(_box0, 0);
+            sortDescending = BooleanByteWrapper.GetFlag(_box0, 1);
             nameFilter = (string)reader.ReadUTF();
             uint _criterionFilterLen = (uint)reader.ReadUShort();
             criterionFilter = new int[_criterionFilterLen];
-            for (uint _i3 = 0;_i3 < _criterionFilterLen;_i3++)
+            for (uint _i3 = 0; _i3 < _criterionFilterLen; _i3++)
             {
                 _val3 = (uint)reader.ReadVarUhInt();
                 if (_val3 < 0)
@@ -146,7 +146,7 @@ namespace Giny.Protocol.Messages
 
             uint _languagesFilterLen = (uint)reader.ReadUShort();
             languagesFilter = new int[_languagesFilterLen];
-            for (uint _i4 = 0;_i4 < _languagesFilterLen;_i4++)
+            for (uint _i4 = 0; _i4 < _languagesFilterLen; _i4++)
             {
                 _val4 = (uint)reader.ReadVarUhInt();
                 if (_val4 < 0)
@@ -159,7 +159,7 @@ namespace Giny.Protocol.Messages
 
             uint _recruitmentTypeFilterLen = (uint)reader.ReadUShort();
             recruitmentTypeFilter = new byte[_recruitmentTypeFilterLen];
-            for (uint _i5 = 0;_i5 < _recruitmentTypeFilterLen;_i5++)
+            for (uint _i5 = 0; _i5 < _recruitmentTypeFilterLen; _i5++)
             {
                 _val5 = (uint)reader.ReadByte();
                 if (_val5 < 0)
@@ -214,14 +214,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HaapiConfirmationRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8332;
+{
+    public class HaapiConfirmationRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 3987;
         public override ushort MessageId => Id;
 
         public long kamas;
@@ -20,7 +20,7 @@ namespace Giny.Protocol.Messages
         public HaapiConfirmationRequestMessage()
         {
         }
-        public HaapiConfirmationRequestMessage(long kamas,long ogrines,short rate,byte action)
+        public HaapiConfirmationRequestMessage(long kamas, long ogrines, short rate, byte action)
         {
             this.kamas = kamas;
             this.ogrines = ogrines;
@@ -29,13 +29,13 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (kamas < 0 || kamas > 9.00719925474099E+15)
+            if (kamas < 0 || kamas > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + kamas + ") on element kamas.");
             }
 
             writer.WriteVarLong((long)kamas);
-            if (ogrines < 0 || ogrines > 9.00719925474099E+15)
+            if (ogrines < 0 || ogrines > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + ogrines + ") on element ogrines.");
             }
@@ -52,13 +52,13 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             kamas = (long)reader.ReadVarUhLong();
-            if (kamas < 0 || kamas > 9.00719925474099E+15)
+            if (kamas < 0 || kamas > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + kamas + ") on element of HaapiConfirmationRequestMessage.kamas.");
             }
 
             ogrines = (long)reader.ReadVarUhLong();
-            if (ogrines < 0 || ogrines > 9.00719925474099E+15)
+            if (ogrines < 0 || ogrines > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + ogrines + ") on element of HaapiConfirmationRequestMessage.ogrines.");
             }
@@ -77,14 +77,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class IgnoredAddedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4502;
+{
+    public class IgnoredAddedMessage : NetworkMessage
+    {
+        public const ushort Id = 3303;
         public override ushort MessageId => Id;
 
         public IgnoredInformations ignoreAdded;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public IgnoredAddedMessage()
         {
         }
-        public IgnoredAddedMessage(IgnoredInformations ignoreAdded,bool session)
+        public IgnoredAddedMessage(IgnoredInformations ignoreAdded, bool session)
         {
             this.ignoreAdded = ignoreAdded;
             this.session = session;
@@ -37,14 +37,7 @@ namespace Giny.Protocol.Messages
             session = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

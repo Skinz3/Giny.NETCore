@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class LeagueFriendInformations : AbstractContactInformations  
-    { 
-        public new const ushort Id = 8933;
+{
+    public class LeagueFriendInformations : AbstractContactInformations
+    {
+        public new const ushort Id = 6685;
         public override ushort TypeId => Id;
 
         public long playerId;
@@ -22,7 +22,7 @@ namespace Giny.Protocol.Types
         public LeagueFriendInformations()
         {
         }
-        public LeagueFriendInformations(long playerId,string playerName,byte breed,bool sex,short level,short leagueId,short totalLeaguePoints,int ladderPosition,int accountId,AccountTagInformation accountTag)
+        public LeagueFriendInformations(long playerId, string playerName, byte breed, bool sex, short level, short leagueId, short totalLeaguePoints, int ladderPosition, int accountId, AccountTagInformation accountTag)
         {
             this.playerId = playerId;
             this.playerName = playerName;
@@ -38,7 +38,7 @@ namespace Giny.Protocol.Types
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
@@ -61,14 +61,14 @@ namespace Giny.Protocol.Types
         {
             base.Deserialize(reader);
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of LeagueFriendInformations.playerId.");
             }
 
             playerName = (string)reader.ReadUTF();
             breed = (byte)reader.ReadByte();
-            if (breed < (byte)PlayableBreedEnum.Feca || breed > (byte)PlayableBreedEnum.Ouginak)
+            if (breed < (byte)PlayableBreedEnum.Feca || breed > (byte)PlayableBreedEnum.Forgelance)
             {
                 throw new System.Exception("Forbidden value (" + breed + ") on element of LeagueFriendInformations.breed.");
             }
@@ -88,11 +88,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class SpawnScaledMonsterInformation : BaseSpawnMonsterInformation  
-    { 
-        public new const ushort Id = 5556;
+{
+    public class SpawnScaledMonsterInformation : BaseSpawnMonsterInformation
+    {
+        public new const ushort Id = 3386;
         public override ushort TypeId => Id;
 
         public short creatureLevel;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public SpawnScaledMonsterInformation()
         {
         }
-        public SpawnScaledMonsterInformation(short creatureLevel,short creatureGenericId)
+        public SpawnScaledMonsterInformation(short creatureLevel, short creatureGenericId)
         {
             this.creatureLevel = creatureLevel;
             this.creatureGenericId = creatureGenericId;
@@ -44,11 +44,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

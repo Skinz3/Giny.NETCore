@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class EvolutiveObjectRecycleResultMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8653;
+{
+    public class EvolutiveObjectRecycleResultMessage : NetworkMessage
+    {
+        public const ushort Id = 9667;
         public override ushort MessageId => Id;
 
         public RecycledItem[] recycledItems;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)recycledItems.Length);
-            for (uint _i1 = 0;_i1 < recycledItems.Length;_i1++)
+            for (uint _i1 = 0; _i1 < recycledItems.Length; _i1++)
             {
                 (recycledItems[_i1] as RecycledItem).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             RecycledItem _item1 = null;
             uint _recycledItemsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _recycledItemsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _recycledItemsLen; _i1++)
             {
                 _item1 = new RecycledItem();
                 _item1.Deserialize(reader);
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

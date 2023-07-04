@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameFightMonsterWithAlignmentInformations : GameFightMonsterInformations  
-    { 
-        public new const ushort Id = 1061;
+{
+    public class GameFightMonsterWithAlignmentInformations : GameFightMonsterInformations
+    {
+        public new const ushort Id = 2152;
         public override ushort TypeId => Id;
 
         public ActorAlignmentInformations alignmentInfos;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public GameFightMonsterWithAlignmentInformations()
         {
         }
-        public GameFightMonsterWithAlignmentInformations(ActorAlignmentInformations alignmentInfos,double contextualId,EntityDispositionInformations disposition,EntityLook look,GameContextBasicSpawnInformation spawnInfo,byte wave,GameFightCharacteristics stats,short[] previousPositions,short creatureGenericId,byte creatureGrade,short creatureLevel)
+        public GameFightMonsterWithAlignmentInformations(ActorAlignmentInformations alignmentInfos, double contextualId, EntityDispositionInformations disposition, EntityLook look, GameContextBasicSpawnInformation spawnInfo, byte wave, GameFightCharacteristics stats, short[] previousPositions, short creatureGenericId, byte creatureGrade, short creatureLevel)
         {
             this.alignmentInfos = alignmentInfos;
             this.contextualId = contextualId;
@@ -44,11 +44,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

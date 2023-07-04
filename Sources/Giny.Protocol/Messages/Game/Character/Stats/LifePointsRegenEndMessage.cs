@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class LifePointsRegenEndMessage : UpdateLifePointsMessage  
-    { 
-        public new const ushort Id = 494;
+{
+    public class LifePointsRegenEndMessage : UpdateLifePointsMessage
+    {
+        public new const ushort Id = 1550;
         public override ushort MessageId => Id;
 
         public int lifePointsGained;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public LifePointsRegenEndMessage()
         {
         }
-        public LifePointsRegenEndMessage(int lifePointsGained,int lifePoints,int maxLifePoints)
+        public LifePointsRegenEndMessage(int lifePointsGained, int lifePoints, int maxLifePoints)
         {
             this.lifePointsGained = lifePointsGained;
             this.lifePoints = lifePoints;
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

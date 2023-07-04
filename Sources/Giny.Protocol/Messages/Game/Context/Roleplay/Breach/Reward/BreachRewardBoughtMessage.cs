@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BreachRewardBoughtMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8594;
+{
+    public class BreachRewardBoughtMessage : NetworkMessage
+    {
+        public const ushort Id = 9202;
         public override ushort MessageId => Id;
 
         public int id;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public BreachRewardBoughtMessage()
         {
         }
-        public BreachRewardBoughtMessage(int id,bool bought)
+        public BreachRewardBoughtMessage(int id, bool bought)
         {
             this.id = id;
             this.bought = bought;
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
             bought = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

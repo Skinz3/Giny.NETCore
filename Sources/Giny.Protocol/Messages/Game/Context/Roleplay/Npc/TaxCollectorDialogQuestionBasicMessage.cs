@@ -6,39 +6,32 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class TaxCollectorDialogQuestionBasicMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2837;
+{
+    public class TaxCollectorDialogQuestionBasicMessage : NetworkMessage
+    {
+        public const ushort Id = 8970;
         public override ushort MessageId => Id;
 
-        public BasicGuildInformations guildInfo;
+        public BasicAllianceInformations allianceInfo;
 
         public TaxCollectorDialogQuestionBasicMessage()
         {
         }
-        public TaxCollectorDialogQuestionBasicMessage(BasicGuildInformations guildInfo)
+        public TaxCollectorDialogQuestionBasicMessage(BasicAllianceInformations allianceInfo)
         {
-            this.guildInfo = guildInfo;
+            this.allianceInfo = allianceInfo;
         }
         public override void Serialize(IDataWriter writer)
         {
-            guildInfo.Serialize(writer);
+            allianceInfo.Serialize(writer);
         }
         public override void Deserialize(IDataReader reader)
         {
-            guildInfo = new BasicGuildInformations();
-            guildInfo.Deserialize(reader);
+            allianceInfo = new BasicAllianceInformations();
+            allianceInfo.Deserialize(reader);
         }
-
 
     }
 }
-
-
-
-
-
-
 
 

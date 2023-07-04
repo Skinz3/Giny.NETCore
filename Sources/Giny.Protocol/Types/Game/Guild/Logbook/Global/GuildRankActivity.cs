@@ -4,19 +4,19 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GuildRankActivity : GuildLogbookEntryBasicInformation  
-    { 
-        public new const ushort Id = 6586;
+{
+    public class GuildRankActivity : GuildLogbookEntryBasicInformation
+    {
+        public new const ushort Id = 7662;
         public override ushort TypeId => Id;
 
         public byte rankActivityType;
-        public GuildRankMinimalInformation guildRankMinimalInfos;
+        public RankMinimalInformation guildRankMinimalInfos;
 
         public GuildRankActivity()
         {
         }
-        public GuildRankActivity(byte rankActivityType,GuildRankMinimalInformation guildRankMinimalInfos,int id,double date)
+        public GuildRankActivity(byte rankActivityType, RankMinimalInformation guildRankMinimalInfos, int id, double date)
         {
             this.rankActivityType = rankActivityType;
             this.guildRankMinimalInfos = guildRankMinimalInfos;
@@ -38,18 +38,12 @@ namespace Giny.Protocol.Types
                 throw new System.Exception("Forbidden value (" + rankActivityType + ") on element of GuildRankActivity.rankActivityType.");
             }
 
-            guildRankMinimalInfos = new GuildRankMinimalInformation();
+            guildRankMinimalInfos = new RankMinimalInformation();
             guildRankMinimalInfos.Deserialize(reader);
         }
 
 
     }
 }
-
-
-
-
-
-
 
 

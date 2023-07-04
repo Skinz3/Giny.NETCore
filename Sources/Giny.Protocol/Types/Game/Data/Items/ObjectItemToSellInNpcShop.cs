@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ObjectItemToSellInNpcShop : ObjectItemMinimalInformation  
-    { 
-        public new const ushort Id = 357;
+{
+    public class ObjectItemToSellInNpcShop : ObjectItemMinimalInformation
+    {
+        public new const ushort Id = 6501;
         public override ushort TypeId => Id;
 
         public long objectPrice;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public ObjectItemToSellInNpcShop()
         {
         }
-        public ObjectItemToSellInNpcShop(long objectPrice,string buyCriterion,short objectGID,ObjectEffect[] effects)
+        public ObjectItemToSellInNpcShop(long objectPrice, string buyCriterion, int objectGID, ObjectEffect[] effects)
         {
             this.objectPrice = objectPrice;
             this.buyCriterion = buyCriterion;
@@ -26,7 +26,7 @@ namespace Giny.Protocol.Types
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (objectPrice < 0 || objectPrice > 9.00719925474099E+15)
+            if (objectPrice < 0 || objectPrice > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + objectPrice + ") on element objectPrice.");
             }
@@ -38,7 +38,7 @@ namespace Giny.Protocol.Types
         {
             base.Deserialize(reader);
             objectPrice = (long)reader.ReadVarUhLong();
-            if (objectPrice < 0 || objectPrice > 9.00719925474099E+15)
+            if (objectPrice < 0 || objectPrice > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + objectPrice + ") on element of ObjectItemToSellInNpcShop.objectPrice.");
             }
@@ -49,11 +49,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

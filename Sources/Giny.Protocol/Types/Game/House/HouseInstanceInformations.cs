@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class HouseInstanceInformations  
-    { 
-        public const ushort Id = 1868;
+{
+    public class HouseInstanceInformations
+    {
+        public const ushort Id = 3322;
         public virtual ushort TypeId => Id;
 
         public int instanceId;
@@ -17,11 +17,12 @@ namespace Giny.Protocol.Types
         public bool hasOwner;
         public long price;
         public bool isSaleLocked;
+        public bool isAdminLocked;
 
         public HouseInstanceInformations()
         {
         }
-        public HouseInstanceInformations(int instanceId,bool secondHand,bool isLocked,AccountTagInformation ownerTag,bool hasOwner,long price,bool isSaleLocked)
+        public HouseInstanceInformations(int instanceId, bool secondHand, bool isLocked, AccountTagInformation ownerTag, bool hasOwner, long price, bool isSaleLocked, bool isAdminLocked)
         {
             this.instanceId = instanceId;
             this.secondHand = secondHand;
@@ -30,14 +31,16 @@ namespace Giny.Protocol.Types
             this.hasOwner = hasOwner;
             this.price = price;
             this.isSaleLocked = isSaleLocked;
+            this.isAdminLocked = isAdminLocked;
         }
         public virtual void Serialize(IDataWriter writer)
         {
             byte _box0 = 0;
-            _box0 = BooleanByteWrapper.SetFlag(_box0,0,secondHand);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,1,isLocked);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,2,hasOwner);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,3,isSaleLocked);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 0, secondHand);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 1, isLocked);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 2, hasOwner);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 3, isSaleLocked);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 4, isAdminLocked);
             writer.WriteByte((byte)_box0);
             if (instanceId < 0)
             {
@@ -46,7 +49,7 @@ namespace Giny.Protocol.Types
 
             writer.WriteInt((int)instanceId);
             ownerTag.Serialize(writer);
-            if (price < -9.00719925474099E+15 || price > 9.00719925474099E+15)
+            if (price < -9007199254740992 || price > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + price + ") on element price.");
             }
@@ -56,10 +59,11 @@ namespace Giny.Protocol.Types
         public virtual void Deserialize(IDataReader reader)
         {
             byte _box0 = reader.ReadByte();
-            secondHand = BooleanByteWrapper.GetFlag(_box0,0);
-            isLocked = BooleanByteWrapper.GetFlag(_box0,1);
-            hasOwner = BooleanByteWrapper.GetFlag(_box0,2);
-            isSaleLocked = BooleanByteWrapper.GetFlag(_box0,3);
+            secondHand = BooleanByteWrapper.GetFlag(_box0, 0);
+            isLocked = BooleanByteWrapper.GetFlag(_box0, 1);
+            hasOwner = BooleanByteWrapper.GetFlag(_box0, 2);
+            isSaleLocked = BooleanByteWrapper.GetFlag(_box0, 3);
+            isAdminLocked = BooleanByteWrapper.GetFlag(_box0, 4);
             instanceId = (int)reader.ReadInt();
             if (instanceId < 0)
             {
@@ -69,7 +73,7 @@ namespace Giny.Protocol.Types
             ownerTag = new AccountTagInformation();
             ownerTag.Deserialize(reader);
             price = (long)reader.ReadVarLong();
-            if (price < -9.00719925474099E+15 || price > 9.00719925474099E+15)
+            if (price < -9007199254740992 || price > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + price + ") on element of HouseInstanceInformations.price.");
             }
@@ -79,11 +83,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

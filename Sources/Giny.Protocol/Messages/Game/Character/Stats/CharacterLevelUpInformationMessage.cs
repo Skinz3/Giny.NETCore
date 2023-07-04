@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class CharacterLevelUpInformationMessage : CharacterLevelUpMessage  
-    { 
-        public new const ushort Id = 9230;
+{
+    public class CharacterLevelUpInformationMessage : CharacterLevelUpMessage
+    {
+        public new const ushort Id = 6159;
         public override ushort MessageId => Id;
 
         public string name;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public CharacterLevelUpInformationMessage()
         {
         }
-        public CharacterLevelUpInformationMessage(string name,long id,short newLevel)
+        public CharacterLevelUpInformationMessage(string name, long id, short newLevel)
         {
             this.name = name;
             this.id = id;
@@ -28,7 +28,7 @@ namespace Giny.Protocol.Messages
         {
             base.Serialize(writer);
             writer.WriteUTF((string)name);
-            if (id < 0 || id > 9.00719925474099E+15)
+            if (id < 0 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element id.");
             }
@@ -40,21 +40,14 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
             name = (string)reader.ReadUTF();
             id = (long)reader.ReadVarUhLong();
-            if (id < 0 || id > 9.00719925474099E+15)
+            if (id < 0 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element of CharacterLevelUpInformationMessage.id.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

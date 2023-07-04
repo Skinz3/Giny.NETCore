@@ -6,17 +6,17 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildListApplicationRequestMessage : PaginationRequestAbstractMessage  
-    { 
-        public new const ushort Id = 9014;
+{
+    public class GuildListApplicationRequestMessage : PaginationRequestAbstractMessage
+    {
+        public new const ushort Id = 1269;
         public override ushort MessageId => Id;
 
 
         public GuildListApplicationRequestMessage()
         {
         }
-        public GuildListApplicationRequestMessage(double offset,uint count)
+        public GuildListApplicationRequestMessage(double offset, uint count)
         {
             this.offset = offset;
             this.count = count;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

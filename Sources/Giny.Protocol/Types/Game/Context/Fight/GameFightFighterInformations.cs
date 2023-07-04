@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameFightFighterInformations : GameContextActorInformations  
-    { 
-        public new const ushort Id = 8525;
+{
+    public class GameFightFighterInformations : GameContextActorInformations
+    {
+        public new const ushort Id = 3110;
         public override ushort TypeId => Id;
 
         public GameContextBasicSpawnInformation spawnInfo;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Types
         public GameFightFighterInformations()
         {
         }
-        public GameFightFighterInformations(GameContextBasicSpawnInformation spawnInfo,byte wave,GameFightCharacteristics stats,short[] previousPositions,double contextualId,EntityDispositionInformations disposition,EntityLook look)
+        public GameFightFighterInformations(GameContextBasicSpawnInformation spawnInfo, byte wave, GameFightCharacteristics stats, short[] previousPositions, double contextualId, EntityDispositionInformations disposition, EntityLook look)
         {
             this.spawnInfo = spawnInfo;
             this.wave = wave;
@@ -41,7 +41,7 @@ namespace Giny.Protocol.Types
             writer.WriteShort((short)stats.TypeId);
             stats.Serialize(writer);
             writer.WriteShort((short)previousPositions.Length);
-            for (uint _i4 = 0;_i4 < previousPositions.Length;_i4++)
+            for (uint _i4 = 0; _i4 < previousPositions.Length; _i4++)
             {
                 if (previousPositions[_i4] < 0 || previousPositions[_i4] > 559)
                 {
@@ -69,7 +69,7 @@ namespace Giny.Protocol.Types
             stats.Deserialize(reader);
             uint _previousPositionsLen = (uint)reader.ReadUShort();
             previousPositions = new short[_previousPositionsLen];
-            for (uint _i4 = 0;_i4 < _previousPositionsLen;_i4++)
+            for (uint _i4 = 0; _i4 < _previousPositionsLen; _i4++)
             {
                 _val4 = (uint)reader.ReadVarUhShort();
                 if (_val4 < 0 || _val4 > 559)
@@ -85,11 +85,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

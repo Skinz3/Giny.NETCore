@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class JobAllowMultiCraftRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6676;
+{
+    public class JobAllowMultiCraftRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 3486;
         public override ushort MessageId => Id;
 
         public bool enabled;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             enabled = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

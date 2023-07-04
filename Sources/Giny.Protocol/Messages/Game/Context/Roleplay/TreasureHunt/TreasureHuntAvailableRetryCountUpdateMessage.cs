@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class TreasureHuntAvailableRetryCountUpdateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5909;
+{
+    public class TreasureHuntAvailableRetryCountUpdateMessage : NetworkMessage
+    {
+        public const ushort Id = 7423;
         public override ushort MessageId => Id;
 
         public byte questType;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public TreasureHuntAvailableRetryCountUpdateMessage()
         {
         }
-        public TreasureHuntAvailableRetryCountUpdateMessage(byte questType,int availableRetryCount)
+        public TreasureHuntAvailableRetryCountUpdateMessage(byte questType, int availableRetryCount)
         {
             this.questType = questType;
             this.availableRetryCount = availableRetryCount;
@@ -39,14 +39,7 @@ namespace Giny.Protocol.Messages
             availableRetryCount = (int)reader.ReadInt();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

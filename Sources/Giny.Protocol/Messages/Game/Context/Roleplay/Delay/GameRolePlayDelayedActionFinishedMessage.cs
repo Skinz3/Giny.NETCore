@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameRolePlayDelayedActionFinishedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9954;
+{
+    public class GameRolePlayDelayedActionFinishedMessage : NetworkMessage
+    {
+        public const ushort Id = 7643;
         public override ushort MessageId => Id;
 
         public double delayedCharacterId;
@@ -18,14 +18,14 @@ namespace Giny.Protocol.Messages
         public GameRolePlayDelayedActionFinishedMessage()
         {
         }
-        public GameRolePlayDelayedActionFinishedMessage(double delayedCharacterId,byte delayTypeId)
+        public GameRolePlayDelayedActionFinishedMessage(double delayedCharacterId, byte delayTypeId)
         {
             this.delayedCharacterId = delayedCharacterId;
             this.delayTypeId = delayTypeId;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (delayedCharacterId < -9.00719925474099E+15 || delayedCharacterId > 9.00719925474099E+15)
+            if (delayedCharacterId < -9007199254740992 || delayedCharacterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + delayedCharacterId + ") on element delayedCharacterId.");
             }
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             delayedCharacterId = (double)reader.ReadDouble();
-            if (delayedCharacterId < -9.00719925474099E+15 || delayedCharacterId > 9.00719925474099E+15)
+            if (delayedCharacterId < -9007199254740992 || delayedCharacterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + delayedCharacterId + ") on element of GameRolePlayDelayedActionFinishedMessage.delayedCharacterId.");
             }
@@ -49,14 +49,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

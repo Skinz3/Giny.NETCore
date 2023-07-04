@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AccountLinkRequiredMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4034;
+{
+    public class AccountLinkRequiredMessage : NetworkMessage
+    {
+        public const ushort Id = 2023;
         public override ushort MessageId => Id;
 
 
@@ -23,14 +23,7 @@ namespace Giny.Protocol.Messages
         {
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

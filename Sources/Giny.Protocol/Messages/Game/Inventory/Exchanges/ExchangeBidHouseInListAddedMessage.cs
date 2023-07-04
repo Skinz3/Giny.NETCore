@@ -6,14 +6,14 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeBidHouseInListAddedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7717;
+{
+    public class ExchangeBidHouseInListAddedMessage : NetworkMessage
+    {
+        public const ushort Id = 9050;
         public override ushort MessageId => Id;
 
         public int itemUID;
-        public short objectGID;
+        public int objectGID;
         public int objectType;
         public ObjectEffect[] effects;
         public long[] prices;
@@ -21,7 +21,7 @@ namespace Giny.Protocol.Messages
         public ExchangeBidHouseInListAddedMessage()
         {
         }
-        public ExchangeBidHouseInListAddedMessage(int itemUID,short objectGID,int objectType,ObjectEffect[] effects,long[] prices)
+        public ExchangeBidHouseInListAddedMessage(int itemUID, int objectGID, int objectType, ObjectEffect[] effects, long[] prices)
         {
             this.itemUID = itemUID;
             this.objectGID = objectGID;
@@ -37,7 +37,7 @@ namespace Giny.Protocol.Messages
                 throw new System.Exception("Forbidden value (" + objectGID + ") on element objectGID.");
             }
 
-            writer.WriteVarShort((short)objectGID);
+            writer.WriteVarInt((int)objectGID);
             if (objectType < 0)
             {
                 throw new System.Exception("Forbidden value (" + objectType + ") on element objectType.");
@@ -45,16 +45,16 @@ namespace Giny.Protocol.Messages
 
             writer.WriteInt((int)objectType);
             writer.WriteShort((short)effects.Length);
-            for (uint _i4 = 0;_i4 < effects.Length;_i4++)
+            for (uint _i4 = 0; _i4 < effects.Length; _i4++)
             {
                 writer.WriteShort((short)(effects[_i4] as ObjectEffect).TypeId);
                 (effects[_i4] as ObjectEffect).Serialize(writer);
             }
 
             writer.WriteShort((short)prices.Length);
-            for (uint _i5 = 0;_i5 < prices.Length;_i5++)
+            for (uint _i5 = 0; _i5 < prices.Length; _i5++)
             {
-                if (prices[_i5] < 0 || prices[_i5] > 9.00719925474099E+15)
+                if (prices[_i5] < 0 || prices[_i5] > 9007199254740992)
                 {
                     throw new System.Exception("Forbidden value (" + prices[_i5] + ") on element 5 (starting at 1) of prices.");
                 }
@@ -69,7 +69,7 @@ namespace Giny.Protocol.Messages
             ObjectEffect _item4 = null;
             double _val5 = double.NaN;
             itemUID = (int)reader.ReadInt();
-            objectGID = (short)reader.ReadVarUhShort();
+            objectGID = (int)reader.ReadVarUhInt();
             if (objectGID < 0)
             {
                 throw new System.Exception("Forbidden value (" + objectGID + ") on element of ExchangeBidHouseInListAddedMessage.objectGID.");
@@ -82,7 +82,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _effectsLen = (uint)reader.ReadUShort();
-            for (uint _i4 = 0;_i4 < _effectsLen;_i4++)
+            for (uint _i4 = 0; _i4 < _effectsLen; _i4++)
             {
                 _id4 = (uint)reader.ReadUShort();
                 _item4 = ProtocolTypeManager.GetInstance<ObjectEffect>((short)_id4);
@@ -92,10 +92,10 @@ namespace Giny.Protocol.Messages
 
             uint _pricesLen = (uint)reader.ReadUShort();
             prices = new long[_pricesLen];
-            for (uint _i5 = 0;_i5 < _pricesLen;_i5++)
+            for (uint _i5 = 0; _i5 < _pricesLen; _i5++)
             {
                 _val5 = (double)reader.ReadVarUhLong();
-                if (_val5 < 0 || _val5 > 9.00719925474099E+15)
+                if (_val5 < 0 || _val5 > 9007199254740992)
                 {
                     throw new System.Exception("Forbidden value (" + _val5 + ") on elements of prices.");
                 }
@@ -105,14 +105,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

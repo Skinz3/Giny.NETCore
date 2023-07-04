@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class MimicryObjectErrorMessage : SymbioticObjectErrorMessage  
-    { 
-        public new const ushort Id = 7868;
+{
+    public class MimicryObjectErrorMessage : SymbioticObjectErrorMessage
+    {
+        public new const ushort Id = 8051;
         public override ushort MessageId => Id;
 
         public bool preview;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public MimicryObjectErrorMessage()
         {
         }
-        public MimicryObjectErrorMessage(bool preview,byte reason,byte errorCode)
+        public MimicryObjectErrorMessage(bool preview, byte reason, byte errorCode)
         {
             this.preview = preview;
             this.reason = reason;
@@ -34,14 +34,7 @@ namespace Giny.Protocol.Messages
             preview = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GoldItem : Item  
-    { 
-        public new const ushort Id = 7805;
+{
+    public class GoldItem : Item
+    {
+        public new const ushort Id = 4494;
         public override ushort TypeId => Id;
 
         public long sum;
@@ -22,7 +22,7 @@ namespace Giny.Protocol.Types
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (sum < 0 || sum > 9.00719925474099E+15)
+            if (sum < 0 || sum > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + sum + ") on element sum.");
             }
@@ -33,7 +33,7 @@ namespace Giny.Protocol.Types
         {
             base.Deserialize(reader);
             sum = (long)reader.ReadVarUhLong();
-            if (sum < 0 || sum > 9.00719925474099E+15)
+            if (sum < 0 || sum > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + sum + ") on element of GoldItem.sum.");
             }
@@ -43,11 +43,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

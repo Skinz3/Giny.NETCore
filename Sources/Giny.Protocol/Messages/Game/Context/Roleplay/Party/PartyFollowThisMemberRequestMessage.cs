@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PartyFollowThisMemberRequestMessage : PartyFollowMemberRequestMessage  
-    { 
-        public new const ushort Id = 2208;
+{
+    public class PartyFollowThisMemberRequestMessage : PartyFollowMemberRequestMessage
+    {
+        public new const ushort Id = 2541;
         public override ushort MessageId => Id;
 
         public bool enabled;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public PartyFollowThisMemberRequestMessage()
         {
         }
-        public PartyFollowThisMemberRequestMessage(bool enabled,int partyId,long playerId)
+        public PartyFollowThisMemberRequestMessage(bool enabled, int partyId, long playerId)
         {
             this.enabled = enabled;
             this.partyId = partyId;
@@ -34,14 +34,7 @@ namespace Giny.Protocol.Messages
             enabled = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

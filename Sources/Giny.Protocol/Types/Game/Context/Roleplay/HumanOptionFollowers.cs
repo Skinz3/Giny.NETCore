@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class HumanOptionFollowers : HumanOption  
-    { 
-        public new const ushort Id = 6006;
+{
+    public class HumanOptionFollowers : HumanOption
+    {
+        public new const ushort Id = 7719;
         public override ushort TypeId => Id;
 
         public IndexedEntityLook[] followingCharactersLook;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Types
         {
             base.Serialize(writer);
             writer.WriteShort((short)followingCharactersLook.Length);
-            for (uint _i1 = 0;_i1 < followingCharactersLook.Length;_i1++)
+            for (uint _i1 = 0; _i1 < followingCharactersLook.Length; _i1++)
             {
                 (followingCharactersLook[_i1] as IndexedEntityLook).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Types
             IndexedEntityLook _item1 = null;
             base.Deserialize(reader);
             uint _followingCharactersLookLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _followingCharactersLookLen;_i1++)
+            for (uint _i1 = 0; _i1 < _followingCharactersLookLen; _i1++)
             {
                 _item1 = new IndexedEntityLook();
                 _item1.Deserialize(reader);
@@ -46,11 +46,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

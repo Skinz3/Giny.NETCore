@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class EntityTalkMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4154;
+{
+    public class EntityTalkMessage : NetworkMessage
+    {
+        public const ushort Id = 1753;
         public override ushort MessageId => Id;
 
         public double entityId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public EntityTalkMessage()
         {
         }
-        public EntityTalkMessage(double entityId,short textId,string[] parameters)
+        public EntityTalkMessage(double entityId, short textId, string[] parameters)
         {
             this.entityId = entityId;
             this.textId = textId;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (entityId < -9.00719925474099E+15 || entityId > 9.00719925474099E+15)
+            if (entityId < -9007199254740992 || entityId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + entityId + ") on element entityId.");
             }
@@ -40,7 +40,7 @@ namespace Giny.Protocol.Messages
 
             writer.WriteVarShort((short)textId);
             writer.WriteShort((short)parameters.Length);
-            for (uint _i3 = 0;_i3 < parameters.Length;_i3++)
+            for (uint _i3 = 0; _i3 < parameters.Length; _i3++)
             {
                 writer.WriteUTF((string)parameters[_i3]);
             }
@@ -50,7 +50,7 @@ namespace Giny.Protocol.Messages
         {
             string _val3 = null;
             entityId = (double)reader.ReadDouble();
-            if (entityId < -9.00719925474099E+15 || entityId > 9.00719925474099E+15)
+            if (entityId < -9007199254740992 || entityId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + entityId + ") on element of EntityTalkMessage.entityId.");
             }
@@ -63,7 +63,7 @@ namespace Giny.Protocol.Messages
 
             uint _parametersLen = (uint)reader.ReadUShort();
             parameters = new string[_parametersLen];
-            for (uint _i3 = 0;_i3 < _parametersLen;_i3++)
+            for (uint _i3 = 0; _i3 < _parametersLen; _i3++)
             {
                 _val3 = (string)reader.ReadUTF();
                 parameters[_i3] = (string)_val3;
@@ -71,14 +71,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

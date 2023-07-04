@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameActionSpamMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9175;
+{
+    public class GameActionSpamMessage : NetworkMessage
+    {
+        public const ushort Id = 1558;
         public override ushort MessageId => Id;
 
         public short[] cells;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)cells.Length);
-            for (uint _i1 = 0;_i1 < cells.Length;_i1++)
+            for (uint _i1 = 0; _i1 < cells.Length; _i1++)
             {
                 writer.WriteShort((short)cells[_i1]);
             }
@@ -35,7 +35,7 @@ namespace Giny.Protocol.Messages
             int _val1 = 0;
             uint _cellsLen = (uint)reader.ReadUShort();
             cells = new short[_cellsLen];
-            for (uint _i1 = 0;_i1 < _cellsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _cellsLen; _i1++)
             {
                 _val1 = (int)reader.ReadShort();
                 cells[_i1] = (short)_val1;
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

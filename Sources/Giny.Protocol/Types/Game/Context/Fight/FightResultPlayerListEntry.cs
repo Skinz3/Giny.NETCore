@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class FightResultPlayerListEntry : FightResultFighterListEntry  
-    { 
-        public new const ushort Id = 9475;
+{
+    public class FightResultPlayerListEntry : FightResultFighterListEntry
+    {
+        public new const ushort Id = 4904;
         public override ushort TypeId => Id;
 
         public short level;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public FightResultPlayerListEntry()
         {
         }
-        public FightResultPlayerListEntry(short level,FightResultAdditionalData[] additional,short outcome,byte wave,FightLoot rewards,double id,bool alive)
+        public FightResultPlayerListEntry(short level, FightResultAdditionalData[] additional, short outcome, byte wave, FightLoot rewards, double id, bool alive)
         {
             this.level = level;
             this.additional = additional;
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Types
 
             writer.WriteVarShort((short)level);
             writer.WriteShort((short)additional.Length);
-            for (uint _i2 = 0;_i2 < additional.Length;_i2++)
+            for (uint _i2 = 0; _i2 < additional.Length; _i2++)
             {
                 writer.WriteShort((short)(additional[_i2] as FightResultAdditionalData).TypeId);
                 (additional[_i2] as FightResultAdditionalData).Serialize(writer);
@@ -55,7 +55,7 @@ namespace Giny.Protocol.Types
             }
 
             uint _additionalLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _additionalLen;_i2++)
+            for (uint _i2 = 0; _i2 < _additionalLen; _i2++)
             {
                 _id2 = (uint)reader.ReadUShort();
                 _item2 = ProtocolTypeManager.GetInstance<FightResultAdditionalData>((short)_id2);
@@ -68,11 +68,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

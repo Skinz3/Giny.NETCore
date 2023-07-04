@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BasicWhoIsRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3721;
+{
+    public class BasicWhoIsRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 94;
         public override ushort MessageId => Id;
 
         public bool verbose;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public BasicWhoIsRequestMessage()
         {
         }
-        public BasicWhoIsRequestMessage(bool verbose,AbstractPlayerSearchInformation target)
+        public BasicWhoIsRequestMessage(bool verbose, AbstractPlayerSearchInformation target)
         {
             this.verbose = verbose;
             this.target = target;
@@ -37,14 +37,7 @@ namespace Giny.Protocol.Messages
             target.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

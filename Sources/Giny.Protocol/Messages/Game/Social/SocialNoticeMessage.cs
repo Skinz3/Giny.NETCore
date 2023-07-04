@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class SocialNoticeMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7363;
+{
+    public class SocialNoticeMessage : NetworkMessage
+    {
+        public const ushort Id = 153;
         public override ushort MessageId => Id;
 
         public string content;
@@ -20,7 +20,7 @@ namespace Giny.Protocol.Messages
         public SocialNoticeMessage()
         {
         }
-        public SocialNoticeMessage(string content,int timestamp,long memberId,string memberName)
+        public SocialNoticeMessage(string content, int timestamp, long memberId, string memberName)
         {
             this.content = content;
             this.timestamp = timestamp;
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteInt((int)timestamp);
-            if (memberId < 0 || memberId > 9.00719925474099E+15)
+            if (memberId < 0 || memberId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + memberId + ") on element memberId.");
             }
@@ -54,7 +54,7 @@ namespace Giny.Protocol.Messages
             }
 
             memberId = (long)reader.ReadVarUhLong();
-            if (memberId < 0 || memberId > 9.00719925474099E+15)
+            if (memberId < 0 || memberId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + memberId + ") on element of SocialNoticeMessage.memberId.");
             }
@@ -62,14 +62,7 @@ namespace Giny.Protocol.Messages
             memberName = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

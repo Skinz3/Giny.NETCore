@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class SymbioticObjectErrorMessage : ObjectErrorMessage  
-    { 
-        public new const ushort Id = 7936;
+{
+    public class SymbioticObjectErrorMessage : ObjectErrorMessage
+    {
+        public new const ushort Id = 3035;
         public override ushort MessageId => Id;
 
         public byte errorCode;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public SymbioticObjectErrorMessage()
         {
         }
-        public SymbioticObjectErrorMessage(byte errorCode,byte reason)
+        public SymbioticObjectErrorMessage(byte errorCode, byte reason)
         {
             this.errorCode = errorCode;
             this.reason = reason;
@@ -33,14 +33,7 @@ namespace Giny.Protocol.Messages
             errorCode = (byte)reader.ReadByte();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

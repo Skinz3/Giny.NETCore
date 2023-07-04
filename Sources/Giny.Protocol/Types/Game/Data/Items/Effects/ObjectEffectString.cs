@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ObjectEffectString : ObjectEffect  
-    { 
-        public new const ushort Id = 205;
+{
+    public class ObjectEffectString : ObjectEffect
+    {
+        public new const ushort Id = 4550;
         public override ushort TypeId => Id;
 
         public string value;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public ObjectEffectString()
         {
         }
-        public ObjectEffectString(string value,short actionId)
+        public ObjectEffectString(string value, short actionId)
         {
             this.value = value;
             this.actionId = actionId;
@@ -34,11 +34,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

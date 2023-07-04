@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class MonsterInGroupLightInformations  
-    { 
-        public const ushort Id = 502;
+{
+    public class MonsterInGroupLightInformations
+    {
+        public const ushort Id = 5204;
         public virtual ushort TypeId => Id;
 
         public int genericId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Types
         public MonsterInGroupLightInformations()
         {
         }
-        public MonsterInGroupLightInformations(int genericId,byte grade,short level)
+        public MonsterInGroupLightInformations(int genericId, byte grade, short level)
         {
             this.genericId = genericId;
             this.grade = grade;
@@ -59,11 +59,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

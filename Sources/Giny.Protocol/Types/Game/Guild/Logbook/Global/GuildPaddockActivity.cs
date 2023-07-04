@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GuildPaddockActivity : GuildLogbookEntryBasicInformation  
-    { 
-        public new const ushort Id = 9842;
+{
+    public class GuildPaddockActivity : GuildLogbookEntryBasicInformation
+    {
+        public new const ushort Id = 6202;
         public override ushort TypeId => Id;
 
         public long playerId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Types
         public GuildPaddockActivity()
         {
         }
-        public GuildPaddockActivity(long playerId,string playerName,MapCoordinatesExtended paddockCoordinates,double farmId,byte paddockEventType,int id,double date)
+        public GuildPaddockActivity(long playerId, string playerName, MapCoordinatesExtended paddockCoordinates, double farmId, byte paddockEventType, int id, double date)
         {
             this.playerId = playerId;
             this.playerName = playerName;
@@ -32,7 +32,7 @@ namespace Giny.Protocol.Types
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
@@ -40,7 +40,7 @@ namespace Giny.Protocol.Types
             writer.WriteVarLong((long)playerId);
             writer.WriteUTF((string)playerName);
             paddockCoordinates.Serialize(writer);
-            if (farmId < 0 || farmId > 9.00719925474099E+15)
+            if (farmId < 0 || farmId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + farmId + ") on element farmId.");
             }
@@ -52,7 +52,7 @@ namespace Giny.Protocol.Types
         {
             base.Deserialize(reader);
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of GuildPaddockActivity.playerId.");
             }
@@ -61,7 +61,7 @@ namespace Giny.Protocol.Types
             paddockCoordinates = new MapCoordinatesExtended();
             paddockCoordinates.Deserialize(reader);
             farmId = (double)reader.ReadDouble();
-            if (farmId < 0 || farmId > 9.00719925474099E+15)
+            if (farmId < 0 || farmId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + farmId + ") on element of GuildPaddockActivity.farmId.");
             }
@@ -77,11 +77,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

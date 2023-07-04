@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class CharacterMinimalPlusLookInformations : CharacterMinimalInformations  
-    { 
-        public new const ushort Id = 6908;
+{
+    public class CharacterMinimalPlusLookInformations : CharacterMinimalInformations
+    {
+        public new const ushort Id = 3804;
         public override ushort TypeId => Id;
 
         public EntityLook entityLook;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public CharacterMinimalPlusLookInformations()
         {
         }
-        public CharacterMinimalPlusLookInformations(EntityLook entityLook,byte breed,long id,string name,short level)
+        public CharacterMinimalPlusLookInformations(EntityLook entityLook, byte breed, long id, string name, short level)
         {
             this.entityLook = entityLook;
             this.breed = breed;
@@ -41,11 +41,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

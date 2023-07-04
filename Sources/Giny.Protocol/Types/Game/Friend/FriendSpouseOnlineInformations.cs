@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class FriendSpouseOnlineInformations : FriendSpouseInformations  
-    { 
-        public new const ushort Id = 3147;
+{
+    public class FriendSpouseOnlineInformations : FriendSpouseInformations
+    {
+        public new const ushort Id = 6627;
         public override ushort TypeId => Id;
 
         public double mapId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Types
         public FriendSpouseOnlineInformations()
         {
         }
-        public FriendSpouseOnlineInformations(double mapId,short subAreaId,bool inFight,bool followSpouse,int spouseAccountId,long spouseId,string spouseName,short spouseLevel,byte breed,byte sex,EntityLook spouseEntityLook,GuildInformations guildInfo,byte alignmentSide)
+        public FriendSpouseOnlineInformations(double mapId, short subAreaId, bool inFight, bool followSpouse, int spouseAccountId, long spouseId, string spouseName, short spouseLevel, byte breed, byte sex, EntityLook spouseEntityLook, GuildInformations guildInfo, byte alignmentSide)
         {
             this.mapId = mapId;
             this.subAreaId = subAreaId;
@@ -38,10 +38,10 @@ namespace Giny.Protocol.Types
         {
             base.Serialize(writer);
             byte _box0 = 0;
-            _box0 = BooleanByteWrapper.SetFlag(_box0,0,inFight);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,1,followSpouse);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 0, inFight);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 1, followSpouse);
             writer.WriteByte((byte)_box0);
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element mapId.");
             }
@@ -58,10 +58,10 @@ namespace Giny.Protocol.Types
         {
             base.Deserialize(reader);
             byte _box0 = reader.ReadByte();
-            inFight = BooleanByteWrapper.GetFlag(_box0,0);
-            followSpouse = BooleanByteWrapper.GetFlag(_box0,1);
+            inFight = BooleanByteWrapper.GetFlag(_box0, 0);
+            followSpouse = BooleanByteWrapper.GetFlag(_box0, 1);
             mapId = (double)reader.ReadDouble();
-            if (mapId < 0 || mapId > 9.00719925474099E+15)
+            if (mapId < 0 || mapId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + mapId + ") on element of FriendSpouseOnlineInformations.mapId.");
             }
@@ -77,11 +77,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

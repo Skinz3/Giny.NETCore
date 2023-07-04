@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ForgettableSpellListUpdateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 584;
+{
+    public class ForgettableSpellListUpdateMessage : NetworkMessage
+    {
+        public const ushort Id = 3361;
         public override ushort MessageId => Id;
 
         public byte action;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ForgettableSpellListUpdateMessage()
         {
         }
-        public ForgettableSpellListUpdateMessage(byte action,ForgettableSpellItem[] spells)
+        public ForgettableSpellListUpdateMessage(byte action, ForgettableSpellItem[] spells)
         {
             this.action = action;
             this.spells = spells;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         {
             writer.WriteByte((byte)action);
             writer.WriteShort((short)spells.Length);
-            for (uint _i2 = 0;_i2 < spells.Length;_i2++)
+            for (uint _i2 = 0; _i2 < spells.Length; _i2++)
             {
                 (spells[_i2] as ForgettableSpellItem).Serialize(writer);
             }
@@ -43,7 +43,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _spellsLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _spellsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _spellsLen; _i2++)
             {
                 _item2 = new ForgettableSpellItem();
                 _item2.Deserialize(reader);
@@ -52,14 +52,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

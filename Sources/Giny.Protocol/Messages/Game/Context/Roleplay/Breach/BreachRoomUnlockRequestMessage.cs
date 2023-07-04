@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BreachRoomUnlockRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3933;
+{
+    public class BreachRoomUnlockRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 1344;
         public override ushort MessageId => Id;
 
         public byte roomId;
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

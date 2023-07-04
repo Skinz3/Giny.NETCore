@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PartyInvitationMessage : AbstractPartyMessage  
-    { 
-        public new const ushort Id = 7030;
+{
+    public class PartyInvitationMessage : AbstractPartyMessage
+    {
+        public new const ushort Id = 4666;
         public override ushort MessageId => Id;
 
         public byte partyType;
@@ -22,7 +22,7 @@ namespace Giny.Protocol.Messages
         public PartyInvitationMessage()
         {
         }
-        public PartyInvitationMessage(byte partyType,string partyName,byte maxParticipants,long fromId,string fromName,long toId,int partyId)
+        public PartyInvitationMessage(byte partyType, string partyName, byte maxParticipants, long fromId, string fromName, long toId, int partyId)
         {
             this.partyType = partyType;
             this.partyName = partyName;
@@ -43,14 +43,14 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteByte((byte)maxParticipants);
-            if (fromId < 0 || fromId > 9.00719925474099E+15)
+            if (fromId < 0 || fromId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + fromId + ") on element fromId.");
             }
 
             writer.WriteVarLong((long)fromId);
             writer.WriteUTF((string)fromName);
-            if (toId < 0 || toId > 9.00719925474099E+15)
+            if (toId < 0 || toId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + toId + ") on element toId.");
             }
@@ -74,28 +74,21 @@ namespace Giny.Protocol.Messages
             }
 
             fromId = (long)reader.ReadVarUhLong();
-            if (fromId < 0 || fromId > 9.00719925474099E+15)
+            if (fromId < 0 || fromId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + fromId + ") on element of PartyInvitationMessage.fromId.");
             }
 
             fromName = (string)reader.ReadUTF();
             toId = (long)reader.ReadVarUhLong();
-            if (toId < 0 || toId > 9.00719925474099E+15)
+            if (toId < 0 || toId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + toId + ") on element of PartyInvitationMessage.toId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

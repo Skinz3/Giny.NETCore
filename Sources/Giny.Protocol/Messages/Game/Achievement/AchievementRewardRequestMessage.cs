@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AchievementRewardRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2838;
+{
+    public class AchievementRewardRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 5633;
         public override ushort MessageId => Id;
 
         public short achievementId;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             achievementId = (short)reader.ReadShort();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

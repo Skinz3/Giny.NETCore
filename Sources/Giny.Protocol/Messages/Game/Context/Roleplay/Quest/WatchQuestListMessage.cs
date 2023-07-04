@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class WatchQuestListMessage : QuestListMessage  
-    { 
-        public new const ushort Id = 3233;
+{
+    public class WatchQuestListMessage : QuestListMessage
+    {
+        public new const ushort Id = 3831;
         public override ushort MessageId => Id;
 
         public long playerId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public WatchQuestListMessage()
         {
         }
-        public WatchQuestListMessage(long playerId,short[] finishedQuestsIds,short[] finishedQuestsCounts,QuestActiveInformations[] activeQuests,short[] reinitDoneQuestsIds)
+        public WatchQuestListMessage(long playerId, short[] finishedQuestsIds, short[] finishedQuestsCounts, QuestActiveInformations[] activeQuests, short[] reinitDoneQuestsIds)
         {
             this.playerId = playerId;
             this.finishedQuestsIds = finishedQuestsIds;
@@ -28,7 +28,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
@@ -39,21 +39,14 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of WatchQuestListMessage.playerId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

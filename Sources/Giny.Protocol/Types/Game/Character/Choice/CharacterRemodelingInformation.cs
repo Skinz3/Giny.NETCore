@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class CharacterRemodelingInformation : AbstractCharacterInformation  
-    { 
-        public new const ushort Id = 8348;
+{
+    public class CharacterRemodelingInformation : AbstractCharacterInformation
+    {
+        public new const ushort Id = 3560;
         public override ushort TypeId => Id;
 
         public string name;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Types
         public CharacterRemodelingInformation()
         {
         }
-        public CharacterRemodelingInformation(string name,byte breed,bool sex,short cosmeticId,int[] colors,long id)
+        public CharacterRemodelingInformation(string name, byte breed, bool sex, short cosmeticId, int[] colors, long id)
         {
             this.name = name;
             this.breed = breed;
@@ -41,7 +41,7 @@ namespace Giny.Protocol.Types
 
             writer.WriteVarShort((short)cosmeticId);
             writer.WriteShort((short)colors.Length);
-            for (uint _i5 = 0;_i5 < colors.Length;_i5++)
+            for (uint _i5 = 0; _i5 < colors.Length; _i5++)
             {
                 writer.WriteInt((int)colors[_i5]);
             }
@@ -62,7 +62,7 @@ namespace Giny.Protocol.Types
 
             uint _colorsLen = (uint)reader.ReadUShort();
             colors = new int[_colorsLen];
-            for (uint _i5 = 0;_i5 < _colorsLen;_i5++)
+            for (uint _i5 = 0; _i5 < _colorsLen; _i5++)
             {
                 _val5 = (int)reader.ReadInt();
                 colors[_i5] = (int)_val5;
@@ -73,11 +73,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

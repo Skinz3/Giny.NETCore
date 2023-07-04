@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HavenBagRoomUpdateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5991;
+{
+    public class HavenBagRoomUpdateMessage : NetworkMessage
+    {
+        public const ushort Id = 5223;
         public override ushort MessageId => Id;
 
         public byte action;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public HavenBagRoomUpdateMessage()
         {
         }
-        public HavenBagRoomUpdateMessage(byte action,HavenBagRoomPreviewInformation[] roomsPreview)
+        public HavenBagRoomUpdateMessage(byte action, HavenBagRoomPreviewInformation[] roomsPreview)
         {
             this.action = action;
             this.roomsPreview = roomsPreview;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         {
             writer.WriteByte((byte)action);
             writer.WriteShort((short)roomsPreview.Length);
-            for (uint _i2 = 0;_i2 < roomsPreview.Length;_i2++)
+            for (uint _i2 = 0; _i2 < roomsPreview.Length; _i2++)
             {
                 (roomsPreview[_i2] as HavenBagRoomPreviewInformation).Serialize(writer);
             }
@@ -43,7 +43,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _roomsPreviewLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _roomsPreviewLen;_i2++)
+            for (uint _i2 = 0; _i2 < _roomsPreviewLen; _i2++)
             {
                 _item2 = new HavenBagRoomPreviewInformation();
                 _item2.Deserialize(reader);
@@ -52,14 +52,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

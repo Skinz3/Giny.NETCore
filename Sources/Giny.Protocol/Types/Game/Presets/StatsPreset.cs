@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class StatsPreset : Preset  
-    { 
-        public new const ushort Id = 4172;
+{
+    public class StatsPreset : Preset
+    {
+        public new const ushort Id = 8158;
         public override ushort TypeId => Id;
 
         public SimpleCharacterCharacteristicForPreset[] stats;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public StatsPreset()
         {
         }
-        public StatsPreset(SimpleCharacterCharacteristicForPreset[] stats,short id)
+        public StatsPreset(SimpleCharacterCharacteristicForPreset[] stats, short id)
         {
             this.stats = stats;
             this.id = id;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Types
         {
             base.Serialize(writer);
             writer.WriteShort((short)stats.Length);
-            for (uint _i1 = 0;_i1 < stats.Length;_i1++)
+            for (uint _i1 = 0; _i1 < stats.Length; _i1++)
             {
                 (stats[_i1] as SimpleCharacterCharacteristicForPreset).Serialize(writer);
             }
@@ -35,7 +35,7 @@ namespace Giny.Protocol.Types
             SimpleCharacterCharacteristicForPreset _item1 = null;
             base.Deserialize(reader);
             uint _statsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _statsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _statsLen; _i1++)
             {
                 _item1 = new SimpleCharacterCharacteristicForPreset();
                 _item1.Deserialize(reader);
@@ -47,11 +47,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

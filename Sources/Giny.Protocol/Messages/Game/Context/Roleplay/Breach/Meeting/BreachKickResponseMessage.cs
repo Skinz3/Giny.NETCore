@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BreachKickResponseMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6036;
+{
+    public class BreachKickResponseMessage : NetworkMessage
+    {
+        public const ushort Id = 6416;
         public override ushort MessageId => Id;
 
         public CharacterMinimalInformations target;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public BreachKickResponseMessage()
         {
         }
-        public BreachKickResponseMessage(CharacterMinimalInformations target,bool kicked)
+        public BreachKickResponseMessage(CharacterMinimalInformations target, bool kicked)
         {
             this.target = target;
             this.kicked = kicked;
@@ -35,14 +35,7 @@ namespace Giny.Protocol.Messages
             kicked = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class PaddockInformations  
-    { 
-        public const ushort Id = 5079;
+{
+    public class PaddockInformations
+    {
+        public const ushort Id = 9423;
         public virtual ushort TypeId => Id;
 
         public short maxOutdoorMount;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public PaddockInformations()
         {
         }
-        public PaddockInformations(short maxOutdoorMount,short maxItems)
+        public PaddockInformations(short maxOutdoorMount, short maxItems)
         {
             this.maxOutdoorMount = maxOutdoorMount;
             this.maxItems = maxItems;
@@ -55,11 +55,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

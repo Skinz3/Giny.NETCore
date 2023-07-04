@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameActionFightDispellSpellMessage : GameActionFightDispellMessage  
-    { 
-        public new const ushort Id = 6072;
+{
+    public class GameActionFightDispellSpellMessage : GameActionFightDispellMessage
+    {
+        public new const ushort Id = 8178;
         public override ushort MessageId => Id;
 
         public short spellId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public GameActionFightDispellSpellMessage()
         {
         }
-        public GameActionFightDispellSpellMessage(short spellId,short actionId,double sourceId,double targetId,bool verboseCast)
+        public GameActionFightDispellSpellMessage(short spellId, short actionId, double sourceId, double targetId, bool verboseCast)
         {
             this.spellId = spellId;
             this.actionId = actionId;
@@ -46,14 +46,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

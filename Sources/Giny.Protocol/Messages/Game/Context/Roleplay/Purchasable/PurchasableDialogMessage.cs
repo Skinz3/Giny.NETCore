@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PurchasableDialogMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9506;
+{
+    public class PurchasableDialogMessage : NetworkMessage
+    {
+        public const ushort Id = 8325;
         public override ushort MessageId => Id;
 
         public bool buyOrSell;
@@ -21,7 +21,7 @@ namespace Giny.Protocol.Messages
         public PurchasableDialogMessage()
         {
         }
-        public PurchasableDialogMessage(bool buyOrSell,double purchasableId,int purchasableInstanceId,bool secondHand,long price)
+        public PurchasableDialogMessage(bool buyOrSell, double purchasableId, int purchasableInstanceId, bool secondHand, long price)
         {
             this.buyOrSell = buyOrSell;
             this.purchasableId = purchasableId;
@@ -32,10 +32,10 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             byte _box0 = 0;
-            _box0 = BooleanByteWrapper.SetFlag(_box0,0,buyOrSell);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,1,secondHand);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 0, buyOrSell);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 1, secondHand);
             writer.WriteByte((byte)_box0);
-            if (purchasableId < 0 || purchasableId > 9.00719925474099E+15)
+            if (purchasableId < 0 || purchasableId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + purchasableId + ") on element purchasableId.");
             }
@@ -47,7 +47,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteInt((int)purchasableInstanceId);
-            if (price < 0 || price > 9.00719925474099E+15)
+            if (price < 0 || price > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + price + ") on element price.");
             }
@@ -57,10 +57,10 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             byte _box0 = reader.ReadByte();
-            buyOrSell = BooleanByteWrapper.GetFlag(_box0,0);
-            secondHand = BooleanByteWrapper.GetFlag(_box0,1);
+            buyOrSell = BooleanByteWrapper.GetFlag(_box0, 0);
+            secondHand = BooleanByteWrapper.GetFlag(_box0, 1);
             purchasableId = (double)reader.ReadDouble();
-            if (purchasableId < 0 || purchasableId > 9.00719925474099E+15)
+            if (purchasableId < 0 || purchasableId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + purchasableId + ") on element of PurchasableDialogMessage.purchasableId.");
             }
@@ -72,21 +72,14 @@ namespace Giny.Protocol.Messages
             }
 
             price = (long)reader.ReadVarUhLong();
-            if (price < 0 || price > 9.00719925474099E+15)
+            if (price < 0 || price > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + price + ") on element of PurchasableDialogMessage.price.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

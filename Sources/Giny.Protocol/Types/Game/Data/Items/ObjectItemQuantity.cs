@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ObjectItemQuantity : Item  
-    { 
-        public new const ushort Id = 5342;
+{
+    public class ObjectItemQuantity : Item
+    {
+        public new const ushort Id = 2111;
         public override ushort TypeId => Id;
 
         public int objectUID;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public ObjectItemQuantity()
         {
         }
-        public ObjectItemQuantity(int objectUID,int quantity)
+        public ObjectItemQuantity(int objectUID, int quantity)
         {
             this.objectUID = objectUID;
             this.quantity = quantity;
@@ -57,11 +57,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

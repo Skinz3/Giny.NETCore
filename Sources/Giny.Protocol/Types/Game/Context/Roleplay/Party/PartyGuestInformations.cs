@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class PartyGuestInformations  
-    { 
-        public const ushort Id = 3541;
+{
+    public class PartyGuestInformations
+    {
+        public const ushort Id = 554;
         public virtual ushort TypeId => Id;
 
         public long guestId;
@@ -22,7 +22,7 @@ namespace Giny.Protocol.Types
         public PartyGuestInformations()
         {
         }
-        public PartyGuestInformations(long guestId,long hostId,string name,EntityLook guestLook,byte breed,bool sex,PlayerStatus status,PartyEntityBaseInformation[] entities)
+        public PartyGuestInformations(long guestId, long hostId, string name, EntityLook guestLook, byte breed, bool sex, PlayerStatus status, PartyEntityBaseInformation[] entities)
         {
             this.guestId = guestId;
             this.hostId = hostId;
@@ -35,13 +35,13 @@ namespace Giny.Protocol.Types
         }
         public virtual void Serialize(IDataWriter writer)
         {
-            if (guestId < 0 || guestId > 9.00719925474099E+15)
+            if (guestId < 0 || guestId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + guestId + ") on element guestId.");
             }
 
             writer.WriteVarLong((long)guestId);
-            if (hostId < 0 || hostId > 9.00719925474099E+15)
+            if (hostId < 0 || hostId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + hostId + ") on element hostId.");
             }
@@ -54,7 +54,7 @@ namespace Giny.Protocol.Types
             writer.WriteShort((short)status.TypeId);
             status.Serialize(writer);
             writer.WriteShort((short)entities.Length);
-            for (uint _i8 = 0;_i8 < entities.Length;_i8++)
+            for (uint _i8 = 0; _i8 < entities.Length; _i8++)
             {
                 (entities[_i8] as PartyEntityBaseInformation).Serialize(writer);
             }
@@ -64,13 +64,13 @@ namespace Giny.Protocol.Types
         {
             PartyEntityBaseInformation _item8 = null;
             guestId = (long)reader.ReadVarUhLong();
-            if (guestId < 0 || guestId > 9.00719925474099E+15)
+            if (guestId < 0 || guestId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + guestId + ") on element of PartyGuestInformations.guestId.");
             }
 
             hostId = (long)reader.ReadVarUhLong();
-            if (hostId < 0 || hostId > 9.00719925474099E+15)
+            if (hostId < 0 || hostId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + hostId + ") on element of PartyGuestInformations.hostId.");
             }
@@ -84,7 +84,7 @@ namespace Giny.Protocol.Types
             status = ProtocolTypeManager.GetInstance<PlayerStatus>((short)_id7);
             status.Deserialize(reader);
             uint _entitiesLen = (uint)reader.ReadUShort();
-            for (uint _i8 = 0;_i8 < _entitiesLen;_i8++)
+            for (uint _i8 = 0; _i8 < _entitiesLen; _i8++)
             {
                 _item8 = new PartyEntityBaseInformation();
                 _item8.Deserialize(reader);
@@ -96,11 +96,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class SpellForPreset  
-    { 
-        public const ushort Id = 3545;
+{
+    public class SpellForPreset
+    {
+        public const ushort Id = 2056;
         public virtual ushort TypeId => Id;
 
         public short spellId;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public SpellForPreset()
         {
         }
-        public SpellForPreset(short spellId,short[] shortcuts)
+        public SpellForPreset(short spellId, short[] shortcuts)
         {
             this.spellId = spellId;
             this.shortcuts = shortcuts;
@@ -30,7 +30,7 @@ namespace Giny.Protocol.Types
 
             writer.WriteVarShort((short)spellId);
             writer.WriteShort((short)shortcuts.Length);
-            for (uint _i2 = 0;_i2 < shortcuts.Length;_i2++)
+            for (uint _i2 = 0; _i2 < shortcuts.Length; _i2++)
             {
                 writer.WriteShort((short)shortcuts[_i2]);
             }
@@ -47,7 +47,7 @@ namespace Giny.Protocol.Types
 
             uint _shortcutsLen = (uint)reader.ReadUShort();
             shortcuts = new short[_shortcutsLen];
-            for (uint _i2 = 0;_i2 < _shortcutsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _shortcutsLen; _i2++)
             {
                 _val2 = (int)reader.ReadShort();
                 shortcuts[_i2] = (short)_val2;
@@ -58,11 +58,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

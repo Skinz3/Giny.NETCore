@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeLeaveMessage : LeaveDialogMessage  
-    { 
-        public new const ushort Id = 5922;
+{
+    public class ExchangeLeaveMessage : LeaveDialogMessage
+    {
+        public new const ushort Id = 4024;
         public override ushort MessageId => Id;
 
         public bool success;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public ExchangeLeaveMessage()
         {
         }
-        public ExchangeLeaveMessage(bool success,byte dialogType)
+        public ExchangeLeaveMessage(bool success, byte dialogType)
         {
             this.success = success;
             this.dialogType = dialogType;
@@ -33,14 +33,7 @@ namespace Giny.Protocol.Messages
             success = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class RemodelingInformation  
-    { 
-        public const ushort Id = 480;
+{
+    public class RemodelingInformation
+    {
+        public const ushort Id = 3213;
         public virtual ushort TypeId => Id;
 
         public string name;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Types
         public RemodelingInformation()
         {
         }
-        public RemodelingInformation(string name,byte breed,bool sex,short cosmeticId,int[] colors)
+        public RemodelingInformation(string name, byte breed, bool sex, short cosmeticId, int[] colors)
         {
             this.name = name;
             this.breed = breed;
@@ -39,7 +39,7 @@ namespace Giny.Protocol.Types
 
             writer.WriteVarShort((short)cosmeticId);
             writer.WriteShort((short)colors.Length);
-            for (uint _i5 = 0;_i5 < colors.Length;_i5++)
+            for (uint _i5 = 0; _i5 < colors.Length; _i5++)
             {
                 writer.WriteInt((int)colors[_i5]);
             }
@@ -59,7 +59,7 @@ namespace Giny.Protocol.Types
 
             uint _colorsLen = (uint)reader.ReadUShort();
             colors = new int[_colorsLen];
-            for (uint _i5 = 0;_i5 < _colorsLen;_i5++)
+            for (uint _i5 = 0; _i5 < _colorsLen; _i5++)
             {
                 _val5 = (int)reader.ReadInt();
                 colors[_i5] = (int)_val5;
@@ -70,11 +70,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

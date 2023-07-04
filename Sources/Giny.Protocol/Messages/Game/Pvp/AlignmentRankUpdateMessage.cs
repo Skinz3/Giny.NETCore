@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AlignmentRankUpdateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 953;
+{
+    public class AlignmentRankUpdateMessage : NetworkMessage
+    {
+        public const ushort Id = 2405;
         public override ushort MessageId => Id;
 
         public byte alignmentRank;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public AlignmentRankUpdateMessage()
         {
         }
-        public AlignmentRankUpdateMessage(byte alignmentRank,bool verbose)
+        public AlignmentRankUpdateMessage(byte alignmentRank, bool verbose)
         {
             this.alignmentRank = alignmentRank;
             this.verbose = verbose;
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
             verbose = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildApplicationIsAnsweredMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3119;
+{
+    public class GuildApplicationIsAnsweredMessage : NetworkMessage
+    {
+        public const ushort Id = 334;
         public override ushort MessageId => Id;
 
         public bool accepted;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public GuildApplicationIsAnsweredMessage()
         {
         }
-        public GuildApplicationIsAnsweredMessage(bool accepted,GuildInformations guildInformation)
+        public GuildApplicationIsAnsweredMessage(bool accepted, GuildInformations guildInformation)
         {
             this.accepted = accepted;
             this.guildInformation = guildInformation;
@@ -35,14 +35,7 @@ namespace Giny.Protocol.Messages
             guildInformation.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

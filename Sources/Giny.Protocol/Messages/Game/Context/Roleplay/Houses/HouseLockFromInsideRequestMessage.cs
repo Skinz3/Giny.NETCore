@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HouseLockFromInsideRequestMessage : LockableChangeCodeMessage  
-    { 
-        public new const ushort Id = 9332;
+{
+    public class HouseLockFromInsideRequestMessage : LockableChangeCodeMessage
+    {
+        public new const ushort Id = 1120;
         public override ushort MessageId => Id;
 
 
@@ -29,14 +29,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

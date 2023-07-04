@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PopupWarningMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8260;
+{
+    public class PopupWarningMessage : NetworkMessage
+    {
+        public const ushort Id = 615;
         public override ushort MessageId => Id;
 
         public byte lockDuration;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public PopupWarningMessage()
         {
         }
-        public PopupWarningMessage(byte lockDuration,string author,string content)
+        public PopupWarningMessage(byte lockDuration, string author, string content)
         {
             this.lockDuration = lockDuration;
             this.author = author;
@@ -48,14 +48,7 @@ namespace Giny.Protocol.Messages
             content = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

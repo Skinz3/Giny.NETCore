@@ -6,17 +6,17 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class WatchInventoryContentMessage : InventoryContentMessage  
-    { 
-        public new const ushort Id = 2287;
+{
+    public class WatchInventoryContentMessage : InventoryContentMessage
+    {
+        public new const ushort Id = 676;
         public override ushort MessageId => Id;
 
 
         public WatchInventoryContentMessage()
         {
         }
-        public WatchInventoryContentMessage(ObjectItem[] objects,long kamas)
+        public WatchInventoryContentMessage(ObjectItem[] objects, long kamas)
         {
             this.objects = objects;
             this.kamas = kamas;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

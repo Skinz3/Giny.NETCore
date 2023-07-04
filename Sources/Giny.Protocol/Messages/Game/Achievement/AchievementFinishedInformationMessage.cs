@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AchievementFinishedInformationMessage : AchievementFinishedMessage  
-    { 
-        public new const ushort Id = 7708;
+{
+    public class AchievementFinishedInformationMessage : AchievementFinishedMessage
+    {
+        public new const ushort Id = 7456;
         public override ushort MessageId => Id;
 
         public string name;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public AchievementFinishedInformationMessage()
         {
         }
-        public AchievementFinishedInformationMessage(string name,long playerId,AchievementAchievedRewardable achievement)
+        public AchievementFinishedInformationMessage(string name, long playerId, AchievementAchievedRewardable achievement)
         {
             this.name = name;
             this.playerId = playerId;
@@ -28,7 +28,7 @@ namespace Giny.Protocol.Messages
         {
             base.Serialize(writer);
             writer.WriteUTF((string)name);
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
@@ -40,21 +40,14 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
             name = (string)reader.ReadUTF();
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of AchievementFinishedInformationMessage.playerId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

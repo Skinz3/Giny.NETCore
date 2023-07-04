@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class JobDescription  
-    { 
-        public const ushort Id = 6947;
+{
+    public class JobDescription
+    {
+        public const ushort Id = 3802;
         public virtual ushort TypeId => Id;
 
         public byte jobId;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public JobDescription()
         {
         }
-        public JobDescription(byte jobId,SkillActionDescription[] skills)
+        public JobDescription(byte jobId, SkillActionDescription[] skills)
         {
             this.jobId = jobId;
             this.skills = skills;
@@ -30,7 +30,7 @@ namespace Giny.Protocol.Types
 
             writer.WriteByte((byte)jobId);
             writer.WriteShort((short)skills.Length);
-            for (uint _i2 = 0;_i2 < skills.Length;_i2++)
+            for (uint _i2 = 0; _i2 < skills.Length; _i2++)
             {
                 writer.WriteShort((short)(skills[_i2] as SkillActionDescription).TypeId);
                 (skills[_i2] as SkillActionDescription).Serialize(writer);
@@ -48,7 +48,7 @@ namespace Giny.Protocol.Types
             }
 
             uint _skillsLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _skillsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _skillsLen; _i2++)
             {
                 _id2 = (uint)reader.ReadUShort();
                 _item2 = ProtocolTypeManager.GetInstance<SkillActionDescription>((short)_id2);
@@ -61,11 +61,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

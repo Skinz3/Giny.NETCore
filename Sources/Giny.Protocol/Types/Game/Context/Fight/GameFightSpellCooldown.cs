@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameFightSpellCooldown  
-    { 
-        public const ushort Id = 1808;
+{
+    public class GameFightSpellCooldown
+    {
+        public const ushort Id = 9989;
         public virtual ushort TypeId => Id;
 
         public int spellId;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public GameFightSpellCooldown()
         {
         }
-        public GameFightSpellCooldown(int spellId,byte cooldown)
+        public GameFightSpellCooldown(int spellId, byte cooldown)
         {
             this.spellId = spellId;
             this.cooldown = cooldown;
@@ -45,11 +45,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

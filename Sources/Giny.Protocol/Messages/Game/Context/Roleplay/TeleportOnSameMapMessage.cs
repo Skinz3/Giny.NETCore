@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class TeleportOnSameMapMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2720;
+{
+    public class TeleportOnSameMapMessage : NetworkMessage
+    {
+        public const ushort Id = 696;
         public override ushort MessageId => Id;
 
         public double targetId;
@@ -18,14 +18,14 @@ namespace Giny.Protocol.Messages
         public TeleportOnSameMapMessage()
         {
         }
-        public TeleportOnSameMapMessage(double targetId,short cellId)
+        public TeleportOnSameMapMessage(double targetId, short cellId)
         {
             this.targetId = targetId;
             this.cellId = cellId;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (targetId < -9.00719925474099E+15 || targetId > 9.00719925474099E+15)
+            if (targetId < -9007199254740992 || targetId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + targetId + ") on element targetId.");
             }
@@ -41,7 +41,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             targetId = (double)reader.ReadDouble();
-            if (targetId < -9.00719925474099E+15 || targetId > 9.00719925474099E+15)
+            if (targetId < -9007199254740992 || targetId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + targetId + ") on element of TeleportOnSameMapMessage.targetId.");
             }
@@ -54,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

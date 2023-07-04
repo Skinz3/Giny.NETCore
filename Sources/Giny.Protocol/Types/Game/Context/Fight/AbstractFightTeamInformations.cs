@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class AbstractFightTeamInformations  
-    { 
-        public const ushort Id = 7711;
+{
+    public class AbstractFightTeamInformations
+    {
+        public const ushort Id = 2250;
         public virtual ushort TypeId => Id;
 
         public byte teamId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Types
         public AbstractFightTeamInformations()
         {
         }
-        public AbstractFightTeamInformations(byte teamId,double leaderId,byte teamSide,byte teamTypeId,byte nbWaves)
+        public AbstractFightTeamInformations(byte teamId, double leaderId, byte teamSide, byte teamTypeId, byte nbWaves)
         {
             this.teamId = teamId;
             this.leaderId = leaderId;
@@ -30,7 +30,7 @@ namespace Giny.Protocol.Types
         public virtual void Serialize(IDataWriter writer)
         {
             writer.WriteByte((byte)teamId);
-            if (leaderId < -9.00719925474099E+15 || leaderId > 9.00719925474099E+15)
+            if (leaderId < -9007199254740992 || leaderId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + leaderId + ") on element leaderId.");
             }
@@ -54,7 +54,7 @@ namespace Giny.Protocol.Types
             }
 
             leaderId = (double)reader.ReadDouble();
-            if (leaderId < -9.00719925474099E+15 || leaderId > 9.00719925474099E+15)
+            if (leaderId < -9007199254740992 || leaderId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + leaderId + ") on element of AbstractFightTeamInformations.leaderId.");
             }
@@ -77,11 +77,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class MountInformationsForPaddock  
-    { 
-        public const ushort Id = 7701;
+{
+    public class MountInformationsForPaddock
+    {
+        public const ushort Id = 4252;
         public virtual ushort TypeId => Id;
 
         public short modelId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Types
         public MountInformationsForPaddock()
         {
         }
-        public MountInformationsForPaddock(short modelId,string name,string ownerName)
+        public MountInformationsForPaddock(short modelId, string name, string ownerName)
         {
             this.modelId = modelId;
             this.name = name;
@@ -49,11 +49,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

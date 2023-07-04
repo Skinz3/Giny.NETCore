@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PartyRestrictedMessage : AbstractPartyMessage  
-    { 
-        public new const ushort Id = 4094;
+{
+    public class PartyRestrictedMessage : AbstractPartyMessage
+    {
+        public new const ushort Id = 1451;
         public override ushort MessageId => Id;
 
         public bool restricted;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public PartyRestrictedMessage()
         {
         }
-        public PartyRestrictedMessage(bool restricted,int partyId)
+        public PartyRestrictedMessage(bool restricted, int partyId)
         {
             this.restricted = restricted;
             this.partyId = partyId;
@@ -33,14 +33,7 @@ namespace Giny.Protocol.Messages
             restricted = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class SubscriptionZoneMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5068;
+{
+    public class SubscriptionZoneMessage : NetworkMessage
+    {
+        public const ushort Id = 497;
         public override ushort MessageId => Id;
 
         public bool active;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             active = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

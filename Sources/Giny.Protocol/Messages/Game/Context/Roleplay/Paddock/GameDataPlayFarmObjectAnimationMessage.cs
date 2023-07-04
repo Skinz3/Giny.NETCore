@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameDataPlayFarmObjectAnimationMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1970;
+{
+    public class GameDataPlayFarmObjectAnimationMessage : NetworkMessage
+    {
+        public const ushort Id = 6882;
         public override ushort MessageId => Id;
 
         public short[] cellId;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)cellId.Length);
-            for (uint _i1 = 0;_i1 < cellId.Length;_i1++)
+            for (uint _i1 = 0; _i1 < cellId.Length; _i1++)
             {
                 if (cellId[_i1] < 0 || cellId[_i1] > 559)
                 {
@@ -40,7 +40,7 @@ namespace Giny.Protocol.Messages
             uint _val1 = 0;
             uint _cellIdLen = (uint)reader.ReadUShort();
             cellId = new short[_cellIdLen];
-            for (uint _i1 = 0;_i1 < _cellIdLen;_i1++)
+            for (uint _i1 = 0; _i1 < _cellIdLen; _i1++)
             {
                 _val1 = (uint)reader.ReadVarUhShort();
                 if (_val1 < 0 || _val1 > 559)
@@ -53,14 +53,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

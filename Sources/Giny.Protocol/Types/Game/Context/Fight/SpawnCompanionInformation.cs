@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class SpawnCompanionInformation : SpawnInformation  
-    { 
-        public new const ushort Id = 8648;
+{
+    public class SpawnCompanionInformation : SpawnInformation
+    {
+        public new const ushort Id = 9815;
         public override ushort TypeId => Id;
 
         public byte modelId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Types
         public SpawnCompanionInformation()
         {
         }
-        public SpawnCompanionInformation(byte modelId,short level,double summonerId,double ownerId)
+        public SpawnCompanionInformation(byte modelId, short level, double summonerId, double ownerId)
         {
             this.modelId = modelId;
             this.level = level;
@@ -40,13 +40,13 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteVarShort((short)level);
-            if (summonerId < -9.00719925474099E+15 || summonerId > 9.00719925474099E+15)
+            if (summonerId < -9007199254740992 || summonerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + summonerId + ") on element summonerId.");
             }
 
             writer.WriteDouble((double)summonerId);
-            if (ownerId < -9.00719925474099E+15 || ownerId > 9.00719925474099E+15)
+            if (ownerId < -9007199254740992 || ownerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + ownerId + ") on element ownerId.");
             }
@@ -69,13 +69,13 @@ namespace Giny.Protocol.Types
             }
 
             summonerId = (double)reader.ReadDouble();
-            if (summonerId < -9.00719925474099E+15 || summonerId > 9.00719925474099E+15)
+            if (summonerId < -9007199254740992 || summonerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + summonerId + ") on element of SpawnCompanionInformation.summonerId.");
             }
 
             ownerId = (double)reader.ReadDouble();
-            if (ownerId < -9.00719925474099E+15 || ownerId > 9.00719925474099E+15)
+            if (ownerId < -9007199254740992 || ownerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + ownerId + ") on element of SpawnCompanionInformation.ownerId.");
             }
@@ -85,11 +85,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

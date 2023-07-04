@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildModificationNameValidMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 866;
+{
+    public class GuildModificationNameValidMessage : NetworkMessage
+    {
+        public const ushort Id = 605;
         public override ushort MessageId => Id;
 
         public string guildName;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             guildName = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameActionFightMultipleSummonMessage : AbstractGameActionMessage  
-    { 
-        public new const ushort Id = 6695;
+{
+    public class GameActionFightMultipleSummonMessage : AbstractGameActionMessage
+    {
+        public new const ushort Id = 9919;
         public override ushort MessageId => Id;
 
         public GameContextSummonsInformation[] summons;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public GameActionFightMultipleSummonMessage()
         {
         }
-        public GameActionFightMultipleSummonMessage(GameContextSummonsInformation[] summons,short actionId,double sourceId)
+        public GameActionFightMultipleSummonMessage(GameContextSummonsInformation[] summons, short actionId, double sourceId)
         {
             this.summons = summons;
             this.actionId = actionId;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         {
             base.Serialize(writer);
             writer.WriteShort((short)summons.Length);
-            for (uint _i1 = 0;_i1 < summons.Length;_i1++)
+            for (uint _i1 = 0; _i1 < summons.Length; _i1++)
             {
                 writer.WriteShort((short)(summons[_i1] as GameContextSummonsInformation).TypeId);
                 (summons[_i1] as GameContextSummonsInformation).Serialize(writer);
@@ -40,7 +40,7 @@ namespace Giny.Protocol.Messages
             GameContextSummonsInformation _item1 = null;
             base.Deserialize(reader);
             uint _summonsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _summonsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _summonsLen; _i1++)
             {
                 _id1 = (uint)reader.ReadUShort();
                 _item1 = ProtocolTypeManager.GetInstance<GameContextSummonsInformation>((short)_id1);
@@ -50,14 +50,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

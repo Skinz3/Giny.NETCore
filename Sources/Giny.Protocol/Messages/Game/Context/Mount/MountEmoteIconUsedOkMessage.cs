@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class MountEmoteIconUsedOkMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6579;
+{
+    public class MountEmoteIconUsedOkMessage : NetworkMessage
+    {
+        public const ushort Id = 6868;
         public override ushort MessageId => Id;
 
         public int mountId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public MountEmoteIconUsedOkMessage()
         {
         }
-        public MountEmoteIconUsedOkMessage(int mountId,byte reactionType)
+        public MountEmoteIconUsedOkMessage(int mountId, byte reactionType)
         {
             this.mountId = mountId;
             this.reactionType = reactionType;
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

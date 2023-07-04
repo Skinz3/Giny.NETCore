@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildChangeMemberParametersMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9008;
+{
+    public class GuildChangeMemberParametersMessage : NetworkMessage
+    {
+        public const ushort Id = 1003;
         public override ushort MessageId => Id;
 
         public long memberId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public GuildChangeMemberParametersMessage()
         {
         }
-        public GuildChangeMemberParametersMessage(long memberId,int rankId,byte experienceGivenPercent)
+        public GuildChangeMemberParametersMessage(long memberId, int rankId, byte experienceGivenPercent)
         {
             this.memberId = memberId;
             this.rankId = rankId;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (memberId < 0 || memberId > 9.00719925474099E+15)
+            if (memberId < 0 || memberId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + memberId + ") on element memberId.");
             }
@@ -49,7 +49,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             memberId = (long)reader.ReadVarUhLong();
-            if (memberId < 0 || memberId > 9.00719925474099E+15)
+            if (memberId < 0 || memberId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + memberId + ") on element of GuildChangeMemberParametersMessage.memberId.");
             }
@@ -68,14 +68,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

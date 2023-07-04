@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PartyMemberInStandardFightMessage : AbstractPartyMemberInFightMessage  
-    { 
-        public new const ushort Id = 4603;
+{
+    public class PartyMemberInStandardFightMessage : AbstractPartyMemberInFightMessage
+    {
+        public new const ushort Id = 6110;
         public override ushort MessageId => Id;
 
         public MapCoordinatesExtended fightMap;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public PartyMemberInStandardFightMessage()
         {
         }
-        public PartyMemberInStandardFightMessage(MapCoordinatesExtended fightMap,int partyId,byte reason,long memberId,int memberAccountId,string memberName,short fightId,short timeBeforeFightStart)
+        public PartyMemberInStandardFightMessage(MapCoordinatesExtended fightMap, int partyId, byte reason, long memberId, int memberAccountId, string memberName, short fightId, short timeBeforeFightStart)
         {
             this.fightMap = fightMap;
             this.partyId = partyId;
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
             fightMap.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

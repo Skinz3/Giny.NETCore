@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ChannelEnablingChangeMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9894;
+{
+    public class ChannelEnablingChangeMessage : NetworkMessage
+    {
+        public const ushort Id = 9820;
         public override ushort MessageId => Id;
 
         public byte channel;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ChannelEnablingChangeMessage()
         {
         }
-        public ChannelEnablingChangeMessage(byte channel,bool enable)
+        public ChannelEnablingChangeMessage(byte channel, bool enable)
         {
             this.channel = channel;
             this.enable = enable;
@@ -39,14 +39,7 @@ namespace Giny.Protocol.Messages
             enable = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

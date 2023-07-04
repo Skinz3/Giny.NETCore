@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ObjectEffectDuration : ObjectEffect  
-    { 
-        public new const ushort Id = 3138;
+{
+    public class ObjectEffectDuration : ObjectEffect
+    {
+        public new const ushort Id = 5867;
         public override ushort TypeId => Id;
 
         public short days;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Types
         public ObjectEffectDuration()
         {
         }
-        public ObjectEffectDuration(short days,byte hours,byte minutes,short actionId)
+        public ObjectEffectDuration(short days, byte hours, byte minutes, short actionId)
         {
             this.days = days;
             this.hours = hours;
@@ -72,11 +72,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

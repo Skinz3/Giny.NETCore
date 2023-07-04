@@ -196,7 +196,6 @@ namespace Giny.World.Managers.Items
             int lastUID = CharacterItemRecord.GetLastItemUID();
             lastUID = Math.Max(lastUID, BankItemRecord.GetLastItemUID());
             lastUID = Math.Max(lastUID, BidShopItemRecord.GetLastItemUID());
-            lastUID = Math.Max(lastUID, MerchantItemRecord.GetLastItemUID());
 
 
             m_idprovider = new UniqueIdProvider(lastUID);

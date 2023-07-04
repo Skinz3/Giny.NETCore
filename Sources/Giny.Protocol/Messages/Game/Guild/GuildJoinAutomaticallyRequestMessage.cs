@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildJoinAutomaticallyRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3965;
+{
+    public class GuildJoinAutomaticallyRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 4071;
         public override ushort MessageId => Id;
 
         public int guildId;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             guildId = (int)reader.ReadInt();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeMountsStableBornAddMessage : ExchangeMountsStableAddMessage  
-    { 
-        public new const ushort Id = 4141;
+{
+    public class ExchangeMountsStableBornAddMessage : ExchangeMountsStableAddMessage
+    {
+        public new const ushort Id = 9124;
         public override ushort MessageId => Id;
 
 
@@ -29,14 +29,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

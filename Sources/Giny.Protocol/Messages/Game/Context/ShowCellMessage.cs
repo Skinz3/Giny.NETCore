@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ShowCellMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3204;
+{
+    public class ShowCellMessage : NetworkMessage
+    {
+        public const ushort Id = 4855;
         public override ushort MessageId => Id;
 
         public double sourceId;
@@ -18,14 +18,14 @@ namespace Giny.Protocol.Messages
         public ShowCellMessage()
         {
         }
-        public ShowCellMessage(double sourceId,short cellId)
+        public ShowCellMessage(double sourceId, short cellId)
         {
             this.sourceId = sourceId;
             this.cellId = cellId;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (sourceId < -9.00719925474099E+15 || sourceId > 9.00719925474099E+15)
+            if (sourceId < -9007199254740992 || sourceId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + sourceId + ") on element sourceId.");
             }
@@ -41,7 +41,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             sourceId = (double)reader.ReadDouble();
-            if (sourceId < -9.00719925474099E+15 || sourceId > 9.00719925474099E+15)
+            if (sourceId < -9007199254740992 || sourceId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + sourceId + ") on element of ShowCellMessage.sourceId.");
             }
@@ -54,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

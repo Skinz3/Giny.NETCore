@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameRolePlayShowMultipleActorsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5370;
+{
+    public class GameRolePlayShowMultipleActorsMessage : NetworkMessage
+    {
+        public const ushort Id = 8352;
         public override ushort MessageId => Id;
 
         public GameRolePlayActorInformations[] informationsList;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)informationsList.Length);
-            for (uint _i1 = 0;_i1 < informationsList.Length;_i1++)
+            for (uint _i1 = 0; _i1 < informationsList.Length; _i1++)
             {
                 writer.WriteShort((short)(informationsList[_i1] as GameRolePlayActorInformations).TypeId);
                 (informationsList[_i1] as GameRolePlayActorInformations).Serialize(writer);
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Messages
             uint _id1 = 0;
             GameRolePlayActorInformations _item1 = null;
             uint _informationsListLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _informationsListLen;_i1++)
+            for (uint _i1 = 0; _i1 < _informationsListLen; _i1++)
             {
                 _id1 = (uint)reader.ReadUShort();
                 _item1 = ProtocolTypeManager.GetInstance<GameRolePlayActorInformations>((short)_id1);
@@ -46,14 +46,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

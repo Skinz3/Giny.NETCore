@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ObjectEffectLadder : ObjectEffectCreature  
-    { 
-        public new const ushort Id = 508;
+{
+    public class ObjectEffectLadder : ObjectEffectCreature
+    {
+        public new const ushort Id = 8329;
         public override ushort TypeId => Id;
 
         public int monsterCount;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public ObjectEffectLadder()
         {
         }
-        public ObjectEffectLadder(int monsterCount,short actionId,short monsterFamilyId)
+        public ObjectEffectLadder(int monsterCount, short actionId, short monsterFamilyId)
         {
             this.monsterCount = monsterCount;
             this.actionId = actionId;
@@ -45,11 +45,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

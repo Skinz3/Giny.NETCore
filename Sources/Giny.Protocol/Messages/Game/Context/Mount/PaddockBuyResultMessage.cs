@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PaddockBuyResultMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3573;
+{
+    public class PaddockBuyResultMessage : NetworkMessage
+    {
+        public const ushort Id = 7817;
         public override ushort MessageId => Id;
 
         public double paddockId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public PaddockBuyResultMessage()
         {
         }
-        public PaddockBuyResultMessage(double paddockId,bool bought,long realPrice)
+        public PaddockBuyResultMessage(double paddockId, bool bought, long realPrice)
         {
             this.paddockId = paddockId;
             this.bought = bought;
@@ -27,14 +27,14 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (paddockId < 0 || paddockId > 9.00719925474099E+15)
+            if (paddockId < 0 || paddockId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + paddockId + ") on element paddockId.");
             }
 
             writer.WriteDouble((double)paddockId);
             writer.WriteBoolean((bool)bought);
-            if (realPrice < 0 || realPrice > 9.00719925474099E+15)
+            if (realPrice < 0 || realPrice > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + realPrice + ") on element realPrice.");
             }
@@ -44,28 +44,21 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             paddockId = (double)reader.ReadDouble();
-            if (paddockId < 0 || paddockId > 9.00719925474099E+15)
+            if (paddockId < 0 || paddockId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + paddockId + ") on element of PaddockBuyResultMessage.paddockId.");
             }
 
             bought = (bool)reader.ReadBoolean();
             realPrice = (long)reader.ReadVarUhLong();
-            if (realPrice < 0 || realPrice > 9.00719925474099E+15)
+            if (realPrice < 0 || realPrice > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + realPrice + ") on element of PaddockBuyResultMessage.realPrice.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

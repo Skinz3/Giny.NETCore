@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameActionMark  
-    { 
-        public const ushort Id = 5902;
+{
+    public class GameActionMark
+    {
+        public const ushort Id = 717;
         public virtual ushort TypeId => Id;
 
         public double markAuthorId;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Types
         public GameActionMark()
         {
         }
-        public GameActionMark(double markAuthorId,byte markTeamId,int markSpellId,short markSpellLevel,short markId,byte markType,short markimpactCell,GameActionMarkedCell[] cells,bool active)
+        public GameActionMark(double markAuthorId, byte markTeamId, int markSpellId, short markSpellLevel, short markId, byte markType, short markimpactCell, GameActionMarkedCell[] cells, bool active)
         {
             this.markAuthorId = markAuthorId;
             this.markTeamId = markTeamId;
@@ -37,7 +37,7 @@ namespace Giny.Protocol.Types
         }
         public virtual void Serialize(IDataWriter writer)
         {
-            if (markAuthorId < -9.00719925474099E+15 || markAuthorId > 9.00719925474099E+15)
+            if (markAuthorId < -9007199254740992 || markAuthorId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + markAuthorId + ") on element markAuthorId.");
             }
@@ -65,7 +65,7 @@ namespace Giny.Protocol.Types
 
             writer.WriteShort((short)markimpactCell);
             writer.WriteShort((short)cells.Length);
-            for (uint _i8 = 0;_i8 < cells.Length;_i8++)
+            for (uint _i8 = 0; _i8 < cells.Length; _i8++)
             {
                 (cells[_i8] as GameActionMarkedCell).Serialize(writer);
             }
@@ -76,7 +76,7 @@ namespace Giny.Protocol.Types
         {
             GameActionMarkedCell _item8 = null;
             markAuthorId = (double)reader.ReadDouble();
-            if (markAuthorId < -9.00719925474099E+15 || markAuthorId > 9.00719925474099E+15)
+            if (markAuthorId < -9007199254740992 || markAuthorId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + markAuthorId + ") on element of GameActionMark.markAuthorId.");
             }
@@ -108,7 +108,7 @@ namespace Giny.Protocol.Types
             }
 
             uint _cellsLen = (uint)reader.ReadUShort();
-            for (uint _i8 = 0;_i8 < _cellsLen;_i8++)
+            for (uint _i8 = 0; _i8 < _cellsLen; _i8++)
             {
                 _item8 = new GameActionMarkedCell();
                 _item8.Deserialize(reader);
@@ -121,11 +121,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

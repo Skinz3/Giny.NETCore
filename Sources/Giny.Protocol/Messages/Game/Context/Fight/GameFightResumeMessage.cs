@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightResumeMessage : GameFightSpectateMessage  
-    { 
-        public new const ushort Id = 6953;
+{
+    public class GameFightResumeMessage : GameFightSpectateMessage
+    {
+        public new const ushort Id = 920;
         public override ushort MessageId => Id;
 
         public GameFightSpellCooldown[] spellCooldowns;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public GameFightResumeMessage()
         {
         }
-        public GameFightResumeMessage(GameFightSpellCooldown[] spellCooldowns,byte summonCount,byte bombCount,FightDispellableEffectExtendedInformations[] effects,GameActionMark[] marks,short gameTurn,int fightStart,Idol[] idols,GameFightEffectTriggerCount[] fxTriggerCounts)
+        public GameFightResumeMessage(GameFightSpellCooldown[] spellCooldowns, byte summonCount, byte bombCount, FightDispellableEffectExtendedInformations[] effects, GameActionMark[] marks, short gameTurn, int fightStart, Idol[] idols, GameFightEffectTriggerCount[] fxTriggerCounts)
         {
             this.spellCooldowns = spellCooldowns;
             this.summonCount = summonCount;
@@ -35,7 +35,7 @@ namespace Giny.Protocol.Messages
         {
             base.Serialize(writer);
             writer.WriteShort((short)spellCooldowns.Length);
-            for (uint _i1 = 0;_i1 < spellCooldowns.Length;_i1++)
+            for (uint _i1 = 0; _i1 < spellCooldowns.Length; _i1++)
             {
                 (spellCooldowns[_i1] as GameFightSpellCooldown).Serialize(writer);
             }
@@ -58,7 +58,7 @@ namespace Giny.Protocol.Messages
             GameFightSpellCooldown _item1 = null;
             base.Deserialize(reader);
             uint _spellCooldownsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _spellCooldownsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _spellCooldownsLen; _i1++)
             {
                 _item1 = new GameFightSpellCooldown();
                 _item1.Deserialize(reader);
@@ -79,14 +79,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

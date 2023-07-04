@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class CurrentServerStatusUpdateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 38;
+{
+    public class CurrentServerStatusUpdateMessage : NetworkMessage
+    {
+        public const ushort Id = 4697;
         public override ushort MessageId => Id;
 
         public byte status;
@@ -35,14 +35,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

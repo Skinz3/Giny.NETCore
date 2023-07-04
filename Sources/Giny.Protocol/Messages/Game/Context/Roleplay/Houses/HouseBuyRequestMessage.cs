@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HouseBuyRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1830;
+{
+    public class HouseBuyRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 8235;
         public override ushort MessageId => Id;
 
         public long proposedPrice;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (proposedPrice < 0 || proposedPrice > 9.00719925474099E+15)
+            if (proposedPrice < 0 || proposedPrice > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + proposedPrice + ") on element proposedPrice.");
             }
@@ -33,21 +33,14 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             proposedPrice = (long)reader.ReadVarUhLong();
-            if (proposedPrice < 0 || proposedPrice > 9.00719925474099E+15)
+            if (proposedPrice < 0 || proposedPrice > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + proposedPrice + ") on element of HouseBuyRequestMessage.proposedPrice.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

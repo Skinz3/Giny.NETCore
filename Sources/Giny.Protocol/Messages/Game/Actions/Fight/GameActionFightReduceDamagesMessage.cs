@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameActionFightReduceDamagesMessage : AbstractGameActionMessage  
-    { 
-        public new const ushort Id = 6282;
+{
+    public class GameActionFightReduceDamagesMessage : AbstractGameActionMessage
+    {
+        public new const ushort Id = 9138;
         public override ushort MessageId => Id;
 
         public double targetId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public GameActionFightReduceDamagesMessage()
         {
         }
-        public GameActionFightReduceDamagesMessage(double targetId,int amount,short actionId,double sourceId)
+        public GameActionFightReduceDamagesMessage(double targetId, int amount, short actionId, double sourceId)
         {
             this.targetId = targetId;
             this.amount = amount;
@@ -28,7 +28,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (targetId < -9.00719925474099E+15 || targetId > 9.00719925474099E+15)
+            if (targetId < -9007199254740992 || targetId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + targetId + ") on element targetId.");
             }
@@ -45,7 +45,7 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             targetId = (double)reader.ReadDouble();
-            if (targetId < -9.00719925474099E+15 || targetId > 9.00719925474099E+15)
+            if (targetId < -9007199254740992 || targetId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + targetId + ") on element of GameActionFightReduceDamagesMessage.targetId.");
             }
@@ -58,14 +58,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

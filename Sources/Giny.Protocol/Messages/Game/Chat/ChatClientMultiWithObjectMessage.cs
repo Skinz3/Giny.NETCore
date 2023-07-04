@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ChatClientMultiWithObjectMessage : ChatClientMultiMessage  
-    { 
-        public new const ushort Id = 4323;
+{
+    public class ChatClientMultiWithObjectMessage : ChatClientMultiMessage
+    {
+        public new const ushort Id = 9189;
         public override ushort MessageId => Id;
 
         public ObjectItem[] objects;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public ChatClientMultiWithObjectMessage()
         {
         }
-        public ChatClientMultiWithObjectMessage(ObjectItem[] objects,string content,byte channel)
+        public ChatClientMultiWithObjectMessage(ObjectItem[] objects, string content, byte channel)
         {
             this.objects = objects;
             this.content = content;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         {
             base.Serialize(writer);
             writer.WriteShort((short)objects.Length);
-            for (uint _i1 = 0;_i1 < objects.Length;_i1++)
+            for (uint _i1 = 0; _i1 < objects.Length; _i1++)
             {
                 (objects[_i1] as ObjectItem).Serialize(writer);
             }
@@ -38,7 +38,7 @@ namespace Giny.Protocol.Messages
             ObjectItem _item1 = null;
             base.Deserialize(reader);
             uint _objectsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _objectsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _objectsLen; _i1++)
             {
                 _item1 = new ObjectItem();
                 _item1.Deserialize(reader);
@@ -47,14 +47,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

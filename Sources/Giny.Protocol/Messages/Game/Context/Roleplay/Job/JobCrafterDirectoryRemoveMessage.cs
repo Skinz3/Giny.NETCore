@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class JobCrafterDirectoryRemoveMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2218;
+{
+    public class JobCrafterDirectoryRemoveMessage : NetworkMessage
+    {
+        public const ushort Id = 235;
         public override ushort MessageId => Id;
 
         public byte jobId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public JobCrafterDirectoryRemoveMessage()
         {
         }
-        public JobCrafterDirectoryRemoveMessage(byte jobId,long playerId)
+        public JobCrafterDirectoryRemoveMessage(byte jobId, long playerId)
         {
             this.jobId = jobId;
             this.playerId = playerId;
@@ -31,7 +31,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteByte((byte)jobId);
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
@@ -47,21 +47,14 @@ namespace Giny.Protocol.Messages
             }
 
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of JobCrafterDirectoryRemoveMessage.playerId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

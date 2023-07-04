@@ -252,14 +252,9 @@ namespace Giny.World.Managers.Guilds
 
 
         }
-        public BasicGuildInformations GetBasicGuildInformations()
+        public GuildInformations GetBasicGuildInformations()
         {
-            return new BasicGuildInformations()
-            {
-                guildId = (int)Id,
-                guildLevel = Level,
-                guildName = Record.Name,
-            };
+            return new GuildInformations(Record.Emblem.ToGuildEmblem(), (int)Id, Record.Name, this.Level);
         }
         public GuildInformations GetGuildInformations()
         {
@@ -295,8 +290,6 @@ namespace Giny.World.Managers.Guilds
                 expLevelFloor = ExperienceLowerBound,
                 expNextLevelFloor = ExperienceUpperBound,
                 level = Level,
-                nbConnectedMembers = (short)OnlineMembers.Count,
-                nbTotalMembers = (short)Record.Members.Count,
             };
         }
         [WIP]

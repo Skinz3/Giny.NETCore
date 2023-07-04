@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class CharacterCharacteristicValue : CharacterCharacteristic  
-    { 
-        public new const ushort Id = 9463;
+{
+    public class CharacterCharacteristicValue : CharacterCharacteristic
+    {
+        public new const ushort Id = 3040;
         public override ushort TypeId => Id;
 
         public int total;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public CharacterCharacteristicValue()
         {
         }
-        public CharacterCharacteristicValue(int total,short characteristicId)
+        public CharacterCharacteristicValue(int total, short characteristicId)
         {
             this.total = total;
             this.characteristicId = characteristicId;
@@ -34,11 +34,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

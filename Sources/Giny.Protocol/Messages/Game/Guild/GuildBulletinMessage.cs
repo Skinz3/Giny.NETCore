@@ -6,23 +6,22 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildBulletinMessage : BulletinMessage  
-    { 
-        public new const ushort Id = 131;
+{
+    public class GuildBulletinMessage : BulletinMessage
+    {
+        public new const ushort Id = 285;
         public override ushort MessageId => Id;
 
 
         public GuildBulletinMessage()
         {
         }
-        public GuildBulletinMessage(string content,int timestamp,long memberId,string memberName,int lastNotifiedTimestamp)
+        public GuildBulletinMessage(string content, int timestamp, long memberId, string memberName)
         {
             this.content = content;
             this.timestamp = timestamp;
             this.memberId = memberId;
             this.memberName = memberName;
-            this.lastNotifiedTimestamp = lastNotifiedTimestamp;
         }
         public override void Serialize(IDataWriter writer)
         {
@@ -33,14 +32,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

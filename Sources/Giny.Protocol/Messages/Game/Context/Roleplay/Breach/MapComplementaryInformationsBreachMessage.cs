@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class MapComplementaryInformationsBreachMessage : MapComplementaryInformationsDataMessage  
-    { 
-        public new const ushort Id = 8282;
+{
+    public class MapComplementaryInformationsBreachMessage : MapComplementaryInformationsDataMessage
+    {
+        public new const ushort Id = 3552;
         public override ushort MessageId => Id;
 
         public int floor;
@@ -20,7 +20,7 @@ namespace Giny.Protocol.Messages
         public MapComplementaryInformationsBreachMessage()
         {
         }
-        public MapComplementaryInformationsBreachMessage(int floor,byte room,short infinityMode,BreachBranch[] branches,short subAreaId,double mapId,HouseInformations[] houses,GameRolePlayActorInformations[] actors,InteractiveElement[] interactiveElements,StatedElement[] statedElements,MapObstacle[] obstacles,FightCommonInformations[] fights,bool hasAggressiveMonsters,FightStartingPositions fightStartPositions)
+        public MapComplementaryInformationsBreachMessage(int floor, byte room, short infinityMode, BreachBranch[] branches, short subAreaId, double mapId, HouseInformations[] houses, GameRolePlayActorInformations[] actors, InteractiveElement[] interactiveElements, StatedElement[] statedElements, MapObstacle[] obstacles, FightCommonInformations[] fights, bool hasAggressiveMonsters, FightStartingPositions fightStartPositions)
         {
             this.floor = floor;
             this.room = room;
@@ -59,7 +59,7 @@ namespace Giny.Protocol.Messages
 
             writer.WriteShort((short)infinityMode);
             writer.WriteShort((short)branches.Length);
-            for (uint _i4 = 0;_i4 < branches.Length;_i4++)
+            for (uint _i4 = 0; _i4 < branches.Length; _i4++)
             {
                 writer.WriteShort((short)(branches[_i4] as BreachBranch).TypeId);
                 (branches[_i4] as BreachBranch).Serialize(writer);
@@ -90,7 +90,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _branchesLen = (uint)reader.ReadUShort();
-            for (uint _i4 = 0;_i4 < _branchesLen;_i4++)
+            for (uint _i4 = 0; _i4 < _branchesLen; _i4++)
             {
                 _id4 = (uint)reader.ReadUShort();
                 _item4 = ProtocolTypeManager.GetInstance<BreachBranch>((short)_id4);
@@ -100,14 +100,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

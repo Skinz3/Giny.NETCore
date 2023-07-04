@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AnomalyStateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3282;
+{
+    public class AnomalyStateMessage : NetworkMessage
+    {
+        public const ushort Id = 9585;
         public override ushort MessageId => Id;
 
         public short subAreaId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public AnomalyStateMessage()
         {
         }
-        public AnomalyStateMessage(short subAreaId,bool open,long closingTime)
+        public AnomalyStateMessage(short subAreaId, bool open, long closingTime)
         {
             this.subAreaId = subAreaId;
             this.open = open;
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
 
             writer.WriteVarShort((short)subAreaId);
             writer.WriteBoolean((bool)open);
-            if (closingTime < 0 || closingTime > 9.00719925474099E+15)
+            if (closingTime < 0 || closingTime > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + closingTime + ") on element closingTime.");
             }
@@ -51,21 +51,14 @@ namespace Giny.Protocol.Messages
 
             open = (bool)reader.ReadBoolean();
             closingTime = (long)reader.ReadVarUhLong();
-            if (closingTime < 0 || closingTime > 9.00719925474099E+15)
+            if (closingTime < 0 || closingTime > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + closingTime + ") on element of AnomalyStateMessage.closingTime.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class SpawnInformation  
-    { 
-        public const ushort Id = 7022;
+{
+    public class SpawnInformation
+    {
+        public const ushort Id = 8723;
         public virtual ushort TypeId => Id;
 
 
@@ -24,11 +24,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

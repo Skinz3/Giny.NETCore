@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeObjectAddedMessage : ExchangeObjectMessage  
-    { 
-        public new const ushort Id = 6633;
+{
+    public class ExchangeObjectAddedMessage : ExchangeObjectMessage
+    {
+        public new const ushort Id = 2769;
         public override ushort MessageId => Id;
 
         public ObjectItem @object;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public ExchangeObjectAddedMessage()
         {
         }
-        public ExchangeObjectAddedMessage(ObjectItem @object,bool remote)
+        public ExchangeObjectAddedMessage(ObjectItem @object, bool remote)
         {
             this.@object = @object;
             this.remote = remote;
@@ -34,14 +34,7 @@ namespace Giny.Protocol.Messages
             @object.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeTypesExchangerDescriptionForUserMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5329;
+{
+    public class ExchangeTypesExchangerDescriptionForUserMessage : NetworkMessage
+    {
+        public const ushort Id = 1296;
         public override ushort MessageId => Id;
 
         public int objectType;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ExchangeTypesExchangerDescriptionForUserMessage()
         {
         }
-        public ExchangeTypesExchangerDescriptionForUserMessage(int objectType,int[] typeDescription)
+        public ExchangeTypesExchangerDescriptionForUserMessage(int objectType, int[] typeDescription)
         {
             this.objectType = objectType;
             this.typeDescription = typeDescription;
@@ -32,7 +32,7 @@ namespace Giny.Protocol.Messages
 
             writer.WriteInt((int)objectType);
             writer.WriteShort((short)typeDescription.Length);
-            for (uint _i2 = 0;_i2 < typeDescription.Length;_i2++)
+            for (uint _i2 = 0; _i2 < typeDescription.Length; _i2++)
             {
                 if (typeDescription[_i2] < 0)
                 {
@@ -54,7 +54,7 @@ namespace Giny.Protocol.Messages
 
             uint _typeDescriptionLen = (uint)reader.ReadUShort();
             typeDescription = new int[_typeDescriptionLen];
-            for (uint _i2 = 0;_i2 < _typeDescriptionLen;_i2++)
+            for (uint _i2 = 0; _i2 < _typeDescriptionLen; _i2++)
             {
                 _val2 = (uint)reader.ReadVarUhInt();
                 if (_val2 < 0)
@@ -67,14 +67,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameRolePlayArenaLeagueRewardsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4959;
+{
+    public class GameRolePlayArenaLeagueRewardsMessage : NetworkMessage
+    {
+        public const ushort Id = 4555;
         public override ushort MessageId => Id;
 
         public short seasonId;
@@ -20,7 +20,7 @@ namespace Giny.Protocol.Messages
         public GameRolePlayArenaLeagueRewardsMessage()
         {
         }
-        public GameRolePlayArenaLeagueRewardsMessage(short seasonId,short leagueId,int ladderPosition,bool endSeasonReward)
+        public GameRolePlayArenaLeagueRewardsMessage(short seasonId, short leagueId, int ladderPosition, bool endSeasonReward)
         {
             this.seasonId = seasonId;
             this.leagueId = leagueId;
@@ -62,14 +62,7 @@ namespace Giny.Protocol.Messages
             endSeasonReward = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

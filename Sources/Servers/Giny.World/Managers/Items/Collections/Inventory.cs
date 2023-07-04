@@ -180,7 +180,7 @@ namespace Giny.World.Managers.Items.Collections
             }
 
         }
-        public CharacterItemRecord AddItem(short gid, int quantity, bool perfect = false)
+        public CharacterItemRecord AddItem(int gid, int quantity, bool perfect = false)
         {
             var template = ItemRecord.GetItem(gid);
             if (template != null)
@@ -209,13 +209,13 @@ namespace Giny.World.Managers.Items.Collections
 
         public void RefreshWeight()
         {
-            Character.Client.Send(new InventoryWeightMessage(CurrentWeight, 0, TotalWeight));
+            Character.Client.Send(new InventoryWeightMessage(CurrentWeight, TotalWeight));
         }
         public void RefreshKamas()
         {
             Character.Client.Send(new KamasUpdateMessage(Character.Record.Kamas));
         }
-        protected override CharacterItemRecord GetSameItem(short gid, EffectCollection effects)
+        protected override CharacterItemRecord GetSameItem(int gid, EffectCollection effects)
         {
             var items = GetItems();
             return items.FirstOrDefault(x => x.GId == gid && effects.SequenceEqual(x.Effects) && x.PositionEnum == CharacterInventoryPositionEnum.INVENTORY_POSITION_NOT_EQUIPED);

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ObjectUseMultipleMessage : ObjectUseMessage  
-    { 
-        public new const ushort Id = 2182;
+{
+    public class ObjectUseMultipleMessage : ObjectUseMessage
+    {
+        public new const ushort Id = 2873;
         public override ushort MessageId => Id;
 
         public int quantity;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public ObjectUseMultipleMessage()
         {
         }
-        public ObjectUseMultipleMessage(int quantity,int objectUID)
+        public ObjectUseMultipleMessage(int quantity, int objectUID)
         {
             this.quantity = quantity;
             this.objectUID = objectUID;
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

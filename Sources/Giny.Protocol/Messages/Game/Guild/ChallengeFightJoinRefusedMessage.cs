@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ChallengeFightJoinRefusedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4862;
+{
+    public class ChallengeFightJoinRefusedMessage : NetworkMessage
+    {
+        public const ushort Id = 7150;
         public override ushort MessageId => Id;
 
         public long playerId;
@@ -18,14 +18,14 @@ namespace Giny.Protocol.Messages
         public ChallengeFightJoinRefusedMessage()
         {
         }
-        public ChallengeFightJoinRefusedMessage(long playerId,byte reason)
+        public ChallengeFightJoinRefusedMessage(long playerId, byte reason)
         {
             this.playerId = playerId;
             this.reason = reason;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of ChallengeFightJoinRefusedMessage.playerId.");
             }
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
             reason = (byte)reader.ReadByte();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

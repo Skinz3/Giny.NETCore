@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BasicStatWithDataMessage : BasicStatMessage  
-    { 
-        public new const ushort Id = 5377;
+{
+    public class BasicStatWithDataMessage : BasicStatMessage
+    {
+        public new const ushort Id = 5089;
         public override ushort MessageId => Id;
 
         public StatisticData[] datas;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public BasicStatWithDataMessage()
         {
         }
-        public BasicStatWithDataMessage(StatisticData[] datas,double timeSpent,short statId)
+        public BasicStatWithDataMessage(StatisticData[] datas, double timeSpent, short statId)
         {
             this.datas = datas;
             this.timeSpent = timeSpent;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         {
             base.Serialize(writer);
             writer.WriteShort((short)datas.Length);
-            for (uint _i1 = 0;_i1 < datas.Length;_i1++)
+            for (uint _i1 = 0; _i1 < datas.Length; _i1++)
             {
                 writer.WriteShort((short)(datas[_i1] as StatisticData).TypeId);
                 (datas[_i1] as StatisticData).Serialize(writer);
@@ -40,7 +40,7 @@ namespace Giny.Protocol.Messages
             StatisticData _item1 = null;
             base.Deserialize(reader);
             uint _datasLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _datasLen;_i1++)
+            for (uint _i1 = 0; _i1 < _datasLen; _i1++)
             {
                 _id1 = (uint)reader.ReadUShort();
                 _item1 = ProtocolTypeManager.GetInstance<StatisticData>((short)_id1);
@@ -50,14 +50,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ContactLookRequestByNameMessage : ContactLookRequestMessage  
-    { 
-        public new const ushort Id = 8512;
+{
+    public class ContactLookRequestByNameMessage : ContactLookRequestMessage
+    {
+        public new const ushort Id = 8972;
         public override ushort MessageId => Id;
 
         public string playerName;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public ContactLookRequestByNameMessage()
         {
         }
-        public ContactLookRequestByNameMessage(string playerName,byte requestId,byte contactType)
+        public ContactLookRequestByNameMessage(string playerName, byte requestId, byte contactType)
         {
             this.playerName = playerName;
             this.requestId = requestId;
@@ -34,14 +34,7 @@ namespace Giny.Protocol.Messages
             playerName = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

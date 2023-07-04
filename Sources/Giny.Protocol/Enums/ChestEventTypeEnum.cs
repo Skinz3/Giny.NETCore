@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 using System;
 
 namespace Giny.Protocol.Enums
@@ -13,6 +6,7 @@ namespace Giny.Protocol.Enums
     {
         DEPOSIT = 0,
         WITHDRAW = 1,
+        TRANSFER = 2,
 
     }
 }

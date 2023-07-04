@@ -4,20 +4,20 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class SimpleCharacterCharacteristicForPreset  
-    { 
-        public const ushort Id = 7594;
+{
+    public class SimpleCharacterCharacteristicForPreset
+    {
+        public const ushort Id = 3348;
         public virtual ushort TypeId => Id;
 
         public string keyword;
-        public short @base;
-        public short additionnal;
+        public int @base;
+        public int additionnal;
 
         public SimpleCharacterCharacteristicForPreset()
         {
         }
-        public SimpleCharacterCharacteristicForPreset(string keyword,short @base,short additionnal)
+        public SimpleCharacterCharacteristicForPreset(string keyword, int @base, int additionnal)
         {
             this.keyword = keyword;
             this.@base = @base;
@@ -26,24 +26,18 @@ namespace Giny.Protocol.Types
         public virtual void Serialize(IDataWriter writer)
         {
             writer.WriteUTF((string)keyword);
-            writer.WriteVarShort((short)@base);
-            writer.WriteVarShort((short)additionnal);
+            writer.WriteVarInt((int)@base);
+            writer.WriteVarInt((int)additionnal);
         }
         public virtual void Deserialize(IDataReader reader)
         {
             keyword = (string)reader.ReadUTF();
-            @base = (short)reader.ReadVarShort();
-            additionnal = (short)reader.ReadVarShort();
+            @base = (int)reader.ReadVarInt();
+            additionnal = (int)reader.ReadVarInt();
         }
 
 
     }
 }
-
-
-
-
-
-
 
 

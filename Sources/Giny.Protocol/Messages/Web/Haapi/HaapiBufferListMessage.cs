@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HaapiBufferListMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5285;
+{
+    public class HaapiBufferListMessage : NetworkMessage
+    {
+        public const ushort Id = 6920;
         public override ushort MessageId => Id;
 
         public BufferInformation[] buffers;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)buffers.Length);
-            for (uint _i1 = 0;_i1 < buffers.Length;_i1++)
+            for (uint _i1 = 0; _i1 < buffers.Length; _i1++)
             {
                 (buffers[_i1] as BufferInformation).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             BufferInformation _item1 = null;
             uint _buffersLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _buffersLen;_i1++)
+            for (uint _i1 = 0; _i1 < _buffersLen; _i1++)
             {
                 _item1 = new BufferInformation();
                 _item1.Deserialize(reader);
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

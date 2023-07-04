@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class QuestActiveDetailedInformations : QuestActiveInformations  
-    { 
-        public new const ushort Id = 3883;
+{
+    public class QuestActiveDetailedInformations : QuestActiveInformations
+    {
+        public new const ushort Id = 9691;
         public override ushort TypeId => Id;
 
         public short stepId;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public QuestActiveDetailedInformations()
         {
         }
-        public QuestActiveDetailedInformations(short stepId,QuestObjectiveInformations[] objectives,short questId)
+        public QuestActiveDetailedInformations(short stepId, QuestObjectiveInformations[] objectives, short questId)
         {
             this.stepId = stepId;
             this.objectives = objectives;
@@ -32,7 +32,7 @@ namespace Giny.Protocol.Types
 
             writer.WriteVarShort((short)stepId);
             writer.WriteShort((short)objectives.Length);
-            for (uint _i2 = 0;_i2 < objectives.Length;_i2++)
+            for (uint _i2 = 0; _i2 < objectives.Length; _i2++)
             {
                 writer.WriteShort((short)(objectives[_i2] as QuestObjectiveInformations).TypeId);
                 (objectives[_i2] as QuestObjectiveInformations).Serialize(writer);
@@ -51,7 +51,7 @@ namespace Giny.Protocol.Types
             }
 
             uint _objectivesLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _objectivesLen;_i2++)
+            for (uint _i2 = 0; _i2 < _objectivesLen; _i2++)
             {
                 _id2 = (uint)reader.ReadUShort();
                 _item2 = ProtocolTypeManager.GetInstance<QuestObjectiveInformations>((short)_id2);
@@ -64,11 +64,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

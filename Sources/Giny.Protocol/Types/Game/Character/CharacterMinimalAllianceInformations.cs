@@ -4,18 +4,18 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class CharacterMinimalAllianceInformations : CharacterMinimalGuildInformations  
-    { 
-        public new const ushort Id = 4632;
+{
+    public class CharacterMinimalAllianceInformations : CharacterMinimalPlusLookInformations
+    {
+        public new const ushort Id = 1850;
         public override ushort TypeId => Id;
 
-        public BasicAllianceInformations alliance;
+        public BasicNamedAllianceInformations alliance;
 
         public CharacterMinimalAllianceInformations()
         {
         }
-        public CharacterMinimalAllianceInformations(BasicAllianceInformations alliance,long id,string name,short level,EntityLook entityLook,byte breed,BasicGuildInformations guild)
+        public CharacterMinimalAllianceInformations(BasicNamedAllianceInformations alliance, long id, string name, short level, EntityLook entityLook, byte breed)
         {
             this.alliance = alliance;
             this.id = id;
@@ -23,7 +23,6 @@ namespace Giny.Protocol.Types
             this.level = level;
             this.entityLook = entityLook;
             this.breed = breed;
-            this.guild = guild;
         }
         public override void Serialize(IDataWriter writer)
         {
@@ -33,18 +32,12 @@ namespace Giny.Protocol.Types
         public override void Deserialize(IDataReader reader)
         {
             base.Deserialize(reader);
-            alliance = new BasicAllianceInformations();
+            alliance = new BasicNamedAllianceInformations();
             alliance.Deserialize(reader);
         }
 
 
     }
 }
-
-
-
-
-
-
 
 

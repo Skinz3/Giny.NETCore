@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class JobExperience  
-    { 
-        public const ushort Id = 2255;
+{
+    public class JobExperience
+    {
+        public const ushort Id = 8263;
         public virtual ushort TypeId => Id;
 
         public byte jobId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Types
         public JobExperience()
         {
         }
-        public JobExperience(byte jobId,byte jobLevel,long jobXP,long jobXpLevelFloor,long jobXpNextLevelFloor)
+        public JobExperience(byte jobId, byte jobLevel, long jobXP, long jobXpLevelFloor, long jobXpNextLevelFloor)
         {
             this.jobId = jobId;
             this.jobLevel = jobLevel;
@@ -41,19 +41,19 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteByte((byte)jobLevel);
-            if (jobXP < 0 || jobXP > 9.00719925474099E+15)
+            if (jobXP < 0 || jobXP > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + jobXP + ") on element jobXP.");
             }
 
             writer.WriteVarLong((long)jobXP);
-            if (jobXpLevelFloor < 0 || jobXpLevelFloor > 9.00719925474099E+15)
+            if (jobXpLevelFloor < 0 || jobXpLevelFloor > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + jobXpLevelFloor + ") on element jobXpLevelFloor.");
             }
 
             writer.WriteVarLong((long)jobXpLevelFloor);
-            if (jobXpNextLevelFloor < 0 || jobXpNextLevelFloor > 9.00719925474099E+15)
+            if (jobXpNextLevelFloor < 0 || jobXpNextLevelFloor > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + jobXpNextLevelFloor + ") on element jobXpNextLevelFloor.");
             }
@@ -75,19 +75,19 @@ namespace Giny.Protocol.Types
             }
 
             jobXP = (long)reader.ReadVarUhLong();
-            if (jobXP < 0 || jobXP > 9.00719925474099E+15)
+            if (jobXP < 0 || jobXP > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + jobXP + ") on element of JobExperience.jobXP.");
             }
 
             jobXpLevelFloor = (long)reader.ReadVarUhLong();
-            if (jobXpLevelFloor < 0 || jobXpLevelFloor > 9.00719925474099E+15)
+            if (jobXpLevelFloor < 0 || jobXpLevelFloor > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + jobXpLevelFloor + ") on element of JobExperience.jobXpLevelFloor.");
             }
 
             jobXpNextLevelFloor = (long)reader.ReadVarUhLong();
-            if (jobXpNextLevelFloor < 0 || jobXpNextLevelFloor > 9.00719925474099E+15)
+            if (jobXpNextLevelFloor < 0 || jobXpNextLevelFloor > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + jobXpNextLevelFloor + ") on element of JobExperience.jobXpNextLevelFloor.");
             }
@@ -97,11 +97,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

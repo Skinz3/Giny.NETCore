@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class SelectedServerDataExtendedMessage : SelectedServerDataMessage  
-    { 
-        public new const ushort Id = 7776;
+{
+    public class SelectedServerDataExtendedMessage : SelectedServerDataMessage
+    {
+        public new const ushort Id = 3290;
         public override ushort MessageId => Id;
 
         public GameServerInformations[] servers;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public SelectedServerDataExtendedMessage()
         {
         }
-        public SelectedServerDataExtendedMessage(GameServerInformations[] servers,short serverId,string address,short[] ports,bool canCreateNewCharacter,byte[] ticket)
+        public SelectedServerDataExtendedMessage(GameServerInformations[] servers, short serverId, string address, short[] ports, bool canCreateNewCharacter, byte[] ticket)
         {
             this.servers = servers;
             this.serverId = serverId;
@@ -30,7 +30,7 @@ namespace Giny.Protocol.Messages
         {
             base.Serialize(writer);
             writer.WriteShort((short)servers.Length);
-            for (uint _i1 = 0;_i1 < servers.Length;_i1++)
+            for (uint _i1 = 0; _i1 < servers.Length; _i1++)
             {
                 (servers[_i1] as GameServerInformations).Serialize(writer);
             }
@@ -41,7 +41,7 @@ namespace Giny.Protocol.Messages
             GameServerInformations _item1 = null;
             base.Deserialize(reader);
             uint _serversLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _serversLen;_i1++)
+            for (uint _i1 = 0; _i1 < _serversLen; _i1++)
             {
                 _item1 = new GameServerInformations();
                 _item1.Deserialize(reader);
@@ -50,14 +50,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

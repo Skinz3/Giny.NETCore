@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HaapiSessionMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1564;
+{
+    public class HaapiSessionMessage : NetworkMessage
+    {
+        public const ushort Id = 727;
         public override ushort MessageId => Id;
 
         public string key;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public HaapiSessionMessage()
         {
         }
-        public HaapiSessionMessage(string key,byte type)
+        public HaapiSessionMessage(string key, byte type)
         {
             this.key = key;
             this.type = type;
@@ -39,14 +39,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

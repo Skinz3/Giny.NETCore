@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeBuyMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5063;
+{
+    public class ExchangeBuyMessage : NetworkMessage
+    {
+        public const ushort Id = 2381;
         public override ushort MessageId => Id;
 
         public int objectToBuyId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ExchangeBuyMessage()
         {
         }
-        public ExchangeBuyMessage(int objectToBuyId,int quantity)
+        public ExchangeBuyMessage(int objectToBuyId, int quantity)
         {
             this.objectToBuyId = objectToBuyId;
             this.quantity = quantity;
@@ -54,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

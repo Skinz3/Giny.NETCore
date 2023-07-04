@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HouseGuildRightsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6131;
+{
+    public class HouseGuildRightsMessage : NetworkMessage
+    {
+        public const ushort Id = 9248;
         public override ushort MessageId => Id;
 
         public int houseId;
@@ -21,7 +21,7 @@ namespace Giny.Protocol.Messages
         public HouseGuildRightsMessage()
         {
         }
-        public HouseGuildRightsMessage(int houseId,int instanceId,bool secondHand,GuildInformations guildInfo,int rights)
+        public HouseGuildRightsMessage(int houseId, int instanceId, bool secondHand, GuildInformations guildInfo, int rights)
         {
             this.houseId = houseId;
             this.instanceId = instanceId;
@@ -77,14 +77,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

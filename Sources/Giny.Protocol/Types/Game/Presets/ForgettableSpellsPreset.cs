@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ForgettableSpellsPreset : Preset  
-    { 
-        public new const ushort Id = 5549;
+{
+    public class ForgettableSpellsPreset : Preset
+    {
+        public new const ushort Id = 9888;
         public override ushort TypeId => Id;
 
         public SpellsPreset baseSpellsPreset;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public ForgettableSpellsPreset()
         {
         }
-        public ForgettableSpellsPreset(SpellsPreset baseSpellsPreset,SpellForPreset[] forgettableSpells,short id)
+        public ForgettableSpellsPreset(SpellsPreset baseSpellsPreset, SpellForPreset[] forgettableSpells, short id)
         {
             this.baseSpellsPreset = baseSpellsPreset;
             this.forgettableSpells = forgettableSpells;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Types
             base.Serialize(writer);
             baseSpellsPreset.Serialize(writer);
             writer.WriteShort((short)forgettableSpells.Length);
-            for (uint _i2 = 0;_i2 < forgettableSpells.Length;_i2++)
+            for (uint _i2 = 0; _i2 < forgettableSpells.Length; _i2++)
             {
                 (forgettableSpells[_i2] as SpellForPreset).Serialize(writer);
             }
@@ -40,7 +40,7 @@ namespace Giny.Protocol.Types
             baseSpellsPreset = new SpellsPreset();
             baseSpellsPreset.Deserialize(reader);
             uint _forgettableSpellsLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _forgettableSpellsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _forgettableSpellsLen; _i2++)
             {
                 _item2 = new SpellForPreset();
                 _item2.Deserialize(reader);
@@ -52,11 +52,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

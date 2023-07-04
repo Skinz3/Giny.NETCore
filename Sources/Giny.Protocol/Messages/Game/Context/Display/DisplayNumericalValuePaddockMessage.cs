@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class DisplayNumericalValuePaddockMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5321;
+{
+    public class DisplayNumericalValuePaddockMessage : NetworkMessage
+    {
+        public const ushort Id = 5202;
         public override ushort MessageId => Id;
 
         public int rideId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public DisplayNumericalValuePaddockMessage()
         {
         }
-        public DisplayNumericalValuePaddockMessage(int rideId,int value,byte type)
+        public DisplayNumericalValuePaddockMessage(int rideId, int value, byte type)
         {
             this.rideId = rideId;
             this.value = value;
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

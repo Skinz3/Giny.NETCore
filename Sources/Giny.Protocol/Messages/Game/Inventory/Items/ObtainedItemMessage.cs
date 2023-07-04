@@ -6,19 +6,19 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ObtainedItemMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8927;
+{
+    public class ObtainedItemMessage : NetworkMessage
+    {
+        public const ushort Id = 6585;
         public override ushort MessageId => Id;
 
-        public short genericId;
+        public int genericId;
         public int baseQuantity;
 
         public ObtainedItemMessage()
         {
         }
-        public ObtainedItemMessage(short genericId,int baseQuantity)
+        public ObtainedItemMessage(int genericId, int baseQuantity)
         {
             this.genericId = genericId;
             this.baseQuantity = baseQuantity;
@@ -30,7 +30,7 @@ namespace Giny.Protocol.Messages
                 throw new System.Exception("Forbidden value (" + genericId + ") on element genericId.");
             }
 
-            writer.WriteVarShort((short)genericId);
+            writer.WriteVarInt((int)genericId);
             if (baseQuantity < 0)
             {
                 throw new System.Exception("Forbidden value (" + baseQuantity + ") on element baseQuantity.");
@@ -40,7 +40,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Deserialize(IDataReader reader)
         {
-            genericId = (short)reader.ReadVarUhShort();
+            genericId = (int)reader.ReadVarUhInt();
             if (genericId < 0)
             {
                 throw new System.Exception("Forbidden value (" + genericId + ") on element of ObtainedItemMessage.genericId.");
@@ -54,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

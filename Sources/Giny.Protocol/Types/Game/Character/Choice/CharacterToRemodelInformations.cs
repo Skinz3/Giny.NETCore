@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class CharacterToRemodelInformations : CharacterRemodelingInformation  
-    { 
-        public new const ushort Id = 2999;
+{
+    public class CharacterToRemodelInformations : CharacterRemodelingInformation
+    {
+        public new const ushort Id = 7363;
         public override ushort TypeId => Id;
 
         public byte possibleChangeMask;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public CharacterToRemodelInformations()
         {
         }
-        public CharacterToRemodelInformations(byte possibleChangeMask,byte mandatoryChangeMask,long id,string name,byte breed,bool sex,short cosmeticId,int[] colors)
+        public CharacterToRemodelInformations(byte possibleChangeMask, byte mandatoryChangeMask, long id, string name, byte breed, bool sex, short cosmeticId, int[] colors)
         {
             this.possibleChangeMask = possibleChangeMask;
             this.mandatoryChangeMask = mandatoryChangeMask;
@@ -63,11 +63,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

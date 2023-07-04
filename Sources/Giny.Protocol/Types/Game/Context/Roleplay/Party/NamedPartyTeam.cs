@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class NamedPartyTeam  
-    { 
-        public const ushort Id = 8422;
+{
+    public class NamedPartyTeam
+    {
+        public const ushort Id = 6489;
         public virtual ushort TypeId => Id;
 
         public byte teamId;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public NamedPartyTeam()
         {
         }
-        public NamedPartyTeam(byte teamId,string partyName)
+        public NamedPartyTeam(byte teamId, string partyName)
         {
             this.teamId = teamId;
             this.partyName = partyName;
@@ -40,11 +40,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

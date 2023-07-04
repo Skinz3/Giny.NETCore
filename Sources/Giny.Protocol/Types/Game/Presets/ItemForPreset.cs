@@ -4,20 +4,20 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ItemForPreset  
-    { 
-        public const ushort Id = 7757;
+{
+    public class ItemForPreset
+    {
+        public const ushort Id = 4108;
         public virtual ushort TypeId => Id;
 
         public short position;
-        public short objGid;
+        public int objGid;
         public int objUid;
 
         public ItemForPreset()
         {
         }
-        public ItemForPreset(short position,short objGid,int objUid)
+        public ItemForPreset(short position, int objGid, int objUid)
         {
             this.position = position;
             this.objGid = objGid;
@@ -31,7 +31,7 @@ namespace Giny.Protocol.Types
                 throw new System.Exception("Forbidden value (" + objGid + ") on element objGid.");
             }
 
-            writer.WriteVarShort((short)objGid);
+            writer.WriteVarInt((int)objGid);
             if (objUid < 0)
             {
                 throw new System.Exception("Forbidden value (" + objUid + ") on element objUid.");
@@ -47,7 +47,7 @@ namespace Giny.Protocol.Types
                 throw new System.Exception("Forbidden value (" + position + ") on element of ItemForPreset.position.");
             }
 
-            objGid = (short)reader.ReadVarUhShort();
+            objGid = (int)reader.ReadVarUhInt();
             if (objGid < 0)
             {
                 throw new System.Exception("Forbidden value (" + objGid + ") on element of ItemForPreset.objGid.");
@@ -64,11 +64,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

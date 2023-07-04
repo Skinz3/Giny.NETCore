@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BreachBudgetMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8787;
+{
+    public class BreachBudgetMessage : NetworkMessage
+    {
+        public const ushort Id = 5328;
         public override ushort MessageId => Id;
 
         public int bugdet;
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

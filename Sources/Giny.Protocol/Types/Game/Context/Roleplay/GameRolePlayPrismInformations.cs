@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameRolePlayPrismInformations : GameRolePlayActorInformations  
-    { 
-        public new const ushort Id = 882;
+{
+    public class GameRolePlayPrismInformations : GameRolePlayActorInformations
+    {
+        public new const ushort Id = 6621;
         public override ushort TypeId => Id;
 
         public PrismInformation prism;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public GameRolePlayPrismInformations()
         {
         }
-        public GameRolePlayPrismInformations(PrismInformation prism,double contextualId,EntityDispositionInformations disposition,EntityLook look)
+        public GameRolePlayPrismInformations(PrismInformation prism, double contextualId, EntityDispositionInformations disposition, EntityLook look)
         {
             this.prism = prism;
             this.contextualId = contextualId;
@@ -39,11 +39,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class CheckFileRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9159;
+{
+    public class CheckFileRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 1810;
         public override ushort MessageId => Id;
 
         public string filename;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public CheckFileRequestMessage()
         {
         }
-        public CheckFileRequestMessage(string filename,byte type)
+        public CheckFileRequestMessage(string filename, byte type)
         {
             this.filename = filename;
             this.type = type;
@@ -39,14 +39,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

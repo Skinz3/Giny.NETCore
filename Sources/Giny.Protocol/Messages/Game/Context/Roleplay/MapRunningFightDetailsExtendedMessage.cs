@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class MapRunningFightDetailsExtendedMessage : MapRunningFightDetailsMessage  
-    { 
-        public new const ushort Id = 6206;
+{
+    public class MapRunningFightDetailsExtendedMessage : MapRunningFightDetailsMessage
+    {
+        public new const ushort Id = 7653;
         public override ushort MessageId => Id;
 
         public NamedPartyTeam[] namedPartyTeams;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public MapRunningFightDetailsExtendedMessage()
         {
         }
-        public MapRunningFightDetailsExtendedMessage(NamedPartyTeam[] namedPartyTeams,short fightId,GameFightFighterLightInformations[] attackers,GameFightFighterLightInformations[] defenders)
+        public MapRunningFightDetailsExtendedMessage(NamedPartyTeam[] namedPartyTeams, short fightId, GameFightFighterLightInformations[] attackers, GameFightFighterLightInformations[] defenders)
         {
             this.namedPartyTeams = namedPartyTeams;
             this.fightId = fightId;
@@ -28,7 +28,7 @@ namespace Giny.Protocol.Messages
         {
             base.Serialize(writer);
             writer.WriteShort((short)namedPartyTeams.Length);
-            for (uint _i1 = 0;_i1 < namedPartyTeams.Length;_i1++)
+            for (uint _i1 = 0; _i1 < namedPartyTeams.Length; _i1++)
             {
                 (namedPartyTeams[_i1] as NamedPartyTeam).Serialize(writer);
             }
@@ -39,7 +39,7 @@ namespace Giny.Protocol.Messages
             NamedPartyTeam _item1 = null;
             base.Deserialize(reader);
             uint _namedPartyTeamsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _namedPartyTeamsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _namedPartyTeamsLen; _i1++)
             {
                 _item1 = new NamedPartyTeam();
                 _item1.Deserialize(reader);
@@ -48,14 +48,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

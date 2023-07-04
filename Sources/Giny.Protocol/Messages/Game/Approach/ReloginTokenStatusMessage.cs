@@ -6,55 +6,35 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ReloginTokenStatusMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6325;
+{
+    public class ReloginTokenStatusMessage : NetworkMessage
+    {
+        public const ushort Id = 6024;
         public override ushort MessageId => Id;
 
         public bool validToken;
-        public byte[] ticket;
+        public string token;
 
         public ReloginTokenStatusMessage()
         {
         }
-        public ReloginTokenStatusMessage(bool validToken,byte[] ticket)
+        public ReloginTokenStatusMessage(bool validToken, string token)
         {
             this.validToken = validToken;
-            this.ticket = ticket;
+            this.token = token;
         }
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteBoolean((bool)validToken);
-            writer.WriteVarInt((int)ticket.Length);
-            for (uint _i2 = 0;_i2 < ticket.Length;_i2++)
-            {
-                writer.WriteByte((byte)ticket[_i2]);
-            }
-
+            writer.WriteUTF((string)token);
         }
         public override void Deserialize(IDataReader reader)
         {
-            int _val2 = 0;
             validToken = (bool)reader.ReadBoolean();
-            uint _ticketLen = (uint)reader.ReadVarInt();
-            ticket = new byte[_ticketLen];
-            for (uint _i2 = 0;_i2 < _ticketLen;_i2++)
-            {
-                _val2 = (int)reader.ReadByte();
-                ticket[_i2] = (byte)_val2;
-            }
-
+            token = (string)reader.ReadUTF();
         }
-
 
     }
 }
-
-
-
-
-
-
 
 

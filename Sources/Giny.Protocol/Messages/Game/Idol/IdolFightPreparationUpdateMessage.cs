@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class IdolFightPreparationUpdateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 146;
+{
+    public class IdolFightPreparationUpdateMessage : NetworkMessage
+    {
+        public const ushort Id = 8314;
         public override ushort MessageId => Id;
 
         public byte idolSource;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public IdolFightPreparationUpdateMessage()
         {
         }
-        public IdolFightPreparationUpdateMessage(byte idolSource,Idol[] idols)
+        public IdolFightPreparationUpdateMessage(byte idolSource, Idol[] idols)
         {
             this.idolSource = idolSource;
             this.idols = idols;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         {
             writer.WriteByte((byte)idolSource);
             writer.WriteShort((short)idols.Length);
-            for (uint _i2 = 0;_i2 < idols.Length;_i2++)
+            for (uint _i2 = 0; _i2 < idols.Length; _i2++)
             {
                 writer.WriteShort((short)(idols[_i2] as Idol).TypeId);
                 (idols[_i2] as Idol).Serialize(writer);
@@ -45,7 +45,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _idolsLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _idolsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _idolsLen; _i2++)
             {
                 _id2 = (uint)reader.ReadUShort();
                 _item2 = ProtocolTypeManager.GetInstance<Idol>((short)_id2);
@@ -55,14 +55,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

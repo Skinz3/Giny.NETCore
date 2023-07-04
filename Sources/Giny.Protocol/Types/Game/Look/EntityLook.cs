@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class EntityLook  
-    { 
-        public const ushort Id = 212;
+{
+    public class EntityLook
+    {
+        public const ushort Id = 6357;
         public virtual ushort TypeId => Id;
 
         public short bonesId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Types
         public EntityLook()
         {
         }
-        public EntityLook(short bonesId,short[] skins,int[] indexedColors,short[] scales,SubEntity[] subentities)
+        public EntityLook(short bonesId, short[] skins, int[] indexedColors, short[] scales, SubEntity[] subentities)
         {
             this.bonesId = bonesId;
             this.skins = skins;
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Types
 
             writer.WriteVarShort((short)bonesId);
             writer.WriteShort((short)skins.Length);
-            for (uint _i2 = 0;_i2 < skins.Length;_i2++)
+            for (uint _i2 = 0; _i2 < skins.Length; _i2++)
             {
                 if (skins[_i2] < 0)
                 {
@@ -47,19 +47,19 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteShort((short)indexedColors.Length);
-            for (uint _i3 = 0;_i3 < indexedColors.Length;_i3++)
+            for (uint _i3 = 0; _i3 < indexedColors.Length; _i3++)
             {
                 writer.WriteInt((int)indexedColors[_i3]);
             }
 
             writer.WriteShort((short)scales.Length);
-            for (uint _i4 = 0;_i4 < scales.Length;_i4++)
+            for (uint _i4 = 0; _i4 < scales.Length; _i4++)
             {
                 writer.WriteVarShort((short)scales[_i4]);
             }
 
             writer.WriteShort((short)subentities.Length);
-            for (uint _i5 = 0;_i5 < subentities.Length;_i5++)
+            for (uint _i5 = 0; _i5 < subentities.Length; _i5++)
             {
                 (subentities[_i5] as SubEntity).Serialize(writer);
             }
@@ -79,7 +79,7 @@ namespace Giny.Protocol.Types
 
             uint _skinsLen = (uint)reader.ReadUShort();
             skins = new short[_skinsLen];
-            for (uint _i2 = 0;_i2 < _skinsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _skinsLen; _i2++)
             {
                 _val2 = (uint)reader.ReadVarUhShort();
                 if (_val2 < 0)
@@ -92,7 +92,7 @@ namespace Giny.Protocol.Types
 
             uint _indexedColorsLen = (uint)reader.ReadUShort();
             indexedColors = new int[_indexedColorsLen];
-            for (uint _i3 = 0;_i3 < _indexedColorsLen;_i3++)
+            for (uint _i3 = 0; _i3 < _indexedColorsLen; _i3++)
             {
                 _val3 = (int)reader.ReadInt();
                 indexedColors[_i3] = (int)_val3;
@@ -100,14 +100,14 @@ namespace Giny.Protocol.Types
 
             uint _scalesLen = (uint)reader.ReadUShort();
             scales = new short[_scalesLen];
-            for (uint _i4 = 0;_i4 < _scalesLen;_i4++)
+            for (uint _i4 = 0; _i4 < _scalesLen; _i4++)
             {
                 _val4 = (int)reader.ReadVarShort();
                 scales[_i4] = (short)_val4;
             }
 
             uint _subentitiesLen = (uint)reader.ReadUShort();
-            for (uint _i5 = 0;_i5 < _subentitiesLen;_i5++)
+            for (uint _i5 = 0; _i5 < _subentitiesLen; _i5++)
             {
                 _item5 = new SubEntity();
                 _item5.Deserialize(reader);
@@ -119,11 +119,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

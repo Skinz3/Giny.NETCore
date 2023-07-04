@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class TrustCertificate  
-    { 
-        public const ushort Id = 8303;
+{
+    public class TrustCertificate
+    {
+        public const ushort Id = 9142;
         public virtual ushort TypeId => Id;
 
         public int id;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public TrustCertificate()
         {
         }
-        public TrustCertificate(int id,string hash)
+        public TrustCertificate(int id, string hash)
         {
             this.id = id;
             this.hash = hash;
@@ -45,11 +45,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

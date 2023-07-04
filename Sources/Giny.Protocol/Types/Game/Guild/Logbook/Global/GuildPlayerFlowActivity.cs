@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GuildPlayerFlowActivity : GuildLogbookEntryBasicInformation  
-    { 
-        public new const ushort Id = 9219;
+{
+    public class GuildPlayerFlowActivity : GuildLogbookEntryBasicInformation
+    {
+        public new const ushort Id = 9354;
         public override ushort TypeId => Id;
 
         public long playerId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Types
         public GuildPlayerFlowActivity()
         {
         }
-        public GuildPlayerFlowActivity(long playerId,string playerName,byte playerFlowEventType,int id,double date)
+        public GuildPlayerFlowActivity(long playerId, string playerName, byte playerFlowEventType, int id, double date)
         {
             this.playerId = playerId;
             this.playerName = playerName;
@@ -28,7 +28,7 @@ namespace Giny.Protocol.Types
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
@@ -41,7 +41,7 @@ namespace Giny.Protocol.Types
         {
             base.Deserialize(reader);
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of GuildPlayerFlowActivity.playerId.");
             }
@@ -58,11 +58,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

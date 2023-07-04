@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HouseToSellListMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 824;
+{
+    public class HouseToSellListMessage : NetworkMessage
+    {
+        public const ushort Id = 1247;
         public override ushort MessageId => Id;
 
         public short pageIndex;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public HouseToSellListMessage()
         {
         }
-        public HouseToSellListMessage(short pageIndex,short totalPage,HouseInformationsForSell[] houseList)
+        public HouseToSellListMessage(short pageIndex, short totalPage, HouseInformationsForSell[] houseList)
         {
             this.pageIndex = pageIndex;
             this.totalPage = totalPage;
@@ -40,7 +40,7 @@ namespace Giny.Protocol.Messages
 
             writer.WriteVarShort((short)totalPage);
             writer.WriteShort((short)houseList.Length);
-            for (uint _i3 = 0;_i3 < houseList.Length;_i3++)
+            for (uint _i3 = 0; _i3 < houseList.Length; _i3++)
             {
                 (houseList[_i3] as HouseInformationsForSell).Serialize(writer);
             }
@@ -62,7 +62,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _houseListLen = (uint)reader.ReadUShort();
-            for (uint _i3 = 0;_i3 < _houseListLen;_i3++)
+            for (uint _i3 = 0; _i3 < _houseListLen; _i3++)
             {
                 _item3 = new HouseInformationsForSell();
                 _item3.Deserialize(reader);
@@ -71,14 +71,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

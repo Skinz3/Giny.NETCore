@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ChatKolizeumServerMessage : ChatServerMessage  
-    { 
-        public new const ushort Id = 1773;
+{
+    public class ChatKolizeumServerMessage : ChatServerMessage
+    {
+        public new const ushort Id = 2490;
         public override ushort MessageId => Id;
 
         public short originServerId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public ChatKolizeumServerMessage()
         {
         }
-        public ChatKolizeumServerMessage(short originServerId,byte channel,string content,int timestamp,string fingerprint,double senderId,string senderName,string prefix,int senderAccountId)
+        public ChatKolizeumServerMessage(short originServerId, byte channel, string content, int timestamp, string fingerprint, double senderId, string senderName, string prefix, int senderAccountId)
         {
             this.originServerId = originServerId;
             this.channel = channel;
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
             originServerId = (short)reader.ReadShort();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

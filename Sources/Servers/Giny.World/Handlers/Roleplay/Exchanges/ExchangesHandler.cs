@@ -3,7 +3,6 @@ using Giny.Protocol.Enums;
 using Giny.Protocol.Messages;
 using Giny.World.Managers.Dialogs.DialogBox;
 using Giny.World.Managers.Entities.Characters;
-using Giny.World.Managers.Entities.Merchants;
 using Giny.World.Managers.Exchanges;
 using Giny.World.Managers.Exchanges.Jobs;
 using Giny.World.Network;
@@ -33,30 +32,8 @@ namespace Giny.World.Handlers.Roleplay.Exchanges
                 client.Character.GetDialog<PlayerTradeExchange>().TransferAllFromInventory();
             }
         }
-        [MessageHandler]
-        public static void HandleExchangeOnHumanVendorRequest(ExchangeOnHumanVendorRequestMessage message, WorldClient client)
-        {
-            CharacterMerchant merchant = client.Character.Map.Instance.GetEntity<CharacterMerchant>(message.humanVendorId);
-
-            if (merchant != null && merchant.CellId == message.humanVendorCell)
-            {
-                client.Character.OpenMerchantAsSellerExchange(merchant);
-            }
-            else
-            {
-                client.Character.OnExchangeError(ExchangeErrorEnum.REQUEST_IMPOSSIBLE);
-            }
-        }
-        [MessageHandler]
-        public static void HandleExchangeStartAsVendor(ExchangeStartAsVendorMessage message, WorldClient client)
-        {
-            client.Character.EnterMerchantMode();
-        }
-        [MessageHandler]
-        public static void HandleExchangeShowVendorTax(ExchangeShowVendorTaxMessage message, WorldClient client)
-        {
-            client.Send(new ExchangeReplyTaxVendorMessage(0, client.Character.MerchantItems.GetMerchantTax()));
-        }
+       
+       
         [MessageHandler]
         public static void HandleExchangeCraftCountRequest(ExchangeCraftCountRequestMessage message, WorldClient client)
         {
@@ -89,11 +66,7 @@ namespace Giny.World.Handlers.Roleplay.Exchanges
                 client.Character.GetDialog<Exchange>().ModifyItemPriced(message.objectUID, message.quantity, message.price);
             }
         }
-        [MessageHandler]
-        public static void HandleExchangeRequestOnShopStock(ExchangeRequestOnShopStockMessage message, WorldClient client)
-        {
-            client.Character.OpenMerchantAsVendorExchange();
-        }
+     
         [MessageHandler]
         public static void HandleExchangeBuyMessage(ExchangeBuyMessage message, WorldClient client)
         {
@@ -101,10 +74,7 @@ namespace Giny.World.Handlers.Roleplay.Exchanges
             {
                 client.Character.GetDialog<BuySellExchange>().Buy((short)message.objectToBuyId, message.quantity);
             }
-            else if (client.Character.IsInExchange(ExchangeTypeEnum.DISCONNECTED_VENDOR))
-            {
-                client.Character.GetDialog<MerchantSellerExchange>().Buy(message.objectToBuyId, message.quantity);
-            }
+          
         }
         [MessageHandler]
         public static void HandleExchangeObjectMoveMessage(ExchangeObjectMoveMessage message, WorldClient client)

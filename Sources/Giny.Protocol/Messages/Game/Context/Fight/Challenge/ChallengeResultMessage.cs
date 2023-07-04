@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ChallengeResultMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7931;
+{
+    public class ChallengeResultMessage : NetworkMessage
+    {
+        public const ushort Id = 6642;
         public override ushort MessageId => Id;
 
         public short challengeId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ChallengeResultMessage()
         {
         }
-        public ChallengeResultMessage(short challengeId,bool success)
+        public ChallengeResultMessage(short challengeId, bool success)
         {
             this.challengeId = challengeId;
             this.success = success;
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
             success = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

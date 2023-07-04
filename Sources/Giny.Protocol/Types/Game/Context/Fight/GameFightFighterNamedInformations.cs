@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameFightFighterNamedInformations : GameFightFighterInformations  
-    { 
-        public new const ushort Id = 3364;
+{
+    public class GameFightFighterNamedInformations : GameFightFighterInformations
+    {
+        public new const ushort Id = 6740;
         public override ushort TypeId => Id;
 
         public string name;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Types
         public GameFightFighterNamedInformations()
         {
         }
-        public GameFightFighterNamedInformations(string name,PlayerStatus status,short leagueId,int ladderPosition,bool hiddenInPrefight,double contextualId,EntityDispositionInformations disposition,EntityLook look,GameContextBasicSpawnInformation spawnInfo,byte wave,GameFightCharacteristics stats,short[] previousPositions)
+        public GameFightFighterNamedInformations(string name, PlayerStatus status, short leagueId, int ladderPosition, bool hiddenInPrefight, double contextualId, EntityDispositionInformations disposition, EntityLook look, GameContextBasicSpawnInformation spawnInfo, byte wave, GameFightCharacteristics stats, short[] previousPositions)
         {
             this.name = name;
             this.status = status;
@@ -57,11 +57,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

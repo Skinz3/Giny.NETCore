@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightSpectateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6763;
+{
+    public class GameFightSpectateMessage : NetworkMessage
+    {
+        public const ushort Id = 9527;
         public override ushort MessageId => Id;
 
         public FightDispellableEffectExtendedInformations[] effects;
@@ -22,7 +22,7 @@ namespace Giny.Protocol.Messages
         public GameFightSpectateMessage()
         {
         }
-        public GameFightSpectateMessage(FightDispellableEffectExtendedInformations[] effects,GameActionMark[] marks,short gameTurn,int fightStart,Idol[] idols,GameFightEffectTriggerCount[] fxTriggerCounts)
+        public GameFightSpectateMessage(FightDispellableEffectExtendedInformations[] effects, GameActionMark[] marks, short gameTurn, int fightStart, Idol[] idols, GameFightEffectTriggerCount[] fxTriggerCounts)
         {
             this.effects = effects;
             this.marks = marks;
@@ -34,13 +34,13 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)effects.Length);
-            for (uint _i1 = 0;_i1 < effects.Length;_i1++)
+            for (uint _i1 = 0; _i1 < effects.Length; _i1++)
             {
                 (effects[_i1] as FightDispellableEffectExtendedInformations).Serialize(writer);
             }
 
             writer.WriteShort((short)marks.Length);
-            for (uint _i2 = 0;_i2 < marks.Length;_i2++)
+            for (uint _i2 = 0; _i2 < marks.Length; _i2++)
             {
                 (marks[_i2] as GameActionMark).Serialize(writer);
             }
@@ -58,13 +58,13 @@ namespace Giny.Protocol.Messages
 
             writer.WriteInt((int)fightStart);
             writer.WriteShort((short)idols.Length);
-            for (uint _i5 = 0;_i5 < idols.Length;_i5++)
+            for (uint _i5 = 0; _i5 < idols.Length; _i5++)
             {
                 (idols[_i5] as Idol).Serialize(writer);
             }
 
             writer.WriteShort((short)fxTriggerCounts.Length);
-            for (uint _i6 = 0;_i6 < fxTriggerCounts.Length;_i6++)
+            for (uint _i6 = 0; _i6 < fxTriggerCounts.Length; _i6++)
             {
                 (fxTriggerCounts[_i6] as GameFightEffectTriggerCount).Serialize(writer);
             }
@@ -77,7 +77,7 @@ namespace Giny.Protocol.Messages
             Idol _item5 = null;
             GameFightEffectTriggerCount _item6 = null;
             uint _effectsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _effectsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _effectsLen; _i1++)
             {
                 _item1 = new FightDispellableEffectExtendedInformations();
                 _item1.Deserialize(reader);
@@ -85,7 +85,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _marksLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _marksLen;_i2++)
+            for (uint _i2 = 0; _i2 < _marksLen; _i2++)
             {
                 _item2 = new GameActionMark();
                 _item2.Deserialize(reader);
@@ -105,7 +105,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _idolsLen = (uint)reader.ReadUShort();
-            for (uint _i5 = 0;_i5 < _idolsLen;_i5++)
+            for (uint _i5 = 0; _i5 < _idolsLen; _i5++)
             {
                 _item5 = new Idol();
                 _item5.Deserialize(reader);
@@ -113,7 +113,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _fxTriggerCountsLen = (uint)reader.ReadUShort();
-            for (uint _i6 = 0;_i6 < _fxTriggerCountsLen;_i6++)
+            for (uint _i6 = 0; _i6 < _fxTriggerCountsLen; _i6++)
             {
                 _item6 = new GameFightEffectTriggerCount();
                 _item6.Deserialize(reader);
@@ -122,14 +122,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

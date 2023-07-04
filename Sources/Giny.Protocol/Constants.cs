@@ -8,6 +8,6 @@ namespace Giny.Protocol
 {
     public class Constants
     {
-        public const string ProtocolVersion = "1.0.3-77465d0";
+        public const string ProtocolVersion = "1.0.3+6dde4e8";
     }
 }

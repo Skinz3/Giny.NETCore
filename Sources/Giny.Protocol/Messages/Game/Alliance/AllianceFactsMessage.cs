@@ -6,14 +6,14 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AllianceFactsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7769;
+{
+    public class AllianceFactsMessage : NetworkMessage
+    {
+        public const ushort Id = 4615;
         public override ushort MessageId => Id;
 
-        public AllianceFactSheetInformations infos;
-        public GuildInAllianceInformations[] guilds;
+        public AllianceFactSheetInformation infos;
+        public CharacterMinimalSocialPublicInformations[] members;
         public short[] controlledSubareaIds;
         public long leaderCharacterId;
         public string leaderCharacterName;
@@ -21,10 +21,10 @@ namespace Giny.Protocol.Messages
         public AllianceFactsMessage()
         {
         }
-        public AllianceFactsMessage(AllianceFactSheetInformations infos,GuildInAllianceInformations[] guilds,short[] controlledSubareaIds,long leaderCharacterId,string leaderCharacterName)
+        public AllianceFactsMessage(AllianceFactSheetInformation infos, CharacterMinimalSocialPublicInformations[] members, short[] controlledSubareaIds, long leaderCharacterId, string leaderCharacterName)
         {
             this.infos = infos;
-            this.guilds = guilds;
+            this.members = members;
             this.controlledSubareaIds = controlledSubareaIds;
             this.leaderCharacterId = leaderCharacterId;
             this.leaderCharacterName = leaderCharacterName;
@@ -33,14 +33,14 @@ namespace Giny.Protocol.Messages
         {
             writer.WriteShort((short)infos.TypeId);
             infos.Serialize(writer);
-            writer.WriteShort((short)guilds.Length);
-            for (uint _i2 = 0;_i2 < guilds.Length;_i2++)
+            writer.WriteShort((short)members.Length);
+            for (uint _i2 = 0; _i2 < members.Length; _i2++)
             {
-                (guilds[_i2] as GuildInAllianceInformations).Serialize(writer);
+                (members[_i2] as CharacterMinimalSocialPublicInformations).Serialize(writer);
             }
 
             writer.WriteShort((short)controlledSubareaIds.Length);
-            for (uint _i3 = 0;_i3 < controlledSubareaIds.Length;_i3++)
+            for (uint _i3 = 0; _i3 < controlledSubareaIds.Length; _i3++)
             {
                 if (controlledSubareaIds[_i3] < 0)
                 {
@@ -50,7 +50,7 @@ namespace Giny.Protocol.Messages
                 writer.WriteVarShort((short)controlledSubareaIds[_i3]);
             }
 
-            if (leaderCharacterId < 0 || leaderCharacterId > 9.00719925474099E+15)
+            if (leaderCharacterId < 0 || leaderCharacterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + leaderCharacterId + ") on element leaderCharacterId.");
             }
@@ -60,22 +60,22 @@ namespace Giny.Protocol.Messages
         }
         public override void Deserialize(IDataReader reader)
         {
-            GuildInAllianceInformations _item2 = null;
+            CharacterMinimalSocialPublicInformations _item2 = null;
             uint _val3 = 0;
             uint _id1 = (uint)reader.ReadUShort();
-            infos = ProtocolTypeManager.GetInstance<AllianceFactSheetInformations>((short)_id1);
+            infos = ProtocolTypeManager.GetInstance<AllianceFactSheetInformation>((short)_id1);
             infos.Deserialize(reader);
-            uint _guildsLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _guildsLen;_i2++)
+            uint _membersLen = (uint)reader.ReadUShort();
+            for (uint _i2 = 0; _i2 < _membersLen; _i2++)
             {
-                _item2 = new GuildInAllianceInformations();
+                _item2 = new CharacterMinimalSocialPublicInformations();
                 _item2.Deserialize(reader);
-                guilds[_i2] = _item2;
+                members[_i2] = _item2;
             }
 
             uint _controlledSubareaIdsLen = (uint)reader.ReadUShort();
             controlledSubareaIds = new short[_controlledSubareaIdsLen];
-            for (uint _i3 = 0;_i3 < _controlledSubareaIdsLen;_i3++)
+            for (uint _i3 = 0; _i3 < _controlledSubareaIdsLen; _i3++)
             {
                 _val3 = (uint)reader.ReadVarUhShort();
                 if (_val3 < 0)
@@ -87,7 +87,7 @@ namespace Giny.Protocol.Messages
             }
 
             leaderCharacterId = (long)reader.ReadVarUhLong();
-            if (leaderCharacterId < 0 || leaderCharacterId > 9.00719925474099E+15)
+            if (leaderCharacterId < 0 || leaderCharacterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + leaderCharacterId + ") on element of AllianceFactsMessage.leaderCharacterId.");
             }
@@ -95,14 +95,7 @@ namespace Giny.Protocol.Messages
             leaderCharacterName = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

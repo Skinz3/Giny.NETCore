@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeRequestedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6930;
+{
+    public class ExchangeRequestedMessage : NetworkMessage
+    {
+        public const ushort Id = 9854;
         public override ushort MessageId => Id;
 
         public byte exchangeType;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             exchangeType = (byte)reader.ReadByte();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ObjectEffectMount : ObjectEffect  
-    { 
-        public new const ushort Id = 3193;
+{
+    public class ObjectEffectMount : ObjectEffect
+    {
+        public new const ushort Id = 9469;
         public override ushort TypeId => Id;
 
         public long id;
@@ -28,7 +28,7 @@ namespace Giny.Protocol.Types
         public ObjectEffectMount()
         {
         }
-        public ObjectEffectMount(long id,long expirationDate,int model,string name,string owner,byte level,bool sex,bool isRideable,bool isFeconded,bool isFecondationReady,int reproductionCount,int reproductionCountMax,ObjectEffectInteger[] effects,int[] capacities,short actionId)
+        public ObjectEffectMount(long id, long expirationDate, int model, string name, string owner, byte level, bool sex, bool isRideable, bool isFeconded, bool isFecondationReady, int reproductionCount, int reproductionCountMax, ObjectEffectInteger[] effects, int[] capacities, short actionId)
         {
             this.id = id;
             this.expirationDate = expirationDate;
@@ -50,18 +50,18 @@ namespace Giny.Protocol.Types
         {
             base.Serialize(writer);
             byte _box0 = 0;
-            _box0 = BooleanByteWrapper.SetFlag(_box0,0,sex);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,1,isRideable);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,2,isFeconded);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,3,isFecondationReady);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 0, sex);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 1, isRideable);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 2, isFeconded);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 3, isFecondationReady);
             writer.WriteByte((byte)_box0);
-            if (id < 0 || id > 9.00719925474099E+15)
+            if (id < 0 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element id.");
             }
 
             writer.WriteVarLong((long)id);
-            if (expirationDate < 0 || expirationDate > 9.00719925474099E+15)
+            if (expirationDate < 0 || expirationDate > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + expirationDate + ") on element expirationDate.");
             }
@@ -89,13 +89,13 @@ namespace Giny.Protocol.Types
 
             writer.WriteVarInt((int)reproductionCountMax);
             writer.WriteShort((short)effects.Length);
-            for (uint _i13 = 0;_i13 < effects.Length;_i13++)
+            for (uint _i13 = 0; _i13 < effects.Length; _i13++)
             {
                 (effects[_i13] as ObjectEffectInteger).Serialize(writer);
             }
 
             writer.WriteShort((short)capacities.Length);
-            for (uint _i14 = 0;_i14 < capacities.Length;_i14++)
+            for (uint _i14 = 0; _i14 < capacities.Length; _i14++)
             {
                 if (capacities[_i14] < 0)
                 {
@@ -112,18 +112,18 @@ namespace Giny.Protocol.Types
             uint _val14 = 0;
             base.Deserialize(reader);
             byte _box0 = reader.ReadByte();
-            sex = BooleanByteWrapper.GetFlag(_box0,0);
-            isRideable = BooleanByteWrapper.GetFlag(_box0,1);
-            isFeconded = BooleanByteWrapper.GetFlag(_box0,2);
-            isFecondationReady = BooleanByteWrapper.GetFlag(_box0,3);
+            sex = BooleanByteWrapper.GetFlag(_box0, 0);
+            isRideable = BooleanByteWrapper.GetFlag(_box0, 1);
+            isFeconded = BooleanByteWrapper.GetFlag(_box0, 2);
+            isFecondationReady = BooleanByteWrapper.GetFlag(_box0, 3);
             id = (long)reader.ReadVarUhLong();
-            if (id < 0 || id > 9.00719925474099E+15)
+            if (id < 0 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element of ObjectEffectMount.id.");
             }
 
             expirationDate = (long)reader.ReadVarUhLong();
-            if (expirationDate < 0 || expirationDate > 9.00719925474099E+15)
+            if (expirationDate < 0 || expirationDate > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + expirationDate + ") on element of ObjectEffectMount.expirationDate.");
             }
@@ -150,7 +150,7 @@ namespace Giny.Protocol.Types
             }
 
             uint _effectsLen = (uint)reader.ReadUShort();
-            for (uint _i13 = 0;_i13 < _effectsLen;_i13++)
+            for (uint _i13 = 0; _i13 < _effectsLen; _i13++)
             {
                 _item13 = new ObjectEffectInteger();
                 _item13.Deserialize(reader);
@@ -159,7 +159,7 @@ namespace Giny.Protocol.Types
 
             uint _capacitiesLen = (uint)reader.ReadUShort();
             capacities = new int[_capacitiesLen];
-            for (uint _i14 = 0;_i14 < _capacitiesLen;_i14++)
+            for (uint _i14 = 0; _i14 < _capacitiesLen; _i14++)
             {
                 _val14 = (uint)reader.ReadVarUhInt();
                 if (_val14 < 0)
@@ -175,11 +175,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

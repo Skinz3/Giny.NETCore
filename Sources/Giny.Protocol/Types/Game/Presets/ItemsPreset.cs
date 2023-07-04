@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ItemsPreset : Preset  
-    { 
-        public new const ushort Id = 559;
+{
+    public class ItemsPreset : Preset
+    {
+        public new const ushort Id = 9368;
         public override ushort TypeId => Id;
 
         public ItemForPreset[] items;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Types
         public ItemsPreset()
         {
         }
-        public ItemsPreset(ItemForPreset[] items,bool mountEquipped,EntityLook look,short id)
+        public ItemsPreset(ItemForPreset[] items, bool mountEquipped, EntityLook look, short id)
         {
             this.items = items;
             this.mountEquipped = mountEquipped;
@@ -28,7 +28,7 @@ namespace Giny.Protocol.Types
         {
             base.Serialize(writer);
             writer.WriteShort((short)items.Length);
-            for (uint _i1 = 0;_i1 < items.Length;_i1++)
+            for (uint _i1 = 0; _i1 < items.Length; _i1++)
             {
                 (items[_i1] as ItemForPreset).Serialize(writer);
             }
@@ -41,7 +41,7 @@ namespace Giny.Protocol.Types
             ItemForPreset _item1 = null;
             base.Deserialize(reader);
             uint _itemsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _itemsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _itemsLen; _i1++)
             {
                 _item1 = new ItemForPreset();
                 _item1.Deserialize(reader);
@@ -56,11 +56,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

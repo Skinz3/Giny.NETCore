@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PaddockSellBuyDialogMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 375;
+{
+    public class PaddockSellBuyDialogMessage : NetworkMessage
+    {
+        public const ushort Id = 6148;
         public override ushort MessageId => Id;
 
         public bool bsell;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public PaddockSellBuyDialogMessage()
         {
         }
-        public PaddockSellBuyDialogMessage(bool bsell,int ownerId,long price)
+        public PaddockSellBuyDialogMessage(bool bsell, int ownerId, long price)
         {
             this.bsell = bsell;
             this.ownerId = ownerId;
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteVarInt((int)ownerId);
-            if (price < 0 || price > 9.00719925474099E+15)
+            if (price < 0 || price > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + price + ") on element price.");
             }
@@ -51,21 +51,14 @@ namespace Giny.Protocol.Messages
             }
 
             price = (long)reader.ReadVarUhLong();
-            if (price < 0 || price > 9.00719925474099E+15)
+            if (price < 0 || price > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + price + ") on element of PaddockSellBuyDialogMessage.price.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

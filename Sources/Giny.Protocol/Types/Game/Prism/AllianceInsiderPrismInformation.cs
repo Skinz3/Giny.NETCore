@@ -4,92 +4,61 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class AllianceInsiderPrismInformation : PrismInformation  
-    { 
-        public new const ushort Id = 3284;
+{
+    public class AllianceInsiderPrismInformation : PrismInformation
+    {
+        public new const ushort Id = 4112;
         public override ushort TypeId => Id;
 
-        public int lastTimeSlotModificationDate;
-        public int lastTimeSlotModificationAuthorGuildId;
-        public long lastTimeSlotModificationAuthorId;
-        public string lastTimeSlotModificationAuthorName;
-        public ObjectItem[] modulesObjects;
+        public ObjectItem moduleObject;
+        public int moduleType;
+        public ObjectItem cristalObject;
+        public int cristalType;
+        public int cristalNumberLeft;
 
         public AllianceInsiderPrismInformation()
         {
         }
-        public AllianceInsiderPrismInformation(int lastTimeSlotModificationDate,int lastTimeSlotModificationAuthorGuildId,long lastTimeSlotModificationAuthorId,string lastTimeSlotModificationAuthorName,ObjectItem[] modulesObjects,byte typeId,byte state,int nextVulnerabilityDate,int placementDate,int rewardTokenCount)
+        public AllianceInsiderPrismInformation(ObjectItem moduleObject, int moduleType, ObjectItem cristalObject, int cristalType, int cristalNumberLeft, byte state, int placementDate, int nuggetsCount, int durability, double nextEvolutionDate)
         {
-            this.lastTimeSlotModificationDate = lastTimeSlotModificationDate;
-            this.lastTimeSlotModificationAuthorGuildId = lastTimeSlotModificationAuthorGuildId;
-            this.lastTimeSlotModificationAuthorId = lastTimeSlotModificationAuthorId;
-            this.lastTimeSlotModificationAuthorName = lastTimeSlotModificationAuthorName;
-            this.modulesObjects = modulesObjects;
-            this.typeId = typeId;
+            this.moduleObject = moduleObject;
+            this.moduleType = moduleType;
+            this.cristalObject = cristalObject;
+            this.cristalType = cristalType;
+            this.cristalNumberLeft = cristalNumberLeft;
             this.state = state;
-            this.nextVulnerabilityDate = nextVulnerabilityDate;
             this.placementDate = placementDate;
-            this.rewardTokenCount = rewardTokenCount;
+            this.nuggetsCount = nuggetsCount;
+            this.durability = durability;
+            this.nextEvolutionDate = nextEvolutionDate;
         }
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (lastTimeSlotModificationDate < 0)
+            moduleObject.Serialize(writer);
+            writer.WriteInt((int)moduleType);
+            cristalObject.Serialize(writer);
+            writer.WriteInt((int)cristalType);
+            if (cristalNumberLeft < 0)
             {
-                throw new System.Exception("Forbidden value (" + lastTimeSlotModificationDate + ") on element lastTimeSlotModificationDate.");
+                throw new System.Exception("Forbidden value (" + cristalNumberLeft + ") on element cristalNumberLeft.");
             }
 
-            writer.WriteInt((int)lastTimeSlotModificationDate);
-            if (lastTimeSlotModificationAuthorGuildId < 0)
-            {
-                throw new System.Exception("Forbidden value (" + lastTimeSlotModificationAuthorGuildId + ") on element lastTimeSlotModificationAuthorGuildId.");
-            }
-
-            writer.WriteVarInt((int)lastTimeSlotModificationAuthorGuildId);
-            if (lastTimeSlotModificationAuthorId < 0 || lastTimeSlotModificationAuthorId > 9.00719925474099E+15)
-            {
-                throw new System.Exception("Forbidden value (" + lastTimeSlotModificationAuthorId + ") on element lastTimeSlotModificationAuthorId.");
-            }
-
-            writer.WriteVarLong((long)lastTimeSlotModificationAuthorId);
-            writer.WriteUTF((string)lastTimeSlotModificationAuthorName);
-            writer.WriteShort((short)modulesObjects.Length);
-            for (uint _i5 = 0;_i5 < modulesObjects.Length;_i5++)
-            {
-                (modulesObjects[_i5] as ObjectItem).Serialize(writer);
-            }
-
+            writer.WriteInt((int)cristalNumberLeft);
         }
         public override void Deserialize(IDataReader reader)
         {
-            ObjectItem _item5 = null;
             base.Deserialize(reader);
-            lastTimeSlotModificationDate = (int)reader.ReadInt();
-            if (lastTimeSlotModificationDate < 0)
+            moduleObject = new ObjectItem();
+            moduleObject.Deserialize(reader);
+            moduleType = (int)reader.ReadInt();
+            cristalObject = new ObjectItem();
+            cristalObject.Deserialize(reader);
+            cristalType = (int)reader.ReadInt();
+            cristalNumberLeft = (int)reader.ReadInt();
+            if (cristalNumberLeft < 0)
             {
-                throw new System.Exception("Forbidden value (" + lastTimeSlotModificationDate + ") on element of AllianceInsiderPrismInformation.lastTimeSlotModificationDate.");
-            }
-
-            lastTimeSlotModificationAuthorGuildId = (int)reader.ReadVarUhInt();
-            if (lastTimeSlotModificationAuthorGuildId < 0)
-            {
-                throw new System.Exception("Forbidden value (" + lastTimeSlotModificationAuthorGuildId + ") on element of AllianceInsiderPrismInformation.lastTimeSlotModificationAuthorGuildId.");
-            }
-
-            lastTimeSlotModificationAuthorId = (long)reader.ReadVarUhLong();
-            if (lastTimeSlotModificationAuthorId < 0 || lastTimeSlotModificationAuthorId > 9.00719925474099E+15)
-            {
-                throw new System.Exception("Forbidden value (" + lastTimeSlotModificationAuthorId + ") on element of AllianceInsiderPrismInformation.lastTimeSlotModificationAuthorId.");
-            }
-
-            lastTimeSlotModificationAuthorName = (string)reader.ReadUTF();
-            uint _modulesObjectsLen = (uint)reader.ReadUShort();
-            for (uint _i5 = 0;_i5 < _modulesObjectsLen;_i5++)
-            {
-                _item5 = new ObjectItem();
-                _item5.Deserialize(reader);
-                modulesObjects[_i5] = _item5;
+                throw new System.Exception("Forbidden value (" + cristalNumberLeft + ") on element of AllianceInsiderPrismInformation.cristalNumberLeft.");
             }
 
         }
@@ -97,11 +66,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

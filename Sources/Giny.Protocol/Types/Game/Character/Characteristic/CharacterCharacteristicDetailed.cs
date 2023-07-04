@@ -4,22 +4,22 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class CharacterCharacteristicDetailed : CharacterCharacteristic  
-    { 
-        public new const ushort Id = 8403;
+{
+    public class CharacterCharacteristicDetailed : CharacterCharacteristic
+    {
+        public new const ushort Id = 1174;
         public override ushort TypeId => Id;
 
-        public short @base;
-        public short additional;
-        public short objectsAndMountBonus;
-        public short alignGiftBonus;
-        public short contextModif;
+        public int @base;
+        public int additional;
+        public int objectsAndMountBonus;
+        public int alignGiftBonus;
+        public int contextModif;
 
         public CharacterCharacteristicDetailed()
         {
         }
-        public CharacterCharacteristicDetailed(short @base,short additional,short objectsAndMountBonus,short alignGiftBonus,short contextModif,short characteristicId)
+        public CharacterCharacteristicDetailed(int @base, int additional, int objectsAndMountBonus, int alignGiftBonus, int contextModif, short characteristicId)
         {
             this.@base = @base;
             this.additional = additional;
@@ -31,30 +31,24 @@ namespace Giny.Protocol.Types
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            writer.WriteVarShort((short)@base);
-            writer.WriteVarShort((short)additional);
-            writer.WriteVarShort((short)objectsAndMountBonus);
-            writer.WriteVarShort((short)alignGiftBonus);
-            writer.WriteVarShort((short)contextModif);
+            writer.WriteVarInt((int)@base);
+            writer.WriteVarInt((int)additional);
+            writer.WriteVarInt((int)objectsAndMountBonus);
+            writer.WriteVarInt((int)alignGiftBonus);
+            writer.WriteVarInt((int)contextModif);
         }
         public override void Deserialize(IDataReader reader)
         {
             base.Deserialize(reader);
-            @base = (short)reader.ReadVarShort();
-            additional = (short)reader.ReadVarShort();
-            objectsAndMountBonus = (short)reader.ReadVarShort();
-            alignGiftBonus = (short)reader.ReadVarShort();
-            contextModif = (short)reader.ReadVarShort();
+            @base = (int)reader.ReadVarInt();
+            additional = (int)reader.ReadVarInt();
+            objectsAndMountBonus = (int)reader.ReadVarInt();
+            alignGiftBonus = (int)reader.ReadVarInt();
+            contextModif = (int)reader.ReadVarInt();
         }
 
 
     }
 }
-
-
-
-
-
-
 
 

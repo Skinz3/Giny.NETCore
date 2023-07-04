@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class AlternativeMonstersInGroupLightInformations  
-    { 
-        public const ushort Id = 1054;
+{
+    public class AlternativeMonstersInGroupLightInformations
+    {
+        public const ushort Id = 133;
         public virtual ushort TypeId => Id;
 
         public int playerCount;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public AlternativeMonstersInGroupLightInformations()
         {
         }
-        public AlternativeMonstersInGroupLightInformations(int playerCount,MonsterInGroupLightInformations[] monsters)
+        public AlternativeMonstersInGroupLightInformations(int playerCount, MonsterInGroupLightInformations[] monsters)
         {
             this.playerCount = playerCount;
             this.monsters = monsters;
@@ -25,7 +25,7 @@ namespace Giny.Protocol.Types
         {
             writer.WriteInt((int)playerCount);
             writer.WriteShort((short)monsters.Length);
-            for (uint _i2 = 0;_i2 < monsters.Length;_i2++)
+            for (uint _i2 = 0; _i2 < monsters.Length; _i2++)
             {
                 (monsters[_i2] as MonsterInGroupLightInformations).Serialize(writer);
             }
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Types
             MonsterInGroupLightInformations _item2 = null;
             playerCount = (int)reader.ReadInt();
             uint _monstersLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _monstersLen;_i2++)
+            for (uint _i2 = 0; _i2 < _monstersLen; _i2++)
             {
                 _item2 = new MonsterInGroupLightInformations();
                 _item2.Deserialize(reader);
@@ -48,11 +48,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

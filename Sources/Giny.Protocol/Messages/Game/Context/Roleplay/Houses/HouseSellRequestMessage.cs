@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HouseSellRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3852;
+{
+    public class HouseSellRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 6686;
         public override ushort MessageId => Id;
 
         public int instanceId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public HouseSellRequestMessage()
         {
         }
-        public HouseSellRequestMessage(int instanceId,long amount,bool forSale)
+        public HouseSellRequestMessage(int instanceId, long amount, bool forSale)
         {
             this.instanceId = instanceId;
             this.amount = amount;
@@ -33,7 +33,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteInt((int)instanceId);
-            if (amount < 0 || amount > 9.00719925474099E+15)
+            if (amount < 0 || amount > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + amount + ") on element amount.");
             }
@@ -50,7 +50,7 @@ namespace Giny.Protocol.Messages
             }
 
             amount = (long)reader.ReadVarUhLong();
-            if (amount < 0 || amount > 9.00719925474099E+15)
+            if (amount < 0 || amount > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + amount + ") on element of HouseSellRequestMessage.amount.");
             }
@@ -58,14 +58,7 @@ namespace Giny.Protocol.Messages
             forSale = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

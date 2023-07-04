@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeStartOkCraftWithInformationMessage : ExchangeStartOkCraftMessage  
-    { 
-        public new const ushort Id = 1180;
+{
+    public class ExchangeStartOkCraftWithInformationMessage : ExchangeStartOkCraftMessage
+    {
+        public new const ushort Id = 4404;
         public override ushort MessageId => Id;
 
         public int skillId;
@@ -42,14 +42,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

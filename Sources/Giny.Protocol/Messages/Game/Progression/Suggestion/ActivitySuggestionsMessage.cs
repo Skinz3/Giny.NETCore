@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ActivitySuggestionsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8161;
+{
+    public class ActivitySuggestionsMessage : NetworkMessage
+    {
+        public const ushort Id = 4334;
         public override ushort MessageId => Id;
 
         public short[] lockedActivitiesIds;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ActivitySuggestionsMessage()
         {
         }
-        public ActivitySuggestionsMessage(short[] lockedActivitiesIds,short[] unlockedActivitiesIds)
+        public ActivitySuggestionsMessage(short[] lockedActivitiesIds, short[] unlockedActivitiesIds)
         {
             this.lockedActivitiesIds = lockedActivitiesIds;
             this.unlockedActivitiesIds = unlockedActivitiesIds;
@@ -26,7 +26,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)lockedActivitiesIds.Length);
-            for (uint _i1 = 0;_i1 < lockedActivitiesIds.Length;_i1++)
+            for (uint _i1 = 0; _i1 < lockedActivitiesIds.Length; _i1++)
             {
                 if (lockedActivitiesIds[_i1] < 0)
                 {
@@ -37,7 +37,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteShort((short)unlockedActivitiesIds.Length);
-            for (uint _i2 = 0;_i2 < unlockedActivitiesIds.Length;_i2++)
+            for (uint _i2 = 0; _i2 < unlockedActivitiesIds.Length; _i2++)
             {
                 if (unlockedActivitiesIds[_i2] < 0)
                 {
@@ -54,7 +54,7 @@ namespace Giny.Protocol.Messages
             uint _val2 = 0;
             uint _lockedActivitiesIdsLen = (uint)reader.ReadUShort();
             lockedActivitiesIds = new short[_lockedActivitiesIdsLen];
-            for (uint _i1 = 0;_i1 < _lockedActivitiesIdsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _lockedActivitiesIdsLen; _i1++)
             {
                 _val1 = (uint)reader.ReadVarUhShort();
                 if (_val1 < 0)
@@ -67,7 +67,7 @@ namespace Giny.Protocol.Messages
 
             uint _unlockedActivitiesIdsLen = (uint)reader.ReadUShort();
             unlockedActivitiesIds = new short[_unlockedActivitiesIdsLen];
-            for (uint _i2 = 0;_i2 < _unlockedActivitiesIdsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _unlockedActivitiesIdsLen; _i2++)
             {
                 _val2 = (uint)reader.ReadVarUhShort();
                 if (_val2 < 0)
@@ -80,14 +80,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

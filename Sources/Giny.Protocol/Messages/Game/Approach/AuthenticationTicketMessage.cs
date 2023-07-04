@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AuthenticationTicketMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6334;
+{
+    public class AuthenticationTicketMessage : NetworkMessage
+    {
+        public const ushort Id = 4176;
         public override ushort MessageId => Id;
 
         public string lang;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public AuthenticationTicketMessage()
         {
         }
-        public AuthenticationTicketMessage(string lang,string ticket)
+        public AuthenticationTicketMessage(string lang, string ticket)
         {
             this.lang = lang;
             this.ticket = ticket;
@@ -34,14 +34,7 @@ namespace Giny.Protocol.Messages
             ticket = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,47 +6,40 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AllianceModificationValidMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2712;
+{
+    public class AllianceModificationValidMessage : NetworkMessage
+    {
+        public const ushort Id = 9267;
         public override ushort MessageId => Id;
 
         public string allianceName;
         public string allianceTag;
-        public GuildEmblem Alliancemblem;
+        public SocialEmblem allianceEmblem;
 
         public AllianceModificationValidMessage()
         {
         }
-        public AllianceModificationValidMessage(string allianceName,string allianceTag,GuildEmblem Alliancemblem)
+        public AllianceModificationValidMessage(string allianceName, string allianceTag, SocialEmblem allianceEmblem)
         {
             this.allianceName = allianceName;
             this.allianceTag = allianceTag;
-            this.Alliancemblem = Alliancemblem;
+            this.allianceEmblem = allianceEmblem;
         }
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteUTF((string)allianceName);
             writer.WriteUTF((string)allianceTag);
-            Alliancemblem.Serialize(writer);
+            allianceEmblem.Serialize(writer);
         }
         public override void Deserialize(IDataReader reader)
         {
             allianceName = (string)reader.ReadUTF();
             allianceTag = (string)reader.ReadUTF();
-            Alliancemblem = new GuildEmblem();
-            Alliancemblem.Deserialize(reader);
+            allianceEmblem = new SocialEmblem();
+            allianceEmblem.Deserialize(reader);
         }
-
 
     }
 }
-
-
-
-
-
-
 
 

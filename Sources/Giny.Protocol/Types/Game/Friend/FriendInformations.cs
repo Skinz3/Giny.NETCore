@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class FriendInformations : AbstractContactInformations  
-    { 
-        public new const ushort Id = 9350;
+{
+    public class FriendInformations : AbstractContactInformations
+    {
+        public new const ushort Id = 5091;
         public override ushort TypeId => Id;
 
         public byte playerState;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Types
         public FriendInformations()
         {
         }
-        public FriendInformations(byte playerState,short lastConnection,int achievementPoints,short leagueId,int ladderPosition,int accountId,AccountTagInformation accountTag)
+        public FriendInformations(byte playerState, short lastConnection, int achievementPoints, short leagueId, int ladderPosition, int accountId, AccountTagInformation accountTag)
         {
             this.playerState = playerState;
             this.lastConnection = lastConnection;
@@ -66,11 +66,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

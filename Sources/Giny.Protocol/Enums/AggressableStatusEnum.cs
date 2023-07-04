@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 using System;
 
 namespace Giny.Protocol.Enums

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HavenBagFurnituresMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8483;
+{
+    public class HavenBagFurnituresMessage : NetworkMessage
+    {
+        public const ushort Id = 8751;
         public override ushort MessageId => Id;
 
         public HavenBagFurnitureInformation[] furnituresInfos;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)furnituresInfos.Length);
-            for (uint _i1 = 0;_i1 < furnituresInfos.Length;_i1++)
+            for (uint _i1 = 0; _i1 < furnituresInfos.Length; _i1++)
             {
                 (furnituresInfos[_i1] as HavenBagFurnitureInformation).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             HavenBagFurnitureInformation _item1 = null;
             uint _furnituresInfosLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _furnituresInfosLen;_i1++)
+            for (uint _i1 = 0; _i1 < _furnituresInfosLen; _i1++)
             {
                 _item1 = new HavenBagFurnitureInformation();
                 _item1.Deserialize(reader);
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

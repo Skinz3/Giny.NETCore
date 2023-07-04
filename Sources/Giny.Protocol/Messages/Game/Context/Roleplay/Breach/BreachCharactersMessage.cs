@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BreachCharactersMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 253;
+{
+    public class BreachCharactersMessage : NetworkMessage
+    {
+        public const ushort Id = 7002;
         public override ushort MessageId => Id;
 
         public long[] characters;
@@ -24,9 +24,9 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)characters.Length);
-            for (uint _i1 = 0;_i1 < characters.Length;_i1++)
+            for (uint _i1 = 0; _i1 < characters.Length; _i1++)
             {
-                if (characters[_i1] < 0 || characters[_i1] > 9.00719925474099E+15)
+                if (characters[_i1] < 0 || characters[_i1] > 9007199254740992)
                 {
                     throw new System.Exception("Forbidden value (" + characters[_i1] + ") on element 1 (starting at 1) of characters.");
                 }
@@ -40,10 +40,10 @@ namespace Giny.Protocol.Messages
             double _val1 = double.NaN;
             uint _charactersLen = (uint)reader.ReadUShort();
             characters = new long[_charactersLen];
-            for (uint _i1 = 0;_i1 < _charactersLen;_i1++)
+            for (uint _i1 = 0; _i1 < _charactersLen; _i1++)
             {
                 _val1 = (double)reader.ReadVarUhLong();
-                if (_val1 < 0 || _val1 > 9.00719925474099E+15)
+                if (_val1 < 0 || _val1 > 9007199254740992)
                 {
                     throw new System.Exception("Forbidden value (" + _val1 + ") on elements of characters.");
                 }
@@ -53,14 +53,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ObjectQuantityMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7075;
+{
+    public class ObjectQuantityMessage : NetworkMessage
+    {
+        public const ushort Id = 1065;
         public override ushort MessageId => Id;
 
         public int objectUID;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public ObjectQuantityMessage()
         {
         }
-        public ObjectQuantityMessage(int objectUID,int quantity,byte origin)
+        public ObjectQuantityMessage(int objectUID, int quantity, byte origin)
         {
             this.objectUID = objectUID;
             this.quantity = quantity;
@@ -63,14 +63,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

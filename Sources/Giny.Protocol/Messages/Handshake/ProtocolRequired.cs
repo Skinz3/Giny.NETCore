@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ProtocolRequired : NetworkMessage  
-    { 
-        public  const ushort Id = 1730;
+{
+    public class ProtocolRequired : NetworkMessage
+    {
+        public const ushort Id = 7214;
         public override ushort MessageId => Id;
 
         public string version;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             version = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

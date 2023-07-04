@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildHouseUpdateInformationMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5248;
+{
+    public class GuildHouseUpdateInformationMessage : NetworkMessage
+    {
+        public const ushort Id = 2496;
         public override ushort MessageId => Id;
 
         public HouseInformationsForGuild housesInformations;
@@ -31,14 +31,7 @@ namespace Giny.Protocol.Messages
             housesInformations.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

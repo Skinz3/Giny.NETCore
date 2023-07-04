@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameActionFightCastOnTargetRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6062;
+{
+    public class GameActionFightCastOnTargetRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 6654;
         public override ushort MessageId => Id;
 
         public short spellId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public GameActionFightCastOnTargetRequestMessage()
         {
         }
-        public GameActionFightCastOnTargetRequestMessage(short spellId,double targetId)
+        public GameActionFightCastOnTargetRequestMessage(short spellId, double targetId)
         {
             this.spellId = spellId;
             this.targetId = targetId;
@@ -31,7 +31,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteVarShort((short)spellId);
-            if (targetId < -9.00719925474099E+15 || targetId > 9.00719925474099E+15)
+            if (targetId < -9007199254740992 || targetId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + targetId + ") on element targetId.");
             }
@@ -47,21 +47,14 @@ namespace Giny.Protocol.Messages
             }
 
             targetId = (double)reader.ReadDouble();
-            if (targetId < -9.00719925474099E+15 || targetId > 9.00719925474099E+15)
+            if (targetId < -9007199254740992 || targetId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + targetId + ") on element of GameActionFightCastOnTargetRequestMessage.targetId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

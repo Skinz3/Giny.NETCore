@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class QuestListMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4672;
+{
+    public class QuestListMessage : NetworkMessage
+    {
+        public const ushort Id = 1025;
         public override ushort MessageId => Id;
 
         public short[] finishedQuestsIds;
@@ -20,7 +20,7 @@ namespace Giny.Protocol.Messages
         public QuestListMessage()
         {
         }
-        public QuestListMessage(short[] finishedQuestsIds,short[] finishedQuestsCounts,QuestActiveInformations[] activeQuests,short[] reinitDoneQuestsIds)
+        public QuestListMessage(short[] finishedQuestsIds, short[] finishedQuestsCounts, QuestActiveInformations[] activeQuests, short[] reinitDoneQuestsIds)
         {
             this.finishedQuestsIds = finishedQuestsIds;
             this.finishedQuestsCounts = finishedQuestsCounts;
@@ -30,7 +30,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)finishedQuestsIds.Length);
-            for (uint _i1 = 0;_i1 < finishedQuestsIds.Length;_i1++)
+            for (uint _i1 = 0; _i1 < finishedQuestsIds.Length; _i1++)
             {
                 if (finishedQuestsIds[_i1] < 0)
                 {
@@ -41,7 +41,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteShort((short)finishedQuestsCounts.Length);
-            for (uint _i2 = 0;_i2 < finishedQuestsCounts.Length;_i2++)
+            for (uint _i2 = 0; _i2 < finishedQuestsCounts.Length; _i2++)
             {
                 if (finishedQuestsCounts[_i2] < 0)
                 {
@@ -52,14 +52,14 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteShort((short)activeQuests.Length);
-            for (uint _i3 = 0;_i3 < activeQuests.Length;_i3++)
+            for (uint _i3 = 0; _i3 < activeQuests.Length; _i3++)
             {
                 writer.WriteShort((short)(activeQuests[_i3] as QuestActiveInformations).TypeId);
                 (activeQuests[_i3] as QuestActiveInformations).Serialize(writer);
             }
 
             writer.WriteShort((short)reinitDoneQuestsIds.Length);
-            for (uint _i4 = 0;_i4 < reinitDoneQuestsIds.Length;_i4++)
+            for (uint _i4 = 0; _i4 < reinitDoneQuestsIds.Length; _i4++)
             {
                 if (reinitDoneQuestsIds[_i4] < 0)
                 {
@@ -79,7 +79,7 @@ namespace Giny.Protocol.Messages
             uint _val4 = 0;
             uint _finishedQuestsIdsLen = (uint)reader.ReadUShort();
             finishedQuestsIds = new short[_finishedQuestsIdsLen];
-            for (uint _i1 = 0;_i1 < _finishedQuestsIdsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _finishedQuestsIdsLen; _i1++)
             {
                 _val1 = (uint)reader.ReadVarUhShort();
                 if (_val1 < 0)
@@ -92,7 +92,7 @@ namespace Giny.Protocol.Messages
 
             uint _finishedQuestsCountsLen = (uint)reader.ReadUShort();
             finishedQuestsCounts = new short[_finishedQuestsCountsLen];
-            for (uint _i2 = 0;_i2 < _finishedQuestsCountsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _finishedQuestsCountsLen; _i2++)
             {
                 _val2 = (uint)reader.ReadVarUhShort();
                 if (_val2 < 0)
@@ -104,7 +104,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _activeQuestsLen = (uint)reader.ReadUShort();
-            for (uint _i3 = 0;_i3 < _activeQuestsLen;_i3++)
+            for (uint _i3 = 0; _i3 < _activeQuestsLen; _i3++)
             {
                 _id3 = (uint)reader.ReadUShort();
                 _item3 = ProtocolTypeManager.GetInstance<QuestActiveInformations>((short)_id3);
@@ -114,7 +114,7 @@ namespace Giny.Protocol.Messages
 
             uint _reinitDoneQuestsIdsLen = (uint)reader.ReadUShort();
             reinitDoneQuestsIds = new short[_reinitDoneQuestsIdsLen];
-            for (uint _i4 = 0;_i4 < _reinitDoneQuestsIdsLen;_i4++)
+            for (uint _i4 = 0; _i4 < _reinitDoneQuestsIdsLen; _i4++)
             {
                 _val4 = (uint)reader.ReadVarUhShort();
                 if (_val4 < 0)
@@ -127,14 +127,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

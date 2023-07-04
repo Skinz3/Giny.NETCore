@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class PaddockInstancesInformations : PaddockInformations  
-    { 
-        public new const ushort Id = 7192;
+{
+    public class PaddockInstancesInformations : PaddockInformations
+    {
+        public new const ushort Id = 7722;
         public override ushort TypeId => Id;
 
         public PaddockBuyableInformations[] paddocks;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public PaddockInstancesInformations()
         {
         }
-        public PaddockInstancesInformations(PaddockBuyableInformations[] paddocks,short maxOutdoorMount,short maxItems)
+        public PaddockInstancesInformations(PaddockBuyableInformations[] paddocks, short maxOutdoorMount, short maxItems)
         {
             this.paddocks = paddocks;
             this.maxOutdoorMount = maxOutdoorMount;
@@ -25,7 +25,7 @@ namespace Giny.Protocol.Types
         {
             base.Serialize(writer);
             writer.WriteShort((short)paddocks.Length);
-            for (uint _i1 = 0;_i1 < paddocks.Length;_i1++)
+            for (uint _i1 = 0; _i1 < paddocks.Length; _i1++)
             {
                 writer.WriteShort((short)(paddocks[_i1] as PaddockBuyableInformations).TypeId);
                 (paddocks[_i1] as PaddockBuyableInformations).Serialize(writer);
@@ -38,7 +38,7 @@ namespace Giny.Protocol.Types
             PaddockBuyableInformations _item1 = null;
             base.Deserialize(reader);
             uint _paddocksLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _paddocksLen;_i1++)
+            for (uint _i1 = 0; _i1 < _paddocksLen; _i1++)
             {
                 _id1 = (uint)reader.ReadUShort();
                 _item1 = ProtocolTypeManager.GetInstance<PaddockBuyableInformations>((short)_id1);
@@ -51,11 +51,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

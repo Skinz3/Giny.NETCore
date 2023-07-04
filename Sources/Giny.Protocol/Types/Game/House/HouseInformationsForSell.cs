@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class HouseInformationsForSell  
-    { 
-        public const ushort Id = 8931;
+{
+    public class HouseInformationsForSell
+    {
+        public const ushort Id = 9432;
         public virtual ushort TypeId => Id;
 
         public int instanceId;
@@ -28,7 +28,7 @@ namespace Giny.Protocol.Types
         public HouseInformationsForSell()
         {
         }
-        public HouseInformationsForSell(int instanceId,bool secondHand,int modelId,AccountTagInformation ownerTag,bool hasOwner,string ownerCharacterName,short worldX,short worldY,short subAreaId,byte nbRoom,byte nbChest,int[] skillListIds,bool isLocked,long price)
+        public HouseInformationsForSell(int instanceId, bool secondHand, int modelId, AccountTagInformation ownerTag, bool hasOwner, string ownerCharacterName, short worldX, short worldY, short subAreaId, byte nbRoom, byte nbChest, int[] skillListIds, bool isLocked, long price)
         {
             this.instanceId = instanceId;
             this.secondHand = secondHand;
@@ -84,13 +84,13 @@ namespace Giny.Protocol.Types
             writer.WriteByte((byte)nbRoom);
             writer.WriteByte((byte)nbChest);
             writer.WriteShort((short)skillListIds.Length);
-            for (uint _i12 = 0;_i12 < skillListIds.Length;_i12++)
+            for (uint _i12 = 0; _i12 < skillListIds.Length; _i12++)
             {
                 writer.WriteInt((int)skillListIds[_i12]);
             }
 
             writer.WriteBoolean((bool)isLocked);
-            if (price < 0 || price > 9.00719925474099E+15)
+            if (price < 0 || price > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + price + ") on element price.");
             }
@@ -139,7 +139,7 @@ namespace Giny.Protocol.Types
             nbChest = (byte)reader.ReadByte();
             uint _skillListIdsLen = (uint)reader.ReadUShort();
             skillListIds = new int[_skillListIdsLen];
-            for (uint _i12 = 0;_i12 < _skillListIdsLen;_i12++)
+            for (uint _i12 = 0; _i12 < _skillListIdsLen; _i12++)
             {
                 _val12 = (int)reader.ReadInt();
                 skillListIds[_i12] = (int)_val12;
@@ -147,7 +147,7 @@ namespace Giny.Protocol.Types
 
             isLocked = (bool)reader.ReadBoolean();
             price = (long)reader.ReadVarUhLong();
-            if (price < 0 || price > 9.00719925474099E+15)
+            if (price < 0 || price > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + price + ") on element of HouseInformationsForSell.price.");
             }
@@ -157,11 +157,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

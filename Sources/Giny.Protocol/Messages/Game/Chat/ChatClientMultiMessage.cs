@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ChatClientMultiMessage : ChatAbstractClientMessage  
-    { 
-        public new const ushort Id = 9499;
+{
+    public class ChatClientMultiMessage : ChatAbstractClientMessage
+    {
+        public new const ushort Id = 8474;
         public override ushort MessageId => Id;
 
         public byte channel;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public ChatClientMultiMessage()
         {
         }
-        public ChatClientMultiMessage(byte channel,string content)
+        public ChatClientMultiMessage(byte channel, string content)
         {
             this.channel = channel;
             this.content = content;
@@ -38,14 +38,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

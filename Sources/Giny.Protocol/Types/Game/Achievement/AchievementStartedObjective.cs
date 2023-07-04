@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class AchievementStartedObjective : AchievementObjective  
-    { 
-        public new const ushort Id = 1375;
+{
+    public class AchievementStartedObjective : AchievementObjective
+    {
+        public new const ushort Id = 5888;
         public override ushort TypeId => Id;
 
         public short value;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public AchievementStartedObjective()
         {
         }
-        public AchievementStartedObjective(short value,int id,short maxValue)
+        public AchievementStartedObjective(short value, int id, short maxValue)
         {
             this.value = value;
             this.id = id;
@@ -45,11 +45,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

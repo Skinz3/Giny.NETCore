@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class FinishMoveListMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 820;
+{
+    public class FinishMoveListMessage : NetworkMessage
+    {
+        public const ushort Id = 4796;
         public override ushort MessageId => Id;
 
         public FinishMoveInformations[] finishMoves;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)finishMoves.Length);
-            for (uint _i1 = 0;_i1 < finishMoves.Length;_i1++)
+            for (uint _i1 = 0; _i1 < finishMoves.Length; _i1++)
             {
                 (finishMoves[_i1] as FinishMoveInformations).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             FinishMoveInformations _item1 = null;
             uint _finishMovesLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _finishMovesLen;_i1++)
+            for (uint _i1 = 0; _i1 < _finishMovesLen; _i1++)
             {
                 _item1 = new FinishMoveInformations();
                 _item1.Deserialize(reader);
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

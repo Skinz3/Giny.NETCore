@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameRolePlayNpcWithQuestInformations : GameRolePlayNpcInformations  
-    { 
-        public new const ushort Id = 3464;
+{
+    public class GameRolePlayNpcWithQuestInformations : GameRolePlayNpcInformations
+    {
+        public new const ushort Id = 1297;
         public override ushort TypeId => Id;
 
         public GameRolePlayNpcQuestFlag questFlag;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public GameRolePlayNpcWithQuestInformations()
         {
         }
-        public GameRolePlayNpcWithQuestInformations(GameRolePlayNpcQuestFlag questFlag,double contextualId,EntityDispositionInformations disposition,EntityLook look,short npcId,bool sex,short specialArtworkId)
+        public GameRolePlayNpcWithQuestInformations(GameRolePlayNpcQuestFlag questFlag, double contextualId, EntityDispositionInformations disposition, EntityLook look, short npcId, bool sex, short specialArtworkId)
         {
             this.questFlag = questFlag;
             this.contextualId = contextualId;
@@ -40,11 +40,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

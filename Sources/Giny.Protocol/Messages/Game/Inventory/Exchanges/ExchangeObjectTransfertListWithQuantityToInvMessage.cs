@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeObjectTransfertListWithQuantityToInvMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9233;
+{
+    public class ExchangeObjectTransfertListWithQuantityToInvMessage : NetworkMessage
+    {
+        public const ushort Id = 7706;
         public override ushort MessageId => Id;
 
         public int[] ids;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ExchangeObjectTransfertListWithQuantityToInvMessage()
         {
         }
-        public ExchangeObjectTransfertListWithQuantityToInvMessage(int[] ids,int[] qtys)
+        public ExchangeObjectTransfertListWithQuantityToInvMessage(int[] ids, int[] qtys)
         {
             this.ids = ids;
             this.qtys = qtys;
@@ -26,7 +26,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)ids.Length);
-            for (uint _i1 = 0;_i1 < ids.Length;_i1++)
+            for (uint _i1 = 0; _i1 < ids.Length; _i1++)
             {
                 if (ids[_i1] < 0)
                 {
@@ -37,7 +37,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteShort((short)qtys.Length);
-            for (uint _i2 = 0;_i2 < qtys.Length;_i2++)
+            for (uint _i2 = 0; _i2 < qtys.Length; _i2++)
             {
                 if (qtys[_i2] < 0)
                 {
@@ -54,7 +54,7 @@ namespace Giny.Protocol.Messages
             uint _val2 = 0;
             uint _idsLen = (uint)reader.ReadUShort();
             ids = new int[_idsLen];
-            for (uint _i1 = 0;_i1 < _idsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _idsLen; _i1++)
             {
                 _val1 = (uint)reader.ReadVarUhInt();
                 if (_val1 < 0)
@@ -67,7 +67,7 @@ namespace Giny.Protocol.Messages
 
             uint _qtysLen = (uint)reader.ReadUShort();
             qtys = new int[_qtysLen];
-            for (uint _i2 = 0;_i2 < _qtysLen;_i2++)
+            for (uint _i2 = 0; _i2 < _qtysLen; _i2++)
             {
                 _val2 = (uint)reader.ReadVarUhInt();
                 if (_val2 < 0)
@@ -80,14 +80,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

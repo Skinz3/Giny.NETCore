@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HouseBuyResultMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5020;
+{
+    public class HouseBuyResultMessage : NetworkMessage
+    {
+        public const ushort Id = 8928;
         public override ushort MessageId => Id;
 
         public int houseId;
@@ -21,7 +21,7 @@ namespace Giny.Protocol.Messages
         public HouseBuyResultMessage()
         {
         }
-        public HouseBuyResultMessage(int houseId,int instanceId,bool secondHand,bool bought,long realPrice)
+        public HouseBuyResultMessage(int houseId, int instanceId, bool secondHand, bool bought, long realPrice)
         {
             this.houseId = houseId;
             this.instanceId = instanceId;
@@ -32,8 +32,8 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             byte _box0 = 0;
-            _box0 = BooleanByteWrapper.SetFlag(_box0,0,secondHand);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,1,bought);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 0, secondHand);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 1, bought);
             writer.WriteByte((byte)_box0);
             if (houseId < 0)
             {
@@ -47,7 +47,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteInt((int)instanceId);
-            if (realPrice < 0 || realPrice > 9.00719925474099E+15)
+            if (realPrice < 0 || realPrice > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + realPrice + ") on element realPrice.");
             }
@@ -57,8 +57,8 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             byte _box0 = reader.ReadByte();
-            secondHand = BooleanByteWrapper.GetFlag(_box0,0);
-            bought = BooleanByteWrapper.GetFlag(_box0,1);
+            secondHand = BooleanByteWrapper.GetFlag(_box0, 0);
+            bought = BooleanByteWrapper.GetFlag(_box0, 1);
             houseId = (int)reader.ReadVarUhInt();
             if (houseId < 0)
             {
@@ -72,21 +72,14 @@ namespace Giny.Protocol.Messages
             }
 
             realPrice = (long)reader.ReadVarUhLong();
-            if (realPrice < 0 || realPrice > 9.00719925474099E+15)
+            if (realPrice < 0 || realPrice > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + realPrice + ") on element of HouseBuyResultMessage.realPrice.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

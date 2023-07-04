@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangePlayerMultiCraftRequestMessage : ExchangeRequestMessage  
-    { 
-        public new const ushort Id = 5685;
+{
+    public class ExchangePlayerMultiCraftRequestMessage : ExchangeRequestMessage
+    {
+        public new const ushort Id = 6014;
         public override ushort MessageId => Id;
 
         public long target;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ExchangePlayerMultiCraftRequestMessage()
         {
         }
-        public ExchangePlayerMultiCraftRequestMessage(long target,int skillId,byte exchangeType)
+        public ExchangePlayerMultiCraftRequestMessage(long target, int skillId, byte exchangeType)
         {
             this.target = target;
             this.skillId = skillId;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (target < 0 || target > 9.00719925474099E+15)
+            if (target < 0 || target > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + target + ") on element target.");
             }
@@ -44,7 +44,7 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             target = (long)reader.ReadVarUhLong();
-            if (target < 0 || target > 9.00719925474099E+15)
+            if (target < 0 || target > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + target + ") on element of ExchangePlayerMultiCraftRequestMessage.target.");
             }
@@ -57,14 +57,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

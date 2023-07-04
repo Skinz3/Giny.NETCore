@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ObjectGroundRemovedMultipleMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4743;
+{
+    public class ObjectGroundRemovedMultipleMessage : NetworkMessage
+    {
+        public const ushort Id = 5690;
         public override ushort MessageId => Id;
 
         public short[] cells;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)cells.Length);
-            for (uint _i1 = 0;_i1 < cells.Length;_i1++)
+            for (uint _i1 = 0; _i1 < cells.Length; _i1++)
             {
                 if (cells[_i1] < 0 || cells[_i1] > 559)
                 {
@@ -40,7 +40,7 @@ namespace Giny.Protocol.Messages
             uint _val1 = 0;
             uint _cellsLen = (uint)reader.ReadUShort();
             cells = new short[_cellsLen];
-            for (uint _i1 = 0;_i1 < _cellsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _cellsLen; _i1++)
             {
                 _val1 = (uint)reader.ReadVarUhShort();
                 if (_val1 < 0 || _val1 > 559)
@@ -53,14 +53,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

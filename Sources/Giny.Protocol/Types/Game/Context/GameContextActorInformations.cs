@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameContextActorInformations : GameContextActorPositionInformations  
-    { 
-        public new const ushort Id = 7125;
+{
+    public class GameContextActorInformations : GameContextActorPositionInformations
+    {
+        public new const ushort Id = 3319;
         public override ushort TypeId => Id;
 
         public EntityLook look;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public GameContextActorInformations()
         {
         }
-        public GameContextActorInformations(EntityLook look,double contextualId,EntityDispositionInformations disposition)
+        public GameContextActorInformations(EntityLook look, double contextualId, EntityDispositionInformations disposition)
         {
             this.look = look;
             this.contextualId = contextualId;
@@ -36,11 +36,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

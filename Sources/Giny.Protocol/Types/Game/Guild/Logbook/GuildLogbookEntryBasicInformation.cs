@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GuildLogbookEntryBasicInformation  
-    { 
-        public const ushort Id = 3961;
+{
+    public class GuildLogbookEntryBasicInformation
+    {
+        public const ushort Id = 3876;
         public virtual ushort TypeId => Id;
 
         public int id;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public GuildLogbookEntryBasicInformation()
         {
         }
-        public GuildLogbookEntryBasicInformation(int id,double date)
+        public GuildLogbookEntryBasicInformation(int id, double date)
         {
             this.id = id;
             this.date = date;
@@ -29,7 +29,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteVarInt((int)id);
-            if (date < 0 || date > 9.00719925474099E+15)
+            if (date < 0 || date > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + date + ") on element date.");
             }
@@ -45,7 +45,7 @@ namespace Giny.Protocol.Types
             }
 
             date = (double)reader.ReadDouble();
-            if (date < 0 || date > 9.00719925474099E+15)
+            if (date < 0 || date > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + date + ") on element of GuildLogbookEntryBasicInformation.date.");
             }
@@ -55,11 +55,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameContextSummonsInformation  
-    { 
-        public const ushort Id = 663;
+{
+    public class GameContextSummonsInformation
+    {
+        public const ushort Id = 7053;
         public virtual ushort TypeId => Id;
 
         public SpawnInformation spawnInformation;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Types
         public GameContextSummonsInformation()
         {
         }
-        public GameContextSummonsInformation(SpawnInformation spawnInformation,byte wave,EntityLook look,GameFightCharacteristics stats,GameContextBasicSpawnInformation[] summons)
+        public GameContextSummonsInformation(SpawnInformation spawnInformation, byte wave, EntityLook look, GameFightCharacteristics stats, GameContextBasicSpawnInformation[] summons)
         {
             this.spawnInformation = spawnInformation;
             this.wave = wave;
@@ -41,7 +41,7 @@ namespace Giny.Protocol.Types
             writer.WriteShort((short)stats.TypeId);
             stats.Serialize(writer);
             writer.WriteShort((short)summons.Length);
-            for (uint _i5 = 0;_i5 < summons.Length;_i5++)
+            for (uint _i5 = 0; _i5 < summons.Length; _i5++)
             {
                 writer.WriteShort((short)(summons[_i5] as GameContextBasicSpawnInformation).TypeId);
                 (summons[_i5] as GameContextBasicSpawnInformation).Serialize(writer);
@@ -67,7 +67,7 @@ namespace Giny.Protocol.Types
             stats = ProtocolTypeManager.GetInstance<GameFightCharacteristics>((short)_id4);
             stats.Deserialize(reader);
             uint _summonsLen = (uint)reader.ReadUShort();
-            for (uint _i5 = 0;_i5 < _summonsLen;_i5++)
+            for (uint _i5 = 0; _i5 < _summonsLen; _i5++)
             {
                 _id5 = (uint)reader.ReadUShort();
                 _item5 = ProtocolTypeManager.GetInstance<GameContextBasicSpawnInformation>((short)_id5);
@@ -80,11 +80,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

@@ -4,17 +4,17 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameRolePlayActorInformations : GameContextActorInformations  
-    { 
-        public new const ushort Id = 1036;
+{
+    public class GameRolePlayActorInformations : GameContextActorInformations
+    {
+        public new const ushort Id = 1812;
         public override ushort TypeId => Id;
 
 
         public GameRolePlayActorInformations()
         {
         }
-        public GameRolePlayActorInformations(double contextualId,EntityDispositionInformations disposition,EntityLook look)
+        public GameRolePlayActorInformations(double contextualId, EntityDispositionInformations disposition, EntityLook look)
         {
             this.contextualId = contextualId;
             this.disposition = disposition;
@@ -32,11 +32,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

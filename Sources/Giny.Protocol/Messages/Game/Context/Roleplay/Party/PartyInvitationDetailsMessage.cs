@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PartyInvitationDetailsMessage : AbstractPartyMessage  
-    { 
-        public new const ushort Id = 5287;
+{
+    public class PartyInvitationDetailsMessage : AbstractPartyMessage
+    {
+        public new const ushort Id = 736;
         public override ushort MessageId => Id;
 
         public byte partyType;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         public PartyInvitationDetailsMessage()
         {
         }
-        public PartyInvitationDetailsMessage(byte partyType,string partyName,long fromId,string fromName,long leaderId,PartyInvitationMemberInformations[] members,PartyGuestInformations[] guests,int partyId)
+        public PartyInvitationDetailsMessage(byte partyType, string partyName, long fromId, string fromName, long leaderId, PartyInvitationMemberInformations[] members, PartyGuestInformations[] guests, int partyId)
         {
             this.partyType = partyType;
             this.partyName = partyName;
@@ -39,28 +39,28 @@ namespace Giny.Protocol.Messages
             base.Serialize(writer);
             writer.WriteByte((byte)partyType);
             writer.WriteUTF((string)partyName);
-            if (fromId < 0 || fromId > 9.00719925474099E+15)
+            if (fromId < 0 || fromId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + fromId + ") on element fromId.");
             }
 
             writer.WriteVarLong((long)fromId);
             writer.WriteUTF((string)fromName);
-            if (leaderId < 0 || leaderId > 9.00719925474099E+15)
+            if (leaderId < 0 || leaderId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + leaderId + ") on element leaderId.");
             }
 
             writer.WriteVarLong((long)leaderId);
             writer.WriteShort((short)members.Length);
-            for (uint _i6 = 0;_i6 < members.Length;_i6++)
+            for (uint _i6 = 0; _i6 < members.Length; _i6++)
             {
                 writer.WriteShort((short)(members[_i6] as PartyInvitationMemberInformations).TypeId);
                 (members[_i6] as PartyInvitationMemberInformations).Serialize(writer);
             }
 
             writer.WriteShort((short)guests.Length);
-            for (uint _i7 = 0;_i7 < guests.Length;_i7++)
+            for (uint _i7 = 0; _i7 < guests.Length; _i7++)
             {
                 (guests[_i7] as PartyGuestInformations).Serialize(writer);
             }
@@ -80,20 +80,20 @@ namespace Giny.Protocol.Messages
 
             partyName = (string)reader.ReadUTF();
             fromId = (long)reader.ReadVarUhLong();
-            if (fromId < 0 || fromId > 9.00719925474099E+15)
+            if (fromId < 0 || fromId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + fromId + ") on element of PartyInvitationDetailsMessage.fromId.");
             }
 
             fromName = (string)reader.ReadUTF();
             leaderId = (long)reader.ReadVarUhLong();
-            if (leaderId < 0 || leaderId > 9.00719925474099E+15)
+            if (leaderId < 0 || leaderId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + leaderId + ") on element of PartyInvitationDetailsMessage.leaderId.");
             }
 
             uint _membersLen = (uint)reader.ReadUShort();
-            for (uint _i6 = 0;_i6 < _membersLen;_i6++)
+            for (uint _i6 = 0; _i6 < _membersLen; _i6++)
             {
                 _id6 = (uint)reader.ReadUShort();
                 _item6 = ProtocolTypeManager.GetInstance<PartyInvitationMemberInformations>((short)_id6);
@@ -102,7 +102,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _guestsLen = (uint)reader.ReadUShort();
-            for (uint _i7 = 0;_i7 < _guestsLen;_i7++)
+            for (uint _i7 = 0; _i7 < _guestsLen; _i7++)
             {
                 _item7 = new PartyGuestInformations();
                 _item7.Deserialize(reader);
@@ -111,14 +111,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

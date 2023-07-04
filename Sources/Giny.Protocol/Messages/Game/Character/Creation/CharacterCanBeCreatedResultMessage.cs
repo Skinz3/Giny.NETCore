@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class CharacterCanBeCreatedResultMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6756;
+{
+    public class CharacterCanBeCreatedResultMessage : NetworkMessage
+    {
+        public const ushort Id = 9885;
         public override ushort MessageId => Id;
 
         public bool yesYouCan;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             yesYouCan = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

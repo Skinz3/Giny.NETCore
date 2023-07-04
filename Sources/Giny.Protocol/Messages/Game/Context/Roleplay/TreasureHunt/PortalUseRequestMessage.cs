@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PortalUseRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7046;
+{
+    public class PortalUseRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 9795;
         public override ushort MessageId => Id;
 
         public int portalId;
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

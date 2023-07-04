@@ -6,32 +6,38 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class UpdateSelfAgressableStatusMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1944;
+{
+    public class UpdateSelfAgressableStatusMessage : NetworkMessage
+    {
+        public const ushort Id = 3291;
         public override ushort MessageId => Id;
 
         public byte status;
-        public int probationTime;
+        public double probationTime;
+        public int roleAvAId;
+        public int pictoScore;
 
         public UpdateSelfAgressableStatusMessage()
         {
         }
-        public UpdateSelfAgressableStatusMessage(byte status,int probationTime)
+        public UpdateSelfAgressableStatusMessage(byte status, double probationTime, int roleAvAId, int pictoScore)
         {
             this.status = status;
             this.probationTime = probationTime;
+            this.roleAvAId = roleAvAId;
+            this.pictoScore = pictoScore;
         }
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteByte((byte)status);
-            if (probationTime < 0)
+            if (probationTime < 0 || probationTime > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + probationTime + ") on element probationTime.");
             }
 
-            writer.WriteInt((int)probationTime);
+            writer.WriteDouble((double)probationTime);
+            writer.WriteInt((int)roleAvAId);
+            writer.WriteInt((int)pictoScore);
         }
         public override void Deserialize(IDataReader reader)
         {
@@ -41,22 +47,17 @@ namespace Giny.Protocol.Messages
                 throw new System.Exception("Forbidden value (" + status + ") on element of UpdateSelfAgressableStatusMessage.status.");
             }
 
-            probationTime = (int)reader.ReadInt();
-            if (probationTime < 0)
+            probationTime = (double)reader.ReadDouble();
+            if (probationTime < 0 || probationTime > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + probationTime + ") on element of UpdateSelfAgressableStatusMessage.probationTime.");
             }
 
+            roleAvAId = (int)reader.ReadInt();
+            pictoScore = (int)reader.ReadInt();
         }
-
 
     }
 }
-
-
-
-
-
-
 
 

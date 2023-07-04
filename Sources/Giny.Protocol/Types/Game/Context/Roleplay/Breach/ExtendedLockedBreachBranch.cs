@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ExtendedLockedBreachBranch : ExtendedBreachBranch  
-    { 
-        public new const ushort Id = 3173;
+{
+    public class ExtendedLockedBreachBranch : ExtendedBreachBranch
+    {
+        public new const ushort Id = 8196;
         public override ushort TypeId => Id;
 
         public int unlockPrice;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public ExtendedLockedBreachBranch()
         {
         }
-        public ExtendedLockedBreachBranch(int unlockPrice,byte room,int element,MonsterInGroupLightInformations[] bosses,double map,short score,short relativeScore,MonsterInGroupLightInformations[] monsters,BreachReward[] rewards,int modifier,int prize)
+        public ExtendedLockedBreachBranch(int unlockPrice, byte room, int element, MonsterInGroupLightInformations[] bosses, double map, short score, short relativeScore, MonsterInGroupLightInformations[] monsters, BreachReward[] rewards, int modifier, int prize)
         {
             this.unlockPrice = unlockPrice;
             this.room = room;
@@ -53,11 +53,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

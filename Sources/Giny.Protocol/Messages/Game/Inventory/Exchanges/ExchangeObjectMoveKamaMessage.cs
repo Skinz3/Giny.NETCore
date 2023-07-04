@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeObjectMoveKamaMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 200;
+{
+    public class ExchangeObjectMoveKamaMessage : NetworkMessage
+    {
+        public const ushort Id = 4217;
         public override ushort MessageId => Id;
 
         public long quantity;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (quantity < -9.00719925474099E+15 || quantity > 9.00719925474099E+15)
+            if (quantity < -9007199254740992 || quantity > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + quantity + ") on element quantity.");
             }
@@ -33,21 +33,14 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             quantity = (long)reader.ReadVarLong();
-            if (quantity < -9.00719925474099E+15 || quantity > 9.00719925474099E+15)
+            if (quantity < -9007199254740992 || quantity > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + quantity + ") on element of ExchangeObjectMoveKamaMessage.quantity.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

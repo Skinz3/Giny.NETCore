@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ServerSessionConstantLong : ServerSessionConstant  
-    { 
-        public new const ushort Id = 489;
+{
+    public class ServerSessionConstantLong : ServerSessionConstant
+    {
+        public new const ushort Id = 5058;
         public override ushort TypeId => Id;
 
         public double value;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public ServerSessionConstantLong()
         {
         }
-        public ServerSessionConstantLong(double value,short id)
+        public ServerSessionConstantLong(double value, short id)
         {
             this.value = value;
             this.id = id;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Types
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (value < -9.00719925474099E+15 || value > 9.00719925474099E+15)
+            if (value < -9007199254740992 || value > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + value + ") on element value.");
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Types
         {
             base.Deserialize(reader);
             value = (double)reader.ReadDouble();
-            if (value < -9.00719925474099E+15 || value > 9.00719925474099E+15)
+            if (value < -9007199254740992 || value > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + value + ") on element of ServerSessionConstantLong.value.");
             }
@@ -44,11 +44,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

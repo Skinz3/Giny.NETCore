@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class JobExperienceMultiUpdateMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7895;
+{
+    public class JobExperienceMultiUpdateMessage : NetworkMessage
+    {
+        public const ushort Id = 7720;
         public override ushort MessageId => Id;
 
         public JobExperience[] experiencesUpdate;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)experiencesUpdate.Length);
-            for (uint _i1 = 0;_i1 < experiencesUpdate.Length;_i1++)
+            for (uint _i1 = 0; _i1 < experiencesUpdate.Length; _i1++)
             {
                 (experiencesUpdate[_i1] as JobExperience).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             JobExperience _item1 = null;
             uint _experiencesUpdateLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _experiencesUpdateLen;_i1++)
+            for (uint _i1 = 0; _i1 < _experiencesUpdateLen; _i1++)
             {
                 _item1 = new JobExperience();
                 _item1.Deserialize(reader);
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

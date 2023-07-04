@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameMapMovementMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9191;
+{
+    public class GameMapMovementMessage : NetworkMessage
+    {
+        public const ushort Id = 8705;
         public override ushort MessageId => Id;
 
         public short[] keyMovements;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public GameMapMovementMessage()
         {
         }
-        public GameMapMovementMessage(short[] keyMovements,short forcedDirection,double actorId)
+        public GameMapMovementMessage(short[] keyMovements, short forcedDirection, double actorId)
         {
             this.keyMovements = keyMovements;
             this.forcedDirection = forcedDirection;
@@ -28,7 +28,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)keyMovements.Length);
-            for (uint _i1 = 0;_i1 < keyMovements.Length;_i1++)
+            for (uint _i1 = 0; _i1 < keyMovements.Length; _i1++)
             {
                 if (keyMovements[_i1] < 0)
                 {
@@ -39,7 +39,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteShort((short)forcedDirection);
-            if (actorId < -9.00719925474099E+15 || actorId > 9.00719925474099E+15)
+            if (actorId < -9007199254740992 || actorId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + actorId + ") on element actorId.");
             }
@@ -51,7 +51,7 @@ namespace Giny.Protocol.Messages
             uint _val1 = 0;
             uint _keyMovementsLen = (uint)reader.ReadUShort();
             keyMovements = new short[_keyMovementsLen];
-            for (uint _i1 = 0;_i1 < _keyMovementsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _keyMovementsLen; _i1++)
             {
                 _val1 = (uint)reader.ReadShort();
                 if (_val1 < 0)
@@ -64,21 +64,14 @@ namespace Giny.Protocol.Messages
 
             forcedDirection = (short)reader.ReadShort();
             actorId = (double)reader.ReadDouble();
-            if (actorId < -9.00719925474099E+15 || actorId > 9.00719925474099E+15)
+            if (actorId < -9007199254740992 || actorId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + actorId + ") on element of GameMapMovementMessage.actorId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

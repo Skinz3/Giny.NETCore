@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class AnomalySubareaInformation  
-    { 
-        public const ushort Id = 6099;
+{
+    public class AnomalySubareaInformation
+    {
+        public const ushort Id = 6068;
         public virtual ushort TypeId => Id;
 
         public short subAreaId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Types
         public AnomalySubareaInformation()
         {
         }
-        public AnomalySubareaInformation(short subAreaId,short rewardRate,bool hasAnomaly,long anomalyClosingTime)
+        public AnomalySubareaInformation(short subAreaId, short rewardRate, bool hasAnomaly, long anomalyClosingTime)
         {
             this.subAreaId = subAreaId;
             this.rewardRate = rewardRate;
@@ -35,7 +35,7 @@ namespace Giny.Protocol.Types
             writer.WriteVarShort((short)subAreaId);
             writer.WriteVarShort((short)rewardRate);
             writer.WriteBoolean((bool)hasAnomaly);
-            if (anomalyClosingTime < 0 || anomalyClosingTime > 9.00719925474099E+15)
+            if (anomalyClosingTime < 0 || anomalyClosingTime > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + anomalyClosingTime + ") on element anomalyClosingTime.");
             }
@@ -53,7 +53,7 @@ namespace Giny.Protocol.Types
             rewardRate = (short)reader.ReadVarShort();
             hasAnomaly = (bool)reader.ReadBoolean();
             anomalyClosingTime = (long)reader.ReadVarUhLong();
-            if (anomalyClosingTime < 0 || anomalyClosingTime > 9.00719925474099E+15)
+            if (anomalyClosingTime < 0 || anomalyClosingTime > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + anomalyClosingTime + ") on element of AnomalySubareaInformation.anomalyClosingTime.");
             }
@@ -63,11 +63,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class TeleportDestinationsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6883;
+{
+    public class TeleportDestinationsMessage : NetworkMessage
+    {
+        public const ushort Id = 2118;
         public override ushort MessageId => Id;
 
         public byte type;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public TeleportDestinationsMessage()
         {
         }
-        public TeleportDestinationsMessage(byte type,TeleportDestination[] destinations)
+        public TeleportDestinationsMessage(byte type, TeleportDestination[] destinations)
         {
             this.type = type;
             this.destinations = destinations;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         {
             writer.WriteByte((byte)type);
             writer.WriteShort((short)destinations.Length);
-            for (uint _i2 = 0;_i2 < destinations.Length;_i2++)
+            for (uint _i2 = 0; _i2 < destinations.Length; _i2++)
             {
                 (destinations[_i2] as TeleportDestination).Serialize(writer);
             }
@@ -43,7 +43,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _destinationsLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _destinationsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _destinationsLen; _i2++)
             {
                 _item2 = new TeleportDestination();
                 _item2.Deserialize(reader);
@@ -52,14 +52,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class TreasureHuntDigRequestAnswerFailedMessage : TreasureHuntDigRequestAnswerMessage  
-    { 
-        public new const ushort Id = 3869;
+{
+    public class TreasureHuntDigRequestAnswerFailedMessage : TreasureHuntDigRequestAnswerMessage
+    {
+        public new const ushort Id = 2301;
         public override ushort MessageId => Id;
 
         public byte wrongFlagCount;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public TreasureHuntDigRequestAnswerFailedMessage()
         {
         }
-        public TreasureHuntDigRequestAnswerFailedMessage(byte wrongFlagCount,byte questType,byte result)
+        public TreasureHuntDigRequestAnswerFailedMessage(byte wrongFlagCount, byte questType, byte result)
         {
             this.wrongFlagCount = wrongFlagCount;
             this.questType = questType;
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

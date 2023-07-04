@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightUpdateTeamMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 985;
+{
+    public class GameFightUpdateTeamMessage : NetworkMessage
+    {
+        public const ushort Id = 3327;
         public override ushort MessageId => Id;
 
         public short fightId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public GameFightUpdateTeamMessage()
         {
         }
-        public GameFightUpdateTeamMessage(short fightId,FightTeamInformations team)
+        public GameFightUpdateTeamMessage(short fightId, FightTeamInformations team)
         {
             this.fightId = fightId;
             this.team = team;
@@ -45,14 +45,7 @@ namespace Giny.Protocol.Messages
             team.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

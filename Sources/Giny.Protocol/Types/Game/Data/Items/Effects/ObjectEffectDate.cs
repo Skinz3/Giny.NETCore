@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class ObjectEffectDate : ObjectEffect  
-    { 
-        public new const ushort Id = 616;
+{
+    public class ObjectEffectDate : ObjectEffect
+    {
+        public new const ushort Id = 3046;
         public override ushort TypeId => Id;
 
         public short year;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Types
         public ObjectEffectDate()
         {
         }
-        public ObjectEffectDate(short year,byte month,byte day,byte hour,byte minute,short actionId)
+        public ObjectEffectDate(short year, byte month, byte day, byte hour, byte minute, short actionId)
         {
             this.year = year;
             this.month = month;
@@ -100,11 +100,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

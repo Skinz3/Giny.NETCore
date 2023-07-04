@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeCraftResultMagicWithObjectDescMessage : ExchangeCraftResultWithObjectDescMessage  
-    { 
-        public new const ushort Id = 2638;
+{
+    public class ExchangeCraftResultMagicWithObjectDescMessage : ExchangeCraftResultWithObjectDescMessage
+    {
+        public new const ushort Id = 4294;
         public override ushort MessageId => Id;
 
         public byte magicPoolStatus;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public ExchangeCraftResultMagicWithObjectDescMessage()
         {
         }
-        public ExchangeCraftResultMagicWithObjectDescMessage(byte magicPoolStatus,byte craftResult,ObjectItemNotInContainer objectInfo)
+        public ExchangeCraftResultMagicWithObjectDescMessage(byte magicPoolStatus, byte craftResult, ObjectItemNotInContainer objectInfo)
         {
             this.magicPoolStatus = magicPoolStatus;
             this.craftResult = craftResult;
@@ -34,14 +34,7 @@ namespace Giny.Protocol.Messages
             magicPoolStatus = (byte)reader.ReadByte();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -7,7 +7,6 @@ using Giny.Protocol.IPC.Messages;
 using Giny.Protocol.Messages;
 using Giny.World.Managers.Breeds;
 using Giny.World.Managers.Entities.Look;
-using Giny.World.Managers.Entities.Merchants;
 using Giny.World.Managers.Guilds;
 using Giny.World.Network;
 using Giny.World.Records;
@@ -71,8 +70,8 @@ namespace Giny.World.Managers.Entities.Characters
             }
             if (CharacterRecord.NameExist(message.name))
             {
-                client.Send(new CharacterCreationResultMessage((byte)CharacterCreationResultEnum.ERR_NAME_ALREADY_EXISTS));
-                return CharacterCreationResultEnum.ERR_NAME_ALREADY_EXISTS;
+                client.Send(new CharacterCreationResultMessage(0, (byte)CharacterCreationResultEnum.ERR_INVALID_NAME));
+                return CharacterCreationResultEnum.ERR_INVALID_NAME; // NAME ALREADY EXISTS
             }
             if (client.Account.Role < ServerRoleEnum.Moderator)
             {
@@ -98,12 +97,7 @@ namespace Giny.World.Managers.Entities.Characters
 
             MerchantRecord record = MerchantRecord.RemoveMerchant(character.Id);
 
-            if (record != null)
-            {
-                MerchantsManager.Instance.RemoveMerchant(record);
-            }
-
-            MerchantItemRecord.RemoveMerchantItems(character.Id);
+            
             CharacterItemRecord.RemoveCharacterItems(character.Id);
 
             if (character.GuildId != 0)

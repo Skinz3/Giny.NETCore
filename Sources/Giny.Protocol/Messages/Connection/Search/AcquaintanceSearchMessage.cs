@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AcquaintanceSearchMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2520;
+{
+    public class AcquaintanceSearchMessage : NetworkMessage
+    {
+        public const ushort Id = 6607;
         public override ushort MessageId => Id;
 
         public AccountTagInformation tag;
@@ -31,14 +31,7 @@ namespace Giny.Protocol.Messages
             tag.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

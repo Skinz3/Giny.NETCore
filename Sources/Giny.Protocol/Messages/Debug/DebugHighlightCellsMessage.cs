@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class DebugHighlightCellsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7356;
+{
+    public class DebugHighlightCellsMessage : NetworkMessage
+    {
+        public const ushort Id = 5323;
         public override ushort MessageId => Id;
 
         public double color;
@@ -18,21 +18,21 @@ namespace Giny.Protocol.Messages
         public DebugHighlightCellsMessage()
         {
         }
-        public DebugHighlightCellsMessage(double color,short[] cells)
+        public DebugHighlightCellsMessage(double color, short[] cells)
         {
             this.color = color;
             this.cells = cells;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (color < -9.00719925474099E+15 || color > 9.00719925474099E+15)
+            if (color < -9007199254740992 || color > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + color + ") on element color.");
             }
 
             writer.WriteDouble((double)color);
             writer.WriteShort((short)cells.Length);
-            for (uint _i2 = 0;_i2 < cells.Length;_i2++)
+            for (uint _i2 = 0; _i2 < cells.Length; _i2++)
             {
                 if (cells[_i2] < 0 || cells[_i2] > 559)
                 {
@@ -47,14 +47,14 @@ namespace Giny.Protocol.Messages
         {
             uint _val2 = 0;
             color = (double)reader.ReadDouble();
-            if (color < -9.00719925474099E+15 || color > 9.00719925474099E+15)
+            if (color < -9007199254740992 || color > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + color + ") on element of DebugHighlightCellsMessage.color.");
             }
 
             uint _cellsLen = (uint)reader.ReadUShort();
             cells = new short[_cellsLen];
-            for (uint _i2 = 0;_i2 < _cellsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _cellsLen; _i2++)
             {
                 _val2 = (uint)reader.ReadVarUhShort();
                 if (_val2 < 0 || _val2 > 559)
@@ -67,14 +67,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

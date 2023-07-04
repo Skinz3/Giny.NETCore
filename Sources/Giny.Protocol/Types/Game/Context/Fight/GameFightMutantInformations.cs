@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameFightMutantInformations : GameFightFighterNamedInformations  
-    { 
-        public new const ushort Id = 1606;
+{
+    public class GameFightMutantInformations : GameFightFighterNamedInformations
+    {
+        public new const ushort Id = 4659;
         public override ushort TypeId => Id;
 
         public byte powerLevel;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public GameFightMutantInformations()
         {
         }
-        public GameFightMutantInformations(byte powerLevel,double contextualId,EntityDispositionInformations disposition,EntityLook look,GameContextBasicSpawnInformation spawnInfo,byte wave,GameFightCharacteristics stats,short[] previousPositions,string name,PlayerStatus status,short leagueId,int ladderPosition,bool hiddenInPrefight)
+        public GameFightMutantInformations(byte powerLevel, double contextualId, EntityDispositionInformations disposition, EntityLook look, GameContextBasicSpawnInformation spawnInfo, byte wave, GameFightCharacteristics stats, short[] previousPositions, string name, PlayerStatus status, short leagueId, int ladderPosition, bool hiddenInPrefight)
         {
             this.powerLevel = powerLevel;
             this.contextualId = contextualId;
@@ -55,11 +55,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

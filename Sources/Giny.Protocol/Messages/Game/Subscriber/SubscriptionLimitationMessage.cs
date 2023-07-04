@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class SubscriptionLimitationMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7869;
+{
+    public class SubscriptionLimitationMessage : NetworkMessage
+    {
+        public const ushort Id = 9476;
         public override ushort MessageId => Id;
 
         public byte reason;
@@ -35,14 +35,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

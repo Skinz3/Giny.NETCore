@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightPlacementSwapPositionsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8732;
+{
+    public class GameFightPlacementSwapPositionsMessage : NetworkMessage
+    {
+        public const ushort Id = 7448;
         public override ushort MessageId => Id;
 
         public IdentifiedEntityDispositionInformations[] dispositions;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            for (uint _i1 = 0;_i1 < 2;_i1++)
+            for (uint _i1 = 0; _i1 < 2; _i1++)
             {
                 dispositions[_i1].Serialize(writer);
             }
@@ -31,7 +31,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Deserialize(IDataReader reader)
         {
-            for (uint _i1 = 0;_i1 < 2;_i1++)
+            for (uint _i1 = 0; _i1 < 2; _i1++)
             {
                 dispositions[_i1] = new IdentifiedEntityDispositionInformations();
                 dispositions[_i1].Deserialize(reader);
@@ -39,14 +39,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

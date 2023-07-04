@@ -6,20 +6,20 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeStartOkNpcShopMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 3711;
+{
+    public class ExchangeStartOkNpcShopMessage : NetworkMessage
+    {
+        public const ushort Id = 8982;
         public override ushort MessageId => Id;
 
         public double npcSellerId;
-        public short tokenId;
+        public int tokenId;
         public ObjectItemToSellInNpcShop[] objectsInfos;
 
         public ExchangeStartOkNpcShopMessage()
         {
         }
-        public ExchangeStartOkNpcShopMessage(double npcSellerId,short tokenId,ObjectItemToSellInNpcShop[] objectsInfos)
+        public ExchangeStartOkNpcShopMessage(double npcSellerId, int tokenId, ObjectItemToSellInNpcShop[] objectsInfos)
         {
             this.npcSellerId = npcSellerId;
             this.tokenId = tokenId;
@@ -27,7 +27,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (npcSellerId < -9.00719925474099E+15 || npcSellerId > 9.00719925474099E+15)
+            if (npcSellerId < -9007199254740992 || npcSellerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + npcSellerId + ") on element npcSellerId.");
             }
@@ -38,9 +38,9 @@ namespace Giny.Protocol.Messages
                 throw new System.Exception("Forbidden value (" + tokenId + ") on element tokenId.");
             }
 
-            writer.WriteVarShort((short)tokenId);
+            writer.WriteVarInt((int)tokenId);
             writer.WriteShort((short)objectsInfos.Length);
-            for (uint _i3 = 0;_i3 < objectsInfos.Length;_i3++)
+            for (uint _i3 = 0; _i3 < objectsInfos.Length; _i3++)
             {
                 (objectsInfos[_i3] as ObjectItemToSellInNpcShop).Serialize(writer);
             }
@@ -50,19 +50,19 @@ namespace Giny.Protocol.Messages
         {
             ObjectItemToSellInNpcShop _item3 = null;
             npcSellerId = (double)reader.ReadDouble();
-            if (npcSellerId < -9.00719925474099E+15 || npcSellerId > 9.00719925474099E+15)
+            if (npcSellerId < -9007199254740992 || npcSellerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + npcSellerId + ") on element of ExchangeStartOkNpcShopMessage.npcSellerId.");
             }
 
-            tokenId = (short)reader.ReadVarUhShort();
+            tokenId = (int)reader.ReadVarUhInt();
             if (tokenId < 0)
             {
                 throw new System.Exception("Forbidden value (" + tokenId + ") on element of ExchangeStartOkNpcShopMessage.tokenId.");
             }
 
             uint _objectsInfosLen = (uint)reader.ReadUShort();
-            for (uint _i3 = 0;_i3 < _objectsInfosLen;_i3++)
+            for (uint _i3 = 0; _i3 < _objectsInfosLen; _i3++)
             {
                 _item3 = new ObjectItemToSellInNpcShop();
                 _item3.Deserialize(reader);
@@ -71,14 +71,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

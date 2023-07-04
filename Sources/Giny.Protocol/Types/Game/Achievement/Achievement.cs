@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class Achievement  
-    { 
-        public const ushort Id = 3209;
+{
+    public class Achievement
+    {
+        public const ushort Id = 5077;
         public virtual ushort TypeId => Id;
 
         public short id;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Types
         public Achievement()
         {
         }
-        public Achievement(short id,AchievementObjective[] finishedObjective,AchievementStartedObjective[] startedObjectives)
+        public Achievement(short id, AchievementObjective[] finishedObjective, AchievementStartedObjective[] startedObjectives)
         {
             this.id = id;
             this.finishedObjective = finishedObjective;
@@ -32,13 +32,13 @@ namespace Giny.Protocol.Types
 
             writer.WriteVarShort((short)id);
             writer.WriteShort((short)finishedObjective.Length);
-            for (uint _i2 = 0;_i2 < finishedObjective.Length;_i2++)
+            for (uint _i2 = 0; _i2 < finishedObjective.Length; _i2++)
             {
                 (finishedObjective[_i2] as AchievementObjective).Serialize(writer);
             }
 
             writer.WriteShort((short)startedObjectives.Length);
-            for (uint _i3 = 0;_i3 < startedObjectives.Length;_i3++)
+            for (uint _i3 = 0; _i3 < startedObjectives.Length; _i3++)
             {
                 (startedObjectives[_i3] as AchievementStartedObjective).Serialize(writer);
             }
@@ -55,7 +55,7 @@ namespace Giny.Protocol.Types
             }
 
             uint _finishedObjectiveLen = (uint)reader.ReadUShort();
-            for (uint _i2 = 0;_i2 < _finishedObjectiveLen;_i2++)
+            for (uint _i2 = 0; _i2 < _finishedObjectiveLen; _i2++)
             {
                 _item2 = new AchievementObjective();
                 _item2.Deserialize(reader);
@@ -63,7 +63,7 @@ namespace Giny.Protocol.Types
             }
 
             uint _startedObjectivesLen = (uint)reader.ReadUShort();
-            for (uint _i3 = 0;_i3 < _startedObjectivesLen;_i3++)
+            for (uint _i3 = 0; _i3 < _startedObjectivesLen; _i3++)
             {
                 _item3 = new AchievementStartedObjective();
                 _item3.Deserialize(reader);
@@ -75,11 +75,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

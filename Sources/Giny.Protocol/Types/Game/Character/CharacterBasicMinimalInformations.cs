@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class CharacterBasicMinimalInformations : AbstractCharacterInformation  
-    { 
-        public new const ushort Id = 576;
+{
+    public class CharacterBasicMinimalInformations : AbstractCharacterInformation
+    {
+        public new const ushort Id = 4111;
         public override ushort TypeId => Id;
 
         public string name;
@@ -15,7 +15,7 @@ namespace Giny.Protocol.Types
         public CharacterBasicMinimalInformations()
         {
         }
-        public CharacterBasicMinimalInformations(string name,long id)
+        public CharacterBasicMinimalInformations(string name, long id)
         {
             this.name = name;
             this.id = id;
@@ -34,11 +34,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

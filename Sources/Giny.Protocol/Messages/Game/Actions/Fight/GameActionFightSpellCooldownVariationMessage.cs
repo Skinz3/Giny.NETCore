@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameActionFightSpellCooldownVariationMessage : AbstractGameActionMessage  
-    { 
-        public new const ushort Id = 1571;
+{
+    public class GameActionFightSpellCooldownVariationMessage : AbstractGameActionMessage
+    {
+        public new const ushort Id = 2736;
         public override ushort MessageId => Id;
 
         public double targetId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public GameActionFightSpellCooldownVariationMessage()
         {
         }
-        public GameActionFightSpellCooldownVariationMessage(double targetId,short spellId,short value,short actionId,double sourceId)
+        public GameActionFightSpellCooldownVariationMessage(double targetId, short spellId, short value, short actionId, double sourceId)
         {
             this.targetId = targetId;
             this.spellId = spellId;
@@ -30,7 +30,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (targetId < -9.00719925474099E+15 || targetId > 9.00719925474099E+15)
+            if (targetId < -9007199254740992 || targetId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + targetId + ") on element targetId.");
             }
@@ -48,7 +48,7 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             targetId = (double)reader.ReadDouble();
-            if (targetId < -9.00719925474099E+15 || targetId > 9.00719925474099E+15)
+            if (targetId < -9007199254740992 || targetId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + targetId + ") on element of GameActionFightSpellCooldownVariationMessage.targetId.");
             }
@@ -62,14 +62,7 @@ namespace Giny.Protocol.Messages
             value = (short)reader.ReadVarShort();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

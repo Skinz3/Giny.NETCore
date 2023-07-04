@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AllianceModificationNameAndTagValidMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1131;
+{
+    public class AllianceModificationNameAndTagValidMessage : NetworkMessage
+    {
+        public const ushort Id = 2677;
         public override ushort MessageId => Id;
 
         public string allianceName;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public AllianceModificationNameAndTagValidMessage()
         {
         }
-        public AllianceModificationNameAndTagValidMessage(string allianceName,string allianceTag)
+        public AllianceModificationNameAndTagValidMessage(string allianceName, string allianceTag)
         {
             this.allianceName = allianceName;
             this.allianceTag = allianceTag;
@@ -34,14 +34,7 @@ namespace Giny.Protocol.Messages
             allianceTag = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

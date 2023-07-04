@@ -36,7 +36,7 @@ namespace Giny.World.Records.Items
 
         [ProtoSerialize]
         [D2OField("items")]
-        public List<short> Items
+        public List<int> Items
         {
             get;
             set;

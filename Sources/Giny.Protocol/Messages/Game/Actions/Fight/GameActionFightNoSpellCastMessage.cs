@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameActionFightNoSpellCastMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5692;
+{
+    public class GameActionFightNoSpellCastMessage : NetworkMessage
+    {
+        public const ushort Id = 5817;
         public override ushort MessageId => Id;
 
         public int spellLevelId;
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

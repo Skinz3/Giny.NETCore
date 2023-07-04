@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class AchievementObjective  
-    { 
-        public const ushort Id = 6663;
+{
+    public class AchievementObjective
+    {
+        public const ushort Id = 7042;
         public virtual ushort TypeId => Id;
 
         public int id;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public AchievementObjective()
         {
         }
-        public AchievementObjective(int id,short maxValue)
+        public AchievementObjective(int id, short maxValue)
         {
             this.id = id;
             this.maxValue = maxValue;
@@ -55,11 +55,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

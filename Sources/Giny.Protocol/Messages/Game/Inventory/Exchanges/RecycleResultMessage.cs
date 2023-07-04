@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class RecycleResultMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1416;
+{
+    public class RecycleResultMessage : NetworkMessage
+    {
+        public const ushort Id = 9164;
         public override ushort MessageId => Id;
 
         public int nuggetsForPrism;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public RecycleResultMessage()
         {
         }
-        public RecycleResultMessage(int nuggetsForPrism,int nuggetsForPlayer)
+        public RecycleResultMessage(int nuggetsForPrism, int nuggetsForPlayer)
         {
             this.nuggetsForPrism = nuggetsForPrism;
             this.nuggetsForPlayer = nuggetsForPlayer;
@@ -54,14 +54,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

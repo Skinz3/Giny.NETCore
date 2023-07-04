@@ -6,48 +6,41 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeBidHousePriceMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 361;
+{
+    public class ExchangeBidHousePriceMessage : NetworkMessage
+    {
+        public const ushort Id = 88;
         public override ushort MessageId => Id;
 
-        public short genId;
+        public int objectGID;
 
         public ExchangeBidHousePriceMessage()
         {
         }
-        public ExchangeBidHousePriceMessage(short genId)
+        public ExchangeBidHousePriceMessage(int objectGID)
         {
-            this.genId = genId;
+            this.objectGID = objectGID;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (genId < 0)
+            if (objectGID < 0)
             {
-                throw new System.Exception("Forbidden value (" + genId + ") on element genId.");
+                throw new System.Exception("Forbidden value (" + objectGID + ") on element objectGID.");
             }
 
-            writer.WriteVarShort((short)genId);
+            writer.WriteVarInt((int)objectGID);
         }
         public override void Deserialize(IDataReader reader)
         {
-            genId = (short)reader.ReadVarUhShort();
-            if (genId < 0)
+            objectGID = (int)reader.ReadVarUhInt();
+            if (objectGID < 0)
             {
-                throw new System.Exception("Forbidden value (" + genId + ") on element of ExchangeBidHousePriceMessage.genId.");
+                throw new System.Exception("Forbidden value (" + objectGID + ") on element of ExchangeBidHousePriceMessage.objectGID.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

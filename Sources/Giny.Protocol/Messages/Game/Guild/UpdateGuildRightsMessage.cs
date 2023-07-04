@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class UpdateGuildRightsMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6998;
+{
+    public class UpdateGuildRightsMessage : NetworkMessage
+    {
+        public const ushort Id = 6769;
         public override ushort MessageId => Id;
 
         public int rankId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public UpdateGuildRightsMessage()
         {
         }
-        public UpdateGuildRightsMessage(int rankId,int[] rights)
+        public UpdateGuildRightsMessage(int rankId, int[] rights)
         {
             this.rankId = rankId;
             this.rights = rights;
@@ -32,7 +32,7 @@ namespace Giny.Protocol.Messages
 
             writer.WriteVarInt((int)rankId);
             writer.WriteShort((short)rights.Length);
-            for (uint _i2 = 0;_i2 < rights.Length;_i2++)
+            for (uint _i2 = 0; _i2 < rights.Length; _i2++)
             {
                 if (rights[_i2] < 0)
                 {
@@ -54,7 +54,7 @@ namespace Giny.Protocol.Messages
 
             uint _rightsLen = (uint)reader.ReadUShort();
             rights = new int[_rightsLen];
-            for (uint _i2 = 0;_i2 < _rightsLen;_i2++)
+            for (uint _i2 = 0; _i2 < _rightsLen; _i2++)
             {
                 _val2 = (uint)reader.ReadVarUhInt();
                 if (_val2 < 0)
@@ -67,14 +67,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

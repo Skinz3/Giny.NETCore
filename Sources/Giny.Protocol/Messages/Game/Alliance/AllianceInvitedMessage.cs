@@ -6,57 +6,36 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AllianceInvitedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4726;
+{
+    public class AllianceInvitedMessage : NetworkMessage
+    {
+        public const ushort Id = 8538;
         public override ushort MessageId => Id;
 
-        public long recruterId;
         public string recruterName;
-        public BasicNamedAllianceInformations allianceInfo;
+        public AllianceInformation allianceInfo;
 
         public AllianceInvitedMessage()
         {
         }
-        public AllianceInvitedMessage(long recruterId,string recruterName,BasicNamedAllianceInformations allianceInfo)
+        public AllianceInvitedMessage(string recruterName, AllianceInformation allianceInfo)
         {
-            this.recruterId = recruterId;
             this.recruterName = recruterName;
             this.allianceInfo = allianceInfo;
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (recruterId < 0 || recruterId > 9.00719925474099E+15)
-            {
-                throw new System.Exception("Forbidden value (" + recruterId + ") on element recruterId.");
-            }
-
-            writer.WriteVarLong((long)recruterId);
             writer.WriteUTF((string)recruterName);
             allianceInfo.Serialize(writer);
         }
         public override void Deserialize(IDataReader reader)
         {
-            recruterId = (long)reader.ReadVarUhLong();
-            if (recruterId < 0 || recruterId > 9.00719925474099E+15)
-            {
-                throw new System.Exception("Forbidden value (" + recruterId + ") on element of AllianceInvitedMessage.recruterId.");
-            }
-
             recruterName = (string)reader.ReadUTF();
-            allianceInfo = new BasicNamedAllianceInformations();
+            allianceInfo = new AllianceInformation();
             allianceInfo.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

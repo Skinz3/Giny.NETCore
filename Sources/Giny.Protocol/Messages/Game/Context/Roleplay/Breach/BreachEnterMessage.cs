@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BreachEnterMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4929;
+{
+    public class BreachEnterMessage : NetworkMessage
+    {
+        public const ushort Id = 5811;
         public override ushort MessageId => Id;
 
         public long owner;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (owner < 0 || owner > 9.00719925474099E+15)
+            if (owner < 0 || owner > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + owner + ") on element owner.");
             }
@@ -33,21 +33,14 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             owner = (long)reader.ReadVarUhLong();
-            if (owner < 0 || owner > 9.00719925474099E+15)
+            if (owner < 0 || owner > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + owner + ") on element of BreachEnterMessage.owner.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

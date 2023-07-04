@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class BufferInformation  
-    { 
-        public const ushort Id = 6358;
+{
+    public class BufferInformation
+    {
+        public const ushort Id = 1328;
         public virtual ushort TypeId => Id;
 
         public long id;
@@ -16,20 +16,20 @@ namespace Giny.Protocol.Types
         public BufferInformation()
         {
         }
-        public BufferInformation(long id,long amount)
+        public BufferInformation(long id, long amount)
         {
             this.id = id;
             this.amount = amount;
         }
         public virtual void Serialize(IDataWriter writer)
         {
-            if (id < 0 || id > 9.00719925474099E+15)
+            if (id < 0 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element id.");
             }
 
             writer.WriteVarLong((long)id);
-            if (amount < 0 || amount > 9.00719925474099E+15)
+            if (amount < 0 || amount > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + amount + ") on element amount.");
             }
@@ -39,13 +39,13 @@ namespace Giny.Protocol.Types
         public virtual void Deserialize(IDataReader reader)
         {
             id = (long)reader.ReadVarUhLong();
-            if (id < 0 || id > 9.00719925474099E+15)
+            if (id < 0 || id > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + id + ") on element of BufferInformation.id.");
             }
 
             amount = (long)reader.ReadVarUhLong();
-            if (amount < 0 || amount > 9.00719925474099E+15)
+            if (amount < 0 || amount > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + amount + ") on element of BufferInformation.amount.");
             }
@@ -55,11 +55,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BreachBranchesMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 2636;
+{
+    public class BreachBranchesMessage : NetworkMessage
+    {
+        public const ushort Id = 6699;
         public override ushort MessageId => Id;
 
         public ExtendedBreachBranch[] branches;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)branches.Length);
-            for (uint _i1 = 0;_i1 < branches.Length;_i1++)
+            for (uint _i1 = 0; _i1 < branches.Length; _i1++)
             {
                 writer.WriteShort((short)(branches[_i1] as ExtendedBreachBranch).TypeId);
                 (branches[_i1] as ExtendedBreachBranch).Serialize(writer);
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Messages
             uint _id1 = 0;
             ExtendedBreachBranch _item1 = null;
             uint _branchesLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _branchesLen;_i1++)
+            for (uint _i1 = 0; _i1 < _branchesLen; _i1++)
             {
                 _id1 = (uint)reader.ReadUShort();
                 _item1 = ProtocolTypeManager.GetInstance<ExtendedBreachBranch>((short)_id1);
@@ -46,14 +46,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

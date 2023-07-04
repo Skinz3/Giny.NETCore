@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameRolePlayArenaFightPropositionMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 1343;
+{
+    public class GameRolePlayArenaFightPropositionMessage : NetworkMessage
+    {
+        public const ushort Id = 1479;
         public override ushort MessageId => Id;
 
         public short fightId;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public GameRolePlayArenaFightPropositionMessage()
         {
         }
-        public GameRolePlayArenaFightPropositionMessage(short fightId,double[] alliesId,short duration)
+        public GameRolePlayArenaFightPropositionMessage(short fightId, double[] alliesId, short duration)
         {
             this.fightId = fightId;
             this.alliesId = alliesId;
@@ -34,9 +34,9 @@ namespace Giny.Protocol.Messages
 
             writer.WriteVarShort((short)fightId);
             writer.WriteShort((short)alliesId.Length);
-            for (uint _i2 = 0;_i2 < alliesId.Length;_i2++)
+            for (uint _i2 = 0; _i2 < alliesId.Length; _i2++)
             {
-                if (alliesId[_i2] < -9.00719925474099E+15 || alliesId[_i2] > 9.00719925474099E+15)
+                if (alliesId[_i2] < -9007199254740992 || alliesId[_i2] > 9007199254740992)
                 {
                     throw new System.Exception("Forbidden value (" + alliesId[_i2] + ") on element 2 (starting at 1) of alliesId.");
                 }
@@ -62,10 +62,10 @@ namespace Giny.Protocol.Messages
 
             uint _alliesIdLen = (uint)reader.ReadUShort();
             alliesId = new double[_alliesIdLen];
-            for (uint _i2 = 0;_i2 < _alliesIdLen;_i2++)
+            for (uint _i2 = 0; _i2 < _alliesIdLen; _i2++)
             {
                 _val2 = (double)reader.ReadDouble();
-                if (_val2 < -9.00719925474099E+15 || _val2 > 9.00719925474099E+15)
+                if (_val2 < -9007199254740992 || _val2 > 9007199254740992)
                 {
                     throw new System.Exception("Forbidden value (" + _val2 + ") on elements of alliesId.");
                 }
@@ -81,14 +81,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

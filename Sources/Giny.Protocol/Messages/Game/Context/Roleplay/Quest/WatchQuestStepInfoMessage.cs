@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class WatchQuestStepInfoMessage : QuestStepInfoMessage  
-    { 
-        public new const ushort Id = 1802;
+{
+    public class WatchQuestStepInfoMessage : QuestStepInfoMessage
+    {
+        public new const ushort Id = 3665;
         public override ushort MessageId => Id;
 
         public long playerId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public WatchQuestStepInfoMessage()
         {
         }
-        public WatchQuestStepInfoMessage(long playerId,QuestActiveInformations infos)
+        public WatchQuestStepInfoMessage(long playerId, QuestActiveInformations infos)
         {
             this.playerId = playerId;
             this.infos = infos;
@@ -25,7 +25,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
@@ -36,21 +36,14 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of WatchQuestStepInfoMessage.playerId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

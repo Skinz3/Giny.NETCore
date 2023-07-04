@@ -6,18 +6,18 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ExchangeSetCraftRecipeMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9961;
+{
+    public class ExchangeSetCraftRecipeMessage : NetworkMessage
+    {
+        public const ushort Id = 883;
         public override ushort MessageId => Id;
 
-        public short objectGID;
+        public int objectGID;
 
         public ExchangeSetCraftRecipeMessage()
         {
         }
-        public ExchangeSetCraftRecipeMessage(short objectGID)
+        public ExchangeSetCraftRecipeMessage(int objectGID)
         {
             this.objectGID = objectGID;
         }
@@ -28,11 +28,11 @@ namespace Giny.Protocol.Messages
                 throw new System.Exception("Forbidden value (" + objectGID + ") on element objectGID.");
             }
 
-            writer.WriteVarShort((short)objectGID);
+            writer.WriteVarInt((int)objectGID);
         }
         public override void Deserialize(IDataReader reader)
         {
-            objectGID = (short)reader.ReadVarUhShort();
+            objectGID = (int)reader.ReadVarUhInt();
             if (objectGID < 0)
             {
                 throw new System.Exception("Forbidden value (" + objectGID + ") on element of ExchangeSetCraftRecipeMessage.objectGID.");
@@ -40,14 +40,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

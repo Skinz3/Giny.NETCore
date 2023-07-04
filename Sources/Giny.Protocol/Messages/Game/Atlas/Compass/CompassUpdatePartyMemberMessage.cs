@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class CompassUpdatePartyMemberMessage : CompassUpdateMessage  
-    { 
-        public new const ushort Id = 598;
+{
+    public class CompassUpdatePartyMemberMessage : CompassUpdateMessage
+    {
+        public new const ushort Id = 306;
         public override ushort MessageId => Id;
 
         public long memberId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public CompassUpdatePartyMemberMessage()
         {
         }
-        public CompassUpdatePartyMemberMessage(long memberId,bool active,byte type,MapCoordinates coords)
+        public CompassUpdatePartyMemberMessage(long memberId, bool active, byte type, MapCoordinates coords)
         {
             this.memberId = memberId;
             this.active = active;
@@ -28,7 +28,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (memberId < 0 || memberId > 9.00719925474099E+15)
+            if (memberId < 0 || memberId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + memberId + ") on element memberId.");
             }
@@ -40,7 +40,7 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             memberId = (long)reader.ReadVarUhLong();
-            if (memberId < 0 || memberId > 9.00719925474099E+15)
+            if (memberId < 0 || memberId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + memberId + ") on element of CompassUpdatePartyMemberMessage.memberId.");
             }
@@ -48,14 +48,7 @@ namespace Giny.Protocol.Messages
             active = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

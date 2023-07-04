@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameFightFighterEntityLightInformation : GameFightFighterLightInformations  
-    { 
-        public new const ushort Id = 8680;
+{
+    public class GameFightFighterEntityLightInformation : GameFightFighterLightInformations
+    {
+        public new const ushort Id = 5658;
         public override ushort TypeId => Id;
 
         public byte entityModelId;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public GameFightFighterEntityLightInformation()
         {
         }
-        public GameFightFighterEntityLightInformation(byte entityModelId,double masterId,double id,byte wave,short level,byte breed,bool sex,bool alive)
+        public GameFightFighterEntityLightInformation(byte entityModelId, double masterId, double id, byte wave, short level, byte breed, bool sex, bool alive)
         {
             this.entityModelId = entityModelId;
             this.masterId = masterId;
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Types
             }
 
             writer.WriteByte((byte)entityModelId);
-            if (masterId < -9.00719925474099E+15 || masterId > 9.00719925474099E+15)
+            if (masterId < -9007199254740992 || masterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + masterId + ") on element masterId.");
             }
@@ -53,7 +53,7 @@ namespace Giny.Protocol.Types
             }
 
             masterId = (double)reader.ReadDouble();
-            if (masterId < -9.00719925474099E+15 || masterId > 9.00719925474099E+15)
+            if (masterId < -9007199254740992 || masterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + masterId + ") on element of GameFightFighterEntityLightInformation.masterId.");
             }
@@ -63,11 +63,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

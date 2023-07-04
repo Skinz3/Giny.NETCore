@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class FriendsListMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 4381;
+{
+    public class FriendsListMessage : NetworkMessage
+    {
+        public const ushort Id = 975;
         public override ushort MessageId => Id;
 
         public FriendInformations[] friendsList;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)friendsList.Length);
-            for (uint _i1 = 0;_i1 < friendsList.Length;_i1++)
+            for (uint _i1 = 0; _i1 < friendsList.Length; _i1++)
             {
                 writer.WriteShort((short)(friendsList[_i1] as FriendInformations).TypeId);
                 (friendsList[_i1] as FriendInformations).Serialize(writer);
@@ -36,7 +36,7 @@ namespace Giny.Protocol.Messages
             uint _id1 = 0;
             FriendInformations _item1 = null;
             uint _friendsListLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _friendsListLen;_i1++)
+            for (uint _i1 = 0; _i1 < _friendsListLen; _i1++)
             {
                 _id1 = (uint)reader.ReadUShort();
                 _item1 = ProtocolTypeManager.GetInstance<FriendInformations>((short)_id1);
@@ -46,14 +46,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

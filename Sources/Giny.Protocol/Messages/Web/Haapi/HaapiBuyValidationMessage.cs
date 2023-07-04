@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class HaapiBuyValidationMessage : HaapiValidationMessage  
-    { 
-        public new const ushort Id = 1897;
+{
+    public class HaapiBuyValidationMessage : HaapiValidationMessage
+    {
+        public new const ushort Id = 8987;
         public override ushort MessageId => Id;
 
         public long amount;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public HaapiBuyValidationMessage()
         {
         }
-        public HaapiBuyValidationMessage(long amount,string email,byte action,byte code)
+        public HaapiBuyValidationMessage(long amount, string email, byte action, byte code)
         {
             this.amount = amount;
             this.email = email;
@@ -28,7 +28,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            if (amount < 0 || amount > 9.00719925474099E+15)
+            if (amount < 0 || amount > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + amount + ") on element amount.");
             }
@@ -40,7 +40,7 @@ namespace Giny.Protocol.Messages
         {
             base.Deserialize(reader);
             amount = (long)reader.ReadVarUhLong();
-            if (amount < 0 || amount > 9.00719925474099E+15)
+            if (amount < 0 || amount > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + amount + ") on element of HaapiBuyValidationMessage.amount.");
             }
@@ -48,14 +48,7 @@ namespace Giny.Protocol.Messages
             email = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

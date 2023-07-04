@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PartyInvitationDungeonRequestMessage : PartyInvitationRequestMessage  
-    { 
-        public new const ushort Id = 3384;
+{
+    public class PartyInvitationDungeonRequestMessage : PartyInvitationRequestMessage
+    {
+        public new const ushort Id = 7899;
         public override ushort MessageId => Id;
 
         public short dungeonId;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Messages
         public PartyInvitationDungeonRequestMessage()
         {
         }
-        public PartyInvitationDungeonRequestMessage(short dungeonId,AbstractPlayerSearchInformation target)
+        public PartyInvitationDungeonRequestMessage(short dungeonId, AbstractPlayerSearchInformation target)
         {
             this.dungeonId = dungeonId;
             this.target = target;
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

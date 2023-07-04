@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildHousesInformationMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5298;
+{
+    public class GuildHousesInformationMessage : NetworkMessage
+    {
+        public const ushort Id = 8761;
         public override ushort MessageId => Id;
 
         public HouseInformationsForGuild[] housesInformations;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Messages
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort((short)housesInformations.Length);
-            for (uint _i1 = 0;_i1 < housesInformations.Length;_i1++)
+            for (uint _i1 = 0; _i1 < housesInformations.Length; _i1++)
             {
                 (housesInformations[_i1] as HouseInformationsForGuild).Serialize(writer);
             }
@@ -34,7 +34,7 @@ namespace Giny.Protocol.Messages
         {
             HouseInformationsForGuild _item1 = null;
             uint _housesInformationsLen = (uint)reader.ReadUShort();
-            for (uint _i1 = 0;_i1 < _housesInformationsLen;_i1++)
+            for (uint _i1 = 0; _i1 < _housesInformationsLen; _i1++)
             {
                 _item1 = new HouseInformationsForGuild();
                 _item1.Deserialize(reader);
@@ -43,14 +43,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

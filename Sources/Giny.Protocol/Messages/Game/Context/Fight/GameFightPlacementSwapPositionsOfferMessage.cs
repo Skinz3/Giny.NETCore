@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightPlacementSwapPositionsOfferMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 8968;
+{
+    public class GameFightPlacementSwapPositionsOfferMessage : NetworkMessage
+    {
+        public const ushort Id = 7939;
         public override ushort MessageId => Id;
 
         public int requestId;
@@ -21,7 +21,7 @@ namespace Giny.Protocol.Messages
         public GameFightPlacementSwapPositionsOfferMessage()
         {
         }
-        public GameFightPlacementSwapPositionsOfferMessage(int requestId,double requesterId,short requesterCellId,double requestedId,short requestedCellId)
+        public GameFightPlacementSwapPositionsOfferMessage(int requestId, double requesterId, short requesterCellId, double requestedId, short requestedCellId)
         {
             this.requestId = requestId;
             this.requesterId = requesterId;
@@ -37,7 +37,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteInt((int)requestId);
-            if (requesterId < -9.00719925474099E+15 || requesterId > 9.00719925474099E+15)
+            if (requesterId < -9007199254740992 || requesterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + requesterId + ") on element requesterId.");
             }
@@ -49,7 +49,7 @@ namespace Giny.Protocol.Messages
             }
 
             writer.WriteVarShort((short)requesterCellId);
-            if (requestedId < -9.00719925474099E+15 || requestedId > 9.00719925474099E+15)
+            if (requestedId < -9007199254740992 || requestedId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + requestedId + ") on element requestedId.");
             }
@@ -71,7 +71,7 @@ namespace Giny.Protocol.Messages
             }
 
             requesterId = (double)reader.ReadDouble();
-            if (requesterId < -9.00719925474099E+15 || requesterId > 9.00719925474099E+15)
+            if (requesterId < -9007199254740992 || requesterId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + requesterId + ") on element of GameFightPlacementSwapPositionsOfferMessage.requesterId.");
             }
@@ -83,7 +83,7 @@ namespace Giny.Protocol.Messages
             }
 
             requestedId = (double)reader.ReadDouble();
-            if (requestedId < -9.00719925474099E+15 || requestedId > 9.00719925474099E+15)
+            if (requestedId < -9007199254740992 || requestedId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + requestedId + ") on element of GameFightPlacementSwapPositionsOfferMessage.requestedId.");
             }
@@ -96,14 +96,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

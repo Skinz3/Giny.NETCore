@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class PartyJoinMessage : AbstractPartyMessage  
-    { 
-        public new const ushort Id = 2640;
+{
+    public class PartyJoinMessage : AbstractPartyMessage
+    {
+        public new const ushort Id = 2106;
         public override ushort MessageId => Id;
 
         public byte partyType;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         public PartyJoinMessage()
         {
         }
-        public PartyJoinMessage(byte partyType,long partyLeaderId,byte maxParticipants,PartyMemberInformations[] members,PartyGuestInformations[] guests,bool restricted,string partyName,int partyId)
+        public PartyJoinMessage(byte partyType, long partyLeaderId, byte maxParticipants, PartyMemberInformations[] members, PartyGuestInformations[] guests, bool restricted, string partyName, int partyId)
         {
             this.partyType = partyType;
             this.partyLeaderId = partyLeaderId;
@@ -38,7 +38,7 @@ namespace Giny.Protocol.Messages
         {
             base.Serialize(writer);
             writer.WriteByte((byte)partyType);
-            if (partyLeaderId < 0 || partyLeaderId > 9.00719925474099E+15)
+            if (partyLeaderId < 0 || partyLeaderId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + partyLeaderId + ") on element partyLeaderId.");
             }
@@ -51,14 +51,14 @@ namespace Giny.Protocol.Messages
 
             writer.WriteByte((byte)maxParticipants);
             writer.WriteShort((short)members.Length);
-            for (uint _i4 = 0;_i4 < members.Length;_i4++)
+            for (uint _i4 = 0; _i4 < members.Length; _i4++)
             {
                 writer.WriteShort((short)(members[_i4] as PartyMemberInformations).TypeId);
                 (members[_i4] as PartyMemberInformations).Serialize(writer);
             }
 
             writer.WriteShort((short)guests.Length);
-            for (uint _i5 = 0;_i5 < guests.Length;_i5++)
+            for (uint _i5 = 0; _i5 < guests.Length; _i5++)
             {
                 (guests[_i5] as PartyGuestInformations).Serialize(writer);
             }
@@ -79,7 +79,7 @@ namespace Giny.Protocol.Messages
             }
 
             partyLeaderId = (long)reader.ReadVarUhLong();
-            if (partyLeaderId < 0 || partyLeaderId > 9.00719925474099E+15)
+            if (partyLeaderId < 0 || partyLeaderId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + partyLeaderId + ") on element of PartyJoinMessage.partyLeaderId.");
             }
@@ -91,7 +91,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _membersLen = (uint)reader.ReadUShort();
-            for (uint _i4 = 0;_i4 < _membersLen;_i4++)
+            for (uint _i4 = 0; _i4 < _membersLen; _i4++)
             {
                 _id4 = (uint)reader.ReadUShort();
                 _item4 = ProtocolTypeManager.GetInstance<PartyMemberInformations>((short)_id4);
@@ -100,7 +100,7 @@ namespace Giny.Protocol.Messages
             }
 
             uint _guestsLen = (uint)reader.ReadUShort();
-            for (uint _i5 = 0;_i5 < _guestsLen;_i5++)
+            for (uint _i5 = 0; _i5 < _guestsLen; _i5++)
             {
                 _item5 = new PartyGuestInformations();
                 _item5.Deserialize(reader);
@@ -111,14 +111,7 @@ namespace Giny.Protocol.Messages
             partyName = (string)reader.ReadUTF();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

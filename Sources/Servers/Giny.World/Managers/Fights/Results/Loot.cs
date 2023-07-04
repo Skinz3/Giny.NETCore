@@ -71,11 +71,11 @@ namespace Giny.World.Managers.Fights.Results
         public FightLoot GetFightLoot()
         {
             return new FightLoot(this.m_items.Values.SelectMany((DroppedItem entry
-                ) => new int[]
+                ) => new FightLootObject[]
             {
-                entry.ItemGId,
-                entry.Amount
-            }).ToArray(), this.Kamas);
+                new FightLootObject(entry.ItemGId,entry.Amount,0)
+
+            }).ToArray(), this.Kamas); ;
         }
     }
 }

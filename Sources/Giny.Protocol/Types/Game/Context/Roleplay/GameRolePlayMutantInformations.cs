@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class GameRolePlayMutantInformations : GameRolePlayHumanoidInformations  
-    { 
-        public new const ushort Id = 3496;
+{
+    public class GameRolePlayMutantInformations : GameRolePlayHumanoidInformations
+    {
+        public new const ushort Id = 7665;
         public override ushort TypeId => Id;
 
         public short monsterId;
@@ -16,7 +16,7 @@ namespace Giny.Protocol.Types
         public GameRolePlayMutantInformations()
         {
         }
-        public GameRolePlayMutantInformations(short monsterId,byte powerLevel,double contextualId,EntityDispositionInformations disposition,EntityLook look,string name,HumanInformations humanoidInfo,int accountId)
+        public GameRolePlayMutantInformations(short monsterId, byte powerLevel, double contextualId, EntityDispositionInformations disposition, EntityLook look, string name, HumanInformations humanoidInfo, int accountId)
         {
             this.monsterId = monsterId;
             this.powerLevel = powerLevel;
@@ -53,11 +53,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

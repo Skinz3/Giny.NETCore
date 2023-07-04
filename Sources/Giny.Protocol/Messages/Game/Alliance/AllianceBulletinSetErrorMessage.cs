@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AllianceBulletinSetErrorMessage : SocialNoticeSetErrorMessage  
-    { 
-        public new const ushort Id = 3851;
+{
+    public class AllianceBulletinSetErrorMessage : SocialNoticeSetErrorMessage
+    {
+        public new const ushort Id = 754;
         public override ushort MessageId => Id;
 
 
@@ -29,14 +29,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

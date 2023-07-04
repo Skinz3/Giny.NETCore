@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class FriendOnlineInformations : FriendInformations  
-    { 
-        public new const ushort Id = 3423;
+{
+    public class FriendOnlineInformations : FriendInformations
+    {
+        public new const ushort Id = 6772;
         public override ushort TypeId => Id;
 
         public long playerId;
@@ -24,7 +24,7 @@ namespace Giny.Protocol.Types
         public FriendOnlineInformations()
         {
         }
-        public FriendOnlineInformations(long playerId,string playerName,short level,byte alignmentSide,byte breed,bool sex,GuildInformations guildInfo,short moodSmileyId,PlayerStatus status,bool havenBagShared,int accountId,AccountTagInformation accountTag,byte playerState,short lastConnection,int achievementPoints,short leagueId,int ladderPosition)
+        public FriendOnlineInformations(long playerId, string playerName, short level, byte alignmentSide, byte breed, bool sex, GuildInformations guildInfo, short moodSmileyId, PlayerStatus status, bool havenBagShared, int accountId, AccountTagInformation accountTag, byte playerState, short lastConnection, int achievementPoints, short leagueId, int ladderPosition)
         {
             this.playerId = playerId;
             this.playerName = playerName;
@@ -48,10 +48,10 @@ namespace Giny.Protocol.Types
         {
             base.Serialize(writer);
             byte _box0 = 0;
-            _box0 = BooleanByteWrapper.SetFlag(_box0,0,sex);
-            _box0 = BooleanByteWrapper.SetFlag(_box0,1,havenBagShared);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 0, sex);
+            _box0 = BooleanByteWrapper.SetFlag(_box0, 1, havenBagShared);
             writer.WriteByte((byte)_box0);
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element playerId.");
             }
@@ -80,10 +80,10 @@ namespace Giny.Protocol.Types
         {
             base.Deserialize(reader);
             byte _box0 = reader.ReadByte();
-            sex = BooleanByteWrapper.GetFlag(_box0,0);
-            havenBagShared = BooleanByteWrapper.GetFlag(_box0,1);
+            sex = BooleanByteWrapper.GetFlag(_box0, 0);
+            havenBagShared = BooleanByteWrapper.GetFlag(_box0, 1);
             playerId = (long)reader.ReadVarUhLong();
-            if (playerId < 0 || playerId > 9.00719925474099E+15)
+            if (playerId < 0 || playerId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + playerId + ") on element of FriendOnlineInformations.playerId.");
             }
@@ -97,7 +97,7 @@ namespace Giny.Protocol.Types
 
             alignmentSide = (byte)reader.ReadByte();
             breed = (byte)reader.ReadByte();
-            if (breed < (byte)PlayableBreedEnum.Feca || breed > (byte)PlayableBreedEnum.Ouginak)
+            if (breed < (byte)PlayableBreedEnum.Feca || breed > (byte)PlayableBreedEnum.Forgelance)
             {
                 throw new System.Exception("Forbidden value (" + breed + ") on element of FriendOnlineInformations.breed.");
             }
@@ -118,11 +118,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

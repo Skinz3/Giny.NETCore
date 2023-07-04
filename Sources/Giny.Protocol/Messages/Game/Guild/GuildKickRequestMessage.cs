@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GuildKickRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 983;
+{
+    public class GuildKickRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 715;
         public override ushort MessageId => Id;
 
         public long kickedId;
@@ -23,7 +23,7 @@ namespace Giny.Protocol.Messages
         }
         public override void Serialize(IDataWriter writer)
         {
-            if (kickedId < 0 || kickedId > 9.00719925474099E+15)
+            if (kickedId < 0 || kickedId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + kickedId + ") on element kickedId.");
             }
@@ -33,21 +33,14 @@ namespace Giny.Protocol.Messages
         public override void Deserialize(IDataReader reader)
         {
             kickedId = (long)reader.ReadVarUhLong();
-            if (kickedId < 0 || kickedId > 9.00719925474099E+15)
+            if (kickedId < 0 || kickedId > 9007199254740992)
             {
                 throw new System.Exception("Forbidden value (" + kickedId + ") on element of GuildKickRequestMessage.kickedId.");
             }
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

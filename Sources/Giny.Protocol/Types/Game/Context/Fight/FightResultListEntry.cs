@@ -4,10 +4,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Types
-{ 
-    public class FightResultListEntry  
-    { 
-        public const ushort Id = 7834;
+{
+    public class FightResultListEntry
+    {
+        public const ushort Id = 3460;
         public virtual ushort TypeId => Id;
 
         public short outcome;
@@ -17,7 +17,7 @@ namespace Giny.Protocol.Types
         public FightResultListEntry()
         {
         }
-        public FightResultListEntry(short outcome,byte wave,FightLoot rewards)
+        public FightResultListEntry(short outcome, byte wave, FightLoot rewards)
         {
             this.outcome = outcome;
             this.wave = wave;
@@ -55,11 +55,5 @@ namespace Giny.Protocol.Types
 
     }
 }
-
-
-
-
-
-
 
 

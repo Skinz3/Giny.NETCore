@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class ShortcutBarReplacedMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6652;
+{
+    public class ShortcutBarReplacedMessage : NetworkMessage
+    {
+        public const ushort Id = 3336;
         public override ushort MessageId => Id;
 
         public byte barType;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public ShortcutBarReplacedMessage()
         {
         }
-        public ShortcutBarReplacedMessage(byte barType,Shortcut shortcut)
+        public ShortcutBarReplacedMessage(byte barType, Shortcut shortcut)
         {
             this.barType = barType;
             this.shortcut = shortcut;
@@ -42,14 +42,7 @@ namespace Giny.Protocol.Messages
             shortcut.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

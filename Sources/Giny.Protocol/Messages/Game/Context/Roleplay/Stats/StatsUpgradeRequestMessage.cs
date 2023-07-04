@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class StatsUpgradeRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 7822;
+{
+    public class StatsUpgradeRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 1404;
         public override ushort MessageId => Id;
 
         public bool useAdditionnal;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public StatsUpgradeRequestMessage()
         {
         }
-        public StatsUpgradeRequestMessage(bool useAdditionnal,byte statId,short boostPoint)
+        public StatsUpgradeRequestMessage(bool useAdditionnal, byte statId, short boostPoint)
         {
             this.useAdditionnal = useAdditionnal;
             this.statId = statId;
@@ -53,14 +53,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

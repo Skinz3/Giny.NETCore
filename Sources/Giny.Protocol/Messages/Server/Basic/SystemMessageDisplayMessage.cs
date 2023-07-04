@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class SystemMessageDisplayMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 5519;
+{
+    public class SystemMessageDisplayMessage : NetworkMessage
+    {
+        public const ushort Id = 6288;
         public override ushort MessageId => Id;
 
         public bool hangUp;
@@ -19,7 +19,7 @@ namespace Giny.Protocol.Messages
         public SystemMessageDisplayMessage()
         {
         }
-        public SystemMessageDisplayMessage(bool hangUp,short msgId,string[] parameters)
+        public SystemMessageDisplayMessage(bool hangUp, short msgId, string[] parameters)
         {
             this.hangUp = hangUp;
             this.msgId = msgId;
@@ -35,7 +35,7 @@ namespace Giny.Protocol.Messages
 
             writer.WriteVarShort((short)msgId);
             writer.WriteShort((short)parameters.Length);
-            for (uint _i3 = 0;_i3 < parameters.Length;_i3++)
+            for (uint _i3 = 0; _i3 < parameters.Length; _i3++)
             {
                 writer.WriteUTF((string)parameters[_i3]);
             }
@@ -53,7 +53,7 @@ namespace Giny.Protocol.Messages
 
             uint _parametersLen = (uint)reader.ReadUShort();
             parameters = new string[_parametersLen];
-            for (uint _i3 = 0;_i3 < _parametersLen;_i3++)
+            for (uint _i3 = 0; _i3 < _parametersLen; _i3++)
             {
                 _val3 = (string)reader.ReadUTF();
                 parameters[_i3] = (string)_val3;
@@ -61,14 +61,7 @@ namespace Giny.Protocol.Messages
 
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

@@ -493,55 +493,7 @@ namespace Giny.World.Managers.Chat
             MonstersManager.Instance.AddFixedMonsterGroup(client.Character.Map.Instance, client.Character.CellId, records.ToArray());
         }
 
-        [ChatCommand("restoreitem", ServerRoleEnum.Administrator)]
-        public static void RestoreItemCommand(WorldClient client, short itemId)
-        {
-            foreach (var item in CharacterItemRecord.GetCharacterItems())
-            {
-                if (item.GId == itemId)
-                {
-                    item.Effects = item.Record.Effects.Generate();
-                    item.UpdateElement();
-
-                    if (WorldServer.Instance.IsOnline(item.CharacterId) && item is CharacterItemRecord)
-                    {
-                        var target = WorldServer.Instance.GetOnlineClient(x => x.Character.Id == item.CharacterId);
-                        target.Character.Inventory.OnItemModified(item);
-
-                        client.Character.Reply("Update " + item.Record + ". Owner : " + target.Character.Name);
-                    }
-                }
-            }
-
-            foreach (var item in BankItemRecord.GetBankItems())
-            {
-                if (item.GId == itemId)
-                {
-                    item.Effects = item.Record.Effects.Generate();
-                    item.UpdateElement();
-                }
-            }
-
-            foreach (var item in BidShopItemRecord.GetItems())
-            {
-                if (item.GId == itemId)
-                {
-                    item.Effects = item.Record.Effects.Generate();
-                    item.UpdateElement();
-                }
-            }
-
-            foreach (var item in MerchantItemRecord.GetMerchantItems())
-            {
-                if (item.GId == itemId)
-                {
-                    item.Effects = item.Record.Effects.Generate();
-                    item.UpdateElement();
-                }
-            }
-
-            client.Character.Reply("Item restored.");
-        }
+        
 
     }
 }

@@ -6,21 +6,20 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class AllianceMembershipMessage : AllianceJoinedMessage  
-    { 
-        public new const ushort Id = 4163;
+{
+    public class AllianceMembershipMessage : AllianceJoinedMessage
+    {
+        public new const ushort Id = 4286;
         public override ushort MessageId => Id;
 
 
         public AllianceMembershipMessage()
         {
         }
-        public AllianceMembershipMessage(AllianceInformations allianceInfo,bool enabled,int leadingGuildId)
+        public AllianceMembershipMessage(AllianceInformation allianceInfo, int rankId)
         {
             this.allianceInfo = allianceInfo;
-            this.enabled = enabled;
-            this.leadingGuildId = leadingGuildId;
+            this.rankId = rankId;
         }
         public override void Serialize(IDataWriter writer)
         {
@@ -31,14 +30,7 @@ namespace Giny.Protocol.Messages
             base.Deserialize(reader);
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

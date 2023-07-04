@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class BasicPingMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 398;
+{
+    public class BasicPingMessage : NetworkMessage
+    {
+        public const ushort Id = 2710;
         public override ushort MessageId => Id;
 
         public bool quiet;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             quiet = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

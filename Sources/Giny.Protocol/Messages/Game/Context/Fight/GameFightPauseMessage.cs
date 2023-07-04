@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class GameFightPauseMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 9521;
+{
+    public class GameFightPauseMessage : NetworkMessage
+    {
+        public const ushort Id = 5025;
         public override ushort MessageId => Id;
 
         public bool isPaused;
@@ -30,14 +30,7 @@ namespace Giny.Protocol.Messages
             isPaused = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 

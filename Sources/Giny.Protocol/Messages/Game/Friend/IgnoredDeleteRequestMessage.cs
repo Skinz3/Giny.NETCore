@@ -6,10 +6,10 @@ using Giny.Protocol;
 using Giny.Protocol.Enums;
 
 namespace Giny.Protocol.Messages
-{ 
-    public class IgnoredDeleteRequestMessage : NetworkMessage  
-    { 
-        public  const ushort Id = 6327;
+{
+    public class IgnoredDeleteRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 872;
         public override ushort MessageId => Id;
 
         public int accountId;
@@ -18,7 +18,7 @@ namespace Giny.Protocol.Messages
         public IgnoredDeleteRequestMessage()
         {
         }
-        public IgnoredDeleteRequestMessage(int accountId,bool session)
+        public IgnoredDeleteRequestMessage(int accountId, bool session)
         {
             this.accountId = accountId;
             this.session = session;
@@ -44,14 +44,7 @@ namespace Giny.Protocol.Messages
             session = (bool)reader.ReadBoolean();
         }
 
-
     }
 }
-
-
-
-
-
-
 
 
