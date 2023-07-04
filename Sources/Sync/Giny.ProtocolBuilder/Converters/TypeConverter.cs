@@ -75,14 +75,14 @@ namespace Giny.ProtocolBuilder.Converters
 
             if (GetExtends() == string.Empty)
             {
-                Append(string.Format("public const ushort Id = {0};", protocolId), sb);
+                sb.AppendLine(string.Format("public const ushort Id = {0};", protocolId));
             }
             else
             {
-                Append(string.Format("public new const ushort Id = {0};", protocolId), sb);
+                sb.AppendLine(string.Format("public new const ushort Id = {0};", protocolId));
             }
 
-            Append("public " + modifier + " ushort TypeId => Id;", sb);
+            sb.AppendLine("public " + modifier + " ushort TypeId => Id;");
             return sb.ToString();
         }
     }

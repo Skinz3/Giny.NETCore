@@ -25,10 +25,9 @@ namespace Giny.ProtocolBuilder
 
 
             BuildEnums();
-           // BuildMessages();
+            BuildMessages();
             BuildTypes();
-
-         //   BuildDatacenter();
+            BuildDatacenter();
 
             Logger.WriteColor1(string.Format("Build finished in {0}s", stopwatch.Elapsed.Seconds));
 

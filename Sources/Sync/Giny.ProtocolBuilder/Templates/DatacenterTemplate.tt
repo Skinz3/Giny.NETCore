@@ -1,15 +1,15 @@
 ﻿<#= Converter.GetImports() #>
 
 namespace <#= Converter.GetNamespace() #>
-{<# Converter.PushIndent(); #>
+{
 <#= Converter.GetD2OAttribute() #>    public class <#= Converter.GetClassName() #> : <#= Converter.GetExtends() #> , <#= Converter.GetImplements() #>
-    {<# Converter.PushIndent(); #>
-<#= Converter.GetD2OModule() #>
-<#= Converter.GetD2OId() #>
-<#= Converter.GetIndentedFields() #>
-<#= Converter.GetD2OClassProperties() #>
-    }<# Converter.PopIndent(); #>
-}<# Converter.PopIndent(); #>
+    {
+        <#= Converter.GetD2OModule() #>
+        <#= Converter.GetD2OId() #>
+        <#= Converter.GetTextFields() #>
+        <#= Converter.GetD2OClassProperties() #>
+    }
+}
 
 <#@ template language="C#" debug="true"  #>
 <#@ output extension=".cs" #>

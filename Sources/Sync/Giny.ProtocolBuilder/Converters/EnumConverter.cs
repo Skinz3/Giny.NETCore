@@ -36,7 +36,7 @@ namespace Giny.ProtocolBuilder.Converters
 
             foreach (var field in FieldsToWrite)
             {
-                Append(string.Format("{0} = {1},", field.Name, field.GetValue<ConstantExpression>().Value), sb);
+                sb.AppendLine(string.Format("{0} = {1},", field.Name, field.GetValue<ConstantExpression>().Value));
             }
 
             return sb.ToString();

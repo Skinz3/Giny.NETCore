@@ -52,14 +52,14 @@ namespace Giny.ProtocolBuilder.Converters
             }
             StringBuilder sb = new StringBuilder();
 
-            Append(string.Format("public const string MODULE = {0};", field.GetValue<ConstantStringExpression>().Value), sb);
+            sb.AppendLine(string.Format("public const string MODULE = {0};", field.GetValue<ConstantStringExpression>().Value));
 
             return sb.ToString();
         }
         public string GetD2OAttribute()
         {
             var sb = new StringBuilder();
-            Append("[D2OClass(\"" + File.ClassName + "\", \"" + File.Package + "\")]", sb);
+            sb.AppendLine("[D2OClass(\"" + File.ClassName + "\", \"" + File.Package + "\")]");
             return sb.ToString();
         }
         public string GetD2OId()
@@ -70,12 +70,12 @@ namespace Giny.ProtocolBuilder.Converters
 
             if (field != null && (field.RawType == "int" || field.RawType == "uint"))
             {
-                Append("public int Id => (int)" + VerifyVariableName(field.Name) + ";", sb);
+                sb.AppendLine("public int Id => (int)" + VerifyVariableName(field.Name) + ";");
 
             }
             else
             {
-                Append("public int Id => throw new NotImplementedException();", sb);
+                sb.AppendLine("public int Id => throw new NotImplementedException();");
 
             }
             return sb.ToString();
@@ -128,24 +128,24 @@ namespace Giny.ProtocolBuilder.Converters
                     variableName = "_" + variableName;
                 }
 
-                Append("[D2OIgnore]", sb);
-                Append("public " + GetConvertedType(field.Variable.Type) + " " + variableName, sb);
-                Append("{", sb);
-                PushIndent();
-                Append("get", sb);
-                Append("{", sb);
-                PushIndent();
-                Append("return " + VerifyVariableName(field.Variable.Name) + ";", sb);
-                PopIndent();
-                Append("}", sb);
-                Append("set", sb);
-                Append("{", sb);
-                PushIndent();
-                Append(VerifyVariableName(field.Variable.Name) + " = value;", sb);
-                PopIndent();
-                Append("}", sb);
-                PopIndent();
-                Append("}", sb);
+                sb.AppendLine("[D2OIgnore]");
+                sb.AppendLine("public " + GetConvertedType(field.Variable.Type) + " " + variableName);
+                sb.AppendLine("{");
+                
+                sb.AppendLine("get");
+                sb.AppendLine("{");
+              
+                sb.AppendLine("return " + VerifyVariableName(field.Variable.Name) + ";");
+            
+                sb.AppendLine("}");
+                sb.AppendLine("set");
+                sb.AppendLine("{");
+               
+                sb.AppendLine(VerifyVariableName(field.Variable.Name) + " = value;");
+                
+                sb.AppendLine("}");
+               
+                sb.AppendLine("}");
             }
             return sb.ToString();
         }

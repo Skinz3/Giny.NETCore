@@ -26,10 +26,10 @@ namespace Giny.ProtocolBuilder
         /// <summary>
         /// Règles de génération d'assembly au moment de la compilation.
         /// </summary>
-        private TemplateGenerator Host
+        public TemplateGenerator Host
         {
             get;
-            set;
+            private set;
         }
         /// <summary>
         /// Permet de passer des paramètres au moment de la génération.
@@ -89,38 +89,10 @@ namespace Giny.ProtocolBuilder
         /// Une fois généré, le fichier sera compilé.
         /// </summary>
         /// <returns>Resultat de la compilation du fichier généré.</returns>
-        public CompilationResult Generate()
+        public string Generate()
         {
-            var result = CompiledTemplate.Process();
-
-            return new CompilationResult(new CompilerErrorCollection(), result);
-
-            // string generated = Engine.ProcessTemplate(hostValue, this.Host);
-            // return new CompilationResult(Host.Errors, generated);
+            return CompiledTemplate.Process();
         }
     }
-    /// <summary>
-    /// Résultat de la compilation d'un template T4. (Compilé a l'execution).
-    /// </summary>
-    public struct CompilationResult
-    {
-        /// <summary>
-        /// Liste des erreurs retournés par le compilateur C#.
-        /// </summary>
-        public CompilerErrorCollection Errors;
-        /// <summary>
-        /// La compilation à elle reussie?
-        /// </summary>
-        public bool Succes => !Errors.HasErrors;
-        /// <summary>
-        /// Code C# généré (uniquement si la compilation a reussi.)
-        /// </summary>
-        public string Content;
 
-        public CompilationResult(CompilerErrorCollection errors, string content)
-        {
-            this.Errors = errors;
-            this.Content = content;
-        }
-    }
 }

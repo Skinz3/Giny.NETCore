@@ -1,13 +1,12 @@
 ﻿<#= Converter.GetImports() #>
 
 namespace <#= Converter.GetNamespace() #>
-{ <# Converter.PushIndent(); #>
+{ 
     public class <#= Converter.GetClassName() #> : <#= Converter.GetExtends() #> <#= Converter.GetImplements() #> 
-    { <#  Converter.PushIndent(); #>
-<#= Converter.GetMessageProtocolId() #>
-<#= Converter.GetIndentedFields() #>
-<#= Converter.GetIndentedMethods() #>
-
+    { 
+        <#= Converter.GetMessageProtocolId() #>
+        <#= Converter.GetTextFields() #>
+        <#= Converter.GetTextMethods() #>
     }
 }
 <#@ template language="C#" debug="true"  #>

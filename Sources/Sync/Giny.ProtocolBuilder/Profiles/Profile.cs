@@ -114,33 +114,33 @@ namespace Giny.ProtocolBuilder.Profiles
             {
                 var as3File = converter.File;
 
-
                 var directoryPath = Path.Combine(OutputDirectory, GetRelativeOutputPath(as3File));
 
                 generator.Bind("Converter", converter);
 
-
-                var output = generator.Generate();
-
-                foreach (CompilerError error in output.Errors)
+                foreach (CompilerError error in generator.Host.Errors)
                 {
                     Logger.Write("Compiler error :" + error.ErrorText + " line (" + error.Line + ")", Channels.Critical);
                 }
 
-                if (output.Errors.Count > 0)
+                if (generator.Host.Errors.Count > 0)
                 {
                     Console.Read();
                     Environment.Exit(0);
                 }
+
+                var output = generator.Generate();
+
+             
 
                 if (!Directory.Exists(directoryPath))
                     Directory.CreateDirectory(directoryPath);
 
                 string filePath = directoryPath + as3File.ClassName + ".cs";
 
-                File.WriteAllText(filePath, output.Content);
+                File.WriteAllText(filePath, output);
 
-                SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(output.Content);
+                SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(output);
                 SyntaxNode formattedNode = Formatter.Format(syntaxTree.GetRoot(), new AdhocWorkspace());
                 File.WriteAllText(filePath, formattedNode.ToFullString());
 

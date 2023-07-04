@@ -25,11 +25,7 @@ namespace Giny.AS3.Converter
             get;
             private set;
         }
-        protected int CurrentIndent
-        {
-            get;
-            set;
-        }
+        
         public AS3Converter(AS3File file)
         {
         
@@ -37,7 +33,6 @@ namespace Giny.AS3.Converter
             this.FieldsToWrite = SelectFieldsToWrite();
             this.MethodsToWrite = SelectMethodsToWrite();
         }
-
 
         public abstract void Prepare(Dictionary<string, AS3File> context);
 
@@ -55,36 +50,27 @@ namespace Giny.AS3.Converter
         {
             return MethodsToWrite.FirstOrDefault(x => x.Name == name);
         }
-        public string GetIndentedFields()
+        public string GetTextFields()
         {
             StringBuilder sb = new StringBuilder();
 
             foreach (var field in FieldsToWrite)
             {
-                Append(GetField(field) + ";", sb);
+                sb.AppendLine(GetField(field) + ";");
             }
             return sb.ToString();
         }
-        public string GetIndentedMethods()
+        public string GetTextMethods()
         {
             StringBuilder sb = new StringBuilder();
 
             foreach (var method in MethodsToWrite)
             {
-                Append(GetMethodSignature(method), sb);
+                sb.AppendLine(GetMethodSignature(method));
                 WriteBlock(method.Expressions, sb);
             }
 
             return sb.ToString();
-        }
-
-        public void PushIndent()
-        {
-            CurrentIndent++;
-        }
-        public void PopIndent()
-        {
-            CurrentIndent--;
         }
 
         protected abstract string GetField(AS3Field field);
@@ -93,24 +79,12 @@ namespace Giny.AS3.Converter
 
         protected abstract List<AS3Field> SelectFieldsToWrite();
 
-        protected void Append(string content, StringBuilder sb)
-        {
-            string indent = "";
-
-            for (int i = 0; i < CurrentIndent; i++)
-            {
-                indent += "    ";
-            }
-
-            content = indent + content;
-
-            sb.AppendLine(content);
-        }
+       
         private void WriteBlock(List<BaseExpression> expressions, StringBuilder sb)
         {
-            Append("{", sb);
+            sb.AppendLine("{");
 
-            PushIndent();
+           
 
             foreach (var exp in expressions)
             {
@@ -120,11 +94,11 @@ namespace Giny.AS3.Converter
                 {
                     endLine = string.Empty;
                 }
-                Append(GetExpression(exp) + endLine, sb);
+                sb.AppendLine(GetExpression(exp) + endLine);
             }
-            PopIndent();
+         
 
-            Append("}", sb);
+            sb.AppendLine("}");
         }
         protected string GetExpression(BaseExpression expression)
         {

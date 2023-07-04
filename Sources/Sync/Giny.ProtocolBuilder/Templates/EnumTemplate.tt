@@ -1,20 +1,16 @@
-﻿<#@ template language="C#" debug="true"  #>
+﻿<#= Converter.GetImports() #>
+
+namespace <#= Converter.GetNamespace() #>
+{
+    public enum <#= Converter.GetClassName() #>
+    {
+        <#= Converter.GetEnumFields() #>
+    }
+}
+
+<#@ template language="C#" debug="true"  #>
 <#@ output extension=".cs" #>
 <#@ assembly name="System.Core" #>
 <#@ import namespace="System" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ import namespace="Giny.ProtocolBuilder" #>
- 
-
 <#@ parameter name="Converter" type="Giny.ProtocolBuilder.Converters.EnumConverter" #>
-
-<#= Converter.GetImports() #>
-
-namespace <#= Converter.GetNamespace() #>
-{<# Converter.PushIndent(); #>
-    public enum <#= Converter.GetClassName() #>
-    {<# Converter.PushIndent(); #>
-<#= Converter.GetEnumFields() #>
-    }<# Converter.PopIndent(); #>
-}<# Converter.PopIndent(); #>
-
