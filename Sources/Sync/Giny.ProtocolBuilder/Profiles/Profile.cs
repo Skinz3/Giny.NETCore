@@ -140,14 +140,8 @@ namespace Giny.ProtocolBuilder.Profiles
 
                 File.WriteAllText(filePath, output.Content);
 
-                string code = File.ReadAllText(filePath);
-                SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(code);
-
-           
-                // Apply formatting to the syntax tree 
+                SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(output.Content);
                 SyntaxNode formattedNode = Formatter.Format(syntaxTree.GetRoot(), new AdhocWorkspace());
-
-                // Save the formatted code back to the file
                 File.WriteAllText(filePath, formattedNode.ToFullString());
 
                 Logger.Write("Written : " + Path.GetFileNameWithoutExtension(as3File.FilePath), Channels.Log);
