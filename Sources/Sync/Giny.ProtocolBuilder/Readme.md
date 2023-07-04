@@ -57,9 +57,10 @@ public function initAESKey() : ByteArray
 
 ## Protocol
 
-* Fixer les éventuels nom de variables invalide en C# (@base)
-* Apres la génération des D2O Classes utiliser Giny.D2O pour vérifiez les éventuels field manquant après la génération.
 * Verifier l'id du Raw data message dans MessageReceiver.
+* Fixer les éventuels problème dans le protocol (ambiguitée type 'Version' par exemple)
+* Apres la génération des D2O Classes utiliser Giny.DatabaseSynchronizer pour vérifiez les éventuels field manquant après la génération.
+* Génerer les enums custom  (Télécharger le i18n_en de l'officiel , changer la langue)
 
 
 * Dans CharacterCreationRequestMessage
@@ -82,6 +83,8 @@ static infos a rajouter (non static)
 
 * Une fois les erreurs de compilation de Giny.World résolues, utiliser le database synchroniser.
 * Utiliser le module database patcher
+
+
 
 
 ## Edit client to get protocol values

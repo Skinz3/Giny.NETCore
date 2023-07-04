@@ -121,7 +121,6 @@ namespace Giny.World.Managers.Items
                 CastInDiagonal = weapon.CastInDiagonal,
                 CastInLine = weapon.CastInLine,
                 CastTestLos = weapon.CastTestLos,
-                AdditionalEffectsZones = new List<string>(),
                 CriticalEffects = new EffectCollection(criticalEffects),
                 MaxCastPerTurn = weapon.MaxCastPerTurn,
                 CriticalHitProbability = weapon.CriticalHitProbability,
@@ -145,7 +144,8 @@ namespace Giny.World.Managers.Items
                 SpellId = 0,
                 StatesAuthorized = new int[0],
                 StatesForbidden = new int[0], // affaiblie
-                StatesRequired = new int[0]
+                StatesRequired = new int[0],
+                StatesCriterion ="",
             };
         }
 

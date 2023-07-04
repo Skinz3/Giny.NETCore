@@ -1,11 +1,12 @@
 ﻿
 
 using Giny.Core;
+using Giny.IO;
 using Giny.Zaap;
 using System.Reflection;
 
 const int Port = 3001;
-string ClientPath = @"C:\Users\Skinz\Desktop\Giny .NET Core\Dofus";
+string ClientPath = ClientConstants.ClientPath;
 Console.Title = Assembly.GetExecutingAssembly().GetName().Name;
 
 int instanceId = 1;

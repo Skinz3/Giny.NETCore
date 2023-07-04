@@ -33,7 +33,7 @@ namespace Giny.DatabaseSynchronizer
 
         public static void Synchronize()
         {
-            string d2oDirectory = Path.Combine(Program.ClientPath, ClientConstants.D2oDirectory);
+            string d2oDirectory = Path.Combine(ClientConstants.ClientPath, ClientConstants.D2oDirectory);
 
             foreach (var file in Directory.GetFiles(d2oDirectory))
             {
@@ -93,7 +93,7 @@ namespace Giny.DatabaseSynchronizer
 
                         if (d2oField == null)
                         {
-                            Logger.Write("Unknown D2O field : " + d2oFieldAttribute.FieldName + " in " + objectType.Name, Channels.Critical);
+                            Logger.Write("Unknown D2O field : " + d2oFieldAttribute.FieldName + " in " + tableType.Name, Channels.Critical);
                             Console.ReadLine();
                             Environment.Exit(0);
                         }

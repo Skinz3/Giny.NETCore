@@ -1,21 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SharpZipLib" Version="1.4.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Giny.Core\Giny.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="D2OClasses\" />
+    <ProjectReference Include="..\..\Giny.Core\Giny.Core.csproj" />
+    <ProjectReference Include="..\..\Giny.IO\Giny.IO.csproj" />
   </ItemGroup>
 
 </Project>

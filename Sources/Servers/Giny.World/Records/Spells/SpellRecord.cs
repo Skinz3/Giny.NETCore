@@ -50,7 +50,7 @@ namespace Giny.World.Records.Spells
             get;
             set;
         }
-        [D2OField("verbose_cast")]
+        [D2OField("verboseCast")]
         public bool Verbose
         {
             get;

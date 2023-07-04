@@ -165,22 +165,25 @@ namespace Giny.World.Records.Spells
             get;
             set;
         }
-        [ProtoSerialize]
-        [D2OField("statesRequired")]
+        [D2OField("statesCriterion")]
+        public string StatesCriterion
+        {
+            get;
+            set;
+        }
+        [Ignore]
         public int[] StatesRequired
         {
             get;
             set;
         }
-        [ProtoSerialize]
-        [D2OField("statesAuthorized")]
+        [Ignore]
         public int[] StatesAuthorized
         {
             get;
             set;
         }
-        [ProtoSerialize]
-        [D2OField("statesForbidden")]
+        [Ignore]
         public int[] StatesForbidden
         {
             get;
@@ -200,12 +203,7 @@ namespace Giny.World.Records.Spells
             get;
             set;
         }
-        [D2OField("additionalEffectsZones")]
-        public List<string> AdditionalEffectsZones
-        {
-            get;
-            set;
-        }
+      
 
         public override string ToString()
         {

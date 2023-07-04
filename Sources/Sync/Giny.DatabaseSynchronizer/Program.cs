@@ -34,29 +34,21 @@ namespace Giny.DatabaseSynchronizer
 {
     class Program
     {
-        public static bool SYNC_D2O = true;
+        public static bool SYNC_D2O = false;
         public static bool SYNC_MAPS = true;
 
         public static D2IFile D2IFileFR;
         public static D2IFile D2IFileEN;
 
-        public static string ClientPath;
 
         static void Main(string[] args)
         {
             Logger.DrawLogo();
 
-            ClientPath = "C:\\Users\\Skinz\\Desktop\\Giny .NET Core\\Dofus";
+            
 
-            if (!Directory.Exists(ClientPath))
-            {
-                Logger.Write("Unable to locate dofus client. Edit App.config", Channels.Warning);
-                Console.ReadLine();
-                return;
-            }
-
-            D2IFileFR = new D2IFile(Path.Combine(ClientPath, ClientConstants.i18nPathFR));
-            D2IFileEN = new D2IFile(Path.Combine(ClientPath, ClientConstants.i18nPathEN));
+            D2IFileFR = new D2IFile(Path.Combine(ClientConstants.ClientPath, ClientConstants.i18nPathFR));
+            D2IFileEN = new D2IFile(Path.Combine(ClientConstants.ClientPath, ClientConstants.i18nPathEN));
 
             DatabaseManager.Instance.Initialize(Assembly.GetAssembly(typeof(BreedRecord)),
               "127.0.0.1", "giny_world", "root", "");

@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Giny.IO.D2O;
 using Giny.IO.D2OClasses;
+using Giny.IO;
 
 namespace Giny.DatabaseSynchronizer
 {
@@ -39,7 +40,7 @@ namespace Giny.DatabaseSynchronizer
 
             Logger.Write("Building Maps...");
 
-            foreach (var file in Directory.GetFiles(Path.Combine(Program.ClientPath, MAPS_PATH)))
+            foreach (var file in Directory.GetFiles(Path.Combine(ClientConstants.ClientPath, MAPS_PATH)))
             {
                 if (Path.GetExtension(file) == ".ele")
                 {
