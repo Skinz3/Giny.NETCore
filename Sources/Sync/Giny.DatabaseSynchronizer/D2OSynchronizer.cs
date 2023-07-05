@@ -1,4 +1,5 @@
 ﻿using Giny.Core;
+using Giny.Core.Logging;
 using Giny.Core.Misc;
 using Giny.IO;
 using Giny.IO.D2O;
@@ -44,6 +45,9 @@ namespace Giny.DatabaseSynchronizer
             {
                 return;
             }
+
+            Logger.Write("Building D2O", Channels.Info);
+
             foreach (var tableType in DatabaseManager.Instance.TableTypes)
             {
                 var attribute = tableType.GetCustomAttribute<D2OClassAttribute>();
@@ -52,7 +56,10 @@ namespace Giny.DatabaseSynchronizer
                 {
                     var reader = d2oReaders.FirstOrDefault(x => x.Classes.Values.Any(j => j.Name == attribute.Name));
                     Logger.Write("Building " + tableType.Name + "...");
-                    BuildFromObjects(reader.EnumerateObjects().Where(x => x.GetType().Name == attribute.Name), tableType);
+
+                    var objects = reader.EnumerateObjects().Where(x => x.GetType().Name == attribute.Name).ToArray();
+
+                    BuildFromObjects(objects, tableType);
                 }
             }
 
@@ -74,12 +81,17 @@ namespace Giny.DatabaseSynchronizer
 
             Notepad.Open(sb.ToString());
         }
-        private static void BuildFromObjects(IEnumerable<object> objects, Type tableType)
+        private static void BuildFromObjects(object[] objects, Type tableType)
         {
             var objectType = objects.First().GetType();
 
+            int current = 0;
+
+            ProgressLogger logger = new ProgressLogger();
+
             foreach (var obj in objects)
             {
+                current++;
                 ITable table = (ITable)Convert.ChangeType(Activator.CreateInstance(tableType), tableType);
 
                 foreach (var property in tableType.GetProperties())
@@ -183,14 +195,16 @@ namespace Giny.DatabaseSynchronizer
                             }
                             catch (Exception ex)
                             {
-                                Logger.Write("Unable to set property " + property.Name + " :" + ex, Channels.Warning);
+                                Logger.Write($"Unable to set property {property.Name} to value ({value}) : {ex}", Channels.Warning);
                             }
                         }
                     }
                 }
 
+                logger.WriteProgressBar(current, objects.Length);
                 TableManager.Instance.GetWriter(tableType).Use(new ITable[] { table }, DatabaseAction.Add);
             }
+            logger.Flush();
         }
 
         private static Dictionary<long, MonsterRoom> ConvertMonsterRooms(List<double> mapIds)

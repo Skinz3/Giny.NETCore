@@ -97,7 +97,7 @@ namespace Giny.World.Managers.Fights.Effects
         }
 
         [SpellAppearance(1326)]
-        public static void BambouPandawa(Fighter fighter,ref ServerEntityLook look)
+        public static void BambouPandawa(Fighter fighter, ref ServerEntityLook look)
         {
             look.SetBones(4576);
         }
@@ -132,6 +132,18 @@ namespace Giny.World.Managers.Fights.Effects
         public static void OsamodasDragon(Fighter fighter, ref ServerEntityLook look)
         {
             look = EntityLookManager.Instance.CreateLookFromBones(3716, 150);
+        }
+
+        [SpellAppearance(2061)]
+        public static void Appearence_2061(Fighter fighter, ref ServerEntityLook look)
+        {
+            look.AddSkin(3650);
+        }
+        [SpellAppearance(2062)]
+        public static void Appearence_2062(Fighter fighter, ref ServerEntityLook look)
+        {
+            look.SetBones(7156);
+            look.AddSkin(3650);
         }
     }
 }

@@ -3,6 +3,7 @@ using Giny.Core.IO;
 using Giny.IO;
 using Giny.IO.D2I;
 using Giny.IO.D2O;
+using Giny.IO.D2P;
 using Giny.ORM;
 using Giny.ORM.Interfaces;
 using Giny.ORM.IO;
@@ -24,27 +25,29 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Giny.DatabaseSynchronizer
 {
     class Program
     {
-        public static bool SYNC_D2O = false;
+        public static bool SYNC_D2O = true;
         public static bool SYNC_MAPS = true;
 
         public static D2IFile D2IFileFR;
         public static D2IFile D2IFileEN;
 
-
         static void Main(string[] args)
         {
+
             Logger.DrawLogo();
 
-            
+            Logger.Write("Starting synchronization...", Channels.Info);
 
             D2IFileFR = new D2IFile(Path.Combine(ClientConstants.ClientPath, ClientConstants.i18nPathFR));
             D2IFileEN = new D2IFile(Path.Combine(ClientConstants.ClientPath, ClientConstants.i18nPathEN));

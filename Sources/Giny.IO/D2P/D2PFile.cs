@@ -432,12 +432,23 @@ namespace Giny.IO.D2P
             return m_entries.ContainsKey(fileName);
         }
 
-        public Dictionary<D2PEntry, byte[]> ReadAllFiles()
+        public Dictionary<D2PEntry, byte[]> ReadAllEntries()
         {
             Dictionary<D2PEntry, byte[]> result = new Dictionary<D2PEntry, byte[]>();
             foreach (KeyValuePair<string, D2PEntry> entry in this.m_entries)
             {
                 result.Add(entry.Value, this.ReadFile(entry.Value));
+            }
+            return result;
+        }
+
+
+        public Dictionary<D2PEntry, byte[]> ReadInstanceEntries()
+        {
+            Dictionary<D2PEntry, byte[]> result = new Dictionary<D2PEntry, byte[]>();
+            foreach (D2PEntry entry in this.GetEntriesOfInstanceOnly())
+            {
+                result.Add(entry, this.ReadFile(entry));
             }
             return result;
         }

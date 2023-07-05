@@ -2484,9 +2484,13 @@
         /// #1{~1~2 à }#2 (dommages)
         /// </summary>
         Effect_DamageBestElement_2829 = 2829,
+
+        Effect_DamageWorstElement = 2832,
+
         /// <summary>
         /// #1{~1~2 à }#2% Force
         /// </summary>
+        /// 
         Effect_AddStrengthPercent = 2834,
         /// <summary>
         /// -#1{~1~2 à -}#2% Force
@@ -2606,6 +2610,7 @@
         Effect_Unknown_2877 = 2877,
 
         Effect_Autopilot = 2881,
+
 
         End = 2890,
 

@@ -17,11 +17,9 @@ namespace Giny.IO.DLM
 {
     public class DlmMap
     {
-        private BigEndianReader _reader;
+        public const string EncryptionKeyString = "649ae451ca33ec53bbcbcc33becf15f4";
 
-        public const string DefaultEncryptionKeyString = "649ae451ca33ec53bbcbcc33becf15f4";
-
-        private byte[] _encryptionKey = Encoding.UTF8.GetBytes(DefaultEncryptionKeyString);
+        private byte[] EncryptionKey = Encoding.UTF8.GetBytes(EncryptionKeyString);
 
         public const byte MAP_HEADER = 77;
 
@@ -229,11 +227,6 @@ namespace Giny.IO.DLM
             get;
             set;
         }
-        public string HashCode
-        {
-            get;
-            set;
-        }
         public int TacticalModeTemplateId
         {
             get;
@@ -244,74 +237,25 @@ namespace Giny.IO.DLM
             get;
             set;
         }
-        public DlmMap()
-        {
 
-        }
-        public DlmMap(CompressedMap compressedMap)
+        public DlmMap(byte[] compressedBuffer)
         {
+            byte[] headerlessBuffer = new byte[compressedBuffer.Length - 2];
+            Array.Copy(compressedBuffer, 2, headerlessBuffer, 0, compressedBuffer.Length - 2);
 
-            D2PFilePath = compressedMap.D2pFilePath;
-            InitializeReader(compressedMap.D2pFilePath, (int)compressedMap.Offset, (int)compressedMap.BytesCount);
-            Deserialize();
-            _reader.Dispose();
-        }
-        public DlmMap(D2PEntry entry)
-        {
-            InitializeReader(entry.Container.FilePath, entry.Offset, entry.Size);
-            _encryptionKey = Encoding.UTF8.GetBytes(DefaultEncryptionKeyString);
-            Deserialize();
-            _reader.Dispose();
-        }
-        public DlmMap(BigEndianReader uncompressedReader)
-        {
-            this._reader = uncompressedReader;
-            _encryptionKey = Encoding.UTF8.GetBytes(DefaultEncryptionKeyString);
-            Deserialize();
-        }
-
-        private void InitializeReader(string d2pFilePath, int offset, int bytesCount)
-        {
-            FileStream compressedMapStream = new FileStream(d2pFilePath, FileMode.Open, FileAccess.Read);
-            BinaryReader compressedMapReader = new BinaryReader(compressedMapStream);
-            compressedMapReader.BaseStream.Position = offset;
-
-            byte[] compressedMapBuffer = compressedMapReader.ReadBytes(bytesCount);
-
-            if (compressedMapBuffer[0] == MAP_HEADER)
+            using (var decompressMapStream = new MemoryStream(headerlessBuffer))
             {
-                _reader = new BigEndianReader(compressedMapBuffer);
-                return;
+                using (DeflateStream stream = new DeflateStream(decompressMapStream, CompressionMode.Decompress))
+                {
+                    using (BigEndianReader reader = new BigEndianReader(stream))
+                    {
+                        Deserialize(reader);
+                    }
+
+                }
             }
-
-            byte[] compressedMapBufferWithoutHeader = new byte[compressedMapBuffer.Length - 2];
-            Array.Copy(compressedMapBuffer, 2, compressedMapBufferWithoutHeader, 0, compressedMapBuffer.Length - 2);
-
-            StringBuilder mapHashCodeBuilder = new StringBuilder();
-            byte[] compressedMapMd5Buffer = MD5.Create().ComputeHash(compressedMapBufferWithoutHeader);
-
-            for (int i = 0; i < compressedMapMd5Buffer.Length; i++)
-                mapHashCodeBuilder.Append(compressedMapMd5Buffer[i].ToString("X2"));
-
-            HashCode = mapHashCodeBuilder.ToString();
-
-
-            MemoryStream decompressMapStream = new MemoryStream(compressedMapBufferWithoutHeader);
-            DeflateStream mapDeflateStream = new DeflateStream(decompressMapStream, CompressionMode.Decompress);
-
-            _reader = new BigEndianReader(mapDeflateStream);
-
-            compressedMapReader.Dispose();
-            compressedMapStream.Close();
         }
-        public static byte[] GetCompressedData(CompressedMap compressed)
-        {
-            FileStream compressedMapStream = new FileStream(compressed.D2pFilePath, FileMode.Open, FileAccess.Read);
-            BinaryReader compressedMapReader = new BinaryReader(compressedMapStream);
-            compressedMapReader.BaseStream.Position = compressed.Offset;
-            byte[] compressedMapBuffer = compressedMapReader.ReadBytes((int)compressed.BytesCount);
-            return compressedMapBuffer;
-        }
+       
         public void Serialize(BigEndianWriter writer)
         {
             writer.WriteSByte((sbyte)MAP_HEADER);
@@ -408,57 +352,57 @@ namespace Giny.IO.DLM
                 cell.Serialize(writer, MapVersion);
             }
         }
-        private void Deserialize()
+        private void Deserialize(BigEndianReader reader)
         {
-            int header = _reader.ReadSByte();
+            int header = reader.ReadSByte();
             int dataLen = 0;
-            byte[] decryptionKey = _encryptionKey;
+            byte[] decryptionKey = EncryptionKey;
 
             if (header != MAP_HEADER)
                 throw new FormatException("Unknown file header, first byte must be " + MAP_HEADER);
 
 
-            MapVersion = this._reader.ReadSByte();
-            Id = (int)this._reader.ReadUInt();
+            MapVersion = reader.ReadSByte();
+            Id = (int)reader.ReadUInt();
 
             if (MapVersion >= 7)
             {
-                Encrypted = _reader.ReadBoolean();
-                EncryptionVersion = (uint)_reader.ReadSByte();
-                dataLen = this._reader.ReadInt();
+                Encrypted = reader.ReadBoolean();
+                EncryptionVersion = (uint)reader.ReadSByte();
+                dataLen = reader.ReadInt();
 
                 if (Encrypted)
                 {
-                    byte[] encryptedData = _reader.ReadBytes(dataLen);
+                    byte[] encryptedData = reader.ReadBytes(dataLen);
 
                     for (int i = 0; i < encryptedData.Length; i++)
                         encryptedData[i] = (byte)(encryptedData[i] ^ decryptionKey[i % decryptionKey.Length]);
 
-                    _reader = new BigEndianReader(new MemoryStream(encryptedData));
+                    reader = new BigEndianReader(new MemoryStream(encryptedData));
                 }
             }
 
-            RelativeId = _reader.ReadUInt();
+            RelativeId = reader.ReadUInt();
             Position = new WorldPoint(RelativeId);
 
-            MapType = _reader.ReadSByte();
-            SubareaId = (short)_reader.ReadInt();
-            TopNeighbourId = _reader.ReadInt();
-            BottomNeighbourId = _reader.ReadInt();
-            LeftNeighbourId = _reader.ReadInt();
-            RightNeighbourId = _reader.ReadInt();
-            ShadowBonusOnEntities = _reader.ReadUInt();
+            MapType = reader.ReadSByte();
+            SubareaId = (short)reader.ReadInt();
+            TopNeighbourId = reader.ReadInt();
+            BottomNeighbourId = reader.ReadInt();
+            LeftNeighbourId = reader.ReadInt();
+            RightNeighbourId = reader.ReadInt();
+            ShadowBonusOnEntities = reader.ReadUInt();
 
             if (MapVersion >= 9)
             {
                 int readColor = 0;
 
-                readColor = _reader.ReadInt();
+                readColor = reader.ReadInt();
                 this.BackgroundAlpha = (readColor & 4278190080) >> 32;
                 this.BackgroundRed = (readColor & 16711680) >> 16;
                 this.BackgroundGreen = (readColor & 65280) >> 8;
                 this.BackgroundBlue = readColor & 255;
-                readColor = (int)_reader.ReadUInt();
+                readColor = (int)reader.ReadUInt();
 
                 GridAlpha = (readColor & 4278190080) >> 32;
                 GridRed = (readColor & 16711680) >> 16;
@@ -467,16 +411,16 @@ namespace Giny.IO.DLM
             }
             else if (MapVersion >= 3)
             {
-                BackgroundRed = _reader.ReadSByte();
-                BackgroundGreen = _reader.ReadSByte();
-                BackgroundBlue = _reader.ReadSByte();
+                BackgroundRed = reader.ReadSByte();
+                BackgroundGreen = reader.ReadSByte();
+                BackgroundBlue = reader.ReadSByte();
             }
 
             if (MapVersion >= 4)
             {
-                ZoomScale = (ushort)(_reader.ReadUShort() / 100);
-                ZoomOffsetX = _reader.ReadShort();
-                ZoomOffsetY = _reader.ReadShort();
+                ZoomScale = (ushort)(reader.ReadUShort() / 100);
+                ZoomOffsetX = reader.ReadShort();
+                ZoomOffsetY = reader.ReadShort();
 
                 if (ZoomScale < 1)
                 {
@@ -486,39 +430,39 @@ namespace Giny.IO.DLM
             }
             if (this.MapVersion > 10)
             {
-                this.TacticalModeTemplateId = _reader.ReadInt();
+                this.TacticalModeTemplateId = reader.ReadInt();
             }
 
-            int bgCount = _reader.ReadSByte();
+            int bgCount = reader.ReadSByte();
 
             BackgroundFixtures = new List<Fixture>();
 
             for (int i = 0; i < bgCount; i++)
             {
-                Fixture backgroundFixture = new Fixture(_reader);
+                Fixture backgroundFixture = new Fixture(reader);
                 BackgroundFixtures.Add(backgroundFixture);
             }
 
 
-            var foregroundCount = _reader.ReadByte();
+            var foregroundCount = reader.ReadByte();
 
             ForegroundFixtures = new List<Fixture>();
 
             for (int i = 0; i < foregroundCount; i++)
             {
-                Fixture foregroundFixture = new Fixture(_reader);
+                Fixture foregroundFixture = new Fixture(reader);
                 ForegroundFixtures.Add(foregroundFixture);
             }
 
-            _reader.ReadInt(); // -_- ankama wtf... -_-
+            reader.ReadInt(); // -_- ankama wtf... -_-
 
-            GroundCRC = _reader.ReadInt();
-            var layersCount = _reader.ReadByte();
+            GroundCRC = reader.ReadInt();
+            var layersCount = reader.ReadByte();
             Layers = new List<Layer>();
 
             for (int i = 0; i < layersCount; i++)
             {
-                Layer layer = new Layer(_reader, MapVersion);
+                Layer layer = new Layer(reader, MapVersion);
                 Layers.Add(layer);
             }
 
@@ -526,7 +470,7 @@ namespace Giny.IO.DLM
 
             for (short i = 0; i < Cells.Length; i++)
             {
-                CellData cell = new CellData(_reader, MapVersion, i);
+                CellData cell = new CellData(reader, MapVersion, i);
                 Cells[i] = cell;
             }
         }
@@ -540,17 +484,6 @@ namespace Giny.IO.DLM
             }
         }
 
-        public static DlmMap Uncompress(byte[] data)
-        {
-            using (var memoryStream = new MemoryStream(data))
-            {
-                var uncompressed = Deflate.Decompress(memoryStream);
-
-                using (var reader = new BigEndianReader(uncompressed))
-                {
-                    return new DlmMap(reader);
-                }
-            }
-        }
+        
     }
 }
