@@ -1,4 +1,5 @@
-﻿using Giny.Core.DesignPattern;
+﻿using Giny.Core;
+using Giny.Core.DesignPattern;
 using Giny.Core.Extensions;
 using Giny.Core.Time;
 using Giny.World.Modules;
@@ -25,7 +26,14 @@ namespace Giny.World.Managers.Fights.Challenges
 
                 if (attribute != null)
                 {
-                    this.m_challenges.Add(ChallengeRecord.GetChallenge(attribute.Id), type);
+                    var challenge = ChallengeRecord.GetChallenge(attribute.Id);
+
+                    if (challenge == null)
+                    {
+                        Logger.Write("Challenge " + attribute.Id + " have unknown challenge record. (skipped)",Channels.Warning);
+                        continue;
+                    }
+                    this.m_challenges.Add(challenge, type);
                 }
             }
         }

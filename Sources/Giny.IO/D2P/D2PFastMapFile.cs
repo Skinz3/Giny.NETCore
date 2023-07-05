@@ -55,7 +55,7 @@ namespace Giny.IO.D2P
             reader.BaseStream.Position = (position);
 
 
-            for (int i = 0; i < compressedMapsCount; i++) // <=
+            for (int i = 0; i < compressedMapsCount; i++)  
             {
                 var compressedMap = new CompressedMap(reader, D2pFilePath);
 

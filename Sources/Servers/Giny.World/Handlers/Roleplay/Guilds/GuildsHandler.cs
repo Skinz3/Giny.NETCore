@@ -37,6 +37,13 @@ namespace Giny.World.Handlers.Roleplay.Guilds
         [MessageHandler]
         public static void HandleGuildGetInformationsMessage(GuildGetInformationsMessage message, WorldClient client)
         {
+            if (client.Character.Guild == null)
+            {
+                client.Character.ReplyWarning("Client request GuildGetInformationsMessage but no guild... why?");
+                return;
+
+              
+            }
             switch ((GuildInformationsTypeEnum)message.infoType)
             {
                 case GuildInformationsTypeEnum.INFO_GENERAL:

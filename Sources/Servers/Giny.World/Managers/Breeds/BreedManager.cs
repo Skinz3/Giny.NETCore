@@ -20,36 +20,7 @@ namespace Giny.World.Managers.Breeds
         public const short BreedDefaultLife = 55;
 
         public const short BreedDefaultProspecting = 100;
-
-        private readonly static PlayableBreedEnum[] AvailableBreeds = new PlayableBreedEnum[]
-        {
-                PlayableBreedEnum.Feca,
-                PlayableBreedEnum.Osamodas,
-                PlayableBreedEnum.Enutrof,
-                PlayableBreedEnum.Sram,
-                PlayableBreedEnum.Xelor,
-                PlayableBreedEnum.Ecaflip,
-                PlayableBreedEnum.Eniripsa,
-                PlayableBreedEnum.Iop,
-                PlayableBreedEnum.Cra,
-                PlayableBreedEnum.Sadida,
-                PlayableBreedEnum.Sacrieur,
-                PlayableBreedEnum.Pandawa,
-                PlayableBreedEnum.Roublard,
-                PlayableBreedEnum.Zobal,
-                PlayableBreedEnum.Steamer,
-                PlayableBreedEnum.Eliotrope,
-                PlayableBreedEnum.Huppermage,
-                PlayableBreedEnum.Ouginak,
-        };
-
-        public int AvailableBreedsFlags
-        {
-            get
-            {
-                return AvailableBreeds.Aggregate(0, (current, breedEnum) => current | (1 << ((int)breedEnum - 1)));
-            }
-        }
+      
 
         public ServerEntityLook GetBreedLook(BreedRecord breedRecord, bool sex, short cosmeticId, int[] colors)
         {

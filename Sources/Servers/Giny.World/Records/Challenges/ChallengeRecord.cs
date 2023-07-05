@@ -39,7 +39,8 @@ namespace Giny.World.Records.Challenges
 
         public static ChallengeRecord GetChallenge(int id)
         {
-            return Challenges[id];
+            Challenges.TryGetValue(id, out var challenge);
+            return challenge;
         }
     }
 }

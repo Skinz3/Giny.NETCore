@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Giny.DatabasePatcher.Monsters
 {
-    public class MonsterSpawns 
+    public class MonsterSpawns
     {
         private static long[] NotSpawned = new long[]
         {
@@ -43,6 +43,11 @@ namespace Giny.DatabasePatcher.Monsters
                     {
                         MonsterRecord monsterRecord = MonsterRecord.GetMonsterRecord(monsterId);
 
+                        if (monsterRecord == null)
+                        {
+                            Logger.Write($"Unknown monster {monsterId} skipping spawn...");
+                            continue;
+                        }
                         var spawnProbability = ComputeMonsterSpawnProbability(monsterRecord);
 
                         if (spawnProbability > 0)
@@ -58,7 +63,7 @@ namespace Giny.DatabasePatcher.Monsters
                             record.AddInstantElement();
                         }
                     }
-                   
+
                 }
             }
 
@@ -79,6 +84,7 @@ namespace Giny.DatabasePatcher.Monsters
             {
                 case MonsterRacesEnum.UNCLASSIFIED:
                     return 0.5d;
+                    break;
                 case MonsterRacesEnum.CLASS_SUMMONS:
                     break;
                 case MonsterRacesEnum.BANDITS:
@@ -87,13 +93,13 @@ namespace Giny.DatabasePatcher.Monsters
                     break;
                 case MonsterRacesEnum.IMMATURE_DREGGONS:
                     break;
-                case MonsterRacesEnum.BWORKS:
+                case MonsterRacesEnum.AMAKNA_BWORKS:
                     break;
-                case MonsterRacesEnum.GOBLINS:
+                case MonsterRacesEnum.AMAKNA_GOBLINS:
                     break;
                 case MonsterRacesEnum.JELLIES:
                     break;
-                case MonsterRacesEnum.NIGHT_MONSTERS:
+                case MonsterRacesEnum.NIGHT_BEASTS:
                     break;
                 case MonsterRacesEnum.GOBBALLS:
                     break;
@@ -131,10 +137,10 @@ namespace Giny.DatabasePatcher.Monsters
                     break;
                 case MonsterRacesEnum.IMPS:
                     break;
-                case MonsterRacesEnum.SEWER_MONSTERS:
+                case MonsterRacesEnum.SPHINCTER_CELLS_GANG:
                     break;
                 case MonsterRacesEnum.WANTED_MONSTERS:
-                    return 0.05d;
+                    break;
                 case MonsterRacesEnum.PIWIS:
                     break;
                 case MonsterRacesEnum.SCARALEAVES:
@@ -143,15 +149,15 @@ namespace Giny.DatabasePatcher.Monsters
                     break;
                 case MonsterRacesEnum.BOOWOLVES:
                     break;
-                case MonsterRacesEnum.MOON_BEACH_MONSTERS:
+                case MonsterRacesEnum.MOON_TURTLES:
                     break;
                 case MonsterRacesEnum.MOON_PIRATES:
                     break;
                 case MonsterRacesEnum.FORBIDDEN_JUNGLE_MONSTERS:
                     break;
-                case MonsterRacesEnum.CROCODYLS:
+                case MonsterRacesEnum.SWAMPSTERS:
                     break;
-                case MonsterRacesEnum.MUSHES:
+                case MonsterRacesEnum.SPIMUSHES:
                     break;
                 case MonsterRacesEnum.TOFUS:
                     break;
@@ -162,7 +168,7 @@ namespace Giny.DatabasePatcher.Monsters
                 case MonsterRacesEnum.FOREST_ANIMALS:
                     break;
                 case MonsterRacesEnum.QUEST_MONSTERS:
-                    return 0.01d;
+                    break;
                 case MonsterRacesEnum.CROBAKS:
                     break;
                 case MonsterRacesEnum.GHOSTS:
@@ -184,49 +190,49 @@ namespace Giny.DatabasePatcher.Monsters
                 case MonsterRacesEnum.MINOS:
                     break;
                 case MonsterRacesEnum.KWISMAS_MONSTERS:
-                    return 0.01d;
+                    break;
                 case MonsterRacesEnum.SNAPPERS:
                     break;
-                case MonsterRacesEnum.GRASSY_PLAINS_MONSTERS:
+                case MonsterRacesEnum.HERBOREALS:
                     break;
-                case MonsterRacesEnum.CORAL_BEACH_MONSTERS:
+                case MonsterRacesEnum.CORALATOR_COLONY:
                     break;
                 case MonsterRacesEnum.PEAT_BOG_MONSTERS:
                     break;
-                case MonsterRacesEnum.DARK_JUNGLE_MONSTERS:
+                case MonsterRacesEnum.DARK_FLORIFAUNA:
                     break;
-                case MonsterRacesEnum.TREE_KEEHOLO_MONSTERS:
+                case MonsterRacesEnum.TREE_PEOPLE:
                     break;
-                case MonsterRacesEnum.OTOMAIS_ARK_MONSTERS:
+                case MonsterRacesEnum.OTOMAIS_ARK_PIRATES:
                     break;
-                case MonsterRacesEnum.ZOTH_VILLAGE_MONSTERS:
+                case MonsterRacesEnum.ZOTHS:
                     break;
                 case MonsterRacesEnum.ARCHMONSTERS:
-                    return 0.01d;
+                    break;
                 case MonsterRacesEnum.MASTOGOBS:
                     break;
-                case MonsterRacesEnum.FRIGOST_VILLAGE_MONSTERS:
+                case MonsterRacesEnum.FRIGOST_VILLAGE_CRITTERS:
                     break;
-                case MonsterRacesEnum.LONESOME_PINE_TRAIL_MONSTERS:
+                case MonsterRacesEnum.LONESOME_PINE_FAUNA:
                     break;
                 case MonsterRacesEnum.PINGWINS:
                     break;
                 case MonsterRacesEnum.BEARBARIANS:
                     break;
-                case MonsterRacesEnum.TEARS_OF_OURONIGRIDE_MONSTERS:
+                case MonsterRacesEnum.SULFURIOUSES:
                     break;
-                case MonsterRacesEnum.ALMAS_CRADLE_MONSTERS:
+                case MonsterRacesEnum.HESPERUS_CREW:
                     break;
-                case MonsterRacesEnum.FANGS_OF_GLASS_MONSTERS:
+                case MonsterRacesEnum.BROCKHARDS:
                     break;
                 case MonsterRacesEnum.SNOWFOUX:
                     break;
-                case MonsterRacesEnum.PETRIFIED_FOREST_MONSTERS:
+                case MonsterRacesEnum.SYLVASPIRITS:
                     break;
-                case MonsterRacesEnum.FRIGOST_WANTED_MONSTERS:
-                    return 0.01d;
+                case MonsterRacesEnum.FRIGOST_WANTED_NOTICES:
+                    break;
                 case MonsterRacesEnum.FRIGOST_QUEST_MONSTERS:
-                    return 0.01d;
+                    break;
                 case MonsterRacesEnum.SAKAI_GOBLINS:
                     break;
                 case MonsterRacesEnum.BOMBS:
@@ -242,9 +248,9 @@ namespace Giny.DatabasePatcher.Monsters
                 case MonsterRacesEnum.LEATHERBODS:
                     break;
                 case MonsterRacesEnum.VULKANIA_QUEST_MONSTERS:
-                    return 0.01d;
+                    break;
                 case MonsterRacesEnum.KWISMAS_QUEST_MONSTERS:
-                    return 0.01d;
+                    break;
                 case MonsterRacesEnum.ARMARINES:
                     break;
                 case MonsterRacesEnum.ALCHIMERAS:
@@ -255,16 +261,14 @@ namespace Giny.DatabasePatcher.Monsters
                     break;
                 case MonsterRacesEnum.MONSTER_SUMMONS:
                     break;
-                case MonsterRacesEnum.INCARNATION_SUMMONS:
-                    break;
                 case MonsterRacesEnum.ALLIANCE_PRISMS:
                     break;
                 case MonsterRacesEnum.KRISMAHLO_ISLAND_MONSTERS:
                     break;
-                case MonsterRacesEnum.ARCHBISHOPS_PALACE_MONSTER:
+                case MonsterRacesEnum.ARCHBISHOPS_PALACE_MONSTERS:
                     break;
                 case MonsterRacesEnum.ALIGNMENT_QUEST_MONSTERS:
-                    return 0.01d;
+                    break;
                 case MonsterRacesEnum.MERKAPTANS:
                     break;
                 case MonsterRacesEnum.EVENT_MONSTERS:
@@ -284,7 +288,7 @@ namespace Giny.DatabasePatcher.Monsters
                 case MonsterRacesEnum.STRONGBOXERS:
                     break;
                 case MonsterRacesEnum.WANTED_DIMENSIONAL_MONSTERS:
-                    return 0.05d;
+                    break;
                 case MonsterRacesEnum.DARK_COURT:
                     break;
                 case MonsterRacesEnum.MALITIAMEN:
@@ -308,7 +312,7 @@ namespace Giny.DatabasePatcher.Monsters
                 case MonsterRacesEnum.CELESTIAL_TEMPLE_MONSTERS:
                     break;
                 case MonsterRacesEnum.INCARNAM_QUEST_MONSTERS:
-                    return 0.01d;
+                    break;
                 case MonsterRacesEnum.SPIRIT_FIRES:
                     break;
                 case MonsterRacesEnum.INCARNAM_GOBBALLS:
@@ -322,7 +326,7 @@ namespace Giny.DatabasePatcher.Monsters
                 case MonsterRacesEnum.INCARNAM_MUSHROOMS:
                     break;
                 case MonsterRacesEnum.WANTED_ALIGNMENT_MONSTERS:
-                    return 0.05d;
+                    break;
                 case MonsterRacesEnum.GREAT_GAME:
                     break;
                 case MonsterRacesEnum.ECAFLEES:
@@ -338,7 +342,7 @@ namespace Giny.DatabasePatcher.Monsters
                 case MonsterRacesEnum.WILD_SEEMYOOLS:
                     break;
                 case MonsterRacesEnum.SUFOKIA_WANTED_MONSTERS:
-                    return 0.05d;
+                    break;
                 case MonsterRacesEnum.BLIBLIS:
                     break;
                 case MonsterRacesEnum.IMP_AUTOMATONS:
@@ -385,10 +389,16 @@ namespace Giny.DatabasePatcher.Monsters
                     break;
                 case MonsterRacesEnum.ANOMALY_GUARDIANS:
                     break;
+                case MonsterRacesEnum.BIGBOMORPHS:
+                    break;
                 case MonsterRacesEnum.CHOCOMANCER:
                     break;
+                case MonsterRacesEnum.BRUTOMORPHS:
+                    break;
+                case MonsterRacesEnum.BRIKOMORPHS:
+                    break;
                 case MonsterRacesEnum.FLEASTER_ISLAND_QUEST_MONSTERS:
-                    return 0.01d;
+                    break;
                 case MonsterRacesEnum.CLASS_SUMMONS_OSAMODAS:
                     break;
                 case MonsterRacesEnum.DRAGOSS:
@@ -413,7 +423,116 @@ namespace Giny.DatabasePatcher.Monsters
                     break;
                 case MonsterRacesEnum.CLASS_SUMMONS_CRA:
                     break;
-
+                case MonsterRacesEnum.THRALLS:
+                    break;
+                case MonsterRacesEnum.MISERITES:
+                    break;
+                case MonsterRacesEnum.WARMONGERS:
+                    break;
+                case MonsterRacesEnum.CORRUPTED_ONES:
+                    break;
+                case MonsterRacesEnum.CLASS_SUMMONS_ROGUE:
+                    break;
+                case MonsterRacesEnum.CLASS_SUMMONS_FOGGERNAUT:
+                    break;
+                case MonsterRacesEnum.TEMPORIS_SUMMONS:
+                    break;
+                case MonsterRacesEnum.KWAPA:
+                    break;
+                case MonsterRacesEnum.KOZARU:
+                    break;
+                case MonsterRacesEnum.TANUKIS:
+                    break;
+                case MonsterRacesEnum.PLANTALAS:
+                    break;
+                case MonsterRacesEnum.FIREFOUX:
+                    break;
+                case MonsterRacesEnum.MIST_ARMY:
+                    break;
+                case MonsterRacesEnum.TOMB_YOKAI:
+                    break;
+                case MonsterRacesEnum.PAPER_YOKIANZHI:
+                    break;
+                case MonsterRacesEnum.INK_YOKIANZHI:
+                    break;
+                case MonsterRacesEnum.ECAFLIP_CITY_MONSTERS:
+                    break;
+                case MonsterRacesEnum.THE_POSSESSED:
+                    break;
+                case MonsterRacesEnum.BRAKMARIAN_RATS:
+                    break;
+                case MonsterRacesEnum.BONTARIAN_RATS:
+                    break;
+                case MonsterRacesEnum.DESTROYERS:
+                    break;
+                case MonsterRacesEnum.GOBBOWL_SUMMONS:
+                    break;
+                case MonsterRacesEnum.MALTERS:
+                    break;
+                case MonsterRacesEnum.POUTCH:
+                    break;
+                case MonsterRacesEnum.WORLD_BOSS:
+                    break;
+                case MonsterRacesEnum.TIMBERLAND_REBELS:
+                    break;
+                case MonsterRacesEnum.STRUBIAN_RATS:
+                    break;
+                case MonsterRacesEnum.MAKNIAN_RATS:
+                    break;
+                case MonsterRacesEnum.GISGOUL_BWORKS:
+                    break;
+                case MonsterRacesEnum.BIG_LARVAE:
+                    break;
+                case MonsterRacesEnum.REST_BEASTS:
+                    break;
+                case MonsterRacesEnum.MORTAL_KOALAKS:
+                    break;
+                case MonsterRacesEnum.PRIMITIVE_KOALAKS:
+                    break;
+                case MonsterRacesEnum.THE_WA_GUAWD:
+                    break;
+                case MonsterRacesEnum.MUTANT_WABBITS:
+                    break;
+                case MonsterRacesEnum.DARK_TREECHNIDIANS:
+                    break;
+                case MonsterRacesEnum.SHORT_TEMPERED_TREECHNIDIANS:
+                    break;
+                case MonsterRacesEnum.BIG_TOFUS:
+                    break;
+                case MonsterRacesEnum.MUSICOPATHS:
+                    break;
+                case MonsterRacesEnum.WILD_KOALAKS:
+                    break;
+                case MonsterRacesEnum.PROTECTORS_OF_EPHEDRYA:
+                    break;
+                case MonsterRacesEnum.MINOTOT:
+                    break;
+                case MonsterRacesEnum.GROHLUM:
+                    break;
+                case MonsterRacesEnum.PALMIKOKOS:
+                    break;
+                case MonsterRacesEnum.BITTER_HAMMERS:
+                    break;
+                case MonsterRacesEnum.SIDEKICK_SUMMONS:
+                    break;
+                case MonsterRacesEnum.SOLITARY_GUARDIANS:
+                    break;
+                case MonsterRacesEnum.CLASS_SUMMONS_FORGELANCE:
+                    break;
+                case MonsterRacesEnum.CLASS_SUMMONS_SACRIER:
+                    break;
+                case MonsterRacesEnum.CLASS_SUMMONS_IOP:
+                    break;
+                case MonsterRacesEnum.CLASS_SUMMONS_HUPPERMAGE:
+                    break;
+                case MonsterRacesEnum.CLASS_SUMMONS_XELOR:
+                    break;
+                case MonsterRacesEnum.CLASS_SUMMONS_MASQUERAIDER:
+                    break;
+                case MonsterRacesEnum.CLASS_SUMMONS_ELIOTROPE:
+                    break;
+                case MonsterRacesEnum.COMMON_SUMMONS:
+                    break;
             }
             return 1d;
         }

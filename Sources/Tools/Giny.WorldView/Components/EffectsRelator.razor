@@ -196,6 +196,8 @@
             int i = 0;
             int n = spellRecords.Count();
 
+            var lastBreedId = BreedRecord.GetBreeds().Max(x => x.Id);
+
             foreach (var spell in spellRecords)
             {
                 foreach (var level in spell.Levels)
@@ -207,7 +209,8 @@
                             continue;
                         }
 
-                        if ((level.SpellBreed < 0 || level.SpellBreed > (short)BreedEnum.Ouginak) && breedSpellsOnly)
+
+                        if ((level.SpellBreed < 0 || level.SpellBreed >= (short)lastBreedId) && breedSpellsOnly)
                         {
                             continue;
                         }

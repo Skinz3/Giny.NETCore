@@ -59,10 +59,7 @@ namespace Giny.EnumsBuilder.Generation
 
         protected virtual string ApplyRules(string line)
         {
-            if (line == "Natasha Manka's Workshop")
-            {
-
-            }
+         
 
             string value = "";
 

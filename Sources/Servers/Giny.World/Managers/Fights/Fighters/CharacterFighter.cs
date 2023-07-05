@@ -166,6 +166,10 @@ namespace Giny.World.Managers.Fights.Fighters
                     ExecuteSpell(12718, 1, Cell);
                     break;
 
+                case BreedEnum.Forgelance:
+                    ExecuteSpell(24387, 1, Cell);
+                    break;
+
             }
 
          

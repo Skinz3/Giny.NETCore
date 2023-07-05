@@ -176,19 +176,19 @@ namespace Giny.World.Records.Spells
         {
             get;
             set;
-        }
+        } = new int[0];
         [Ignore]
         public int[] StatesAuthorized
         {
             get;
             set;
-        }
+        } = new int[0];
         [Ignore]
         public int[] StatesForbidden
         {
             get;
             set;
-        }
+        } = new int[0];
         [ProtoSerialize]
         [D2OField("effects")]
         public EffectCollection Effects
@@ -203,7 +203,7 @@ namespace Giny.World.Records.Spells
             get;
             set;
         }
-      
+
 
         public override string ToString()
         {
