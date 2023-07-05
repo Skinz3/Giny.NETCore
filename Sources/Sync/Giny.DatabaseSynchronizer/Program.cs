@@ -33,7 +33,7 @@ namespace Giny.DatabaseSynchronizer
 {
     class Program
     {
-        public static bool SYNC_D2O = true;
+        public static bool SYNC_D2O = false;
         public static bool SYNC_MAPS = true;
 
         public static D2IFile D2IFileFR;
