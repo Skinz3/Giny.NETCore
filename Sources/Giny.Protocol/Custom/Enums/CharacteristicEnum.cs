@@ -36,8 +36,8 @@ namespace Giny.Protocol.Custom.Enums
         NEUTRAL_ELEMENT_RESIST_PERCENT=37,
         CRITICAL_MISS=39,
         WEIGHT=40,
-        NULL=41,
-        NULL42=42,
+        RESTRICTION_ON_PLAYER=41,
+        RESTRICTION_ON_OTHERS=42,
         ALIGNEMENT_SIDE=43,
         INITIATIVE=44,
         SHOP_PERCENT_REDUCTION=45,
@@ -48,7 +48,7 @@ namespace Giny.Protocol.Custom.Enums
         REFLECT_DAMAGE=50,
         ENERGY_LOOSE=51,
         HONOUR_POINTS=52,
-        NULL53=53,
+        DISGRACE_POINTS=53,
         EARTH_ELEMENT_REDUCTION=54,
         FIRE_ELEMENT_REDUCTION=55,
         WATER_ELEMENT_REDUCTION=56,
@@ -119,7 +119,7 @@ namespace Giny.Protocol.Custom.Enums
         RECEIVED_DAMAGE_MULTIPLIER_WEAPON=142,
         UNKNOWN=146,
         CUR_PERMANENT_DAMAGE=147,
-        DAMAGE_FACTOR=148,
+        DEALT_HEAL_MULTIPLIER=156,
 
     }
 }

@@ -96,11 +96,11 @@ namespace Giny.World.Managers.Fights.Challenges
 
         protected virtual void OnChallengeTargetUpdated()
         {
-            Fight.Send(new ChallengeTargetUpdateMessage(Id, GetTargetId()));
+           // Fight.Send(new ChallengeTargetUpdateMessage(Id, GetTargetId()));
         }
         protected void OnTargetUpdated()
         {
-            Fight.Send(new ChallengeTargetUpdateMessage(Id, GetTargetId()));
+          //  Fight.Send(new ChallengeTargetUpdateMessage(Id, GetTargetId()));
         }
 
         public virtual long GetTargetId()

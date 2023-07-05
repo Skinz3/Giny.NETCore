@@ -22,7 +22,6 @@ using Giny.World.Managers.Fights;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Generic;
 using Giny.World.Managers.Guilds;
-using Giny.World.Managers.Idols;
 using Giny.World.Managers.Items;
 using Giny.World.Managers.Items.Collections;
 using Giny.World.Managers.Maps;
@@ -105,11 +104,6 @@ namespace Giny.World.Managers.Entities.Characters
         {
             get;
             set;
-        }
-        public IdolsInventory IdolsInventory
-        {
-            get;
-            private set;
         }
         public EntityStats Stats => Record.Stats;
 
@@ -379,7 +373,6 @@ namespace Giny.World.Managers.Entities.Characters
             this.SpellShortcutBar = new SpellShortcutBar(this);
             this.HumanOptions = new List<CharacterHumanOption>();
             this.SkillsAllowed = SkillsManager.Instance.GetAllowedSkills(this);
-            this.IdolsInventory = new IdolsInventory(this);
             this.Collecting = false;
         }
 
@@ -965,27 +958,11 @@ namespace Giny.World.Managers.Entities.Characters
 
         public void OnItemAdded(CharacterItemRecord item)
         {
-            if (item.Record.TypeEnum == ItemTypeEnum.IDOL)
-            {
-                IdolsInventory.Update(this);
-            }
-
-            if (HasParty && Party.Leader == this)
-            {
-                Party.IdolsInventory.Update(this);
-            }
+            // nothing todo, idols stuff
         }
         public void OnItemRemoved(CharacterItemRecord item)
         {
-            if (item.Record.TypeEnum == ItemTypeEnum.IDOL)
-            {
-                IdolsInventory.Update(this);
-            }
-
-            if (HasParty && Party.Leader == this)
-            {
-                Party.IdolsInventory.Update(this);
-            }
+            // nothing todo, idols stuff
         }
         public void NotifyItemGained(int gid, int quantity)
         {
@@ -1512,65 +1489,8 @@ namespace Giny.World.Managers.Entities.Characters
                 new PartyEntityBaseInformation[0], Id, Name, Level, Look.ToEntityLook(), Record.BreedId, Record.Sex);
         }
 
-        public void RefreshIdols()
-        {
-            short[] chosenIdols = IdolsInventory.GetActiveIdols().Select(x => (short)x.Id).ToArray();
-
-            short[] partyChosenIdols = new short[0];
-
-            PartyIdol[] partyIdols = new PartyIdol[0];
-
-            if (this.HasParty)
-            {
-                partyChosenIdols = Party.IdolsInventory.GetActiveIdols().Select(x => (short)x.Id).ToArray();
-                partyIdols = Party.IdolsInventory.GetAllIdols().Select(x => x.GetPartyIdol(this.Id)).ToArray();
-            }
-
-            this.Client.Send(new IdolListMessage(chosenIdols, partyChosenIdols, partyIdols));
-        }
-        public void SelectIdol(short idolId, bool activate, bool party)
-        {
-            if (Fighting && Fighter.Fight.Started)
-            {
-                return;
-            }
-
-            if (party)
-            {
-                if (HasParty && Party.Leader == this)
-                {
-                    if (Party.IdolsInventory.Select(idolId, activate))
-                    {
-                        this.Client.Send(new IdolSelectedMessage((short)idolId, activate, party));
-
-                        foreach (var member in Party.Members.Values)
-                        {
-                            member.RefreshIdols();
-                        }
-                    }
-                }
-                else
-                {
-                    return;
-                }
-            }
-            else
-            {
-                if (IdolsInventory.Select(idolId, activate))
-                {
-                    this.Client.Send(new IdolSelectedMessage((short)idolId, activate, party));
-                }
-            }
-
-            if (Fighting)
-            {
-                Fighter.Fight.Send(new IdolFightPreparationUpdateMessage(0, IdolsInventory.GetActiveIdols().Select(x => x.GetIdol()).ToArray()));
-            }
-
-
-
-
-        }
+      
+       
 
         public PartyInvitationMemberInformations GetPartyInvitationMemberInformations()
         {

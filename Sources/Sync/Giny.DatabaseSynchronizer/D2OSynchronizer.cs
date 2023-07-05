@@ -12,7 +12,6 @@ using Giny.World.Managers.Entities.Look;
 using Giny.World.Records;
 using Giny.World.Records.Breeds;
 using Giny.World.Records.Characters;
-using Giny.World.Records.Idols;
 using Giny.World.Records.Items;
 using Giny.World.Records.Maps;
 using System;

@@ -27,6 +27,8 @@ namespace Giny.Core.Network.Messages
 
         public static void Initialize(Assembly messagesAssembly, Assembly handlersAssembly)
         {
+            List<int> duplicateIds = new List<int>();
+
             foreach (var type in messagesAssembly.GetTypes().Where(x => x.IsSubclassOf(typeof(NetworkMessage))))
             {
                 FieldInfo field = type.GetField("Id");
@@ -35,8 +37,10 @@ namespace Giny.Core.Network.Messages
                     ushort num = (ushort)field.GetValue(type);
                     if (Messages.ContainsKey(num))
                     {
-                        throw new AmbiguousMatchException(string.Format("MessageReceiver() => {0} item is already in the dictionary, old type is : {1}, new type is  {2}",
-                            num, Messages[num], type));
+                        duplicateIds.Add(num);
+                        continue;
+                        // throw new AmbiguousMatchException(string.Format("MessageReceiver() => {0} item is already in the dictionary, old type is : {1}, new type is  {2}",
+                        //    num, Messages[num], type));
                     }
                     Messages.Add(num, type);
                     ConstructorInfo constructor = type.GetConstructor(Type.EmptyTypes);
@@ -46,6 +50,26 @@ namespace Giny.Core.Network.Messages
                     }
                     Constructors.Add(num, constructor.CreateDelegate<Func<NetworkMessage>>());
                 }
+            }
+
+            if (duplicateIds.Count > 0)
+            {
+                foreach (var id in duplicateIds)
+                {
+                    Logger.Write("Duplicate message id " + id, Channels.Critical);
+                }
+
+                for (ushort i = 0; i < 100; i++)
+                {
+                    if (!Messages.ContainsKey(i))
+                    {
+                        Logger.Write("FreeId : " + i);
+                    }
+                }
+
+
+                Console.ReadLine();
+                Environment.Exit(0);
             }
 
 

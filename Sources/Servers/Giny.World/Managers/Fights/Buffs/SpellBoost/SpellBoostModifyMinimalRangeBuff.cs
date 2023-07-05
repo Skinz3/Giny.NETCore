@@ -17,12 +17,12 @@ namespace Giny.World.Managers.Fights.Buffs.SpellBoost
         }
         public override void Execute()
         {
-            Target.SpellModifiers.ApplySpellModification(SpellId, CharacterSpellModificationTypeEnum.RANGE_MIN, GetDelta());
+            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.RANGE_MIN, GetDelta());
             base.Execute();
         }
         public override void Dispell()
         {
-            Target.SpellModifiers.ApplySpellModification(SpellId, CharacterSpellModificationTypeEnum.RANGE_MIN, (short)-GetDelta());
+            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.RANGE_MIN, (short)-GetDelta());
             base.Dispell();
         }
     }

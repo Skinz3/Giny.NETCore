@@ -6,7 +6,6 @@ using Giny.Protocol.Messages;
 using Giny.Protocol.Types;
 using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Fights;
-using Giny.World.Managers.Idols;
 using Giny.World.Network;
 using System;
 using System.Collections.Concurrent;
@@ -78,11 +77,7 @@ namespace Giny.World.Managers.Parties
                 return Members.Count() + Guests.Count();
             }
         }
-        public IdolsInventory IdolsInventory
-        {
-            get;
-            private set;
-        }
+     
         public Party(int partyId, Character leader)
         {
             this.Members = new ConcurrentDictionary<long, Character>();
@@ -238,7 +233,7 @@ namespace Giny.World.Managers.Parties
 
         private void OnLeaderUpdated()
         {
-            this.IdolsInventory = new IdolsInventory(Leader.IdolsInventory.GetAllIdols());
+            // nothing todo (idols stuff)
         }
         public bool Leave(Character character)
         {

@@ -470,13 +470,7 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
-            var stats = client.Character.Stats;
-
-            var modifs = client.Character.Fighter.SpellModifiers.Modifications;
-
-            client.Character.Reply(modifs[12949][CharacterSpellModificationTypeEnum.AP_COST].Value);
-
-            return;
+            
 
             var item = client.Character.Inventory.GetEquipedItems().FirstOrDefault(x => x.Record.TypeEnum == ItemTypeEnum.RING);
 

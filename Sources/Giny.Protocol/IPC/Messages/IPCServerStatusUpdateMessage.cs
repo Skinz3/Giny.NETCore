@@ -12,7 +12,7 @@ namespace Giny.Protocol.IPC.Messages
 {
     public class IPCServerStatusUpdateMessage : IPCMessage
     {
-        public const ushort Id = 15;
+        public const ushort Id = 11;
         public override ushort MessageId
         {
             get

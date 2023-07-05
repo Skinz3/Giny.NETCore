@@ -13,7 +13,7 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModifiers
 {
     public class SpellModifier
     {
-        public CharacterSpellModificationTypeEnum Type
+        public SpellModifierTypeEnum Type
         {
             get;
             private set;
@@ -28,58 +28,70 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModifiers
             get;
             private set;
         }
-        public SpellModifier(CharacterSpellModificationTypeEnum type, short spellId, short value)
+        public SpellModifier(SpellModifierTypeEnum type, short spellId, short value)
         {
             this.Type = type;
             this.Value = value;
             this.SpellId = spellId;
         }
 
-        public CharacterSpellModification GetCharacterSpellModification()
-        {
-            return new CharacterSpellModification((byte)Type, this.SpellId, new CharacterCharacteristicDetailed(0, 0, 0, 0, Value, 0));
-        }
+
 
         public void UpdateValue(short value)
         {
             switch (Type)
             {
-                case CharacterSpellModificationTypeEnum.RANGEABLE:
+                case SpellModifierTypeEnum.INVALID_MODIFICATION:
                     throw new NotImplementedException();
-                case CharacterSpellModificationTypeEnum.DAMAGE:
+                case SpellModifierTypeEnum.RANGEABLE:
                     throw new NotImplementedException();
-                case CharacterSpellModificationTypeEnum.BASE_DAMAGE:
+                case SpellModifierTypeEnum.DAMAGE:
+                    throw new NotImplementedException();
+                case SpellModifierTypeEnum.BASE_DAMAGE:
                     Value += value;
                     break;
-                case CharacterSpellModificationTypeEnum.HEAL_BONUS:
-                    throw new NotImplementedException();
-                case CharacterSpellModificationTypeEnum.AP_COST:
+                case SpellModifierTypeEnum.HEAL_BONUS:
+                    break;
+                case SpellModifierTypeEnum.AP_COST:
                     Value += value;
                     break;
-                case CharacterSpellModificationTypeEnum.CAST_INTERVAL:
+                case SpellModifierTypeEnum.CAST_INTERVAL:
                     throw new NotImplementedException();
-                case CharacterSpellModificationTypeEnum.CAST_INTERVAL_SET:
+                case SpellModifierTypeEnum.CRITICAL_HIT_BONUS:
                     throw new NotImplementedException();
-                case CharacterSpellModificationTypeEnum.CRITICAL_HIT_BONUS:
+                case SpellModifierTypeEnum.CAST_LINE:
                     throw new NotImplementedException();
-                case CharacterSpellModificationTypeEnum.CAST_LINE:
-                    throw new NotImplementedException();
-                case CharacterSpellModificationTypeEnum.LOS:
+                case SpellModifierTypeEnum.LOS:
                     Value = value;
                     break;
-                case CharacterSpellModificationTypeEnum.MAX_CAST_PER_TURN:
+                case SpellModifierTypeEnum.MAX_CAST_PER_TURN:
                     throw new NotImplementedException();
-                case CharacterSpellModificationTypeEnum.MAX_CAST_PER_TARGET:
+                case SpellModifierTypeEnum.MAX_CAST_PER_TARGET:
                     throw new NotImplementedException();
-                case CharacterSpellModificationTypeEnum.RANGE_MAX:
+                case SpellModifierTypeEnum.RANGE_MAX:
                     Value += value;
                     break;
-                case CharacterSpellModificationTypeEnum.RANGE_MIN:
+                case SpellModifierTypeEnum.RANGE_MIN:
+                    throw new NotImplementedException();
+                case SpellModifierTypeEnum.OCCUPIED_CELL:
+                    throw new NotImplementedException();
+                case SpellModifierTypeEnum.FREE_CELL:
+                    throw new NotImplementedException();
+                case SpellModifierTypeEnum.VISIBLE_TARGET:
+                    throw new NotImplementedException();
+                case SpellModifierTypeEnum.PORTAL_FREE_CELL:
+                    throw new NotImplementedException();
+                case SpellModifierTypeEnum.PORTAL_PROJECTION:
                     throw new NotImplementedException();
                 default:
                     throw new NotImplementedException();
-
             }
+
+        }
+
+        public SpellModifierMessage GetSpellModifierMessage()
+        {
+            return new SpellModifierMessage(SpellId, (byte)SpellModifierActionTypeEnum.ACTION_BOOST, (byte)Type, Value, 0);
         }
     }
 }

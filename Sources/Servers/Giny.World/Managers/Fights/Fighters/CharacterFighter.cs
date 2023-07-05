@@ -17,7 +17,6 @@ using Giny.World.Managers.Fights.Results;
 using Giny.World.Managers.Fights.Sequences;
 using Giny.World.Managers.Fights.Stats;
 using Giny.World.Managers.Fights.Synchronisation;
-using Giny.World.Managers.Idols;
 using Giny.World.Managers.Items;
 using Giny.World.Managers.Items.Collections;
 using Giny.World.Managers.Spells;
@@ -597,7 +596,6 @@ namespace Giny.World.Managers.Fights.Fighters
                 fightStart = !Fight.Started ? 0 : Fight.StartTime.Value.GetUnixTimeStamp(),
                 fxTriggerCounts = new GameFightEffectTriggerCount[0],
                 gameTurn = (short)Fight.RoundNumber,
-                idols = Fight.GetIdols(),
                 marks = Fight.GetMarks().Select(x => x.GetGameActionMark()).ToArray(),
                 spellCooldowns = SpellHistory.GetSpellCooldowns(),
                 summonCount = (byte)GetSummons().Count(),

@@ -13,7 +13,7 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
 {
     public class SpellModifiers
     {
-        public Dictionary<short, Dictionary<CharacterSpellModificationTypeEnum, SpellModifier>> Modifications
+        public Dictionary<short, Dictionary<SpellModifierTypeEnum, SpellModifier>> Modifications
         {
             get;
             private set;
@@ -27,11 +27,11 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
         public SpellModifiers(Fighter fighter)
         {
             this.Fighter = fighter;
-            this.Modifications = new Dictionary<short, Dictionary<CharacterSpellModificationTypeEnum, SpellModifier>>();
+            this.Modifications = new Dictionary<short, Dictionary<SpellModifierTypeEnum, SpellModifier>>();
         }
 
 
-        public short GetModifier(short spellId, CharacterSpellModificationTypeEnum type)
+        public short GetModifier(short spellId, SpellModifierTypeEnum type)
         {
             if (!Modifications.ContainsKey(spellId))
             {
@@ -50,11 +50,11 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
             }
         }
 
-        public void ApplySpellModification(short spellId, CharacterSpellModificationTypeEnum type, short value)
+        public void ApplySpellModification(short spellId, SpellModifierTypeEnum type, short value)
         {
             if (!Modifications.ContainsKey(spellId))
             {
-                Modifications.Add(spellId, new Dictionary<CharacterSpellModificationTypeEnum, SpellModifier>());
+                Modifications.Add(spellId, new Dictionary<SpellModifierTypeEnum, SpellModifier>());
             }
 
             var modifiers = Modifications[spellId];
@@ -68,7 +68,8 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
                 modifiers[type] = new SpellModifier(type, spellId, value);
             }
 
-            Fighter.Fight.Send(new UpdateSpellModifierMessage(Fighter.Id, modifiers[type].GetCharacterSpellModification()));
+
+            Fighter.Fight.Send(new ApplySpellModifierMessage(Fighter.Id, modifiers[type].GetSpellModifierMessage()));
 
         }
     }

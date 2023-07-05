@@ -185,7 +185,7 @@ namespace Giny.World.Network
 
             Send(new AccountCapabilitiesMessage(Account.Id, true, 0,true));
 
-            Send(new TrustStatusMessage(true, true));
+            Send(new TrustStatusMessage(true));
 
             if (Characters.Any(x => x.InGameContext))
             {

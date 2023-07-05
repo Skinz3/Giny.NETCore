@@ -36,7 +36,7 @@ namespace Giny.ProtocolBuilder
 
         static void BuildEnums()
         {
-            Logger.Write("Writting Enums...");
+            Logger.Write("Building Enums...");
             string path = Path.Combine(Constants.SOURCES_PATH, Constants.ENUMS_PATH);
             EnumProfile @enum = new EnumProfile(path);
             @enum.Generate();

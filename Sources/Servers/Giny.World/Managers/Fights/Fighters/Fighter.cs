@@ -1215,13 +1215,13 @@ namespace Giny.World.Managers.Fights.Fighters
         private int GetSpellMinimalRange(SpellLevelRecord level)
         {
             var range = (int)level.MinRange;
-            range += SpellModifiers.GetModifier(level.SpellId, CharacterSpellModificationTypeEnum.RANGE_MIN);
+            range += SpellModifiers.GetModifier(level.SpellId, SpellModifierTypeEnum.RANGE_MIN);
             return range;
         }
         private int GetSpellRange(SpellLevelRecord level)
         {
             var range = (int)level.MaxRange;
-            range += SpellModifiers.GetModifier(level.SpellId, CharacterSpellModificationTypeEnum.RANGE_MAX);
+            range += SpellModifiers.GetModifier(level.SpellId, SpellModifierTypeEnum.RANGE_MAX);
             return range;
         }
         public virtual bool HasSpell(short spellId)
@@ -1505,7 +1505,7 @@ namespace Giny.World.Managers.Fights.Fighters
         {
             short apCost = level.ApCost;
 
-            apCost -= this.SpellModifiers.GetModifier(level.SpellId, CharacterSpellModificationTypeEnum.AP_COST);
+            apCost -= this.SpellModifiers.GetModifier(level.SpellId, SpellModifierTypeEnum.AP_COST);
 
             if (apCost < 0)
             {

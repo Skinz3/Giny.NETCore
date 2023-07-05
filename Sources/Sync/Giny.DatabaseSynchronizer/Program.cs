@@ -12,7 +12,6 @@ using Giny.World.Records.Breeds;
 using Giny.World.Records.Challenges;
 using Giny.World.Records.Characters;
 using Giny.World.Records.Effects;
-using Giny.World.Records.Idols;
 using Giny.World.Records.Items;
 using Giny.World.Records.Jobs;
 using Giny.World.Records.Maps;
@@ -56,7 +55,6 @@ namespace Giny.DatabaseSynchronizer
             DatabaseManager.Instance.DropTableIfExists<RecipeRecord>();
             DatabaseManager.Instance.DropTableIfExists<SubareaRecord>();
             DatabaseManager.Instance.DropTableIfExists<ItemSetRecord>();
-            DatabaseManager.Instance.DropTableIfExists<IdolRecord>();
             DatabaseManager.Instance.DropTableIfExists<BreedRecord>();
             DatabaseManager.Instance.DropTableIfExists<ExperienceRecord>();
             DatabaseManager.Instance.DropTableIfExists<HeadRecord>();

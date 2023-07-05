@@ -23,6 +23,7 @@ namespace Giny.Protocol.Custom.Enums
         HANDYMAN=65,
         CRAFTMAGUS=74,
         SCROLLMAGE=75,
+        BEASTOLOGIST=78,
 
     }
 }

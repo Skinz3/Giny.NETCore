@@ -27,12 +27,12 @@ namespace Giny.World.Managers.Fights.Buffs.SpellBoost
         }
         public override void Execute()
         {
-            Target.SpellModifiers.ApplySpellModification(SpellId, CharacterSpellModificationTypeEnum.AP_COST, (short)-EffectiveDelta);
+            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.AP_COST, (short)-EffectiveDelta);
             base.Execute();
         }
         public override void Dispell()
         {
-            Target.SpellModifiers.ApplySpellModification(SpellId, CharacterSpellModificationTypeEnum.AP_COST, EffectiveDelta);
+            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.AP_COST, EffectiveDelta);
             base.Dispell();
         }
     }

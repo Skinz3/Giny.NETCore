@@ -227,7 +227,7 @@ namespace Giny.World.Managers.Stats
 
         public CharacterCharacteristic[] GetCharacterCharacteristics(CharacteristicEnum? characteristicEnum = null)
         {
-            
+
             if (characteristicEnum.HasValue)
             {
                 var characterCharateristic = this.GetCharacteristic<Characteristic>(characteristicEnum.Value).GetCharacterCharacteristic(characteristicEnum.Value);
@@ -255,7 +255,7 @@ namespace Giny.World.Managers.Stats
             results.Add(new CharacterCharacteristicValue(MaxEnergyPoints, (short)CharacteristicEnum.MAX_ENERGY_POINTS));
             results.Add(new CharacterCharacteristicValue(Energy, (short)CharacteristicEnum.ENERGY_POINTS));
 
-            
+
             return results.ToArray();
         }
         public CharacterCharacteristicsInformations GetCharacterCharacteristicsInformations(Character character)
@@ -268,7 +268,7 @@ namespace Giny.World.Managers.Stats
                 experienceBonusLimit = 0,
                 characteristics = GetCharacterCharacteristics(),
                 probationTime = 0,
-                spellModifications = new CharacterSpellModification[0],
+                spellModifiers = new SpellModifierMessage[0],
                 criticalHitWeapon = CriticalHitWeapon,
                 experience = character.Record.Experience,
                 kamas = character.Record.Kamas,

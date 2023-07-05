@@ -16,9 +16,7 @@ using Giny.World.Managers.Fights.Challenges;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Results;
 using Giny.World.Managers.Formulas;
-using Giny.World.Managers.Idols;
 using Giny.World.Managers.Monsters;
-using Giny.World.Records.Idols;
 using Giny.World.Records.Maps;
 
 namespace Giny.World.Managers.Fights
@@ -112,8 +110,6 @@ namespace Giny.World.Managers.Fights
 
             foreach (var team in GetTeams())
             {
-                IdolXp idolXp = this.Idols.GetIdolXp();
-
                 IEnumerable<Fighter> droppers = team.EnemyTeam.GetFighters<Fighter>(false).Where(entry => !entry.Alive && entry.CanDrop);
 
                 var looters = results.Where(x => x.CanLoot(team)).OrderByDescending(entry => entry.Prospecting);
@@ -131,15 +127,13 @@ namespace Giny.World.Managers.Fights
                     dropBonusRatio += GetChallengesDropRatioBonus();
                 }
 
-                dropBonusRatio += idolXp.LootBonusPercent / 100d;
-
                 foreach (var looter in looters)
                 {
                     if (looter is FightPlayerResult && looter.Outcome == FightOutcomeEnum.RESULT_VICTORY)
                     {
                         FightPlayerResult playerResult = (FightPlayerResult)looter;
 
-                        playerResult.AddEarnedExperience(xpBonusRatio, 0, idolXp.ExperienceBonusPercent, idolXp.ExperienceBonusPercent);
+                        playerResult.AddEarnedExperience(xpBonusRatio, 0);
                     }
 
                     if (team == Winners)
@@ -198,7 +192,7 @@ namespace Giny.World.Managers.Fights
 
             foreach (var challenge in this.Challenges)
             {
-                targetTeam.Send(new ChallengeInfoMessage(challenge.Id, challenge.GetTargetId(), (int)(challenge.XpBonusRatio * 100d), (int)(challenge.DropBonusRatio * 100d)));
+             //   targetTeam.Send(new ChallengeInfoMessage(challenge.Id, challenge.GetTargetId(), (int)(challenge.XpBonusRatio * 100d), (int)(challenge.DropBonusRatio * 100d)));
             }
         }
 

@@ -20,10 +20,8 @@ using Giny.World.Managers.Fights.Synchronisation;
 using Giny.World.Managers.Fights.Timeline;
 using Giny.World.Managers.Fights.Triggers;
 using Giny.World.Managers.Fights.Zones;
-using Giny.World.Managers.Idols;
 using Giny.World.Managers.Maps;
 using Giny.World.Network;
-using Giny.World.Records.Idols;
 using Giny.World.Records.Maps;
 using System;
 using System.Collections.Generic;
@@ -195,11 +193,7 @@ namespace Giny.World.Managers.Fights
             private set;
         }
 
-        protected IdolsInventory Idols
-        {
-            get;
-            private set;
-        }
+      
         #region Events
 
         public event Action<Fight, Fighter> TurnStarted;
@@ -383,16 +377,7 @@ namespace Giny.World.Managers.Fights
 
         protected virtual void OnPlacementStarted()
         {
-            if (Origin.HasParty)
-            {
-                Idols = Origin.Party.IdolsInventory;
-            }
-            else
-            {
-                Idols = Origin.IdolsInventory;
-
-            }
-            this.Send(new IdolFightPreparationUpdateMessage(0, Idols.GetActiveIdols().Select(x => x.GetIdol()).ToArray()));
+           
         }
 
         private void ShowBladesOnMap()
@@ -460,7 +445,7 @@ namespace Giny.World.Managers.Fights
 
             this.Timeline.OrderLine();
 
-            this.Send(new GameFightStartMessage(GetIdols()));
+            this.Send(new GameFightStartMessage());
 
             this.UpdateTimeLine();
 
@@ -473,46 +458,11 @@ namespace Giny.World.Managers.Fights
                 fighter.OnFightStarted();
             }
 
-            this.CastIdols();
 
             this.OnFightStarted();
 
             Synchronizer = Synchronizer.RequestCheck(SynchronizerRole.StartFight, this, StartFight, LagAndStartFight, SynchronizerTimout * 1000);
 
-        }
-
-        public Idol[] GetIdols()
-        {
-            return Idols.GetActiveIdols().Select(x => x.GetIdol()).ToArray();
-        }
-
-        private void CastIdols()
-        {
-            var targetTeam = this.GetTeam(TeamTypeEnum.TEAM_TYPE_MONSTER);
-
-            if (targetTeam == null)
-            {
-                return;
-            }
-
-            var targetFighters = targetTeam.GetFighters<MonsterFighter>();
-
-            foreach (var idol in Idols.GetActiveIdols())
-            {
-                if (targetFighters.Any(x => idol.IncompatibleMonsters.Contains((int)x.Record.Id)))
-                {
-                    continue;
-                }
-
-                foreach (var enemy in targetFighters)
-                {
-                    SpellCast cast = new SpellCast(enemy, idol.Spell, enemy.Cell);
-                    cast.Target = enemy;
-                    cast.Force = true;
-                    enemy.CastSpell(cast);
-                }
-
-            }
         }
 
         public abstract void OnFightStarted();

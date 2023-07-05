@@ -1,0 +1,37 @@
+using System.Collections.Generic;
+using Giny.Core.Network.Messages;
+using Giny.Protocol.Types;
+using Giny.Core.IO.Interfaces;
+using Giny.Protocol;
+using Giny.Protocol.Enums;
+
+namespace Giny.Protocol.Messages
+{
+    public class GuildUpdateChestTabRequestMessage : NetworkMessage
+    {
+        public const ushort Id = 9795;
+        public override ushort MessageId => Id;
+
+        public UpdatedStorageTabInformation tab;
+
+        public GuildUpdateChestTabRequestMessage()
+        {
+        }
+        public GuildUpdateChestTabRequestMessage(UpdatedStorageTabInformation tab)
+        {
+            this.tab = tab;
+        }
+        public override void Serialize(IDataWriter writer)
+        {
+            tab.Serialize(writer);
+        }
+        public override void Deserialize(IDataReader reader)
+        {
+            tab = new UpdatedStorageTabInformation();
+            tab.Deserialize(reader);
+        }
+
+    }
+}
+
+

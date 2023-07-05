@@ -19,12 +19,12 @@ namespace Giny.World.Managers.Fights.Buffs.SpellBoost
 
         public override void Execute()
         {
-            Target.SpellModifiers.ApplySpellModification(SpellId, CharacterSpellModificationTypeEnum.BASE_DAMAGE, GetDelta());
+            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.BASE_DAMAGE, GetDelta());
             base.Execute();
         }
         public override void Dispell()
         {
-            Target.SpellModifiers.ApplySpellModification(SpellId, CharacterSpellModificationTypeEnum.BASE_DAMAGE, (short)-GetDelta());
+            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.BASE_DAMAGE, (short)-GetDelta());
             base.Dispell();
         }
     }

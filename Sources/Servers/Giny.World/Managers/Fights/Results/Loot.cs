@@ -11,7 +11,7 @@ namespace Giny.World.Managers.Fights.Results
 {
     public class DroppedItem
     {
-        public short ItemGId
+        public int ItemGId
         {
             get;
             set;
@@ -21,7 +21,7 @@ namespace Giny.World.Managers.Fights.Results
             get;
             set;
         }
-        public DroppedItem(short itemGId, int amount)
+        public DroppedItem(int itemGId, int amount)
         {
             this.ItemGId = itemGId;
             this.Amount = amount;
@@ -42,11 +42,11 @@ namespace Giny.World.Managers.Fights.Results
             get;
             set;
         }
-        public void AddItem(short itemId)
+        public void AddItem(int itemId)
         {
             this.AddItem(itemId, 1);
         }
-        public void AddItem(short itemId, int amount)
+        public void AddItem(int itemId, int amount)
         {
             if (this.m_items.ContainsKey(itemId))
             {
