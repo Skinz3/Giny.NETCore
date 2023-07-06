@@ -81,6 +81,7 @@
     private void OnSearchTextChanged()
     {
         SearchResults = SpellRecord.GetSpellRecords().Where(x => x.ToString().ToLower().Contains(Search.ToLower())).ToList();
+
         StateHasChanged();
     }
     protected override void OnAfterRender(bool firstRender)
@@ -93,6 +94,6 @@
        });
         }
     }
-   
+
 
 }

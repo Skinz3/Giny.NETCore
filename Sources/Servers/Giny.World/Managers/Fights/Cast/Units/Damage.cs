@@ -52,10 +52,10 @@ namespace Giny.World.Managers.Fights.Cast.Units
             get;
             private set;
         }
-        private SpellEffectHandler EffectHandler
+        public SpellEffectHandler EffectHandler
         {
             get;
-            set;
+            private set;
         }
         public bool IgnoreBoost
         {
@@ -280,6 +280,10 @@ namespace Giny.World.Managers.Fights.Cast.Units
         {
             return EffectHandler != null && !EffectHandler.CastHandler.Cast.Weapon;
         }
+        public bool IsWeaponDamage()
+        {
+            return EffectHandler != null && EffectHandler.CastHandler.Cast.Weapon;
+        }
         private short GetJetDelta(double jet)
         {
             double weaponDamageBonus = 0;
@@ -344,10 +348,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
             return (short)result;                        // (short)(result < jet ? jet : result);
         }
 
-        public SpellEffectHandler GetEffectHandler()
-        {
-            return EffectHandler;
-        }
+
         public Fighter GetSource()
         {
             return Source;

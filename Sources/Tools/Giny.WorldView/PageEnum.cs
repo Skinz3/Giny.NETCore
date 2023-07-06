@@ -12,6 +12,7 @@ namespace Giny.WorldView
         Loader,
         SpellExplorer,
         EffectsRelator,
+        TriggersRelator,
         Items,
         Npcs,
         Dungeons,

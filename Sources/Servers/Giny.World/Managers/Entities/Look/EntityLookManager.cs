@@ -104,6 +104,13 @@ namespace Giny.World.Managers.Entities.Look
             }
             return col;
         }
+
+        public int GetConvertedColor(int colorValue, int index)
+        {
+            var color = Color.FromArgb(colorValue);
+            var result = index + 1 << 24 | color.ToArgb() & 16777215;
+            return result;
+        }
         public ServerEntityLook Parse(string str)
         {
             if (str == string.Empty)

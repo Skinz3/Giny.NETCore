@@ -3,6 +3,7 @@ using Giny.Protocol.Enums;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Managers.Fights.Triggers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,19 +29,25 @@ namespace Giny.World.Managers.Fights.Effects.Steal
 
                 if (dodged > 0)
                 {
-                    target.OnDodge(Source, ActionsEnum.ACTION_CHARACTER_DODGE_HIT, dodged);;
+                    target.OnDodge(Source, ActionsEnum.ACTION_CHARACTER_DODGE_HIT, dodged); ;
                 }
 
-                if (this.Effect.Duration > 1 && Effect.EffectEnum != EffectsEnum.Effect_LostMP)
+                if (delta > 0)
                 {
-                    base.AddStatBuff(target, (short)-delta, target.Stats.MovementPoints, FightDispellableEnum.DISPELLABLE, (short)EffectsEnum.Effect_SubMP);
-                    base.AddStatBuff(target, (short)delta, target.Stats.MovementPoints, FightDispellableEnum.DISPELLABLE, (short)EffectsEnum.Effect_AddMP_128);
+                    if (this.Effect.Duration > 1 && Effect.EffectEnum != EffectsEnum.Effect_LostMP)
+                    {
+                        base.AddStatBuff(target, (short)-delta, target.Stats.MovementPoints, FightDispellableEnum.DISPELLABLE, (short)EffectsEnum.Effect_SubMP);
+                        base.AddStatBuff(target, (short)delta, target.Stats.MovementPoints, FightDispellableEnum.DISPELLABLE, (short)EffectsEnum.Effect_AddMP_128);
+                    }
+                    else
+                    {
+                        target.LooseMp(Source, (short)delta, ActionsEnum.ACTION_CHARACTER_MOVEMENT_POINTS_LOST);
+                        Source.GainMp(Source, delta);
+                    }
                 }
-                else
-                {
-                    target.LooseMp(Source, (short)delta, ActionsEnum.ACTION_CHARACTER_MOVEMENT_POINTS_LOST);
-                    Source.GainMp(Source, delta);
-                }
+
+
+                target.TriggerBuffs(TriggerTypeEnum.OnMpRemovalAttempt, null);
             }
         }
         private short RollMP(Fighter fighter, int maxValue)

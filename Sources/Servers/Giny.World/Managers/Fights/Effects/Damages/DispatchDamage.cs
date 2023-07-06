@@ -37,7 +37,7 @@ namespace Giny.World.Managers.Fights.Effects.Damages
 
             foreach (var target in targets)
             {
-                Damage damages = new Damage(token.Source, target, token.EffectSchool, token.BaseMinDamages, token.BaseMaxDamages, token.GetEffectHandler());
+                Damage damages = new Damage(token.Source, target, token.EffectSchool, token.BaseMinDamages, token.BaseMaxDamages, token.EffectHandler);
                 damages.WontTriggerBuffs = true;
                 damages.IgnoreResistances = true;
                 damages.IgnoreBoost = true;

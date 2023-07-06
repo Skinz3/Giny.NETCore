@@ -118,7 +118,7 @@ namespace Giny.World.Managers.Fights.Cast
             get;
             set;
         }
-      
+
         public SpellCast(Fighter source, Spell spell, CellRecord targetCell, SpellCast parent = null)
         {
             if (parent != null)
@@ -144,7 +144,7 @@ namespace Giny.World.Managers.Fights.Cast
             this.Childs.Add(child);
         }
 
-        public Fighter GetCaster()
+        public Fighter GetInitialCaster()
         {
             Fighter source = this.Source;
 
@@ -173,6 +173,25 @@ namespace Giny.World.Managers.Fights.Cast
             return deep;
         }
 
+        public Mark? GetInitialMarkSource()
+        {
+            if (MarkSource != null)
+            {
+                return MarkSource;
+            }
+            SpellCast current = this;
+
+            while (current.Parent != null)
+            {
+                current = current.Parent;
+
+                if (current.MarkSource != null)
+                {
+                    return current.MarkSource;
+                }
+            }
+            return null;
+        }
         public IEnumerable<SpellCast> GetAllChilds()
         {
             List<SpellCast> childs = new List<SpellCast>();

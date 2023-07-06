@@ -151,5 +151,11 @@ namespace Giny.World.Managers.Fights.Effects
         {
             look.SetBones(7597);
         }
+
+        [SpellAppearance(1298)]
+        public static void BerserkSkin(Fighter fighter, ref ServerEntityLook look)
+        {
+            look.SetBones(4115);
+        }
     }
 }

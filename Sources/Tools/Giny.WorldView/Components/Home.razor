@@ -52,6 +52,8 @@
                     <MudTreeViewItem Icon="@Icons.Outlined.FilterDrama" Value="@("Serveur")">
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.SpellExplorer)" Match="NavLinkMatch.All">Sorts</MudNavLink>
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.EffectsRelator)" Match="NavLinkMatch.All">Sorts par effets</MudNavLink>
+                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.TriggersRelator)" Match="NavLinkMatch.All">Sorts par triggers</MudNavLink>
+
 
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Dungeons)" Match="NavLinkMatch.All">Donjons</MudNavLink>
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Items)" Match="NavLinkMatch.All">Objets</MudNavLink>
@@ -90,6 +92,10 @@
             else if (AppState.Page == PageEnum.EffectsRelator)
             {
                 <EffectsRelator></EffectsRelator>
+            }
+            else if (AppState.Page == PageEnum.TriggersRelator)
+            {
+                <TriggersRelator></TriggersRelator>
             }
             else if (AppState.Page == PageEnum.Items)
             {

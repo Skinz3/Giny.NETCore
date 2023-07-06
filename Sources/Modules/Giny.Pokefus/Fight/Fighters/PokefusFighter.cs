@@ -44,7 +44,7 @@ namespace Giny.Pokefus.Fight.Fighters
             base.Initialize();
 
             var coeff = ComputeStatsCoeff();
-            this.Stats = new FighterStats(Grade, coeff);
+            this.Stats = new FighterStats(Grade, null, coeff); // null = we dont want additional bonuses , since we manually calculate ratios
 
             int lifePoints = (int)(coeff * 1000);
 

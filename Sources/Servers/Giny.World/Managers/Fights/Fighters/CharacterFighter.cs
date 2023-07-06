@@ -298,7 +298,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
 
                 if (!cast.ApFree)
-                    LooseAp(this, cast.Spell.Level.ApCost, ActionsEnum.ACTION_CHARACTER_ACTION_POINTS_LOST);
+                    LooseAp(this, cast.Spell.Level.ApCost, 0);
 
                 if (!handler.Execute())
                 {

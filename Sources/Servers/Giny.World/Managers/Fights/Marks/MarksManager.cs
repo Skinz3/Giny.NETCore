@@ -40,7 +40,7 @@ namespace Giny.World.Managers.Fights.Marks
 
                 case 12941: // Piège a Fragmentation
                 case 12906: // Piège Sournois
-                    return Color.FromArgb(12128795);
+                    return Color.FromArgb(12128795); 
 
 
                 case 12920: // Piège de masse

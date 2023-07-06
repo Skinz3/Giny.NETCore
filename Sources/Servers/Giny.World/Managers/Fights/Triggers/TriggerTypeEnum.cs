@@ -24,24 +24,27 @@ namespace Giny.World.Managers.Fights.Triggers
         OnDamagedByAlly, // DBA   
         OnDamagedByEnemy, // BDE
         OnDamagedBySummon, // DI
-       // OnDamagedByWeapon, // DC
         OnDamagedBySpell, // DS
-      //  OnDamagedByGlyph, // DG
-       // OnDamagedByTrap, //DP
+        OnDamagedByWeapon, // DCAC
+        //  OnDamagedByGlyph, // DG ------------> plutot tout les dommages indirects?
+        OnDamagedByTrap, //DT
         OnDamagedMelee, //DM
         OnDamagedRange, //DR
         OnDamagedByPush, // PD
         OnDamagedByAllyPush, //PMD
+        OnDamagedByEnemyPush, // PPD    
 
         //OnDamageEnemyByPush, // MMD
 
         OnSummon, // CI
 
+        OnSwitchPosition, // MS
         OnTurnBegin, // TB
         OnTurnEnd, // TE
 
         AfterTurnBegin, // ATB
 
+        OnMpRemovalAttempt,
         OnMPLost, // m , MPA (effective loss? attempt? )
         OnAPLost, // A
         OnRangeLost, // R
@@ -70,10 +73,6 @@ namespace Giny.World.Managers.Fights.Triggers
          */
         Delayed,
         Unknown,
-
-
-
-
 
 
         /*

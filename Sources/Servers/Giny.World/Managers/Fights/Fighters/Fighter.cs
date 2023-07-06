@@ -486,7 +486,7 @@ namespace Giny.World.Managers.Fights.Fighters
                         this.MovementHistory.OnMove(path);
 
                         OnMove(new Movement(MovementType.Walk, this));
-                   
+
                         this.LooseMp(this, mpCost, 0);
 
 
@@ -674,8 +674,8 @@ namespace Giny.World.Managers.Fights.Fighters
             //if (!buff.Silent)
             {
                 var abstractFightDispellableEffect = buff.GetAbstractFightDispellableEffect();
-    
-                
+
+
                 Fight.Send(new GameActionFightDispellableEffectMessage()
                 {
                     actionId = buff.GetActionId(),
@@ -1450,6 +1450,11 @@ namespace Giny.World.Managers.Fights.Fighters
                 this.TriggerBuffs(TriggerTypeEnum.OnPushed, movement);
             }
 
+            if (movement.Type == MovementType.SwitchPosition)
+            {
+                this.TriggerBuffs(TriggerTypeEnum.OnSwitchPosition, movement);
+            }
+
             Fight.TriggerMarks(this, MarkTriggerType.OnMove);
 
             Moved?.Invoke(this);
@@ -2025,12 +2030,35 @@ namespace Giny.World.Managers.Fights.Fighters
                 return;
             }
 
-            var effectHandler = damage.GetEffectHandler();
-
-            if (effectHandler != null && effectHandler.Effect.Duration > 0)
+            if (damage.EffectHandler != null)
             {
-                return;
+                if (damage.EffectHandler.Effect.Duration > 0)
+                {
+                    // we dont trigger buffs for poisons?
+                    return;
+                }
+
+                Mark? markSource = damage.EffectHandler.CastHandler.Cast.GetInitialMarkSource();
+
+                if (markSource != null)
+                {
+                    switch (markSource.Type)
+                    {
+                        case GameActionMarkTypeEnum.GLYPH:
+                            break;
+                        case GameActionMarkTypeEnum.TRAP:
+                            TriggerBuffs(TriggerTypeEnum.OnDamagedByTrap, damage);
+                            break;
+                        case GameActionMarkTypeEnum.WALL:
+                            break;
+                        case GameActionMarkTypeEnum.PORTAL:
+                            break;
+                        case GameActionMarkTypeEnum.RUNE:
+                            break;
+                    }
+                }
             }
+
 
             TriggerBuffs(TriggerTypeEnum.OnDamaged, damage);
 
@@ -2039,6 +2067,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 TriggerBuffs(TriggerTypeEnum.OnDamagedBySummon, damage);
             }
 
+
             switch (damage.EffectSchool)
             {
                 case EffectSchoolEnum.Pushback:
@@ -2046,6 +2075,10 @@ namespace Giny.World.Managers.Fights.Fighters
                     if (damage.Source.IsFriendlyWith(this))
                     {
                         TriggerBuffs(TriggerTypeEnum.OnDamagedByAllyPush, damage);
+                    }
+                    else
+                    {
+                        TriggerBuffs(TriggerTypeEnum.OnDamagedByEnemyPush, damage);
                     }
 
                     TriggerBuffs(TriggerTypeEnum.OnDamagedByPush, damage);
@@ -2081,6 +2114,10 @@ namespace Giny.World.Managers.Fights.Fighters
             {
                 TriggerBuffs(TriggerTypeEnum.OnDamagedBySpell, damage);
             }
+            else if (damage.IsWeaponDamage())
+            {
+                TriggerBuffs(TriggerTypeEnum.OnDamagedByWeapon, damage);
+            }
 
             if (damage.Source.IsFriendlyWith(this))
             {
@@ -2097,7 +2134,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 damage.Source.TriggerBuffs(TriggerTypeEnum.CasterInflictDamageEnnemy, damage);
             }
 
-            if (effectHandler != null && effectHandler.CastHandler.Cast.IsCriticalHit)
+            if (damage.EffectHandler != null && damage.EffectHandler.CastHandler.Cast.IsCriticalHit)
             {
                 damage.Source.TriggerBuffs(TriggerTypeEnum.OnCriticalHit, damage);
             }
@@ -2309,6 +2346,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 prob = 0.90 - (0.10 * value);
 
             var rnd = this.Random.NextDouble();
+
 
             return rnd < prob;
         }

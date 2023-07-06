@@ -1,5 +1,6 @@
 ﻿using Giny.Protocol.Enums;
 using Giny.World.Managers.Effects;
+using Giny.World.Records.Breeds;
 using Giny.World.Records.Monsters;
 using Giny.World.Records.Spells;
 using System;
@@ -136,6 +137,19 @@ namespace Giny.WorldView
             {
                 return UnknownDataText;
             }
+        }
+
+        public static string GetSpellDescriptionWithBreed(SpellRecord spell)
+        {
+            foreach (var breed in BreedRecord.GetBreeds())
+            {
+                if (breed.SpellIds.Contains(spell.Id))
+                {
+                    return spell.ToString() + " (" + breed.Name + ")";
+                }
+            }
+
+            return null;
         }
     }
 }

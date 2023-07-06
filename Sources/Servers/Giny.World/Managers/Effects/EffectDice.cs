@@ -66,13 +66,13 @@ namespace Giny.World.Managers.Effects
             }
             else
             {
-                return new EffectInteger(EffectId, (short)random.Next(Min, Max + 1));
+                return new EffectInteger(EffectId, random.Next(Min, Max + 1));
             }
         }
 
-        public short GetDelta()
+        public int GetDelta()
         {
-            return (short)(Min < Max ? new AsyncRandom().Next(Min, Max + 1) : Min);
+            return Min < Max ? new AsyncRandom().Next(Min, Max + 1) : Min;
         }
 
         public override bool Equals(object obj)

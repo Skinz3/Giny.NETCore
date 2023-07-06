@@ -25,7 +25,7 @@ namespace Giny.World.Managers.Fights.Effects.Cast
         {
             Spell spell = CreateCastedSpell();
 
-            var caster = CastHandler.Cast.GetCaster();
+            var caster = CastHandler.Cast.GetInitialCaster();
 
             foreach (var target in targets)
             {

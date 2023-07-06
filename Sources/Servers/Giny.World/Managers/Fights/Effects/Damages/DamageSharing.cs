@@ -33,7 +33,7 @@ namespace Giny.World.Managers.Fights.Effects.Damages
                 foreach (var ally in Source.Team.GetFighters<Fighter>())
                 {
                     Damage sharedDamage = new Damage(damage.Source, ally, damage.EffectSchool, 0, 0,
-                        damage.GetEffectHandler());
+                        damage.EffectHandler);
 
                     sharedDamage.Computed = sharedDelta;
                     sharedDamage.IgnoreBoost = true;

@@ -470,21 +470,7 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
-            foreach (var level in SpellLevelRecord.GetSpellLevels())
-            {
-                foreach (var effect in level.Effects)
-                {
-                    var e = effect as EffectDice;
-
-                    if (e.Min == 25807 && level.SpellId != 25807)
-                    {
-
-                    }
-
-                 
-                }
-            }
-            
+            var p = client.Character.Fighter;
             return;
             IEnumerable<MonsterRecord> records = MonsterRecord.GetMonsterRecords().Where(x => x.IsBoss == true).Shuffle().Take(8);
             MonstersManager.Instance.AddFixedMonsterGroup(client.Character.Map.Instance, client.Character.CellId, records.ToArray());

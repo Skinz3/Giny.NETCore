@@ -184,6 +184,8 @@ namespace Giny.World.Managers.Effects
                     return new Trigger(TriggerTypeEnum.OnDamagedRange);
                 case "DS":
                     return new Trigger(TriggerTypeEnum.OnDamagedBySpell);
+                case "DCAC":
+                    return new Trigger(TriggerTypeEnum.OnDamagedByWeapon);
                 case "DM":
                     return new Trigger(TriggerTypeEnum.OnDamagedMelee);
                 case "DA":
@@ -192,6 +194,8 @@ namespace Giny.World.Managers.Effects
                     return new Trigger(TriggerTypeEnum.OnDamagedFire);
                 case "DN":
                     return new Trigger(TriggerTypeEnum.OnDamagedNeutral);
+                case "DT":
+                    return new Trigger(TriggerTypeEnum.OnDamagedByTrap);
                 case "DE":
                     return new Trigger(TriggerTypeEnum.OnDamagedEarth);
                 case "DW":
@@ -234,6 +238,12 @@ namespace Giny.World.Managers.Effects
                     return new Trigger(TriggerTypeEnum.OnLifePointsPending);
                 case "R":
                     return new Trigger(TriggerTypeEnum.OnRangeLost);
+                case "CMPA":
+                    return new Trigger(TriggerTypeEnum.OnMpRemovalAttempt);
+                case "MS":
+                    return new Trigger(TriggerTypeEnum.OnSwitchPosition);
+                case "PPD":
+                    return new Trigger(TriggerTypeEnum.OnDamagedByEnemyPush);
             }
 
             return new Trigger(TriggerTypeEnum.Unknown);

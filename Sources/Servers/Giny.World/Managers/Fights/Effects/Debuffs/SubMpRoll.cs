@@ -3,6 +3,7 @@ using Giny.Protocol.Enums;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Managers.Fights.Triggers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,14 +34,21 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
                     target.OnDodge(Source, ActionsEnum.ACTION_CHARACTER_BOOST_MOVEMENT_POINTS_LOST_DODGE, dodged);
                 }
 
-                if (this.Effect.Duration > 1 && Effect.EffectEnum != EffectsEnum.Effect_LostMP)
+
+                if (delta > 0)
                 {
-                    base.AddStatBuff(target, (short)-delta, target.Stats.MovementPoints, FightDispellableEnum.DISPELLABLE, (short)EffectsEnum.Effect_SubMP);
+                    if (this.Effect.Duration > 1 && Effect.EffectEnum != EffectsEnum.Effect_LostMP)
+                    {
+                        base.AddStatBuff(target, (short)-delta, target.Stats.MovementPoints, FightDispellableEnum.DISPELLABLE, (short)EffectsEnum.Effect_SubMP);
+                    }
+                    else
+                    {
+                        target.LooseMp(Source, (short)delta, ActionsEnum.ACTION_CHARACTER_MOVEMENT_POINTS_LOST);
+                    }
                 }
-                else
-                {
-                    target.LooseMp(Source, (short)delta, ActionsEnum.ACTION_CHARACTER_MOVEMENT_POINTS_LOST);
-                }
+
+                target.TriggerBuffs(TriggerTypeEnum.OnMpRemovalAttempt, null);
+
             }
         }
 

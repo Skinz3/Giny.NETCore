@@ -1,4 +1,5 @@
-﻿@using Giny.IO.D2I;
+﻿@using Giny.Core.Extensions;
+@using Giny.IO.D2I;
 @using Giny.IO.D2O;
 @using Giny.IO.D2OClasses;
 @using Giny.Protocol.Enums;
@@ -39,7 +40,7 @@
                 <div style="height:70vh;overflow-y:scroll">
 
                     <Virtualize Items="@SearchResults">
-                        <MudListItem OnClick="() => SelectEffect(context)" Text=@context.ToString() />
+                        <MudListItem OnClick="() => SelectTrigger(context)" Text=@context.ToString() />
                     </Virtualize>
                 </div>
 
@@ -53,7 +54,7 @@
 
             <MudList Dense="true" Clickable="true">
                 <MudListSubheader>
-                    <MudText>@SelectedEffect</MudText>
+                    <MudText>@SelectedTrigger</MudText>
                 </MudListSubheader>
 
                 <div style="height:80vh;overflow-y:scroll">
@@ -88,6 +89,8 @@
         set;
     } = "";
 
+
+
     bool m_unhandledOnly;
 
     bool UnhandledOnly
@@ -99,7 +102,7 @@
         set
         {
             m_unhandledOnly = value;
-            OnInitialized();
+            OnSearchParameterChange();
         }
     }
 
@@ -114,66 +117,91 @@
         set
         {
             m_breedSpellsOnly = value;
-            OnInitialized();
+            OnSearchParameterChange();
         }
     }
 
-    Dictionary<EffectsEnum, List<SpellRecord>> Effects = new Dictionary<EffectsEnum, List<SpellRecord>>();
+    Dictionary<string, List<SpellRecord>> TriggerSpells = new Dictionary<string, List<SpellRecord>>();
 
-    List<EffectsEnum> SearchResults = new();
+    List<string> SearchResults = new();
 
     List<SpellRecord> DisplayedSpells = new();
 
     private SpellComponent spellComponent;
 
-    private EffectsEnum SelectedEffect
+    private string SelectedTrigger
     {
         get;
         set;
     }
     string GetSpellName(SpellRecord record)
     {
-        var result = SpellHelper.GetSpellDescriptionWithBreed(record);
-
-        if (result != null)
-        {
-            return result;
-        }
-
-        return record.ToString();
+        var breedName = SpellHelper.GetSpellDescriptionWithBreed(record);
+        return breedName != null ? breedName : record.ToString();
     }
 
     private void OnSearchTextChanged()
     {
-        SearchResults = Effects.Keys.Where(x => x.ToString().ToLower().Contains(Search.ToLower())).ToList();
+        SearchResults = TriggerSpells.Keys.Where(x => x.ToString().ToLower().Contains(Search.ToLower())).ToList();
         StateHasChanged();
     }
-    private void SelectEffect(EffectsEnum effect)
+    private void SelectTrigger(string trigger)
     {
-        SelectedEffect = effect;
-        DisplayedSpells = Effects[effect].ToList();
+        SelectedTrigger = trigger;
+
+        if (!BreedSpellsOnly)
+        {
+            DisplayedSpells = TriggerSpells[trigger].ToList();
+        }
+        else
+        {
+            DisplayedSpells = TriggerSpells[trigger].Where(x => SpellHelper.GetSpellDescriptionWithBreed(x) != null).ToList();
+        }
     }
 
     private void DisplaySpell(SpellRecord record)
     {
         spellComponent.SelectSpell(record);
     }
+    private void OnSearchParameterChange()
+    {
+        var results = BreedSpellsOnly ? GetBreedSpellsOnlyTriggers() : TriggerSpells.Keys.ToList();
+
+        if (UnhandledOnly)
+        {
+            results = results.Where(x => x.ToString().Contains("(Unknown)")).ToList();
+        }
+
+        SearchResults = results;
+        DisplayedSpells = new List<SpellRecord>();
+        SelectedTrigger = null;
+
+    }
+    private List<string> GetBreedSpellsOnlyTriggers()
+    {
+        List<string> searchResults = new();
+
+        foreach (var pair in TriggerSpells)
+        {
+            foreach (var spell in pair.Value)
+            {
+                if (SpellHelper.GetSpellDescriptionWithBreed(spell) != null)
+                {
+                    searchResults.Add(pair.Key);
+                    break;
+                }
+            }
+        }
+        return searchResults;
+    }
+
+
+
     private void InternalLoad()
     {
-        Effects.Clear();
-        SearchResults.Clear();
-
-        bool unhandledOnly = UnhandledOnly;
-        bool breedSpellsOnly = BreedSpellsOnly;
-
-        string searchStr = "";
-
-
         var spellRecords = SpellRecord.GetSpellRecords();
         int i = 0;
         int n = spellRecords.Count();
-
-        var lastBreedId = BreedRecord.GetBreeds().Max(x => x.Id);
 
         foreach (var spell in spellRecords)
         {
@@ -181,38 +209,26 @@
             {
                 foreach (var effect in level.Effects)
                 {
-                    if (SpellEffectManager.Instance.Exists(effect.EffectEnum) && unhandledOnly)
+                    int index = 0;
+                    foreach (var trigger in effect.RawTriggers.Split('|'))
                     {
-                        continue;
-                    }
+                        string triggerName = trigger.RemoveNumbers() + " (" + effect.Triggers[index].Type + ")";
 
-
-                    if ((level.SpellBreed < 0 || level.SpellBreed >= (short)lastBreedId) && breedSpellsOnly)
-                    {
-                        continue;
-                    }
-
-                    if (searchStr == string.Empty || effect.EffectEnum.ToString().ToLower().Contains(searchStr.ToLower()))
-                    {
-                        if (!Effects.ContainsKey(effect.EffectEnum))
+                        if (!TriggerSpells.ContainsKey(triggerName))
                         {
-                            Effects.Add(effect.EffectEnum, new List<SpellRecord>());
-
+                            TriggerSpells.Add(triggerName, new List<SpellRecord>());
                         }
 
-                        if (!Effects[effect.EffectEnum].Contains(spell))
-                        {
-                            Effects[effect.EffectEnum].Add(spell);
-                        }
+
+                        if (!TriggerSpells[triggerName].Contains(spell))
+                            TriggerSpells[triggerName].Add(spell);
+                        index++;
                     }
+
                 }
             }
             i++;
-
         }
-
-        SearchResults = Effects.Keys.ToList();
-        StateHasChanged();
     }
 
     protected override void OnInitialized()

@@ -287,7 +287,7 @@ namespace Giny.DatabaseSynchronizer
                     BonusCharacteristics = ConvertToMonsterBonusCharacteristics(val.BonusCharacteristics),
 
 
-                });; ;
+                }); ; ;
             }
             return grades;
         }
@@ -317,7 +317,7 @@ namespace Giny.DatabaseSynchronizer
             };
 
             return result;
-            
+
         }
         private static EffectCollection ConvertToServerEffects(IEnumerable<EffectInstance> effectInstances)
         {
@@ -333,6 +333,7 @@ namespace Giny.DatabaseSynchronizer
                 {
                     if (!effectInstance.ForClientOnly)
                         results.Add(BuildEffect(effectInstance));
+
                 }
             }
             return results;
@@ -343,8 +344,9 @@ namespace Giny.DatabaseSynchronizer
 
             if (effectDice != null)
             {
-                return new EffectDice((short)effectDice.EffectId, (short)effectDice.diceNum, (short)effectDice.DiceSide, (short)effectDice.value)
+                return new EffectDice((short)effectDice.EffectId, (int)effectDice.diceNum, (int)effectDice.DiceSide, effectDice.value)
                 {
+
                     Delay = effectDice.delay,
                     Dispellable = effectDice.dispellable,
                     Duration = effectDice.duration,
@@ -359,6 +361,7 @@ namespace Giny.DatabaseSynchronizer
                     TargetId = effectDice.targetId,
                 };
             }
+
 
             throw new Exception();
         }
