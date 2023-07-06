@@ -2613,7 +2613,9 @@
 
         Effect_CasterExecuteSpellOnCell = 2960,
 
-        End = 2890,
+        Effect_AddDealtHealPercentMultiplier = 2971,
+
+        End = 3004,
 
     }
 }

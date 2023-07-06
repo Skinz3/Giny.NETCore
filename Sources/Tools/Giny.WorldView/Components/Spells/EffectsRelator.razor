@@ -20,15 +20,17 @@
 
 <MudGrid>
 
-    <MudItem xs="3">
+    <MudItem xs="2">
         <MudPaper Outlined=true>
 
             <MudList Dense="true" Clickable="true">
 
 
                 <MudListSubheader>
-                    <MudCheckBox @bind-Checked="@UnhandledOnly" Color="Color.Primary">Non géré uniquement</MudCheckBox>
-                    <MudCheckBox @bind-Checked="@BreedSpellsOnly" Color="Color.Primary">Sorts de classe uniquement</MudCheckBox>
+
+                        <MudCheckBox @bind-Checked="@UnhandledOnly" Color="Color.Primary"> <MudText Typo="Typo.body2">  Non géré uniquement</MudText> </MudCheckBox>
+                    <MudCheckBox @bind-Checked="@BreedSpellsOnly" Color="Color.Primary"><MudText Typo="Typo.body2"> Sorts de classe</MudText></MudCheckBox>
+
                     <MudTextField Label="Search" TextChanged=OnSearchTextChanged @bind-Value="@Search"
                                   AdornmentColor="Color.Primary" AdornmentIcon="@Icons.Filled.Search"
                                   Adornment="Adornment.End" Immediate="true" Variant="Variant.Outlined" />
@@ -46,7 +48,7 @@
         </MudPaper>
     </MudItem>
 
-    <MudItem xs="3">
+    <MudItem xs="2">
         <MudPaper Outlined=true>
 
             <MudList Dense="true" Clickable="true">
@@ -57,7 +59,7 @@
                 <div style="height:80vh;overflow-y:scroll">
 
                     <Virtualize Items="@DisplayedSpells">
-                        <MudListItem OnClick="() => NavigateToSpell(context)" Text=@(context.ToString() + " ("+GetSpellBreedStr(context)+")") />
+                        <MudListItem OnClick="() => DisplaySpell(context)" Text=@(GetSpellName(context)) />
                     </Virtualize>
                 </div>
 
@@ -65,6 +67,8 @@
 
         </MudPaper>
     </MudItem>
+
+    <SpellComponent @ref="spellComponent"></SpellComponent>
 
 
 
@@ -134,22 +138,27 @@
 
     List<SpellRecord> DisplayedSpells = new();
 
+    private SpellComponent spellComponent;
+
+
     private EffectsEnum SelectedEffect
     {
         get;
         set;
     }
-    string GetSpellBreedStr(SpellRecord spell)
+    string GetSpellName(SpellRecord record)
     {
         foreach (var breed in BreedRecord.GetBreeds())
         {
-            if (breed.SpellIds.Contains(spell.Id))
+            if (breed.SpellIds.Contains(record.Id))
             {
-                return breed.Name;
+                return record.ToString() + " (" + breed.Name + ")";
             }
         }
-        return "";
+
+        return record.ToString();
     }
+
     private void OnSearchTextChanged()
     {
         if (!Ready)
@@ -168,15 +177,13 @@
         SelectedEffect = effect;
         DisplayedSpells = Effects[effect].ToList();
     }
-    private void NavigateToSpell(SpellRecord record)
-    {
-        AppState.SpellExplorerTarget = record;
-        Parent.Navigate(PageEnum.SpellExplorer);
 
+    private void DisplaySpell(SpellRecord record)
+    {
+        spellComponent.SelectSpell(record);
     }
     private void InternalLoad()
     {
-
         Ready = false;
         InvokeAsync(() => StateHasChanged());
 

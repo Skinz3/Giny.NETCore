@@ -45,11 +45,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sync", "Sync", "{6E5EEED7-2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Giny.DatabaseSynchronizer", "Sync\Giny.DatabaseSynchronizer\Giny.DatabaseSynchronizer.csproj", "{EBFA4DFF-3910-4314-A32B-BD5CB2EA56A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Giny.ProtocolBuilder", "Sync\Giny.ProtocolBuilder\Giny.ProtocolBuilder.csproj", "{6D9FA426-AAED-4E5C-B9CB-5F6656E5F023}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Giny.ProtocolBuilder", "Sync\Giny.ProtocolBuilder\Giny.ProtocolBuilder.csproj", "{6D9FA426-AAED-4E5C-B9CB-5F6656E5F023}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Giny.AS3", "Sync\Giny.AS3\Giny.AS3.csproj", "{76D77F60-D22B-436B-9629-51EB94B302B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Giny.AS3", "Sync\Giny.AS3\Giny.AS3.csproj", "{76D77F60-D22B-436B-9629-51EB94B302B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Giny.CustomEnumsBuilder", "Sync\Giny.CustomEnumsBuilder\Giny.CustomEnumsBuilder.csproj", "{FCE82FB8-8C0F-4767-9A29-8338FA08F219}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Giny.CustomEnumsBuilder", "Sync\Giny.CustomEnumsBuilder\Giny.CustomEnumsBuilder.csproj", "{FCE82FB8-8C0F-4767-9A29-8338FA08F219}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

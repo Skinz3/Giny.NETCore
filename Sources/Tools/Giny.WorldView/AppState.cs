@@ -59,11 +59,7 @@ namespace Giny.WorldView
             set;
         } = false;
 
-        public static SpellRecord? SpellExplorerTarget
-        {
-            get;
-            set;
-        }
+      
         public static PageEnum Page
         {
             get;
