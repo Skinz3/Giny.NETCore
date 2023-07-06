@@ -26,7 +26,7 @@ namespace Giny.World.Managers.Fights.Effects.Marks
         {
             Zone zone = Effect.GetZone();
 
-            Color color = MarksManager.Instance.GetMarkColor(CastHandler.Cast.Spell.SpellId);
+            Color color = Color.FromArgb(Effect.Value);
 
             Glyph glyph = new Glyph(Source.Fight.PopNextMarkId(), Effect,
                  zone, GetTriggerType(), color, Source, TargetCell, CastHandler.Cast.Spell.Record, CastHandler.Cast.Spell.Level);

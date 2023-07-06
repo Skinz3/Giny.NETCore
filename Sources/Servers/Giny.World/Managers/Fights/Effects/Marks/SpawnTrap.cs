@@ -28,7 +28,7 @@ namespace Giny.World.Managers.Fights.Effects.Marks
             {
                 Zone zone = Effect.GetZone();
 
-                Color color = MarksManager.Instance.GetMarkColor(CastHandler.Cast.Spell.SpellId);
+                Color color = Color.FromArgb(Effect.Value);
 
                 Trap trap = new Trap(Source.Fight.PopNextMarkId(), Effect,
                     MarkTriggerType.OnMove, zone, color, Source, TargetCell, CastHandler.Cast.Spell.Record, CastHandler.Cast.Spell.Level);

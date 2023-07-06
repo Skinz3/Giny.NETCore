@@ -82,7 +82,7 @@ namespace Giny.World.Records.Spells
             set;
         }
         [D2OField("criticalHitProbability")]
-        public short CriticalHitProbability
+        public long CriticalHitProbability
         {
             get;
             set;
@@ -118,37 +118,37 @@ namespace Giny.World.Records.Spells
             set;
         }
         [D2OField("maxCastPerTurn")]
-        public short MaxCastPerTurn
+        public long MaxCastPerTurn
         {
             get;
             set;
         }
         [D2OField("maxCastPerTarget")]
-        public short MaxCastPerTarget
+        public int MaxCastPerTarget
         {
             get;
             set;
         }
         [D2OField("minCastInterval")]
-        public short MinCastInterval
+        public int MinCastInterval
         {
             get;
             set;
         }
         [D2OField("initialCooldown")]
-        public long InitialCooldown
+        public long InitialCooldown // long -> ankama wtf stuff
         {
             get;
             set;
         }
         [D2OField("globalCooldown")]
-        public short GlobalCooldown
+        public int GlobalCooldown
         {
             get;
             set;
         }
         [D2OField("minPlayerLevel")]
-        public short MinPlayerLevel
+        public int MinPlayerLevel
         {
             get;
             set;

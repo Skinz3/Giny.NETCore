@@ -70,7 +70,7 @@ namespace Giny.World.Records.Spells
             set;
         }
         [Ignore]
-        public short MinimumLevel
+        public int MinimumLevel
         {
             get
             {

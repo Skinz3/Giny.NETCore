@@ -24,65 +24,14 @@ namespace Giny.World
     /// </summary>
     class Program
     {
-
-
-
-        static short EncodeColor(int argb) // 22 8 0 
-        {
-            var color = Color.FromArgb(argb);
-
-            int red = color.R;
-            int green = color.G;
-            int blue = color.B;
-
-            // Make sure the values are within the range of 0-255
-            red = Math.Max(0, Math.Min(red, 255));
-            green = Math.Max(0, Math.Min(green, 255));
-            blue = Math.Max(0, Math.Min(blue, 255));
-
-            // Combine the components into a single value
-            int rs = (int)((red << 16) | (green << 8) | (blue));
-
-            return (short)rs;
-        }
-
         static void Main(string[] args)
         {
-            int rs = EncodeColor(5911580);
-
-
-            Random rd = new Random();
-
-            while (true)
-            {
-                var a = rd.Next(0, 100);
-                var b = rd.Next(0, 100);
-                var c = rd.Next(0, 100);
-
-                var d = rd.Next(0, 255);
-                var e = rd.Next(0, 255);
-                var f = rd.Next(0, 255);
-
-                int R = (rs >> a) & d;
-                int G = (rs >> b) & e;
-                int B = (rs >> c) & f;
-
-                if (R == 90 && G == 52 && B == 28)
-                {
-
-                }
-            }
-
-
-
-
             /* WIPManager.Analyse(Assembly.GetExecutingAssembly());
               Console.Read(); */
 
             Logger.DrawLogo();
             StartupManager.Instance.Initialize(Assembly.GetExecutingAssembly());
             IPCManager.Instance.ConnectToAuth();
-
 
             ConsoleCommandsManager.Instance.ReadCommand();
         }

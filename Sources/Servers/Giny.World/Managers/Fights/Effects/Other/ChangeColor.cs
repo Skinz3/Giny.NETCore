@@ -23,27 +23,24 @@ namespace Giny.World.Managers.Fights.Effects.Other
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
-            // expected : 12984578 OR 29761794 (unconverted)
-
             var color = 0;
 
             switch (CastHandler.Cast.Spell.SpellId)
             {
+                case 14002: // Rituel de Jashin
                 case 12743: // Berserk
-                    color = 12984578;
+                    color = 29761794;
                     break;
             }
 
-        
+
+            var converted = EntityLookManager.Instance.GetConvertedColor(color, 0);
             foreach (var target in targets) 
             {
                 int id = target.BuffIdProvider.Pop();
-
-                var targetColor = (Effect.Min - 1) + 1 << 24 | color & 16777215;
-
                 var look = target.Look.Clone();
                 var colors = look.Colors;
-                colors[Effect.Min - 1] = targetColor;
+                colors[Effect.Min - 1] = color;
                 LookBuff buff = new LookBuff(id, look, target, this, FightDispellableEnum.REALLY_NOT_DISPELLABLE);
                 target.AddBuff(buff);
             }

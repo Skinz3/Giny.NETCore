@@ -76,12 +76,12 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
-            short delta = Effect.GetDelta();
+            int delta = Effect.GetDelta();
 
             foreach (var target in targets)
             {
                 Characteristic characteristic = target.Stats[GetAssociatedCharacteristicEnum()];
-                AddStatBuff(target, delta, characteristic, Dispellable);
+                AddStatBuff(target, (short)delta, characteristic, Dispellable);
             }
 
         }

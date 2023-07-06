@@ -170,11 +170,11 @@ namespace Giny.World.Managers.Fights.Fighters
                     ExecuteSpell(24387, 1, Cell);
                     break;
                 case BreedEnum.Eniripsa:
-                    ExecuteSpell(25810, 1, Cell);
+                    ExecuteSpell(25807, 1, Cell);
                     break;
             }
 
-         
+
 
         }
 
@@ -294,7 +294,7 @@ namespace Giny.World.Managers.Fights.Fighters
                     destinationCellId = targetCell.Id,
                     verboseCast = true,
                     weaponGenericId = weaponGenericId,
-                });;
+                }); ;
 
 
                 if (!cast.ApFree)
@@ -444,7 +444,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public override void OnTurnBegin()
         {
-         
+
 
             if (Disconnected)
             {

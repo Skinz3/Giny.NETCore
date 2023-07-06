@@ -125,7 +125,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public override void OnSummoned()
         {
-            Summoner.CastSpell(Grade.StartingSpellLevelId);
+            this.CastSpell(Grade.StartingSpellLevelId);
         }
     }
 }

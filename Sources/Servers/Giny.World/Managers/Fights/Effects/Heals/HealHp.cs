@@ -26,7 +26,7 @@ namespace Giny.World.Managers.Fights.Effects.Heals
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
-            short jet = Effect.GetDelta();
+            int jet = Effect.GetDelta();
 
             short delta = (short)(jet * (double)(100d + Source.Stats.Intelligence.TotalInContext()) /
                 100d + Source.Stats[CharacteristicEnum.HEAL_BONUS].TotalInContext());

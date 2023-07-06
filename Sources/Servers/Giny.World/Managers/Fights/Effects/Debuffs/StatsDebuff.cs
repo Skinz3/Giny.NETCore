@@ -59,7 +59,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
-            short delta = Effect.GetDelta();
+            int delta = Effect.GetDelta();
 
             foreach (var target in targets)
             {
