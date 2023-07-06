@@ -12,25 +12,11 @@ namespace Giny.World.Managers.Fights.Marks
 {
     public class MarksManager : Singleton<MarksManager>
     {
-        /*
-            Forgelance ->
-            [03:45:05:055] [ServerConnection] [server_game] [RCV] GameActionFightSpellCastMessage @626
-            [03:45:05:055] [test] Mark color : 5718180
-            [03:45:05:056] [test] Mark color : 5718180
-            [03:45:05:056] [test] Mark color : 5718180
-            [03:45:05:056] [test] Mark color : 5718180
-            [03:45:05:056] [test] Mark color : 5718180
-            [03:45:05:056] [test] Mark color : 5718180
-            [03:45:05:057] [test] Mark color : 5718180
-            [03:45:05:057] [test] Mark color : 5718180
-            [03:45:05:057] [ServerConnection] [server_game] [RCV] GameActionFightMarkCellsMessage @627
-            [03:45:05:057] [test] Mark color : 4337427
-        */
         public Color GetMarkColor(short spellId)
         {
             switch (spellId)
             {
-                case 24391:
+                case 24391: // Étendard (Forgelance)
                     return Color.FromArgb(5718180);
 
 

@@ -59,8 +59,6 @@ namespace Giny.EnumsBuilder.Generation
 
         protected virtual string ApplyRules(string line)
         {
-         
-
             string value = "";
 
             bool prevIsLower = false;

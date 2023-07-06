@@ -138,8 +138,6 @@ namespace Giny.ProtocolBuilder.Profiles
 
                 string filePath = directoryPath + as3File.ClassName + ".cs";
 
-                File.WriteAllText(filePath, output);
-
                 SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(output);
                 SyntaxNode formattedNode = Formatter.Format(syntaxTree.GetRoot(), new AdhocWorkspace());
                 File.WriteAllText(filePath, formattedNode.ToFullString());

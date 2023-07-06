@@ -1,5 +1,5 @@
-﻿using Giny.Protocol.Enums;
-using Giny.World.Managers.Actions;
+﻿using Giny.Protocol.Custom.Enums;
+using Giny.Protocol.Enums;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
@@ -28,7 +28,7 @@ namespace Giny.World.Managers.Fights.Effects.Steal
 
                 if (dodged > 0)
                 {
-                    target.OnDodge(Source, ActionsEnum.ACTION_FIGHT_SPELL_DODGED_PM, dodged);
+                    target.OnDodge(Source, ActionsEnum.ACTION_CHARACTER_DODGE_HIT, dodged);;
                 }
 
                 if (this.Effect.Duration > 1 && Effect.EffectEnum != EffectsEnum.Effect_LostMP)

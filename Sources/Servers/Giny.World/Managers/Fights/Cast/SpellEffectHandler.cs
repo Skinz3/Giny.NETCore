@@ -18,7 +18,6 @@ using Giny.World.Managers.Stats;
 using Giny.Protocol.Enums;
 using Giny.World.Records.Monsters;
 using Giny.World.Managers.Fights.Triggers;
-using Giny.World.Managers.Actions;
 using Giny.World.Managers.Fights.Zones;
 using Giny.Protocol.Custom.Enums;
 using Org.BouncyCastle.Asn1.X509;

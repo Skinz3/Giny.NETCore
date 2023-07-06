@@ -2,11 +2,11 @@
 using Giny.Core.Extensions;
 using Giny.Core.Network.Messages;
 using Giny.Core.Time;
+using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
 using Giny.Protocol.Messages;
 using Giny.Protocol.Types;
 using Giny.World.Api;
-using Giny.World.Managers.Actions;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Entities.Look;
@@ -169,7 +169,9 @@ namespace Giny.World.Managers.Fights.Fighters
                 case BreedEnum.Forgelance:
                     ExecuteSpell(24387, 1, Cell);
                     break;
-
+                case BreedEnum.Eniripsa:
+                    ExecuteSpell(25810, 1, Cell);
+                    break;
             }
 
          
@@ -284,7 +286,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
                 Fight.Send(new GameActionFightCloseCombatMessage()
                 {
-                    actionId = (short)ActionsEnum.ACTION_FIGHT_CLOSE_COMBAT,
+                    actionId = 0,
                     critical = (byte)cast.Critical,
                     silentCast = false,
                     sourceId = this.Id,
@@ -292,11 +294,11 @@ namespace Giny.World.Managers.Fights.Fighters
                     destinationCellId = targetCell.Id,
                     verboseCast = true,
                     weaponGenericId = weaponGenericId,
-                });
+                });;
 
 
                 if (!cast.ApFree)
-                    LooseAp(this, cast.Spell.Level.ApCost, ActionsEnum.ACTION_CHARACTER_ACTION_POINTS_USE);
+                    LooseAp(this, cast.Spell.Level.ApCost, ActionsEnum.ACTION_CHARACTER_ACTION_POINTS_LOST);
 
                 if (!handler.Execute())
                 {

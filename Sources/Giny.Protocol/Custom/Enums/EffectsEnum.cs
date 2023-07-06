@@ -2611,6 +2611,7 @@
 
         Effect_Autopilot = 2881,
 
+        Effect_CasterExecuteSpellOnCell = 2960,
 
         End = 2890,
 

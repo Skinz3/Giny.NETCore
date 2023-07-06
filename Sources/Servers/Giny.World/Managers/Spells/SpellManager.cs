@@ -13,7 +13,7 @@ namespace Giny.World.Managers.Spells
 {
     public class SpellManager : Singleton<SpellManager>
     {
-        private readonly Dictionary<SpellEnum, Type> m_handlers = new Dictionary<SpellEnum, Type>();
+        private readonly Dictionary<short, Type> m_handlers = new Dictionary<short, Type>();
 
         [StartupInvoke(StartupInvokePriority.FourthPass)]
         public void Initialize()
@@ -22,15 +22,15 @@ namespace Giny.World.Managers.Spells
             {
                 foreach (var attribute in type.GetCustomAttributes<SpellCastHandlerAttribute>())
                 {
-                    m_handlers.Add(attribute.SpellEnum, type);
+                    m_handlers.Add(attribute.SpellId, type);
                 }
             }
         }
         public SpellCastHandler CreateSpellCastHandler(SpellCast cast)
         {
-            if (m_handlers.ContainsKey((SpellEnum)cast.SpellId))
+            if (m_handlers.ContainsKey(cast.SpellId))
             {
-                return (SpellCastHandler)Activator.CreateInstance(m_handlers[(SpellEnum)cast.SpellId], cast);
+                return (SpellCastHandler)Activator.CreateInstance(m_handlers[cast.SpellId], cast);
             }
 
             return new DefaultSpellCastHandler(cast);

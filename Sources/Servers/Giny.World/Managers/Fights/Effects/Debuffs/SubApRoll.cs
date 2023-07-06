@@ -1,5 +1,5 @@
-﻿using Giny.Protocol.Enums;
-using Giny.World.Managers.Actions;
+﻿using Giny.Protocol.Custom.Enums;
+using Giny.Protocol.Enums;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
@@ -29,7 +29,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
 
                 if (dodged > 0)
                 {
-                    target.OnDodge(Source, ActionsEnum.ACTION_FIGHT_SPELL_DODGED_PA, dodged);
+                    target.OnDodge(Source, ActionsEnum.ACTION_CHARACTER_BOOST_ACTION_POINTS_LOST_DODGE, dodged);
                 }
 
                 if (this.Effect.Duration > 1)

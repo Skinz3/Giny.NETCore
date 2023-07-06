@@ -4,7 +4,6 @@ using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
 using Giny.Protocol.Messages;
 using Giny.Protocol.Types;
-using Giny.World.Managers.Actions;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Entities.Look;
 using Giny.World.Managers.Entities.Npcs;
@@ -24,6 +23,7 @@ using Giny.World.Records.Items;
 using Giny.World.Records.Jobs;
 using Giny.World.Records.Maps;
 using Giny.World.Records.Monsters;
+using Giny.World.Records.Spells;
 using Giny.World.Records.Tinsel;
 using System;
 using System.Collections.Generic;
@@ -470,16 +470,20 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
-            for (int i = 6000; i < 8000; i++)
+            foreach (var level in SpellLevelRecord.GetSpellLevels())
             {
-                var lookStr = "{" + i + "}";
-                var look = EntityLookManager.Instance.Parse(System.Web.HttpUtility.HtmlDecode(lookStr));
-                client.Character.Look = look;
-                client.Character.RefreshActorOnMap();
-                client.Character.Reply(i);
-                System.Threading.Thread.Sleep(500);
-            }
+                foreach (var effect in level.Effects)
+                {
+                    var e = effect as EffectDice;
 
+                    if (e.Min == 25807 && level.SpellId != 25807)
+                    {
+
+                    }
+
+                 
+                }
+            }
             
             return;
             IEnumerable<MonsterRecord> records = MonsterRecord.GetMonsterRecords().Where(x => x.IsBoss == true).Shuffle().Take(8);

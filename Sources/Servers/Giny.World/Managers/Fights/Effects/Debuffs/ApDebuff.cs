@@ -1,4 +1,5 @@
-﻿using Giny.Protocol.Enums;
+﻿using Giny.Protocol.Custom.Enums;
+using Giny.Protocol.Enums;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
@@ -30,7 +31,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
                 }
                 else
                 {
-                    target.LooseAp(Source, (short)Effect.Min, Actions.ActionsEnum.ACTION_CHARACTER_ACTION_POINTS_LOST);
+                    target.LooseAp(Source, (short)Effect.Min, ActionsEnum.ACTION_CHARACTER_ACTION_POINTS_LOST);
                 }
             }
         }

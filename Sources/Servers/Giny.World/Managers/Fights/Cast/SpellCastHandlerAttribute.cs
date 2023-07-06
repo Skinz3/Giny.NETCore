@@ -10,14 +10,14 @@ namespace Giny.World.Managers.Fights.Cast
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class SpellCastHandlerAttribute : Attribute
     {
-        public SpellEnum SpellEnum
+        public short SpellId
         {
             get;
             set;
         }
-        public SpellCastHandlerAttribute(SpellEnum spell)
+        public SpellCastHandlerAttribute(short spellId)
         {
-            this.SpellEnum = spell;
+            this.SpellId = spellId;
         }
     }
 }

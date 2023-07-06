@@ -28,6 +28,33 @@ namespace Giny.Auth.Handlers
         public const int MAX_NICKNAME_LENGTH = 15;
 
         [MessageHandler]
+        public static void HandleReleaseAccountMessage(ReleaseAccountMessage message, AuthClient client)
+        {
+            client.Disconnect();
+        }
+        [MessageHandler]
+        public static void HandleForceAccountMessage(ForceAccountMessage message, AuthClient client)
+        {
+            if (client.Account.Role != ServerRoleEnum.Administrator)
+            {
+                client.Send(new ForceAccountErrorMessage());
+                return;
+            }
+
+            var account = AccountRecord.ReadAccount(message.accountId);
+
+            if (account == null)
+            {
+                client.Send(new ForceAccountErrorMessage());
+                return;
+            }
+
+            client.AssignAccount(account);
+            client.Send(new ForceAccountStatusMessage(true, account.Id, account.Nickname, account.Username));
+            client.SendServerList();
+
+        }
+        [MessageHandler]
         public static void HandleServerSelectionMessage(ServerSelectionMessage message, AuthClient client)
         {
             ProcessServerSelection(client, message.serverId);
@@ -168,8 +195,8 @@ namespace Giny.Auth.Handlers
                 client.Disconnect();
                 return;
             }
-            client.Account = account;
-            client.Characters = WorldCharacterRecord.Get(client.Account.Id);
+
+            client.AssignAccount(account);
 
             if (string.IsNullOrEmpty(client.Account.Nickname))
             {

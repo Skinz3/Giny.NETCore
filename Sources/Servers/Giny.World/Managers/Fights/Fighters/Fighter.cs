@@ -8,7 +8,6 @@ using Giny.Protocol.Messages;
 using Giny.Protocol.Types;
 using Giny.World.Api;
 using Giny.World.Handlers.Roleplay.Maps.Paths;
-using Giny.World.Managers.Actions;
 using Giny.World.Managers.Entities.Look;
 using Giny.World.Managers.Fights.Buffs;
 using Giny.World.Managers.Fights.Buffs.SpellBoost;
@@ -487,8 +486,8 @@ namespace Giny.World.Managers.Fights.Fighters
                         this.MovementHistory.OnMove(path);
 
                         OnMove(new Movement(MovementType.Walk, this));
-
-                        this.LooseMp(this, mpCost, ActionsEnum.ACTION_CHARACTER_MOVEMENT_POINTS_USE);
+                   
+                        this.LooseMp(this, mpCost, 0);
 
 
 
@@ -969,7 +968,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 }
 
                 if (!cast.ApFree)
-                    LooseAp(this, GetApCost(cast.Spell.Level), ActionsEnum.ACTION_CHARACTER_ACTION_POINTS_USE);
+                    LooseAp(this, GetApCost(cast.Spell.Level), 0);
 
                 if (result != SpellCastResult.CELL_NOT_FREE)
                 {
@@ -1057,7 +1056,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
             Fight.Send(new GameActionFightSpellCastMessage()
             {
-                actionId = (short)ActionsEnum.ACTION_FIGHT_CAST_SPELL,
+                actionId = (short)ActionsEnum.ACTION_CAST_STARTING_SPELL,
                 critical = (byte)handler.Cast.Critical,
                 destinationCellId = handler.Cast.TargetCell.Id,
                 portalsIds = new short[0],
@@ -1799,7 +1798,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
                 Fight.Send(new GameActionFightLifePointsGainMessage()
                 {
-                    actionId = (short)ActionsEnum.ACTION_CHARACTER_LIFE_POINTS_WIN,
+                    actionId = (short)ActionsEnum.ACTION_CHARACTER_LIFE_POINTS_WIN_WITHOUT_BOOST,
                     delta = delta,
                     sourceId = healing.Source.Id,
                     targetId = Id,
@@ -1835,7 +1834,7 @@ namespace Giny.World.Managers.Fights.Fighters
         {
             Fight.Send(new GameActionFightDispellableEffectMessage()
             {
-                actionId = (short)ActionsEnum.ACTION_CHARACTER_UPDATE_BOOST,
+                actionId = (short)ActionsEnum.ACTION_ITEM_BUFF_CHANGE_DURATION,
                 effect = buff.GetAbstractFightDispellableEffect(),
                 sourceId = source.Id,
             });
@@ -2238,7 +2237,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 }
                 else
                 {
-                    Fight.Send(new GameActionFightDropCharacterMessage(Carried.Id, cell.Id, (short)ActionsEnum.ACTION_NO_MORE_CARRIED, Id));
+                    Fight.Send(new GameActionFightDropCharacterMessage(Carried.Id, cell.Id, (short)ActionsEnum.ACTION_THROW_CARRIED_CHARACTER, Id));
                 }
 
                 Carried = null;
@@ -2265,7 +2264,7 @@ namespace Giny.World.Managers.Fights.Fighters
                     this.DeathTime = DateTime.Now;
                     Fight.Send(new GameActionFightDeathMessage()
                     {
-                        actionId = (short)ActionsEnum.ACTION_CHARACTER_DEATH,
+                        actionId = (short)ActionsEnum.ACTION_CHARACTER_KILL,
                         sourceId = killedBy.Id,
                         targetId = this.Id,
                     });

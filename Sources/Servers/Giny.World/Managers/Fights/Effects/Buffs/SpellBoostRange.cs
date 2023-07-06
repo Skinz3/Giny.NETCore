@@ -2,7 +2,6 @@
 using Giny.Protocol.Enums;
 using Giny.Protocol.Messages;
 using Giny.Protocol.Types;
-using Giny.World.Managers.Actions;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Buffs;
 using Giny.World.Managers.Fights.Buffs.SpellBoost;

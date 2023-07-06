@@ -44,25 +44,22 @@ namespace Giny.Auth.Network
         public AccountRecord Account
         {
             get;
-            set;
+            private set;
         }
         public WorldCharacterRecord[] Characters
         {
             get;
-            set;
+            private set;
         }
         public byte[] AesKey
         {
             get;
             set;
         }
-        public bool HasRights
-        {
-            get
-            {
-                return Account.Role > ServerRoleEnum.Player;
-            }
-        }
+
+        public bool HasRights => Account.Role > ServerRoleEnum.Player;
+
+        public bool HasForceRight => Account.Role == ServerRoleEnum.Administrator;
 
         public string Ticket
         {
@@ -157,7 +154,12 @@ namespace Giny.Auth.Network
         public void OnIdentificationSuccess(bool wasConnected)
         {
             Send(new IdentificationSuccessMessage(Account.Username, new AccountTagInformation(Account.Nickname, Account.Id.ToString()),
-                 Account.Id, 0, HasRights, HasRights, 0, 0, wasConnected, 0));
+                 Account.Id, 0, HasRights, HasForceRight, 0, 0, wasConnected, 0));
+        }
+        public void AssignAccount(AccountRecord account)
+        {
+            this.Account = account;
+            this.Characters = WorldCharacterRecord.Get(Account.Id);
         }
         public void SendServerList()
         {

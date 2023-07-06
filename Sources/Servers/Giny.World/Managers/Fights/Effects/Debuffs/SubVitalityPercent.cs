@@ -1,6 +1,6 @@
 ﻿using Giny.Core.DesignPattern;
+using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
-using Giny.World.Managers.Actions;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Buffs;
 using Giny.World.Managers.Fights.Cast;
