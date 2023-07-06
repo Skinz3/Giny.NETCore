@@ -1,0 +1,18 @@
+﻿<Window x:Class="Giny.SpellTree.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Giny.SpellTree"
+        mc:Ignorable="d"
+        Title="Giny.SpellTree" Height="1080" Width="1920" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Grid>
+        <TextBox  x:Name="spellInput" HorizontalAlignment="Left" Margin="1708,10,0,0" TextWrapping="Wrap" Text="13117" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Draw" HorizontalAlignment="Left" Margin="1843,8,0,0" VerticalAlignment="Top" Width="67" Click="Button_Click"/>
+
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  Margin="42,35,348,69">
+        <Canvas x:Name="canvas" Width="3000" Height="3000"  Background="White"/>
+        </ScrollViewer>
+
+    </Grid>
+</Window>

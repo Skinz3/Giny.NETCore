@@ -290,5 +290,27 @@ namespace Giny.World.Managers.Effects
 
         public abstract object Clone();
 
+        public bool IsSpellCastEffect()
+        {
+            switch (EffectEnum)
+            {
+                case EffectsEnum.Effect_TargetExecuteSpellWithAnimation:
+                case EffectsEnum.Effect_TargetExecuteSpell:
+                case EffectsEnum.Effect_TargetExecuteSpellOnCell:
+                case EffectsEnum.Effect_CasterExecuteSpellGlobalLimitation:
+                case EffectsEnum.Effect_CastSpell_1175:
+                case EffectsEnum.Effect_CasterExecuteSpell:
+                case EffectsEnum.Effect_SourceExecuteSpellOnSource:
+                case EffectsEnum.Effect_SourceExecuteSpellOnTarget:
+                case EffectsEnum.Effect_TargetExecuteSpellOnSource:
+                case EffectsEnum.Effect_TargetExecuteSpellGlobalLimitation:
+                case EffectsEnum.Effect_TargetExecuteSpellOnSourceGlobalLimitation:
+                case EffectsEnum.Effect_Trap:
+                case EffectsEnum.Effect_CasterExecuteSpellOnCell:
+                    return true;
+            }
+
+            return false;
+        }
     }
 }

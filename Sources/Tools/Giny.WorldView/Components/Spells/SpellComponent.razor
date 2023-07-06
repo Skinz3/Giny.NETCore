@@ -133,7 +133,7 @@
 
                                    
 
-                                    @if (SpellHelper.IsSpellCastEffect(@SelectedEffect.EffectEnum))
+                                    @if (@SelectedEffect.IsSpellCastEffect())
                                     {
                                         <tr>
                                             <td>Casted Spell</td>
@@ -183,7 +183,7 @@
 
 
                         </MudCardContent>
-                        @if (SpellHelper.IsSpellCastEffect(@SelectedEffect.EffectEnum))
+                        @if (@SelectedEffect.IsSpellCastEffect())
                         {
                             <MudCardActions>
                                 <MudButton OnClick="()=> OnExploreClick(SelectedEffect)" Variant="Variant.Text" Color="Color.Primary">Explorer</MudButton>
