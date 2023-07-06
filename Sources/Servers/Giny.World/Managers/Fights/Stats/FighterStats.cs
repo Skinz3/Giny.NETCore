@@ -4,12 +4,14 @@ using Giny.Protocol.Enums;
 using Giny.Protocol.Types;
 using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Fights.Cast.Units;
+using Giny.World.Managers.Fights.Effects.Summons;
 using Giny.World.Managers.Fights.Fighters;
-using Giny.World.Managers.Monsters;
 using Giny.World.Managers.Stats;
 using Giny.World.Records.Characters;
+using Giny.World.Records.Monsters;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -92,7 +94,7 @@ namespace Giny.World.Managers.Fights.Stats
                 this[CharacteristicEnum.SHIELD].Context = 0;
             }
         }
-   
+
         public void AddMaxVitality(short delta)
         {
             this.BaseMaxLife += delta;
@@ -241,31 +243,25 @@ namespace Giny.World.Managers.Fights.Stats
          * Todo : Summoned / SummonerId
          * bonusCharacteristic.lifePoints * (caster.lifePoints - caster.vitality.total)  + (grade.lifePoints * statsCoeff)
          */
-        public FighterStats(MonsterGrade monsterGrade, double coeff = 1d)
+        public FighterStats(MonsterGrade monsterGrade, Fighter? summoner = null, double coeff = 1d)
         {
             this[CharacteristicEnum.ACTION_POINTS] = ApCharacteristic.New(monsterGrade.ActionPoints);
             this[CharacteristicEnum.AIR_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.AIR_ELEMENT_REDUCTION] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.AIR_ELEMENT_RESIST_PERCENT] = ResistanceCharacteristic.New(monsterGrade.AirResistance);
             this[CharacteristicEnum.ALL_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
-
-
             this[CharacteristicEnum.CRITICAL_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.CRITICAL_DAMAGE_REDUCTION] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.CRITICAL_HIT] = DetailedCharacteristic.Zero();
-            this.CriticalHitWeapon = 0;
             this[CharacteristicEnum.DAMAGE_PERCENT] = DetailedCharacteristic.Zero();
-
             this[CharacteristicEnum.DODGE_AP_LOST_PROBABILITY] = PointDodgeCharacteristic.New(monsterGrade.ApDodge);
             this[CharacteristicEnum.DODGE_MP_LOST_PROBABILITY] = PointDodgeCharacteristic.New(monsterGrade.MpDodge);
             this[CharacteristicEnum.EARTH_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.EARTH_ELEMENT_REDUCTION] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.EARTH_ELEMENT_RESIST_PERCENT] = ResistanceCharacteristic.New(monsterGrade.EarthResistance);
-            this.Energy = 0;
             this[CharacteristicEnum.FIRE_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.FIRE_ELEMENT_REDUCTION] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.FIRE_ELEMENT_RESIST_PERCENT] = ResistanceCharacteristic.New(monsterGrade.FireResistance);
-            this.GlobalDamageReduction = 0;
             this[CharacteristicEnum.GLYPH_POWER] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.HEAL_BONUS] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.INITIATIVE] = DetailedCharacteristic.Zero();
@@ -275,9 +271,6 @@ namespace Giny.World.Managers.Fights.Stats
             this[CharacteristicEnum.AGILITY] = DetailedCharacteristic.New((short)(monsterGrade.Agility * coeff));
             this[CharacteristicEnum.STRENGTH] = DetailedCharacteristic.New((short)(monsterGrade.Strength * coeff));
             this[CharacteristicEnum.VITALITY] = DetailedCharacteristic.New((short)(monsterGrade.Vitality * coeff));
-            this.MaxLifePoints = (int)(monsterGrade.LifePoints * coeff);
-            this.MaxEnergyPoints = 0;
-
             this[CharacteristicEnum.MOVEMENT_POINTS] = MpCharacteristic.New(monsterGrade.MovementPoints);
             this[CharacteristicEnum.NEUTRAL_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.NEUTRAL_ELEMENT_REDUCTION] = DetailedCharacteristic.Zero();
@@ -288,24 +281,18 @@ namespace Giny.World.Managers.Fights.Stats
             this[CharacteristicEnum.MAGIC_FIND] = RelativeCharacteristic.Zero();
             this[CharacteristicEnum.PUSH_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.PUSH_DAMAGE_REDUCTION] = DetailedCharacteristic.Zero();
-
             this[CharacteristicEnum.RANGE] = RangeCharacteristic.Zero();
-
             this[CharacteristicEnum.REFLECT_DAMAGE] = DetailedCharacteristic.New(monsterGrade.DamageReflect);
             this[CharacteristicEnum.RUNE_POWER] = DetailedCharacteristic.Zero();
-
-
             this[CharacteristicEnum.MAX_SUMMONED_CREATURES_BOOST] = Characteristic.New(BaseSummonsCount);
             this[CharacteristicEnum.TACKLE_BLOCK] = RelativeCharacteristic.Zero();
             this[CharacteristicEnum.TACKLE_EVADE] = RelativeCharacteristic.Zero();
             this[CharacteristicEnum.TRAP_DAMAGE_BONUS] = Characteristic.Zero();
             this[CharacteristicEnum.TRAP_DAMAGE_BONUS_PERCENT] = DetailedCharacteristic.Zero();
-
             this[CharacteristicEnum.WATER_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.WATER_ELEMENT_REDUCTION] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.WATER_ELEMENT_RESIST_PERCENT] = ResistanceCharacteristic.New(monsterGrade.WaterResistance);
             this[CharacteristicEnum.WEAPON_POWER] = DetailedCharacteristic.Zero();
-
             this[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_MELEE] = DetailedCharacteristic.New(100);
             this[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE] = DetailedCharacteristic.New(100);
             this[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_WEAPON] = DetailedCharacteristic.New(100);
@@ -319,14 +306,65 @@ namespace Giny.World.Managers.Fights.Stats
             this[CharacteristicEnum.DAMAGE_PERCENT_SPELL] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.SHIELD] = Characteristic.New(0);
 
-
             InvisibilityState = GameActionFightInvisibilityStateEnum.VISIBLE;
+
+            this.MaxLifePoints = (int)(monsterGrade.LifePoints * coeff);
+
+
+            if (summoner != null)
+            {
+                this.ApplyBonusCharacteristics(monsterGrade.BonusCharacteristics, summoner);
+            }
+
             this.BaseMaxLife = MaxLifePoints;
             this.LifePoints = MaxLifePoints;
             this.Erosion = NaturalErosion;
+            this.CriticalHitWeapon = 0;
+            this.Energy = 0;
+            this.GlobalDamageReduction = 0;
+            this.MaxEnergyPoints = 0;
+
+
+
+
             this.Initialize();
         }
 
+        private void ApplyBonusCharacteristics(MonsterBonusCharacteristics bonus, Fighter summoner)
+        {
+            var delta = (bonus.LifePoints / 100d) * (summoner.Stats.BaseMaxLife - summoner.Stats[CharacteristicEnum.VITALITY].TotalInContext());
+            MaxLifePoints += (int)delta;
+
+            AddStatsPercentSummoner(summoner, bonus.Agility, CharacteristicEnum.AGILITY);
+            AddStatsPercentSummoner(summoner, bonus.Strength, CharacteristicEnum.STRENGTH);
+            AddStatsPercentSummoner(summoner, bonus.Intelligence, CharacteristicEnum.INTELLIGENCE);
+            AddStatsPercentSummoner(summoner, bonus.Chance, CharacteristicEnum.CHANCE);
+            AddStatsPercentSummoner(summoner, bonus.Wisdom, CharacteristicEnum.WISDOM);
+
+
+            AddStatsPercentSummoner(summoner, bonus.TackleBlock, CharacteristicEnum.TACKLE_BLOCK);
+            AddStatsPercentSummoner(summoner, bonus.TackleEvade, CharacteristicEnum.TACKLE_EVADE);
+
+
+            AddStatsPercentSummoner(summoner, bonus.FireResistance, CharacteristicEnum.FIRE_ELEMENT_RESIST_PERCENT);
+            AddStatsPercentSummoner(summoner, bonus.WaterResistance, CharacteristicEnum.WATER_ELEMENT_RESIST_PERCENT);
+            AddStatsPercentSummoner(summoner, bonus.EarthResistance, CharacteristicEnum.EARTH_ELEMENT_RESIST_PERCENT);
+            AddStatsPercentSummoner(summoner, bonus.AirResistance, CharacteristicEnum.AIR_ELEMENT_RESIST_PERCENT);
+            AddStatsPercentSummoner(summoner, bonus.NeutralResistance, CharacteristicEnum.NEUTRAL_ELEMENT_RESIST_PERCENT);
+
+            //  bonus.APRemoval ?
+
+            AddStatsPercentSummoner(summoner, bonus.BonusEarthDamage, CharacteristicEnum.EARTH_DAMAGE_BONUS);
+            AddStatsPercentSummoner(summoner, bonus.BonusFireDamage, CharacteristicEnum.FIRE_DAMAGE_BONUS);
+            AddStatsPercentSummoner(summoner, bonus.BonusWaterDamage, CharacteristicEnum.WATER_DAMAGE_BONUS);
+            AddStatsPercentSummoner(summoner, bonus.BonusAirDamage, CharacteristicEnum.AIR_DAMAGE_BONUS);
+
+           
+        }
+        private void AddStatsPercentSummoner(Fighter summoner, int percent, CharacteristicEnum characteristic)
+        {
+            this[characteristic].Base += (short)(percent / 100d * summoner.Stats[characteristic].Total());
+        }
         public GameFightCharacteristics GetGameFightCharacteristics(Fighter owner, CharacterFighter target)
         {
             Fighter summoner = owner.GetSummoner();

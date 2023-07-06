@@ -44,9 +44,6 @@ namespace Giny.World.Managers.Fights.Cast
         }
 
 
-        public SpellEnum GetSpellEnum()
-        {
-            return (SpellEnum)SpellId;
-        }
+       
     }
 }

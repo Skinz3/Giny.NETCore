@@ -1,6 +1,5 @@
 ﻿using Giny.Core;
 using Giny.World.Api;
-using Giny.World.Managers.Entities.Monsters;
 using Giny.World.Modules;
 using Giny.World.Records.Items;
 using Giny.World.Records.Jobs;

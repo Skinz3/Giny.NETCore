@@ -898,8 +898,7 @@ namespace Giny.World.Managers.Fights.Fighters
             {
                 SpellRecord record = SpellRecord.GetSpellRecord(level.SpellId);
                 Spell spell = new Spell(record, level);
-                SpellCast cast = new SpellCast(this, spell, this.Cell);
-
+                SpellCast cast = new SpellCast(this, spell, Cell);
                 cast.Force = true;
                 return this.CastSpell(cast);
             }

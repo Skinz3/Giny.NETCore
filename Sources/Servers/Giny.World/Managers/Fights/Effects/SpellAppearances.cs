@@ -145,5 +145,11 @@ namespace Giny.World.Managers.Fights.Effects
             look.SetBones(7156);
             look.AddSkin(3650);
         }
+
+        [SpellAppearance(2160)]
+        public static void MutantLapinoSkin(Fighter fighter,ref ServerEntityLook look)
+        {
+            look.SetBones(7597);
+        }
     }
 }

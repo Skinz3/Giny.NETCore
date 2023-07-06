@@ -15,6 +15,7 @@ using Giny.World.Records.Breeds;
 using Giny.World.Records.Characters;
 using Giny.World.Records.Items;
 using Giny.World.Records.Maps;
+using Giny.World.Records.Monsters;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -145,17 +146,17 @@ namespace Giny.DatabaseSynchronizer
                             {
                                 value = Enum.ToObject(property.PropertyType, value);
                             }
-                            else if (property.PropertyType == typeof(List<Giny.World.Managers.Monsters.MonsterGrade>))
+                            else if (property.PropertyType == typeof(List<World.Records.Monsters.MonsterGrade>))
                             {
-                                value = ConvertToMonsterGrades((List<MonsterGrade>)value);
+                                value = ConvertToMonsterGrades((List<IO.D2OClasses.MonsterGrade>)value);
                             }
                             else if (property.PropertyType == typeof(Dictionary<long, MonsterRoom>))
                             {
                                 value = ConvertMonsterRooms((List<double>)value);
                             }
-                            else if (property.PropertyType == typeof(List<Giny.World.Managers.Entities.Monsters.MonsterDrop>))
+                            else if (property.PropertyType == typeof(List<World.Records.Monsters.MonsterDrop>))
                             {
-                                value = ConvertToMonsterDrop((List<MonsterDrop>)value);
+                                value = ConvertToMonsterDrop((List<IO.D2OClasses.MonsterDrop>)value);
                             }
                             else if (property.PropertyType == typeof(List<EffectCollection>))
                             {
@@ -230,13 +231,13 @@ namespace Giny.DatabaseSynchronizer
             return results;
         }
 
-        private static List<World.Managers.Entities.Monsters.MonsterDrop> ConvertToMonsterDrop(List<MonsterDrop> value)
+        private static List<World.Records.Monsters.MonsterDrop> ConvertToMonsterDrop(List<IO.D2OClasses.MonsterDrop> value)
         {
-            List<World.Managers.Entities.Monsters.MonsterDrop> drops = new List<World.Managers.Entities.Monsters.MonsterDrop>();
+            List<World.Records.Monsters.MonsterDrop> drops = new List<World.Records.Monsters.MonsterDrop>();
 
             foreach (var val in value)
             {
-                drops.Add(new World.Managers.Entities.Monsters.MonsterDrop()
+                drops.Add(new World.Records.Monsters.MonsterDrop()
                 {
                     DropLimit = val.count,
                     criteria = val.criteria,
@@ -253,13 +254,13 @@ namespace Giny.DatabaseSynchronizer
             return drops;
         }
 
-        private static List<Giny.World.Managers.Monsters.MonsterGrade> ConvertToMonsterGrades(List<MonsterGrade> value)
+        private static List<World.Records.Monsters.MonsterGrade> ConvertToMonsterGrades(List<IO.D2OClasses.MonsterGrade> value)
         {
-            List<Giny.World.Managers.Monsters.MonsterGrade> grades = new List<Giny.World.Managers.Monsters.MonsterGrade>();
+            List<World.Records.Monsters.MonsterGrade> grades = new List<World.Records.Monsters.MonsterGrade>();
 
             foreach (var val in value)
             {
-                grades.Add(new World.Managers.Monsters.MonsterGrade()
+                grades.Add(new World.Records.Monsters.MonsterGrade()
                 {
                     Level = (short)val.level,
                     GradeId = (byte)val.grade,
@@ -283,12 +284,41 @@ namespace Giny.DatabaseSynchronizer
                     Vitality = (short)val.vitality,
                     WaterResistance = (short)val.waterResistance,
                     Wisdom = (short)val.wisdom,
+                    BonusCharacteristics = ConvertToMonsterBonusCharacteristics(val.BonusCharacteristics),
 
-                }); ;
+
+                });; ;
             }
             return grades;
         }
 
+        private static World.Records.Monsters.MonsterBonusCharacteristics ConvertToMonsterBonusCharacteristics(IO.D2OClasses.MonsterBonusCharacteristics input)
+        {
+            var result = new World.Records.Monsters.MonsterBonusCharacteristics()
+            {
+                Agility = input.Agility,
+                AirResistance = input.AirResistance,
+                APRemoval = input.APRemoval,
+                BonusAirDamage = input.BonusAirDamage,
+                BonusEarthDamage = input.BonusEarthDamage,
+                BonusFireDamage = input.BonusFireDamage,
+                BonusWaterDamage = input.BonusWaterDamage,
+                Chance = input.Chance,
+                EarthResistance = input.EarthResistance,
+                FireResistance = input.FireResistance,
+                Intelligence = input.Intelligence,
+                LifePoints = input.LifePoints,
+                NeutralResistance = input.NeutralResistance,
+                Strength = input.Strength,
+                TackleBlock = input.TackleBlock,
+                TackleEvade = input.TackleEvade,
+                WaterResistance = input.WaterResistance,
+                Wisdom = input.Wisdom,
+            };
+
+            return result;
+            
+        }
         private static EffectCollection ConvertToServerEffects(IEnumerable<EffectInstance> effectInstances)
         {
             EffectCollection results = new EffectCollection();

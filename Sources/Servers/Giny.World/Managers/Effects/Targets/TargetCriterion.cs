@@ -75,6 +75,8 @@ namespace Giny.World.Managers.Effects.Targets
                         return new TelefragCriterion();
                     case 'U':
                         return new JustSummonedCriterion();
+                    case 'u':
+                        return new JustSummonedCriterion();
                     case 'P':
                         return new SummonerCriterion(true);
                     case 'p':

@@ -6,8 +6,6 @@ using Giny.ORM.Attributes;
 using Giny.ORM.Interfaces;
 using Giny.Protocol.Custom.Enums;
 using Giny.World.Managers.Entities.Look;
-using Giny.World.Managers.Entities.Monsters;
-using Giny.World.Managers.Monsters;
 using Giny.World.Records.Spells;
 using System;
 using System.Collections.Concurrent;

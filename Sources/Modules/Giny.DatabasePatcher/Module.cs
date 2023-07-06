@@ -1,4 +1,6 @@
-﻿using Giny.DatabasePatcher.Experience;
+﻿using Giny.Core;
+using Giny.Core.Commands;
+using Giny.DatabasePatcher.Experience;
 using Giny.DatabasePatcher.Items;
 using Giny.DatabasePatcher.Maps;
 using Giny.DatabasePatcher.Monsters;
@@ -19,6 +21,13 @@ namespace Giny.DatabasePatcher
 
         public void Initialize()
         {
+           // Patch here
+        }
+
+        [ConsoleCommand("patch")]
+        public static void PatchCommand()
+        {
+            Logger.Write("Patching world database ...", Channels.Info);
             Experiences.Patch();
             ItemAppearances.Patch();
             LivingObjects.Patch();
@@ -29,6 +38,7 @@ namespace Giny.DatabasePatcher
             MonsterSpawns.Patch();
             SpellCategories.Patch();
             Teleporters.Patch();
+            Logger.Write("World database patched.", Channels.Info);
         }
 
     }

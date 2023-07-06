@@ -20,7 +20,10 @@ if(buildType != -1 && buildType > -1)
 }
 ```
 * ServerControlFrame.as
-Remplacer le paramètre content par rdMsg.content
+
+```  Remplacer le paramètre content par rdMsg.content ```  
+
+
 ``` l.loadBytes(rdMsg.content,lc);```
 ```actionscript
 if (Kernel.getWorker().contains(AuthentificationFrame)) // a remplacer par if (false)
@@ -88,19 +91,16 @@ static infos a rajouter (non static)
 
 
 ## Edit client to get protocol values
+
 ````pcode
- getlex QName(PackageNamespace("com.ankamagames.jerakine.logger"),"Log")
+getlex QName(PackageNamespace("com.ankamagames.jerakine.logger"),"Log")
 pushstring "test"
 callproperty QName(PackageNamespace(""),"getLogger"), 1
 setlocal2
 getlocal2
-pushstring "Value is "
+pushstring "Mark color : "
 getlocal0
-getproperty QName(PackageNamespace(""),"total")
-add
-pushstring ", length "
-add
-pushstring "..."
+getproperty QName(PackageNamespace(""),"cellColor")
 add
 callpropvoid QName(Namespace("com.ankamagames.jerakine.logger:Logger"),"warn"), 1
 ````

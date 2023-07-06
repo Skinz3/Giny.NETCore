@@ -1,5 +1,4 @@
-﻿using Giny.World.Managers.Monsters;
-using Giny.World.Records.Monsters;
+﻿using Giny.World.Records.Monsters;
 using System;
 using System.Collections.Generic;
 using System.Linq;

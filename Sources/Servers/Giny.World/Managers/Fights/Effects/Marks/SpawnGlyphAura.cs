@@ -26,7 +26,7 @@ namespace Giny.World.Managers.Fights.Effects.Marks
             if (!Source.Fight.MarkExist<GlyphAura>(x => x.CenterCell == TargetCell))
             {
                 Zone zone = Effect.GetZone();
-                Color color = MarksManager.Instance.GetMarkColor(CastHandler.Cast.Spell.GetSpellEnum());
+                Color color = MarksManager.Instance.GetMarkColor(CastHandler.Cast.Spell.SpellId);
 
                 GlyphAura glyph = new GlyphAura(Source.Fight.PopNextMarkId(), Effect,
                    zone, MarkTriggerType.OnMove, color, Source, TargetCell, CastHandler.Cast.Spell.Record, CastHandler.Cast.Spell.Level);

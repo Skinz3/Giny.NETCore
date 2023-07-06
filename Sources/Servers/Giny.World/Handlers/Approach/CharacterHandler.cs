@@ -50,7 +50,7 @@ namespace Giny.World.Handlers.Approach
             {
                 if (!result.succes)
                 {
-                    client.Send(new CharacterCreationResultMessage(0,(byte)CharacterCreationResultEnum.ERR_NO_REASON));
+                    client.Send(new CharacterCreationResultMessage(0, (byte)CharacterCreationResultEnum.ERR_NO_REASON));
                     return;
                 }
 
@@ -109,7 +109,16 @@ namespace Giny.World.Handlers.Approach
         {
             client.Send(new CharacterCanBeCreatedResultMessage(client.Characters.Count < client.Account.CharacterSlots));
         }
+        [MessageHandler]
+        public static void HandleCharacterDeletionPrepareRequestMessage(CharacterDeletionPrepareRequestMessage message, WorldClient client)
+        {
+            var character = client.GetCharacter(message.characterId);
 
+            if (character != null)
+            {
+                client.Send(new CharacterDeletionPrepareMessage(character.Id, character.Name, string.Empty, false));
+            }
+        }
         [MessageHandler]
         public static void HandleCharacterDeletionRequestMessage(CharacterDeletionRequestMessage message, WorldClient client)
         {

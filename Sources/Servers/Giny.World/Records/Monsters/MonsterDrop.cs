@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.World.Managers.Entities.Monsters
+namespace Giny.World.Records.Monsters
 {
     [ProtoContract]
     public class MonsterDrop

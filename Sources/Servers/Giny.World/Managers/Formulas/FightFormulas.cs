@@ -1,10 +1,10 @@
 ﻿using Giny.Core.DesignPattern;
 using Giny.Protocol.Enums;
-using Giny.World.Managers.Entities.Monsters;
 using Giny.World.Managers.Fights;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Results;
 using Giny.World.Managers.Monsters;
+using Giny.World.Records.Monsters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
