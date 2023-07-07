@@ -6,13 +6,22 @@
         xmlns:local="clr-namespace:Giny.SpellTree"
         mc:Ignorable="d"
         Title="Giny.SpellTree" Height="1080" Width="1920" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Window.Resources>
+        <FontFamily x:Key="JostLight" >/Fonts/#Jost Light</FontFamily>
+        <FontFamily x:Key="Jost" >/Fonts/#Jost Regular</FontFamily>
+    </Window.Resources>
     <Grid>
-        <TextBox  x:Name="spellInput" HorizontalAlignment="Left" Margin="1708,10,0,0" TextWrapping="Wrap" Text="13117" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Draw" HorizontalAlignment="Left" Margin="1843,8,0,0" VerticalAlignment="Top" Width="67" Click="Button_Click"/>
+        <TextBox FontFamily="{StaticResource Jost}" Opacity="0.7" FontSize="16" Name="search" TextChanged="spellInput_TextChanged"   HorizontalAlignment="Left" Margin="1516,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="397" Height="28"/>
 
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  Margin="42,35,348,69">
-        <Canvas x:Name="canvas" Width="3000" Height="3000"  Background="White"/>
+        <ScrollViewer Name="scrollView" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"  Margin="0,24,410,0">
+            <Canvas x:Name="canvas"  Width="8000" Height="8000"  Background="White">
+            </Canvas>
         </ScrollViewer>
+        <ListBox FontFamily="{StaticResource Jost}" Opacity="0.7" FontSize="16" SelectionChanged="effects_SelectionChanged" x:Name="effects"  Margin="1516,445,4,0" Height="170" VerticalAlignment="Top"/>
+        <ListBox  FontFamily="{StaticResource Jost}" Opacity="0.7" FontSize="16" Name="effectProps"  Margin="1517,624,4,10"/>
+        <Label   FontFamily="{StaticResource Jost}" Opacity="0.7" Name="spellName"  Content="Aucun sort séléctionné" HorizontalAlignment="Left" FontSize="18" Margin="1517,399,0,0" VerticalAlignment="Top" Width="397" Height="47"/>
+        <ListBox ScrollViewer.HorizontalScrollBarVisibility="Hidden" FontFamily="{StaticResource Jost}" Opacity="0.7" FontSize="16" SelectionChanged="spells_SelectionChanged" x:Name="spells"  Margin="1515,43,7,0" Height="351" VerticalAlignment="Top"/>
+        <CheckBox FontFamily="{StaticResource Jost}" Opacity="0.7" IsChecked="true"  FontSize="15" x:Name="displayNames" Click="CheckBox_Click" Content="Display names" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

@@ -55,7 +55,7 @@ namespace Giny.SpellTree
             return new Size(formattedText.Width, formattedText.Height);
         }
 
-        public static void Text(string content, double x, double y, Brush color, Canvas cv, bool alignCenter = true, double rotation = 0d)
+        public static TextBlock Text(string content, double x, double y, Brush color, Canvas cv, bool alignCenter = true, double rotation = 0d)
         {
             TextBlock block = new TextBlock();
 
@@ -65,7 +65,8 @@ namespace Giny.SpellTree
             block.Text = content;
             block.Foreground = color;
             // block.FontWeight = FontWeights.Bold;
-            block.FontSize = 14;
+            block.FontSize = 16;
+            block.FontFamily = MainWindow.AppFont;
             cv.Children.Add(block);
 
             Canvas.SetZIndex(block, 999);
@@ -84,9 +85,11 @@ namespace Giny.SpellTree
                 block.SetValue(Canvas.TopProperty, y);
             }
 
+            block.IsHitTestVisible = false;
 
+            return block;
         }
-        public static void Line(double x1, double y1, double x2, double y2, Brush color, Canvas canvas, double opacity = 1d)
+        public static Line Line(double x1, double y1, double x2, double y2, Brush color, Canvas canvas, double opacity = 1d, double strokeThickness = 1d)
         {
             Line myLine = new Line();
             myLine.Stroke = color;
@@ -96,9 +99,10 @@ namespace Giny.SpellTree
             myLine.Y1 = y1;
             myLine.Y2 = y2;
             myLine.Opacity = opacity;
-            myLine.StrokeThickness = 1.5d;
+            myLine.StrokeThickness = strokeThickness;
             Canvas.SetZIndex(myLine, -1);
             canvas.Children.Add(myLine);
+            return myLine;
         }
     }
 }

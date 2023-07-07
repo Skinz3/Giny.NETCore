@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Triggers
 {
+    /// <summary>
+    /// CDA -> dernier élement d'attaque dans le jet du sort
+    /// </summary>
     public enum TriggerTypeEnum
     {
         Instant, // I

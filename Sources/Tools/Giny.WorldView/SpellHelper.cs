@@ -93,17 +93,7 @@ namespace Giny.WorldView
 
             return result;
         }
-        public static string GetTargets(EffectDice effect)
-        {
-            string targets = string.Join(",", effect.GetTargets());
-
-            if (targets == string.Empty)
-            {
-                targets = "ALL";
-            }
-
-            return targets;
-        }
+        
         public static string GetTargetSpellName(EffectDice effect)
         {
             SpellRecord spell = SpellRecord.GetSpellRecord((short)effect.Min);
