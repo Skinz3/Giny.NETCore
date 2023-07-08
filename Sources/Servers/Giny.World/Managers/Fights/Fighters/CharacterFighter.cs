@@ -162,6 +162,10 @@ namespace Giny.World.Managers.Fights.Fighters
                     ExecuteSpell(13991, 1, Cell);
                     break;
 
+                case BreedEnum.Sadida:
+                    ExecuteSpell(14377, 1, Cell);
+                    break;
+
                 case BreedEnum.Sacrieur:
                     ExecuteSpell(12718, 1, Cell);
                     break;

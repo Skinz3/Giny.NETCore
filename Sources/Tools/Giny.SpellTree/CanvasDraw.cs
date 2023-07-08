@@ -59,14 +59,19 @@ namespace Giny.SpellTree
         {
             TextBlock block = new TextBlock();
 
-            var size = MeasureTextSize(content, block.FontFamily, block.FontSize, block.FontStyle, block.FontWeight);
+            
 
 
             block.Text = content;
             block.Foreground = color;
             // block.FontWeight = FontWeights.Bold;
             block.FontSize = 16;
+            block.TextAlignment = TextAlignment.Center;
             block.FontFamily = MainWindow.AppFont;
+
+
+            var size = MeasureTextSize(content, block.FontFamily, block.FontSize, block.FontStyle, block.FontWeight);
+
             cv.Children.Add(block);
 
             Canvas.SetZIndex(block, 999);

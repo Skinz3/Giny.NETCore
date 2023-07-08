@@ -163,6 +163,18 @@ namespace Giny.SpellTree
         {
             Tree.Draw(spell, level);
 
+            gradeSelect.SelectionChanged -= gradeSelect_SelectionChanged;
+
+            gradeSelect.Items.Clear();
+
+            foreach (var spellLevel in spell.Levels)
+            {
+                gradeSelect.Items.Add(spellLevel);
+            }
+
+            gradeSelect.SelectedItem = level;
+
+            gradeSelect.SelectionChanged += gradeSelect_SelectionChanged;
 
             SelectNode(Tree.Nodes.First());
             UpdateDisplayNames();
@@ -324,6 +336,17 @@ namespace Giny.SpellTree
             UpdateDisplayNames();
         }
 
-        
+        private void gradeSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedLevel = (SpellLevelRecord)gradeSelect.SelectedItem;
+
+            if (selectedLevel != null)
+            {
+                var selectedRecord = SpellRecord.GetSpellRecord(selectedLevel.SpellId);
+
+                DrawSpell(selectedRecord, selectedLevel);
+            }
+           
+        }
     }
 }

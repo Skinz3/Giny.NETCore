@@ -360,7 +360,7 @@ namespace Giny.World.Managers.Effects
                 case EffectsEnum.Effect_TargetExecuteSpellOnSourceGlobalLimitation:
                 case EffectsEnum.Effect_Trap:
                 case EffectsEnum.Effect_CasterExecuteSpellOnCell:
-                case EffectsEnum.Effect_CastSpell_2793:
+                case EffectsEnum.Effect_TargetExecuteSpellWithAnimationGlobalLimitation:
                 case EffectsEnum.Effect_TurnBeginGlyph:
                     return true;
             }

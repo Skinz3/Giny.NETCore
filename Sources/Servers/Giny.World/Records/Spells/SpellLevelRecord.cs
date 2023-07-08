@@ -215,6 +215,24 @@ namespace Giny.World.Records.Spells
             SpellsLevels.TryGetValue(levelId, out result);
             return result;
         }
+
+        public static List<SpellLevelRecord> GetLevelsCastingSpell(short targetSpellId)
+        {
+            List<SpellLevelRecord> results = new List<SpellLevelRecord>();
+
+            foreach (var level in GetSpellLevels())
+            {
+                foreach (var effect in level.Effects.OfType<EffectDice>())
+                {
+                    if (effect.IsSpellCastEffect() && effect.Min == targetSpellId && !results.Contains(level))
+                    {
+                        results.Add(level);
+                    }
+                }
+            }
+
+            return results;
+        }
         public static IEnumerable<SpellLevelRecord> GetSpellLevels()
         {
             return SpellsLevels.Values;

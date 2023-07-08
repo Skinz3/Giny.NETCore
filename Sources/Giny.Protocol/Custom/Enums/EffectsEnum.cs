@@ -2359,7 +2359,8 @@
         /// <summary>
         /// #1
         /// </summary>
-        Effect_CastSpell_2793 = 2793,
+        ///  
+        Effect_TargetExecuteSpellWithAnimationGlobalLimitation = 2793,
         /// <summary>
         /// #1
         /// </summary>

@@ -32,7 +32,7 @@ namespace Giny.World.Managers.Fights.Effects.Cast
                 cast.Token = this.GetTriggerToken<ITriggerToken>();
                 cast.Force = true;
                 cast.Silent = true;
-                Source.CastSpell(cast);
+                target.CastSpell(cast);
             }
         }
     }

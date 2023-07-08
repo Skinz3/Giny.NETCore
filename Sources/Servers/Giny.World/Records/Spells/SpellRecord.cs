@@ -2,6 +2,7 @@
 using Giny.IO.D2O;
 using Giny.ORM.Attributes;
 using Giny.ORM.Interfaces;
+using Giny.World.Managers.Effects;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -122,6 +123,8 @@ namespace Giny.World.Records.Spells
                 return Levels.Last();
             }
         }
+
+   
 
         public static IEnumerable<SpellRecord> GetSpellRecords()
         {

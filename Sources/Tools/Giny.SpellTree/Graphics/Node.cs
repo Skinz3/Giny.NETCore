@@ -34,9 +34,9 @@ namespace Giny.SpellTree.Graphics
 
         public const double StrokeSize = 5d;
 
-        public const double LineOpacityNormal = 0.55d;
+        public const double LineOpacityNormal = 0.6d;
 
-        public const double LineOpacityTriggers = 0.3d;
+        public const double LineOpacityTriggers = 0.2d;
 
         public Ellipse Circle
         {
@@ -143,9 +143,13 @@ namespace Giny.SpellTree.Graphics
             X = x;
             Y = y;
 
+            if (SpellLevel.Effects.All(x => x.IsSpellCastEffect()))
+            {
+                SetNodeColor(Color.FromArgb(255, 200, 200, 200));
+            }
             if (Effect != null && Effect.Random != 0)
             {
-                SetNodeColor(Color.FromArgb(255, 211, 220, 232));
+                SetNodeColor(Color.FromArgb(255, 79, 126, 219));
             }
 
 
@@ -160,7 +164,7 @@ namespace Giny.SpellTree.Graphics
             if (Spell.Description != string.Empty)
             {
                 sb.AppendLine();
-                sb.AppendLine(Spell.Description.AddLineBreaks(' ',7));
+                sb.AppendLine(Spell.Description.AddLineBreaks(' ', 7));
             }
 
 
@@ -171,7 +175,7 @@ namespace Giny.SpellTree.Graphics
             StringBuilder sb = new StringBuilder();
             string triggers = string.Join(',', child.Effect.Triggers).AddLineBreaks(',', 5);
             sb.AppendLine("Triggers : " + triggers);
-            sb.AppendLine("Targets : " + child.Effect.GetTargetsString().AddLineBreaks(',',3));
+            sb.AppendLine("Targets : " + child.Effect.GetTargetsString().AddLineBreaks(',', 3));
 
             if (child.Effect.Triggers.Any(x => x.Type == TriggerTypeEnum.Unknown))
             {
@@ -266,7 +270,9 @@ namespace Giny.SpellTree.Graphics
             }
 
 
-            this.Label = CanvasDraw.Text(Spell.Name + " (" + Spell.Id + "," + SpellLevel.Grade + ")", X, Y - NodeRadius, new SolidColorBrush(Color.FromArgb(255, 100, 100, 100)), canvas, true);
+            this.Label = CanvasDraw.Text("(" + Spell.Id + "," + SpellLevel.Grade + ")" + 
+                Environment.NewLine + Spell.Name, X, Y - NodeRadius - 15d,
+                new SolidColorBrush(Color.FromArgb(255, 100, 100, 100)), canvas, true);
 
 
             foreach (var child in Childs)
