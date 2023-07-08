@@ -29,7 +29,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
 
                 if (dodged > 0)
                 {
-                    target.OnDodge(Source, ActionsEnum.ACTION_CHARACTER_BOOST_ACTION_POINTS_LOST_DODGE, dodged);
+                    target.OnDodge(Source, ActionsEnum.ACTION_FIGHT_SPELL_DODGED_PA, dodged);
                 }
 
                 if (this.Effect.Duration > 1)

@@ -28,6 +28,8 @@ using Giny.World.Managers.Spells;
 using Giny.World.Managers.Stats;
 using Giny.World.Records.Maps;
 using Giny.World.Records.Spells;
+using MySqlX.XDevAPI.Common;
+using Newtonsoft.Json.Linq;
 using Org.BouncyCastle.Asn1.X509;
 using System;
 using System.Collections.Generic;
@@ -485,13 +487,14 @@ namespace Giny.World.Managers.Fights.Fighters
 
                         this.MovementHistory.OnMove(path);
 
-                        OnMove(new Movement(MovementType.Walk, this));
 
                         this.LooseMp(this, mpCost, 0);
 
-
-
                         IsMoving = false;
+
+                        TriggerMovementBuffs(new Movement(MovementType.Walk, this, mpCost));
+
+
                     }
                     else
                     {
@@ -517,36 +520,32 @@ namespace Giny.World.Managers.Fights.Fighters
         public void LooseMp(Fighter source, short amount, ActionsEnum action)
         {
             Stats.UseMp(amount);
-            OnPointsVariation(source.Id, action, (short)(-amount));
-            // RefreshStats(CharacteristicEnum.MOVEMENT_POINTS);
+            OnPointsVariation(source, action, (short)(-amount));
         }
         public void GainMp(Fighter source, short delta)
         {
             Stats.GainMp(delta);
-            OnPointsVariation(source.Id, ActionsEnum.ACTION_CHARACTER_MOVEMENT_POINTS_WIN, delta);
-            // RefreshStats(CharacteristicEnum.MOVEMENT_POINTS);
+            OnPointsVariation(source, ActionsEnum.ACTION_CHARACTER_MOVEMENT_POINTS_WIN, delta);
         }
         public void LooseAp(Fighter source, short amount, ActionsEnum action)
         {
             Stats.UseAp(amount);
-            OnPointsVariation(source.Id, action, (short)(-amount));
-            // RefreshStats(CharacteristicEnum.ACTION_POINTS);
+            OnPointsVariation(source, action, (short)(-amount));
         }
         public void GainAp(Fighter source, short delta)
         {
             Stats.GainAp(delta);
-            OnPointsVariation(source.Id, ActionsEnum.ACTION_CHARACTER_ACTION_POINTS_WIN, delta);
-            // RefreshStats(CharacteristicEnum.ACTION_POINTS);
+            OnPointsVariation(source, ActionsEnum.ACTION_CHARACTER_ACTION_POINTS_WIN, delta);
         }
 
 
-        private void OnPointsVariation(int sourceId, ActionsEnum action, short delta)
+        private void OnPointsVariation(Fighter source, ActionsEnum action, short delta)
         {
             Fight.Send(new GameActionFightPointsVariationMessage()
             {
                 actionId = (short)action,
                 delta = delta,
-                sourceId = sourceId,
+                sourceId = source.Id,
                 targetId = Id,
             });
 
@@ -558,6 +557,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
                     break;
                 case ActionsEnum.ACTION_CHARACTER_ACTION_POINTS_LOST:
+                    source.TriggerBuffs(TriggerTypeEnum.OnCasterRemoveAp, null);
                     TriggerBuffs(TriggerTypeEnum.OnAPLost, null);
                     break;
 
@@ -696,6 +696,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 targetId = Id,
             });
         }
+
         public bool TriggerBuffs(TriggerTypeEnum type, ITriggerToken token, int? triggerParam = null)
         {
             bool result = false;
@@ -1318,7 +1319,7 @@ namespace Giny.World.Managers.Fights.Fighters
             if (register)
                 MovementHistory.OnCellChanged(oldCell);
 
-            OnMove(new Movement(MovementType.Teleport, source));
+            TriggerMovementBuffs(new Movement(MovementType.Teleport, source, 0));
 
             return null;
         }
@@ -1428,7 +1429,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 targetId = Id,
             });
         }
-        public virtual void OnMove(Movement movement)
+        public virtual void TriggerMovementBuffs(Movement movement)
         {
             var source = movement.GetSource();
 
@@ -1450,9 +1451,24 @@ namespace Giny.World.Managers.Fights.Fighters
                 this.TriggerBuffs(TriggerTypeEnum.OnPushed, movement);
             }
 
+            if (movement.Type == MovementType.Pull)
+            {
+                this.TriggerBuffs(TriggerTypeEnum.OnPulled, movement);
+            }
+
             if (movement.Type == MovementType.SwitchPosition)
             {
                 this.TriggerBuffs(TriggerTypeEnum.OnSwitchPosition, movement);
+            }
+
+            if (movement.Type == MovementType.Walk)
+            {
+                for (int i = 0; i < movement.MpCost; i++)
+                {
+                    this.TriggerBuffs(TriggerTypeEnum.OnAMpUsed, movement);
+                }
+
+                this.TriggerBuffs(TriggerTypeEnum.OnMpUsed, movement);
             }
 
             Fight.TriggerMarks(this, MarkTriggerType.OnMove);
@@ -1595,7 +1611,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
             this.Cell = Fight.Map.GetCell(destinationPoint);
 
-            OnMove(new Movement(type, source));
+            TriggerMovementBuffs(new Movement(type, source, 0));
 
             MovementHistory.OnCellChanged(oldCell);
         }
@@ -1641,8 +1657,8 @@ namespace Giny.World.Managers.Fights.Fighters
                 target.MovementHistory.RegisterEntry(this.Cell);
             }
 
-            OnMove(new Movement(MovementType.SwitchPosition, this));
-            target.OnMove(new Movement(MovementType.SwitchPosition, this));
+            TriggerMovementBuffs(new Movement(MovementType.SwitchPosition, this, 0));
+            target.TriggerMovementBuffs(new Movement(MovementType.SwitchPosition, this, 0));
 
         }
         public void SetInvisiblityState(GameActionFightInvisibilityStateEnum state, Fighter source)
@@ -1706,8 +1722,6 @@ namespace Giny.World.Managers.Fights.Fighters
         public virtual void OnFightStarted()
         {
             this.FightStartCell = this.Cell;
-
-
         }
 
         public short[] GetPreviousPositions()
@@ -1775,6 +1789,7 @@ namespace Giny.World.Managers.Fights.Fighters
         {
             return GetBuffs<StateBuff>().Where(x => x.Record.Incurable).Any(y => HasState(y.StateId));
         }
+        [WIP("trigger V ? ")]
         public void Heal(Healing healing)
         {
             if (healing.Delta <= 0 || IsIncurable())
@@ -1810,7 +1825,8 @@ namespace Giny.World.Managers.Fights.Fighters
                 });
             }
 
-            TriggerBuffs(TriggerTypeEnum.OnLifePointsPending, null);
+            TriggerBuffs(TriggerTypeEnum.LifeAffected, null); // not sure about this one!!
+            TriggerBuffs(TriggerTypeEnum.LifePointsAffected, null);
 
         }
 
@@ -1854,7 +1870,6 @@ namespace Giny.World.Managers.Fights.Fighters
 
             return reflectDamages;
         }
-        [WIP("shield loss not working.")]
         public DamageResult InflictDamage(Damage damage)
         {
             damage.Compute();
@@ -2007,7 +2022,32 @@ namespace Giny.World.Managers.Fights.Fighters
                 Die(damage.Source);
             }
 
-            TriggerBuffs(TriggerTypeEnum.OnLifePointsPending, null);
+
+
+            /*
+             *  public function get_isLifeAffected() : Boolean
+                 {
+                    if(!(areLifePointsAffected || areMaxLifePointsAffected))
+                    {          
+                        return areErodedLifePointsAffected;
+                     }
+                    return true;
+                 }
+            */
+            if (lifeLoss > 0)
+            {
+                TriggerBuffs(TriggerTypeEnum.LifeAffected, null);
+                // dont know what we are doing? uff
+                // check client HaveBuff.as (param1.areLifePointsAffected et param1.get_isLifeAffected())
+                TriggerBuffs(TriggerTypeEnum.LifePointsAffected, null);
+
+            }
+            if (permanentDamages > 0)
+            {
+                TriggerBuffs(TriggerTypeEnum.ErodedLifePointsAffected, null);
+                TriggerBuffs(TriggerTypeEnum.MaxLifePointsAffected, null);
+            }
+
 
 
             return result;
@@ -2048,6 +2088,11 @@ namespace Giny.World.Managers.Fights.Fighters
                             break;
                         case GameActionMarkTypeEnum.TRAP:
                             TriggerBuffs(TriggerTypeEnum.OnDamagedByTrap, damage);
+
+                            if (!damage.Source.IsFriendlyWith(this))
+                            {
+                                TriggerBuffs(TriggerTypeEnum.OnDamagedByEnemyTrap, damage);
+                            }
                             break;
                         case GameActionMarkTypeEnum.WALL:
                             break;
@@ -2084,18 +2129,23 @@ namespace Giny.World.Managers.Fights.Fighters
                     TriggerBuffs(TriggerTypeEnum.OnDamagedByPush, damage);
                     break;
                 case EffectSchoolEnum.Neutral:
+                    damage.Source.TriggerBuffs(TriggerTypeEnum.CasterInflictDamageNeutral, damage);
                     TriggerBuffs(TriggerTypeEnum.OnDamagedNeutral, damage);
                     break;
                 case EffectSchoolEnum.Earth:
+                    damage.Source.TriggerBuffs(TriggerTypeEnum.CasterInflictDamageEarth, damage);
                     TriggerBuffs(TriggerTypeEnum.OnDamagedEarth, damage);
                     break;
                 case EffectSchoolEnum.Water:
+                    damage.Source.TriggerBuffs(TriggerTypeEnum.CasterInflictDamageWater, damage);
                     TriggerBuffs(TriggerTypeEnum.OnDamagedWater, damage);
                     break;
                 case EffectSchoolEnum.Air:
+                    damage.Source.TriggerBuffs(TriggerTypeEnum.CasterInflictDamageAir, damage);
                     TriggerBuffs(TriggerTypeEnum.OnDamagedAir, damage);
                     break;
                 case EffectSchoolEnum.Fire:
+                    damage.Source.TriggerBuffs(TriggerTypeEnum.CasterInflictDamageFire, damage);
                     TriggerBuffs(TriggerTypeEnum.OnDamagedFire, damage);
                     break;
             }
@@ -2133,11 +2183,21 @@ namespace Giny.World.Managers.Fights.Fighters
             {
                 damage.Source.TriggerBuffs(TriggerTypeEnum.CasterInflictDamageEnnemy, damage);
             }
+            else
+            {
+                damage.Source.TriggerBuffs(TriggerTypeEnum.CasterInflictDamageAlly, damage);
+            }
 
             if (damage.EffectHandler != null && damage.EffectHandler.CastHandler.Cast.IsCriticalHit)
             {
                 damage.Source.TriggerBuffs(TriggerTypeEnum.OnCriticalHit, damage);
+
+                if (damage.Source.IsFriendlyWith(this))
+                {
+                    this.TriggerBuffs(TriggerTypeEnum.CasterCriticalHitOnAlly, damage);
+                }
             }
+
         }
         public void OnStatsBuff(EffectsEnum effectEnum)
         {

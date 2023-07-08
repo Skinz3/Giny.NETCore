@@ -196,6 +196,8 @@ namespace Giny.World.Managers.Effects
                     return new Trigger(TriggerTypeEnum.OnDamagedNeutral);
                 case "DT":
                     return new Trigger(TriggerTypeEnum.OnDamagedByTrap);
+                case "DTE":
+                    return new Trigger(TriggerTypeEnum.OnDamagedByEnemyTrap);
                 case "DE":
                     return new Trigger(TriggerTypeEnum.OnDamagedEarth);
                 case "DW":
@@ -232,10 +234,14 @@ namespace Giny.World.Managers.Effects
                     return new Trigger(TriggerTypeEnum.OnMPLost);
                 case "APA":
                     return new Trigger(TriggerTypeEnum.OnAPLost);
+                case "CAPA":
+                    return new Trigger(TriggerTypeEnum.OnCasterRemoveAp);
                 case "CDBE":
                     return new Trigger(TriggerTypeEnum.CasterInflictDamageEnnemy);
+                case "CDBA":
+                    return new Trigger(TriggerTypeEnum.CasterInflictDamageAlly);
                 case "V":
-                    return new Trigger(TriggerTypeEnum.OnLifePointsPending);
+                    return new Trigger(TriggerTypeEnum.LifeAffected);
                 case "R":
                     return new Trigger(TriggerTypeEnum.OnRangeLost);
                 case "CMPA":
@@ -244,6 +250,42 @@ namespace Giny.World.Managers.Effects
                     return new Trigger(TriggerTypeEnum.OnSwitchPosition);
                 case "PPD":
                     return new Trigger(TriggerTypeEnum.OnDamagedByEnemyPush);
+                case "CCMPARR":
+                    return new Trigger(TriggerTypeEnum.OnAMpUsed);
+                case "CMPARR":
+                    return new Trigger(TriggerTypeEnum.OnMpUsed);
+                case "DCCBA":
+                    return new Trigger(TriggerTypeEnum.CasterCriticalHitOnAlly);
+
+                case "CDE":
+                    return new Trigger(TriggerTypeEnum.CasterInflictDamageEarth);
+                case "CDF":
+                    return new Trigger(TriggerTypeEnum.CasterInflictDamageFire);
+                case "CDW":
+                    return new Trigger(TriggerTypeEnum.CasterInflictDamageWater);
+                case "CDA":
+                    return new Trigger(TriggerTypeEnum.CasterInflictDamageAir);
+                case "CDN":
+                    return new Trigger(TriggerTypeEnum.CasterInflictDamageNeutral);
+
+                case "VA":
+                    return new Trigger(TriggerTypeEnum.LifePointsAffected);
+                case "VM":
+                    return new Trigger(TriggerTypeEnum.MaxLifePointsAffected);
+                case "VE":
+                    return new Trigger(TriggerTypeEnum.ErodedLifePointsAffected);
+
+                case "MA":
+                    return new Trigger(TriggerTypeEnum.OnPulled);
+                    /* 
+                     * Not sure about how it works
+                     * 
+                     case "DIS":
+                         return new Trigger(TriggerTypeEnum.OnDispelled); 
+                     case "CDIS":
+                         return new Trigger(TriggerTypeEnum.OnCasterDispelled); 
+                     
+                     */
             }
 
             return new Trigger(TriggerTypeEnum.Unknown);

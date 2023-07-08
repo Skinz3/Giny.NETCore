@@ -30,9 +30,9 @@ namespace Giny.World.Managers.Fights.Fighters
             UpdateWalls();
         }
 
-        public override void OnMove(Movement movement)
+        public override void TriggerMovementBuffs(Movement movement)
         {
-            base.OnMove(movement);
+            base.TriggerMovementBuffs(movement);
             UpdateWalls();
         }
 

@@ -763,5 +763,11 @@ namespace Giny.Protocol.Custom.Enums
         ACTION_CHARACTER_LIFE_POINTS_WIN_FROM_BEST_ELEMENT = 3002,
         ACTION_REFRESH_MARK_QUEST = 3003,
 
+
+        // Old versions (do not remove ! ) 
+         
+        ACTION_FIGHT_SPELL_DODGED_PM = 309,
+        ACTION_FIGHT_SPELL_DODGED_PA = 308,
+
     }
 }

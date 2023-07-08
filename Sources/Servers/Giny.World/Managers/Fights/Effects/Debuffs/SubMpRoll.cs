@@ -31,11 +31,11 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
 
                 if (dodged > 0)
                 {
-                    target.OnDodge(Source, ActionsEnum.ACTION_CHARACTER_BOOST_MOVEMENT_POINTS_LOST_DODGE, dodged);
+                    target.OnDodge(Source, ActionsEnum.ACTION_FIGHT_SPELL_DODGED_PM, dodged);
                 }
 
 
-                if (delta > 0)
+                //if (delta > 0)
                 {
                     if (this.Effect.Duration > 1 && Effect.EffectEnum != EffectsEnum.Effect_LostMP)
                     {

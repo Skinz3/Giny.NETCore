@@ -15,7 +15,22 @@ namespace Giny.World.Managers.Fights.Triggers
 
         CasterInflictDamageMelee, // CDM
         CasterInflictDamageRange, // CDR
-        CasterInflictDamageEnnemy, // CBDE On inflige des dégats a un enemi
+        CasterInflictDamageEnnemy, // CDBE On inflige des dégats a un enemi
+        CasterInflictDamageAlly, // CDBA On inflige des dégats a un allié
+
+        CasterInflictDamageEarth, // CDE
+        CasterInflictDamageWater,
+        CasterInflictDamageAir,
+        CasterInflictDamageFire,
+        CasterInflictDamageNeutral,
+
+        OnCasterRemoveAp, // CAPA
+
+        LifePointsAffected, // VA
+        MaxLifePointsAffected, // VM
+        ErodedLifePointsAffected, // VE
+        LifeAffected, // V
+
         CasterHealed, // CH
 
         OnDamaged, // D
@@ -31,6 +46,7 @@ namespace Giny.World.Managers.Fights.Triggers
         OnDamagedByWeapon, // DCAC
         //  OnDamagedByGlyph, // DG ------------> plutot tout les dommages indirects?
         OnDamagedByTrap, //DT
+        OnDamagedByEnemyTrap, // DTE
         OnDamagedMelee, //DM
         OnDamagedRange, //DR
         OnDamagedByPush, // PD
@@ -48,18 +64,22 @@ namespace Giny.World.Managers.Fights.Triggers
         AfterTurnBegin, // ATB
 
         OnMpRemovalAttempt,
-        OnMPLost, // m , MPA (effective loss? attempt? )
-        OnAPLost, // A
+        OnMPLost, //  MPA (effective loss? attempt? )
+        OnAPLost, // APA
         OnRangeLost, // R
 
-        OnLifePointsPending,
+        OnAMpUsed, // CCMPARR (foreach mp used, call it)
+        OnMpUsed, // CMPARR (called after all movement)
 
         OnHealed, //H
+
+        OnPulled, // MA
 
         OnStateAdded, // EO
         OnStateRemoved, //Eo
 
-        OnDispelled, //d
+        OnDispelled, // DIS
+        OnCasterDispelled, // CDIS
 
         OnCriticalHit, //CC
         OnDeath, //X
@@ -69,13 +89,20 @@ namespace Giny.World.Managers.Fights.Triggers
         OnTackled, //tF
         OnTackle, //tS
 
+        CasterCriticalHitOnAlly, // DCCBA
+
+
         OnTeleportPortal,
+
+        // DTB dommage poisons (? dommages reçus indirectements)
+
 
         /*
          * Custom
          */
         Delayed,
         Unknown,
+
 
 
         /*

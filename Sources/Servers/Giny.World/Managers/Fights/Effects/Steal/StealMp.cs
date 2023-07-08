@@ -29,7 +29,7 @@ namespace Giny.World.Managers.Fights.Effects.Steal
 
                 if (dodged > 0)
                 {
-                    target.OnDodge(Source, ActionsEnum.ACTION_CHARACTER_DODGE_HIT, dodged); ;
+                    target.OnDodge(Source, ActionsEnum.ACTION_FIGHT_SPELL_DODGED_PM, dodged);
                 }
 
                 if (delta > 0)

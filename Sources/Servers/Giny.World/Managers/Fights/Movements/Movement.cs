@@ -15,15 +15,21 @@ namespace Giny.World.Managers.Fights.Movements
             get;
             private set;
         }
-        private Fighter Source
+        public Fighter Source
         {
             get;
-            set;
+            private set;
         }
-        public Movement(MovementType type, Fighter source)
+        public short MpCost
+        {
+            get;
+            private set;
+        }
+        public Movement(MovementType type, Fighter source, short mpCost)
         {
             this.Type = type;
             this.Source = source;
+            this.MpCost = mpCost;
         }
 
         public Fighter GetSource()
