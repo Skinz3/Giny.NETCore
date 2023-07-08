@@ -11,7 +11,7 @@
  Target Server Version : 100424
  File Encoding         : 65001
 
- Date: 25/06/2023 02:15:50
+ Date: 08/07/2023 02:39:18
 */
 
 SET NAMES utf8mb4;
@@ -38,7 +38,8 @@ CREATE TABLE `accounts`  (
 -- ----------------------------
 -- Records of accounts
 -- ----------------------------
-INSERT INTO `accounts` VALUES (1, 'admin', 'overflow35', 36, '127.0.0.1', 15, 0, 5, 'Street', 600);
+INSERT INTO `accounts` VALUES (1, 'admin', 'overflow35', 291, '127.0.0.1', 15, 0, 5, 'Street', 600);
+INSERT INTO `accounts` VALUES (2, 'admin2', 'overflow35', 291, '127.0.0.1', 5, 0, 5, 'Skinz', 0);
 
 -- ----------------------------
 -- Table structure for webcomments
@@ -92,9 +93,13 @@ CREATE TABLE `worldcharacters`  (
 -- ----------------------------
 -- Records of worldcharacters
 -- ----------------------------
-INSERT INTO `worldcharacters` VALUES (21, 8, 1, 36);
-INSERT INTO `worldcharacters` VALUES (19, 6, 1, 36);
-INSERT INTO `worldcharacters` VALUES (20, 7, 1, 36);
+INSERT INTO `worldcharacters` VALUES (5, 5, 1, 291);
+INSERT INTO `worldcharacters` VALUES (4, 4, 1, 291);
+INSERT INTO `worldcharacters` VALUES (3, 3, 1, 291);
+INSERT INTO `worldcharacters` VALUES (2, 2, 1, 291);
+INSERT INTO `worldcharacters` VALUES (1, 1, 1, 291);
+INSERT INTO `worldcharacters` VALUES (7, 7, 1, 291);
+INSERT INTO `worldcharacters` VALUES (6, 6, 1, 291);
 
 -- ----------------------------
 -- Table structure for worldservers
@@ -113,6 +118,6 @@ CREATE TABLE `worldservers`  (
 -- ----------------------------
 -- Records of worldservers
 -- ----------------------------
-INSERT INTO `worldservers` VALUES (36, 'Giny', 'SERVER_TYPE_CLASSICAL', '0', 'localhost', 5555);
+INSERT INTO `worldservers` VALUES (291, 'Imagiro', 'SERVER_TYPE_CLASSICAL', '0', 'localhost', 5555);
 
 SET FOREIGN_KEY_CHECKS = 1;
