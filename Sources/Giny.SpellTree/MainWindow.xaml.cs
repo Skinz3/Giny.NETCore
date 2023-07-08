@@ -9,6 +9,8 @@ using Giny.World.Records.Spells;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading;
@@ -23,6 +25,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace Giny.SpellTree
 {
@@ -296,7 +299,7 @@ namespace Giny.SpellTree
 
             DrawSpell(spell, spell.Levels.First());
         }
-
+        
         private void UpdateDisplayNames()
         {
             foreach (var element in canvas.Children)
@@ -320,5 +323,7 @@ namespace Giny.SpellTree
         {
             UpdateDisplayNames();
         }
+
+        
     }
 }

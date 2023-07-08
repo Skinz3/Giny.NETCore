@@ -10,6 +10,26 @@ namespace Giny.Core.Extensions
 {
     public static class StringExtensions
     {
+        public static string AddLineBreaks(this string input, char separator, int maxSeparator)
+        {
+            StringBuilder result = new StringBuilder();
+            int count = 0;
+
+            foreach (char c in input)
+            {
+                result.Append(c);
+                if (c == separator)
+                {
+                    count++;
+                    if (count % maxSeparator == 0)
+                    {
+                        result.Append("\n");
+                    }
+                }
+            }
+
+            return result.ToString();
+        }
         public static string FirstCharToUpper(this string input)
         {
             switch (input)

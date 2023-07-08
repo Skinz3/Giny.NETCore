@@ -85,7 +85,7 @@ namespace Giny.World.Managers.Fights.Cast
             get;
             private set;
         }
-        private ITriggerToken TriggerToken
+        private ITriggerToken? TriggerToken
         {
             get;
             set;
@@ -105,7 +105,6 @@ namespace Giny.World.Managers.Fights.Cast
             get;
             private set;
         }
-        [WIP("Performances issues on concurrent dictionary ? EffectRecord.Get")]
         public SpellEffectHandler(EffectDice effect, SpellCastHandler castHandler)
         {
             Targets = effect.GetTargets();

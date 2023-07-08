@@ -136,10 +136,6 @@ namespace Giny.World.Managers.Fights.Cast
         {
             return Handlers;
         }
-        protected IEnumerable<SpellEffectHandler> OrderByEffects(params EffectsEnum[] effects)
-        {
-            return Handlers.OrderBy(x => Array.IndexOf(effects, x.Effect.EffectEnum));
-        }
 
     }
 }

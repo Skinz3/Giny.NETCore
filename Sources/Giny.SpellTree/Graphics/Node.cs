@@ -1,4 +1,5 @@
-﻿using Giny.World.Managers.Effects;
+﻿using Giny.Core.Extensions;
+using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Triggers;
 using Giny.World.Records.Spells;
 using System;
@@ -153,28 +154,31 @@ namespace Giny.SpellTree.Graphics
         public string GetNodeDescription()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Sort : " + Spell.ToString());
-            sb.AppendLine("Niveau : " + SpellLevel.ToString());
+            sb.AppendLine("Spell : " + Spell.ToString());
+            sb.AppendLine("Level : " + SpellLevel.ToString());
 
             if (Spell.Description != string.Empty)
             {
-                sb.AppendLine(Spell.Description);
+                sb.AppendLine();
+                sb.AppendLine(Spell.Description.AddLineBreaks(' ',7));
             }
 
-           
+
             return sb.ToString();
         }
         public string GetLinkDescription(Node child)
         {
             StringBuilder sb = new StringBuilder();
-            string triggers = string.Join(',', child.Effect.Triggers);
+            string triggers = string.Join(',', child.Effect.Triggers).AddLineBreaks(',', 5);
             sb.AppendLine("Triggers : " + triggers);
-            sb.AppendLine("Targets : " + child.Effect.GetTargetsString());
+            sb.AppendLine("Targets : " + child.Effect.GetTargetsString().AddLineBreaks(',',3));
 
             if (child.Effect.Triggers.Any(x => x.Type == TriggerTypeEnum.Unknown))
             {
                 sb.AppendLine("Raw Triggers : " + child.Effect.RawTriggers);
             }
+
+            sb.AppendLine("Zone : " + child.Effect.RawZone);
 
             return sb.ToString();
         }

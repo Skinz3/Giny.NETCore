@@ -2615,6 +2615,8 @@
 
         Effect_AddDealtHealPercentMultiplier = 2971,
 
+        Effect_HealCastTotalDamages = 2973, // à verifier
+
         End = 3004,
 
     }
