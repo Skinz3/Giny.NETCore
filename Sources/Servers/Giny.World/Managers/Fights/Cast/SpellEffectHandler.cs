@@ -188,8 +188,6 @@ namespace Giny.World.Managers.Fights.Cast
         }
         public void Execute()
         {
-
-
             if (!CasterCriterionSatisfied)
             {
                 return;

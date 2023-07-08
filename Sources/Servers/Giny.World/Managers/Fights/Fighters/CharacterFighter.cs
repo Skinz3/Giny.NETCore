@@ -170,7 +170,7 @@ namespace Giny.World.Managers.Fights.Fighters
                     ExecuteSpell(24387, 1, Cell);
                     break;
                 case BreedEnum.Eniripsa:
-                    ExecuteSpell(25807, 1, Cell);
+                    ExecuteSpell(25810, 1, Cell);
                     break;
             }
 

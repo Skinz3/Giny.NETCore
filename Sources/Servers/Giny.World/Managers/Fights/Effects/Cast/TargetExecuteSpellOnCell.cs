@@ -30,6 +30,7 @@ namespace Giny.World.Managers.Fights.Effects.Cast
             {
                 return;
             }
+          
             foreach (var target in targets)  // target , sure 
             {
                 SpellCast cast = new SpellCast(target, spell, TargetCell, CastHandler.Cast);  // TargetCell, sure ! 

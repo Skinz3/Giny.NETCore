@@ -2351,7 +2351,6 @@ namespace Giny.World.Managers.Fights.Fighters
                 using (var sequence = Fight.SequenceManager.StartSequence(SequenceTypeEnum.SEQUENCE_CHARACTER_DEATH))
                 {
                     this.Stats.LifePoints = 0;
-
                     TriggerBuffs(TriggerTypeEnum.OnDeath, new Death(killedBy));
 
                     KillAllSummons();

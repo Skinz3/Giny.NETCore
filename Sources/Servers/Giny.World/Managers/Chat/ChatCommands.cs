@@ -470,7 +470,9 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
-            foreach (var buff in client.Character.Fighter.GetBuffs())
+            var summon = client.Character.Fighter.Fight.GetFighters<SummonedMonster>().First();
+
+            foreach (var buff in summon.GetBuffs())
             {
                 client.Character.Reply(buff);
             }
