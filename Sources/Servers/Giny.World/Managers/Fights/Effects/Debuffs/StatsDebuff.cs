@@ -47,6 +47,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
     [SpellEffectHandler(EffectsEnum.Effect_SubHealBonus)]
     [SpellEffectHandler(EffectsEnum.Effect_SubCriticalDamageReduction)]
     [SpellEffectHandler(EffectsEnum.Effect_SubSpellDamageDonePercent)]
+    [SpellEffectHandler(EffectsEnum.Effect_ReduceFinalDamages)]
     public class StatsDebuff : SpellEffectHandler
     {
         public const FightDispellableEnum Dispellable = FightDispellableEnum.DISPELLABLE;

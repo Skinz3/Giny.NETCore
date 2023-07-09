@@ -111,9 +111,10 @@ namespace Giny.World.Records.Spells
             set;
         }
 
-        public static SpellStateRecord GetSpellStateRecord(long id)
+        public static SpellStateRecord? GetSpellStateRecord(long id)
         {
-            return SpellStates[id];
+            SpellStates.TryGetValue(id, out var state);
+            return state;
         }
 
         public override string ToString()

@@ -26,6 +26,7 @@ using Giny.World.Records.Maps;
 using Giny.World.Records.Spells;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace Giny.World.Managers.Fights.Fighters
@@ -88,11 +89,14 @@ namespace Giny.World.Managers.Fights.Fighters
             this.Character = character;
             this.Left = false;
         }
+
+        public override FighterStats CreateStats()
+        {
+            return new FighterStats(Character);
+        }
         public override void Initialize()
         {
             this.Id = (int)Character.Id;
-            this.Look = Character.Look.Clone();
-            this.Stats = new FighterStats(Character);
 
 
 
@@ -103,6 +107,11 @@ namespace Giny.World.Managers.Fights.Fighters
             }
 
             base.Initialize();
+        }
+
+        public override ServerEntityLook CreateLook()
+        {
+            return Character.Look.Clone();
         }
 
 
@@ -153,30 +162,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
 
 
-            switch (Breed)
-            {
-                case BreedEnum.Zobal:
-                    ExecuteSpell(18633, 1, Cell);
-                    break;
-                case BreedEnum.Osamodas:
-                    ExecuteSpell(13991, 1, Cell);
-                    break;
-
-                case BreedEnum.Sadida:
-                 //   ExecuteSpell(14377, 1, Cell);
-                    break;
-
-                case BreedEnum.Sacrieur:
-                    ExecuteSpell(12718, 1, Cell);
-                    break;
-
-                case BreedEnum.Forgelance:
-                    ExecuteSpell(24387, 1, Cell);
-                    break;
-                case BreedEnum.Eniripsa:
-                    ExecuteSpell(25810, 1, Cell);
-                    break;
-            }
+            InitialSpellHandler.Execute(this);
 
 
 
@@ -210,8 +196,13 @@ namespace Giny.World.Managers.Fights.Fighters
             return false;
         }
 
-        public void Restore()
+        public void UpdateOnPlacement()
         {
+            if (this.Fight.Started)
+            {
+                this.Fight.Warn("Cannot UpdateOnPlacement() character while fight has started.");
+                return;
+            }
             this.Initialize();
             this.ShowFighter();
         }

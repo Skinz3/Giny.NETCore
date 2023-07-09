@@ -192,7 +192,7 @@ namespace Giny.World.Managers.Fights
             private set;
         }
 
-      
+
         #region Events
 
         public event Action<Fight, Fighter> TurnStarted;
@@ -236,7 +236,16 @@ namespace Giny.World.Managers.Fights
         }
         public IEnumerable<Fighter> GetFighters(IEnumerable<CellRecord> cells)
         {
-            return GetFighters().Where(x => cells.Contains(x.Cell));
+            foreach (var cell in cells)
+            {
+                var fighter = GetFighter(cell.Id);
+
+                if (fighter != null)
+                {
+                    yield return fighter;
+                }
+            }
+            // return GetFighters().Where(x => cells.Contains(x.Cell));
         }
         public IEnumerable<T> GetFighters<T>(bool aliveOnly = true)
         {
@@ -376,7 +385,7 @@ namespace Giny.World.Managers.Fights
 
         protected virtual void OnPlacementStarted()
         {
-           
+
         }
 
         private void ShowBladesOnMap()
@@ -412,7 +421,14 @@ namespace Giny.World.Managers.Fights
 
         public bool IsCellFree(CellRecord cell)
         {
-            return cell.Walkable && !cell.NonWalkableDuringFight && GetFighter(cell.Id) == null;
+            var fighter = GetFighter(cell.Id);
+
+            if (fighter != null && fighter.AliveSafe)
+            {
+                return false;
+            }
+
+            return cell.Walkable && !cell.NonWalkableDuringFight;
         }
         public bool IsCellFree(short cellId)
         {
@@ -834,7 +850,6 @@ namespace Giny.World.Managers.Fights
             {
                 source.Team.AddFighter(summon);
                 Timeline.InsertFighter(summon, Timeline.Index + 1);
-                summon.Initialize();
             }
 
             foreach (var target in GetAllConnectedFighters())
@@ -889,7 +904,7 @@ namespace Giny.World.Managers.Fights
         {
             double[] ids = this.Timeline.GetAlives().Where(x => x.DisplayInTimeline()).Select(x => (double)x.Id).ToArray();
             double[] deads = this.Timeline.GetDeads().Where(x => x.DisplayInTimeline()).Select(x => (double)x.Id).ToArray();
-            fighter.Send(new GameFightTurnListMessage(ids, deads));
+            fighter.Send(new GameFightTurnListMessage(ids, deads)); 
         }
 
         public void CheckFightStart()

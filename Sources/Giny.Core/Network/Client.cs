@@ -38,8 +38,9 @@ namespace Giny.Core.Network
                         Socket.BeginSend(writer.Data, 0, writer.Data.Length, SocketFlags.None, OnSended, message);
                     }
                 }
-                catch
+                catch (Exception ex) 
                 {
+                    Logger.Write(ex, Channels.Warning);
                     Disconnect();
                 }
             }

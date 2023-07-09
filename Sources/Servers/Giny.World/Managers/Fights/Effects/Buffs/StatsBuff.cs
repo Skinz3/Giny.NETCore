@@ -64,6 +64,8 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
     [SpellEffectHandler(EffectsEnum.Effect_AddCriticalDamageBonus)]
     [SpellEffectHandler(EffectsEnum.Effect_SpellDamageDonePercent)]
     [SpellEffectHandler(EffectsEnum.Effect_IncreaseSpellDamage)]
+    [SpellEffectHandler(EffectsEnum.Effect_IncreaseFinalDamages)]
+    [SpellEffectHandler(EffectsEnum.Effect_AddErosion)]
     public class StatsBuff : SpellEffectHandler
     {
         public const FightDispellableEnum Dispellable = FightDispellableEnum.DISPELLABLE;

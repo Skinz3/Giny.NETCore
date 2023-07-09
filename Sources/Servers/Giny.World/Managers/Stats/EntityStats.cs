@@ -5,11 +5,11 @@ using Giny.Protocol.Types;
 using Giny.World.Managers.Breeds;
 using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Experiences;
+using Giny.World.Managers.Fights.Stats;
 using Giny.World.Managers.Formulas;
 using Giny.World.Network;
 using Giny.World.Records;
 using Giny.World.Records.Breeds;
-using MySqlX.XDevAPI.Common;
 using ProtoBuf;
 using System;
 using System.Collections;
@@ -249,14 +249,25 @@ namespace Giny.World.Managers.Stats
                 results.Add(characterCharacteristic);
             }
 
-            //results.Add(new CharacterCharacteristicDetailed(2000, 2000, 2000, 2000, 2000, (short)CharacteristicEnum.MAX_LIFE_POINTS));
-            results.Add(new CharacterCharacteristicValue(MaxLifePoints - this[CharacteristicEnum.VITALITY].TotalInContext(), (short)CharacteristicEnum.HIT_POINTS));
-            results.Add(new CharacterCharacteristicValue(-MissingLife, (short)CharacteristicEnum.HIT_POINT_LOSS));
+
+
+            results.Add(new CharacterCharacteristicValue(GetHitPoints(), (short)CharacteristicEnum.HIT_POINTS));
+            results.Add(new CharacterCharacteristicValue(GetMissingLife(), (short)CharacteristicEnum.HIT_POINT_LOSS));
+
+            results.Add(new CharacterCharacteristicValue(0, (short)CharacteristicEnum.CUR_PERMANENT_DAMAGE));
             results.Add(new CharacterCharacteristicValue(MaxEnergyPoints, (short)CharacteristicEnum.MAX_ENERGY_POINTS));
             results.Add(new CharacterCharacteristicValue(Energy, (short)CharacteristicEnum.ENERGY_POINTS));
 
 
             return results.ToArray();
+        }
+        public virtual int GetMissingLife()
+        {
+            return -MissingLife;
+        }
+        public virtual int GetHitPoints()
+        {
+            return MaxLifePoints - this[CharacteristicEnum.VITALITY].TotalInContext();
         }
         public CharacterCharacteristicsInformations GetCharacterCharacteristicsInformations(Character character)
         {
@@ -367,6 +378,7 @@ namespace Giny.World.Managers.Stats
             stats[CharacteristicEnum.WEIGHT] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.DAMAGE_PERCENT_SPELL] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.SHIELD] = Characteristic.Zero();
+            stats[CharacteristicEnum.PERMANENT_DAMAGE_PERCENT] = ErosionCharacteristic.New(FighterStats.NaturalErosion);
             stats.Initialize();
 
             return stats;

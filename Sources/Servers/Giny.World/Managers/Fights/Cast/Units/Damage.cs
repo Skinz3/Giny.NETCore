@@ -144,10 +144,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
                 ComputeCriticalDamageReduction(jet);
 
             if (!IgnoreBoost)
-                ComputeDamageDone(jet);
-
-            if (!IgnoreBoost)
-                ComputeFinalDamageBoost(jet);
+                ComputeFinalDamages(jet);
 
             jet.ValidateBounds();
 
@@ -156,13 +153,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
             Computed = jet.Generate(Source.Random, Source.HasRandDownModifier(), Source.HasRandUpModifier());
 
         }
-
-        private void ComputeFinalDamageBoost(Jet jet)
-        {
-            jet.Min += jet.Min * (Source.Stats.FinalDamagePercent / 100d);
-            jet.Max += jet.Max * (Source.Stats.FinalDamagePercent / 100d);
-        }
-
+ 
         private void ComputeCriticalDamageBonus(Jet jet)
         {
             if (this.EffectHandler.CastHandler.Cast.IsCriticalHit)
@@ -180,7 +171,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
             }
         }
 
-        private void ComputeDamageDone(Jet jet)
+        private void ComputeFinalDamages(Jet jet)
         {
             if (Source.IsMeleeWith(Target))
             {

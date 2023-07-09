@@ -467,13 +467,32 @@ namespace Giny.World.Managers.Chat
             }
             client.Character.Reply("Target restored.");
         }
+        [ChatCommand("buffs",ServerRoleEnum.Administrator)]
+        public static void DisplayBuffCommand(WorldClient client)
+        {
+            if (!client.Character.Fighting)
+            {
+                client.Character.ReplyWarning("Not in fight.");
+                return;
+            }
+            foreach (var buff in client.Character.Fighter.GetBuffs())
+            {
+                client.Character.Reply(buff, Color.CornflowerBlue);
+            }
+        }
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
+            client.Character.Reply("MissingLife : " + client.Character.Stats.GetMissingLife());
+           // client.Character.RefreshStats();
+
+            if (client.Character.Fighter == null)
+                return;
+
 
             using (var seq = client.Character.Fighter.Fight.SequenceManager.StartSequence(Fights.Sequences.SequenceTypeEnum.SEQUENCE_SPELL))
             {
-                client.Character.Fighter.InflictDamage(new Fights.Cast.Units.Damage(client.Character.Fighter, client.Character.Fighter, EffectSchoolEnum.Fix, 100, 100));
+                client.Character.Fighter.InflictDamage(new Fights.Cast.Units.Damage(client.Character.Fighter, client.Character.Fighter, EffectSchoolEnum.Fix, 400, 400));
             }
 
 

@@ -70,6 +70,12 @@ namespace Giny.World.Managers.Fights.Fighters
             get;
             set;
         } = true;
+        /// <summary>
+        /// When triggering X trigger, the entity is still alive
+        /// </summary>
+        public bool DeadAlive => Stats.LifePoints <= 0 && Alive;
+
+        public bool AliveSafe => Alive && !DeadAlive;
 
         public Fight Fight
         {
@@ -109,7 +115,7 @@ namespace Giny.World.Managers.Fights.Fighters
         public ServerEntityLook Look
         {
             get;
-            set;
+            private set;
         }
         public ServerEntityLook BaseLook
         {
@@ -119,7 +125,7 @@ namespace Giny.World.Managers.Fights.Fighters
         public FighterStats Stats
         {
             get;
-            set;
+            private set;
         }
         public DateTime? DeathTime
         {
@@ -263,11 +269,19 @@ namespace Giny.World.Managers.Fights.Fighters
             this.Random = new Random();
         }
 
+
+        public abstract FighterStats CreateStats();
+
+        public abstract ServerEntityLook CreateLook();
+
         public virtual void Initialize()
         {
             this.TurnStartCell = this.Cell;
             this.MovementHistory = new MovementHistory(this);
+
+            this.Look = CreateLook();
             this.BaseLook = Look.Clone();
+            this.Stats = CreateStats();
 
             foreach (var stat in Stats.GetCharacteristics<Characteristic>())
             {
@@ -276,9 +290,7 @@ namespace Giny.World.Managers.Fights.Fighters
                     this.RefreshStats(stat.Key);
                 });
             }
-
         }
-
 
 
         public void FindPlacementDirection()
@@ -587,14 +599,6 @@ namespace Giny.World.Managers.Fights.Fighters
                 }
             }
         }
-        /* public short GetSpellBoost<T>(short spellId) where T : SpellBoostBuff
-         {
-             var buffs = GetBuffs<T>().Where(x => x.SpellId == spellId);
-             return (short)buffs.Sum(x => x.GetDelta());
-         } */
-
-
-
 
         protected IEnumerable<SummonedFighter> GetSummons()
         {
@@ -2225,12 +2229,7 @@ namespace Giny.World.Managers.Fights.Fighters
         }
         private int CalculateErodedLife(int damages)
         {
-            var num = Stats.Erosion;
-
-            if (num > 50)
-            {
-                num = 50;
-            }
+            var num = Stats.Erosion.TotalInContext();
             return (int)(damages * (num / 100.0d));
         }
         public bool IsMeleeWith(Fighter fighter)
@@ -2351,13 +2350,17 @@ namespace Giny.World.Managers.Fights.Fighters
                 using (var sequence = Fight.SequenceManager.StartSequence(SequenceTypeEnum.SEQUENCE_CHARACTER_DEATH))
                 {
                     this.Stats.LifePoints = 0;
+
+                    this.DeathTime = DateTime.Now;
+
                     TriggerBuffs(TriggerTypeEnum.OnDeath, new Death(killedBy));
+
+                    this.Alive = false;
 
                     KillAllSummons();
                     RemoveAllCastedBuffs();
                     this.RemoveMarks();
 
-                    this.DeathTime = DateTime.Now;
                     Fight.Send(new GameActionFightDeathMessage()
                     {
                         actionId = (short)ActionsEnum.ACTION_CHARACTER_KILL,
@@ -2365,7 +2368,6 @@ namespace Giny.World.Managers.Fights.Fighters
                         targetId = this.Id,
                     });
 
-                    this.Alive = false;
 
 
                     this.OnDie(killedBy);

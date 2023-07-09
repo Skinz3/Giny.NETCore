@@ -1,0 +1,160 @@
+﻿using Giny.IO.D2OClasses;
+using Giny.Protocol.Enums;
+using Giny.World.Managers.Entities.Characters;
+using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Managers.Spells;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Giny.World.Managers.Fights.Cast
+{
+    public class InitialSpellHandler
+    {
+        /// <summary>
+        /// Le client ne contenant pas les informations sur les sorts intiaux des classes
+        /// obligé de distinguer les cas ici.
+        /// </summary>
+        public static void Execute(CharacterFighter fighter)
+        {
+            /*
+             * Maîtrise des invocations
+             */
+            if (fighter.Character.HasSpell(18646))
+            {
+                fighter.ExecuteSpell(21976, 1, fighter.Cell);
+            }
+            switch (fighter.Breed)
+            {
+                case BreedEnum.Iop:
+                    Iop(fighter);
+                    break;
+
+                case BreedEnum.Cra:
+                    Cra(fighter);
+                    break;
+
+                case BreedEnum.Zobal:
+                    Zobal(fighter);
+                    break;
+
+                case BreedEnum.Osamodas:
+                    Osamodas(fighter);
+                    break;
+
+                case BreedEnum.Sadida:
+                    Sadida(fighter);
+                    break;
+
+                case BreedEnum.Sacrieur:
+                    Sacrieur(fighter);
+                    break;
+
+                case BreedEnum.Forgelance:
+                    Forgelance(fighter);
+                    break;
+
+                case BreedEnum.Eniripsa:
+                    Eniripsa(fighter);
+                    break;
+            }
+        }
+
+        private static void Iop(CharacterFighter fighter)
+        {
+            fighter.ExecuteSpell(21981, 1, fighter.Cell);
+        }
+        private static void Cra(CharacterFighter fighter)
+        {
+            fighter.ExecuteSpell(21977, 1, fighter.Cell);
+        }
+        private static void Osamodas(CharacterFighter fighter)
+        {
+            fighter.ExecuteSpell(13991, 1, fighter.Cell);
+        }
+        private static void Zobal(CharacterFighter fighter)
+        {
+            fighter.ExecuteSpell(18633, 1, fighter.Cell);
+        }
+        private static void Sacrieur(CharacterFighter fighter)
+        {
+            fighter.ExecuteSpell(12718, 1, fighter.Cell);
+        }
+
+        private static void Forgelance(CharacterFighter fighter)
+        {
+            fighter.ExecuteSpell(24387, 1, fighter.Cell);
+        }
+        private static void Eniripsa(CharacterFighter fighter)
+        {
+            fighter.ExecuteSpell(25810, 1, fighter.Cell);
+        }
+
+        private static void Sadida(CharacterFighter fighter)
+        {
+            /*
+             * Arbre ou Arbre Feuillu
+             */
+            CharacterSpell treeSpell = fighter.Character.GetSpellByBase(13519)!;
+
+            if (!treeSpell.Variant)
+            {
+                fighter.ExecuteSpell(24418, treeSpell.GetGrade(fighter.Character), fighter.Cell);
+            }
+            else
+            {
+                fighter.ExecuteSpell(24417, treeSpell.GetGrade(fighter.Character), fighter.Cell);
+            }
+
+            /*
+             * Folle transmutée
+             */
+            if (fighter.Character.HasSpell(13515))
+            {
+                fighter.ExecuteSpell(25510, 1, fighter.Cell);
+            }
+
+
+            /*
+             * Bloqueuse transmutée
+             */
+            if (fighter.Character.HasSpell(13526))
+            {
+                fighter.ExecuteSpell(25511, 1, fighter.Cell);
+            }
+
+            /*
+            * Sacrifiée transmutée
+            */
+            if (fighter.Character.HasSpell(13522))
+            {
+                fighter.ExecuteSpell(25512, 1, fighter.Cell);
+            }
+
+            /*
+           * Gonflable transmutée
+           */
+            if (fighter.Character.HasSpell(13523))
+            {
+                fighter.ExecuteSpell(25513, 1, fighter.Cell);
+            }
+
+            /*
+           * Sacrifiée transmutée
+           */
+            if (fighter.Character.HasSpell(13520))
+            {
+                fighter.ExecuteSpell(25514, 1, fighter.Cell);
+            }
+
+
+            /*
+             * Soulier du sadida
+             */
+            fighter.ExecuteSpell(14377, 1, fighter.Cell);
+
+        }
+    }
+}

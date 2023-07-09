@@ -54,11 +54,15 @@ namespace Giny.SpellTree
             set;
         }
 
-        public static FontFamily AppFont;
+        public FontFamily AppFont;
+
+        public static MainWindow Instance;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            Instance = this;
 
             AppFont = (FontFamily)FindResource("Jost");
 
@@ -163,18 +167,7 @@ namespace Giny.SpellTree
         {
             Tree.Draw(spell, level);
 
-            gradeSelect.SelectionChanged -= gradeSelect_SelectionChanged;
-
-            gradeSelect.Items.Clear();
-
-            foreach (var spellLevel in spell.Levels)
-            {
-                gradeSelect.Items.Add(spellLevel);
-            }
-
-            gradeSelect.SelectedItem = level;
-
-            gradeSelect.SelectionChanged += gradeSelect_SelectionChanged;
+          
 
             SelectNode(Tree.Nodes.First());
             UpdateDisplayNames();
@@ -197,6 +190,20 @@ namespace Giny.SpellTree
                 effects.Items.Add(effect);
             }
             SelectedNode.SetNodeStroke(Colors.Orange, true);
+
+            gradeSelect.SelectionChanged -= gradeSelect_SelectionChanged;
+
+            gradeSelect.Items.Clear();
+
+            foreach (var spellLevel in node.Spell.Levels)
+            {
+                gradeSelect.Items.Add(spellLevel);
+            }
+
+            gradeSelect.SelectedItem = node.SpellLevel;
+
+            gradeSelect.SelectionChanged += gradeSelect_SelectionChanged;
+
         }
         private void effects_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -242,11 +249,23 @@ namespace Giny.SpellTree
             {
                 case EffectsEnum.Effect_Summon:
                 case EffectsEnum.Effect_SummonSlave:
+                case EffectsEnum.Effect_KillAndSummon:
+                case EffectsEnum.Effect_KillAndSummonSlave:
                     MonsterRecord monster = MonsterRecord.GetMonsterRecord((short)CurrentEffect.Min);
 
                     if (monster != null)
                     {
-                        effectProps.Items.Add("Summoned : " + monster.Name);
+                        effectProps.Items.Add("Summoned : " + monster.Name+ " ("+CurrentEffect.Max+")");
+
+                        var grade = monster.GetGrade((byte)CurrentEffect.Max);
+
+                        SpellLevelRecord level = SpellLevelRecord.GetSpellLevel(grade.StartingSpellLevelId);
+
+                        if (level != null)
+                        {
+                            SpellRecord record = SpellRecord.GetSpellRecord(level.SpellId);
+                            effectProps.Items.Add($"Summon cast : ({record.Id}) {record.Name} ({level.Grade})");
+                        }
                     }
                     else
                     {
@@ -311,7 +330,7 @@ namespace Giny.SpellTree
 
             DrawSpell(spell, spell.Levels.First());
         }
-        
+
         private void UpdateDisplayNames()
         {
             foreach (var element in canvas.Children)
@@ -346,7 +365,12 @@ namespace Giny.SpellTree
 
                 DrawSpell(selectedRecord, selectedLevel);
             }
-           
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SpellSearch search = new SpellSearch();
+            search.Show();
         }
     }
 }

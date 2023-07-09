@@ -1,5 +1,6 @@
 ﻿using Giny.Protocol.Types;
 using Giny.World.Managers.Entities.Characters;
+using Giny.World.Managers.Entities.Look;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Stats;
 using Giny.World.Records.Maps;
@@ -31,13 +32,17 @@ namespace Giny.World.Managers.Fights.Fighters
         {
             base.OnTurnEnded();
         }
-        public override void Initialize()
+       
+        public override ServerEntityLook CreateLook()
         {
-            this.Stats = new FighterStats(Summoner.Stats);
+            return Summoner.Look.Clone();
+        }
+        public override FighterStats CreateStats()
+        {
+            var stats = new FighterStats(Summoner.Stats);
             this.Stats.MaxLifePoints = Summoner.Stats.BaseMaxLife;
             this.Stats.LifePoints = this.Stats.MaxLifePoints;
-            this.Look = Summoner.Look.Clone();
-            base.Initialize();
+            return stats;
         }
         public override GameFightFighterInformations GetFightFighterInformations(CharacterFighter to)
         {

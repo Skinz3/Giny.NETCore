@@ -16,6 +16,7 @@ namespace Giny.World.Managers.Stats
     [ProtoInclude(7, typeof(RangeCharacteristic))]
     [ProtoInclude(8, typeof(RelativeCharacteristic))]
     [ProtoInclude(9, typeof(ResistanceCharacteristic))]
+    [ProtoInclude(10, typeof(ErosionCharacteristic))]
     public class DetailedCharacteristic : Characteristic
     {
         public virtual short? Limit => null;

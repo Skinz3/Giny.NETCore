@@ -67,7 +67,7 @@ namespace Giny.SpellTree
             // block.FontWeight = FontWeights.Bold;
             block.FontSize = 16;
             block.TextAlignment = TextAlignment.Center;
-            block.FontFamily = MainWindow.AppFont;
+            block.FontFamily = MainWindow.Instance.AppFont;
 
 
             var size = MeasureTextSize(content, block.FontFamily, block.FontSize, block.FontStyle, block.FontWeight);

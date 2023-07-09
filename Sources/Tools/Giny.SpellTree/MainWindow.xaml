@@ -13,16 +13,17 @@
     <Grid>
         <TextBox FontFamily="{StaticResource Jost}" Opacity="0.7" FontSize="16" Name="search" TextChanged="spellInput_TextChanged"   HorizontalAlignment="Right" Margin="0,10,7,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="397" Height="28"/>
 
-        <ScrollViewer Name="scrollView" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"  Margin="0,24,410,0">
-            <Canvas x:Name="canvas"  Width="8000" Height="8000"  Background="White">
-            </Canvas>
+        <ScrollViewer Name="scrollView" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"  Margin="0,30,410,0">
+            <Canvas x:Name="canvas"  Width="8000" Height="8000"  Background="White"/>
         </ScrollViewer>
+
         <ListBox FontFamily="{StaticResource Jost}" Opacity="0.7" FontSize="16" SelectionChanged="effects_SelectionChanged" x:Name="effects"  Margin="0,360,4,0" Height="172" VerticalAlignment="Top" HorizontalAlignment="Right" Width="400"/>
         <ListBox  FontFamily="{StaticResource Jost}" Opacity="0.7" FontSize="16" Name="effectProps"  Margin="0,544,4,10" HorizontalAlignment="Right" Width="399"/>
         <Label   FontFamily="{StaticResource Jost}" Opacity="0.7" Name="spellName"  Content="Aucun sort séléctionné" HorizontalAlignment="Right" FontSize="18" Margin="0,279,6,0" VerticalAlignment="Top" Width="397" Height="47"/>
         <ListBox ScrollViewer.HorizontalScrollBarVisibility="Hidden" FontFamily="{StaticResource Jost}" Opacity="0.7" FontSize="16" SelectionChanged="spells_SelectionChanged" x:Name="spells"  Margin="0,43,7,0" Height="233" VerticalAlignment="Top" HorizontalAlignment="Right" Width="398"/>
         <CheckBox FontFamily="{StaticResource Jost}" Opacity="0.7" IsChecked="true"  FontSize="15" x:Name="displayNames" Click="CheckBox_Click" Content="Display names" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top"/>
-        <ComboBox  FontFamily="{StaticResource Jost}" Opacity="0.7" Name="gradeSelect" SelectionChanged="gradeSelect_SelectionChanged" FontSize="15" Margin="1517,316,10,0" VerticalAlignment="Top" Height="30"/>
+        <ComboBox  FontFamily="{StaticResource Jost}" Opacity="0.7" Name="gradeSelect" SelectionChanged="gradeSelect_SelectionChanged" FontSize="15" Margin="0,316,10,0" VerticalAlignment="Top" Height="30" HorizontalAlignment="Right" Width="393"/>
+        <Button  FontFamily="{StaticResource Jost}" Opacity="0.7" FontSize="16" Content="Search spell" Margin="135,4,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="163" Click="Button_Click"/>
 
     </Grid>
 </Window>

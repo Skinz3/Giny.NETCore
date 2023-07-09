@@ -97,7 +97,7 @@ namespace Giny.DatabasePatcher.Spells
             EffectsEnum.Effect_DamageNeutralPerMP,
             EffectsEnum.Effect_CastSpell_1175,
             EffectsEnum.Effect_DamageEarthPerMP,
-            EffectsEnum.Effect_CastSpell_2793,
+            EffectsEnum.Effect_TargetExecuteSpellWithAnimationGlobalLimitation,
             EffectsEnum.Effect_DamageBestElement,
             EffectsEnum.Effect_StealHpBestElement,
             EffectsEnum.Effect_DamageBestElement_2829,

@@ -1,5 +1,6 @@
 ﻿using Giny.Pokefus.Effects;
 using Giny.Protocol.Types;
+using Giny.World.Managers.Entities.Look;
 using Giny.World.Managers.Fights;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
@@ -35,16 +36,10 @@ namespace Giny.Pokefus.Fight.Fighters
 
         public override bool Sex => false;
 
-        public override void Initialize()
+        public override FighterStats CreateStats()
         {
-            this.Look = Record.Look.Clone();
-
-            this.SetController((CharacterFighter)Summoner);
-
-            base.Initialize();
-
             var coeff = ComputeStatsCoeff();
-            this.Stats = new FighterStats(Grade, null, coeff); // null = we dont want additional bonuses , since we manually calculate ratios
+            var stats = new FighterStats(Grade, null, coeff); // null = we dont want additional bonuses , since we manually calculate ratios
 
             int lifePoints = (int)(coeff * 1000);
 
@@ -55,15 +50,25 @@ namespace Giny.Pokefus.Fight.Fighters
 
             const double statsMax = 600;
 
-            this.Stats.Wisdom = DetailedCharacteristic.New((short)(statsMax * coeff));
-            this.Stats.Chance = DetailedCharacteristic.New((short)(statsMax * coeff));
-            this.Stats.Agility = DetailedCharacteristic.New((short)(statsMax * coeff));
-            this.Stats.Strength = DetailedCharacteristic.New((short)(statsMax * coeff));
-            this.Stats.BaseMaxLife = lifePoints;
-            this.Stats.LifePoints = lifePoints;
-            this.Stats.MaxLifePoints = lifePoints;
-        }
+            stats.Wisdom = DetailedCharacteristic.New((short)(statsMax * coeff));
+            stats.Chance = DetailedCharacteristic.New((short)(statsMax * coeff));
+            stats.Agility = DetailedCharacteristic.New((short)(statsMax * coeff));
+            stats.Strength = DetailedCharacteristic.New((short)(statsMax * coeff));
+            stats.BaseMaxLife = lifePoints;
+            stats.LifePoints = lifePoints;
+            stats.MaxLifePoints = lifePoints;
 
+            return stats;
+        }
+        public override void Initialize()
+        {
+            this.SetController((CharacterFighter)Summoner);
+            base.Initialize();
+        }
+        public override ServerEntityLook CreateLook()
+        {
+            return Record.Look.Clone();
+        }
         private double ComputeStatsCoeff()
         {
             return (Level * 2d / 200d) + 0.1d;

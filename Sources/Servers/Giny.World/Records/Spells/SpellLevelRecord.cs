@@ -216,7 +216,7 @@ namespace Giny.World.Records.Spells
             return result;
         }
 
-        public static List<SpellLevelRecord> GetLevelsCastingSpell(short targetSpellId)
+        public static List<SpellLevelRecord> GetLevelsCastingSpell(int targetSpellId)
         {
             List<SpellLevelRecord> results = new List<SpellLevelRecord>();
 

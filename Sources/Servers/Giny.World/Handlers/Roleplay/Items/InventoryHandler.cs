@@ -37,7 +37,7 @@ namespace Giny.World.Handlers.Items
 
             if (client.Character.Fighting)
             {
-                client.Character.Fighter.Restore();
+                client.Character.Fighter.UpdateOnPlacement();
             }
         }
         [MessageHandler]

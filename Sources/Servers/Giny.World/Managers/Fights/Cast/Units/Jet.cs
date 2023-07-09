@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.World.Managers.Fights.Cast
+namespace Giny.World.Managers.Fights.Cast.Units
 {
     public class Jet
     {
@@ -25,8 +25,8 @@ namespace Giny.World.Managers.Fights.Cast
 
         public Jet(double min, double max)
         {
-            this.Min = min;
-            this.Max = max;
+            Min = min;
+            Max = max;
         }
 
         public void ValidateBounds()

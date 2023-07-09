@@ -308,7 +308,7 @@ namespace Giny.World.Managers.Entities.Characters
 
 
 
-    
+
         public BankItemCollection BankItems
         {
             get;
@@ -376,7 +376,7 @@ namespace Giny.World.Managers.Entities.Characters
             this.Collecting = false;
         }
 
-      
+
         private void CheckSoldItems()
         {
             BidShopItemRecord[] bidHouseItems = BidshopsManager.Instance.GetSoldItem(this).ToArray();
@@ -604,7 +604,7 @@ namespace Giny.World.Managers.Entities.Characters
             }
 
         }
-    
+
         public void OpenCraftExchange(SkillRecord skill)
         {
             this.OpenDialog(new CraftExchange(this, skill));
@@ -1364,11 +1364,15 @@ namespace Giny.World.Managers.Entities.Characters
                 RefreshActorOnMap();
             }
         }
-        public CharacterSpell GetSpellByVariant(short spellId)
+        public CharacterSpell? GetSpellByBase(short spellId)
+        {
+            return Record.Spells.FirstOrDefault(x => x.SpellId == spellId);
+        }
+        public CharacterSpell? GetSpellByVariant(short spellId)
         {
             return Record.Spells.FirstOrDefault(x => x.VariantSpellRecord != null && x.VariantSpellRecord.Id == spellId);
         }
-        public CharacterSpell GetSpell(short spellId)
+        public CharacterSpell? GetSpell(short spellId)
         {
             return Record.Spells.FirstOrDefault(x => x.ActiveSpellRecord.Id == spellId);
         }
@@ -1443,7 +1447,7 @@ namespace Giny.World.Managers.Entities.Characters
         private void SendGameFightStartingMessage(Fight fight)
         {
             this.Client.Send(new GameFightStartingMessage((byte)fight.FightType,
-            (short)fight.Id, (double)fight.BlueTeam.TeamId, (double)fight.RedTeam.TeamId, fight.ContainsBoss(),new int[0]));
+            (short)fight.Id, (double)fight.BlueTeam.TeamId, (double)fight.RedTeam.TeamId, fight.ContainsBoss(), new int[0]));
         }
         public void DisplayNotification(string message)
         {
@@ -1469,8 +1473,8 @@ namespace Giny.World.Managers.Entities.Characters
         {
             return "Character: " + Name;
         }
-       
-       
+
+
         public void AddFollower(ServerEntityLook look)
         {
             GetHumanOption<CharacterHumanOptionFollowers>().Add(look);
@@ -1489,8 +1493,8 @@ namespace Giny.World.Managers.Entities.Characters
                 new PartyEntityBaseInformation[0], Id, Name, Level, Look.ToEntityLook(), Record.BreedId, Record.Sex);
         }
 
-      
-       
+
+
 
         public PartyInvitationMemberInformations GetPartyInvitationMemberInformations()
         {

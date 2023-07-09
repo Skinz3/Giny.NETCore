@@ -11,9 +11,14 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Cast
 {
-    [SpellEffectHandler(EffectsEnum.Effect_CasterExecuteSpellGlobalLimitation)] // Dofus Abyssal
+    /// <summary>
+    /// Dofus Abyssal
+    /// Flèche fulminante
+    /// </summary>
+    [SpellEffectHandler(EffectsEnum.Effect_CasterExecuteSpellGlobalLimitation)]  
     public class CasterExecuteSpellGlobalLimitation : SpellEffectHandler
     {
+
         public CasterExecuteSpellGlobalLimitation(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
         {
 
@@ -23,8 +28,12 @@ namespace Giny.World.Managers.Fights.Effects.Cast
         {
             Spell spell = CreateCastedSpell();
 
-            foreach (var target in targets)
+
+            foreach (var target in targets.Take(Effect.Value))
             {
+                Source.Fight.Send(new Giny.Protocol.Messages.ShowCellMessage(target.Cell.Id, target.Cell.Id));
+
+                System.Threading.Thread.Sleep(500);
                 SpellCast cast = new SpellCast(Source, spell, target.Cell, CastHandler.Cast);
                 cast.Token = this.GetTriggerToken<ITriggerToken>();
                 cast.Force = true;

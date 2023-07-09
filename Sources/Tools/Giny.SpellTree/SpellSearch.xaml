@@ -1,0 +1,22 @@
+﻿<Window x:Class="Giny.SpellTree.SpellSearch"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Giny.SpellTree"
+        mc:Ignorable="d"
+        Title="Giny.SpellTree" Height="500" Width="700" WindowStartupLocation="CenterScreen" >
+    <Window.Resources>
+        <FontFamily x:Key="JostLight" >/Fonts/#Jost Light</FontFamily>
+        <FontFamily x:Key="Jost" >/Fonts/#Jost Regular</FontFamily>
+    </Window.Resources>
+    <Grid>
+        <ComboBox Name="searchType" FontFamily="{StaticResource Jost}" Opacity="0.7" FontSize="16" Margin="336,17,181,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="searchText" FontFamily="{StaticResource Jost}" Opacity="0.7" FontSize="16"  HorizontalAlignment="Left" Margin="23,17,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="293" Height="29"/>
+        <Button Content="Rechercher" FontFamily="{StaticResource Jost}" Opacity="0.7" FontSize="16" HorizontalAlignment="Right" Margin="0,17,16,0" VerticalAlignment="Top" Height="29" Width="146" Click="Button_Click">
+        </Button>
+        <ListBox SelectionChanged="spells_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Hidden" FontFamily="{StaticResource Jost}" Opacity="0.7" FontSize="16"  x:Name="spells" Height="353" VerticalAlignment="Center" Margin="23,0,22,0"/>
+
+
+    </Grid>
+</Window>

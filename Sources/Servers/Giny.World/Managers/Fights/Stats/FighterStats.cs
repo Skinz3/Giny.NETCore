@@ -30,11 +30,8 @@ namespace Giny.World.Managers.Fights.Stats
             set;
         }
 
-        public short Erosion
-        {
-            get;
-            private set;
-        }
+        public Characteristic Erosion => this[CharacteristicEnum.PERMANENT_DAMAGE_PERCENT];
+ 
 
         public int ErodedLife
         {
@@ -56,30 +53,6 @@ namespace Giny.World.Managers.Fights.Stats
             set;
         }
 
-        public short FinalDamagePercent
-        {
-            get;
-            set;
-        }
-
-        public void AddErosion(short amount)
-        {
-            this.Erosion += amount;
-
-            if (Erosion > MaxErosion)
-            {
-                Erosion = MaxErosion;
-            }
-        }
-        public void RemoveErosion(short amount)
-        {
-            this.Erosion -= amount;
-
-            if (Erosion < 0)
-            {
-                Erosion = 0;
-            }
-        }
         public void AddShield(short delta)
         {
             this[CharacteristicEnum.SHIELD].Context += delta;
@@ -219,7 +192,6 @@ namespace Giny.World.Managers.Fights.Stats
             this.MaxEnergyPoints = character.Stats.MaxEnergyPoints;
             InvisibilityState = GameActionFightInvisibilityStateEnum.VISIBLE;
             this.BaseMaxLife = MaxLifePoints;
-            this.Erosion = NaturalErosion;
 
         }
         public FighterStats(FighterStats other)
@@ -236,7 +208,6 @@ namespace Giny.World.Managers.Fights.Stats
             this.MaxEnergyPoints = other.MaxEnergyPoints;
             this.InvisibilityState = GameActionFightInvisibilityStateEnum.VISIBLE;
             this.BaseMaxLife = MaxLifePoints;
-            this.Erosion = NaturalErosion;
             this.Initialize();
         }
         /*
@@ -305,6 +276,7 @@ namespace Giny.World.Managers.Fights.Stats
             this[CharacteristicEnum.WEIGHT] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.DAMAGE_PERCENT_SPELL] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.SHIELD] = Characteristic.New(0);
+            this[CharacteristicEnum.PERMANENT_DAMAGE_PERCENT] = ErosionCharacteristic.New(NaturalErosion);
 
             InvisibilityState = GameActionFightInvisibilityStateEnum.VISIBLE;
 
@@ -318,7 +290,6 @@ namespace Giny.World.Managers.Fights.Stats
 
             this.BaseMaxLife = MaxLifePoints;
             this.LifePoints = MaxLifePoints;
-            this.Erosion = NaturalErosion;
             this.CriticalHitWeapon = 0;
             this.Energy = 0;
             this.GlobalDamageReduction = 0;
@@ -329,7 +300,14 @@ namespace Giny.World.Managers.Fights.Stats
 
             this.Initialize();
         }
-
+        public override int GetHitPoints()
+        {
+            return base.GetHitPoints() - ErodedLife;
+        }
+        public override int GetMissingLife()
+        {
+            return base.GetMissingLife() ;
+        }
         private void ApplyBonusCharacteristics(MonsterBonusCharacteristics bonus, Fighter summoner)
         {
             var delta = (bonus.LifePoints / 100d) * (summoner.Stats.BaseMaxLife - summoner.Stats[CharacteristicEnum.VITALITY].TotalInContext());

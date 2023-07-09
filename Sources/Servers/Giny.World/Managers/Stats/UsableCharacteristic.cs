@@ -10,10 +10,18 @@ namespace Giny.World.Managers.Stats
 {
     public abstract class UsableCharacteristic : DetailedCharacteristic
     {
+        private short m_used;
+
         public short Used
         {
-            get;
-            set;
+            get
+            {
+                return m_used;
+            }
+            set
+            {
+                m_used = value;
+            }
         }
 
         public override CharacterCharacteristic GetCharacterCharacteristic(CharacteristicEnum characteristic)

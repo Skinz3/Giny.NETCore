@@ -131,7 +131,7 @@
                                         <td>@SelectedEffect.Group</td>
                                     </tr>
 
-                                   
+
 
                                     @if (@SelectedEffect.IsSpellCastEffect())
                                     {
@@ -264,6 +264,10 @@
                                         <td>@(SelectedSpellLevel.GlobalCooldown)</td>
                                     </tr>
 
+                                    <tr>
+                                        <td>Critères d'états</td>
+                                        <td>@SelectedSpellLevel.StatesCriterion</td>
+                                    </tr>
                                     <tr>
                                         <td>Etats requis</td>
                                         <td>@SpellHelper.GetRequiredStatesNames(SelectedSpellLevel)</td>

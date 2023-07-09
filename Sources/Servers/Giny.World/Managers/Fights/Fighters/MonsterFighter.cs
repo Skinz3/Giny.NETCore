@@ -8,6 +8,7 @@ using Giny.Core.Time;
 using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
 using Giny.Protocol.Types;
+using Giny.World.Managers.Entities.Look;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Results;
 using Giny.World.Managers.Fights.Stats;
@@ -49,9 +50,16 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public override void Initialize()
         {
-            this.Stats = new FighterStats(Grade,null);
-            this.Look = Record.Look.Clone();
             base.Initialize();
+        }
+
+        public override ServerEntityLook CreateLook()
+        {
+            return Record.Look.Clone(); 
+        }
+        public override FighterStats CreateStats()
+        {
+            return new FighterStats(Grade, null);
         }
         public override bool CanBePushed()
         {

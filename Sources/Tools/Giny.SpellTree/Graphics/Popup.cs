@@ -48,7 +48,7 @@ namespace Giny.SpellTree.Graphics
             textBlock.Text = message;
             textBlock.Foreground = Brushes.White;
             textBlock.FontSize = 16;
-            textBlock.FontFamily = MainWindow.AppFont;
+            textBlock.FontFamily = MainWindow.Instance.AppFont;
             textBlock.HorizontalAlignment = HorizontalAlignment.Center;
             textBlock.VerticalAlignment = VerticalAlignment.Center;
 

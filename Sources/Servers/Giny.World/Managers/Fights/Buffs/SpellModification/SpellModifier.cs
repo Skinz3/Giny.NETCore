@@ -36,62 +36,87 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModifiers
         }
 
 
-
-        public void UpdateValue(short value)
+        public SpellModifierActionTypeEnum GetModifierActionTypeEnum()
         {
             switch (Type)
             {
                 case SpellModifierTypeEnum.INVALID_MODIFICATION:
-                    throw new NotImplementedException();
-                case SpellModifierTypeEnum.RANGEABLE:
-                    throw new NotImplementedException();
-                case SpellModifierTypeEnum.DAMAGE:
-                    throw new NotImplementedException();
-                case SpellModifierTypeEnum.BASE_DAMAGE:
-                    Value += value;
                     break;
+                case SpellModifierTypeEnum.RANGEABLE:
+                    break;
+                case SpellModifierTypeEnum.DAMAGE:
+                    break;
+
+                case SpellModifierTypeEnum.RANGE_MAX:
+                case SpellModifierTypeEnum.AP_COST:
+                case SpellModifierTypeEnum.BASE_DAMAGE:
+                    return SpellModifierActionTypeEnum.ACTION_BOOST;
+
+
                 case SpellModifierTypeEnum.HEAL_BONUS:
                     break;
-                case SpellModifierTypeEnum.AP_COST:
+                case SpellModifierTypeEnum.CAST_INTERVAL:
+                    break;
+                case SpellModifierTypeEnum.CRITICAL_HIT_BONUS:
+                    break;
+                case SpellModifierTypeEnum.CAST_LINE:
+                    break;
+
+
+                case SpellModifierTypeEnum.LOS:
+                    return SpellModifierActionTypeEnum.ACTION_SET;
+
+
+                case SpellModifierTypeEnum.MAX_CAST_PER_TURN:
+                    break;
+                case SpellModifierTypeEnum.MAX_CAST_PER_TARGET:
+                    break;
+
+                case SpellModifierTypeEnum.RANGE_MIN:
+                    break;
+                case SpellModifierTypeEnum.OCCUPIED_CELL:
+                    break;
+                case SpellModifierTypeEnum.FREE_CELL:
+                    break;
+                case SpellModifierTypeEnum.VISIBLE_TARGET:
+                    break;
+                case SpellModifierTypeEnum.PORTAL_FREE_CELL:
+                    break;
+                case SpellModifierTypeEnum.PORTAL_PROJECTION:
+                    break;
+                default:
+                    break;
+            }
+
+            return SpellModifierActionTypeEnum.ACTION_INVALID;
+        }
+        public void UpdateValue(short value)
+        {
+            var actionType = GetModifierActionTypeEnum();
+
+            switch (actionType)
+            {
+                case SpellModifierActionTypeEnum.ACTION_INVALID:
+                    break;
+                case SpellModifierActionTypeEnum.ACTION_BOOST:
                     Value += value;
                     break;
-                case SpellModifierTypeEnum.CAST_INTERVAL:
-                    throw new NotImplementedException();
-                case SpellModifierTypeEnum.CRITICAL_HIT_BONUS:
-                    throw new NotImplementedException();
-                case SpellModifierTypeEnum.CAST_LINE:
-                    throw new NotImplementedException();
-                case SpellModifierTypeEnum.LOS:
+                case SpellModifierActionTypeEnum.ACTION_DEBOOST:
+                    Value -= value;
+                    break;
+                case SpellModifierActionTypeEnum.ACTION_SET:
                     Value = value;
                     break;
-                case SpellModifierTypeEnum.MAX_CAST_PER_TURN:
-                    throw new NotImplementedException();
-                case SpellModifierTypeEnum.MAX_CAST_PER_TARGET:
-                    throw new NotImplementedException();
-                case SpellModifierTypeEnum.RANGE_MAX:
-                    Value += value;
-                    break;
-                case SpellModifierTypeEnum.RANGE_MIN:
-                    throw new NotImplementedException();
-                case SpellModifierTypeEnum.OCCUPIED_CELL:
-                    throw new NotImplementedException();
-                case SpellModifierTypeEnum.FREE_CELL:
-                    throw new NotImplementedException();
-                case SpellModifierTypeEnum.VISIBLE_TARGET:
-                    throw new NotImplementedException();
-                case SpellModifierTypeEnum.PORTAL_FREE_CELL:
-                    throw new NotImplementedException();
-                case SpellModifierTypeEnum.PORTAL_PROJECTION:
-                    throw new NotImplementedException();
                 default:
-                    throw new NotImplementedException();
+                    break;
             }
 
         }
 
         public SpellModifierMessage GetSpellModifierMessage()
         {
-            return new SpellModifierMessage(SpellId, (byte)SpellModifierActionTypeEnum.ACTION_BOOST, (byte)Type, Value, 0);
+            var type = GetModifierActionTypeEnum();
+            return new SpellModifierMessage(SpellId, (byte)type, (byte)Type, Value, 0);
         }
     }
 }

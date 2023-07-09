@@ -142,11 +142,11 @@ namespace Giny.World.Managers.Fights.Buffs
         {
             if (HasDelay())
             {
-                return "Delayed :" + Delay + " " + Cast.Spell.Record.Name;
+                return "DelayedBuff :" + Delay + " " + Cast.Spell.Record.Name;
             }
             else
             {
-                return "Triggered " + Cast.Spell.Record.Name;
+                return "TriggerBuff : " + Cast.Spell.Record.Name;
             }
 
         }

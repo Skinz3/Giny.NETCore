@@ -89,14 +89,18 @@ namespace Giny.World.Managers.Fights.Fighters
         }
         public void SwitchContext()
         {
-            var msg = new SlaveSwitchContextMessage()
+            var slaveTurn = Fight.Timeline.RoundNumber;
+
+            var currentIndex = Fight.Timeline.Index;
+
+            if (currentIndex < Fight.Timeline.IndexOf(this))
             {
-                masterId = Controller.Id,
-                shortcuts = GetShortcuts().ToArray(),
-                slaveId = Id,
-                slaveSpells = GetSpellItems(),
-                slaveStats = this.Stats.GetCharacterCharacteristicsInformations(Controller.Character),
-            };
+                slaveTurn++;
+            }
+
+            var msg = new SlaveSwitchContextMessage(Controller.Id, Id, (short)slaveTurn, GetSpellItems(),
+            this.Stats.GetCharacterCharacteristicsInformations(Controller.Character), GetShortcuts().ToArray());
+
             this.Controller.Character.Client.Send(msg);
         }
         private Shortcut[] GetShortcuts()

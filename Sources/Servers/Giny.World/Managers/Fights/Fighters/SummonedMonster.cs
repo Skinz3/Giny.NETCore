@@ -1,6 +1,7 @@
 ﻿using Giny.Core.DesignPattern;
 using Giny.Protocol.Enums;
 using Giny.Protocol.Types;
+using Giny.World.Managers.Entities.Look;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Stats;
 using Giny.World.Records.Maps;
@@ -31,19 +32,24 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public override short Level => Summoner.Level;
 
-
-
         public SummonedMonster(Fighter owner, MonsterRecord record, SpellEffectHandler summoningEffect, byte gradeId, CellRecord cell) : base(owner, summoningEffect, cell)
         {
             this.Record = record;
             this.Grade = Record.GetGrade(gradeId);
         }
-        public override void Initialize()
+
+        public override FighterStats CreateStats()
         {
             double statsCoeff = 1 + (Summoner.Level / 100d);
-            this.Stats = new FighterStats(Grade, Summoner,statsCoeff);
-            this.Look = Record.Look.Clone();
+            return new FighterStats(Grade, Summoner, statsCoeff); 
+        }
+        public override void Initialize()
+        {
             base.Initialize();
+        }
+        public override ServerEntityLook CreateLook()
+        {
+            return Record.Look.Clone();
         }
 
         public override bool CanBePushed()
@@ -125,7 +131,9 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public override void OnSummoned()
         {
+           
             this.CastSpell(Grade.StartingSpellLevelId);
+
         }
     }
 }

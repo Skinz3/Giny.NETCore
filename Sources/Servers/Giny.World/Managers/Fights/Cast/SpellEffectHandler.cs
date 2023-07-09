@@ -116,7 +116,7 @@ namespace Giny.World.Managers.Fights.Cast
             this.CastHandler = castHandler;
             Effect = effect;
             Zone = Effect.GetZone(CastCell.Point.OrientationTo(TargetCell.Point));
-       
+      
             this.AffectedFighters = GetAffectedFighters();
 
             this.CasterCriterionSatisfied = ComputeCasterCriterion();

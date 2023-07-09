@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.World.Managers.Fights.Cast
+namespace Giny.World.Managers.Fights.Cast.Units
 {
     public class Telefrag
     {
@@ -21,8 +21,8 @@ namespace Giny.World.Managers.Fights.Cast
         }
         public Telefrag(Fighter source, Fighter target)
         {
-            this.Source = source;
-            this.Target = target;
+            Source = source;
+            Target = target;
         }
     }
 }
