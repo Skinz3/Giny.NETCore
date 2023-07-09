@@ -22,6 +22,7 @@ using Giny.World.Managers.Fights.Zones;
 using Giny.Protocol.Custom.Enums;
 using Org.BouncyCastle.Asn1.X509;
 using Giny.World.Managers.Fights.Effects;
+using MySqlX.XDevAPI.Common;
 
 namespace Giny.World.Managers.Fights.Cast
 {
@@ -136,28 +137,46 @@ namespace Giny.World.Managers.Fights.Cast
         {
             List<CellRecord> affectedCells = GetAffectedCells();
 
-            if (affectedCells.Count < 560)
-            {
-
-                foreach (var cell in affectedCells)
-                {
-                    Source.Fight.Send(new Giny.Protocol.Messages.ShowCellMessage(cell.Id, cell.Id));
-                    System.Threading.Thread.Sleep(1000);
-                }
-            }
-
-
-
             if (Targets.Any(x => x is TargetTypeCriterion && ((TargetTypeCriterion)x).TargetType == SpellTargetType.SELF_ONLY) && !affectedCells.Contains(Source.Cell))
-                affectedCells.Add(Source.Cell); // Source.Cell
+                affectedCells.Add(Source.Cell); 
 
             var fighters = Source.Fight.GetFighters(affectedCells);
 
-            var results = fighters.Where(entry => entry.Alive && !entry.IsCarried() && IsValidTarget(entry)).ToArray();
+            var results = fighters.Where(entry => entry.Alive && !entry.IsCarried() && IsValidTarget(entry)).ToList();
+
+            SortTargets(results);
+
+
 
             return results;
         }
 
+        private void SortTargets(List<Fighter> targets)
+        {
+            var centerCell = CastHandler.Cast.TargetCell;
+
+            targets.Sort((target1, target2) =>
+            {
+                var cell1 = target1.Cell;
+                var cell2 = target2.Cell;
+
+                var xc1 = cell1.Point.Y - centerCell.Point.Y;
+                var yc1 = cell1.Point.X - centerCell.Point.X;
+
+                var xc2 = cell2.Point.Y - centerCell.Point.Y;
+
+                var yc2 = cell2.Point.X - centerCell.Point.X;
+                double angle1 = Math.Atan2(yc1, -xc1);
+                double angle2 = Math.Atan2(yc2, -xc2);
+
+                if (angle1 == angle2)
+                {
+                    return cell1.Point.DistanceTo(centerCell.Point).CompareTo(cell2.Point.DistanceTo(centerCell.Point));
+                }
+                return angle2.CompareTo(angle1);
+            });
+
+        }
         public bool IsValidTarget(Fighter actor)
         {
             var targets = Targets.ToLookup(x => x.GetType());

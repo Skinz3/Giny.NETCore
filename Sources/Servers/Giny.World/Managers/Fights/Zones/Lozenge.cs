@@ -12,7 +12,7 @@ namespace Giny.World.Managers.Fights.Zones
 {
     public class Lozenge : Zone
     {
-        public Lozenge(byte minRadius, byte radius) 
+        public Lozenge(byte minRadius, byte radius)
         {
             MinRadius = minRadius;
             Radius = radius;
@@ -54,7 +54,9 @@ namespace Giny.World.Managers.Fights.Zones
                 x++;
             }
 
-                
+
+        
+
             return result.ToArray();
         }
 

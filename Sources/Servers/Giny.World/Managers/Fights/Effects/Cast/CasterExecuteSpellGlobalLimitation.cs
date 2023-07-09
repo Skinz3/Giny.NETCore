@@ -31,9 +31,6 @@ namespace Giny.World.Managers.Fights.Effects.Cast
 
             foreach (var target in targets.Take(Effect.Value))
             {
-                Source.Fight.Send(new Giny.Protocol.Messages.ShowCellMessage(target.Cell.Id, target.Cell.Id));
-
-                System.Threading.Thread.Sleep(500);
                 SpellCast cast = new SpellCast(Source, spell, target.Cell, CastHandler.Cast);
                 cast.Token = this.GetTriggerToken<ITriggerToken>();
                 cast.Force = true;

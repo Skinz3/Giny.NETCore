@@ -236,16 +236,7 @@ namespace Giny.World.Managers.Fights
         }
         public IEnumerable<Fighter> GetFighters(IEnumerable<CellRecord> cells)
         {
-            foreach (var cell in cells)
-            {
-                var fighter = GetFighter(cell.Id);
-
-                if (fighter != null)
-                {
-                    yield return fighter;
-                }
-            }
-            // return GetFighters().Where(x => cells.Contains(x.Cell));
+            return GetFighters().Where(x => cells.Contains(x.Cell));
         }
         public IEnumerable<T> GetFighters<T>(bool aliveOnly = true)
         {
