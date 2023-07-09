@@ -54,7 +54,7 @@ namespace Giny.World.Managers.Fights.Cast
             get;
             private set;
         }
-      
+
         protected bool Critical
         {
             get
@@ -116,7 +116,7 @@ namespace Giny.World.Managers.Fights.Cast
             this.CastHandler = castHandler;
             Effect = effect;
             Zone = Effect.GetZone(CastCell.Point.OrientationTo(TargetCell.Point));
-      
+
             this.AffectedFighters = GetAffectedFighters();
 
             this.CasterCriterionSatisfied = ComputeCasterCriterion();
@@ -136,10 +136,16 @@ namespace Giny.World.Managers.Fights.Cast
         {
             List<CellRecord> affectedCells = GetAffectedCells();
 
-            /* foreach (var cell in affectedCells)
-             {
-                 Source.Fight.Send(new Giny.Protocol.Messages.ShowCellMessage(cell.Id, cell.Id));
-             } */
+            if (affectedCells.Count < 560)
+            {
+
+                foreach (var cell in affectedCells)
+                {
+                    Source.Fight.Send(new Giny.Protocol.Messages.ShowCellMessage(cell.Id, cell.Id));
+                    System.Threading.Thread.Sleep(1000);
+                }
+            }
+
 
 
             if (Targets.Any(x => x is TargetTypeCriterion && ((TargetTypeCriterion)x).TargetType == SpellTargetType.SELF_ONLY) && !affectedCells.Contains(Source.Cell))

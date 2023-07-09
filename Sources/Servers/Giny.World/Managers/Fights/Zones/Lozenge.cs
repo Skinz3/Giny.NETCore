@@ -54,8 +54,7 @@ namespace Giny.World.Managers.Fights.Zones
                 x++;
             }
 
-            result.Reverse();
-
+                
             return result.ToArray();
         }
 
