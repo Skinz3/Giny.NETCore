@@ -1,8 +1,7 @@
 ﻿using Giny.Protocol.Enums;
 using Giny.Protocol.Messages;
-using Giny.World.Managers.Fights.Buffs.SpellModifiers;
+using Giny.Protocol.Types;
 using Giny.World.Managers.Fights.Fighters;
-using Org.BouncyCastle.Asn1.X509;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,17 +60,51 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
 
             if (modifiers.ContainsKey(type))
             {
-                modifiers[type].UpdateValue(value);
+                UpdateModifier(modifiers[type], value);
             }
             else
             {
-                modifiers[type] = new SpellModifier(type, spellId, value);
+                modifiers[type] = CreateSpellModifier(type, spellId);
+                UpdateModifier(modifiers[type], value);
+            }
+        }
+
+        private void UpdateModifier(SpellModifier modifier, short value)
+        {
+            var action = modifier.Update(value);
+
+            if (modifier.RequiresDeletion())
+            {
+                Modifications[modifier.SpellId].Remove(modifier.Type);
+
+                if (Modifications[modifier.SpellId].Count == 0)
+                {
+                    Modifications.Remove(modifier.SpellId);
+                }
+
+                Fighter.Fight.Send(new RemoveSpellModifierMessage(Fighter.Id,
+                    (byte)action, (byte)modifier.Type, modifier.SpellId));
+            }
+            else
+            {
+                Fighter.Fight.Send(new ApplySpellModifierMessage(Fighter.Id, new SpellModifierMessage(modifier.SpellId,
+              (byte)action, (byte)modifier.Type, modifier.Value, 0)));
+            }
+        }
+
+        private SpellModifier CreateSpellModifier(SpellModifierTypeEnum type, short spellId)
+        {
+            switch (type)
+            {
+                case SpellModifierTypeEnum.BASE_DAMAGE:
+                    return new SpellModifierBaseDamage(spellId);
+                case SpellModifierTypeEnum.LOS:
+                    return new SpellModifierLOS(spellId);
+
             }
 
-            var spellModifierMessage = modifiers[type].GetSpellModifierMessage();
 
-            Fighter.Fight.Send(new ApplySpellModifierMessage(Fighter.Id, spellModifierMessage));
-
+            throw new NotImplementedException($"Not implemented spell modifier {type}");
         }
     }
 }

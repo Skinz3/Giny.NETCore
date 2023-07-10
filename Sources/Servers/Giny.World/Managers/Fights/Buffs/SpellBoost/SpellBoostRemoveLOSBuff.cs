@@ -20,12 +20,12 @@ namespace Giny.World.Managers.Fights.Buffs.SpellBoost
 
         public override void Execute()
         {
-            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.LOS, 1);
+            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.LOS, 0);
             base.Execute();
         }
         public override void Dispell()
         {
-            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.LOS, 0);
+            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.LOS, 1);
             base.Dispell();
         }
     }

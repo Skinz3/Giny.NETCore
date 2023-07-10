@@ -487,8 +487,8 @@ namespace Giny.World.Managers.Chat
 
             using (var seq = client.Character.Fighter.Fight.SequenceManager.StartSequence(Fights.Sequences.SequenceTypeEnum.SEQUENCE_SPELL))
             {
-                SpellModifierMessage msg = new SpellModifierMessage(13057, (byte)SpellModifierActionTypeEnum.ACTION_BOOST,
-               (byte)SpellModifierTypeEnum.BASE_DAMAGE, 40, 0);
+                SpellModifierMessage msg = new SpellModifierMessage(13053, (byte)SpellModifierActionTypeEnum.ACTION_SET,
+               (byte)SpellModifierTypeEnum.LOS, 0, 0);
 
                 client.Character.Fighter.Fight.Send(new ApplySpellModifierMessage(client.Character.Fighter.Id, msg));
             }

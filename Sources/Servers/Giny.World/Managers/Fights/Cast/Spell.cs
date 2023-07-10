@@ -1,7 +1,6 @@
 ﻿using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
 using Giny.Protocol.Types;
-using Giny.World.Managers.Fights.Buffs.SpellModifiers;
 using Giny.World.Records.Spells;
 using System;
 using System.Collections.Generic;
