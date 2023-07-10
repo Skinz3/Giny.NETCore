@@ -27,5 +27,9 @@ namespace Giny.World.Managers.Fights.Buffs.SpellBoost
             Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.BASE_DAMAGE, (short)-GetDelta());
             base.Dispell();
         }
+        public override string ToString()
+        {
+            return $"SpellBoost (BaseDamages) {base.Cast.Spell.Record.Name} +{GetDelta()}";
+        }
     }
 }

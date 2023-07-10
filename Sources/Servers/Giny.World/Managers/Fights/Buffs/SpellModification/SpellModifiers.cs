@@ -68,8 +68,9 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
                 modifiers[type] = new SpellModifier(type, spellId, value);
             }
 
+            var spellModifierMessage = modifiers[type].GetSpellModifierMessage();
 
-            Fighter.Fight.Send(new ApplySpellModifierMessage(Fighter.Id, modifiers[type].GetSpellModifierMessage()));
+            Fighter.Fight.Send(new ApplySpellModifierMessage(Fighter.Id, spellModifierMessage));
 
         }
     }

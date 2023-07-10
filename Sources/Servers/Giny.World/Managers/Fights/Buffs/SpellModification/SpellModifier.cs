@@ -118,5 +118,6 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModifiers
             var type = GetModifierActionTypeEnum();
             return new SpellModifierMessage(SpellId, (byte)type, (byte)Type, Value, 0);
         }
+
     }
 }

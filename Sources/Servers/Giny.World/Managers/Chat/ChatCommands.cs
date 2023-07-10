@@ -467,7 +467,7 @@ namespace Giny.World.Managers.Chat
             }
             client.Character.Reply("Target restored.");
         }
-        [ChatCommand("buffs",ServerRoleEnum.Administrator)]
+        [ChatCommand("buffs", ServerRoleEnum.Administrator)]
         public static void DisplayBuffCommand(WorldClient client)
         {
             if (!client.Character.Fighting)
@@ -483,8 +483,21 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
+
+
+            using (var seq = client.Character.Fighter.Fight.SequenceManager.StartSequence(Fights.Sequences.SequenceTypeEnum.SEQUENCE_SPELL))
+            {
+                SpellModifierMessage msg = new SpellModifierMessage(13057, (byte)SpellModifierActionTypeEnum.ACTION_BOOST,
+               (byte)SpellModifierTypeEnum.BASE_DAMAGE, 40, 0);
+
+                client.Character.Fighter.Fight.Send(new ApplySpellModifierMessage(client.Character.Fighter.Id, msg));
+            }
+
+
+
+            return;
             client.Character.Reply("MissingLife : " + client.Character.Stats.GetMissingLife());
-           // client.Character.RefreshStats();
+            // client.Character.RefreshStats();
 
             if (client.Character.Fighter == null)
                 return;

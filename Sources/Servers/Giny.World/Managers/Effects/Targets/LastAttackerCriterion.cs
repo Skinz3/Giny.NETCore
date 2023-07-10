@@ -26,5 +26,9 @@ namespace Giny.World.Managers.Effects.Targets
             // required ?
             return handler.Source.LastAttacker == actor;
         }
+        public override string ToString()
+        {
+            return Required ? "LastAttacker" : "Not Last Attaker (Not handled)";
+        }
     }
 }

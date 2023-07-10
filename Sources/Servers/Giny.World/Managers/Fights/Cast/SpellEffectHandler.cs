@@ -142,7 +142,15 @@ namespace Giny.World.Managers.Fights.Cast
             List<CellRecord> affectedCells = GetAffectedCells();
 
             if (Targets.Any(x => x is TargetTypeCriterion && ((TargetTypeCriterion)x).TargetType == SpellTargetType.SELF_ONLY) && !affectedCells.Contains(Source.Cell))
+            {
                 affectedCells.Add(Source.Cell);
+            }
+
+            if (Targets.Any(x => x is LastAttackerCriterion && ((LastAttackerCriterion)x).Required))
+            {
+                if (Source.LastAttacker != null && !affectedCells.Contains(Source.LastAttacker.Cell))
+                    affectedCells.Add(Source.LastAttacker.Cell);
+            }
 
             var fighters = Source.Fight.GetFighters(affectedCells);
 
@@ -176,7 +184,7 @@ namespace Giny.World.Managers.Fights.Cast
                  * convention de dofus pour changer le point de départ 
                  * par rapport au cerle trigonométrique (π/2)
                  */
-                double a1 = Math.Atan2(yc1, -xc1); 
+                double a1 = Math.Atan2(yc1, -xc1);
                 double a2 = Math.Atan2(yc2, -xc2);
 
                 /*
