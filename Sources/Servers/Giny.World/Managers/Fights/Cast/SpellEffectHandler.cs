@@ -23,6 +23,7 @@ using Giny.Protocol.Custom.Enums;
 using Org.BouncyCastle.Asn1.X509;
 using Giny.World.Managers.Fights.Effects;
 using MySqlX.XDevAPI.Common;
+using Giny.Protocol.Messages;
 
 namespace Giny.World.Managers.Fights.Cast
 {
@@ -106,6 +107,9 @@ namespace Giny.World.Managers.Fights.Cast
             get;
             private set;
         }
+
+        public virtual bool InvertTargetsSort => false;
+
         public SpellEffectHandler(EffectDice effect, SpellCastHandler castHandler)
         {
             Targets = effect.GetTargets();
@@ -138,7 +142,7 @@ namespace Giny.World.Managers.Fights.Cast
             List<CellRecord> affectedCells = GetAffectedCells();
 
             if (Targets.Any(x => x is TargetTypeCriterion && ((TargetTypeCriterion)x).TargetType == SpellTargetType.SELF_ONLY) && !affectedCells.Contains(Source.Cell))
-                affectedCells.Add(Source.Cell); 
+                affectedCells.Add(Source.Cell);
 
             var fighters = Source.Fight.GetFighters(affectedCells);
 
@@ -146,12 +150,13 @@ namespace Giny.World.Managers.Fights.Cast
 
             SortTargets(results);
 
-
-
             return results;
         }
-
-        private void SortTargets(List<Fighter> targets)
+        /// <summary>
+        /// Tri les cibles de l'effet par cercles concentriques
+        /// en partant de π/2
+        /// </summary>
+        protected void SortTargets(List<Fighter> targets)
         {
             var centerCell = CastHandler.Cast.TargetCell;
 
@@ -164,16 +169,52 @@ namespace Giny.World.Managers.Fights.Cast
                 var yc1 = cell1.Point.X - centerCell.Point.X;
 
                 var xc2 = cell2.Point.Y - centerCell.Point.Y;
-
                 var yc2 = cell2.Point.X - centerCell.Point.X;
-                double angle1 = Math.Atan2(yc1, -xc1);
-                double angle2 = Math.Atan2(yc2, -xc2);
 
-                if (angle1 == angle2)
+                /*
+                 * Inversion de la coordonnée y en accord avec les 
+                 * convention de dofus pour changer le point de départ 
+                 * par rapport au cerle trigonométrique (π/2)
+                 */
+                double a1 = Math.Atan2(yc1, -xc1); 
+                double a2 = Math.Atan2(yc2, -xc2);
+
+                /*
+                 * Considéré comme une ligne droite
+                 */
+                if (cell2.Id == centerCell.Id)
                 {
-                    return cell1.Point.DistanceTo(centerCell.Point).CompareTo(cell2.Point.DistanceTo(centerCell.Point));
+                    a2 = a1;
                 }
-                return angle2.CompareTo(angle1);
+                if (cell1.Id == centerCell.Id)
+                {
+                    a1 = a2;
+                }
+
+                var d1 = cell1.Point.DistanceTo(centerCell.Point);
+
+                var d2 = cell2.Point.DistanceTo(centerCell.Point);
+
+                if (d1 == d2)
+                {
+                    return a2.CompareTo(a1);
+                }
+                else
+                {
+                    /*
+                     * Les effets de poussé appliqueront les effets 
+                     * à l'envers par rapport au tri de base
+                     */
+                    if (InvertTargetsSort)
+                    {
+                        return cell2.Point.DistanceTo(centerCell.Point).CompareTo(cell1.Point.DistanceTo(centerCell.Point));
+                    }
+                    else
+                    {
+                        return cell1.Point.DistanceTo(centerCell.Point).CompareTo(cell2.Point.DistanceTo(centerCell.Point));
+                    }
+                }
+
             });
 
         }
