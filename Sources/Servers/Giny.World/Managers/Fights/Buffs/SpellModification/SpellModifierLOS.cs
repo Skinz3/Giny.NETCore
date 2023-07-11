@@ -9,21 +9,23 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
 {
     public class SpellModifierLOS : SpellModifier
     {
+        public override SpellModifierTypeEnum Type => SpellModifierTypeEnum.LOS;
+
+        public override SpellModifierActionTypeEnum Action => SpellModifierActionTypeEnum.ACTION_SET;
+
         public SpellModifierLOS(short spellId) : base(spellId)
         {
         }
 
-        public override SpellModifierTypeEnum Type => SpellModifierTypeEnum.LOS;
-
+      
         public override bool RequiresDeletion()
         {
             return Value == 1;
         }
 
-        public override SpellModifierActionTypeEnum Update(short value)
+        public override void Update(short value)
         {
             Value = value;
-            return SpellModifierActionTypeEnum.ACTION_SET;
         }
     }
 }

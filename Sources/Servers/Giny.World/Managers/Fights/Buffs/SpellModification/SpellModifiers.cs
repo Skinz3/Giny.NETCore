@@ -71,7 +71,7 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
 
         private void UpdateModifier(SpellModifier modifier, short value)
         {
-            var action = modifier.Update(value);
+            modifier.Update(value);
 
             if (modifier.RequiresDeletion())
             {
@@ -83,12 +83,11 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
                 }
 
                 Fighter.Fight.Send(new RemoveSpellModifierMessage(Fighter.Id,
-                    (byte)action, (byte)modifier.Type, modifier.SpellId));
+                      (byte)modifier.Action, (byte)modifier.Type, modifier.SpellId));
             }
             else
             {
-                Fighter.Fight.Send(new ApplySpellModifierMessage(Fighter.Id, new SpellModifierMessage(modifier.SpellId,
-              (byte)action, (byte)modifier.Type, modifier.Value, 0)));
+                Fighter.Fight.Send(new ApplySpellModifierMessage(Fighter.Id, modifier.GetSpellModifierMessage()));
             }
         }
 

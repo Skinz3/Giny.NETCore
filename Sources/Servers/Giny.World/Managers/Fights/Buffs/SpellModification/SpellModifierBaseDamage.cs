@@ -9,29 +9,23 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
 {
     public class SpellModifierBaseDamage : SpellModifier
     {
+        public override SpellModifierTypeEnum Type => SpellModifierTypeEnum.BASE_DAMAGE;
+
+        public override SpellModifierActionTypeEnum Action => SpellModifierActionTypeEnum.ACTION_BOOST;
+
         public SpellModifierBaseDamage(short spellId) : base(spellId)
         {
-        }
 
-        public override SpellModifierTypeEnum Type => SpellModifierTypeEnum.BASE_DAMAGE;
+        }
 
         public override bool RequiresDeletion()
         {
             return this.Value == 0;
         }
 
-        public override SpellModifierActionTypeEnum Update(short value)
+        public override void Update(short value)
         {
             Value += value;
-
-            if (value > 0)
-            {
-                return SpellModifierActionTypeEnum.ACTION_BOOST;
-            }
-            else
-            {
-                return SpellModifierActionTypeEnum.ACTION_DEBOOST;
-            }
         }
     }
 }

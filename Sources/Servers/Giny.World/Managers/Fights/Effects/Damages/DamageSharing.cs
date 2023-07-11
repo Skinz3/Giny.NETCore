@@ -30,7 +30,7 @@ namespace Giny.World.Managers.Fights.Effects.Damages
 
                 short sharedDelta = (short)(damage.Computed.Value / fighters.Count());
 
-                foreach (var ally in Source.Team.GetFighters<Fighter>())
+                foreach (var ally in fighters)
                 {
                     Damage sharedDamage = new Damage(damage.Source, ally, damage.EffectSchool, 0, 0,
                         damage.EffectHandler);

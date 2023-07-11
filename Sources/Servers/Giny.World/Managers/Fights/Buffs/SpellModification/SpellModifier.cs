@@ -24,16 +24,27 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
             get;
             private set;
         }
+
+
         public abstract SpellModifierTypeEnum Type { get; }
 
-        public abstract SpellModifierActionTypeEnum Update(short value);
-
-        public abstract bool RequiresDeletion();
+        public abstract SpellModifierActionTypeEnum Action { get; }
 
         public SpellModifier(short spellId)
         {
             this.SpellId = spellId;
         }
+
+        public abstract void Update(short value);
+
+        public abstract bool RequiresDeletion();
+
+        public SpellModifierMessage GetSpellModifierMessage()
+        {
+            return new SpellModifierMessage(SpellId, (byte)Action, (byte)Type, Value, 0);
+        }
+
+
 
 
     }
