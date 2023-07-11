@@ -31,5 +31,7 @@ namespace Giny.World.Managers.Fights.Buffs.SpellBoost
         {
             return $"SpellBoost (BaseDamages) {base.Cast.Spell.Record.Name} +{GetDelta()}";
         }
+
+       
     }
 }

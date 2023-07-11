@@ -1,4 +1,5 @@
-﻿using Giny.World.Managers.Effects;
+﻿using Giny.Protocol.Enums;
+using Giny.World.Managers.Effects;
 using Giny.World.Records.Spells;
 using System;
 using System.Collections.Generic;
@@ -131,8 +132,6 @@ namespace Giny.SpellTree.Graphics
                 return null;
             }
 
-
-
             if (parent.Effect == effect)
             {
 
@@ -205,6 +204,10 @@ namespace Giny.SpellTree.Graphics
                 {
                     var targetLevel = targetSpell.GetLevel((byte)effect.Max);
 
+                    if (targetLevel.Effects.All(x => x.EffectEnum == EffectsEnum.Effect_NoMoreEffects))
+                    {
+                        continue;
+                    }
                     var newNode = CreateNode(deepLevel, parent, xCurrent, yCurrentNode, effect, targetSpell, targetLevel);
 
                     if (newNode == null)
@@ -212,10 +215,10 @@ namespace Giny.SpellTree.Graphics
                         break;
                     }
 
-                  
+
                     BuildTreeLevel(deepLevel + 1, newNode, xCurrent, yCurrentNode, targetLevel, yOffset / castEffects.Length);
 
-                   
+
                     yCurrentNode += gapBetweenNode;
                 }
 

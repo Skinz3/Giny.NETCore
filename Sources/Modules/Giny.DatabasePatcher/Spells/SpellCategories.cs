@@ -326,7 +326,7 @@ namespace Giny.DatabasePatcher.Spells
             EffectsEnum.Effect_IncreaseGlyphDamages,
             EffectsEnum.Effect_IncreaseFinalDamages,
             EffectsEnum.Effect_DispatchDamage_1223,
-            EffectsEnum.Effect_HealReceivedDamages,
+            EffectsEnum.Effect_SplashHeal,
             EffectsEnum.Effect_TransmitCharacteristic,
             EffectsEnum.Effect_MeleeDamageDonePercent,
             EffectsEnum.Effect_AddMeleeResistance,

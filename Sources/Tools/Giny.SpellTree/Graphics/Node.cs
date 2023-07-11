@@ -167,6 +167,21 @@ namespace Giny.SpellTree.Graphics
                 sb.AppendLine(Spell.Description.AddLineBreaks(' ', 7));
             }
 
+            var displayedEffects = SpellLevel.Effects.OfType<EffectDice>().Where(x => PopupHelper.IsDisplayed(x));
+
+
+            if (displayedEffects.Count() > 0)
+            {
+                sb.AppendLine();
+            }
+
+            foreach (var effect in displayedEffects)
+            {
+                if (PopupHelper.IsDisplayed(effect))
+                {
+                    sb.AppendLine(PopupHelper.GetDescription(effect));
+                }
+            }
 
             return sb.ToString();
         }
@@ -270,7 +285,7 @@ namespace Giny.SpellTree.Graphics
             }
 
 
-            this.Label = CanvasDraw.Text("(" + Spell.Id + "," + SpellLevel.Grade + ")" + 
+            this.Label = CanvasDraw.Text("(" + Spell.Id + "," + SpellLevel.Grade + ")" +
                 Environment.NewLine + Spell.Name, X, Y - NodeRadius - 15d,
                 new SolidColorBrush(Color.FromArgb(255, 100, 100, 100)), canvas, true);
 

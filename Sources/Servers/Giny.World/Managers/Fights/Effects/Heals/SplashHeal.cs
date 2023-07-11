@@ -14,11 +14,12 @@ namespace Giny.World.Managers.Fights.Effects.Heals
     /*
      * Mot interdit
      * Prygen
+     * Soigne les dégats subis
      */
-    [SpellEffectHandler(EffectsEnum.Effect_HealReceivedDamages)]
-    public class HealReceivedDamage : SpellEffectHandler
+    [SpellEffectHandler(EffectsEnum.Effect_SplashHeal)]
+    public class SplashHeal : SpellEffectHandler
     {
-        public HealReceivedDamage(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
+        public SplashHeal(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
         {
         }
 

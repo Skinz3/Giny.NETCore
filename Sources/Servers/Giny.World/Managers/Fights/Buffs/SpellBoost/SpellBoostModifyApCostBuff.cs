@@ -34,5 +34,7 @@ namespace Giny.World.Managers.Fights.Buffs.SpellBoost
             Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.AP_COST, EffectiveDelta);
             base.Dispell();
         }
+
+       
     }
 }

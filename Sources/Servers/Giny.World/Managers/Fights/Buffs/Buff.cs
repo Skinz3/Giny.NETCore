@@ -139,6 +139,13 @@ namespace Giny.World.Managers.Fights.Buffs
             return false;
         }
 
+        public virtual bool IsSimilar(Buff other)
+        {
+            return this.Cast.SpellId == other.Cast.SpellId &&
+               this.Effect.EffectId == other.Effect.EffectId && this.Effect.Delay == other.Effect.Delay
+               && Trigger.SequenceEquals(this.GetTriggers(), other.GetTriggers()) && this.GetType().Name == other.GetType().Name
+               && this.Effect.TargetMask == other.Effect.TargetMask;
+        }
         public Fighter GetSource()
         {
             return this.Cast.Source;

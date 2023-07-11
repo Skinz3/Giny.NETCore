@@ -2307,7 +2307,7 @@
         /// <summary>
         /// Soigne #1{~1~2 à }#2% des dommages subis.
         /// </summary>
-        Effect_HealReceivedDamages = 2020,
+        Effect_SplashHeal = 2020,
         /// <summary>
         /// 
         /// </summary>
@@ -2616,7 +2616,7 @@
 
         Effect_AddDealtHealPercentMultiplier = 2971,
 
-        Effect_HealCastTotalDamages = 2973, // à verifier
+        Effect_CasterSplashHeal = 2973, // à verifier
 
         End = 3004,
 

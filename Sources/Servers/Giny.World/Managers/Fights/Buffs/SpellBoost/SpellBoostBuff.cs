@@ -53,7 +53,20 @@ namespace Giny.World.Managers.Fights.Buffs.SpellBoost
             };
         }
 
+        public override bool IsSimilar(Buff other)
+        {
+            var result = base.IsSimilar(other);
 
+            if (other is SpellBoostBuff)
+            {
+                var otherBuff = (SpellBoostBuff)other;
+                return result && this.SpellId == otherBuff.SpellId && this.Delta == otherBuff.Delta;                
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public override short GetDelta()
         {

@@ -657,10 +657,9 @@ namespace Giny.World.Managers.Fights.Fighters
         {
             if (BuffMaxStackReached(buff)) // WIP censer cumuler la durée ?
             {
-                Buff oldBuff = Buffs.FirstOrDefault(x => IsSimilar(x, buff));
+                Buff oldBuff = Buffs.First(x => x.IsSimilar(buff));
                 RemoveAndDispellBuff(this, oldBuff);
             }
-
 
 
             Fight.Buffs.Add(buff);
@@ -732,30 +731,11 @@ namespace Giny.World.Managers.Fights.Fighters
         public bool BuffMaxStackReached(Buff buff)
         {
             bool result = buff.Cast.Spell.Level.MaxStack > 0 &&
-                buff.Cast.Spell.Level.MaxStack <= this.Buffs.Count((Buff entry) => IsSimilar(entry, buff));
+                buff.Cast.Spell.Level.MaxStack <= this.Buffs.Count((Buff entry) => entry.IsSimilar(buff));
 
             return result;
         }
-        /// <summary>
-        /// && targetMasks (Fureur Iop) correct ?
-        /// </summary>
-        /// <param name="current"></param>
-        /// <param name="reference"></param>
-        /// <returns></returns>
-        private bool IsSimilar(Buff current, Buff reference)
-        {
-            bool result = current.Cast.SpellId == reference.Cast.SpellId &&
-                 current.Effect.EffectId == reference.Effect.EffectId && current.Effect.Delay == reference.Effect.Delay
-                 && Trigger.SequenceEquals(current.GetTriggers(), reference.GetTriggers()) && current.GetType().Name == reference.GetType().Name
-                 && current.Effect.TargetMask == reference.Effect.TargetMask;
 
-            if (current is StateBuff && reference is StateBuff)
-            {
-                return result && ((StateBuff)current).Record.Id == ((StateBuff)reference).Record.Id;
-            }
-
-            return result;
-        }
         public void SwapPlacementPosition(Fighter target)
         {
             short cellId = this.Cell.Id;

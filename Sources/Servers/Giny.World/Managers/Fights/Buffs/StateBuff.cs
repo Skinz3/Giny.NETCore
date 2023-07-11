@@ -27,7 +27,7 @@ namespace Giny.World.Managers.Fights.Buffs
             get;
             private set;
         }
-      
+
         public StateBuff(int id, SpellStateRecord record, Fighter target, SpellEffectHandler effectHandler, FightDispellableEnum dispellable) : base(id, target, effectHandler, dispellable)
         {
             this.Record = record;
@@ -66,6 +66,22 @@ namespace Giny.World.Managers.Fights.Buffs
         public override string ToString()
         {
             return "StateBuff : " + Record.Name;
+        }
+
+        public override bool IsSimilar(Buff other)
+        {
+            bool result = base.IsSimilar(other);
+
+            if (other is StateBuff)
+            {
+                return result && ((StateBuff)other).StateId == this.StateId;
+            }
+            else
+            {
+                return false;
+            }
+
+
         }
     }
 }

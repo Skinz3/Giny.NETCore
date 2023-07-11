@@ -73,8 +73,6 @@ namespace Giny.Auth.Network
             Send(new HelloConnectMessage(string.Empty, new byte[0]));
             Send(new RawDataMessage(RawPatchManager.Instance.GetRawPatch("AuthPatch")));
         }
-
-
         public override void OnConnected()
         {
             throw new NotImplementedException();

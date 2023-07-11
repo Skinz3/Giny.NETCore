@@ -852,6 +852,7 @@ namespace Giny.World.Managers.Fights
 
             this.UpdateTimeLine();
 
+
             foreach (var summon in summons)
             {
                 summon.OnSummoned();
