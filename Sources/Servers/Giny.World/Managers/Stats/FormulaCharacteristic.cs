@@ -6,48 +6,26 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Stats
 {
-    public class FormulaCharacteristic : DetailedCharacteristic
+    public abstract class FormulaCharacteristic : DetailedCharacteristic
     {
-        public delegate short ComputeTotalDelegate(FormulaCharacteristic characteristic);
+        public delegate short ComputeTotalDelegate();
 
-        private ComputeTotalDelegate TotalFunction
+        protected ComputeTotalDelegate TotalFunction
         {
             get;
             set;
         }
 
-        public FormulaCharacteristic(ComputeTotalDelegate totalFunction)
+        public FormulaCharacteristic()
         {
-            TotalFunction = totalFunction;
+
         }
 
-        public override Characteristic Clone()
-        {
-            return new DetailedCharacteristic()
-            {
-                Additional = Additional,
-                Base = Base,
-                Objects = Objects
-            };
-        }
+        public abstract void Initialize(EntityStats stats);
+
         public override short Total()
         {
-            return TotalFunction(this);
+            return TotalFunction();
         }
-        public static new FormulaCharacteristic Zero(ComputeTotalDelegate totalFunction)
-        {
-            return New(totalFunction, 0);
-        }
-        public static new FormulaCharacteristic New(ComputeTotalDelegate totalFunction, short @base)
-        {
-            return new FormulaCharacteristic(totalFunction)
-            {
-                Base = @base,
-                Additional = 0,
-                Context = 0,
-                Objects = 0,
-            };
-        }
-
     }
 }
