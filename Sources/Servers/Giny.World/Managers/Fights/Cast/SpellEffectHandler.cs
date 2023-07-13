@@ -139,10 +139,6 @@ namespace Giny.World.Managers.Fights.Cast
 
         private IEnumerable<Fighter> GetAffectedFighters()
         {
-            if (Effect.EffectEnum == EffectsEnum.Effect_PushBack)
-            {
-
-            }
             List<CellRecord> affectedCells = GetAffectedCells();
 
             if (Targets.Any(x => x is TargetTypeCriterion && ((TargetTypeCriterion)x).TargetType == SpellTargetType.SELF_ONLY) && !affectedCells.Contains(Source.Cell))

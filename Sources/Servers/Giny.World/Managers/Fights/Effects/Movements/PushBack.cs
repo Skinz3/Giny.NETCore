@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Movements
 {
-    [SpellEffectHandler(EffectsEnum.Effect_PushBack)]
-    [SpellEffectHandler(EffectsEnum.Effect_PushBack_1103)]
+    [SpellEffectHandler(EffectsEnum.Effect_Pushback)]
+    [SpellEffectHandler(EffectsEnum.Effect_Pushback_1103)]
     public class Pushback : SpellEffectHandler
     {
         public override bool InvertTargetsSort => true;

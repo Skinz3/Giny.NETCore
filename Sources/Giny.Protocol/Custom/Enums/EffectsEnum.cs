@@ -17,7 +17,7 @@
         /// <summary>
         /// Repousse de #1 case(s)
         /// </summary>
-        Effect_PushBack = 5,
+        Effect_Pushback = 5,
         /// <summary>
         /// Attire de #1 case(s)
         /// </summary>
@@ -1686,7 +1686,7 @@
         /// <summary>
         /// Repousse de #1 case(s)
         /// </summary>
-        Effect_PushBack_1021 = 1021,
+        Effect_Pushback_1021 = 1021,
         /// <summary>
         /// Attire de #1 case(s)
         /// </summary>
@@ -1998,7 +1998,7 @@
         /// <summary>
         /// Pousse de #1 case(s)
         /// </summary>
-        Effect_PushBack_1103 = 1103,
+        Effect_Pushback_1103 = 1103,
         /// <summary>
         /// Téléportation symétrique par rapport à la cible
         /// </summary>
