@@ -19,7 +19,7 @@ namespace Giny.SpellTree
                 return false;
             }
 
-            if (effect.EffectEnum == EffectsEnum.Effect_NoMoreEffects)
+            if (effect.EffectEnum == EffectsEnum.Effect_NoOperation)
             {
                 return false;
             }

@@ -204,7 +204,7 @@ namespace Giny.SpellTree.Graphics
                 {
                     var targetLevel = targetSpell.GetLevel((byte)effect.Max);
 
-                    if (targetLevel.Effects.All(x => x.EffectEnum == EffectsEnum.Effect_NoMoreEffects))
+                    if (targetLevel.Effects.All(x => x.EffectEnum == EffectsEnum.Effect_NoOperation))
                     {
                         continue;
                     }

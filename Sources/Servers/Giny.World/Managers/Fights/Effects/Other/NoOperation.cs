@@ -14,10 +14,10 @@ namespace Giny.World.Managers.Fights.Effects.Other
      * Nothing to do...
      * Probably spell animations
      */
-    [SpellEffectHandler(EffectsEnum.Effect_NoMoreEffects)]
-    public class NoMoreEffects : SpellEffectHandler
+    [SpellEffectHandler(EffectsEnum.Effect_NoOperation)]
+    public class NoOperation : SpellEffectHandler
     {
-        public NoMoreEffects(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
+        public NoOperation(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
         {
         }
 

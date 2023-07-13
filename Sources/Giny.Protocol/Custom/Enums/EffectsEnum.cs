@@ -747,7 +747,7 @@
         /// <summary>
         /// Rend la portée du sort #1 modifiable
         /// </summary>
-        Effect_282 = 282,
+        Effect_BoostSpellRangeable = 282,
         /// <summary>
         /// +#3 Dommages sur le sort #1
         /// </summary>
@@ -810,10 +810,13 @@
         Effect_DeboostFreeCell = 298,
 
         Effect_BoostFreeCell = 299,
+
         /// <summary>
         /// (not found)
         /// </summary>
         Effect_310 = 310,
+
+        Effect_BoostOccupiedCell = 314,
         /// <summary>
         /// Vole #1{~1~2 à }#2 PO
         /// </summary>
@@ -1133,7 +1136,7 @@
         /// <summary>
         /// Pas d'effet supplémentaire
         /// </summary>
-        Effect_NoMoreEffects = 666,
+        Effect_NoOperation = 666,
         /// <summary>
         /// Combat annulé
         /// </summary>
@@ -1366,6 +1369,8 @@
         /// Restaurer le point de respawn
         /// </summary>
         Effect_796 = 796,
+
+        Effect_BoostVisibleTargetOnCellOn = 798,
         /// <summary>
         /// Points de vie : #3
         /// </summary>
@@ -1748,7 +1753,7 @@
         /// <summary>
         /// #1 : +#3 tour(s) de relance
         /// </summary>
-        Effect_1035 = 1035,
+        Effect_CharacterAddSpellCooldown = 1035,
         /// <summary>
         /// #1 : -#3 tour(s) de relance
         /// </summary>
@@ -2060,27 +2065,27 @@
         /// <summary>
         /// 
         /// </summary>
-        Effect_Unknown_1124 = 1124,
+        Effect_SplashRawTakenDamageNeutral = 1124,
         /// <summary>
         /// 
         /// </summary>
-        Effect_Unknown1125 = 1125,
+        Effect_SplashRawTakenDamageAir = 1125,
         /// <summary>
         /// 
         /// </summary>
-        Effect_Unknown_1126 = 1126,
+        Effect_SplashRawTakenDamageFire = 1126,
         /// <summary>
         /// 
         /// </summary>
-        Effect_Unknown_1127 = 1127,
+        Effect_SplashRawTakenDamageWater = 1127,
         /// <summary>
         /// 
         /// </summary>
-        Effect_Unknown_1128 = 1128,
+        Effect_SplashRawTakenEarth = 1128,
         /// <summary>
         /// Envoyer vers Krosmaster
         /// </summary>
-        Effect_1129 = 1129,
+        SendToKromaster = 1129,
         /// <summary>
         /// #1 PA utilisés font perdre #2 PV (Air)
         /// </summary>
@@ -2288,28 +2293,26 @@
         /// <summary>
         /// Crée un double du lanceur de sort
         /// </summary>
-        Effect_Double_1189 = 1189,
+        Effect_DoubleNoSummonSlot = 1189,
         /// <summary>
         /// Répartit #1{~1~2 à }#2% des dommages subis.
         /// </summary>
         Effect_SplashFinalTakenDamages = 1223,
-        /// <summary>
-        /// Répartit #1{~1~2 à }#2% des dommages subis.
-        /// </summary>
-        Effect_Unknown_1225 = 1225,
-        /// <summary>   
-        /// #1
-        /// </summary>
-        /// 
+
+        Effect_SplashFinalTakenDamageNeutral = 1224,
+
+        Effect_SplashFinalTakenDamageAir = 1225,
+
+        Effect_SplashFinalTakenDamageFire = 1226,
+
+        Effect_SplashFinalTakenDamageWater = 1227,
+
+        Effect_SplashFinalTakenDamageEarth = 1228,
+
         Effect_TargetExecuteSpellOnSourceGlobalLimitation = 2017,
-        /// <summary>
-        /// Something related to spells ?
-        /// </summary>
-        Effect_Unknown_2018 = 2018,
-        /// <summary>
-        /// 
-        /// </summary>
-        Effect_Unknown_2019 = 2019,
+
+        Effect_DispelGlyphsOfTarget = 2018,
+        Effect_DispelTrapsOfTarget = 2019,
         /// <summary>
         /// Soigne #1{~1~2 à }#2% des dommages subis.
         /// </summary>
@@ -2329,7 +2332,7 @@
         /// <summary>
         /// 
         /// </summary>
-        Effect_Unknown_2024 = 2024,
+        Effect_DispelRunesOfTarget = 2024,
         /// <summary>
         /// 
         /// </summary>
@@ -2483,6 +2486,8 @@
         /// #1{~1~2 à }#2 (dommages)
         /// </summary>
         Effect_DamageBestElement = 2822,
+
+        Effect_BoostAllSpellBaseDmg = 2824,
         /// <summary>
         /// #1{~1~2 à }#2 (dommages)
         /// </summary>
@@ -2490,7 +2495,9 @@
         /// <summary>
         /// #1{~1~2 à }#2 (dommages)
         /// </summary>
-        Effect_DamageBestElement_2829 = 2829,
+        Effect_SplashRawTakenDamageBestElement = 2829,
+
+        Effect_SplashFinalTakenDamageBestElement = 2830,
 
         Effect_DamageWorstElement = 2832,
 
@@ -2606,7 +2613,7 @@
         /// <summary>
         /// Apprend le sort #3
         /// </summary>
-        Effect_LearnSpell_2875 = 2875,
+        Effect_LearnSpellForgettable = 2875,
         /// <summary>
         /// 
         /// </summary>
@@ -2618,11 +2625,33 @@
 
         Effect_Autopilot = 2881,
 
+        /// <summary>
+        /// Temps pour jouer?
+        /// </summary>
+        Effect_SetTurnWaitingTime = 2883,
+
+        Effect_LifeStealWorstElement = 2890,
+
+        Effect_SetSpellRangeMax = 2905,
+
+        Effect_SetSpellRangeMin = 2906,
+
         Effect_CasterExecuteSpellOnCell = 2960,
 
         Effect_AddDealtHealPercentMultiplier = 2971,
 
         Effect_CasterSplashHeal = 2973, // à verifier
+
+
+        Effect_LifePointsWinFromWater = 2998,
+
+        Effect_LifePointsWinFromAir = 2999,
+
+        Effect_LifePointsWinFromEarth = 3000,
+
+        Effect_LifePointsWinFromNeutral = 3001,
+
+        Effect_LifePointsWinBestElement = 3002,
 
         End = 3004,
 

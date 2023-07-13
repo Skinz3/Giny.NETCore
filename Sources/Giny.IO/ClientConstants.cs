@@ -18,6 +18,6 @@ namespace Giny.IO
         /// <summary>
         /// Debug only
         /// </summary>
-        public const string ClientPath = "C:\\Users\\olivi\\Desktop\\Giny .NET Core\\Dofus";
+        public const string ClientPath = "C:\\Users\\Skinz\\Desktop\\Giny .NET Core\\Dofus";
     }
 }
