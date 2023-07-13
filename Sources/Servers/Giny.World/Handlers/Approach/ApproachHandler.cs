@@ -53,7 +53,7 @@ namespace Giny.World.Handlers.Approach
         [MessageHandler]
         public static void HandleReloginTokenRequestMessage(ReloginTokenRequestMessage message, WorldClient client)
         {
-            client.Send(new ReloginTokenStatusMessage(false,""));
+            client.Send(new ReloginTokenStatusMessage(false, string.Empty));
         }
     }
 }

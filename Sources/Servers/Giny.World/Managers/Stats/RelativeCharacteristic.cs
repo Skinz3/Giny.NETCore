@@ -22,7 +22,7 @@ namespace Giny.World.Managers.Stats
         {
             get
             {
-                return (short)(Relativ.Total() / 10);
+                return (short)(Relativ.Total() / 10d);
             }
         }
         [ProtoMember(1)]

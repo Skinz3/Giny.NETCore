@@ -95,13 +95,6 @@ namespace Giny.World.Managers.Stats
             get;
             set;
         }
-        public int TotalInitiative
-        {
-            get
-            {
-                return StatsFormulas.Instance.TotalInitiative(this);
-            }
-        }
 
         public DetailedCharacteristic Strength
         {
@@ -197,6 +190,9 @@ namespace Giny.World.Managers.Stats
             ((RelativeCharacteristic)this[CharacteristicEnum.TACKLE_EVADE]).Bind(Agility);
 
             ((RelativeCharacteristic)this[CharacteristicEnum.MAGIC_FIND]).Bind(Chance);
+
+            ((InitiativeCharacteristic)this[CharacteristicEnum.INITIATIVE]).Bind(this);
+
         }
         public Characteristic GetCharacteristic(StatsBoostEnum statId)
         {
@@ -315,7 +311,7 @@ namespace Giny.World.Managers.Stats
                 CriticalHitWeapon = 0,
             };
 
-
+            stats[CharacteristicEnum.INITIATIVE] = InitiativeCharacteristic.Zero();
             stats[CharacteristicEnum.STATS_POINTS] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.ACTION_POINTS] = ApCharacteristic.New(ConfigFile.Instance.StartAp);
             stats[CharacteristicEnum.MOVEMENT_POINTS] = MpCharacteristic.New(ConfigFile.Instance.StartMp);
@@ -329,7 +325,6 @@ namespace Giny.World.Managers.Stats
             stats[CharacteristicEnum.CRITICAL_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.CRITICAL_DAMAGE_REDUCTION] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.CRITICAL_HIT] = DetailedCharacteristic.Zero();
-            stats[CharacteristicEnum.INITIATIVE] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.DODGE_AP_LOST_PROBABILITY] = PointDodgeCharacteristic.Zero();
             stats[CharacteristicEnum.DODGE_MP_LOST_PROBABILITY] = PointDodgeCharacteristic.Zero();
             stats[CharacteristicEnum.EARTH_DAMAGE_BONUS] = DetailedCharacteristic.Zero();

@@ -1,4 +1,5 @@
-﻿using Giny.World.Managers.Fights.Fighters;
+﻿using Giny.Protocol.Custom.Enums;
+using Giny.World.Managers.Fights.Fighters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -144,14 +145,14 @@ namespace Giny.World.Managers.Fights.Timeline
         {
             IOrderedEnumerable<Fighter> orderedEnumerable =
                 from entry in this.Fight.BlueTeam.GetFighters<Fighter>(false)
-                orderby entry.Stats.TotalInitiative descending
+                orderby entry.Stats[CharacteristicEnum.INITIATIVE].Total() descending
                 select entry;
             IOrderedEnumerable<Fighter> orderedEnumerable2 =
                 from entry in this.Fight.RedTeam.GetFighters<Fighter>(false)
-                orderby entry.Stats.TotalInitiative descending
+                orderby entry.Stats[CharacteristicEnum.INITIATIVE].Total() descending
                 select entry;
 
-            bool flag = orderedEnumerable.First().Stats.TotalInitiative > orderedEnumerable2.First().Stats.TotalInitiative;
+            bool flag = orderedEnumerable.First().Stats[CharacteristicEnum.INITIATIVE].Total() > orderedEnumerable2.First().Stats[CharacteristicEnum.INITIATIVE].Total();
             System.Collections.Generic.IEnumerator<Fighter> enumerator = orderedEnumerable.GetEnumerator();
             System.Collections.Generic.IEnumerator<Fighter> enumerator2 = orderedEnumerable2.GetEnumerator();
             System.Collections.Generic.List<Fighter> list = new System.Collections.Generic.List<Fighter>();

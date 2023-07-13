@@ -28,6 +28,10 @@ namespace Giny.World.Managers.Fights.Cast
             }
             switch (fighter.Breed)
             {
+                case BreedEnum.Sram:
+                    Sram(fighter);
+
+                    break;
                 case BreedEnum.Iop:
                     Iop(fighter);
                     break;
@@ -62,6 +66,8 @@ namespace Giny.World.Managers.Fights.Cast
             }
         }
 
+
+
         private static void Iop(CharacterFighter fighter)
         {
             fighter.ExecuteSpell(21981, 1, fighter.Cell);
@@ -90,6 +96,55 @@ namespace Giny.World.Managers.Fights.Cast
         private static void Eniripsa(CharacterFighter fighter)
         {
             fighter.ExecuteSpell(25810, 1, fighter.Cell);
+        }
+
+        private static void Sram(CharacterFighter fighter)
+        {
+            /*
+            * Chausse-trappe
+            */
+            if (fighter.Character.HasSpell(12932))
+            {
+                fighter.ExecuteSpell(25104, 1, fighter.Cell);
+            }
+
+            /*
+            * Perfidie
+            */
+            if (fighter.Character.HasSpell(12949))
+            {
+                fighter.ExecuteSpell(25103, 1, fighter.Cell);
+            }
+
+
+            /*
+             * Injection toxique
+             */
+            else if (fighter.Character.HasSpell(12940))
+            {
+                fighter.ExecuteSpell(25105, 1, fighter.Cell);
+            }
+
+            /*
+             * Marque mortuaire
+             */
+            else if (fighter.Character.HasSpell(14313))
+            {
+                fighter.ExecuteSpell(25106, 1, fighter.Cell);
+            }
+
+
+            /*
+            * Comploteur
+            */
+            else if (fighter.Character.HasSpell(14313))
+            {
+                fighter.ExecuteSpell(12936, 1, fighter.Cell);
+            }
+
+
+            /* L'ombre de sram */
+            fighter.ExecuteSpell(21978, 1, fighter.Cell);
         }
 
         private static void Sadida(CharacterFighter fighter)

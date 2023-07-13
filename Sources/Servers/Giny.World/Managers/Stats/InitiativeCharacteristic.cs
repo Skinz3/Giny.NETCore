@@ -1,4 +1,6 @@
-﻿using Giny.World.Managers.Formulas;
+﻿using Giny.Protocol.Custom.Enums;
+using Giny.Protocol.Types;
+using Giny.World.Managers.Formulas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,18 +9,81 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Stats
 {
-    public class InitiativeCharacteristic : FormulaCharacteristic
+    public class InitiativeCharacteristic : DetailedCharacteristic
     {
-        public InitiativeCharacteristic()
+        private EntityStats Stats
         {
+            get;
+            set;
         }
 
-        public override void Initialize(EntityStats stats)
+
+        public InitiativeCharacteristic()
         {
-            this.TotalFunction = () =>
+
+        }
+
+        public static new InitiativeCharacteristic New(short @base)
+        {
+            throw new InvalidOperationException("Cannot create initiative characteristic from base.");
+        }
+
+        public static InitiativeCharacteristic Zero()
+        {
+            return new InitiativeCharacteristic();
+        }
+
+        public override CharacterCharacteristic GetCharacterCharacteristic(CharacteristicEnum characteristic)
+        {
+            return new CharacterCharacteristicDetailed(Base + GetNaturalInitiative(), Additional, Objects, 0, Context, (short)characteristic);
+        }
+
+        private short GetNaturalInitiative()
+        {
+            var totalContext = (short)(Total() + Context);
+
+            if (ContextualLimit && Limit.HasValue)
             {
-                return stats[Protocol.Custom.Enums.CharacteristicEnum.INTELLIGENCE].TotalInContext();
+                totalContext = totalContext > Limit.Value ? Limit.Value : totalContext;
+            }
+
+            var diff = totalContext - (Base + Additional + Objects + Context);
+
+            return (short)diff;
+        }
+
+        private short GetTotalInitiative()
+        {
+            var initiative = Base + Additional + Objects;
+            double num1 = Stats.Total() + initiative;
+            double num2 = Stats.LifePoints / (double)Stats.MaxLifePoints;
+            double value = num1 * num2;
+            value = value > 0 ? value : 0;
+            return (short)value;
+        }
+        public override Characteristic Clone()
+        {
+            return new InitiativeCharacteristic()
+            {
+                Stats = Stats,
+                Additional = Additional,
+                Base = Base,
+                Objects = Objects,
             };
+        }
+        public void Bind(EntityStats stats)
+        {
+            this.Stats = stats;
+        }
+        public override short Total()
+        {
+            var total = GetTotalInitiative();
+
+            if (!Limit.HasValue)
+            {
+                return total;
+            }
+            return total > Limit.Value ? Limit.Value : total;
         }
     }
 }

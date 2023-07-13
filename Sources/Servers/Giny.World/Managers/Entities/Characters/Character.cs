@@ -1488,7 +1488,7 @@ namespace Giny.World.Managers.Entities.Characters
         public PartyMemberInformations GetPartyMemberInformations()
         {
             return new PartyMemberInformations(Stats.LifePoints, Stats.MaxLifePoints, Stats[CharacteristicEnum.MAGIC_FIND].TotalInContext(),
-                0, (short)Stats.TotalInitiative, 0, (short)Map.Position.X, (short)Map.Position.Y,
+                0, Stats[CharacteristicEnum.INITIATIVE].Total(), 0, (short)Map.Position.X, (short)Map.Position.Y,
                 Record.MapId, Map.SubareaId, GetPlayerStatus(),
                 new PartyEntityBaseInformation[0], Id, Name, Level, Look.ToEntityLook(), Record.BreedId, Record.Sex);
         }

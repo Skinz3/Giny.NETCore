@@ -99,6 +99,8 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
                     return new SpellModifierBaseDamage(spellId);
                 case SpellModifierTypeEnum.LOS:
                     return new SpellModifierLOS(spellId);
+                case SpellModifierTypeEnum.AP_COST:
+                    return new SpellModifierApCost(spellId);
 
             }
 

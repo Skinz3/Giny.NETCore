@@ -31,7 +31,7 @@ namespace Giny.World.Managers.Fights.Stats
         }
 
         public Characteristic Erosion => this[CharacteristicEnum.PERMANENT_DAMAGE_PERCENT];
- 
+
 
         public int ErodedLife
         {
@@ -216,6 +216,7 @@ namespace Giny.World.Managers.Fights.Stats
          */
         public FighterStats(MonsterGrade monsterGrade, Fighter? summoner = null, double coeff = 1d)
         {
+            this[CharacteristicEnum.INITIATIVE] = InitiativeCharacteristic.Zero();
             this[CharacteristicEnum.ACTION_POINTS] = ApCharacteristic.New(monsterGrade.ActionPoints);
             this[CharacteristicEnum.AIR_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.AIR_ELEMENT_REDUCTION] = DetailedCharacteristic.Zero();
@@ -235,7 +236,6 @@ namespace Giny.World.Managers.Fights.Stats
             this[CharacteristicEnum.FIRE_ELEMENT_RESIST_PERCENT] = ResistanceCharacteristic.New(monsterGrade.FireResistance);
             this[CharacteristicEnum.GLYPH_POWER] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.HEAL_BONUS] = DetailedCharacteristic.Zero();
-            this[CharacteristicEnum.INITIATIVE] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.INTELLIGENCE] = DetailedCharacteristic.New(monsterGrade.Intelligence);
             this[CharacteristicEnum.WISDOM] = DetailedCharacteristic.New((short)(monsterGrade.Wisdom * coeff));
             this[CharacteristicEnum.CHANCE] = DetailedCharacteristic.New((short)(monsterGrade.Chance * coeff));
@@ -302,11 +302,11 @@ namespace Giny.World.Managers.Fights.Stats
         }
         public override int GetHitPoints()
         {
-            return base.GetHitPoints() - ErodedLife;
+            return base.GetHitPoints() + ErodedLife;
         }
         public override int GetMissingLife()
         {
-            return base.GetMissingLife() ;
+            return base.GetMissingLife() - ErodedLife;
         }
         private void ApplyBonusCharacteristics(MonsterBonusCharacteristics bonus, Fighter summoner)
         {
@@ -337,7 +337,7 @@ namespace Giny.World.Managers.Fights.Stats
             AddStatsPercentSummoner(summoner, bonus.BonusWaterDamage, CharacteristicEnum.WATER_DAMAGE_BONUS);
             AddStatsPercentSummoner(summoner, bonus.BonusAirDamage, CharacteristicEnum.AIR_DAMAGE_BONUS);
 
-           
+
         }
         private void AddStatsPercentSummoner(Fighter summoner, int percent, CharacteristicEnum characteristic)
         {

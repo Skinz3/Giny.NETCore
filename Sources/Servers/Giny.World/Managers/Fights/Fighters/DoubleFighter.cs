@@ -1,4 +1,5 @@
-﻿using Giny.Protocol.Types;
+﻿using Giny.Protocol.Custom.Enums;
+using Giny.Protocol.Types;
 using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Entities.Look;
 using Giny.World.Managers.Fights.Cast;
@@ -40,8 +41,9 @@ namespace Giny.World.Managers.Fights.Fighters
         public override FighterStats CreateStats()
         {
             var stats = new FighterStats(Summoner.Stats);
-            this.Stats.MaxLifePoints = Summoner.Stats.BaseMaxLife;
-            this.Stats.LifePoints = this.Stats.MaxLifePoints;
+            stats.BaseMaxLife = Summoner.Stats.BaseMaxLife;
+            stats.MaxLifePoints = stats.BaseMaxLife;
+            stats.LifePoints = stats.BaseMaxLife;
             return stats;
         }
         public override GameFightFighterInformations GetFightFighterInformations(CharacterFighter to)

@@ -1556,6 +1556,11 @@ namespace Giny.World.Managers.Fights.Fighters
                         }
 
                         InflictPushDamages(source,n , true);
+
+                        if (!this.AliveSafe)
+                        {
+                            break;
+                        }
                         MapPoint next = destinationPoint.GetNearestCellInDirection(direction);
 
                         if (next != null)
