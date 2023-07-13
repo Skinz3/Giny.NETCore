@@ -39,7 +39,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
                 {
                     if (this.Effect.Duration > 1 && Effect.EffectEnum != EffectsEnum.Effect_LostMP)
                     {
-                        base.AddStatBuff(target, (short)-delta, target.Stats.MovementPoints, FightDispellableEnum.DISPELLABLE, (short)EffectsEnum.Effect_SubMP);
+                        base.AddStatBuff(target, (short)-delta, target.Stats.MovementPoints, Effect.DispellableEnum, (short)EffectsEnum.Effect_SubMP);
                     }
                     else
                     {

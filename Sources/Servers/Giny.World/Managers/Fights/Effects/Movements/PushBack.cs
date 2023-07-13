@@ -14,10 +14,10 @@ namespace Giny.World.Managers.Fights.Effects.Movements
 {
     [SpellEffectHandler(EffectsEnum.Effect_PushBack)]
     [SpellEffectHandler(EffectsEnum.Effect_PushBack_1103)]
-    public class PushBack : SpellEffectHandler
+    public class Pushback : SpellEffectHandler
     {
         public override bool InvertTargetsSort => true;
-        public PushBack(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
+        public Pushback(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
         {
 
         }

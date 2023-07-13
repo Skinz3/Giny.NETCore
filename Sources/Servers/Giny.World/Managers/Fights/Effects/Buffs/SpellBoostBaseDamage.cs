@@ -29,7 +29,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
 
             foreach (var target in targets)
             {
-                Buff buff = new SpellBoostBaseDamageBuff(target.BuffIdProvider.Pop(), spellId, delta, target, this, FightDispellableEnum.DISPELLABLE);
+                Buff buff = new SpellBoostBaseDamageBuff(target.BuffIdProvider.Pop(), spellId, delta, target, this, Effect.DispellableEnum);
                
                 target.AddBuff(buff);
             }

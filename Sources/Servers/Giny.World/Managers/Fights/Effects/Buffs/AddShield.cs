@@ -27,7 +27,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
             foreach (var target in targets)
             {
                 int id = target.BuffIdProvider.Pop();
-                ShieldBuff buff = new ShieldBuff(id, (short)delta, target, this, FightDispellableEnum.DISPELLABLE);
+                ShieldBuff buff = new ShieldBuff(id, (short)delta, target, this, Effect.DispellableEnum);
                 target.AddBuff(buff);
             }
         }

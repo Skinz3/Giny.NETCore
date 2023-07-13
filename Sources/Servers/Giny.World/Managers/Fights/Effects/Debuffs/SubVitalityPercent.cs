@@ -42,7 +42,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
                 }
 
                 VitalityDebuff buff = new VitalityDebuff(target.BuffIdProvider.Pop(), delta, target, this,
-                   (FightDispellableEnum)Effect.Dispellable, ActionId);
+                   Effect.DispellableEnum, ActionId);
 
                 target.AddBuff(buff);
             }

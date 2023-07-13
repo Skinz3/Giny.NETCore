@@ -30,7 +30,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
                 int id = target.BuffIdProvider.Pop();
 
                 var characteristic = target.Stats[GetAssociatedCharacteristicEnum()];
-                StatPercentBuff statBuff = new StatPercentBuff(id, target, this, Critical, (FightDispellableEnum)Effect.Dispellable, characteristic, (short)-delta, null);
+                StatPercentBuff statBuff = new StatPercentBuff(id, target, this, Critical, Effect.DispellableEnum, characteristic, (short)-delta, null);
                 target.AddBuff(statBuff);
             }
         }

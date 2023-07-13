@@ -27,7 +27,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
             foreach (var target in targets)
             {
                 short delta = (short)(target.Stats.MaxLifePoints * (double)Effect.Min / 100.0d);
-                this.AddVitalityBuff(target, delta, FightDispellableEnum.DISPELLABLE, ActionId);
+                this.AddVitalityBuff(target, delta, Effect.DispellableEnum, ActionId);
             }
         }
     }

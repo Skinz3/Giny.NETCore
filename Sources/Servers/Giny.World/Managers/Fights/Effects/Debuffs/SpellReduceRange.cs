@@ -28,7 +28,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
                 if (target.HasSpell(spellId))
                 {
                     SpellBoostModifyRangeBuff buff = new SpellBoostModifyRangeBuff(target.BuffIdProvider.Pop(), spellId, delta
-                        , target, this, (FightDispellableEnum)Effect.Dispellable);
+                        , target, this, Effect.DispellableEnum);
 
                     target.AddBuff(buff);
                 }

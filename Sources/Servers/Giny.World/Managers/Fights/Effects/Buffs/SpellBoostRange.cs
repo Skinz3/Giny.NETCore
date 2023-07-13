@@ -32,7 +32,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
                 if (target.HasSpell(spellId))
                 {
                     int id = target.BuffIdProvider.Pop();
-                    Buff buff = new SpellBoostModifyRangeBuff(id, spellId, delta, target, this, FightDispellableEnum.DISPELLABLE);
+                    Buff buff = new SpellBoostModifyRangeBuff(id, spellId, delta, target, this, Effect.DispellableEnum);
                     target.AddBuff(buff);
                 }
             }

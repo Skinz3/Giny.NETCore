@@ -2050,7 +2050,7 @@
         /// <summary>
         /// Répartit #1{~1~2 à }#2% des dommages subis.
         /// </summary>
-        Effect_DispatchDamages = 1123,
+        Effect_SplashRawTakenDamage = 1123,
         /// <summary>
         /// 
         /// </summary>
@@ -2286,7 +2286,7 @@
         /// <summary>
         /// Répartit #1{~1~2 à }#2% des dommages subis.
         /// </summary>
-        Effect_DispatchDamage_1223 = 1223,
+        Effect_SplashFinalTakenDamages = 1223,
         /// <summary>
         /// Répartit #1{~1~2 à }#2% des dommages subis.
         /// </summary>
@@ -2464,11 +2464,11 @@
         /// <summary>
         /// [UNKNOWN_TEXT_ID_735940]
         /// </summary>
-        Effect_Unknown_2816 = 2816,
+        Effect_BoostCharacConvert = 2816,
         /// <summary>
         /// 
         /// </summary>
-        Effect_Unknown_2817 = 2817,
+        Effect_BuyInBidHouse = 2817,
         /// <summary>
         /// Craft coopératif impossible.
         /// </summary>
@@ -2604,11 +2604,11 @@
         /// <summary>
         /// 
         /// </summary>
-        Effect_Unknown_2876 = 2876,
+        Effect_ValidateChallenge = 2876,
         /// <summary>
         /// 
         /// </summary>
-        Effect_Unknown_2877 = 2877,
+        Effect_InvalidateChallenge = 2877,
 
         Effect_Autopilot = 2881,
 

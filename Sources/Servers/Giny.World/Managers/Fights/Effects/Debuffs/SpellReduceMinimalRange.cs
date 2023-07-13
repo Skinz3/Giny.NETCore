@@ -29,7 +29,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
                 if (target.HasSpell(spellId))
                 {
                     SpellBoostModifyMinimalRangeBuff buff = new SpellBoostModifyMinimalRangeBuff(target.BuffIdProvider.Pop(), spellId, delta
-                        , target, this, (FightDispellableEnum)Effect.Dispellable);
+                        , target, this, Effect.DispellableEnum);
 
                     target.AddBuff(buff);
                 }

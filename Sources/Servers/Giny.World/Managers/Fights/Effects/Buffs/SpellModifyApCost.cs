@@ -32,7 +32,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
                 {
                     int id = target.BuffIdProvider.Pop();
                     SpellBoostModifyApCostBuff buff = new SpellBoostModifyApCostBuff(id, spellId, delta,
-                        target, this, FightDispellableEnum.DISPELLABLE, substract);
+                        target, this, Effect.DispellableEnum, substract);
                     target.AddBuff(buff);
                 }
             }

@@ -50,7 +50,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
     [SpellEffectHandler(EffectsEnum.Effect_ReduceFinalDamages)]
     public class StatsDebuff : SpellEffectHandler
     {
-        public const FightDispellableEnum Dispellable = FightDispellableEnum.DISPELLABLE;
+         
 
         public StatsDebuff(EffectDice effect, SpellCastHandler castHandler) :
             base(effect, castHandler)
@@ -64,7 +64,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
 
             foreach (var target in targets)
             {
-                AddStatBuff(target, (short)-delta, target.Stats[GetAssociatedCharacteristicEnum()], Dispellable);
+                AddStatBuff(target, (short)-delta, target.Stats[GetAssociatedCharacteristicEnum()], Effect.DispellableEnum);
             }
 
         }

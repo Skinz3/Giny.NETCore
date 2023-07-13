@@ -39,7 +39,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
                 {
                     int id = target.BuffIdProvider.Pop();
                     Buff buff = new GlobalDamageReductionBuff(id,
-                       (short)Effect.Min,  target, this, FightDispellableEnum.DISPELLABLE);
+                       (short)Effect.Min,  target, this, Effect.DispellableEnum);
                     target.AddBuff(buff);
                 }
             }

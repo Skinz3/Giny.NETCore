@@ -148,7 +148,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
 
             jet.ValidateBounds();
 
-            //Source.Fight.Reply("Min:" + jet.Min + " Max:" + jet.Max, System.Drawing.Color.Red);
+            Source.Fight.Reply("Min:" + jet.Min + " Max:" + jet.Max, System.Drawing.Color.Red);
 
             Computed = jet.Generate(Source.Random, Source.HasRandDownModifier(), Source.HasRandUpModifier());
 
@@ -332,11 +332,14 @@ namespace Giny.World.Managers.Fights.Cast.Units
 
 
 
+            double percentBonus = (100d + elementDelta + damageBonusPercent + weaponDamageBonus + spellDamageBonus) / 100.0d;
+            percentBonus = Math.Max(1,percentBonus); // percent bonus cant be inferior to 1
 
-            double result = (double)(jet * (100d + elementDelta + damageBonusPercent + weaponDamageBonus + spellDamageBonus) / 100.0d + (allDamageBonus + elementDamageBonus));
+            double fixBonus = allDamageBonus + elementDamageBonus;
+            double result = jet * percentBonus + fixBonus;
 
 
-            return (short)result;                        // (short)(result < jet ? jet : result);
+            return (short)result;                    
         }
 
 

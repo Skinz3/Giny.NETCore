@@ -68,7 +68,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
     [SpellEffectHandler(EffectsEnum.Effect_AddErosion)]
     public class StatsBuff : SpellEffectHandler
     {
-        public const FightDispellableEnum Dispellable = FightDispellableEnum.DISPELLABLE;
+ 
 
         public StatsBuff(EffectDice effect, SpellCastHandler castHandler) :
             base(effect, castHandler)
@@ -83,7 +83,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
             foreach (var target in targets)
             {
                 Characteristic characteristic = target.Stats[GetAssociatedCharacteristicEnum()];
-                AddStatBuff(target, (short)delta, characteristic, Dispellable);
+                AddStatBuff(target, (short)delta, characteristic, Effect.DispellableEnum);
             }
 
         }

@@ -132,6 +132,7 @@ namespace Giny.World.Managers.Items
                 InitialCooldown = 0,
                 MaxCastPerTarget = 0,
                 MaxRange = weapon.MaxRange,
+                
                 MaxStack = 0,
                 MinCastInterval = 0,
                 MinPlayerLevel = 0,

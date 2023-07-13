@@ -26,7 +26,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
             foreach (var target in targets)
             {
                 short delta = (short)Effect.Min;
-                this.AddVitalityBuff(target, delta, FightDispellableEnum.DISPELLABLE, ActionId);
+                this.AddVitalityBuff(target, delta, Effect.DispellableEnum, ActionId);
             }
         }
     }

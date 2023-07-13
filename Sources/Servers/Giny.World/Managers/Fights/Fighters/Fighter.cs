@@ -22,6 +22,7 @@ using Giny.World.Managers.Fights.Results;
 using Giny.World.Managers.Fights.Sequences;
 using Giny.World.Managers.Fights.Stats;
 using Giny.World.Managers.Fights.Triggers;
+using Giny.World.Managers.Fights.Zones;
 using Giny.World.Managers.Fights.Zones.Sets;
 using Giny.World.Managers.Maps;
 using Giny.World.Managers.Spells;
@@ -1547,7 +1548,14 @@ namespace Giny.World.Managers.Fights.Fighters
                 {
                     if (type == MovementType.Push)
                     {
-                        InflictPushDamages(source, delta - i, true);
+                        var n = delta - i;
+
+                        if (direction.IsDiagonal())
+                        {
+                            n *= 2;
+                        }
+
+                        InflictPushDamages(source,n , true);
                         MapPoint next = destinationPoint.GetNearestCellInDirection(direction);
 
                         if (next != null)
@@ -1556,7 +1564,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
                             if (nextFighter != null)
                             {
-                                nextFighter.InflictPushDamages(source, delta - i, false);
+                                nextFighter.InflictPushDamages(source, n, false);
                             }
                         }
                     }

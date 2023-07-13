@@ -35,13 +35,14 @@ namespace Giny.World.Managers.Fights.Effects.Other
 
 
             var converted = EntityLookManager.Instance.GetConvertedColor(color, 0);
+
             foreach (var target in targets) 
             {
                 int id = target.BuffIdProvider.Pop();
                 var look = target.Look.Clone();
                 var colors = look.Colors;
                 colors[Effect.Min - 1] = color;
-                LookBuff buff = new LookBuff(id, look, target, this, FightDispellableEnum.REALLY_NOT_DISPELLABLE);
+                LookBuff buff = new LookBuff(id, look, target, this, Effect.DispellableEnum);
                 target.AddBuff(buff);
             }
         }

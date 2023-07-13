@@ -25,7 +25,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
             {
                 int buffId = target.BuffIdProvider.Pop();
                 RescaleSkinBuff buff = new RescaleSkinBuff(buffId, (Effect.Min / 100d),
-                    target, this, FightDispellableEnum.DISPELLABLE);
+                    target, this, Effect.DispellableEnum);
                 target.AddBuff(buff);
             }
         }

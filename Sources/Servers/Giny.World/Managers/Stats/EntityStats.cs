@@ -250,7 +250,6 @@ namespace Giny.World.Managers.Stats
             }
 
 
-
             results.Add(new CharacterCharacteristicValue(GetHitPoints(), (short)CharacteristicEnum.HIT_POINTS));
             results.Add(new CharacterCharacteristicValue(GetMissingLife(), (short)CharacteristicEnum.HIT_POINT_LOSS));
 

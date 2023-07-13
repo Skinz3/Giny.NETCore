@@ -25,7 +25,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
             {
                 if (this.Effect.Duration != 0)
                 {
-                    base.AddStatBuff(target, (short)Effect.Min, target.Stats.MovementPoints, FightDispellableEnum.DISPELLABLE);
+                    base.AddStatBuff(target, (short)Effect.Min, target.Stats.MovementPoints, Effect.DispellableEnum);
                 }
                 else
                 {

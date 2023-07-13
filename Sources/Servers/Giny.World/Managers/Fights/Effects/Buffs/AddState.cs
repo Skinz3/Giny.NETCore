@@ -27,7 +27,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
 
             foreach (var target in targets)
             {
-                AddStateBuff(target, stateRecord, FightDispellableEnum.DISPELLABLE); // see dispell
+                AddStateBuff(target, stateRecord, Effect.DispellableEnum);  
             }
         }
     }

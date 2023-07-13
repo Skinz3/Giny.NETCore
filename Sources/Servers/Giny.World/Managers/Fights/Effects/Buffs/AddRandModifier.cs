@@ -26,7 +26,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
             {
                 int buffId = target.BuffIdProvider.Pop();
                 RandModifierBuff buff = new RandModifierBuff(buffId, IsRandUpModifier(),
-                    target, this, FightDispellableEnum.DISPELLABLE);
+                    target, this, Effect.DispellableEnum);
                 target.AddBuff(buff);
 
             }

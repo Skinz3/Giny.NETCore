@@ -30,7 +30,7 @@ namespace Giny.World.Managers.Fights.Effects.Other
                 foreach (var spell in target.GetSpells())
                 {
                     int id = target.BuffIdProvider.Pop();
-                    Buff buff = new SpellBoostRemoveLOSBuff(id, spell.Id, (short)Effect.Value, target, this, FightDispellableEnum.DISPELLABLE,
+                    Buff buff = new SpellBoostRemoveLOSBuff(id, spell.Id, (short)Effect.Value, target, this, Effect.DispellableEnum,
                      (short)ActionsEnum.ACTION_BOOST_SPELL_NOLINEOFSIGHT);
 
                     target.AddBuff(buff);

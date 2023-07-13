@@ -37,7 +37,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
             {
                 int id = target.BuffIdProvider.Pop();
                 ResistanceBuff buff = new ResistanceBuff(id, delta,  target,
-                    this, FightDispellableEnum.DISPELLABLE);
+                    this, Effect.DispellableEnum);
                 target.AddBuff(buff);
             }
         }

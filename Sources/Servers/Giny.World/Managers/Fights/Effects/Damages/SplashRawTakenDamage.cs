@@ -16,10 +16,10 @@ namespace Giny.World.Managers.Fights.Effects.Damages
     /// <summary>
     /// Massacre
     /// </summary>
-    [SpellEffectHandler(EffectsEnum.Effect_DispatchDamages)]
-    public class DispatchDamage : SpellEffectHandler
+    [SpellEffectHandler(EffectsEnum.Effect_SplashRawTakenDamage)]
+    public class SplashRawTakenDamage : SpellEffectHandler
     {
-        public DispatchDamage(EffectDice effect, SpellCastHandler castHandler) :
+        public SplashRawTakenDamage(EffectDice effect, SpellCastHandler castHandler) :
             base(effect, castHandler)
         {
 

@@ -105,6 +105,9 @@ namespace Giny.World.Managers.Effects
             get;
             set;
         }
+
+        public FightDispellableEnum DispellableEnum => (FightDispellableEnum)Dispellable;
+
         [ProtoMember(17)]
         public string RawZone
         {

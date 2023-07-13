@@ -33,7 +33,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
                 if (look != null)
                 {
                     int id = target.BuffIdProvider.Pop();
-                    LookBuff buff = new LookBuff(id, look, target, this, FightDispellableEnum.REALLY_NOT_DISPELLABLE);
+                    LookBuff buff = new LookBuff(id, look, target, this, Effect.DispellableEnum);
                     target.AddBuff(buff);
                 }
             }
