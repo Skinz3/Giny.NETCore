@@ -193,6 +193,8 @@ namespace Giny.World.Managers.Fights.Stats
             InvisibilityState = GameActionFightInvisibilityStateEnum.VISIBLE;
             this.BaseMaxLife = MaxLifePoints;
 
+            this.Initialize();
+
         }
         public FighterStats(FighterStats other)
         {

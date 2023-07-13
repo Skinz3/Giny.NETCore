@@ -1354,13 +1354,14 @@ namespace Giny.World.Managers.Fights.Fighters
         public void PullForward(Fighter source, CellRecord castCell, short delta, CellRecord targetCell)
         {
             DirectionsEnum direction = 0;
+            bool diagonal = false;
 
             if (targetCell.Id == Cell.Id)
             {
                 if (targetCell.Id == castCell.Id)
                     return;
 
-                bool diagonal = targetCell.Point.IsOnSameDiagonal(castCell.Point);
+                diagonal = targetCell.Point.IsOnSameDiagonal(castCell.Point);
                 direction = targetCell.Point.OrientationTo(castCell.Point, diagonal);
             }
             else
@@ -1368,9 +1369,15 @@ namespace Giny.World.Managers.Fights.Fighters
                 if (Cell.Id == targetCell.Id)
                     return;
 
-                bool diagonal = Cell.Point.IsOnSameDiagonal(targetCell.Point);
+                diagonal = Cell.Point.IsOnSameDiagonal(targetCell.Point);
                 direction = Cell.Point.OrientationTo(targetCell.Point, diagonal);
             }
+
+            if (diagonal) // Tir de barrage
+            {
+                delta /= 2;
+            }
+
 
             this.Slide(source, direction, delta, MovementType.Pull);
         }
@@ -1555,7 +1562,7 @@ namespace Giny.World.Managers.Fights.Fighters
                             n *= 2;
                         }
 
-                        InflictPushDamages(source,n , true);
+                        InflictPushDamages(source, n, true);
 
                         if (!this.AliveSafe)
                         {
@@ -1869,6 +1876,8 @@ namespace Giny.World.Managers.Fights.Fighters
         }
         public DamageResult InflictDamage(Damage damage)
         {
+            Fight.Warn("Chance lanceur: "+damage.Source.Stats.Chance.TotalInContext().ToString());
+
             damage.Compute();
 
             int delta = damage.Computed.Value;

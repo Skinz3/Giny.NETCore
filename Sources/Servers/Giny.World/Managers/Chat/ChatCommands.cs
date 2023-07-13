@@ -483,9 +483,10 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
+            
+            client.Character.Fighter.Stats[CharacteristicEnum.CRITICAL_HIT].Context = -200;
 
-
-            client.Character.RefreshStats();
+            //client.Character.RefreshStats();
 
 
             return;

@@ -804,6 +804,12 @@
         /// Augmente de #3 le coût en PA du sort #1
         /// </summary>
         Effect_IncreaseSpellAPCost = 296,
+
+        Effect_DeboostOccupiedCell = 297,
+
+        Effect_DeboostFreeCell = 298,
+
+        Effect_BoostFreeCell = 299,
         /// <summary>
         /// (not found)
         /// </summary>

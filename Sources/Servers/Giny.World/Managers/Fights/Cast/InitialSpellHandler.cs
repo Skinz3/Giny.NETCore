@@ -28,6 +28,9 @@ namespace Giny.World.Managers.Fights.Cast
             }
             switch (fighter.Breed)
             {
+                case BreedEnum.Pandawa:
+                    Pandawa(fighter);
+                    break;
                 case BreedEnum.Sram:
                     Sram(fighter);
 
@@ -67,7 +70,13 @@ namespace Giny.World.Managers.Fights.Cast
         }
 
 
-
+        private static void Pandawa(CharacterFighter fighter)
+        {
+            /*
+             * Chopine de pandawa
+             */
+            fighter.ExecuteSpell(12830, 1, fighter.Cell);
+        }
         private static void Iop(CharacterFighter fighter)
         {
             fighter.ExecuteSpell(21981, 1, fighter.Cell);
@@ -120,7 +129,7 @@ namespace Giny.World.Managers.Fights.Cast
             /*
              * Injection toxique
              */
-            else if (fighter.Character.HasSpell(12940))
+            if (fighter.Character.HasSpell(12940))
             {
                 fighter.ExecuteSpell(25105, 1, fighter.Cell);
             }
@@ -128,7 +137,7 @@ namespace Giny.World.Managers.Fights.Cast
             /*
              * Marque mortuaire
              */
-            else if (fighter.Character.HasSpell(14313))
+            if (fighter.Character.HasSpell(14313))
             {
                 fighter.ExecuteSpell(25106, 1, fighter.Cell);
             }
@@ -137,9 +146,9 @@ namespace Giny.World.Managers.Fights.Cast
             /*
             * Comploteur
             */
-            else if (fighter.Character.HasSpell(14313))
+            if (fighter.Character.HasSpell(12936))
             {
-                fighter.ExecuteSpell(12936, 1, fighter.Cell);
+                fighter.ExecuteSpell(25102, 1, fighter.Cell);
             }
 
 
