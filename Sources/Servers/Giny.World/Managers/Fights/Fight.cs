@@ -44,7 +44,13 @@ namespace Giny.World.Managers.Fights
 
         private UniqueIdProvider m_markIdPopper = new UniqueIdProvider(0);
 
+        /* -- Fight events API -- */
+
         public event Action<Fighter> TurnEnded;
+
+        public event Action<Fight, Fighter> TurnStarted;
+
+        /* -- Fight events API -- */
 
         public int Id
         {
@@ -65,7 +71,6 @@ namespace Giny.World.Managers.Fights
         {
             get;
         }
-
         protected Character Origin
         {
             get;
@@ -192,12 +197,7 @@ namespace Giny.World.Managers.Fights
             private set;
         }
 
-
-        #region Events
-
-        public event Action<Fight, Fighter> TurnStarted;
-
-        #endregion
+ 
 
         public void Send(NetworkMessage message)
         {

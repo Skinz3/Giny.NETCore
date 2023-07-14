@@ -313,6 +313,7 @@ namespace Giny.World.Managers.Fights.Fighters
         [WIP]
         public override GameFightFighterInformations GetFightFighterInformations(CharacterFighter target)
         {
+   
             return new GameFightCharacterInformations()
             {
                 contextualId = Id,

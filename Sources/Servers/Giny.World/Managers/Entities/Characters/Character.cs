@@ -1447,7 +1447,7 @@ namespace Giny.World.Managers.Entities.Characters
         private void SendGameFightStartingMessage(Fight fight)
         {
             this.Client.Send(new GameFightStartingMessage((byte)fight.FightType,
-            (short)fight.Id, (double)fight.BlueTeam.TeamId, (double)fight.RedTeam.TeamId, fight.ContainsBoss(), new int[0]));
+            (short)fight.Id, (double)fight.BlueTeam.TeamId, (double)fight.RedTeam.TeamId, fight.ContainsBoss(),new int[0]));
         }
         public void DisplayNotification(string message)
         {

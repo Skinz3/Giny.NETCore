@@ -47,6 +47,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public const short GravityState = 7;
 
+        /* -- Fight events API -- */
         public delegate void FighterEventDelegate(Fighter target);
 
         public delegate void FighterKilledDelegate(Fighter target, Fighter source);
@@ -56,6 +57,8 @@ namespace Giny.World.Managers.Fights.Fighters
         public event FighterEventDelegate Tackled;
 
         public event FighterKilledDelegate Killed;
+
+        /*  --  */
 
         public int Id
         {
@@ -1876,8 +1879,6 @@ namespace Giny.World.Managers.Fights.Fighters
         }
         public DamageResult InflictDamage(Damage damage)
         {
-            Fight.Warn("Chance lanceur: "+damage.Source.Stats.Chance.TotalInContext().ToString());
-
             damage.Compute();
 
             int delta = damage.Computed.Value;

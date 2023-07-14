@@ -37,5 +37,21 @@ namespace Giny.World.Handlers.Fights
 
             client.Send(new ChallengeProposalMessage(challenges, 30d));
         }
+
+        [MessageHandler]
+        public static void HandleChallengeSelectionMessage(ChallengeSelectionMessage message, WorldClient client)
+        {
+            client.Send(new ChallengeSelectedMessage(new ChallengeInformation(1, new ChallengeTargetInformation[] { new ChallengeTargetInformation(-1, 255) },
+                50, 50, 0)));
+
+            client.Character.ReplyWarning("Received ChallengeSelectionMessage");
+
+        }
+
+        [MessageHandler]
+        public static void HandleChallengeValidateMessage(ChallengeValidateMessage message, WorldClient client)
+        {
+            client.Character.ReplyWarning("Received ChallengeValidateMessage");
+        }
     }
 }
