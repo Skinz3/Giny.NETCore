@@ -94,7 +94,7 @@ namespace Giny.Core.Extensions
             T2 result;
             return dictionnary.TryRemove(key, out result);
         }
-      
+
         public static Color[] RandomColors(int count)
         {
             AsyncRandom rd = new AsyncRandom();
@@ -148,36 +148,36 @@ namespace Giny.Core.Extensions
             }
             return result;
         }
-        public static T Random<T>(this T[] array)
+        public static T Random<T>(this T[] array, Random random)
         {
             if (array.Length > 0)
             {
-                return array[new AsyncRandom().Next(0, array.Length)];
+                return array[random.Next(0, array.Length)];
             }
             else
                 return default(T);
         }
-        public static T Random<T>(this IEnumerable<T> collection)
+        public static T Random<T>(this IEnumerable<T> collection, Random random)
         {
             int count = collection.Count();
 
             if (count > 0)
             {
-                return collection.ElementAt(new AsyncRandom().Next(0, count));
+                return collection.ElementAt(random.Next(0, count));
             }
             else
                 return default(T);
         }
         public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> enumerable)
         {
-            var rand = new Random();
+            Random random = new Random();
 
             T[] elements = enumerable.ToArray();
             // Note i > 0 to avoid final pointless iteration
             for (int i = elements.Length - 1; i > 0; i--)
             {
                 // Swap element "i" with a random earlier element it (or itself)
-                int swapIndex = rand.Next(i + 1);
+                int swapIndex = random.Next(i + 1);
                 T tmp = elements[i];
                 elements[i] = elements[swapIndex];
                 elements[swapIndex] = tmp;

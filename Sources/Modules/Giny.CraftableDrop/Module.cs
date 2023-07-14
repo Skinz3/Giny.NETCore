@@ -1,10 +1,17 @@
 ﻿using Giny.Core;
+using Giny.Core.Extensions;
+using Giny.IO.D2O;
+using Giny.Protocol.Enums;
 using Giny.World.Api;
+using Giny.World.Managers.Fights;
+using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Managers.Fights.Results;
 using Giny.World.Modules;
 using Giny.World.Records.Items;
 using Giny.World.Records.Jobs;
 using Giny.World.Records.Monsters;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,15 +22,69 @@ namespace Giny.AdditionalDrop
     [Module("Craftable Drop")]
     public class Module : IModule
     {
+        private ConcurrentDictionary<MonsterRecord, ConcurrentBag<ItemRecord>> Drops = new ConcurrentDictionary<MonsterRecord, ConcurrentBag<ItemRecord>>();
+
+
         public void CreateHooks()
         {
+            FightEventApi.OnPlayerResultApplied += OnPlayerResultApplied;
+        }
+
+
+        public void OnPlayerResultApplied(FightPlayerResult result)
+        {
+            if (result.Fight.Winners != result.Fighter.Team)
+            {
+                return;
+            }
+            if (!(result.Fight is FightPvM))
+            {
+                return;
+            }
+
+            Random random = new Random();
+
+            var monsterTeam = result.Fight.GetTeam(TeamTypeEnum.TEAM_TYPE_MONSTER);
+
+            List<ItemRecord> droppedItems = new List<ItemRecord>();
+
+            foreach (var monster in monsterTeam.GetFighters<MonsterFighter>(false).Select(x => x.Monster.Record))
+            {
+                if (Drops.ContainsKey(monster))
+                {
+                    ItemRecord item = Drops[monster].Where(x => !droppedItems.Contains(x)).Random(random);
+
+                    if (item == null)
+                    {
+                        continue;
+                    }
+                    if (RollLoot(random, result.Fighter, item))
+                    {
+                        result.Character.Inventory.AddItem((short)item.Id, 1);
+                        result.Loot.AddItem((short)item.Id, 1);
+                        droppedItems.Add(item);
+                    }
+
+                }
+            }
 
         }
 
+        public bool RollLoot(Random random, CharacterFighter fighter, ItemRecord item)
+        {
+            var chance = random.Next(0, 100) + random.NextDouble();
+
+            var dropRate = 100d;
+
+            if (!(dropRate >= chance))
+                return false;
+
+            return true;
+        }
+
+
         public void Initialize()
         {
-            int count = 0;
-
             foreach (var monster in MonsterRecord.GetMonsterRecords())
             {
                 foreach (var drop in monster.Drops.ToArray())
@@ -53,26 +114,20 @@ namespace Giny.AdditionalDrop
                             continue;
                         }
 
-
-                        MonsterDrop newDrop = new MonsterDrop();
-                        newDrop.RollsCounter = 1;
-                        newDrop.DropLimit = 1;
-                        newDrop.ItemGId = (int)recipe.ResultId;
-                        newDrop.ProspectingLock = 100;
-                        newDrop.PercentDropForGrade1 = 0.5;
-                        newDrop.PercentDropForGrade2 = 0.6;
-                        newDrop.PercentDropForGrade3 = 1.2;
-                        newDrop.PercentDropForGrade4 = 1.4;
-                        newDrop.PercentDropForGrade5 = 1.5;
-                            
-                        monster.Drops.Add(newDrop);
-                        count++;
+                        if (!Drops.ContainsKey(monster))
+                        {
+                            Drops.TryAdd(monster, new ConcurrentBag<ItemRecord>() { item });
+                        }
+                        else
+                        {
+                            Drops[monster].Add(item);
+                        }
 
                     }
                 }
             }
 
-            Logger.Write(count + " craftable drops added to monsters.");
+            Logger.Write(Drops.Count + " monsters has drop(s).");
         }
     }
 }

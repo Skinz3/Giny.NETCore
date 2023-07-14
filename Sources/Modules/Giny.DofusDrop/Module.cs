@@ -27,6 +27,8 @@ namespace Giny.DofusDrop
 
         private void OnResultApplied(FightPlayerResult result)
         {
+            Random random = new Random();
+
             if (result.Fight.Winners != result.Fighter.Team)
             {
                 return;
@@ -44,9 +46,7 @@ namespace Giny.DofusDrop
 
                 if (items.Count() > 0)
                 {
-                    var dofusItem = items.Random();
-
-                    AsyncRandom random = new AsyncRandom();
+                    var dofusItem = items.Random(random);
 
                     var chance = (random.Next(0, 100) + random.NextDouble());
                     var dropRate = DofusDropPercentage;
