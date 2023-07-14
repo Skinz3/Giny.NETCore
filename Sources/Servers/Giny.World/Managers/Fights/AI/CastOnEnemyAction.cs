@@ -82,6 +82,8 @@ namespace Giny.World.Managers.Fights.AI
         }
         private List<SpellCast> GetSpellCasts(CellRecord cell)
         {
+            Random random = new Random();
+
             List<SpellCast> casts = new List<SpellCast>();
 
             foreach (var spellRecord in GetSpells().Where(x => x.Category == SpellCategoryEnum.Agressive || x.Category == SpellCategoryEnum.Debuff).Shuffle())
@@ -111,7 +113,7 @@ namespace Giny.World.Managers.Fights.AI
 
                     if (target.IsInvisible())
                     {
-                        targetCell = Fighter.Fight.Map.GetCell(Fighter.GetSpellZone(spell.Level, Fighter.Cell.Point).EnumerateValidPoints().Random());
+                        targetCell = Fighter.Fight.Map.GetCell(Fighter.GetSpellZone(spell.Level, Fighter.Cell.Point).EnumerateValidPoints().Random(random));
                     }
 
                     SpellCast cast = new SpellCast(Fighter, spell, targetCell);

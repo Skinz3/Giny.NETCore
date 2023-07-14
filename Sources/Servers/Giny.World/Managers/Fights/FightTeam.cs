@@ -1,5 +1,6 @@
 ﻿using Giny.Core.Extensions;
 using Giny.Core.Network.Messages;
+using Giny.Core.Time;
 using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
 using Giny.Protocol.Messages;
@@ -155,7 +156,7 @@ namespace Giny.World.Managers.Fights
         }
         public CellRecord GetPlacementCell()
         {
-            return PlacementCells.Where(cell => !Fighters.Any(fighter => fighter.Cell.Id == cell.Id)).Random();
+            return PlacementCells.Where(cell => !Fighters.Any(fighter => fighter.Cell.Id == cell.Id)).Random(new AsyncRandom());
         }
         public void RemoveFighter(Fighter fighter)
         {

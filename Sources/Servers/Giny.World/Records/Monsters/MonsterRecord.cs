@@ -187,34 +187,13 @@ namespace Giny.World.Records.Monsters
             }
         }
 
-        /*
-           public List<MonsterGrade> grades;
-           public List<MonsterDrop> drops;
-           public List<MonsterDrop> temporisDrops;
-           public bool isMiniBoss;
-           public bool isQuestMonster;
-           public uint correspondingMiniBossId;
-           public bool canBePushed;
-           public bool canBeCarried;
-           public bool canUsePortal;
-           public bool canSwitchPos;
-           public bool fastAnimsFun;
-           public List<uint> incompatibleIdols;
-           public bool allIdolsDisabled;
-           public bool dareAvailable;
-           public List<uint> incompatibleChallenges;
-           public bool useRaceValues;
-           public int aggressiveZoneSize;
-           public int aggressiveLevelDiff;
-           public string aggressiveImmunityCriterion;
-           public int aggressiveAttackDelay; */
         public MonsterGrade GetGrade(byte gradeId)
         {
             return Grades.FirstOrDefault(x => x.GradeId == gradeId);
         }
         public MonsterGrade RandomGrade()
         {
-            return Grades.Random();
+            return Grades.Random(new AsyncRandom());
         }
 
         public static MonsterRecord GetMonsterRecord(short monsterId)

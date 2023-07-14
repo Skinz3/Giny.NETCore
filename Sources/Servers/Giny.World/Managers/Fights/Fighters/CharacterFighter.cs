@@ -170,12 +170,19 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public override void OnJoined()
         {
-            this.Fight.SendGameFightJoinMessage(this);
+            SendGameFightJoinMessage();
             this.ShowPlacementCells();
             this.Fight.ShowFighters(this);
             this.ShowReadyFighters();
             base.OnJoined();
         }
+
+        public void SendGameFightJoinMessage()
+        {
+            Character.Client.Send(new GameFightJoinMessage(true, !Fight.Started, false, Fight.Started, Fight.GetPlacementTimeLeft(), (byte)Fight.FightType));
+        }
+
+
         public void ShowReadyFighters()
         {
             Fight.OnFighters((CharacterFighter fighter) =>
@@ -612,7 +619,7 @@ namespace Giny.World.Managers.Fights.Fighters
             this.Disconnected = false;
             this.LeftRound = null;
 
-            Fight.SendGameFightJoinMessage(this);
+            SendGameFightJoinMessage();
 
             foreach (var fighter in Fight.GetFighters<Fighter>(false))
             {

@@ -23,11 +23,14 @@ namespace Giny.World.Managers.Fights.AI
             }
             var mp = Fighter.Stats.MovementPoints.TotalInContext();
 
+
+            Random random = new Random();
+
             if (mp > 0)
             {
                 var points = MapPoint.GetOrthogonalGridReference().Where(x => x.DistanceTo(Fighter.Cell.Point) == mp); // erf
 
-                var target = points.Random();
+                var target = points.Random(random);
 
                 var path = Fighter.FindPath(target);
 

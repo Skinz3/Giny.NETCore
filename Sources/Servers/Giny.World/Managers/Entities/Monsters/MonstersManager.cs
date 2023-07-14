@@ -55,7 +55,7 @@ namespace Giny.World.Managers.Monsters
         }
         public void AddGeneratedMonsterGroup(MapInstance instance, MonsterSpawnRecord[] spawns, AsyncRandom random)
         {
-            MonsterGroup group = new MonsterGroup(instance.Record, instance.FindMonsterGroupCell().Id);
+            MonsterGroup group = new MonsterGroup(instance.Record, instance.FindMonsterGroupCell(random).Id);
             group.Direction = Entity.RandomDirection4D(random);
 
             if (instance.Record.RedCells.Count == 0)
@@ -105,7 +105,7 @@ namespace Giny.World.Managers.Monsters
 
             if (group.MonsterCount == 0)
             {
-                MonsterRecord template = MonsterRecord.GetMonsterRecord(shuffled.Random().MonsterId);
+                MonsterRecord template = MonsterRecord.GetMonsterRecord(shuffled.Random(random).MonsterId);
                 Monster monster = new Monster(template, group.GetCell());
                 group.AddMonster(monster);
             }
@@ -120,7 +120,8 @@ namespace Giny.World.Managers.Monsters
                 return;
             }
 
-            ModularMonsterGroup group = new ModularMonsterGroup(map, map.Instance.FindMonsterGroupCell().Id);
+
+            ModularMonsterGroup group = new ModularMonsterGroup(map, map.Instance.FindMonsterGroupCell(new AsyncRandom()).Id);
 
             foreach (var monsterId in map.MonsterRoom.MonsterIds)
             {
@@ -149,7 +150,7 @@ namespace Giny.World.Managers.Monsters
         {
             if (monsterRecords.Length != grades.Length)
             {
-                throw new Exception("Record and grades array must have same lenght.");
+                throw new Exception("Record and grades array must have same length.");
             }
             MonsterGroup group = new MonsterGroup(instance.Record, cellId);
 

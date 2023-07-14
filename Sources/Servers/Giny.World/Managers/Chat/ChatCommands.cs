@@ -228,7 +228,7 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("rdmap", ServerRoleEnum.Administrator)]
         public static void TeleportToRandomMapInSubarea(WorldClient client, short subareaId)
         {
-            client.Character.Teleport(MapRecord.GetMaps().Where(x => x.Subarea.Id == subareaId).Random());
+            client.Character.Teleport(MapRecord.GetMaps().Where(x => x.Subarea.Id == subareaId).Random(new Random()));
         }
         [ChatCommand("map", ServerRoleEnum.Administrator)]
         public static void MapCommand(WorldClient client)

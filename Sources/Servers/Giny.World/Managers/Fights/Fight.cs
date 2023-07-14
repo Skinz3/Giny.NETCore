@@ -463,7 +463,7 @@ namespace Giny.World.Managers.Fights
             {
                 fighter.OnFightStarted();
             }
-
+      
 
             this.OnFightStarted();
 
@@ -935,11 +935,7 @@ namespace Giny.World.Managers.Fights
             }
             return Ended;
         }
-        public void SendGameFightJoinMessage(CharacterFighter fighter)
-        {
-            fighter.Character.Client.Send(new GameFightJoinMessage(true, !Started, false, Started, GetPlacementTimeLeft(), (byte)FightType));
-        }
-
+     
         public abstract FightCommonInformations GetFightCommonInformations();
 
         public FightTeamInformations[] GetFightTeamInformations()

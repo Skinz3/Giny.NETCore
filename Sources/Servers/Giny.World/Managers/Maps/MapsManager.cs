@@ -218,7 +218,7 @@ namespace Giny.World.Managers.Maps
 
             if (points.Length > 0)
             {
-                return map.GetCell(points.Random());
+                return map.GetCell(points.Random(new AsyncRandom()));
             }
             else
             {

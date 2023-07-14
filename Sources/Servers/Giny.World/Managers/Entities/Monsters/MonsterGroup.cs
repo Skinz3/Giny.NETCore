@@ -107,10 +107,12 @@ namespace Giny.World.Managers.Monsters
         [WIP]
         public void MoveRandomly()
         {
+            Random random = new Random();
+
             Lozenge lozenge = new Lozenge(1, 5);
 
             var centerCell = Map.GetCell(CellId);
-            CellRecord cell = lozenge.GetCells(centerCell, centerCell, Map).Where((CellRecord entry) => entry.Walkable).Random();
+            CellRecord cell = lozenge.GetCells(centerCell, centerCell, Map).Where((CellRecord entry) => entry.Walkable).Random(random);
 
             if (cell != null)
             {

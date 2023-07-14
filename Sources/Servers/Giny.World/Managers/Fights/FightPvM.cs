@@ -164,10 +164,11 @@ namespace Giny.World.Managers.Fights
             }
         }
 
-        public override void OnFightStarted()
+        protected override void OnPlacementStarted()
         {
             DisplayChallenges();
         }
+      
 
         private FightTeam GetTeamChallenged()
         {
@@ -178,7 +179,7 @@ namespace Giny.World.Managers.Fights
         private void DisplayChallenges()
         {
             FightTeam targetTeam = GetTeamChallenged();
-            targetTeam.Send(new ChallengeNumberMessage(2));
+           // targetTeam.Send(new ChallengeNumberMessage(1));
         }
 
         private int GetChallengeCount()
@@ -188,6 +189,11 @@ namespace Giny.World.Managers.Fights
                 return 1;
             else
                 return 2;
+        }
+
+        public override void OnFightStarted()
+        {
+           
         }
     }
 }

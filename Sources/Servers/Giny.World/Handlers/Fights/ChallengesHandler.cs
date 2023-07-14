@@ -15,7 +15,7 @@ namespace Giny.World.Handlers.Fights
         [MessageHandler]
         public static void HandleChallengeBonusChoiceMessage(ChallengeBonusChoiceMessage message, WorldClient client)
         {
-            client.Send(new ChallengeBonusChoiceSelectedMessage(30));
+            client.Send(new ChallengeBonusChoiceSelectedMessage(1));
         }
 
         [MessageHandler]
@@ -44,14 +44,32 @@ namespace Giny.World.Handlers.Fights
             client.Send(new ChallengeSelectedMessage(new ChallengeInformation(1, new ChallengeTargetInformation[] { new ChallengeTargetInformation(-1, 255) },
                 50, 50, 0)));
 
-            client.Character.ReplyWarning("Received ChallengeSelectionMessage");
+        
 
         }
 
         [MessageHandler]
         public static void HandleChallengeValidateMessage(ChallengeValidateMessage message, WorldClient client)
         {
-            client.Character.ReplyWarning("Received ChallengeValidateMessage");
+
+
+            // selection du challenge
+            client.Send(new ChallengeAddMessage(new ChallengeInformation(1, new ChallengeTargetInformation[] { new ChallengeTargetInformation(-1, 255) },
+                50, 50, 0)));
+        }
+
+        [MessageHandler]
+        public static void HandleChallengeReadyMessage(ChallengeReadyMessage message, WorldClient client)
+        {
+            var challenges = new ChallengeInformation[2];
+
+            challenges[0] = new ChallengeInformation(1, new ChallengeTargetInformation[] { new ChallengeTargetInformation(-1, 255) },
+                50, 50, 0);
+
+            challenges[1] = new ChallengeInformation(3, new ChallengeTargetInformation[] { new ChallengeTargetInformation(-1, 255) },
+              50, 50, 0);
+
+            client.Send(new ChallengeProposalMessage(challenges, 30d));
         }
     }
 }

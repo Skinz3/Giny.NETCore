@@ -157,5 +157,11 @@ namespace Giny.World.Managers.Fights.Effects
         {
             look.SetBones(4115);
         }
+
+        [SpellAppearance(1333)]
+        public static void HarmonySkin(Fighter fighter,ref ServerEntityLook look)
+        {
+            look.AddSkin(3);
+        }
     }
 }

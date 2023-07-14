@@ -248,9 +248,9 @@ namespace Giny.World.Managers.Maps.Instances
             return true;
         }
 
-        public CellRecord FindMonsterGroupCell()
+        public CellRecord FindMonsterGroupCell(Random random)
         {
-            return Record.Cells.Where(x => x.IsValidFightCell() && IsCellFree(x.Id)).Random();
+            return Record.Cells.Where(x => x.IsValidFightCell() && IsCellFree(x.Id)).Random(random);
         }
         public short? GetNearEntityCell(CellRecord cellRecord)
         {
@@ -314,7 +314,7 @@ namespace Giny.World.Managers.Maps.Instances
                 character.Client.Send(message);
             }
         }
-        
+
         public void ToggleMute()
         {
             Mute = !Mute;
@@ -389,7 +389,7 @@ namespace Giny.World.Managers.Maps.Instances
             }
         }
 
-      
+
 
         /* public void RemoveDropItem(DropItem dropItem)
          {

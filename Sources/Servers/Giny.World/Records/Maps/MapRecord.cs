@@ -2,6 +2,7 @@
 using Giny.Core.DesignPattern;
 using Giny.Core.Extensions;
 using Giny.Core.Logging;
+using Giny.Core.Time;
 using Giny.ORM.Attributes;
 using Giny.ORM.Interfaces;
 using Giny.Protocol.Custom.Enums;
@@ -215,7 +216,7 @@ namespace Giny.World.Records.Maps
         }
         public CellRecord RandomWalkableCell()
         {
-            return WalkableCells.Where(x => !x.FarmCell).Random();
+            return WalkableCells.Where(x => !x.FarmCell).Random(new AsyncRandom());
         }
         public void ReloadMembers()
         {
