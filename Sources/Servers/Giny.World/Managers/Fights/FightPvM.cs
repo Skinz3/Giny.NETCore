@@ -12,7 +12,6 @@ using Giny.Protocol.Types;
 using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Entities.Monsters;
 using Giny.World.Managers.Fights.Cast;
-using Giny.World.Managers.Fights.Challenges;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Results;
 using Giny.World.Managers.Formulas;
@@ -30,11 +29,6 @@ namespace Giny.World.Managers.Fights
         public override bool SpawnJoin => true;
 
         private MonsterGroup MonsterGroup
-        {
-            get;
-            set;
-        }
-        private List<Challenge> Challenges
         {
             get;
             set;
@@ -75,10 +69,7 @@ namespace Giny.World.Managers.Fights
          */
         protected override void OnWinnersDetermined()
         {
-            foreach (var challenge in Challenges)
-            {
-                challenge.OnWinnersDetermined();
-            }
+            // challenges
         }
         /*
          * When fight ended.
@@ -97,11 +88,11 @@ namespace Giny.World.Managers.Fights
 
         private double GetChallengesDropRatioBonus()
         {
-            return Challenges.Where(x => x.Success).Sum(x => x.DropBonusRatio);
+            return 0d;
         }
         private double GetChallengesExpRatioBonus()
         {
-            return Challenges.Where(x => x.Success).Sum(x => x.XpBonusRatio);
+            return 0d;
         }
         [WIP] // drop bonus , unit test.
         protected override IEnumerable<IFightResult> GenerateResults()
@@ -175,9 +166,7 @@ namespace Giny.World.Managers.Fights
 
         public override void OnFightStarted()
         {
-            Challenges = ChallengesManager.Instance.CreateChallenges(GetTeamChallenged(), GetChallengeCount());
             DisplayChallenges();
-
         }
 
         private FightTeam GetTeamChallenged()
@@ -189,11 +178,7 @@ namespace Giny.World.Managers.Fights
         private void DisplayChallenges()
         {
             FightTeam targetTeam = GetTeamChallenged();
-
-            foreach (var challenge in this.Challenges)
-            {
-             //   targetTeam.Send(new ChallengeInfoMessage(challenge.Id, challenge.GetTargetId(), (int)(challenge.XpBonusRatio * 100d), (int)(challenge.DropBonusRatio * 100d)));
-            }
+            targetTeam.Send(new ChallengeNumberMessage(2));
         }
 
         private int GetChallengeCount()

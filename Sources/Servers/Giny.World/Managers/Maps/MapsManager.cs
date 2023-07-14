@@ -192,7 +192,7 @@ namespace Giny.World.Managers.Maps
          * else return near free cell.
          * if no free cell is available return random walkable cell
          */
-        public CellRecord SecureRoleplayCell(MapRecord map, CellRecord roleplayCell)
+        public CellRecord GetSafeRoleplayCell(MapRecord map, CellRecord roleplayCell)
         {
             if (roleplayCell.Walkable && map.Instance.IsCellFree(roleplayCell.Id))
             {

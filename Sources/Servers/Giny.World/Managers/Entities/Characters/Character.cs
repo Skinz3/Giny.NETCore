@@ -1443,7 +1443,7 @@ namespace Giny.World.Managers.Entities.Characters
             }
 
         }
-        [WIP]
+        [WIP("monsters? int[0]")]
         private void SendGameFightStartingMessage(Fight fight)
         {
             this.Client.Send(new GameFightStartingMessage((byte)fight.FightType,

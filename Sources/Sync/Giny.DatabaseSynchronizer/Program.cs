@@ -37,7 +37,7 @@ namespace Giny.DatabaseSynchronizer
     class Program
     {
         public static bool SYNC_D2O = true;
-        public static bool SYNC_MAPS = true;
+        public static bool SYNC_MAPS = false;
 
         public static D2IFile D2IFileFR;
         public static D2IFile D2IFileEN;
@@ -79,7 +79,9 @@ namespace Giny.DatabaseSynchronizer
             DatabaseManager.Instance.DropTableIfExists<MapPositionRecord>();
             DatabaseManager.Instance.DropTableIfExists<NpcRecord>();
             DatabaseManager.Instance.DropTableIfExists<ChallengeRecord>();
-            DatabaseManager.Instance.DropTableIfExists<MapRecord>();
+
+            if (SYNC_MAPS)
+                DatabaseManager.Instance.DropTableIfExists<MapRecord>();
 
             DatabaseManager.Instance.CreateAllTablesIfNotExists();
 

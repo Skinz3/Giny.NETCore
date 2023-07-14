@@ -30,6 +30,13 @@ namespace Giny.World.Records.Challenges
             get;
             set;
         }
+        [I18NField]
+        [D2OField("descriptionId")]
+        public string Description
+        {
+            get;
+            set;
+        }
         [D2OField("incompatibleChallenges")]
         public List<long> IncompatiblesChallenges
         {
@@ -37,6 +44,27 @@ namespace Giny.World.Records.Challenges
             set;
         }
 
+        [D2OField("activationCriterion")]
+        public string ActivationCriterion
+        {
+            get;
+            set;
+        }
+
+
+        [D2OField("completionCriterion")]
+        public string CompletionCriterion
+        {
+            get;
+            set;
+        }
+
+        [D2OField("targetMonsterId")]
+        public int TargetMonsterId
+        {
+            get;
+            set;
+        }
         public static ChallengeRecord GetChallenge(int id)
         {
             Challenges.TryGetValue(id, out var challenge);

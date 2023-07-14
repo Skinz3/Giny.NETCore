@@ -388,8 +388,8 @@ namespace Giny.World.Managers.Fights
         {
             if (this.RedTeam.Leader.RoleplayCell.Id != this.BlueTeam.Leader.RoleplayCell.Id)
             {
-                this.RedTeam.BladesCell = MapsManager.Instance.SecureRoleplayCell(this.Map, this.RedTeam.Leader.RoleplayCell);
-                this.BlueTeam.BladesCell = MapsManager.Instance.SecureRoleplayCell(this.Map, this.BlueTeam.Leader.RoleplayCell);
+                this.RedTeam.BladesCell = MapsManager.Instance.GetSafeRoleplayCell(this.Map, this.RedTeam.Leader.RoleplayCell);
+                this.BlueTeam.BladesCell = MapsManager.Instance.GetSafeRoleplayCell(this.Map, this.BlueTeam.Leader.RoleplayCell);
 
             }
             else

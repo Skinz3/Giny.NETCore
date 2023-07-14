@@ -20,4 +20,8 @@
     <ProjectReference Include="..\..\Giny.Protocol\Giny.Protocol.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Managers\Fights\Challenges\" />
+  </ItemGroup>
+
 </Project>
