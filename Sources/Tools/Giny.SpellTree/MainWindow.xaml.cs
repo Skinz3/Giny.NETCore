@@ -167,7 +167,7 @@ namespace Giny.SpellTree
         {
             Tree.Draw(spell, level);
 
-          
+
 
             SelectNode(Tree.Nodes.First());
             UpdateDisplayNames();
@@ -255,7 +255,7 @@ namespace Giny.SpellTree
 
                     if (monster != null)
                     {
-                        effectProps.Items.Add("Summoned : " + monster.Name+ " ("+CurrentEffect.Max+")");
+                        effectProps.Items.Add("Summoned : " + monster.Name + " (" + CurrentEffect.Max + ")");
 
                         var grade = monster.GetGrade((byte)CurrentEffect.Max);
 

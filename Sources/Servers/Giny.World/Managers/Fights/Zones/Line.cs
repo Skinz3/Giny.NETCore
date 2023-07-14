@@ -43,7 +43,14 @@ namespace Giny.World.Managers.Fights.Zones
             if (FromCaster && this.StopAtTarget)
             {
                 distance = origin.DistanceTo(centerCell.Point); // distanceToCell
-                length = distance < length ? distance : length;
+
+                bool flag = distance < length;
+
+                if (flag)
+                {
+                    distance -= 1;
+                }
+                length = flag ? distance : length;
             }
             for (int r = this.MinRadius; r <= length; r++)
             {
@@ -75,6 +82,8 @@ namespace Giny.World.Managers.Fights.Zones
                         break;
                 }
             }
+
+
             return aCells.ToArray();
         }
 

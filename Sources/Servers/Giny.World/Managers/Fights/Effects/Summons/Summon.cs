@@ -23,8 +23,6 @@ namespace Giny.World.Managers.Fights.Effects.Summons
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
-
-            
             MonsterRecord record = MonsterRecord.GetMonsterRecord((short)Effect.Min);
 
             if (record != null && Source.Fight.IsCellFree(TargetCell))

@@ -1,4 +1,5 @@
 ﻿using Giny.World.Managers.Fights.Cast;
+using Giny.World.Managers.Fights.Cast.Units;
 using Giny.World.Managers.Fights.Fighters;
 using System;
 using System.Collections.Generic;
@@ -23,8 +24,26 @@ namespace Giny.World.Managers.Effects.Targets
 
         public override bool IsTargetValid(Fighter actor, SpellEffectHandler handler)
         {
-            // required ?
-            return handler.Source.LastAttacker == actor;
+            var source = GetLastAttackerSource(handler);
+            return source.LastAttacker == actor;
+        }
+
+        public static Fighter GetLastAttackerSource(SpellEffectHandler handler)
+        {
+            var lastAtkSource = handler.Source;
+
+            if (handler.CastHandler.Cast.Token != null)
+            {
+                if (handler.CastHandler.Cast.Token is Damage)
+                {
+                    var damages = handler.CastHandler.Cast.Token as Damage;
+
+                    lastAtkSource = damages.Target;
+
+                }
+            }
+
+            return lastAtkSource;
         }
         public override string ToString()
         {

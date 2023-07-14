@@ -24,6 +24,7 @@ using Org.BouncyCastle.Asn1.X509;
 using Giny.World.Managers.Fights.Effects;
 using MySqlX.XDevAPI.Common;
 using Giny.Protocol.Messages;
+using Giny.World.Managers.Fights.Cast.Units;
 
 namespace Giny.World.Managers.Fights.Cast
 {
@@ -140,7 +141,14 @@ namespace Giny.World.Managers.Fights.Cast
         private IEnumerable<Fighter> GetAffectedFighters()
         {
             List<CellRecord> affectedCells = GetAffectedCells();
-
+            
+            if (Effect.EffectEnum == EffectsEnum.Effect_Teleport)
+            {
+                foreach (var cell in affectedCells)
+                {
+                    this.CastHandler.Cast.Source.Fight.Send(new ShowCellMessage(this.Source.Id, cell.Id));
+                }
+            }
             if (Targets.Any(x => x is TargetTypeCriterion && ((TargetTypeCriterion)x).TargetType == SpellTargetType.SELF_ONLY) && !affectedCells.Contains(Source.Cell))
             {
                 affectedCells.Add(Source.Cell);
@@ -148,8 +156,10 @@ namespace Giny.World.Managers.Fights.Cast
 
             if (Targets.Any(x => x is LastAttackerCriterion && ((LastAttackerCriterion)x).Required))
             {
-                if (Source.LastAttacker != null && !affectedCells.Contains(Source.LastAttacker.Cell))
-                    affectedCells.Add(Source.LastAttacker.Cell);
+                var lastAtkSource = LastAttackerCriterion.GetLastAttackerSource(this); 
+
+                if (lastAtkSource.LastAttacker != null && !affectedCells.Contains(lastAtkSource.LastAttacker.Cell))
+                    affectedCells.Add(lastAtkSource.LastAttacker.Cell);
             }
 
             var fighters = Source.Fight.GetFighters(affectedCells);
