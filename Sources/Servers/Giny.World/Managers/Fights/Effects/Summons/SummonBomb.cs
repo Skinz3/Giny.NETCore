@@ -22,10 +22,10 @@ namespace Giny.World.Managers.Fights.Effects.Summons
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
-            if (Source.Fight.IsCellFree(TargetCell))
+            if (Source.Fight.IsCellFree(CastHandler.Cast.BaseTargetCell))
             {
                 MonsterRecord record = MonsterRecord.GetMonsterRecord((short)Effect.Min);
-                SummonedMonster bombFighter = new SummonedBomb(Source, record, this, CastHandler.Cast.Spell.Level.Grade, TargetCell);
+                SummonedMonster bombFighter = new SummonedBomb(Source, record, this, CastHandler.Cast.Spell.Level.Grade, CastHandler.Cast.BaseTargetCell);
                 Source.Fight.AddSummon(Source, bombFighter);
             }
         }

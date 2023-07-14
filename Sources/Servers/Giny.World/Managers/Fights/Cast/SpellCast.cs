@@ -39,6 +39,8 @@ namespace Giny.World.Managers.Fights.Cast
 
         CellRecord m_targetCell;
 
+        public CellRecord BaseTargetCell => m_targetCell;
+
         public CellRecord TargetCell
         {
             get

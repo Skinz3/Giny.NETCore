@@ -26,7 +26,7 @@ namespace Giny.World.Managers.Fights.Effects.Summons
                 target.Die(Source);
                 MonsterRecord record = MonsterRecord.GetMonsterRecord((short)Effect.Min);
 
-                if (record != null && Source.Fight.IsCellFree(TargetCell))
+                if (record != null && Source.Fight.IsCellFree(CastHandler.Cast.BaseTargetCell))
                 {
                     SummonedMonster summon = CreateSummon(record, (byte)Effect.Max);
 

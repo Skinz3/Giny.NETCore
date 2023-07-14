@@ -142,13 +142,13 @@ namespace Giny.World.Managers.Fights.Cast
         {
             List<CellRecord> affectedCells = GetAffectedCells();
             
-            if (Effect.EffectEnum == EffectsEnum.Effect_Teleport)
+           /* if (Effect.EffectEnum == EffectsEnum.Effect_Teleport)
             {
                 foreach (var cell in affectedCells)
                 {
                     this.CastHandler.Cast.Source.Fight.Send(new ShowCellMessage(this.Source.Id, cell.Id));
                 }
-            }
+            } */
             if (Targets.Any(x => x is TargetTypeCriterion && ((TargetTypeCriterion)x).TargetType == SpellTargetType.SELF_ONLY) && !affectedCells.Contains(Source.Cell))
             {
                 affectedCells.Add(Source.Cell);
@@ -336,7 +336,7 @@ namespace Giny.World.Managers.Fights.Cast
 
         protected SummonedMonster CreateSummon(MonsterRecord record, byte grade)
         {
-            SummonedMonster fighter = new SummonedMonster(Source, record, this, grade, TargetCell);
+            SummonedMonster fighter = new SummonedMonster(Source, record, this, grade, CastHandler.Cast.BaseTargetCell);
             return fighter;
         }
 
