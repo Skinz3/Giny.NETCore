@@ -13,7 +13,7 @@ using Rune = Giny.World.Managers.Fights.Marks.Rune;
 
 namespace Giny.World.Managers.Fights.Effects.Marks
 {
-    [SpellEffectHandler(EffectsEnum.Effect_TriggerRune)]
+    [SpellEffectHandler(EffectsEnum.Effect_TriggerRunes)]
     public class TriggerRune : SpellEffectHandler
     {
         public TriggerRune(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
@@ -23,11 +23,13 @@ namespace Giny.World.Managers.Fights.Effects.Marks
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
-            Rune rune = Source.GetMarks<Rune>().Where(x => x.CenterCell == TargetCell).FirstOrDefault();
+            var cells = GetAffectedCells();
 
-            if (rune != null)
+            IEnumerable<Rune> runes = Source.GetMarks<Rune>().Where(x => x.ContainsCell(x.CenterCell.Id));
+
+            using (Source.Fight.SequenceManager.StartSequence(SequenceTypeEnum.SEQUENCE_GLYPH_TRAP))
             {
-                using (Source.Fight.SequenceManager.StartSequence(SequenceTypeEnum.SEQUENCE_GLYPH_TRAP))
+                foreach (var rune in runes.ToArray())
                 {
                     Fighter target = Source.Fight.GetFighter(rune.CenterCell.Id);
                     rune.Trigger(target, MarkTriggerType.None);

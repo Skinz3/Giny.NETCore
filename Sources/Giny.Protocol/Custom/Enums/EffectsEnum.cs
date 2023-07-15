@@ -2328,7 +2328,7 @@
         /// <summary>
         /// Déclenche les runes
         /// </summary>
-        Effect_TriggerRune = 2023,
+        Effect_TriggerRunes = 2023,
         /// <summary>
         /// 
         /// </summary>

@@ -25,7 +25,7 @@ namespace Giny.World.Managers.Fights.Buffs
 
         public override void Execute()
         {
-            
+            Target.Stats[CharacteristicEnum.NEUTRAL_ELEMENT_RESIST_PERCENT].Context += Delta;
             Target.Stats[CharacteristicEnum.AIR_ELEMENT_RESIST_PERCENT].Context += Delta;
             Target.Stats[CharacteristicEnum.FIRE_ELEMENT_RESIST_PERCENT].Context += Delta;
             Target.Stats[CharacteristicEnum.EARTH_ELEMENT_RESIST_PERCENT].Context += Delta;
@@ -34,6 +34,7 @@ namespace Giny.World.Managers.Fights.Buffs
 
         public override void Dispell()
         {
+            Target.Stats[CharacteristicEnum.NEUTRAL_ELEMENT_RESIST_PERCENT].Context -= Delta;
             Target.Stats[CharacteristicEnum.AIR_ELEMENT_RESIST_PERCENT].Context -= Delta;
             Target.Stats[CharacteristicEnum.FIRE_ELEMENT_RESIST_PERCENT].Context -= Delta;
             Target.Stats[CharacteristicEnum.EARTH_ELEMENT_RESIST_PERCENT].Context -= Delta;
