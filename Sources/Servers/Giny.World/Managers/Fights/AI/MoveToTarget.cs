@@ -32,6 +32,7 @@ namespace Giny.World.Managers.Fights.AI
 
                 var targetPoint = points.Where(x => Fighter.Fight.IsCellFree(x.CellId)).MinBy(x => x.ManhattanDistanceTo(target.Cell.Point));
 
+
                 if (targetPoint != null)
                 {
                     Fighter.CastSpell(spellRecord.Id, targetPoint.CellId);

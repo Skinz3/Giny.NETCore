@@ -28,6 +28,9 @@ namespace Giny.World.Managers.Fights.Cast
             }
             switch (fighter.Breed)
             {
+                case BreedEnum.Huppermage:
+                    Huppermage(fighter);
+                    break;
                 case BreedEnum.Pandawa:
                     Pandawa(fighter);
                     break;
@@ -69,7 +72,30 @@ namespace Giny.World.Managers.Fights.Cast
             }
         }
 
+        private static void Huppermage(CharacterFighter fighter)
+        {
+            /*
+             * Torrent Arcanique
+             */
+            if (fighter.Character.HasSpell(14342))
+            {
+                fighter.ExecuteSpell(23960, 1, fighter.Cell);
+            }
 
+            /* 
+             * Création
+             */
+            if (fighter.Character.HasSpell(13727))
+            {
+                fighter.ExecuteSpell(23959, 1, fighter.Cell);
+            }
+
+
+            /* 
+             * La rune de l'Huppermage
+             */
+            fighter.ExecuteSpell(21985, 1, fighter.Cell);
+        }
         private static void Pandawa(CharacterFighter fighter)
         {
             /*

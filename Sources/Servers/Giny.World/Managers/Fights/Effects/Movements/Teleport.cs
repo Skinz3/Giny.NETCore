@@ -25,7 +25,16 @@ namespace Giny.World.Managers.Fights.Effects.Movements
         {
             var targetCells = base.GetAffectedCells();
 
-            var targetCell = targetCells.Last();
+            var targetCell = this.TargetCell;
+
+            if (targetCells.Count > 0)
+            {
+                targetCell = targetCells.Last();
+            }
+            else
+            {
+                Source.Fight.Warn("Teleport cell could not be computed from TargetMask...");
+            }
 
             Telefrag telefrag = Source.Teleport(Source, targetCell);
 
