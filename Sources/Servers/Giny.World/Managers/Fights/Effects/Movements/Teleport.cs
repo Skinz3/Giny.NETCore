@@ -1,4 +1,5 @@
 ﻿using Giny.Protocol.Enums;
+using Giny.Protocol.Messages;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Cast.Units;
@@ -21,20 +22,42 @@ namespace Giny.World.Managers.Fights.Effects.Movements
         {
         }
 
-        protected override void Apply(IEnumerable<Fighter> targets)
+
+        private CellRecord? GetTeleportCell()
         {
             var targetCells = base.GetAffectedCells();
 
-            var targetCell = this.TargetCell;
+            if (targetCells.Count == 0)
+            {
+                return null;
+            }
+            if (targetCells.Count == 1)
+            {
+                return targetCells.First();
+            }
 
-            if (targetCells.Count > 0)
+            for (int i = targetCells.Count - 1; i <= 0; i--)
             {
-                targetCell = targetCells.Last();
+                var cellFree = Source.Fight.IsCellFree(targetCells[i]);
+
+                if (cellFree)
+                {
+                    return targetCells[i];
+                }
             }
-            else
+
+            return null;
+        }
+        protected override void Apply(IEnumerable<Fighter> targets)
+        {
+            CellRecord? targetCell = GetTeleportCell();
+
+            if (targetCell == null)
             {
-                Source.Fight.Warn("Teleport cell could not be computed from TargetMask...");
+                Source.Fight.Warn("Teleport cell could not be computed from RawZone...");
+                return;
             }
+
 
             Telefrag telefrag = Source.Teleport(Source, targetCell);
 

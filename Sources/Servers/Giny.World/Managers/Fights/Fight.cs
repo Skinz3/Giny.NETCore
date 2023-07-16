@@ -256,6 +256,7 @@ namespace Giny.World.Managers.Fights
             return Timeline.Index;
         }
 
+
         public Fight(Character origin, int id, MapRecord map, FightTeam blueTeam, FightTeam redTeam, CellRecord cell)
         {
             this.Id = id;
@@ -512,6 +513,8 @@ namespace Giny.World.Managers.Fights
 
             using (SequenceManager.StartSequence(SequenceTypeEnum.SEQUENCE_TURN_START))
             {
+                FighterPlaying.IsSequencingTurnStart = true;
+
                 FighterPlaying.TurnStartCell = FighterPlaying.Cell;
                 /*
                  * Here or after decrement buff delay ? seems here, see Dofus Ocre
@@ -545,6 +548,7 @@ namespace Giny.World.Managers.Fights
 
                 FighterPlaying.TriggerBuffs(TriggerTypeEnum.AfterTurnBegin, null);
 
+                FighterPlaying.IsSequencingTurnStart = false;
             }
 
             /*
@@ -765,7 +769,21 @@ namespace Giny.World.Managers.Fights
         }
         private void OnTurnStopped()
         {
-            FighterPlaying.OnTurnEnding();
+            using (SequenceManager.StartSequence(SequenceTypeEnum.SEQUENCE_TURN_END))
+            {
+                FighterPlaying.IsSequencingTurnEnd = true;
+
+                if (FighterPlaying.Alive)
+                {
+                    TriggerMarks(FighterPlaying, MarkTriggerType.OnTurnEnd);
+                    FighterPlaying.TriggerBuffs(TriggerTypeEnum.OnTurnEnd, null);
+                    FighterPlaying.OnTurnEnded();
+
+                    FighterPlaying.WasTeleportedInInvalidCell = false;
+                }
+
+                FighterPlaying.IsSequencingTurnEnd = false;
+            }
 
             if (SequenceManager.IsSequencing)
                 SequenceManager.EndAllSequences();

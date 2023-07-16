@@ -484,22 +484,13 @@ namespace Giny.World.Managers.Chat
         public static void TestCommand(WorldClient client)
         {
             
-            client.Character.Fighter.Stats[CharacteristicEnum.CRITICAL_HIT].Context = -200;
-
-            //client.Character.RefreshStats();
-
-
-            return;
-            client.Character.Reply("MissingLife : " + client.Character.Stats.GetMissingLife());
-            // client.Character.RefreshStats();
-
             if (client.Character.Fighter == null)
                 return;
 
 
             using (var seq = client.Character.Fighter.Fight.SequenceManager.StartSequence(Fights.Sequences.SequenceTypeEnum.SEQUENCE_SPELL))
             {
-                client.Character.Fighter.InflictDamage(new Fights.Cast.Units.Damage(client.Character.Fighter, client.Character.Fighter, EffectSchoolEnum.Fix, 400, 400));
+                client.Character.Fighter.InflictDamage(new Fights.Cast.Units.Damage(client.Character.Fighter, client.Character.Fighter, EffectSchoolEnum.Earth, 100, 100));
             }
 
 

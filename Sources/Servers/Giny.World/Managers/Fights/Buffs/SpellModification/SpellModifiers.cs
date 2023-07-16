@@ -101,6 +101,8 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
                     return new SpellModifierLOS(spellId);
                 case SpellModifierTypeEnum.AP_COST:
                     return new SpellModifierApCost(spellId);
+                case SpellModifierTypeEnum.RANGE_MAX:
+                    return new SpellModifierMaxRange(spellId);
 
             }
 

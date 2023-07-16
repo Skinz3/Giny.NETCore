@@ -131,6 +131,23 @@ namespace Giny.World.Managers.Fights.Cast
         }
         private static void Sacrieur(CharacterFighter fighter)
         {
+            /*
+             * Transposition
+             */
+            if (fighter.HasSpell(12736))
+            {
+                fighter.ExecuteSpell(25188, 1, fighter.Cell);
+            }
+
+            /*
+             * Attirance
+             */
+
+            if (fighter.HasSpell(12735))
+            {
+                fighter.ExecuteSpell(25187, 1, fighter.Cell);
+            }
+
             fighter.ExecuteSpell(12718, 1, fighter.Cell);
         }
 

@@ -26,12 +26,14 @@ namespace Giny.World.Managers.Fights.Buffs
 
         public override void Execute()
         {
-            Target.Stats.RemoveVitality(GetDelta());
+            Target.RemoveVitality(GetDelta());
+
+        
         }
 
         public override void Dispell()
         {
-            Target.Stats.AddVitality(GetDelta());
+            Target.AddVitality(GetDelta());
         }
 
         public override short GetDelta()

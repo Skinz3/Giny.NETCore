@@ -36,13 +36,13 @@ namespace Giny.World.Managers.Fights.Fighters
         }
         public override void OnTurnBegin()
         {
-            try
-            {
+           // try
+         //   {
                 this.Brain.Play();
-            }
-            catch
+          //  }
+         //   catch
             {
-                this.Fight.Warn("Unable to play AI : " + Name);
+        //        this.Fight.Warn("Unable to play AI : " + Name);
             }
 
             if (Alive) // else has already passed turn

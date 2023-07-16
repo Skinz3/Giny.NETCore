@@ -222,7 +222,26 @@ namespace Giny.World.Managers.Fights.Fighters
         public bool WasTeleportedInInvalidCell
         {
             get;
-            private set;
+            set;
+        }
+
+        /// <summary>
+        /// Into TURN_START sequence
+        /// Used to trigger DTB buffs
+        /// </summary>
+        public bool IsSequencingTurnStart
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// Into TURN_END sequence
+        /// Used to trigger DTE buffs
+        /// </summary>
+        public bool IsSequencingTurnEnd
+        {
+            get;
+            set;
         }
         /*
          * Prevent some Telefrag recursive issues (Desynchronisaiton)
@@ -835,24 +854,7 @@ namespace Giny.World.Managers.Fights.Fighters
             };
         }
 
-        /*
-         * Before turn end.
-         */
-        public void OnTurnEnding()
-        {
-            using (Fight.SequenceManager.StartSequence(SequenceTypeEnum.SEQUENCE_TURN_END))
-            {
-                if (Alive)
-                {
-                    Fight.TriggerMarks(this, MarkTriggerType.OnTurnEnd);
-                    TriggerBuffs(TriggerTypeEnum.OnTurnEnd, null);
-                    OnTurnEnded();
 
-                    this.WasTeleportedInInvalidCell = false;
-                }
-
-            }
-        }
 
         public abstract void OnTurnEnded();
 
@@ -1884,7 +1886,72 @@ namespace Giny.World.Managers.Fights.Fighters
             }
         }
 
+        public void RemoveVitality(short delta)
+        {
+            Stats.LifePoints -= delta;
 
+            if (Stats.LifePoints < 0)
+            {
+                Stats.LifePoints = 0;
+            }
+
+            TriggerBuffs(TriggerTypeEnum.LifeAffected, null);
+            TriggerBuffs(TriggerTypeEnum.LifePointsAffected, null);
+
+
+            RefreshStats(CharacteristicEnum.HIT_POINT_LOSS);
+
+        }
+        public void AddVitality(short delta)
+        {
+            Stats.LifePoints += delta;
+
+            if (Stats.LifePoints >= Stats.MaxLifePoints)
+            {
+                Stats.LifePoints = Stats.MaxLifePoints;
+            }
+
+            TriggerBuffs(TriggerTypeEnum.LifeAffected, null);
+            TriggerBuffs(TriggerTypeEnum.LifePointsAffected, null);
+
+            RefreshStats(CharacteristicEnum.HIT_POINT_LOSS);
+        }
+
+        public void AddMaxVitality(short delta)
+        {
+            Stats.BaseMaxLife += delta;
+            Stats.MaxLifePoints += delta;
+            Stats.LifePoints += delta;
+
+            TriggerBuffs(TriggerTypeEnum.LifeAffected, null);
+            TriggerBuffs(TriggerTypeEnum.LifePointsAffected, null);
+            TriggerBuffs(TriggerTypeEnum.MaxLifePointsAffected, null);
+
+            RefreshStats(CharacteristicEnum.HIT_POINTS);
+            RefreshStats(CharacteristicEnum.HIT_POINT_LOSS);
+        }
+        public void RemoveMaxVitality(short delta)
+        {
+            Stats.BaseMaxLife -= delta;
+            Stats.MaxLifePoints -= delta;
+            Stats.LifePoints -= delta;
+
+            if (Stats.LifePoints < 0)
+            {
+                Stats.LifePoints = 0;
+            }
+            if (Stats.MaxLifePoints < 0)
+            {
+                Stats.MaxLifePoints = 0;
+            }
+
+            TriggerBuffs(TriggerTypeEnum.LifeAffected, null);
+            TriggerBuffs(TriggerTypeEnum.LifePointsAffected, null);
+            TriggerBuffs(TriggerTypeEnum.MaxLifePointsAffected, null);
+
+            RefreshStats(CharacteristicEnum.HIT_POINTS);
+            RefreshStats(CharacteristicEnum.HIT_POINT_LOSS);
+        }
         private void UpdateBuff(Fighter source, Buff buff)
         {
             Fight.Send(new GameActionFightDispellableEffectMessage()
@@ -2058,7 +2125,7 @@ namespace Giny.World.Managers.Fights.Fighters
             /*
              *  public function get_isLifeAffected() : Boolean
                  {
-                    if(!(areLifePointsAffected || areMaxLifePointsAffected))
+                    if((areLifePointsAffected && areMaxLifePointsAffected))
                     {          
                         return areErodedLifePointsAffected;
                      }
@@ -2067,16 +2134,17 @@ namespace Giny.World.Managers.Fights.Fighters
             */
             if (lifeLoss > 0)
             {
-                TriggerBuffs(TriggerTypeEnum.LifeAffected, null);
+                TriggerBuffs(TriggerTypeEnum.OnDamagedOnLife, null); // DV
+                TriggerBuffs(TriggerTypeEnum.LifeAffected, null); // V
                 // dont know what we are doing? uff
                 // check client HaveBuff.as (param1.areLifePointsAffected et param1.get_isLifeAffected())
-                TriggerBuffs(TriggerTypeEnum.LifePointsAffected, null);
+                TriggerBuffs(TriggerTypeEnum.LifePointsAffected, null); // VA
 
             }
             if (permanentDamages > 0)
             {
-                TriggerBuffs(TriggerTypeEnum.ErodedLifePointsAffected, null);
-                TriggerBuffs(TriggerTypeEnum.MaxLifePointsAffected, null);
+                TriggerBuffs(TriggerTypeEnum.ErodedLifePointsAffected, null); // VE
+                TriggerBuffs(TriggerTypeEnum.MaxLifePointsAffected, null); // VM
             }
 
 
@@ -2105,7 +2173,6 @@ namespace Giny.World.Managers.Fights.Fighters
             {
                 if (damage.EffectHandler.Effect.Duration > 0)
                 {
-                    // we dont trigger buffs for poisons?
                     return;
                 }
 
@@ -2120,11 +2187,6 @@ namespace Giny.World.Managers.Fights.Fighters
                             break;
                         case GameActionMarkTypeEnum.TRAP:
                             TriggerBuffs(TriggerTypeEnum.OnDamagedByTrap, damage);
-
-                            if (!damage.Source.IsFriendlyWith(this))
-                            {
-                                TriggerBuffs(TriggerTypeEnum.OnDamagedByEnemyTrap, damage);
-                            }
                             break;
                         case GameActionMarkTypeEnum.WALL:
                             break;
@@ -2136,6 +2198,15 @@ namespace Giny.World.Managers.Fights.Fighters
                 }
             }
 
+
+            if (IsSequencingTurnStart)
+            {
+                TriggerBuffs(TriggerTypeEnum.OnDamagedTurnBegin, damage);
+            }
+            else if (IsSequencingTurnEnd)
+            {
+                TriggerBuffs(TriggerTypeEnum.OnDamagedTurnEnd, damage);
+            }
 
             TriggerBuffs(TriggerTypeEnum.OnDamaged, damage);
 

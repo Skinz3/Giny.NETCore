@@ -29,13 +29,13 @@ namespace Giny.World.Managers.Fights.Buffs
         public override void Execute()
         {
             Target.Stats[CharacteristicEnum.VITALITY].Context += GetDelta();
-            Target.Stats.AddMaxVitality(GetDelta());
+            Target.AddMaxVitality(GetDelta());
         }
 
         public override void Dispell()
         {
             Target.Stats[CharacteristicEnum.VITALITY].Context -= GetDelta();
-            Target.Stats.RemoveMaxVitality(GetDelta());
+            Target.RemoveMaxVitality(GetDelta());
         }
 
         public override short GetDelta()

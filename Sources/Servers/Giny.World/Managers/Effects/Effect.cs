@@ -201,8 +201,6 @@ namespace Giny.World.Managers.Effects
                     return new Trigger(TriggerTypeEnum.OnDamagedByGlyph);
                 case "DT":
                     return new Trigger(TriggerTypeEnum.OnDamagedByTrap);
-                case "DTE":
-                    return new Trigger(TriggerTypeEnum.OnDamagedByEnemyTrap);
                 case "DE":
                     return new Trigger(TriggerTypeEnum.OnDamagedEarth);
                 case "DW":
@@ -244,8 +242,7 @@ namespace Giny.World.Managers.Effects
                     return new Trigger(TriggerTypeEnum.CasterInflictDamageEnnemy);
                 case "CDBA":
                     return new Trigger(TriggerTypeEnum.CasterInflictDamageAlly);
-                case "V":
-                    return new Trigger(TriggerTypeEnum.LifeAffected);
+             
                 case "R":
                     return new Trigger(TriggerTypeEnum.OnRangeLost);
                 case "CMPA":
@@ -276,6 +273,11 @@ namespace Giny.World.Managers.Effects
                 case "CDN":
                     return new Trigger(TriggerTypeEnum.CasterInflictDamageNeutral);
 
+
+                case "V":
+                    return new Trigger(TriggerTypeEnum.LifeAffected);
+                case "DV":
+                    return new Trigger(TriggerTypeEnum.OnDamagedOnLife);
                 case "VA":
                     return new Trigger(TriggerTypeEnum.LifePointsAffected);
                 case "VM":
@@ -294,6 +296,13 @@ namespace Giny.World.Managers.Effects
 
                 case "S":
                     return new Trigger(TriggerTypeEnum.OnShieldApplied);
+
+                case "DTB":
+                    return new Trigger(TriggerTypeEnum.OnDamagedTurnBegin);
+
+                case "DTE":
+                    return new Trigger(TriggerTypeEnum.OnDamagedTurnEnd);
+                
                     /* 
                      * Not sure about how it works
                      * 

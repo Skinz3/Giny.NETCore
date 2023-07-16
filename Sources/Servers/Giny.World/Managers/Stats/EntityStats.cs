@@ -226,6 +226,14 @@ namespace Giny.World.Managers.Stats
 
             if (characteristicEnum.HasValue)
             {
+                if (characteristicEnum == CharacteristicEnum.HIT_POINTS)
+                {
+                    return new CharacterCharacteristic[] { new CharacterCharacteristicValue(GetHitPoints(), (short)CharacteristicEnum.HIT_POINTS) };
+                }
+                else if (characteristicEnum == CharacteristicEnum.HIT_POINT_LOSS)
+                {
+                    return new CharacterCharacteristic[] { new CharacterCharacteristicValue(GetMissingLife(), (short)CharacteristicEnum.HIT_POINT_LOSS) };
+                }
                 var characterCharateristic = this.GetCharacteristic<Characteristic>(characteristicEnum.Value).GetCharacterCharacteristic(characteristicEnum.Value);
                 return new CharacterCharacteristic[] { characterCharateristic };
             }
@@ -235,6 +243,7 @@ namespace Giny.World.Managers.Stats
             }
 
         }
+
         private CharacterCharacteristic[] GetCharacterCharacteristics()
         {
             List<CharacterCharacteristic> results = new List<CharacterCharacteristic>();
@@ -249,7 +258,6 @@ namespace Giny.World.Managers.Stats
             results.Add(new CharacterCharacteristicValue(GetHitPoints(), (short)CharacteristicEnum.HIT_POINTS));
             results.Add(new CharacterCharacteristicValue(GetMissingLife(), (short)CharacteristicEnum.HIT_POINT_LOSS));
 
-            results.Add(new CharacterCharacteristicValue(0, (short)CharacteristicEnum.CUR_PERMANENT_DAMAGE));
             results.Add(new CharacterCharacteristicValue(MaxEnergyPoints, (short)CharacteristicEnum.MAX_ENERGY_POINTS));
             results.Add(new CharacterCharacteristicValue(Energy, (short)CharacteristicEnum.ENERGY_POINTS));
 

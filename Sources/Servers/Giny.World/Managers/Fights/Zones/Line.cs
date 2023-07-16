@@ -46,10 +46,6 @@ namespace Giny.World.Managers.Fights.Zones
 
                 bool flag = distance < length;
 
-                if (flag)
-                {
-                    distance -= 1;
-                }
                 length = flag ? distance : length;
             }
             for (int r = this.MinRadius; r <= length; r++)

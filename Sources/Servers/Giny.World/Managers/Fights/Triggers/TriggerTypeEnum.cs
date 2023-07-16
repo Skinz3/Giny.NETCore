@@ -47,12 +47,14 @@ namespace Giny.World.Managers.Fights.Triggers
         OnDamagedByWeapon, // DCAC
         OnDamagedByGlyph, // DG 
         OnDamagedByTrap, //DT
-        OnDamagedByEnemyTrap, // DTE
         OnDamagedMelee, //DM
         OnDamagedRange, //DR
         OnDamagedByPush, // PD
         OnDamagedByAllyPush, //PMD
         OnDamagedByEnemyPush, // PPD    
+        OnDamagedTurnBegin, // DTB
+        OnDamagedTurnEnd, // DTE
+        OnDamagedOnLife, // DV
 
         OnSummon, // CI Caster Invoke 
 
@@ -96,8 +98,8 @@ namespace Giny.World.Managers.Fights.Triggers
         CasterAddShield, // CS
         OnShieldApplied, // S
 
-        // DTB : damage turn begin
-        // DTE : damage turn end
+     
+
 
         // CMPAS :  si le lanceur réussit sa prochaine tentative de retrait de PM (caster)
         // CMPDEP :  la cible utilise un PM pour se déplacer. (caster)

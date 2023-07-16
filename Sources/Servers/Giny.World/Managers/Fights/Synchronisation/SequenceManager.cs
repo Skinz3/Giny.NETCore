@@ -55,6 +55,7 @@ namespace Giny.World.Managers.Fights.Synchronisation
             return sequence;
         }
 
+     
         private void StartSequence(FightSequence sequence)
         {
             if (!IsSequencing)
