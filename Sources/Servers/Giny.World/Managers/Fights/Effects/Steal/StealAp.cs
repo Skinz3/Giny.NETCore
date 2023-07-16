@@ -10,14 +10,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.World.Managers.Fights.Effects.Debuffs
+namespace Giny.World.Managers.Fights.Effects.Steal
 {
-    [SpellEffectHandler(EffectsEnum.Effect_SubAP_Roll)]
-    public class SubApRoll : SpellEffectHandler
+    [SpellEffectHandler(EffectsEnum.Effect_StealAP_84)]
+    public class StealAp : SpellEffectHandler
     {
-        public SubApRoll(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
+        public StealAp(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
         {
-
         }
 
         protected override void Apply(IEnumerable<Fighter> targets)
@@ -33,20 +32,24 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
                     target.OnDodge(Source, ActionsEnum.ACTION_FIGHT_SPELL_DODGED_PA, dodged);
                 }
 
-                if (this.Effect.Duration > 1)
+                if (delta > 0)
                 {
-                    base.AddStatBuff(target, (short)-delta, target.Stats.ActionPoints, Effect.DispellableEnum, (short)EffectsEnum.Effect_SubAP);
+                    if (this.Effect.Duration > 1)
+                    {
+                        base.AddStatBuff(target, (short)-delta, target.Stats.ActionPoints, FightDispellableEnum.DISPELLABLE, (short)EffectsEnum.Effect_SubAP);
+                        base.AddStatBuff(Source, (short)delta, Source.Stats.ActionPoints, FightDispellableEnum.DISPELLABLE, (short)EffectsEnum.Effect_AddAP_111);
+                    }
+                    else
+                    {
+                        target.LooseAp(Source, (short)delta, ActionsEnum.ACTION_CHARACTER_ACTION_POINTS_LOST);
+                        Source.GainAp(Source, delta);
+                    }
                 }
-                else
-                {
-                    target.LooseAp(Source, (short)delta, ActionsEnum.ACTION_CHARACTER_ACTION_POINTS_LOST);
-                }
+
 
                 target.TriggerBuffs(TriggerTypeEnum.OnApRemovalAttempt, null);
             }
         }
-
-
         private short RollAP(Fighter fighter, int maxValue)
         {
             short value = 0;

@@ -197,7 +197,7 @@ namespace Giny.World.Managers.Fights
             private set;
         }
 
- 
+
 
         public void Send(NetworkMessage message)
         {
@@ -463,7 +463,7 @@ namespace Giny.World.Managers.Fights
             {
                 fighter.OnFightStarted();
             }
-      
+
 
             this.OnFightStarted();
 
@@ -896,7 +896,7 @@ namespace Giny.World.Managers.Fights
         {
             double[] ids = this.Timeline.GetAlives().Where(x => x.DisplayInTimeline()).Select(x => (double)x.Id).ToArray();
             double[] deads = this.Timeline.GetDeads().Where(x => x.DisplayInTimeline()).Select(x => (double)x.Id).ToArray();
-            fighter.Send(new GameFightTurnListMessage(ids, deads)); 
+            fighter.Send(new GameFightTurnListMessage(ids, deads));
         }
 
         public void CheckFightStart()
@@ -935,7 +935,7 @@ namespace Giny.World.Managers.Fights
             }
             return Ended;
         }
-     
+
         public abstract FightCommonInformations GetFightCommonInformations();
 
         public FightTeamInformations[] GetFightTeamInformations()

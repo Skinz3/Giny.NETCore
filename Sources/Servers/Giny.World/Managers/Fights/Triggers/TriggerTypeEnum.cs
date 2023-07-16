@@ -25,6 +25,7 @@ namespace Giny.World.Managers.Fights.Triggers
         CasterInflictDamageNeutral,
 
         OnCasterRemoveAp, // CAPA
+        OnCasterUseAp,  // CAP
 
         LifePointsAffected, // VA
         MaxLifePointsAffected, // VM
@@ -44,7 +45,7 @@ namespace Giny.World.Managers.Fights.Triggers
         OnDamagedBySummon, // DI
         OnDamagedBySpell, // DS
         OnDamagedByWeapon, // DCAC
-        //  OnDamagedByGlyph, // DG ------------> plutot tout les dommages indirects?
+        OnDamagedByGlyph, // DG 
         OnDamagedByTrap, //DT
         OnDamagedByEnemyTrap, // DTE
         OnDamagedMelee, //DM
@@ -53,16 +54,15 @@ namespace Giny.World.Managers.Fights.Triggers
         OnDamagedByAllyPush, //PMD
         OnDamagedByEnemyPush, // PPD    
 
-        //OnDamageEnemyByPush, // MMD
-
-        OnSummon, // CI
+        OnSummon, // CI Caster Invoke 
 
         OnSwitchPosition, // MS
         OnTurnBegin, // TB
-        OnTurnEnd, // TE
+        OnTurnEnd, // TE (bad timing when buffs added)
 
         AfterTurnBegin, // ATB
 
+        OnApRemovalAttempt, // ?????? called but dunno raw trigger
         OnMpRemovalAttempt,
         OnMPLost, //  MPA (effective loss? attempt? )
         OnAPLost, // APA
@@ -83,74 +83,33 @@ namespace Giny.World.Managers.Fights.Triggers
 
         OnCriticalHit, //CC
         OnDeath, //X
+        OnKill, // K
 
-        OnPushed, //MP , P
-        OnMoved, //M
-        OnTackled, //tF
-        OnTackle, //tS
+
+        OnPushed, // P
+        OnMoved, // M
+        OnTackled, // tF
+        OnTackle, // tS
 
         CasterCriticalHitOnAlly, // DCCBA
 
+        CasterAddShield, // CS
+        OnShieldApplied, // S
 
-        OnTeleportPortal,
+        // DTB : damage turn begin
+        // DTE : damage turn end
 
-        // DTB dommage poisons (? dommages reçus indirectements)
+        // CMPAS :  si le lanceur réussit sa prochaine tentative de retrait de PM (caster)
+        // CMPDEP :  la cible utilise un PM pour se déplacer. (caster)
+        // LPU : Quand le lanceur remonte à 100% de sa vie via du soin ou du vol de vie (sort nuée péstidentielle, item : Pestilence de Corruption) 
+        // KWW : Lorsque le porteur achève une entité avec une arme
 
+        OnTeleportPortal, // TP
 
         /*
          * Custom
          */
         Delayed,
         Unknown,
-
-
-
-        /*
-        *A=lose AP (101)
-        *CC=on critical hit
-        *d=dispell
-        *D=damage
-        *DA=damage air
-        *DBA=damage on ally
-        *DBE=damage on enemy
-        *DC=damaged by weapon
-        *DE=damage earth
-        *DF=damage fire
-        *DG=damage from glyph
-        *DI=
-        *DM=distance between 0 and 1
-        *DN=damage neutral
-        *DP=damage from trap
-        *Dr=
-        *DR=distance > 1
-        *DS=not weapon
-        *DTB=
-        *DTE=
-        *DW=damage water
-        *EO=on add state
-        *EO#=on add state #
-        *Eo=on state removed
-        *Eo#=on state # removed
-        *H=on heal
-        *I=instant
-        *m=lose mp (127)
-        *M=OnMoved
-        *mA=
-        *MD=push damage
-        *MDM=receive push damages from enemy push
-        *MDP=inflict push damage to enemy
-        *ML=
-        *MP=Pushed
-        *MS=
-        *P=
-        *R=Lost Range
-        *TB=turn begin
-        *TE=turn end
-        *tF=Tackled
-        *tS=Tackle
-        *X= Death
-        *CT =tackle enemy?
-        *CI = Summoned
-        */
     }
 }

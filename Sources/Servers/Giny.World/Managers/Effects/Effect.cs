@@ -197,6 +197,8 @@ namespace Giny.World.Managers.Effects
                     return new Trigger(TriggerTypeEnum.OnDamagedFire);
                 case "DN":
                     return new Trigger(TriggerTypeEnum.OnDamagedNeutral);
+                case "DG":
+                    return new Trigger(TriggerTypeEnum.OnDamagedByGlyph);
                 case "DT":
                     return new Trigger(TriggerTypeEnum.OnDamagedByTrap);
                 case "DTE":
@@ -237,8 +239,7 @@ namespace Giny.World.Managers.Effects
                     return new Trigger(TriggerTypeEnum.OnMPLost);
                 case "APA":
                     return new Trigger(TriggerTypeEnum.OnAPLost);
-                case "CAPA":
-                    return new Trigger(TriggerTypeEnum.OnCasterRemoveAp);
+
                 case "CDBE":
                     return new Trigger(TriggerTypeEnum.CasterInflictDamageEnnemy);
                 case "CDBA":
@@ -248,7 +249,11 @@ namespace Giny.World.Managers.Effects
                 case "R":
                     return new Trigger(TriggerTypeEnum.OnRangeLost);
                 case "CMPA":
-                    return new Trigger(TriggerTypeEnum.OnMpRemovalAttempt);
+                    return new Trigger(TriggerTypeEnum.OnMpRemovalAttempt); // fail?
+                case "CAPA":
+                    return new Trigger(TriggerTypeEnum.OnCasterRemoveAp); // fail ?
+                case "CAP":
+                    return new Trigger(TriggerTypeEnum.OnCasterUseAp);
                 case "MS":
                     return new Trigger(TriggerTypeEnum.OnSwitchPosition);
                 case "PPD":
@@ -280,6 +285,15 @@ namespace Giny.World.Managers.Effects
 
                 case "MA":
                     return new Trigger(TriggerTypeEnum.OnPulled);
+
+                case "K":
+                    return new Trigger(TriggerTypeEnum.OnKill);
+
+                case "CS":
+                    return new Trigger(TriggerTypeEnum.CasterAddShield);
+
+                case "S":
+                    return new Trigger(TriggerTypeEnum.OnShieldApplied);
                     /* 
                      * Not sure about how it works
                      * 

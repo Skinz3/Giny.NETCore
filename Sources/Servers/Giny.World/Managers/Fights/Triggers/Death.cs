@@ -15,11 +15,17 @@ namespace Giny.World.Managers.Fights.Triggers
             get;
             set;
         }
-        public Death(Fighter source)
+        private Fighter Target
+        {
+            get;
+            set;
+        }
+        public Death(Fighter source, Fighter target)
         {
             this.Source = source;
+            this.Target = target;   
         }
-       
+
 
         public Fighter GetSource()
         {

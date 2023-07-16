@@ -34,10 +34,10 @@ namespace Giny.World.Managers.Fights.Effects.Steal
 
                 if (delta > 0)
                 {
-                    if (this.Effect.Duration > 1 && Effect.EffectEnum != EffectsEnum.Effect_LostMP)
+                    if (this.Effect.Duration > 1)
                     {
                         base.AddStatBuff(target, (short)-delta, target.Stats.MovementPoints, FightDispellableEnum.DISPELLABLE, (short)EffectsEnum.Effect_SubMP);
-                        base.AddStatBuff(target, (short)delta, target.Stats.MovementPoints, FightDispellableEnum.DISPELLABLE, (short)EffectsEnum.Effect_AddMP_128);
+                        base.AddStatBuff(Source, (short)delta, Source.Stats.MovementPoints, FightDispellableEnum.DISPELLABLE, (short)EffectsEnum.Effect_AddMP_128);
                     }
                     else
                     {

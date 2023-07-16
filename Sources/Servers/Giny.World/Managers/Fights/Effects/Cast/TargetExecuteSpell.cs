@@ -33,14 +33,6 @@ namespace Giny.World.Managers.Fights.Effects.Cast
         {
             Spell spell = CreateCastedSpell();
 
-            if (CastHandler.Cast.Spell.Level.Id == spell.Level.Id)
-            {
-                Source.Fight.Warn("Cancelling spell cast. Preventing stackoverflow.");
-                return;
-            }
-
-
-
             foreach (var target in targets)
             {
                 SpellCast cast = new SpellCast(target, spell, target.Cell, CastHandler.Cast);

@@ -543,6 +543,7 @@ namespace Giny.World.Managers.Fights.Fighters
             Stats.GainMp(delta);
             OnPointsVariation(source, ActionsEnum.ACTION_CHARACTER_MOVEMENT_POINTS_WIN, delta);
         }
+
         public void LooseAp(Fighter source, short amount, ActionsEnum action)
         {
             Stats.UseAp(amount);
@@ -957,7 +958,16 @@ namespace Giny.World.Managers.Fights.Fighters
                 }
 
                 if (!cast.ApFree)
-                    LooseAp(this, GetApCost(cast.Spell.Level), 0);
+                {
+                    var apCost = GetApCost(cast.Spell.Level);
+
+                    if (apCost > 0)
+                    {
+                        LooseAp(this, apCost, 0);
+                        this.TriggerBuffs(TriggerTypeEnum.OnCasterUseAp, null);
+                    }
+
+                }
 
                 if (result != SpellCastResult.CELL_NOT_FREE)
                 {
@@ -1857,6 +1867,23 @@ namespace Giny.World.Managers.Fights.Fighters
                 }
             }
         }
+        public void AddShield(Fighter source, short delta)
+        {
+            Stats[CharacteristicEnum.SHIELD].Context += delta;
+
+            source.TriggerBuffs(TriggerTypeEnum.CasterAddShield, null);
+            this.TriggerBuffs(TriggerTypeEnum.OnShieldApplied, null);
+        }
+        public void RemoveShield(Fighter source, short delta)
+        {
+            Stats[CharacteristicEnum.SHIELD].Context -= delta;
+
+            if (Stats[CharacteristicEnum.SHIELD].TotalInContext() < 0)
+            {
+                Stats[CharacteristicEnum.SHIELD].Context = 0;
+            }
+        }
+
 
         private void UpdateBuff(Fighter source, Buff buff)
         {
@@ -1888,7 +1915,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 return DamageResult.Zero();
             }
 
-            this.LastAttacker = damage.Source;
+            LastAttacker = damage.Source;
 
             if ((IsInvulnerable() || !damage.Source.CanDealDamages()) || (IsInvulnerableMelee() && damage.Source.IsMeleeWith(this))
              || (IsInvulnerableRange() && !damage.Source.IsMeleeWith(this)) || delta < 0)
@@ -1966,8 +1993,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
                     shieldLoss = delta;
 
-                    Stats.RemoveShield((short)delta);
-
+                    RemoveShield(damage.Source, (short)delta);
                     DispellShieldBuffs(damage.Source, shieldLoss);
                 }
             }
@@ -1982,13 +2008,11 @@ namespace Giny.World.Managers.Fights.Fighters
                         actionId = 0,
                         elementId = (int)damage.EffectSchool,
                         loss = Stats.LifePoints,
-                        permanentDamages = 0,
+                        permanentDamages = permanentDamages,
                     });
 
                     lifeLoss = (short)Stats.LifePoints;
                     Stats.LifePoints = 0;
-
-
                 }
                 else
                 {
@@ -2024,7 +2048,7 @@ namespace Giny.World.Managers.Fights.Fighters
             damage.OnApplied(result);
             TotalDamageReceivedSequenced += lifeLoss;
 
-            if (this.Stats.LifePoints <= 0)
+            if (DeadAlive)
             {
                 Die(damage.Source);
             }
@@ -2092,6 +2116,7 @@ namespace Giny.World.Managers.Fights.Fighters
                     switch (markSource.Type)
                     {
                         case GameActionMarkTypeEnum.GLYPH:
+                            TriggerBuffs(TriggerTypeEnum.OnDamagedByGlyph, damage);
                             break;
                         case GameActionMarkTypeEnum.TRAP:
                             TriggerBuffs(TriggerTypeEnum.OnDamagedByTrap, damage);
@@ -2356,7 +2381,10 @@ namespace Giny.World.Managers.Fights.Fighters
 
                     this.DeathTime = DateTime.Now;
 
-                    TriggerBuffs(TriggerTypeEnum.OnDeath, new Death(killedBy));
+                    Death token = new Death(killedBy, this);
+
+                    TriggerBuffs(TriggerTypeEnum.OnDeath, token);
+                    killedBy.TriggerBuffs(TriggerTypeEnum.OnKill, token);
 
                     this.Alive = false;
 

@@ -29,12 +29,12 @@ namespace Giny.World.Managers.Fights.Buffs
 
         public override void Execute()
         {
-            Target.Stats.AddShield(Delta);
+            Target.AddShield(GetSource(),Delta);
         }
 
         public override void Dispell()
         {
-            Target.Stats.RemoveShield(Delta);
+            Target.RemoveShield(GetSource(),Delta);
         }
 
         public override string ToString()

@@ -28,6 +28,9 @@ namespace Giny.World.Managers.Fights.Cast
             }
             switch (fighter.Breed)
             {
+                case BreedEnum.Ecaflip:
+                    Ecaflip(fighter);
+                    break;
                 case BreedEnum.Huppermage:
                     Huppermage(fighter);
                     break;
@@ -72,6 +75,13 @@ namespace Giny.World.Managers.Fights.Cast
             }
         }
 
+        private static void Ecaflip(CharacterFighter fighter)
+        {
+            if (fighter.Character.HasSpell(12879))
+            {
+                fighter.ExecuteSpell(17019, 1, fighter.Cell);
+            }
+        }
         private static void Huppermage(CharacterFighter fighter)
         {
             /*

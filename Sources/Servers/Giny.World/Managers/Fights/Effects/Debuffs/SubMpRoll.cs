@@ -35,7 +35,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
                 }
 
 
-                //if (delta > 0)
+                if (delta > 0)
                 {
                     if (this.Effect.Duration > 1 && Effect.EffectEnum != EffectsEnum.Effect_LostMP)
                     {

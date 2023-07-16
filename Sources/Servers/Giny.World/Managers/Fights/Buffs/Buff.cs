@@ -81,7 +81,10 @@ namespace Giny.World.Managers.Fights.Buffs
             this.Target = target;
             this.EffectHandler = effectHandler;
             this.TurnIndex = target.Fight.GetTurnIndex();
+
             this.Duration = effectHandler.Effect.Duration;
+
+
             this.Dispellable = dispellable;
             this.CustomActionId = customActionId;
 

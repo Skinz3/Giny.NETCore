@@ -6,6 +6,7 @@ using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Fights.Cast.Units;
 using Giny.World.Managers.Fights.Effects.Summons;
 using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Managers.Fights.Triggers;
 using Giny.World.Managers.Stats;
 using Giny.World.Records.Characters;
 using Giny.World.Records.Monsters;
@@ -53,20 +54,7 @@ namespace Giny.World.Managers.Fights.Stats
             set;
         }
 
-        public void AddShield(short delta)
-        {
-            this[CharacteristicEnum.SHIELD].Context += delta;
-        }
-        public void RemoveShield(short delta)
-        {
-            this[CharacteristicEnum.SHIELD].Context -= delta;
-
-
-            if (this[CharacteristicEnum.SHIELD].TotalInContext() < 0)
-            {
-                this[CharacteristicEnum.SHIELD].Context = 0;
-            }
-        }
+      
 
         public void AddMaxVitality(short delta)
         {
