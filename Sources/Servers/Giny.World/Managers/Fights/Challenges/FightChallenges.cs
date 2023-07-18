@@ -1,4 +1,5 @@
-﻿using Giny.Protocol.Enums;
+﻿using Giny.Core.Extensions;
+using Giny.Protocol.Enums;
 using Giny.Protocol.Messages;
 using Giny.Protocol.Types;
 using Giny.World.Managers.Fights.Fighters;
@@ -13,6 +14,10 @@ namespace Giny.World.Managers.Fights.Challenges
 {
     public class FightChallenges
     {
+        /// <summary>
+        /// in seconds
+        /// </summary>
+        public const short ChallengeSelectionTime = 5;
         public Fight Fight
         {
             get;
@@ -58,6 +63,10 @@ namespace Giny.World.Managers.Fights.Challenges
 
         public void DisplayChallengeProposal()
         {
+            short added = (short)(ChallengeSelectionTime * ChallengeProposals.Count);
+
+            Fight.AddPlacementDelay(added);
+
             List<ChallengeInformation> challengeInformations = new List<ChallengeInformation>();
 
             foreach (var proposal in ChallengeProposals)
@@ -67,7 +76,7 @@ namespace Giny.World.Managers.Fights.Challenges
 
             FightTeam targetTeam = GetTeamChallenged();
 
-            targetTeam.Send(new ChallengeProposalMessage(ChallengeProposals[ProposalIndex].GetChallengeInformations().ToArray(), 30d));
+            targetTeam.Send(new ChallengeProposalMessage(ChallengeProposals[ProposalIndex].GetChallengeInformations().ToArray(), added));
         }
 
 
@@ -96,6 +105,13 @@ namespace Giny.World.Managers.Fights.Challenges
 
         public void OnFightStart()
         {
+            var leader = GetTeamChallenged().Leader as CharacterFighter;
+
+            if (leader.ChallengeMod == ChallengeModEnum.CHALLENGE_RANDOM
+                || ChallengeProposals.Any(x => x.Selected == null))
+            {
+                RandomizeChallenges();
+            }
             ActiveChallenges = ChallengeProposals.Select(x => x.Selected).ToList();
 
             foreach (var challenge in ActiveChallenges)
@@ -123,6 +139,39 @@ namespace Giny.World.Managers.Fights.Challenges
                 DisplayChallengeProposal();
             }
 
+        }
+
+        public void RandomizeChallenges()
+        {
+            FightTeam targetTeam = GetTeamChallenged();
+
+            Random random = new Random();
+
+            foreach (var proposal in this.ChallengeProposals)
+            {
+                proposal.Selected = proposal.Challenges.Random(random);
+
+                targetTeam.Send(new ChallengeAddMessage(proposal.Selected.GetChallengeInformation()));
+            }
+        }
+
+        public Challenge? GetActiveChallenge(int id)
+        {
+            return ActiveChallenges.FirstOrDefault(x => x.Id == id);
+        }
+
+        public Challenge? GetProposalChallenge(int challengeId)
+        {
+            foreach (var proposal in ChallengeProposals)
+            {
+                var challenge = proposal.Challenges.FirstOrDefault(x => x.Id == challengeId);
+
+                if (challenge != null)
+                {
+                    return challenge;
+                }
+            }
+            return null;
         }
     }
 }

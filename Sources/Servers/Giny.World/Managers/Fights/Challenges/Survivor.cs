@@ -1,4 +1,5 @@
-﻿using Giny.World.Managers.Fights.Fighters;
+﻿using Giny.Protocol.Enums;
+using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Records.Challenges;
 using System;
 using System.Collections.Generic;
@@ -21,17 +22,32 @@ namespace Giny.World.Managers.Fights.Challenges
 
         public override void BindEvents()
         {
-
+            foreach (Fighter fighter in GetAffectedFighters())
+            {
+                fighter.Death += OnFighterDie;
+            }
         }
 
-        public override IEnumerable<Fighter> GetConcernedFighters()
+        private void OnFighterDie(Fighter target, Fighter source)
+        {
+            OnChallengeResulted(ChallengeStateEnum.CHALLENGE_FAILED);
+        }
+
+        public override bool IsValid()
+        {
+            return Team.GetFightersCount() > 1; 
+        }
+        public override IEnumerable<Fighter> GetAffectedFighters()
         {
             return Team.GetFighters<Fighter>();
         }
 
         public override void UnbindEvents()
         {
-
+            foreach (Fighter fighter in GetAffectedFighters())
+            {
+                fighter.Death -= OnFighterDie;
+            }
         }
     }
 }

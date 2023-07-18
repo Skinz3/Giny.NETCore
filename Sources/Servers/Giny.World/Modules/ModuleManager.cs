@@ -62,7 +62,7 @@ namespace Giny.World.Modules
         {
             foreach (var module in m_modules)
             {
-                Logger.WriteColor2("Applying '" + module.Key + "'");
+                Logger.WriteColor1("Applying '" + module.Key + "'");
                 module.Value.Initialize();
                 module.Value.CreateHooks();
             }

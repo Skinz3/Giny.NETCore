@@ -45,7 +45,7 @@ namespace Giny.World.Managers.Fights.Challenges
             return Team.GetFightersCount() > 1;
         }
 
-        public override IEnumerable<Fighter> GetConcernedFighters()
+        public override IEnumerable<Fighter> GetAffectedFighters()
         {
             return Team.GetFighters<Fighter>();
         }

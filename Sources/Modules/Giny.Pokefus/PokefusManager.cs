@@ -169,7 +169,7 @@ namespace Giny.Pokefus
 
                 if (level != effectLevel.Level)
                 {
-                    character.DisplayPopup(0, "Serveur", string.Format(PokefusLevelUpMessage, effect.MonsterName, effectLevel.Level));
+                    character.DisplayPopup(1, "Serveur", string.Format(PokefusLevelUpMessage, effect.MonsterName, effectLevel.Level));
                 }
 
                 character.Inventory.OnItemModified(item);

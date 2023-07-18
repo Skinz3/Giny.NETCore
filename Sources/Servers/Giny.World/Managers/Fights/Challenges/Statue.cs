@@ -33,7 +33,7 @@ namespace Giny.World.Managers.Fights.Challenges
         {
             Fight.TurnEnded -= OnTurnEnded;
         }
-        public override IEnumerable<Fighter> GetConcernedFighters()
+        public override IEnumerable<Fighter> GetAffectedFighters()
         {
             return Team.GetFighters<Fighter>();
         }

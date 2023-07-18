@@ -3,6 +3,7 @@ using Giny.Protocol.Enums;
 using Giny.Protocol.Messages;
 using Giny.Protocol.Types;
 using Giny.World.Managers.Fights;
+using Giny.World.Managers.Fights.Challenges;
 using Giny.World.Network;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace Giny.World.Handlers.Fights
                 return;
             }
 
+
             client.Character.Fighter.ChallengeBonus = (ChallengeBonusEnum)message.challengeBonus;
             client.Send(new ChallengeBonusChoiceSelectedMessage(message.challengeBonus));
         }
@@ -33,6 +35,11 @@ namespace Giny.World.Handlers.Fights
             {
                 return;
             }
+
+            if (client.Character.Fighter.Fight.Started)
+            {
+                return;
+            }
             client.Character.Fighter.ChallengeMod = (ChallengeModEnum)message.challengeMod;
 
             client.Send(new ChallengeModSelectedMessage(message.challengeMod));
@@ -41,8 +48,33 @@ namespace Giny.World.Handlers.Fights
         [MessageHandler]
         public static void HandleChallengeTargetsRequestMessage(ChallengeTargetsRequestMessage message, WorldClient client)
         {
-            // client.Send(new ChallengeTargetsMessage(new ChallengeInformation(message.challengeId, new ChallengeTargetInformation[] { new ChallengeTargetInformation(-1, 255) },
-            //   50, 20, 0)));
+
+            if (!client.Character.Fighting)
+            {
+                return;
+            }
+
+            var fight = client.Character.Fighter.Fight as FightPvM;
+
+            if (fight == null)
+            {
+                return;
+            }
+
+            Challenge? challenge = fight.Challenges.GetActiveChallenge(message.challengeId);
+
+            if (challenge == null)
+            {
+                return;
+            }
+
+            var targets = challenge.GetTargets();
+
+            if (targets.Count() > 0)
+            {
+                client.Send(new ChallengeTargetsMessage(challenge.GetChallengeInformation()));
+            }
+
         }
 
         [MessageHandler]
@@ -60,11 +92,12 @@ namespace Giny.World.Handlers.Fights
                 return;
             }
 
+            var challenge = fight.Challenges.GetProposalChallenge(message.challengeId);
 
-
-            client.Character.Fighter.Team.Send(new ChallengeSelectedMessage(
-                new ChallengeInformation(message.challengeId, new ChallengeTargetInformation[0],
-                50, 50, 3)));
+            if (challenge != null)
+            {
+                client.Character.Fighter.Team.Send(new ChallengeSelectedMessage(challenge.GetChallengeInformation()));
+            }
         }
 
         [MessageHandler]
@@ -85,9 +118,6 @@ namespace Giny.World.Handlers.Fights
 
 
             fight.Challenges.ValidateChallenge(message.challengeId);
-
-
-
         }
 
         [MessageHandler]

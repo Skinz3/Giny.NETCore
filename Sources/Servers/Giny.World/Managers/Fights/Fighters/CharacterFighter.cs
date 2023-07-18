@@ -346,7 +346,7 @@ namespace Giny.World.Managers.Fights.Fighters
                     informations = new GameContextActorPositionInformations(Id, GetEntityDispositionInformations()),
                     teamId = (byte)Team.TeamId,
                 },
-
+                
                 stats = Stats.GetGameFightCharacteristics(this, target),
                 alignmentInfos = Character.GetActorAlignmentInformations(),
                 breed = Character.Breed.Id,

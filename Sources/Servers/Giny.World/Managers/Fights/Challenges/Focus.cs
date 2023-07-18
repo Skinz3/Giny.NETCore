@@ -1,4 +1,6 @@
-﻿using Giny.World.Managers.Fights.Fighters;
+﻿using Giny.Protocol.Enums;
+using Giny.World.Managers.Fights.Cast.Units;
+using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Records.Challenges;
 using System;
 using System.Collections.Generic;
@@ -11,28 +13,83 @@ namespace Giny.World.Managers.Fights.Challenges
     [Challenge(31)]
     public class Focus : Challenge
     {
+        /// <summary>
+        /// Lorsqu'un ennemi est attaqué par un allié, il doit être achevé avant qu'un autre ennemi ne soit attaqué.
+        /// </summary>
+        /// <param name="record"></param>
+        /// <param name="team"></param>
         public Focus(ChallengeRecord record, FightTeam team) : base(record, team)
         {
 
         }
 
-        public override double XpBonusRatio => 0.10d;
+        public override double XpBonusRatio => 0.60d;
 
-        public override double DropBonusRatio => 0.10;
+        public override double DropBonusRatio => 0.60;
+
+        private Fighter? FocusTarget
+        {
+            get;
+            set;
+        }
 
         public override void BindEvents()
         {
-
+            foreach (var fighter in GetAffectedFighters())
+            {
+                fighter.ReceiveDamages += OnEnemyReceivedDamage;
+            }
         }
 
+        private void OnEnemyReceivedDamage(Damage damages)
+        {
+            if (FocusTarget == null || !FocusTarget.AliveSafe)
+            {
+                FocusTarget = damages.Target;
+                OnTargetUpdated();
+            }
+            else
+            {
+                if (FocusTarget != damages.Target)
+                {
+                    OnChallengeResulted(ChallengeStateEnum.CHALLENGE_FAILED);
+                }
+                else
+                {
+                    if (!FocusTarget.AliveSafe)
+                    {
+                        FocusTarget = null;
+                    }
+                }
+
+            }
+        }
+        public override bool IsValid()
+        {
+            return Team.EnemyTeam.GetFightersCount() > 1;
+        }
         public override void UnbindEvents()
         {
-
+            foreach (var fighter in GetAffectedFighters())
+            {
+                fighter.ReceiveDamages -= OnEnemyReceivedDamage;
+            }
         }
 
-        public override IEnumerable<Fighter> GetConcernedFighters()
+        public override IEnumerable<Fighter> GetTargets()
         {
-            return Team.GetFighters<Fighter>();
+            if (FocusTarget != null)
+            {
+                return new Fighter[] { this.FocusTarget };
+            }
+            else
+            {
+                return new Fighter[0];
+            }
+        }
+        public override IEnumerable<Fighter> GetAffectedFighters()
+        {
+            return Team.EnemyTeam.GetFighters<Fighter>();
         }
     }
 }

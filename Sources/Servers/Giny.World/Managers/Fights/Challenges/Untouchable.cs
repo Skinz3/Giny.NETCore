@@ -1,4 +1,6 @@
-﻿using Giny.World.Managers.Fights.Fighters;
+﻿using Giny.Protocol.Enums;
+using Giny.World.Managers.Fights.Cast.Units;
+using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Records.Challenges;
 using System;
 using System.Collections.Generic;
@@ -16,21 +18,32 @@ namespace Giny.World.Managers.Fights.Challenges
 
         }
 
-        public override double XpBonusRatio => 0.10d;
+        public override double XpBonusRatio => 1.20;
 
-        public override double DropBonusRatio => 0.10;
+        public override double DropBonusRatio => 1.20;
 
         public override void BindEvents()
         {
+            foreach (var fighter in GetAffectedFighters())
+            {
+                fighter.ReceiveDamages += OnAllyReceiveDamages;
+            }
+        }
 
+        private void OnAllyReceiveDamages(Damage damages)
+        {
+            OnChallengeResulted(ChallengeStateEnum.CHALLENGE_FAILED);
         }
 
         public override void UnbindEvents()
         {
-
+            foreach (var fighter in GetAffectedFighters())
+            {
+                fighter.ReceiveDamages -= OnAllyReceiveDamages;
+            }
         }
 
-        public override IEnumerable<Fighter> GetConcernedFighters()
+        public override IEnumerable<Fighter> GetAffectedFighters()
         {
             return Team.GetFighters<Fighter>();
         }

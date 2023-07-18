@@ -56,14 +56,12 @@ namespace Giny.World.Managers.Fights.Challenges
 
             }
 
-
             List<ChallengeProposal> proposals = new List<ChallengeProposal>();
 
             for (int i = 0; i < count; i++)
             {
                 proposals.Add(new ChallengeProposal(i));
             }
-
 
             foreach (var proposal in proposals)
             {

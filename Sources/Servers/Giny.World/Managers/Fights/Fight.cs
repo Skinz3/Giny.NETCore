@@ -354,7 +354,18 @@ namespace Giny.World.Managers.Fights
         {
             return 0;
         }
+        /// <summary>
+        /// lock placement timer?
+        /// </summary>
+        /// <param name="delay"></param>
+        public void AddPlacementDelay(short delay)
+        {
+            var left = (GetPlacementTimeLeft() * 100) + (delay * 1000);
 
+            this.PlacementTimer.Dispose();
+            this.PlacementTimer = new ActionTimer(left, StartFighting, false);
+            this.PlacementTimer.Start();
+        }
         public void StartPlacement()
         {
             if (GetPlacementDelay() > 0)

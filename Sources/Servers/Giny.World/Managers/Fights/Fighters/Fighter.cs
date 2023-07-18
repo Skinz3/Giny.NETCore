@@ -50,13 +50,17 @@ namespace Giny.World.Managers.Fights.Fighters
         /* -- Fight events API -- */
         public delegate void FighterEventDelegate(Fighter target);
 
-        public delegate void FighterKilledDelegate(Fighter target, Fighter source);
+        public delegate void TargetSourceDelegate(Fighter target, Fighter source);
+
+        public delegate void DamageReceivedDelegate(Damage damages);
 
         public event FighterEventDelegate Moved;
 
         public event FighterEventDelegate Tackled;
 
-        public event FighterKilledDelegate Killed;
+        public event TargetSourceDelegate Death;
+
+        public event DamageReceivedDelegate ReceiveDamages;
 
         /*  --  */
 
@@ -2164,6 +2168,8 @@ namespace Giny.World.Managers.Fights.Fighters
 
         private void TriggerBuffs(Damage damage)
         {
+            ReceiveDamages?.Invoke(damage);
+
             if (damage.EffectSchool == EffectSchoolEnum.Fix || damage.WontTriggerBuffs)
             {
                 return;
@@ -2386,7 +2392,7 @@ namespace Giny.World.Managers.Fights.Fighters
         }
         public virtual void OnDie(Fighter killedBy)
         {
-            Killed?.Invoke(this, killedBy);
+            Death?.Invoke(this, killedBy);
 
         }
         public bool IsCarrying()

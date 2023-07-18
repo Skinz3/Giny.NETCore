@@ -22,8 +22,11 @@ namespace Giny.World.Managers.Fights.Challenges
             set;
         } = new List<Challenge>();
 
-        public Challenge Selected = null;
-
+        public Challenge Selected
+        {
+            get;
+            set;
+        }
 
         public bool Consistent => Challenges.Count == 2;
 

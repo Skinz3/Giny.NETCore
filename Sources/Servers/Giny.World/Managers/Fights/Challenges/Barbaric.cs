@@ -30,7 +30,7 @@ namespace Giny.World.Managers.Fights.Challenges
            
         }
 
-        public override IEnumerable<Fighter> GetConcernedFighters()
+        public override IEnumerable<Fighter> GetAffectedFighters()
         {
             return Team.GetFighters<Fighter>();
         }

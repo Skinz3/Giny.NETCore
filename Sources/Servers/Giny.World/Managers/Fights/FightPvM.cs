@@ -71,7 +71,7 @@ namespace Giny.World.Managers.Fights
 
         public override int GetPlacementDelay()
         {
-            return 30;
+            return 10;
         }
         /*
          * Before fight ended.
@@ -86,9 +86,12 @@ namespace Giny.World.Managers.Fights
          */
         public override void OnFightEnded()
         {
-            if (ShowBlades && Winners == GetTeam(TeamTypeEnum.TEAM_TYPE_MONSTER) && (this.Map.Instance.MonsterGroupCount < MonstersManager.MaxGroupPerMap))
+            if (ShowBlades && (this.Map.Instance.MonsterGroupCount < MonstersManager.MaxGroupPerMap))
             {
-                Map.Instance.AddEntity(MonsterGroup);
+                if (Winners == GetTeam(TeamTypeEnum.TEAM_TYPE_MONSTER) || !Started)
+                {
+                    Map.Instance.AddEntity(MonsterGroup);
+                }
             }
         }
         public bool GroupExistOnMap()

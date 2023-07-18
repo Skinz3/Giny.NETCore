@@ -63,10 +63,10 @@ namespace Giny.World.Managers.Fights.Challenges
         }
         public virtual void Initialize()
         {
-            this.ConcernedFighters = GetConcernedFighters().ToList();
+            this.ConcernedFighters = GetAffectedFighters().ToList();
         }
 
-        public abstract IEnumerable<Fighter> GetConcernedFighters();
+        public abstract IEnumerable<Fighter> GetAffectedFighters();
 
         public abstract void BindEvents();
 
@@ -86,11 +86,7 @@ namespace Giny.World.Managers.Fights.Challenges
         protected virtual void OnChallengeResulted(ChallengeStateEnum result)
         {
             this.State = result;
-            Fight.Send(new ChallengeResultMessage()
-            {
-                challengeId = Id,
-                success = Success,
-            });
+            Fight.Send(new ChallengeResultMessage(Id, Success));
             UnbindEvents();
         }
 
@@ -101,26 +97,32 @@ namespace Giny.World.Managers.Fights.Challenges
 
         public ChallengeInformation GetChallengeInformation()
         {
-            return new ChallengeInformation(Id, new ChallengeTargetInformation[0], (int)(DropBonusRatio * 100d),
+            List<ChallengeTargetInformation> targetInformations = new List<ChallengeTargetInformation>();
+
+
+            if (State == ChallengeStateEnum.CHALLENGE_RUNNING)
+            {
+                foreach (var target in GetTargets())
+                {
+                    targetInformations.Add(new ChallengeTargetInformation(target.Id, target.Cell.Id));
+                }
+            }
+         
+
+            return new ChallengeInformation(Id, targetInformations.ToArray(), (int)(DropBonusRatio * 100d),
                 (int)(XpBonusRatio * 100d), (byte)State);
         }
 
-        protected virtual void OnChallengeTargetUpdated()
-        {
-            // Fight.Send(new ChallengeTargetUpdateMessage(Id, GetTargetId()));
-        }
+
         protected void OnTargetUpdated()
         {
-            //  Fight.Send(new ChallengeTargetUpdateMessage(Id, GetTargetId()));
+            Team.Send(new ChallengeTargetsMessage(GetChallengeInformation()));
         }
 
-        public virtual long GetTargetId()
+        public virtual IEnumerable<Fighter> GetTargets()
         {
-            return 0;
+            return new Fighter[0];
         }
-        public virtual short GetTargetedCellId()
-        {
-            return 0;
-        }
+
     }
 }
