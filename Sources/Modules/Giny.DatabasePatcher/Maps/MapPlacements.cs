@@ -28,6 +28,13 @@ namespace Giny.DatabasePatcher.Maps
         {
             Logger.Write("Building map placements ...");
 
+
+            if (!Directory.Exists(PlacementPatternDirectory))
+            {
+                Directory.CreateDirectory(PlacementPatternDirectory);
+                Logger.Write("Unable to find directory " + PlacementPatternDirectory + ". Aborting", Channels.Warning);
+            }
+
             IEnumerable<MapRecord> maps = MapRecord.GetMaps();
 
             int mapsCount = maps.Count();

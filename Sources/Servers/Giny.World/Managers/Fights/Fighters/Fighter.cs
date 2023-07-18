@@ -495,7 +495,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
             using (Fight.SequenceManager.StartSequence(SequenceTypeEnum.SEQUENCE_MOVE))
             {
-                short mpCost = (short)(path.Count - 1);
+                short mpCost = this.Cell.Point.DistanceTo(path.Last().Point);
 
                 if (mpCost <= Stats.MovementPoints.TotalInContext() && mpCost > 0 && Stats.MovementPoints.TotalInContext() > 0)
                 {

@@ -1,5 +1,6 @@
 ﻿using Giny.Core;
 using Giny.Core.Commands;
+using Giny.DatabasePatcher.Challenges;
 using Giny.DatabasePatcher.Experience;
 using Giny.DatabasePatcher.Items;
 using Giny.DatabasePatcher.Maps;
@@ -28,6 +29,7 @@ namespace Giny.DatabasePatcher
         public static void PatchCommand()
         {
             Logger.Write("Patching world database ...", Channels.Info);
+          //  ChallengeSpells.Patch();
             Experiences.Patch();
             ItemAppearances.Patch();
             LivingObjects.Patch();

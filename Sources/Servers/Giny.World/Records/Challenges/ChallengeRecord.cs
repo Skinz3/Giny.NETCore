@@ -1,6 +1,7 @@
 ﻿using Giny.IO.D2O;
 using Giny.ORM.Attributes;
 using Giny.ORM.Interfaces;
+using Giny.Protocol.Custom.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,6 +62,20 @@ namespace Giny.World.Records.Challenges
 
         [D2OField("targetMonsterId")]
         public int TargetMonsterId
+        {
+            get;
+            set;
+        }
+
+        [D2OField("categoryId")]
+        public int CategoryId
+        {
+            get;
+            set;
+        }
+
+        [Update]
+        public long InitialSpellLevelId
         {
             get;
             set;

@@ -84,6 +84,18 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public override BreedEnum Breed => (BreedEnum)Character.Record.BreedId;
 
+        public ChallengeModEnum ChallengeMod
+        {
+            get;
+            set;
+        }
+
+        public ChallengeBonusEnum ChallengeBonus
+        {
+            get;
+            set;
+        }
+
         public CharacterFighter(Character character, FightTeam team, CellRecord roleplayCell) : base(team, roleplayCell)
         {
             this.Character = character;

@@ -12,6 +12,7 @@ using Giny.Protocol.Types;
 using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Entities.Monsters;
 using Giny.World.Managers.Fights.Cast;
+using Giny.World.Managers.Fights.Challenges;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Results;
 using Giny.World.Managers.Formulas;
@@ -34,6 +35,11 @@ namespace Giny.World.Managers.Fights
             set;
         }
 
+        public FightChallenges Challenges
+        {
+            get;
+            private set;
+        }
         public FightPvM(Character origin, int id, MapRecord map, FightTeam blueTeam, FightTeam redTeam, CellRecord cell, MonsterGroup monsterGroup)
             : base(origin, id, map, blueTeam, redTeam, cell)
         {
@@ -48,6 +54,9 @@ namespace Giny.World.Managers.Fights
                     this.TargetMapId = nextMapId;
                 }
             }
+
+            Challenges = new FightChallenges(this);
+
         }
         public override FightCommonInformations GetFightCommonInformations()
         {
@@ -69,7 +78,8 @@ namespace Giny.World.Managers.Fights
          */
         protected override void OnWinnersDetermined()
         {
-            // challenges
+            Challenges.OnWinnersDetermined();
+
         }
         /*
          * When fight ended.
@@ -86,14 +96,7 @@ namespace Giny.World.Managers.Fights
             return Map.Instance.MonsterGroupExists(this.MonsterGroup);
         }
 
-        private double GetChallengesDropRatioBonus()
-        {
-            return 0d;
-        }
-        private double GetChallengesExpRatioBonus()
-        {
-            return 0d;
-        }
+
         [WIP] // drop bonus , unit test.
         protected override IEnumerable<IFightResult> GenerateResults()
         {
@@ -109,20 +112,27 @@ namespace Giny.World.Managers.Fights
 
                 var kamas = Winners == team ? droppers.Sum(entry => entry.GetDroppedKamas()) * team.GetFighters<CharacterFighter>().Count() : 0;
 
-                double xpBonusRatio = 0d;
-                double dropBonusRatio = 0d;
-
-                if (team == GetTeamChallenged())
-                {
-                    xpBonusRatio += GetChallengesExpRatioBonus();
-                    dropBonusRatio += GetChallengesDropRatioBonus();
-                }
-
                 foreach (var looter in looters)
                 {
+                    double xpBonusRatio = 0d;
+                    double dropBonusRatio = 0d;
+
                     if (looter is FightPlayerResult && looter.Outcome == FightOutcomeEnum.RESULT_VICTORY)
                     {
+
                         FightPlayerResult playerResult = (FightPlayerResult)looter;
+
+                        if (team == Challenges.GetTeamChallenged())
+                        {
+                            if (playerResult.Fighter.ChallengeBonus == ChallengeBonusEnum.CHALLENGE_EXPERIENCE_BONUS)
+                            {
+                                xpBonusRatio += Challenges.GetChallengesExpRatioBonus();
+                            }
+                            else if (playerResult.Fighter.ChallengeBonus == ChallengeBonusEnum.CHALLENGE_DROP_BONUS)
+                            {
+                                dropBonusRatio += Challenges.GetChallengesDropRatioBonus();
+                            }
+                        }
 
                         playerResult.AddEarnedExperience(xpBonusRatio, 0);
                     }
@@ -166,34 +176,12 @@ namespace Giny.World.Managers.Fights
 
         protected override void OnPlacementStarted()
         {
-            DisplayChallenges();
-        }
-      
-
-        private FightTeam GetTeamChallenged()
-        {
-            return this.GetTeam(TeamTypeEnum.TEAM_TYPE_PLAYER);
-        }
-
-
-        private void DisplayChallenges()
-        {
-            FightTeam targetTeam = GetTeamChallenged();
-           // targetTeam.Send(new ChallengeNumberMessage(1));
-        }
-
-        private int GetChallengeCount()
-        {
-            FightTeam team = GetTeamChallenged();
-            if (team.GetTeamLevel() >= team.EnemyTeam.GetTeamLevel())
-                return 1;
-            else
-                return 2;
+            Challenges.OnPlacementStarted();
         }
 
         public override void OnFightStarted()
         {
-           
+            Challenges.OnFightStart();
         }
     }
 }

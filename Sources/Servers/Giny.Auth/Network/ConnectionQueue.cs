@@ -1,4 +1,5 @@
 ﻿using Giny.Auth.Handlers;
+using Giny.Core;
 using Giny.Core.DesignPattern;
 using Giny.Core.Extensions;
 using Giny.Protocol.Messages;
@@ -62,6 +63,10 @@ namespace Giny.Auth.Network
                         Queue.Remove(authClient);
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.Write("Error in ConnectionQueue : " + ex, Channels.Warning);
             }
             finally
             {

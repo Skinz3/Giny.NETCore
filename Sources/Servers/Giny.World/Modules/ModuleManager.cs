@@ -67,7 +67,7 @@ namespace Giny.World.Modules
                 module.Value.CreateHooks();
             }
         }
-       
+
 
         public IEnumerable<Type> GetModuleTypes()
         {
@@ -75,9 +75,10 @@ namespace Giny.World.Modules
         }
         private void LoadModule(Type type)
         {
+
             string moduleName = type.GetCustomAttribute<ModuleAttribute>().ModuleName;
             IModule module = (IModule)Activator.CreateInstance(type);
-            Logger.Write("Module '" + moduleName + "' loaded", Channels.Log);
+            Logger.WriteColor1("Module '" + moduleName + "' loaded");
             m_modules.Add(moduleName, module);
         }
     }

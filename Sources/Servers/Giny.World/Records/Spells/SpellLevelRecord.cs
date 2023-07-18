@@ -216,7 +216,8 @@ namespace Giny.World.Records.Spells
             return result;
         }
 
-        public static List<SpellLevelRecord> GetLevelsCastingSpell(int targetSpellId)
+
+        public static List<SpellLevelRecord> GetLevelsCastingSpell(int targetSpellId, byte? grade = null)
         {
             List<SpellLevelRecord> results = new List<SpellLevelRecord>();
 
@@ -224,15 +225,27 @@ namespace Giny.World.Records.Spells
             {
                 foreach (var effect in level.Effects.OfType<EffectDice>())
                 {
-                    if (effect.IsSpellCastEffect() && effect.Min == targetSpellId && !results.Contains(level))
+                    if (grade.HasValue)
                     {
-                        results.Add(level);
+                        if (effect.IsSpellCastEffect() && effect.Min == targetSpellId && effect.Max == grade && !results.Contains(level))
+                        {
+                            results.Add(level);
+                        }
                     }
+                    else
+                    {
+                        if (effect.IsSpellCastEffect() && effect.Min == targetSpellId && !results.Contains(level))
+                        {
+                            results.Add(level);
+                        }
+                    }
+
                 }
             }
 
             return results;
         }
+
         public static IEnumerable<SpellLevelRecord> GetSpellLevels()
         {
             return SpellsLevels.Values;
