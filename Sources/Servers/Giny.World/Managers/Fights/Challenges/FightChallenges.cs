@@ -19,6 +19,11 @@ namespace Giny.World.Managers.Fights.Challenges
         /// in seconds
         /// </summary>
         public const short ChallengeSelectionTime = 15;
+
+        private const byte NumberOfChallengesNormal = 1;
+
+        private const byte NumberOfChallengesDungeon = 2;
+
         public Fight Fight
         {
             get;
@@ -57,10 +62,9 @@ namespace Giny.World.Managers.Fights.Challenges
             return Fight.GetTeam(TeamTypeEnum.TEAM_TYPE_PLAYER);
         }
 
-
         private int GetChallengeCount()
         {
-            return Fight.Map.IsDungeonMap ? 2 : 1;
+            return Fight.Map.IsDungeonMap ? NumberOfChallengesDungeon : NumberOfChallengesNormal;
         }
 
         public void DisplayChallengeProposal()
@@ -133,15 +137,13 @@ namespace Giny.World.Managers.Fights.Challenges
         }
         public void OnPlacementStarted()
         {
-            var challengeCount = GetChallengeCount();
+            int challengeCount = GetChallengeCount();
 
             if (challengeCount > 0)
             {
                 ChallengeProposals = ChallengesManager.Instance.CreateChallengeProposals(GetTeamChallenged(), challengeCount);
                 DisplayChallengeNumber();
             }
-
-
         }
 
         public void ValidateChallenge(int challengeId)
@@ -155,7 +157,6 @@ namespace Giny.World.Managers.Fights.Challenges
 
             FightTeam targetTeam = GetTeamChallenged();
             targetTeam.Send(new ChallengeAddMessage(ChallengeProposals[ProposalIndex].Selected.GetChallengeInformation()));
-
 
             if (ProposalIndex < ChallengeProposals.Count - 1)
             {

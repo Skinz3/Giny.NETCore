@@ -1012,7 +1012,8 @@ namespace Giny.World.Managers.Fights
 
                 this.ApplyResults(results);
 
-                this.Send(new GameFightEndMessage(GetFightDuration(), (int)(ConfigFile.Instance.XpRate * 100), 0, (from entry in results
+
+                this.Send(new GameFightEndMessage(GetFightDuration(), 0, 0, (from entry in results
                                                                                                                    select entry.GetFightResultListEntry()).ToArray(),
                                                                                     new NamedPartyTeamWithOutcome[0]));
             }

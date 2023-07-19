@@ -99,8 +99,6 @@ namespace Giny.World.Managers.Fights
             return Map.Instance.MonsterGroupExists(this.MonsterGroup);
         }
 
-
-        [WIP] // drop bonus , unit test.
         protected override IEnumerable<IFightResult> GenerateResults()
         {
             IEnumerable<IFightResult> results = GetFighters<Fighter>(false).Where(x => !x.IsSummoned()).Select(x => x.GetFightResult()).ToArray();
