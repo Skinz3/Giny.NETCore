@@ -70,7 +70,6 @@ namespace Giny.World.Managers.Fights.Challenges
                 {
                     if (proposals.Where(x => x != proposal).All(x => x.IsChallengeCompatible(challenge.Record)))
                     {
-                        challenge.Initialize();
                         proposal.Challenges.Add(challenge);
                     }
 

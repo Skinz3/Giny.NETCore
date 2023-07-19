@@ -663,5 +663,7 @@ namespace Giny.World.Managers.Fights.Fighters
             Fight.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 184, this.Name);
 
         }
+
+       
     }
 }

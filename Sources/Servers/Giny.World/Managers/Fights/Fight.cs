@@ -197,7 +197,11 @@ namespace Giny.World.Managers.Fights
             private set;
         }
 
-
+        public bool PlacementStarted
+        {
+            get;
+            private set;
+        }
 
         public void Send(NetworkMessage message)
         {
@@ -275,6 +279,7 @@ namespace Giny.World.Managers.Fights
             this.Synchronizer = null;
             this.Marks = new List<Mark>();
             this.Buffs = new List<Buff>();
+            this.PlacementTimer = new ActionTimer(GetPlacementDelay() * 1000, StartFighting, false);
         }
 
         public void OnSequenceStarted(FightSequence sequence)
@@ -329,16 +334,8 @@ namespace Giny.World.Managers.Fights
         }
         public short GetPlacementTimeLeft()
         {
-            if (Started)
-            {
-                return 0;
-            }
-            double num = GetPlacementDelay() - (DateTime.Now - this.CreationTime).TotalSeconds;
-            if (num < 0.0)
-            {
-                num = 0.0;
-            }
-            return (short)(num * 10d);
+            return (short)(PlacementTimer.GetRemainingTime() / 100d);
+
         }
         public void UpdateEntitiesPositions()
         {
@@ -360,8 +357,8 @@ namespace Giny.World.Managers.Fights
         /// <param name="delay"></param>
         public void AddPlacementDelay(short delay)
         {
-            var left = (GetPlacementTimeLeft() * 100) + (delay * 1000);
-
+            var left = (GetPlacementTimeLeft() * 100);
+            left += (delay * 1000);
             this.PlacementTimer.Dispose();
             this.PlacementTimer = new ActionTimer(left, StartFighting, false);
             this.PlacementTimer.Start();
@@ -370,7 +367,6 @@ namespace Giny.World.Managers.Fights
         {
             if (GetPlacementDelay() > 0)
             {
-                this.PlacementTimer = new ActionTimer(GetPlacementDelay() * 1000, StartFighting, false);
                 this.PlacementTimer.Start();
             }
 
@@ -381,8 +377,12 @@ namespace Giny.World.Managers.Fights
 
             OnPlacementStarted();
 
+            this.PlacementStarted = true;
+
             FightEventApi.PlacementStarted(this);
+
             Origin.OnInitiateFight(this);
+
 
         }
 
@@ -1012,8 +1012,8 @@ namespace Giny.World.Managers.Fights
 
                 this.ApplyResults(results);
 
-                this.Send(new GameFightEndMessage(GetFightDuration(), 1, 0, (from entry in results
-                                                                             select entry.GetFightResultListEntry()).ToArray(),
+                this.Send(new GameFightEndMessage(GetFightDuration(), (int)(ConfigFile.Instance.XpRate * 100), 0, (from entry in results
+                                                                                                                   select entry.GetFightResultListEntry()).ToArray(),
                                                                                     new NamedPartyTeamWithOutcome[0]));
             }
 
@@ -1063,7 +1063,8 @@ namespace Giny.World.Managers.Fights
 
             if (joinedTeam.Options.CanJoin(character))
             {
-                joinedTeam.AddFighter(character.CreateFighter(joinedTeam));
+                var fighter = character.CreateFighter(joinedTeam);
+                joinedTeam.AddFighter(fighter);
             }
         }
         public bool CanBeSeen(MapPoint from, MapPoint to, bool throughEntities = false, Fighter except = null)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace Giny.Core.Time
     {
         private Action m_action;
         private Timer m_timer;
-
+        private Stopwatch m_stopwatch;
         public bool Started
         {
             get;
@@ -59,17 +60,29 @@ namespace Giny.Core.Time
                 throw new Exception("Unable to start timer. Action is null, maybe timer is disposed?");
             }
             m_timer.Start();
+            m_stopwatch = Stopwatch.StartNew();
             Started = true;
         }
         public void Pause()
         {
+            m_stopwatch?.Stop();
             Started = false;
             m_timer.Stop();
+        }
+
+        public double GetRemainingTime()
+        {
+            if (!Started)
+            {
+                return Interval;
+            }
+            return Interval - m_stopwatch.ElapsedMilliseconds;
         }
 
         public void Dispose()
         {
             Started = false;
+            m_stopwatch.Stop();
             m_timer?.Stop();
             m_timer?.Dispose();
             m_timer = null;

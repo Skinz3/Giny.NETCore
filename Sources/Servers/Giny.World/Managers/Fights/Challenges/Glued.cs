@@ -32,7 +32,7 @@ namespace Giny.World.Managers.Fights.Challenges
 
         private void OnTurnEnded(Fighter fighter)
         {
-            if (ConcernedFighters.Contains(fighter))
+            if (AffectedFighters.Contains(fighter))
             {
                 if (!fighter.GetMeleeFighters().Any(x => x != fighter && x.IsFriendlyWith(fighter)))
                 {

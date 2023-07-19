@@ -4,6 +4,7 @@ using Giny.Protocol.Messages;
 using Giny.Protocol.Types;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Results;
+using Giny.World.Managers.Formulas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Giny.World.Managers.Fights.Challenges
         /// <summary>
         /// in seconds
         /// </summary>
-        public const short ChallengeSelectionTime = 5;
+        public const short ChallengeSelectionTime = 15;
         public Fight Fight
         {
             get;
@@ -46,6 +47,7 @@ namespace Giny.World.Managers.Fights.Challenges
         {
             this.Fight = fight;
             ActiveChallenges = new List<Challenge>();
+            ChallengeProposals = new List<ChallengeProposal>();
             ProposalIndex = 0;
 
 
@@ -63,9 +65,7 @@ namespace Giny.World.Managers.Fights.Challenges
 
         public void DisplayChallengeProposal()
         {
-            short added = (short)(ChallengeSelectionTime * ChallengeProposals.Count);
-
-            Fight.AddPlacementDelay(added);
+            Fight.AddPlacementDelay(ChallengeSelectionTime);
 
             List<ChallengeInformation> challengeInformations = new List<ChallengeInformation>();
 
@@ -76,14 +76,26 @@ namespace Giny.World.Managers.Fights.Challenges
 
             FightTeam targetTeam = GetTeamChallenged();
 
-            targetTeam.Send(new ChallengeProposalMessage(ChallengeProposals[ProposalIndex].GetChallengeInformations().ToArray(), added));
+            targetTeam.Send(new ChallengeProposalMessage(ChallengeProposals[ProposalIndex].GetChallengeInformations().ToArray(), ChallengeSelectionTime));
         }
 
+
+        public void OnFighterJoined(CharacterFighter fighter)
+        {
+            if (ChallengeProposals.Count > 0)
+            {
+                DisplayChallengeNumber(fighter);
+            }
+        }
 
         private void DisplayChallengeNumber()
         {
             FightTeam targetTeam = GetTeamChallenged();
             targetTeam.Send(new ChallengeNumberMessage(ChallengeProposals.Count));
+        }
+        private void DisplayChallengeNumber(CharacterFighter fighter)
+        {
+            fighter.Send(new ChallengeNumberMessage(ChallengeProposals.Count));
         }
 
         public void OnWinnersDetermined()
@@ -107,8 +119,7 @@ namespace Giny.World.Managers.Fights.Challenges
         {
             var leader = GetTeamChallenged().Leader as CharacterFighter;
 
-            if (leader.ChallengeMod == ChallengeModEnum.CHALLENGE_RANDOM
-                || ChallengeProposals.Any(x => x.Selected == null))
+            if (ChallengeProposals.Any(x => x.Selected == null))
             {
                 RandomizeChallenges();
             }
@@ -116,17 +127,30 @@ namespace Giny.World.Managers.Fights.Challenges
 
             foreach (var challenge in ActiveChallenges)
             {
+                challenge.Initialize();
                 challenge.BindEvents();
             }
         }
         public void OnPlacementStarted()
         {
-            ChallengeProposals = ChallengesManager.Instance.CreateChallengeProposals(GetTeamChallenged(), GetChallengeCount());
-            DisplayChallengeNumber();
+            var challengeCount = GetChallengeCount();
+
+            if (challengeCount > 0)
+            {
+                ChallengeProposals = ChallengesManager.Instance.CreateChallengeProposals(GetTeamChallenged(), challengeCount);
+                DisplayChallengeNumber();
+            }
+
+
         }
 
         public void ValidateChallenge(int challengeId)
         {
+            if (ChallengeProposals.Count == 0)
+            {
+                return;
+            }
+
             ChallengeProposals[ProposalIndex].ValidateChallenge(challengeId);
 
             FightTeam targetTeam = GetTeamChallenged();
@@ -173,5 +197,7 @@ namespace Giny.World.Managers.Fights.Challenges
             }
             return null;
         }
+
+
     }
 }

@@ -31,15 +31,22 @@ namespace Giny.World.Managers.Fights.Challenges
         }
         public override void BindEvents()
         {
-            Target = Team.EnemyTeam.GetFighters<Fighter>().Random(new Random());
-            OnTargetUpdated();
-
             foreach (var enemy in Team.EnemyTeam.GetFighters())
             {
                 enemy.Death += OnEnemyDie;
             }
         }
 
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            Target = Team.EnemyTeam.GetFighters<Fighter>().Random(new Random());
+            OnTargetUpdated();
+
+
+        }
         private void OnEnemyDie(Fighter target, Fighter source)
         {
             if (Target == null)

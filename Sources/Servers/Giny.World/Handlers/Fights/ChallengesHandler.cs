@@ -85,6 +85,11 @@ namespace Giny.World.Handlers.Fights
                 return;
             }
 
+            if (client.Character.Fighter != client.Character.Fighter.Team.Leader)
+            {
+                return;
+            }
+
             var fight = client.Character.Fighter.Fight as FightPvM;
 
             if (fight == null)
@@ -109,9 +114,15 @@ namespace Giny.World.Handlers.Fights
                 return;
             }
 
+            
             var fight = client.Character.Fighter.Fight as FightPvM;
 
             if (fight == null)
+            {
+                return;
+            }
+
+            if (client.Character.Fighter != client.Character.Fighter.Team.Leader)
             {
                 return;
             }
@@ -135,9 +146,20 @@ namespace Giny.World.Handlers.Fights
                 return;
             }
 
+            if (client.Character.Fighter != client.Character.Fighter.Team.Leader)
+            {
+                return;
+            }
+
+
             client.Character.Fighter.ChallengeMod = (ChallengeModEnum)message.challengeMod;
 
-            fight.Challenges.DisplayChallengeProposal();
+            if (client.Character.Fighter.ChallengeMod == ChallengeModEnum.CHALLENGE_CHOICE)
+            {
+                fight.Challenges.DisplayChallengeProposal();
+
+            }
+
 
         }
     }

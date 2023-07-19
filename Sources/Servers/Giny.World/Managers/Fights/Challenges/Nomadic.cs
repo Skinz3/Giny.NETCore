@@ -29,7 +29,7 @@ namespace Giny.World.Managers.Fights.Challenges
         {
             Fight.TurnEnded += OnTurnEnded;
 
-            foreach (var fighter in ConcernedFighters)
+            foreach (var fighter in AffectedFighters)
             {
                 fighter.Tackled += OnTackled;
             }
@@ -40,7 +40,7 @@ namespace Giny.World.Managers.Fights.Challenges
         {
             Fight.TurnEnded -= OnTurnEnded;
 
-            foreach (var fighter in ConcernedFighters)
+            foreach (var fighter in AffectedFighters)
             {
                 fighter.Tackled -= OnTackled;
             }
@@ -57,7 +57,7 @@ namespace Giny.World.Managers.Fights.Challenges
         }
         private void OnTurnEnded(Fighter fighter)
         {
-            if (ConcernedFighters.Contains(fighter))
+            if (AffectedFighters.Contains(fighter))
             {
                 if (fighter.Stats.MovementPoints.TotalInContext() > 0)
                 {

@@ -242,7 +242,7 @@ namespace Giny.World.Managers.Fights
             };
         }
 
-        public Fighter CloserFighter(Fighter source)
+        public Fighter? CloserFighter(Fighter source)
         {
             return GetFighters<Fighter>(true).OrderByDescending(x => x.GetMPDistance(source)).LastOrDefault();
         }
@@ -250,7 +250,7 @@ namespace Giny.World.Managers.Fights
         {
             return GetFighters<Fighter>(true).OrderByDescending(x => x.GetMPDistance(source)).ToArray();
         }
-        public Fighter LastDead()
+        public Fighter? LastDead()
         {
             return Fighters.FindAll(x => !x.Alive).OrderByDescending(x => x.DeathTime).FirstOrDefault();
         }

@@ -1396,7 +1396,7 @@ namespace Giny.World.Managers.Entities.Characters
             this.Record.Stats[CharacteristicEnum.STATS_POINTS].Base = (short)(5 * SafeLevel - 5);
             RefreshStats();
         }
-        public Fighter CreateFighter(FightTeam team)
+        public CharacterFighter CreateFighter(FightTeam team)
         {
             if (Look.RemoveAura())
                 RefreshActorOnMap();

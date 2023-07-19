@@ -71,7 +71,7 @@ namespace Giny.World.Managers.Fights
 
         public override int GetPlacementDelay()
         {
-            return 10;
+            return 30;
         }
         /*
          * Before fight ended.
@@ -174,6 +174,13 @@ namespace Giny.World.Managers.Fights
                         }
                     }
                 }
+
+                if (fighter is CharacterFighter && this.PlacementStarted)
+                {
+                    Challenges.OnFighterJoined((CharacterFighter)fighter);
+                }
+
+
             }
         }
 

@@ -32,7 +32,7 @@ namespace Giny.World.Managers.Fights.Challenges
             private set;
         }
 
-        protected List<Fighter> ConcernedFighters
+        protected List<Fighter> AffectedFighters
         {
             get;
             private set;
@@ -63,7 +63,7 @@ namespace Giny.World.Managers.Fights.Challenges
         }
         public virtual void Initialize()
         {
-            this.ConcernedFighters = GetAffectedFighters().ToList();
+            this.AffectedFighters = GetAffectedFighters().ToList();
         }
 
         public abstract IEnumerable<Fighter> GetAffectedFighters();
@@ -107,7 +107,7 @@ namespace Giny.World.Managers.Fights.Challenges
                     targetInformations.Add(new ChallengeTargetInformation(target.Id, target.Cell.Id));
                 }
             }
-         
+
 
             return new ChallengeInformation(Id, targetInformations.ToArray(), (int)(DropBonusRatio * 100d),
                 (int)(XpBonusRatio * 100d), (byte)State);
