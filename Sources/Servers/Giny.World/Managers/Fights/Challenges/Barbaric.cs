@@ -1,4 +1,6 @@
-﻿using Giny.World.Managers.Fights.Fighters;
+﻿using Giny.Protocol.Enums;
+using Giny.World.Managers.Fights.Cast.Units;
+using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Records.Challenges;
 using System;
 using System.Collections.Generic;
@@ -8,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Challenges
 {
+    /// <summary>
+    /// Barbare
+    /// Les personnages alliés doivent achever les ennemis avec une arme.
+    /// </summary>
     [Challenge(9)]
     public class Barbaric : Challenge
     {
@@ -22,12 +28,29 @@ namespace Giny.World.Managers.Fights.Challenges
 
         public override void BindEvents()
         {
-           
+            foreach (var enemy in Team.EnemyTeam.GetFighters<Fighter>())
+            {
+                enemy.DamageReceived += OnEnemyReceiveDamage;
+            }
+        }
+
+        private void OnEnemyReceiveDamage(Damage damages, DamageResult result)
+        {
+            if (!damages.Target.AliveSafe)
+            {
+                if (!damages.IsWeaponDamage())
+                {
+                    OnChallengeResulted(ChallengeStateEnum.CHALLENGE_FAILED);
+                }
+            }
         }
 
         public override void UnbindEvents()
         {
-           
+            foreach (var enemy in Team.EnemyTeam.GetFighters<Fighter>())
+            {
+                enemy.DamageReceived -= OnEnemyReceiveDamage;
+            }
         }
 
         public override IEnumerable<Fighter> GetAffectedFighters()

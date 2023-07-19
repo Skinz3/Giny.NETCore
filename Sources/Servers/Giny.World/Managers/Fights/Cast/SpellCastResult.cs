@@ -18,6 +18,7 @@ namespace Giny.World.Managers.Fights.Cast
         UNWALKABLE_CELL,
         HAS_NOT_SPELL,
         CANNOT_PLAY,
+        EFFECT_HANDLER_ERROR,
         UNKNOWN,
         OK,
     }

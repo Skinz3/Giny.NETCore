@@ -1,7 +1,9 @@
-﻿using Giny.Protocol.Enums;
+﻿using Giny.Core.Extensions;
+using Giny.Protocol.Enums;
 using Giny.World.Managers.Fights.Cast.Units;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Records.Challenges;
+using Org.BouncyCastle.Asn1.X509;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,22 +13,22 @@ using System.Threading.Tasks;
 namespace Giny.World.Managers.Fights.Challenges
 {
     /// <summary>
-    /// Focus
-    /// Lorsqu'un ennemi est attaqué par un allié, il doit être achevé avant qu'un autre ennemi ne soit attaqué.
+    /// Elitiste
+    /// Toutes les attaques doivent être concentrées sur la cible désignée jusqu'à ce qu'il meure.
     /// </summary>
-    [Challenge(31)]
-    public class Focus : Challenge
+    [Challenge(32)]
+    public class Elitist : Challenge
     {
-        public Focus(ChallengeRecord record, FightTeam team) : base(record, team)
+        public Elitist(ChallengeRecord record, FightTeam team) : base(record, team)
         {
 
         }
 
-        public override double XpBonusRatio => 0.60d;
+        public override double XpBonusRatio => 0.40d;
 
-        public override double DropBonusRatio => 0.60;
+        public override double DropBonusRatio => 0.40;
 
-        private Fighter? FocusTarget
+        private Fighter? Target
         {
             get;
             set;
@@ -40,27 +42,32 @@ namespace Giny.World.Managers.Fights.Challenges
             }
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            Target = Team.EnemyTeam.GetFighters<Fighter>().Random(new Random());
+            OnTargetUpdated();
+        }
+
+
         private void OnEnemyReceivedDamage(Damage damages, DamageResult result)
         {
-            if (FocusTarget == null || !FocusTarget.AliveSafe)
+            if (Target == null)
             {
-                FocusTarget = damages.Target;
-                OnTargetUpdated();
+                return;
+            }
+            if (damages.Target == Target && !Target.AliveSafe)
+            {
+                Target = null;
+                OnChallengeResulted(ChallengeStateEnum.CHALLENGE_COMPLETED);
             }
             else
             {
-                if (FocusTarget != damages.Target)
+                if (Target != damages.Target)
                 {
                     OnChallengeResulted(ChallengeStateEnum.CHALLENGE_FAILED);
                 }
-                else
-                {
-                    if (!FocusTarget.AliveSafe)
-                    {
-                        FocusTarget = null;
-                    }
-                }
-
             }
         }
         public override bool IsValid()
@@ -77,9 +84,9 @@ namespace Giny.World.Managers.Fights.Challenges
 
         public override IEnumerable<Fighter> GetTargets()
         {
-            if (FocusTarget != null)
+            if (Target != null)
             {
-                return new Fighter[] { this.FocusTarget };
+                return new Fighter[] { this.Target };
             }
             else
             {

@@ -38,7 +38,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
         private void UpdateWalls()
         {
-             
+            this.Walls = WallManager.Instance.GetWalls(this);
         }
         public override void OnDie(Fighter killedBy)
         {

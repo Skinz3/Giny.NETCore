@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Challenges
 {
+    /// <summary>
+    /// Prudent
+    /// Les combattants alliés ne doivent jamais finir leur tour sur une cellule adjacente à celle d'un ennemi.
+    /// </summary>
     [Challenge(40)]
     public class Cautious : Challenge
     {

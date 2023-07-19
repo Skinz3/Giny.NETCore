@@ -25,14 +25,13 @@ namespace Giny.World.Managers.Fights.Effects.Cast
             {
                 return;
             }
-            foreach (var target in targets)  // target , sure 
-            {
-                SpellCast cast = new SpellCast(Source, spell, TargetCell, CastHandler.Cast);  // TargetCell, sure ! 
-                cast.Token = this.GetTriggerToken<ITriggerToken>();
-                cast.Force = true;
-                cast.Silent = true;
-                Source.CastSpell(cast);
-            }
+            //foreach (var target in targets)  // target , sure 
+
+            SpellCast cast = new SpellCast(Source, spell, TargetCell, CastHandler.Cast);  // TargetCell, sure ! 
+            cast.Token = this.GetTriggerToken<ITriggerToken>();
+            cast.Force = true;
+            cast.Silent = true;
+            Source.CastSpell(cast);
         }
     }
 }

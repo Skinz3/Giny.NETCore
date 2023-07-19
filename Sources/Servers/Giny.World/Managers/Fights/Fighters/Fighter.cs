@@ -52,7 +52,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public delegate void TargetSourceDelegate(Fighter target, Fighter source);
 
-        public delegate void DamageReceivedDelegate(Damage damages);
+        public delegate void DamageReceivedDelegate(Damage damages, DamageResult result);
 
         public event FighterEventDelegate Moved;
 
@@ -60,7 +60,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public event TargetSourceDelegate Death;
 
-        public event DamageReceivedDelegate ReceiveDamages;
+        public event DamageReceivedDelegate DamageReceived;
 
         /*  --  */
 
@@ -934,7 +934,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
             if (result != SpellCastResult.OK && result != SpellCastResult.CELL_NOT_FREE && !cast.Force)
             {
-                OnSpellCastFailed(cast);
+                OnSpellCastFailed(cast, result);
                 return false;
             }
 
@@ -952,16 +952,13 @@ namespace Giny.World.Managers.Fights.Fighters
 
                 if (!handler.Initialize())
                 {
-                    OnSpellCastFailed(cast);
+                    OnSpellCastFailed(cast, SpellCastResult.EFFECT_HANDLER_ERROR);
                     return false;
                 }
 
                 UpdateInvisibility(handler);
 
-                if (handler.Cast.Animation)
-                {
-                    OnSpellCasting(handler);
-                }
+                OnSpellCasting(handler);
 
                 if (!cast.ApFree)
                 {
@@ -1026,9 +1023,36 @@ namespace Giny.World.Managers.Fights.Fighters
 
         }
 
+        [WIP("see stump")]
+        private void OnSpellCasting(SpellCastHandler handler)
+        {
+            Fighter target = Fight.GetFighter(handler.Cast.TargetCell.Id);
+
+            Fight.Send(new GameActionFightSpellCastMessage()
+            {
+                actionId = (short)ActionsEnum.ACTION_CAST_STARTING_SPELL,
+                critical = (byte)handler.Cast.Critical,
+                destinationCellId = handler.Cast.TargetCell.Id,
+                portalsIds = new short[0],
+                silentCast = handler.Cast.Silent,
+                sourceId = this.Id,
+                spellId = handler.Cast.Spell.Record.Id,
+                spellLevel = handler.Cast.Spell.Level.Grade,
+                targetId = target == null ? 0 : target.Id,
+                verboseCast = handler.Cast.GetParent() == null, // not sure
+            });
+
+            if (!handler.Cast.Force) // history not needed ?
+            {
+                this.SpellHistory.RegisterCastedSpell(handler.Cast.Spell.Level, this.Fight.GetFighter(handler.Cast.TargetCell.Id));
+            }
+
+
+        }
+
         protected virtual void OnSpellCasted(SpellCastHandler handler)
         {
-            this.SpellHistory.RegisterCastedSpell(handler.Cast.Spell.Level, this.Fight.GetFighter(handler.Cast.TargetCell.Id));
+
 
             foreach (var summon in GetSummons())
             {
@@ -1054,27 +1078,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
             }
         }
-        [WIP("see stump")]
-        private void OnSpellCasting(SpellCastHandler handler)
-        {
-            Fighter target = Fight.GetFighter(handler.Cast.TargetCell.Id);
 
-            Fight.Send(new GameActionFightSpellCastMessage()
-            {
-                actionId = (short)ActionsEnum.ACTION_CAST_STARTING_SPELL,
-                critical = (byte)handler.Cast.Critical,
-                destinationCellId = handler.Cast.TargetCell.Id,
-                portalsIds = new short[0],
-                silentCast = handler.Cast.Silent,
-                sourceId = this.Id,
-                spellId = handler.Cast.Spell.Record.Id,
-                spellLevel = handler.Cast.Spell.Level.Grade,
-                targetId = target == null ? 0 : target.Id,
-                verboseCast = handler.Cast.GetParent() == null, // not sure
-            });
-
-
-        }
 
         public virtual FightSpellCastCriticalEnum RollCriticalDice(SpellLevelRecord spell)
         {
@@ -1093,8 +1097,9 @@ namespace Giny.World.Managers.Fights.Fighters
             return critical;
         }
 
-        protected virtual void OnSpellCastFailed(SpellCast cast)
+        protected virtual void OnSpellCastFailed(SpellCast cast, SpellCastResult result)
         {
+
             Fight.Send(new GameActionFightNoSpellCastMessage(cast.Spell.Record.Id == 0 ? 0 : (int)cast.Spell.Level.Id));
         }
 
@@ -1489,18 +1494,19 @@ namespace Giny.World.Managers.Fights.Fighters
         }
         public void SetSpellCooldown(Fighter source, short spellId, short value)
         {
+
             SpellHistory.SetSpellCooldown(spellId, value);
 
             Fight.Send(new GameActionFightSpellCooldownVariationMessage()
             {
-                actionId = (short)ActionsEnum.ACTION_CHARACTER_ADD_SPELL_COOLDOWN,
+                actionId = 0,
                 sourceId = source.Id,
                 spellId = spellId,
                 targetId = Id,
                 value = value,
             });
 
-            OnSpellCooldownChanged(source, ActionsEnum.ACTION_CHARACTER_REMOVE_SPELL_COOLDOWN, spellId, value);
+            OnSpellCooldownChanged(source, 0, spellId, value);
         }
 
         public abstract Spell GetSpell(short spellId);
@@ -2116,7 +2122,10 @@ namespace Giny.World.Managers.Fights.Fighters
 
             DamageResult result = new DamageResult(lifeLoss, permanentDamages, shieldLoss);
 
+            DamageReceived?.Invoke(damage, result);
+
             damage.OnApplied(result);
+
             TotalDamageReceivedSequenced += lifeLoss;
 
             if (DeadAlive)
@@ -2168,7 +2177,6 @@ namespace Giny.World.Managers.Fights.Fighters
 
         private void TriggerBuffs(Damage damage)
         {
-            ReceiveDamages?.Invoke(damage);
 
             if (damage.EffectSchool == EffectSchoolEnum.Fix || damage.WontTriggerBuffs)
             {

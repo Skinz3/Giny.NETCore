@@ -483,10 +483,14 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
-            
+
             if (client.Character.Fighter == null)
                 return;
 
+
+            var res = client.Character.Fighter.CastSpell(13386, client.Character.Fighter.Cell.Id);
+
+            return;
 
             using (var seq = client.Character.Fighter.Fight.SequenceManager.StartSequence(Fights.Sequences.SequenceTypeEnum.SEQUENCE_SPELL))
             {

@@ -1,4 +1,5 @@
 ﻿using Giny.Core.Extensions;
+using Giny.Core.Time;
 using Giny.Protocol.Enums;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Records.Challenges;
@@ -11,12 +12,12 @@ using System.Threading.Tasks;
 namespace Giny.World.Managers.Fights.Challenges
 {
     /// <summary>
-    /// La cible désignée doit être achevée en premier.
+    /// La cible désignée doit être achevée en dernier.
     /// </summary>
-    [Challenge(3)]
-    public class Prime : Challenge
+    [Challenge(4)]
+    public class Last : Challenge
     {
-        public Prime(ChallengeRecord record, FightTeam team) : base(record, team)
+        public Last(ChallengeRecord record, FightTeam team) : base(record, team)
         {
         }
 
@@ -42,7 +43,7 @@ namespace Giny.World.Managers.Fights.Challenges
         {
             base.Initialize();
 
-            Target = Team.EnemyTeam.GetFighters<Fighter>().Random(new Random());
+            Target = Team.EnemyTeam.GetFighters<Fighter>().Random(new AsyncRandom());
             OnTargetUpdated();
 
 
@@ -54,15 +55,11 @@ namespace Giny.World.Managers.Fights.Challenges
                 return;
             }
 
-            if (target == Target)
-            {
-                OnChallengeResulted(ChallengeStateEnum.CHALLENGE_COMPLETED);
-                Target = null;
-                OnTargetUpdated();
-            }
-            else
+            if (target == Target && target.Team.Alives >= 1)
             {
                 OnChallengeResulted(ChallengeStateEnum.CHALLENGE_FAILED);
+                Target = null;
+                OnTargetUpdated();
             }
         }
 

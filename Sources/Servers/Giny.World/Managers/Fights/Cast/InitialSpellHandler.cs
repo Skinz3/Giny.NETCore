@@ -28,14 +28,21 @@ namespace Giny.World.Managers.Fights.Cast
             }
             switch (fighter.Breed)
             {
+                case BreedEnum.Roublard:
+                    Roublard(fighter);
+                    break;
+
                 case BreedEnum.Ecaflip:
                     Ecaflip(fighter);
+
                     break;
                 case BreedEnum.Huppermage:
                     Huppermage(fighter);
+
                     break;
                 case BreedEnum.Pandawa:
                     Pandawa(fighter);
+
                     break;
                 case BreedEnum.Sram:
                     Sram(fighter);
@@ -74,7 +81,10 @@ namespace Giny.World.Managers.Fights.Cast
                     break;
             }
         }
-
+        private static void Roublard(CharacterFighter fighter)
+        {
+            fighter.ExecuteSpell(20683, 1, fighter.Cell);
+        }
         private static void Ecaflip(CharacterFighter fighter)
         {
             if (fighter.Character.HasSpell(12879))

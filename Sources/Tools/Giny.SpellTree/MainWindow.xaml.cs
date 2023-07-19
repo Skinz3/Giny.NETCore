@@ -251,6 +251,7 @@ namespace Giny.SpellTree
                 case EffectsEnum.Effect_SummonSlave:
                 case EffectsEnum.Effect_KillAndSummon:
                 case EffectsEnum.Effect_KillAndSummonSlave:
+                case EffectsEnum.Effect_SummonsBomb:
                     MonsterRecord monster = MonsterRecord.GetMonsterRecord((short)CurrentEffect.Min);
 
                     if (monster != null)

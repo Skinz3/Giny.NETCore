@@ -278,7 +278,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
             if (canCast != SpellCastResult.OK)
             {
-                OnSpellCastFailed(cast);
+                OnSpellCastFailed(cast, canCast);
                 return false;
             }
 
@@ -292,7 +292,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
                 if (!handler.Initialize())
                 {
-                    OnSpellCastFailed(cast);
+                    OnSpellCastFailed(cast, canCast);
                     return false;
                 }
 
@@ -332,7 +332,7 @@ namespace Giny.World.Managers.Fights.Fighters
         [WIP]
         public override GameFightFighterInformations GetFightFighterInformations(CharacterFighter target)
         {
-   
+
             return new GameFightCharacterInformations()
             {
                 contextualId = Id,
@@ -346,7 +346,7 @@ namespace Giny.World.Managers.Fights.Fighters
                     informations = new GameContextActorPositionInformations(Id, GetEntityDispositionInformations()),
                     teamId = (byte)Team.TeamId,
                 },
-                
+
                 stats = Stats.GetGameFightCharacteristics(this, target),
                 alignmentInfos = Character.GetActorAlignmentInformations(),
                 breed = Character.Breed.Id,
@@ -664,6 +664,6 @@ namespace Giny.World.Managers.Fights.Fighters
 
         }
 
-       
+
     }
 }

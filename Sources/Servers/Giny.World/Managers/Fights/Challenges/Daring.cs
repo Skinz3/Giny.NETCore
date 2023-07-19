@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 namespace Giny.World.Managers.Fights.Challenges
 {
     /// <summary>
-    /// Collant
-    /// Les combattants alliés doivent finir leur tour sur une cellule adjacente à celle d'un autre combattant allié.
+    /// Hardi
+    /// Les combattants alliés doivent finir leur tour sur une cellule adjacente à celle d'un ennemi.
     /// </summary>
-    [Challenge(37)]
-    public class Glued : Challenge
+    [Challenge(36)]
+    public class Daring : Challenge
     {
-        public Glued(ChallengeRecord record, FightTeam team) : base(record, team)
+        public Daring(ChallengeRecord record, FightTeam team) : base(record, team)
         {
 
         }
@@ -38,7 +38,7 @@ namespace Giny.World.Managers.Fights.Challenges
         {
             if (AffectedFighters.Contains(fighter))
             {
-                if (!fighter.GetMeleeFighters().Any(x => x != fighter && x.IsFriendlyWith(fighter)))
+                if (!fighter.GetMeleeFighters().Any(x => x != fighter && !x.IsFriendlyWith(fighter)))
                 {
                     OnChallengeResulted(ChallengeStateEnum.CHALLENGE_FAILED);
                 }

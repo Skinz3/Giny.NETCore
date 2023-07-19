@@ -31,17 +31,28 @@ namespace Giny.World.Managers.Fights.Marks
 
         public override void OnAdded()
         {
-            
+
         }
 
         public override void OnRemoved()
         {
-            
+
         }
 
         public override void Trigger(Fighter target, MarkTriggerType triggerType)
         {
             ApplyEffects(target);
+        }
+
+
+        public static Wall CreateWall(SummonedBomb bomb1, SummonedBomb bomb2)
+        {
+            var wallSize = (byte)bomb1.Cell.Point.DistanceTo(bomb2.Cell.Point);
+
+            Wall wall = new Wall(bomb1.Fight.PopNextMarkId(), null, new Line(0, wallSize, false, false),
+                MarkTriggerType.OnTurnBegin, Color.Red, bomb1.Summoner, bomb1.Cell, null, null);
+
+            return wall;
         }
     }
 }

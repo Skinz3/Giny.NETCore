@@ -26,11 +26,11 @@ namespace Giny.World.Managers.Fights.Challenges
         {
             foreach (var fighter in GetAffectedFighters())
             {
-                fighter.ReceiveDamages += OnAllyReceiveDamages;
+                fighter.DamageReceived += OnAllyReceiveDamages;
             }
         }
 
-        private void OnAllyReceiveDamages(Damage damages)
+        private void OnAllyReceiveDamages(Damage damages, DamageResult result)
         {
             OnChallengeResulted(ChallengeStateEnum.CHALLENGE_FAILED);
         }
@@ -39,7 +39,7 @@ namespace Giny.World.Managers.Fights.Challenges
         {
             foreach (var fighter in GetAffectedFighters())
             {
-                fighter.ReceiveDamages -= OnAllyReceiveDamages;
+                fighter.DamageReceived -= OnAllyReceiveDamages;
             }
         }
 
