@@ -129,6 +129,12 @@ namespace Giny.DatabasePatcher.Maps
 
             foreach (var map in randomizedMaps)
             {
+                foreach (var cell in map.Cells)
+                {
+                    cell.Blue = false;
+                    cell.Red = false;
+                }
+
                 var cells = map.Cells.Where(x => x.IsValidFightCell());
 
                 var n = cells.Count() / 2;

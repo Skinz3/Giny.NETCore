@@ -84,7 +84,6 @@ namespace Giny.DatabasePatcher.Monsters
             {
                 case MonsterRacesEnum.UNCLASSIFIED:
                     return 0.5d;
-                    break;
                 case MonsterRacesEnum.CLASS_SUMMONS:
                     break;
                 case MonsterRacesEnum.BANDITS:
@@ -208,7 +207,7 @@ namespace Giny.DatabasePatcher.Monsters
                 case MonsterRacesEnum.ZOTHS:
                     break;
                 case MonsterRacesEnum.ARCHMONSTERS:
-                    break;
+                    return 0.1d;
                 case MonsterRacesEnum.MASTOGOBS:
                     break;
                 case MonsterRacesEnum.FRIGOST_VILLAGE_CRITTERS:

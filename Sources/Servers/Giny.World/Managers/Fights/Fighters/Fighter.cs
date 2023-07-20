@@ -1026,21 +1026,23 @@ namespace Giny.World.Managers.Fights.Fighters
         [WIP("see stump")]
         private void OnSpellCasting(SpellCastHandler handler)
         {
-            Fighter target = Fight.GetFighter(handler.Cast.TargetCell.Id);
-
-            Fight.Send(new GameActionFightSpellCastMessage()
+            if (handler.Cast.Animation)
             {
-                actionId = (short)ActionsEnum.ACTION_CAST_STARTING_SPELL,
-                critical = (byte)handler.Cast.Critical,
-                destinationCellId = handler.Cast.TargetCell.Id,
-                portalsIds = new short[0],
-                silentCast = handler.Cast.Silent,
-                sourceId = this.Id,
-                spellId = handler.Cast.Spell.Record.Id,
-                spellLevel = handler.Cast.Spell.Level.Grade,
-                targetId = target == null ? 0 : target.Id,
-                verboseCast = handler.Cast.GetParent() == null, // not sure
-            });
+                Fight.Send(new GameActionFightSpellCastMessage()
+                {
+                    actionId = (short)ActionsEnum.ACTION_CAST_STARTING_SPELL,
+                    critical = (byte)handler.Cast.Critical,
+                    destinationCellId = handler.Cast.TargetCell.Id,
+                    portalsIds = new short[0],
+                    silentCast = handler.Cast.Silent,
+                    sourceId = this.Id,
+                    spellId = handler.Cast.Spell.Record.Id,
+                    spellLevel = handler.Cast.Spell.Level.Grade,
+                    targetId = handler.Cast.Target == null ? 0 : handler.Cast.Target.Id,
+                    verboseCast = handler.Cast.GetParent() == null, // not sure
+                });
+            }
+          
 
             if (!handler.Cast.Force) // history not needed ?
             {
