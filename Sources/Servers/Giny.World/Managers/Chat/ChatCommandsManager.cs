@@ -36,7 +36,7 @@ namespace Giny.World.Managers.Chat
 
         private readonly Dictionary<ChatCommandAttribute, MethodInfo> m_commands = new Dictionary<ChatCommandAttribute, MethodInfo>();
 
-        [StartupInvoke("Chat Commands", StartupInvokePriority.SixthPath)]
+        [StartupInvoke("Chat commands", StartupInvokePriority.SixthPath)]
         public void Initialize()
         {
             foreach (var type in AssemblyCore.GetTypes())

@@ -75,7 +75,7 @@ namespace Giny.World.Records.Npcs
         {
             return NpcSpawns[npcSpawnId].MapId;
         }
-        [StartupInvoke("Npcs Bidings", StartupInvokePriority.SixthPath)]
+        [StartupInvoke("Npc members", StartupInvokePriority.SixthPath)]
         public static void Initialize()
         {
             foreach (var npc in NpcSpawns)

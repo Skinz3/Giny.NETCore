@@ -25,7 +25,7 @@ namespace Giny.World.Managers
 
         private ActionTimer m_callback;
 
-        [StartupInvoke("Save Task", StartupInvokePriority.Last)]
+        [StartupInvoke("Cyclic backup", StartupInvokePriority.Last)]
         public void CreateNextTask()
         {
             m_callback = new ActionTimer((int)((SAVE_INTERVAL_MINUTES * 60) * 1000), PerformSave, true);

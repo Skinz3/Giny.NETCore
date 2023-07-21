@@ -279,7 +279,12 @@ namespace Giny.World.Managers.Fights
             this.Synchronizer = null;
             this.Marks = new List<Mark>();
             this.Buffs = new List<Buff>();
-            this.PlacementTimer = new ActionTimer(GetPlacementDelay() * 1000, StartFighting, false);
+
+            if (GetPlacementDelay() > 0)
+            {
+                this.PlacementTimer = new ActionTimer(GetPlacementDelay() * 1000, StartFighting, false);
+
+            }
         }
 
         public void OnSequenceStarted(FightSequence sequence)
@@ -334,6 +339,10 @@ namespace Giny.World.Managers.Fights
         }
         public short GetPlacementTimeLeft()
         {
+            if (GetPlacementDelay() == 0)
+            {
+                return 0;
+            }
             return (short)(PlacementTimer.GetRemainingTime() / 100d);
 
         }
@@ -1014,7 +1023,7 @@ namespace Giny.World.Managers.Fights
 
 
                 this.Send(new GameFightEndMessage(GetFightDuration(), 0, 0, (from entry in results
-                                                                                                                   select entry.GetFightResultListEntry()).ToArray(),
+                                                                             select entry.GetFightResultListEntry()).ToArray(),
                                                                                     new NamedPartyTeamWithOutcome[0]));
             }
 

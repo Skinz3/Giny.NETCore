@@ -1,7 +1,9 @@
 ﻿using Giny.Core;
 using Giny.Core.Time;
 using Giny.Protocol.Custom.Enums;
+using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Zones.Sets;
+using Org.BouncyCastle.Asn1.X509;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,30 +51,36 @@ namespace Giny.World.Managers.Fights.Cast.Units
             }
         }
 
+        public void ComputeShapeEfficiencyModifiers(Fighter target, SpellEffectHandler effectHandler)
+        {
+            double efficiency = effectHandler.Zone.GetShapeEfficiency(target.Cell, effectHandler.CastHandler.Cast.TargetCell);
+            Min = Min * efficiency;
+            Max = Max * efficiency;
+        }
         public void ApplyMultiplicator(int value)
         {
             Min = Min * (value / 100d);
             Max = Max * (value / 100d);
         }
-        public short Generate(Random random, bool hasRandDownModifier, bool hasRandUpModifier)
+        public int Generate(Random random, bool hasRandDownModifier, bool hasRandUpModifier)
         {
             if (Min == Max)
             {
-                return (short)Max;
+                return (int)Max;
             }
             else
             {
                 if (hasRandDownModifier)
                 {
-                    return (short)Min;
+                    return (int)Min;
                 }
                 if (hasRandUpModifier)
                 {
-                    return (short)Max;
+                    return (int)Max;
                 }
 
 
-                return (short)random.Next((short)Min, (short)Max + 1);
+                return (int)random.Next((int)Min, (int)Max + 1);
             }
         }
     }

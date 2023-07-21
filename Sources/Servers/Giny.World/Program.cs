@@ -29,18 +29,18 @@ namespace Giny.World
             ConsoleCommandsManager.Instance.ReadCommand();
         }
 
-        [StartupInvoke("Protocol Manager", StartupInvokePriority.SecondPass)]
+        [StartupInvoke("Protocol", StartupInvokePriority.SecondPass)]
         public static void InitializeProtocolManager()
         {
             ProtocolMessageManager.Initialize(Assembly.GetAssembly(typeof(RawDataMessage)), Assembly.GetAssembly(typeof(Program)));
             ProtocolTypeManager.Initialize();
         }
-        [StartupInvoke("Raw Patches", StartupInvokePriority.Last)]
+        [StartupInvoke("SWF patches", StartupInvokePriority.Last)]
         public static void InitializeRawPatches()
         {
             RawPatchManager.Instance.Initialize();
         }
-        [StartupInvoke("Console Commands", StartupInvokePriority.Last)]
+        [StartupInvoke("Console commands", StartupInvokePriority.Last)]
         public static void InitializeConsoleCommand()
         {
             ConsoleCommandsManager.Instance.Initialize(AssemblyCore.GetTypes());

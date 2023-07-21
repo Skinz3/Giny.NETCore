@@ -1,4 +1,5 @@
-﻿using Giny.Protocol.Enums;
+﻿using Giny.Protocol.Custom.Enums;
+using Giny.Protocol.Enums;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Cast.Units;
@@ -22,8 +23,8 @@ namespace Giny.World.Managers.Fights.Effects.Heals
         {
             foreach (var target in targets)
             {
-                short delta = (short)(target.Stats.MaxLifePoints * (Effect.Min / 100d));
-                target.Heal(new Healing(Source, target, delta));
+                double delta = target.Stats.MaxLifePoints * (Effect.Min / 100d);
+                target.Heal(new Healing(Source, target, EffectSchoolEnum.Fix, delta, delta, this));
             }
         }
     }

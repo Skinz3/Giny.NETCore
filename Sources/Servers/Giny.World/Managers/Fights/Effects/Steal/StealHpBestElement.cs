@@ -29,15 +29,15 @@ namespace Giny.World.Managers.Fights.Effects.Steal
             {
                 DamageResult result = target.InflictDamage(CreateDamage(target));
 
-                short healDelta = (short)(result.Total / 2d);
+                double healDelta = result.Total / 2d;
 
-                Source.Heal(new Healing(Source, target, healDelta));
+                Source.Heal(new Healing(Source, target, EffectSchoolEnum.Fix, healDelta, healDelta, this));
             }
         }
 
         private Damage CreateDamage(Fighter target)
         {
-            return new Damage(Source, target, Source.Stats.GetBestElement(), (short)Effect.Min, (short)Effect.Max, this); ;
+            return new Damage(Source, target, Source.Stats.GetBestElement(), Effect.Min, Effect.Max, this);
         }
 
     }

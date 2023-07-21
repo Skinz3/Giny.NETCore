@@ -25,7 +25,7 @@ namespace Giny.World.Managers.Maps
     {
         public const string MAP_KEY = "649ae451ca33ec53bbcbcc33becf15f4";
 
-        [StartupInvoke("Map Instances", StartupInvokePriority.FourthPass)]
+        [StartupInvoke("Map instances", StartupInvokePriority.FourthPass)]
         public void CreateInstances()
         {
             var maps = MapRecord.GetMaps().ToArray();

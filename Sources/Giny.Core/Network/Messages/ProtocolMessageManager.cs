@@ -99,7 +99,7 @@ namespace Giny.Core.Network.Messages
 
                 }
             }
-            Logger.Write(Messages.Count + " Message(s) Loaded | " + Handlers.Count + " Handler(s) Loaded", Channels.Log);
+            Logger.Write(Messages.Count + " message(s) loaded | " + Handlers.Count + " handler(s) loaded", Channels.Log);
         }
         /// <summary>
         /// Care about reader position!

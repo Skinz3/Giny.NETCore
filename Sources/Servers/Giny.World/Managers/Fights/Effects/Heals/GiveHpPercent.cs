@@ -22,7 +22,7 @@ namespace Giny.World.Managers.Fights.Effects.Heals
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
-            short delta = (short)(Source.Stats.LifePoints * (Effect.Min / 100d));
+            double delta = Source.Stats.LifePoints * (Effect.Min / 100d);
 
             Damage damage = new Damage(Source, Source, EffectSchoolEnum.Fix, delta, delta, this);
             damage.IgnoreShield = true;
@@ -32,7 +32,7 @@ namespace Giny.World.Managers.Fights.Effects.Heals
             {
                 if (target != Source)
                 {
-                    target.Heal(new Healing(Source, target, delta));
+                    target.Heal(new Healing(Source, target, EffectSchoolEnum.Fix, delta, delta, this));
                 }
             }
         }

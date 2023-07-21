@@ -22,7 +22,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
         protected override void Apply(IEnumerable<Fighter> targets)
         {
             var token = GetTriggerToken<Healing>();
-            token.Delta *= (short)(Effect.Min / 100d);
+            token.Computed *= (int)(Effect.Min / 100d);
         }
     }
 }

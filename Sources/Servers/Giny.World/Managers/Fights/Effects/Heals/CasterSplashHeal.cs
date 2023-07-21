@@ -1,4 +1,5 @@
-﻿using Giny.Protocol.Enums;
+﻿using Giny.Protocol.Custom.Enums;
+using Giny.Protocol.Enums;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Cast.Units;
@@ -22,7 +23,7 @@ namespace Giny.World.Managers.Fights.Effects.Heals
         {
             var token = GetTriggerToken<Damage>();
 
-            if (token == null)
+            if (token == null || !token.Computed.HasValue)
             {
                 OnTokenMissing<Damage>();
                 return;
@@ -30,8 +31,8 @@ namespace Giny.World.Managers.Fights.Effects.Heals
 
             foreach (var target in targets)
             {
-                short delta = (short)(token.Computed * (Effect.Min / 100d));
-                target.Heal(new Healing(Source, target, delta));
+                double delta = token.Computed.Value * (Effect.Min / 100d);
+                target.Heal(new Healing(Source, target, EffectSchoolEnum.Fix, delta, delta, this));
             }
         }
     }

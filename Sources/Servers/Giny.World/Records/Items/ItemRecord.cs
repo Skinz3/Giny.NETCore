@@ -188,7 +188,7 @@ namespace Giny.World.Records.Items
                 objectPrice = (long)Price,
             };
         }
-        [StartupInvoke("Items Bindings", StartupInvokePriority.SixthPath)]
+        [StartupInvoke("Items members", StartupInvokePriority.SixthPath)]
         public static void Initialize()
         {
             foreach (var item in Items.Values)

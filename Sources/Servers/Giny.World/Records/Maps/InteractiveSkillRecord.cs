@@ -108,7 +108,7 @@ namespace Giny.World.Records.Maps
             return InteractiveSkills.Values.FirstOrDefault(x => x.Identifier == id);
         }
 
-        [StartupInvoke("Interactive Skills Bindings", StartupInvokePriority.SixthPath)]
+        [StartupInvoke("Interactive skills members", StartupInvokePriority.SixthPath)]
         public static void Initialize()
         {
             foreach (var skill in InteractiveSkills.Values)

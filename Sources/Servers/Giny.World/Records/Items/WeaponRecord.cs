@@ -235,7 +235,7 @@ namespace Giny.World.Records.Items
                 Usable = this.Usable,
             };
         }
-        [StartupInvoke("Weapons Bindings", StartupInvokePriority.FourthPass)]
+        [StartupInvoke("Weapons bindings", StartupInvokePriority.FourthPass)]
         public static void Initialize()
         {
             foreach (var weaponRecord in Weapons.Values)

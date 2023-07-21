@@ -14,7 +14,6 @@ namespace Giny.Protocol.Custom.Enums
         Air = 4,
         Fire = 2,
         Pushback = 5,
-        Healing = 6,
         Fix = 7,
         Unknown = 8,
     }

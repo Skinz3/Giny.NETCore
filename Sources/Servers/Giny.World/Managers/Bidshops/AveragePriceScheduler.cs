@@ -14,7 +14,7 @@ namespace Giny.World.Managers.Bidshops
 
         public const double RefreshDelaySeconds = 120f;
 
-        [StartupInvoke("Average Price Scheduler", StartupInvokePriority.Last)]
+        [StartupInvoke("Average price scheduler", StartupInvokePriority.Last)]
         public static void CreateTask()
         {
             m_task = Task.Factory.StartNewDelayed((int)(RefreshDelaySeconds * 1000), RefreshAveragePrices);

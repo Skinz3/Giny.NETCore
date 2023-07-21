@@ -19,7 +19,7 @@ namespace Giny.World.Managers.Chat
         public delegate void ChatHandlerDelegate(WorldClient client, ChatServerMessage message);
         private readonly Dictionary<ChatActivableChannelsEnum, ChatHandlerDelegate> ChatHandlers = new Dictionary<ChatActivableChannelsEnum, ChatHandlerDelegate>();
 
-        [StartupInvoke("Chat Channels", StartupInvokePriority.SixthPath)]
+        [StartupInvoke("Chat channels", StartupInvokePriority.SixthPath)]
         public void Initialize()
         {
             foreach (var method in typeof(ChatChannels).GetMethods())

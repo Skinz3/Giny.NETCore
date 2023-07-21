@@ -262,6 +262,8 @@ namespace Giny.World.Managers.Stats
             results.Add(new CharacterCharacteristicValue(Energy, (short)CharacteristicEnum.ENERGY_POINTS));
 
 
+            results.Add(new CharacterCharacteristicDetailed(100, 0, 0, 0, 0, 143)); // wtf ankama, for client, 143 is dealt heal multiplier.
+
             return results.ToArray();
         }
         public virtual int GetMissingLife()

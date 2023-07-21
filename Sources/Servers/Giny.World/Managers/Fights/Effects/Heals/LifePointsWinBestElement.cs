@@ -12,15 +12,10 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Heals
 {
-    /*
-     * Mot interdit
-     * Prygen
-     * Soigne les dégats subis
-     */
-    [SpellEffectHandler(EffectsEnum.Effect_SplashHeal)]
-    public class SplashHeal : SpellEffectHandler
+    [SpellEffectHandler(EffectsEnum.Effect_LifePointsWinBestElement)]
+    public class LifePointsWinBestElement : SpellEffectHandler
     {
-        public SplashHeal(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
+        public LifePointsWinBestElement(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
         {
         }
 
@@ -28,14 +23,8 @@ namespace Giny.World.Managers.Fights.Effects.Heals
         {
             foreach (var target in targets)
             {
-                double delta = Source.TotalDamageReceivedSequenced * (Effect.Min / 100d);
-                target.Heal(new Healing(Source, target, EffectSchoolEnum.Fix, delta, delta, this));
+                target.Heal(new Healing(Source, target, Source.Stats.GetBestElement(), Effect.Min, Effect.Max, this));
             }
-
-
         }
-
-
     }
-
 }

@@ -37,12 +37,8 @@ namespace Giny.World.Managers.Fights.Cast.Units
             get;
             set;
         }
-        public short Delta
-        {
-            get;
-            private set;
-        }
-        public short? Computed
+
+        public int? Computed
         {
             get;
             set;
@@ -120,7 +116,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
                     throw new Exception("Invalid push damages.");
                 }
 
-                Computed = (short)BaseMaxDamages;
+                Computed = (int)BaseMaxDamages;
                 return;
             }
 
@@ -135,7 +131,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
             if (!IgnoreBoost)
                 ComputeCriticalDamageBonus(jet);
 
-            ComputeShapeEfficiencyModifiers(jet);
+            jet.ComputeShapeEfficiencyModifiers(Target, EffectHandler);
 
             if (!IgnoreResistances)
                 ComputeDamageResistances(jet);
@@ -203,12 +199,6 @@ namespace Giny.World.Managers.Fights.Cast.Units
             jet.ApplyMultiplicator(Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER].TotalInContext());
 
         }
-        private void ComputeShapeEfficiencyModifiers(Jet jet)
-        {
-            double efficiency = EffectHandler.Zone.GetShapeEfficiency(Target.Cell, EffectHandler.CastHandler.Cast.TargetCell);
-            jet.Min = (short)(jet.Min * efficiency);
-            jet.Max = (short)(jet.Max * efficiency);
-        }
 
         private void ComputeDamageResistances(Jet jet)
         {
@@ -252,7 +242,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
             {
                 BaseMinDamages += boost;
 
-                short delta = GetJetDelta(BaseMinDamages);
+                int delta = GetJetDelta(BaseMinDamages);
 
                 return new Jet(delta, delta);
             }
@@ -261,8 +251,8 @@ namespace Giny.World.Managers.Fights.Cast.Units
                 double jetMin = BaseMinDamages + boost;
                 double jetMax = BaseMaxDamages + boost;
 
-                short deltaMin = GetJetDelta(jetMin);
-                short deltaMax = GetJetDelta(jetMax);
+                int deltaMin = GetJetDelta(jetMin);
+                int deltaMax = GetJetDelta(jetMax);
 
                 return new Jet(deltaMin, deltaMax);
             }
@@ -275,7 +265,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
         {
             return EffectHandler != null && EffectHandler.CastHandler.Cast.Weapon;
         }
-        private short GetJetDelta(double jet)
+        private int GetJetDelta(double jet)
         {
             double weaponDamageBonus = 0;
             double spellDamageBonus = 0;
@@ -301,7 +291,6 @@ namespace Giny.World.Managers.Fights.Cast.Units
 
             if (!IgnoreBoost)
             {
-
                 switch (EffectSchool)
                 {
                     case EffectSchoolEnum.Neutral:
@@ -339,7 +328,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
             double result = jet * percentBonus + fixBonus;
 
 
-            return (short)result;
+            return (int)result;
         }
 
 

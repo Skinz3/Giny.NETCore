@@ -488,13 +488,12 @@ namespace Giny.World.Managers.Chat
                 return;
 
 
-            var res = client.Character.Fighter.CastSpell(13386, client.Character.Fighter.Cell.Id);
 
-            return;
+
 
             using (var seq = client.Character.Fighter.Fight.SequenceManager.StartSequence(Fights.Sequences.SequenceTypeEnum.SEQUENCE_SPELL))
             {
-                client.Character.Fighter.InflictDamage(new Fights.Cast.Units.Damage(client.Character.Fighter, client.Character.Fighter, EffectSchoolEnum.Earth, 100, 100));
+                client.Character.Fighter.InflictDamage(new Fights.Cast.Units.Damage(client.Character.Fighter, client.Character.Fighter, EffectSchoolEnum.Fix, 300, 300));
             }
 
 

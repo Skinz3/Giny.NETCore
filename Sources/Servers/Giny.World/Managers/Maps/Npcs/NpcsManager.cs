@@ -20,7 +20,7 @@ namespace Giny.World.Managers.Maps.Npcs
     {
         private Dictionary<NpcActionsEnum, MethodInfo> m_actionsHandlers = new Dictionary<NpcActionsEnum, MethodInfo>();
 
-        [StartupInvoke("Npcs Manager", StartupInvokePriority.SixthPath)]
+        [StartupInvoke("Npcs manager", StartupInvokePriority.SixthPath)]
         public void Initialize()
         {
             foreach (var method in typeof(NpcActions).GetMethods())

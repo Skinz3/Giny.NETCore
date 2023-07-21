@@ -166,7 +166,7 @@ namespace Giny.World.Records.Maps
             get;
             set;
         }
-        [StartupInvoke("Maps links", StartupInvokePriority.SecondPass)]
+        [StartupInvoke("Map members", StartupInvokePriority.SecondPass)]
         public static void Initialize()
         {
             ProgressLogger progressLogger = new ProgressLogger();

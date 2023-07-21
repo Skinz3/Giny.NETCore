@@ -83,7 +83,7 @@ namespace Giny.World.Records.Maps
             set;
         }
 
-        [StartupInvoke("Subareas Spawns", StartupInvokePriority.ThirdPass)]
+        [StartupInvoke("Subareas spawns", StartupInvokePriority.ThirdPass)]
         public static void Initialize()
         {
             foreach (var subarea in Subareas)

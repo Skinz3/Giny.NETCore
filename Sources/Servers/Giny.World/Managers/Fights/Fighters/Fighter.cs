@@ -1042,7 +1042,7 @@ namespace Giny.World.Managers.Fights.Fighters
                     verboseCast = handler.Cast.GetParent() == null, // not sure
                 });
             }
-          
+
 
             if (!handler.Cast.Force) // history not needed ?
             {
@@ -1823,21 +1823,23 @@ namespace Giny.World.Managers.Fights.Fighters
         [WIP("trigger V ? ")]
         public void Heal(Healing healing)
         {
-            if (healing.Delta <= 0 || IsIncurable())
+            healing.Compute();
+
+            var delta = healing.Computed.Value;
+
+            if (delta <= 0 || IsIncurable())
             {
                 return;
             }
 
             TriggerBuffs(TriggerTypeEnum.OnHealed, healing);
 
-            if (healing.Delta <= 0 || IsIncurable())
+            if (delta <= 0 || IsIncurable())
             {
                 return;
             }
 
-            int delta = healing.Delta;
-
-            if (Stats.LifePoints + healing.Delta > Stats.MaxLifePoints)
+            if (Stats.LifePoints + delta > Stats.MaxLifePoints)
             {
                 delta = Stats.MaxLifePoints - Stats.LifePoints;
             }
@@ -1847,17 +1849,14 @@ namespace Giny.World.Managers.Fights.Fighters
             {
                 Stats.LifePoints += delta;
 
-                Fight.Send(new GameActionFightLifePointsGainMessage()
-                {
-                    actionId = (short)ActionsEnum.ACTION_CHARACTER_LIFE_POINTS_WIN_WITHOUT_BOOST,
-                    delta = delta,
-                    sourceId = healing.Source.Id,
-                    targetId = Id,
-                });
+                Fight.Send(new GameActionFightLifePointsGainMessage(Id, delta, (short)ActionsEnum.ACTION_CHARACTER_LIFE_POINTS_WIN_NO_BOOST,
+                healing.Source.Id));
+
+                TriggerBuffs(TriggerTypeEnum.LifeAffected, null); // not sure about this one!!
+                TriggerBuffs(TriggerTypeEnum.LifePointsAffected, null);
             }
 
-            TriggerBuffs(TriggerTypeEnum.LifeAffected, null); // not sure about this one!!
-            TriggerBuffs(TriggerTypeEnum.LifePointsAffected, null);
+
 
         }
 
