@@ -1,6 +1,7 @@
 ﻿using Giny.Core;
 using Giny.Core.Time;
 using Giny.Protocol.Custom.Enums;
+using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Zones.Sets;
 using Org.BouncyCastle.Asn1.X509;
@@ -10,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.World.Managers.Fights.Cast.Units
+namespace Giny.World.Managers.Fights.Units
 {
     public class Jet
     {

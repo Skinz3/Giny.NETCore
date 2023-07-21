@@ -3,7 +3,6 @@ using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
 using Giny.Protocol.Types;
 using Giny.World.Managers.Entities.Characters;
-using Giny.World.Managers.Fights.Cast.Units;
 using Giny.World.Managers.Fights.Effects.Summons;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Triggers;

@@ -4,6 +4,7 @@ using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Triggers;
+using Giny.World.Managers.Fights.Units;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,11 +44,12 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
                     }
                     else
                     {
-                        target.LooseMp(Source, (short)delta, ActionsEnum.ACTION_CHARACTER_MOVEMENT_POINTS_LOST);
+                        target.LooseMp(Source, delta, ActionsEnum.ACTION_CHARACTER_MOVEMENT_POINTS_LOST);
                     }
                 }
 
                 target.TriggerBuffs(TriggerTypeEnum.OnMpRemovalAttempt, null);
+
 
             }
         }

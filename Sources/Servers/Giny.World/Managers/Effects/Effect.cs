@@ -234,9 +234,9 @@ namespace Giny.World.Managers.Effects
                 case "ATB":
                     return new Trigger(TriggerTypeEnum.AfterTurnBegin);
                 case "MPA":
-                    return new Trigger(TriggerTypeEnum.OnMPLost);
+                    return new Trigger(TriggerTypeEnum.OnMpRemovalAttempt);
                 case "APA":
-                    return new Trigger(TriggerTypeEnum.OnAPLost);
+                    return new Trigger(TriggerTypeEnum.OnApRemovalAttempt);
 
                 case "CDBE":
                     return new Trigger(TriggerTypeEnum.CasterInflictDamageEnnemy);
@@ -246,9 +246,9 @@ namespace Giny.World.Managers.Effects
                 case "R":
                     return new Trigger(TriggerTypeEnum.OnRangeLost);
                 case "CMPA":
-                    return new Trigger(TriggerTypeEnum.OnMpRemovalAttempt); // fail?
+                    return new Trigger(TriggerTypeEnum.OnCasterRemoveMpAttempt); 
                 case "CAPA":
-                    return new Trigger(TriggerTypeEnum.OnCasterRemoveAp); // fail ?
+                    return new Trigger(TriggerTypeEnum.OnCasterRemoveApAttempt); 
                 case "CAP":
                     return new Trigger(TriggerTypeEnum.OnCasterUseAp);
                 case "MS":

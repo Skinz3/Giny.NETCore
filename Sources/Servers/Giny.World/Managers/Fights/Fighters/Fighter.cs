@@ -13,7 +13,6 @@ using Giny.World.Managers.Fights.Buffs;
 using Giny.World.Managers.Fights.Buffs.SpellBoost;
 using Giny.World.Managers.Fights.Buffs.SpellModification;
 using Giny.World.Managers.Fights.Cast;
-using Giny.World.Managers.Fights.Cast.Units;
 using Giny.World.Managers.Fights.Effects.Damages;
 using Giny.World.Managers.Fights.History;
 using Giny.World.Managers.Fights.Marks;
@@ -22,6 +21,7 @@ using Giny.World.Managers.Fights.Results;
 using Giny.World.Managers.Fights.Sequences;
 using Giny.World.Managers.Fights.Stats;
 using Giny.World.Managers.Fights.Triggers;
+using Giny.World.Managers.Fights.Units;
 using Giny.World.Managers.Fights.Zones;
 using Giny.World.Managers.Fights.Zones.Sets;
 using Giny.World.Managers.Maps;
@@ -561,6 +561,8 @@ namespace Giny.World.Managers.Fights.Fighters
         {
             Stats.UseMp(amount);
             OnPointsVariation(source, action, (short)(-amount));
+
+
         }
         public void GainMp(Fighter source, short delta)
         {
@@ -572,6 +574,7 @@ namespace Giny.World.Managers.Fights.Fighters
         {
             Stats.UseAp(amount);
             OnPointsVariation(source, action, (short)(-amount));
+
         }
         public void GainAp(Fighter source, short delta)
         {
@@ -591,18 +594,6 @@ namespace Giny.World.Managers.Fights.Fighters
             });
 
 
-            switch (action)
-            {
-                case ActionsEnum.ACTION_CHARACTER_MOVEMENT_POINTS_LOST:
-                    TriggerBuffs(TriggerTypeEnum.OnMPLost, null);
-
-                    break;
-                case ActionsEnum.ACTION_CHARACTER_ACTION_POINTS_LOST:
-                    source.TriggerBuffs(TriggerTypeEnum.OnCasterRemoveAp, null);
-                    TriggerBuffs(TriggerTypeEnum.OnAPLost, null);
-                    break;
-
-            }
         }
         public virtual void PassTurn()
         {
@@ -729,7 +720,7 @@ namespace Giny.World.Managers.Fights.Fighters
             });
         }
 
-        public bool TriggerBuffs(TriggerTypeEnum type, ITriggerToken token, int? triggerParam = null)
+        public bool TriggerBuffs(TriggerTypeEnum type, ITriggerToken? token, int? triggerParam = null)
         {
             bool result = false;
 
@@ -1297,15 +1288,15 @@ namespace Giny.World.Managers.Fights.Fighters
 
             if (otherTarget != null && otherTarget != this)
             {
+                this.SwitchPosition(otherTarget, register);
+
                 switch (source.Breed)
                 {
                     case BreedEnum.Xelor:
-                        this.SwitchPosition(otherTarget, register);
                         return new Telefrag(this, otherTarget);
-                    case BreedEnum.Ouginak:
-                        Fight.Warn("Ouginak teleport. Todo");
-                        break;
                 }
+
+                return null;
             }
 
             if (!targetCell.Walkable || targetCell.NonWalkableDuringFight || !targetCell.Point.IsInMap())
@@ -1890,7 +1881,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 }
                 else
                 {
-                    UpdateBuff(this, buff);
+                   // UpdateBuff(this, buff); <---- not necessary anymore?
                     break;
                 }
             }
@@ -1978,11 +1969,12 @@ namespace Giny.World.Managers.Fights.Fighters
             RefreshStats(CharacteristicEnum.HIT_POINTS);
             RefreshStats(CharacteristicEnum.HIT_POINT_LOSS);
         }
+        [WIP("deprecated?")]
         private void UpdateBuff(Fighter source, Buff buff)
         {
             Fight.Send(new GameActionFightDispellableEffectMessage()
             {
-                actionId = (short)ActionsEnum.ACTION_ITEM_BUFF_CHANGE_DURATION,
+                actionId = 0,
                 effect = buff.GetAbstractFightDispellableEffect(),
                 sourceId = source.Id,
             });
@@ -2165,8 +2157,8 @@ namespace Giny.World.Managers.Fights.Fighters
             {
                 TriggerBuffs(TriggerTypeEnum.OnDamagedOnLife, null); // DV
                 TriggerBuffs(TriggerTypeEnum.LifeAffected, null); // V
-                // dont know what we are doing? uff
-                // check client HaveBuff.as (param1.areLifePointsAffected et param1.get_isLifeAffected())
+                                                                  // dont know what we are doing? uff
+                                                                  // check client HaveBuff.as (param1.areLifePointsAffected et param1.get_isLifeAffected())
                 TriggerBuffs(TriggerTypeEnum.LifePointsAffected, null); // VA
 
             }
@@ -2335,26 +2327,7 @@ namespace Giny.World.Managers.Fights.Fighters
         public void OnStatsBuff(EffectsEnum effectEnum)
         {
 
-            switch (effectEnum)
-            {
-                case EffectsEnum.Effect_SubRange:
-                case EffectsEnum.Effect_SubRange_135:
-                    TriggerBuffs(TriggerTypeEnum.OnRangeLost, null);
-                    break;
-
-                case EffectsEnum.Effect_SubAPPercent:
-                case EffectsEnum.Effect_SubAP:
-                case EffectsEnum.Effect_SubAP_Roll:
-                    TriggerBuffs(TriggerTypeEnum.OnAPLost, null);
-                    break;
-
-                case EffectsEnum.Effect_SubMPPercent:
-                case EffectsEnum.Effect_SubMP_Roll:
-                case EffectsEnum.Effect_SubMP:
-                    TriggerBuffs(TriggerTypeEnum.OnMPLost, null);
-                    break;
-
-            }
+          
         }
         private int CalculateErodedLife(int damages)
         {

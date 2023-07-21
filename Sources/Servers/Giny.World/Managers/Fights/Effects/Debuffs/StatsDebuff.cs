@@ -3,6 +3,7 @@ using Giny.Protocol.Enums;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Managers.Fights.Triggers;
 using Giny.World.Managers.Stats;
 using System;
 using System.Collections.Generic;
@@ -51,7 +52,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
     [SpellEffectHandler(EffectsEnum.Effect_SubSpellReceivedDamageMultiplier)]
     public class StatsDebuff : SpellEffectHandler
     {
-         
+
 
         public StatsDebuff(EffectDice effect, SpellCastHandler castHandler) :
             base(effect, castHandler)
@@ -66,10 +67,35 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
             foreach (var target in targets)
             {
                 AddStatBuff(target, (short)-delta, target.Stats[GetAssociatedCharacteristicEnum()], Effect.DispellableEnum);
+
+                switch (Effect.EffectEnum)
+                {
+                    case EffectsEnum.Effect_SubRange:
+                    case EffectsEnum.Effect_SubRange_135:
+
+                        break;
+
+                    case EffectsEnum.Effect_SubAPPercent:
+                    case EffectsEnum.Effect_SubAP:
+                    case EffectsEnum.Effect_SubAP_Roll:
+                        Source.TriggerBuffs(TriggerTypeEnum.OnCasterRemoveApAttempt, null);
+                        target.TriggerBuffs(TriggerTypeEnum.OnApRemovalAttempt, null);
+                        break;
+
+                    case EffectsEnum.Effect_SubMPPercent:
+                    case EffectsEnum.Effect_SubMP_Roll:
+                    case EffectsEnum.Effect_SubMP:
+                        Source.TriggerBuffs(TriggerTypeEnum.OnCasterRemoveMpAttempt, null);
+                        target.TriggerBuffs(TriggerTypeEnum.OnMpRemovalAttempt, null);
+                        break;
+
+                }
+
+
             }
 
         }
 
-       
+
     }
 }

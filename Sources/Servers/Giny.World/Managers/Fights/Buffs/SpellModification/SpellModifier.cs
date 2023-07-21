@@ -1,5 +1,6 @@
 ﻿using Giny.Protocol.Enums;
 using Giny.Protocol.Types;
+using Giny.World.Managers.Fights.Buffs.SpellBoost;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,7 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
             private set;
         }
 
+     
 
         public SpellModifier(short spellId, SpellModifierTypeEnum type, SpellModifierActionTypeEnum action)
         {
@@ -59,6 +61,8 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
         public SpellModifierUpdateResult Update(short value)
         {
             var oldValue = this.Value;
+
+            
 
             switch (Action)
             {
@@ -77,10 +81,7 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
                     break;
             }
 
-            if (Action == SpellModifierActionTypeEnum.ACTION_SET && Math.Abs(value) != Math.Abs(oldValue))
-            {
-                throw new Exception("Spell modifier set overlap for spellId " + SpellId);
-            }
+            
 
             if (Action == SpellModifierActionTypeEnum.ACTION_SET && value == -oldValue)
             {

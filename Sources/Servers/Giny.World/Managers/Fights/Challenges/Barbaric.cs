@@ -1,6 +1,6 @@
 ﻿using Giny.Protocol.Enums;
-using Giny.World.Managers.Fights.Cast.Units;
 using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Managers.Fights.Units;
 using Giny.World.Records.Challenges;
 using System;
 using System.Collections.Generic;

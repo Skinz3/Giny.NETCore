@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.World.Managers.Fights.Cast.Units
+namespace Giny.World.Managers.Fights.Units
 {
     public class DamageResult
     {

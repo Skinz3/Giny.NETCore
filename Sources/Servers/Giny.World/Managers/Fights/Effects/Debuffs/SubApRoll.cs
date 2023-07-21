@@ -4,6 +4,7 @@ using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Triggers;
+using Giny.World.Managers.Fights.Units;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,14 +34,18 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
                     target.OnDodge(Source, ActionsEnum.ACTION_FIGHT_SPELL_DODGED_PA, dodged);
                 }
 
-                if (this.Effect.Duration > 1)
+                if (delta > 0)
                 {
-                    base.AddStatBuff(target, (short)-delta, target.Stats.ActionPoints, Effect.DispellableEnum, (short)EffectsEnum.Effect_SubAP);
+                    if (this.Effect.Duration > 1)
+                    {
+                        base.AddStatBuff(target, (short)-delta, target.Stats.ActionPoints, Effect.DispellableEnum, (short)EffectsEnum.Effect_SubAP);
+                    }
+                    else
+                    {
+                        target.LooseAp(Source, delta, ActionsEnum.ACTION_CHARACTER_ACTION_POINTS_LOST);
+                    }
                 }
-                else
-                {
-                    target.LooseAp(Source, (short)delta, ActionsEnum.ACTION_CHARACTER_ACTION_POINTS_LOST);
-                }
+
 
                 target.TriggerBuffs(TriggerTypeEnum.OnApRemovalAttempt, null);
             }

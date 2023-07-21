@@ -1,7 +1,7 @@
 ﻿using Giny.Core.Extensions;
 using Giny.Protocol.Enums;
-using Giny.World.Managers.Fights.Cast.Units;
 using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Managers.Fights.Units;
 using Giny.World.Records.Challenges;
 using Org.BouncyCastle.Asn1.X509;
 using System;

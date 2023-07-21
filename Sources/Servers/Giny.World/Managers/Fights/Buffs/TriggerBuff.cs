@@ -17,7 +17,7 @@ namespace Giny.World.Managers.Fights.Buffs
 {
     public class TriggerBuff : Buff
     {
-        public delegate bool TriggerBuffApplyHandler(TriggerBuff buff, ITriggerToken token); // return true -> change context behaviour
+        public delegate bool TriggerBuffApplyHandler(TriggerBuff buff, ITriggerToken? token); // return true -> change context behaviour
 
         public delegate void TriggerBuffRemoveHandler(TriggerBuff buff);
 
@@ -83,7 +83,7 @@ namespace Giny.World.Managers.Fights.Buffs
             }
 
         }
-        public bool Apply(ITriggerToken token)
+        public bool Apply(ITriggerToken? token)
         {
             if (this.ApplyTrigger != null)
             {

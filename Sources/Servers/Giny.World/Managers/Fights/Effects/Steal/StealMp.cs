@@ -4,6 +4,7 @@ using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Triggers;
+using Giny.World.Managers.Fights.Units;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,11 +38,11 @@ namespace Giny.World.Managers.Fights.Effects.Steal
                     if (this.Effect.Duration > 1)
                     {
                         base.AddStatBuff(target, (short)-delta, target.Stats.MovementPoints, FightDispellableEnum.DISPELLABLE, (short)EffectsEnum.Effect_SubMP);
-                        base.AddStatBuff(Source, (short)delta, Source.Stats.MovementPoints, FightDispellableEnum.DISPELLABLE, (short)EffectsEnum.Effect_AddMP_128);
+                        base.AddStatBuff(Source, delta, Source.Stats.MovementPoints, FightDispellableEnum.DISPELLABLE, (short)EffectsEnum.Effect_AddMP_128);
                     }
                     else
                     {
-                        target.LooseMp(Source, (short)delta, ActionsEnum.ACTION_CHARACTER_MOVEMENT_POINTS_LOST);
+                        target.LooseMp(Source, delta, ActionsEnum.ACTION_CHARACTER_MOVEMENT_POINTS_LOST);
                         Source.GainMp(Source, delta);
                     }
                 }

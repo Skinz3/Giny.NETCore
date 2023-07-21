@@ -10,6 +10,7 @@ using Giny.World.Managers.Entities.Npcs;
 using Giny.World.Managers.Experiences;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Results;
+using Giny.World.Managers.Fights.Units;
 using Giny.World.Managers.Generic;
 using Giny.World.Managers.Items;
 using Giny.World.Managers.Maps;
@@ -493,7 +494,7 @@ namespace Giny.World.Managers.Chat
 
             using (var seq = client.Character.Fighter.Fight.SequenceManager.StartSequence(Fights.Sequences.SequenceTypeEnum.SEQUENCE_SPELL))
             {
-                client.Character.Fighter.InflictDamage(new Fights.Cast.Units.Damage(client.Character.Fighter, client.Character.Fighter, EffectSchoolEnum.Fix, 300, 300));
+                client.Character.Fighter.InflictDamage(new Damage(client.Character.Fighter, client.Character.Fighter, EffectSchoolEnum.Fix, 300, 300));
             }
 
 

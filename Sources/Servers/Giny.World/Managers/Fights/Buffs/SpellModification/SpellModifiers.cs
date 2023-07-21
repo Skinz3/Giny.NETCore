@@ -1,6 +1,7 @@
 ﻿using Giny.Protocol.Enums;
 using Giny.Protocol.Messages;
 using Giny.Protocol.Types;
+using Giny.World.Managers.Fights.Buffs.SpellBoost;
 using Giny.World.Managers.Fights.Fighters;
 using System;
 using System.Collections.Generic;
@@ -61,19 +62,27 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
             return (short)(boosts - deboosts);
         }
 
-        public void RemoveSpellModification(SpellModifier modifier)
+        private void RemoveSpellModification(SpellModifier modifier)
         {
             Modifiers.Remove(modifier);
 
             Fighter.Fight.Send(new RemoveSpellModifierMessage(Fighter.Id,
                   (byte)modifier.Action, (byte)modifier.Type, modifier.SpellId));
         }
+
+
         public void ApplySpellModification(short spellId, SpellModifierTypeEnum type, SpellModifierActionTypeEnum action, short value)
         {
             var previous = Modifiers.FirstOrDefault(x => x.SpellId == spellId && x.Type == type && x.Action == action);
 
             if (previous != null)
             {
+                if (action == SpellModifierActionTypeEnum.ACTION_SET && Math.Abs(value) != Math.Abs(previous.Value))
+                {
+                    throw new NotImplementedException("Modification set overlap for spellId " + spellId);
+                }
+
+
                 var result = previous.Update(value);
 
                 if (result == SpellModifierUpdateResult.RequiresDeletion)
@@ -84,7 +93,7 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
                 {
                     Fighter.Fight.Send(new ApplySpellModifierMessage(Fighter.Id, previous.GetSpellModifierMessage()));
                 }
-               
+
                 return;
             }
             else

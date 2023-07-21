@@ -10,7 +10,6 @@ using Giny.World.Api;
 using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Fights.Buffs;
 using Giny.World.Managers.Fights.Cast;
-using Giny.World.Managers.Fights.Cast.Units;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Marks;
 using Giny.World.Managers.Fights.Results;

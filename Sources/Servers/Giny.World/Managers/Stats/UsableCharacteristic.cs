@@ -26,7 +26,7 @@ namespace Giny.World.Managers.Stats
 
         public override CharacterCharacteristic GetCharacterCharacteristic(CharacteristicEnum characteristic)
         {
-            return new CharacterUsableCharacteristicDetailed(Used, (short)characteristic, Base, Additional, Objects,
+            return new CharacterUsableCharacteristicDetailed(Math.Abs(Used), (short)characteristic, Base, Additional, Objects,
                 0, Context);
         }
     }

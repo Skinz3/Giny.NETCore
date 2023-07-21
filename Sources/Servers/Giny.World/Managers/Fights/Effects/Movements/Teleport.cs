@@ -2,8 +2,8 @@
 using Giny.Protocol.Messages;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
-using Giny.World.Managers.Fights.Cast.Units;
 using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Managers.Fights.Units;
 using Giny.World.Records.Breeds;
 using Giny.World.Records.Maps;
 using Giny.World.Records.Spells;

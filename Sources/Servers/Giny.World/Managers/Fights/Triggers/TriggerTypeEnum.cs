@@ -24,7 +24,8 @@ namespace Giny.World.Managers.Fights.Triggers
         CasterInflictDamageFire,
         CasterInflictDamageNeutral,
 
-        OnCasterRemoveAp, // CAPA
+        OnCasterRemoveMpAttempt,
+        OnCasterRemoveApAttempt, // CAPA
         OnCasterUseAp,  // CAP
 
         LifePointsAffected, // VA
@@ -66,8 +67,6 @@ namespace Giny.World.Managers.Fights.Triggers
 
         OnApRemovalAttempt, // ?????? called but dunno raw trigger
         OnMpRemovalAttempt,
-        OnMPLost, //  MPA (effective loss? attempt? )
-        OnAPLost, // APA
         OnRangeLost, // R
 
         OnAMpUsed, // CCMPARR (foreach mp used, call it)

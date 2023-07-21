@@ -4,6 +4,7 @@ using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Triggers;
+using Giny.World.Managers.Fights.Units;
 using Giny.World.Records.Maps;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
+
             foreach (var target in targets)
             {
                 if (this.Effect.Duration > 0 && Effect.EffectEnum != EffectsEnum.Effect_LostAP)
@@ -36,6 +38,8 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
                 }
 
                 target.TriggerBuffs(TriggerTypeEnum.OnApRemovalAttempt, null);
+
+
             }
         }
     }

@@ -28,6 +28,10 @@ namespace Giny.World.Managers.Fights.Cast
             }
             switch (fighter.Breed)
             {
+                case BreedEnum.Ouginak:
+                    Ouginak(fighter);
+                    break;
+
                 case BreedEnum.Roublard:
                     Roublard(fighter);
                     break;
@@ -80,6 +84,14 @@ namespace Giny.World.Managers.Fights.Cast
                     Eniripsa(fighter);
                     break;
             }
+        }
+        private static void Ouginak(CharacterFighter fighter)
+        {
+            if (fighter.HasSpell(13758))
+            {
+                fighter.ExecuteSpell(25726, 1, fighter.Cell);
+            }
+            //fighter.ExecuteSpell(13745, 1, fighter.Cell);
         }
         private static void Roublard(CharacterFighter fighter)
         {

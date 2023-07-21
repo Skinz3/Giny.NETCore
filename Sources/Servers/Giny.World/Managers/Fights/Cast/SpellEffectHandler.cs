@@ -24,7 +24,6 @@ using Org.BouncyCastle.Asn1.X509;
 using Giny.World.Managers.Fights.Effects;
 using MySqlX.XDevAPI.Common;
 using Giny.Protocol.Messages;
-using Giny.World.Managers.Fights.Cast.Units;
 
 namespace Giny.World.Managers.Fights.Cast
 {

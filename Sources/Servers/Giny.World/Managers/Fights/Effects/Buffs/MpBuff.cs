@@ -1,7 +1,9 @@
-﻿using Giny.Protocol.Enums;
+﻿using Giny.Protocol.Custom.Enums;
+using Giny.Protocol.Enums;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Managers.Fights.Units;
 using Giny.World.Records.Maps;
 using System;
 using System.Collections.Generic;

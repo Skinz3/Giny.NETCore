@@ -4,6 +4,7 @@ using Giny.IO.D2OClasses;
 using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
 using Giny.World.Managers.Fights.Buffs.SpellBoost;
+using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Triggers;
 using System;
@@ -13,7 +14,7 @@ using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.World.Managers.Fights.Cast.Units
+namespace Giny.World.Managers.Fights.Units
 {
     public class Damage : ITriggerToken
     {

@@ -4,6 +4,7 @@ using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Triggers;
+using Giny.World.Managers.Fights.Units;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,13 +42,14 @@ namespace Giny.World.Managers.Fights.Effects.Steal
                     }
                     else
                     {
-                        target.LooseAp(Source, (short)delta, ActionsEnum.ACTION_CHARACTER_ACTION_POINTS_LOST);
+                        target.LooseAp(Source, delta, ActionsEnum.ACTION_CHARACTER_ACTION_POINTS_LOST);
                         Source.GainAp(Source, delta);
                     }
                 }
 
 
                 target.TriggerBuffs(TriggerTypeEnum.OnApRemovalAttempt, null);
+                Source.TriggerBuffs(TriggerTypeEnum.OnCasterRemoveApAttempt, null);
             }
         }
         private short RollAP(Fighter fighter, int maxValue)
