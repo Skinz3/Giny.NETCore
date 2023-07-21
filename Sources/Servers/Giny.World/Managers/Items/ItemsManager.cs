@@ -234,12 +234,12 @@ namespace Giny.World.Managers.Items
             EffectsWeigth.TryAdd(EffectsEnum.Effect_AddSummonLimit, 30);
             EffectsWeigth.TryAdd(EffectsEnum.Effect_AddDamageBonus, 20);
 
-            EffectsWeigth.TryAdd(EffectsEnum.Effect_WeaponDamageDonePercent, 15);
-            EffectsWeigth.TryAdd(EffectsEnum.Effect_RangedDamageDonePercent, 15);
-            EffectsWeigth.TryAdd(EffectsEnum.Effect_MeleeDamageDonePercent, 15);
-            EffectsWeigth.TryAdd(EffectsEnum.Effect_SpellDamageDonePercent, 15);
-            EffectsWeigth.TryAdd(EffectsEnum.Effect_AddRangedResistance, 15);
-            EffectsWeigth.TryAdd(EffectsEnum.Effect_AddMeleeResistance, 15);
+            EffectsWeigth.TryAdd(EffectsEnum.Effect_AddWeaponDamageMultiplier, 15);
+            EffectsWeigth.TryAdd(EffectsEnum.Effect_AddRangeDamageMultiplier, 15);
+            EffectsWeigth.TryAdd(EffectsEnum.Effect_AddMeleeDamageMultiplier, 15);
+            EffectsWeigth.TryAdd(EffectsEnum.Effect_AddSpellDamageMultiplier, 15);
+            EffectsWeigth.TryAdd(EffectsEnum.Effect_SubRangeDamageReceivedMultiplier, 15);
+            EffectsWeigth.TryAdd(EffectsEnum.Effect_SubMeleeDamageReceivedMultiplier, 15);
 
             EffectsWeigth.TryAdd(EffectsEnum.Effect_AddHealBonus, 10);
             EffectsWeigth.TryAdd(EffectsEnum.Effect_AddCriticalHit, 10);

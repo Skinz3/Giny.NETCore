@@ -62,7 +62,7 @@ namespace Giny.World.Records.Spells
             get;
             set;
         }
-        [D2OField("invulnerable")]
+        [D2OField("incurable")]
         public bool Incurable
         {
             get;

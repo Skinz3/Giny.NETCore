@@ -743,7 +743,7 @@
         /// <summary>
         /// Augmente la PO du sort #1 de #3
         /// </summary>
-        Effect_SpellBoostRange = 281,
+        Effect_AddSpellRangeMax = 281,
         /// <summary>
         /// Rend la portée du sort #1 modifiable
         /// </summary>
@@ -795,7 +795,7 @@
         /// <summary>
         /// Diminue la portée maximale du sort #1 de #3
         /// </summary>
-        Effect_ReduceSpellRange = 294,
+        Effect_ReduceSpellRangeMax = 294,
         /// <summary>
         /// Diminue la portée minimale du sort #1 de #3
         /// </summary>
@@ -2391,93 +2391,41 @@
         /// </summary>
         Effect_2798 = 2798,
 
-        /// <summary>
-        /// Aumenta o dano corpo a corpo : #1{~1~2 a }#2% de danos no corpo a corpo 
-        /// </summary>
-        Effect_MeleeDamageDonePercent = 2800,
+        Effect_AddMeleeDamageMultiplier = 2800,
 
-        /// <summary>
-        /// Diminui o dano corpo a corpo : #1{~1~2 a -}#2% de danos no corpo a corpo
-        /// </summary>
-        Effect_SubMeleeDamageDonePercent = 2801,
+        Effect_SubMeleeDamageMultiplier = 2801,
 
-        /// <summary>
-        /// Diminui a resistência corpo a corpo : -#1{~1~2 a -}#2% de resistência ao corpo a corpo
-        /// </summary>
-        Effect_SubMeleeResistance = 2802,
+        Effect_AddMeleeDamageReceivedMultiplier = 2802,
 
-        /// <summary>
-        /// Aumenta a resistência corpo a corpo : #1{~1~2 a }#2% de resistência ao corpo a corpo
-        /// </summary>
-        Effect_AddMeleeResistance = 2803,
+        Effect_SubMeleeDamageReceivedMultiplier = 2803,
 
-        /// <summary>
-        /// Aumenta os dano danos à distância : #1{~1~2 a }#2% de danos à distância
-        /// </summary>
-        Effect_RangedDamageDonePercent = 2804,
+        Effect_AddRangeDamageMultiplier = 2804,
 
-        /// <summary>
-        /// Dimiui os dano danos à distância : -#1{~1~2 a -}#2% de danos à distância
-        /// </summary>
-        Effect_SubRangedDamageDonePercent = 2805,
+        Effect_SubRangeDamageMultiplier = 2805,
 
-        /// <summary>
-        /// Dimiui a resistência à distância : -#1{~1~2 a -}#2% de resistência à distância
-        /// </summary>
-        Effect_SubRangedResistance = 2806,
+        Effect_AddRangeDamageReceivedMultiplier = 2806,
 
-        /// <summary>
-        /// Aumenta a resistência à distância : #1{~1~2 a }#2% de resistência à distância
-        /// </summary>
-        Effect_AddRangedResistance = 2807,
+        Effect_SubRangeDamageReceivedMultiplier = 2807,
 
-        /// <summary>
-        /// Aumenta os danos de armas : #1{~1~2 a }#2% de danos de armas
-        /// </summary>
-        Effect_WeaponDamageDonePercent = 2808,
+        Effect_AddWeaponDamageMultiplier = 2808,
 
-        /// <summary>
-        /// Diminui os danos de armas : -#1{~1~2 a -}#2% de danos de armas
-        /// </summary>
-        Effect_SubWeaponDamageDonePercent = 2809,
+        Effect_SubWeaponDamageMultiplier = 2809,
 
-        /// <summary>
-        /// Diminui a resistência às armas : -#1{~1~2 a -}#2% de resistência às armas
-        /// </summary>
-        Effect_SubWeaponResistance = 2810,
+        Effect_AddWeaponDamageReceivedMultiplier = 2810,
 
-        /// <summary>
-        /// Aumenta a resistência às armas : #1{~1~2 a }#2% de resistência às armas
-        /// </summary>
-        Effect_WeaponResistance = 2811,
+        Effect_SubWeaponDamageReceivedMultiplier = 2811,
 
-        /// <summary>
-        /// Aumenta o dano de spells : #1{~1~2 a }#2% de danos de feitiços
-        /// </summary>
-        Effect_SpellDamageDonePercent = 2812,
+        Effect_AddSpellDamageMultiplier = 2812,
 
-        /// <summary>
-        /// Diminui o dano de spells : -#1{~1~2 a -}#2% de danos de feitiços
-        /// </summary>
-        Effect_SubSpellDamageDonePercent = 2813,
+        Effect_SubSpellDamageMultiplier = 2813,
 
-        /// <summary>
-        /// Diminui a resistência aos feitiços : -#1{~1~2 a -}#2% de resistência aos feitiços
-        /// </summary>
-        Effect_SubSpellResistance = 2814,
+        Effect_AddSpellReceivedDamageMultiplier = 2814,
 
-        /// <summary>
-        /// Aumenta a resistência aos feitiços : #1{~1~2 a }#2% de resistência aos feitiços
-        /// </summary>
-        Effect_AddSpellResistance = 2815,
-        /// <summary>
-        /// [UNKNOWN_TEXT_ID_735940]
-        /// </summary>
+        Effect_SubSpellReceivedDamageMultiplier = 2815,
+
         Effect_BoostCharacConvert = 2816,
-        /// <summary>
-        /// 
-        /// </summary>
         Effect_BuyInBidHouse = 2817,
+
         /// <summary>
         /// Craft coopératif impossible.
         /// </summary>

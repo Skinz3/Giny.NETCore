@@ -2,6 +2,7 @@
 using Giny.Protocol.Types;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Buffs.SpellBoost;
+using Giny.World.Managers.Fights.Buffs.SpellModification;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Records.Spells;
@@ -15,26 +16,26 @@ namespace Giny.World.Managers.Fights.Buffs.SpellBoost
 {
     public class SpellBoostModifyApCostBuff : SpellBoostBuff
     {
-        private short EffectiveDelta
+        private SpellModifierActionTypeEnum ActionType
         {
             get;
             set;
         }
-        public SpellBoostModifyApCostBuff(int id, short spellId, short delta, Fighter target, SpellEffectHandler effectHandler, FightDispellableEnum dispellable, bool substract, short? customActionId = null) : base(id, spellId, delta, target, effectHandler, dispellable, customActionId)
+        public SpellBoostModifyApCostBuff(int id, short spellId, short delta, Fighter target, SpellEffectHandler effectHandler, FightDispellableEnum dispellable, SpellModifierActionTypeEnum modifierAction, short? customActionId = null) : base(id, spellId, delta, target, effectHandler, dispellable, customActionId)
         {
-            this.EffectiveDelta = substract ? (short)-GetDelta() : GetDelta();
+            this.ActionType = modifierAction;
         }
         public override void Execute()
         {
-            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.AP_COST, (short)-EffectiveDelta);
+            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.AP_COST, ActionType, GetDelta());
             base.Execute();
         }
         public override void Dispell()
         {
-            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.AP_COST, EffectiveDelta);
+            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.AP_COST, ActionType, (short)-GetDelta());
             base.Dispell();
         }
 
-       
+
     }
 }

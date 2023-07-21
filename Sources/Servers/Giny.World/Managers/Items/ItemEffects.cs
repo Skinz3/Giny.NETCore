@@ -313,88 +313,88 @@ namespace Giny.World.Managers.Items
                 character.ForgetTitle((short)Math.Abs(delta));
             }
         }
-        [ItemEffect(EffectsEnum.Effect_MeleeDamageDonePercent)]
+        [ItemEffect(EffectsEnum.Effect_AddMeleeDamageMultiplier)]
         public static void AddMeleeDamageDone(Character character, int delta)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_MELEE).Objects += (short)delta;
         }
-        [ItemEffect(EffectsEnum.Effect_SubMeleeDamageDonePercent)]
+        [ItemEffect(EffectsEnum.Effect_SubMeleeDamageMultiplier)]
         public static void SubMeeleDamageDone(Character character, int delta)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_MELEE).Objects -= (short)delta;
         }
-        [ItemEffect(EffectsEnum.Effect_AddMeleeResistance)]
+        [ItemEffect(EffectsEnum.Effect_SubMeleeDamageReceivedMultiplier)]
         public static void AddMeleeResistances(Character character, int delta)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE).Objects -= (short)delta;
         }
-        [ItemEffect(EffectsEnum.Effect_SubMeleeResistance)]
+        [ItemEffect(EffectsEnum.Effect_AddMeleeDamageReceivedMultiplier)]
         public static void SubMeeleeResistance(Character character, int delta)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE).Objects += (short)delta;
         }
 
 
-        [ItemEffect(EffectsEnum.Effect_WeaponDamageDonePercent)]
+        [ItemEffect(EffectsEnum.Effect_AddWeaponDamageMultiplier)]
         public static void AddWeaponDamageDone(Character character, int delta)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_WEAPON).Objects += (short)delta;
         }
-        [ItemEffect(EffectsEnum.Effect_SubWeaponDamageDonePercent)]
+        [ItemEffect(EffectsEnum.Effect_SubWeaponDamageMultiplier)]
         public static void SubWeaponDamageDone(Character character, int delta)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_WEAPON).Objects -= (short)delta;
         }
 
-        [ItemEffect(EffectsEnum.Effect_WeaponResistance)]
+        [ItemEffect(EffectsEnum.Effect_SubWeaponDamageReceivedMultiplier)]
         public static void AddWeaponResistance(Character character, int delta)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_WEAPON).Objects -= (short)delta;
         }
-        [ItemEffect(EffectsEnum.Effect_SubWeaponResistance)]
+        [ItemEffect(EffectsEnum.Effect_AddWeaponDamageReceivedMultiplier)]
         public static void SubWeaponResistance(Character character, int delta)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_WEAPON).Objects += (short)delta;
         }
 
-        [ItemEffect(EffectsEnum.Effect_RangedDamageDonePercent)]
+        [ItemEffect(EffectsEnum.Effect_AddRangeDamageMultiplier)]
         public static void AddRangeDamageDone(Character character, int delta)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_DISTANCE).Objects += (short)delta;
         }
-        [ItemEffect(EffectsEnum.Effect_SubRangedDamageDonePercent)]
+        [ItemEffect(EffectsEnum.Effect_SubRangeDamageMultiplier)]
         public static void SuRangedDamageDone(Character character, int delta)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_DISTANCE).Objects -= (short)delta;
         }
-        [ItemEffect(EffectsEnum.Effect_AddRangedResistance)]
+        [ItemEffect(EffectsEnum.Effect_SubRangeDamageReceivedMultiplier)]
         public static void AddRangedResistances(Character character, int delta)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_DISTANCE).Objects -= (short)delta;
         }
-        [ItemEffect(EffectsEnum.Effect_SubRangedResistance)]
+        [ItemEffect(EffectsEnum.Effect_AddRangeDamageReceivedMultiplier)]
         public static void SubRangedResistance(Character character, int delta)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_DISTANCE).Objects += (short)delta;
         }
 
-        [ItemEffect(EffectsEnum.Effect_SpellDamageDonePercent)]
+        [ItemEffect(EffectsEnum.Effect_AddSpellDamageMultiplier)]
         public static void AddSpellDamageDone(Character character, int delta)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_SPELLS).Objects += (short)delta;
         }
-        [ItemEffect(EffectsEnum.Effect_SubSpellDamageDonePercent)]
+        [ItemEffect(EffectsEnum.Effect_SubSpellDamageMultiplier)]
         public static void SubSpellDamageDone(Character character, int delta)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_SPELLS).Objects -= (short)delta;
         }
 
-        [ItemEffect(EffectsEnum.Effect_AddSpellResistance)]
+        [ItemEffect(EffectsEnum.Effect_SubSpellReceivedDamageMultiplier)]
         public static void AddSpellResistances(Character character, int delta)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_SPELLS).Objects -= (short)delta;
         }
-        [ItemEffect(EffectsEnum.Effect_SubSpellResistance)]
+        [ItemEffect(EffectsEnum.Effect_AddSpellReceivedDamageMultiplier)]
         public static void SubSpellResistance(Character character, int delta)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_SPELLS).Objects += (short)delta;

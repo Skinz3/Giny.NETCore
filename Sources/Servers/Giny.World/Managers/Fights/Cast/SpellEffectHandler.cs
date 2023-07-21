@@ -28,7 +28,6 @@ using Giny.World.Managers.Fights.Cast.Units;
 
 namespace Giny.World.Managers.Fights.Cast
 {
-    [WIP("dispellable should not be constants.")]
     public abstract class SpellEffectHandler
     {
         public Fighter Source

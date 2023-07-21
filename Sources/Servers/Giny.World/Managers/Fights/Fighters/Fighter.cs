@@ -286,14 +286,15 @@ namespace Giny.World.Managers.Fights.Fighters
         {
             this.Team = team;
             this.RoleplayCell = roleplayCell;
-            this.Cell = Team.GetPlacementCell();
             this.Loot = new Loot();
             this.Buffs = new List<Buff>();
+            this.Cell = Team.GetPlacementCell();
             this.BuffIdProvider = new UniqueIdProvider();
             this.SpellHistory = new SpellHistory(this);
             this.SpellModifiers = new SpellModifiers(this);
             this.WasTeleportedInInvalidCell = false;
             this.Random = new Random();
+
         }
 
 
@@ -1224,14 +1225,28 @@ namespace Giny.World.Managers.Fights.Fighters
         }
         private int GetSpellMinimalRange(SpellLevelRecord level)
         {
+            short? setModifier = SpellModifiers.GetModifierSet(level.SpellId, SpellModifierTypeEnum.RANGE_MIN);
+
+            if (setModifier.HasValue)
+            {
+                return setModifier.Value;
+            }
+
             var range = (int)level.MinRange;
-            range += SpellModifiers.GetModifier(level.SpellId, SpellModifierTypeEnum.RANGE_MIN);
+            range += SpellModifiers.GetModifierBoost(level.SpellId, SpellModifierTypeEnum.RANGE_MIN);
             return range;
         }
         private int GetSpellRange(SpellLevelRecord level)
         {
+            short? setModifier = SpellModifiers.GetModifierSet(level.SpellId, SpellModifierTypeEnum.RANGE_MAX);
+
+            if (setModifier.HasValue)
+            {
+                return setModifier.Value;
+            }
+
             var range = (int)level.MaxRange;
-            range += SpellModifiers.GetModifier(level.SpellId, SpellModifierTypeEnum.RANGE_MAX);
+            range += SpellModifiers.GetModifierBoost(level.SpellId, SpellModifierTypeEnum.RANGE_MAX);
             return range;
         }
         public virtual bool HasSpell(short spellId)
@@ -1543,7 +1558,7 @@ namespace Giny.World.Managers.Fights.Fighters
         {
             short apCost = level.ApCost;
 
-            apCost -= this.SpellModifiers.GetModifier(level.SpellId, SpellModifierTypeEnum.AP_COST);
+            apCost -= this.SpellModifiers.GetModifierBoost(level.SpellId, SpellModifierTypeEnum.AP_COST);
 
             if (apCost < 0)
             {

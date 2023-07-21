@@ -88,7 +88,7 @@ namespace Giny.World.Managers.Fights
             this.Side = side;
             this.Type = teamtype;
             this.TeamId = id;
-            this.PlacementCells = placementCells;
+            this.PlacementCells = placementCells.Shuffle();
             this.Options = new FightTeamOptions(this);
         }
         public void Send(NetworkMessage message)
@@ -156,7 +156,7 @@ namespace Giny.World.Managers.Fights
         }
         public CellRecord GetPlacementCell()
         {
-            return PlacementCells.Where(cell => !Fighters.Any(fighter => fighter.Cell.Id == cell.Id)).Random(new AsyncRandom());
+            return PlacementCells.Where(cell => !Fighters.Any(fighter => fighter.Cell.Id == cell.Id)).FirstOrDefault();
         }
         public void RemoveFighter(Fighter fighter)
         {

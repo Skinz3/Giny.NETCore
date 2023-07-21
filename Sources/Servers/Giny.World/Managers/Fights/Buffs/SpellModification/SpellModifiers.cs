@@ -12,7 +12,7 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
 {
     public class SpellModifiers
     {
-        public Dictionary<short, Dictionary<SpellModifierTypeEnum, SpellModifier>> Modifications
+        public List<SpellModifier> Modifiers
         {
             get;
             private set;
@@ -26,88 +26,75 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
         public SpellModifiers(Fighter fighter)
         {
             this.Fighter = fighter;
-            this.Modifications = new Dictionary<short, Dictionary<SpellModifierTypeEnum, SpellModifier>>();
+            this.Modifiers = new List<SpellModifier>();
         }
 
 
-        public short GetModifier(short spellId, SpellModifierTypeEnum type)
+
+        public short? GetModifierSet(short spellId, SpellModifierTypeEnum type)
         {
-            if (!Modifications.ContainsKey(spellId))
+            var set = Modifiers.LastOrDefault(x => x.SpellId == spellId &&
+            type == x.Type && x.Action == SpellModifierActionTypeEnum.ACTION_SET);
+
+            if (set != null)
+            {
+                return set.Value;
+            }
+
+            return null;
+        }
+        public short GetModifierBoost(short spellId, SpellModifierTypeEnum type)
+        {
+            var modifiers = Modifiers.Where(x => x.SpellId == spellId && x.Type == type);
+
+            if (modifiers.Count() == 0)
             {
                 return 0;
             }
 
-            var modifiers = Modifications[spellId];
 
-            if (modifiers.ContainsKey(type))
-            {
-                return modifiers[type].Value;
-            }
-            else
-            {
-                return 0;
-            }
+            int boosts = modifiers.Where(x => x.Action == SpellModifierActionTypeEnum.ACTION_BOOST).Sum(x => x.Value);
+
+            int deboosts = modifiers.Where(x => x.Action == SpellModifierActionTypeEnum.ACTION_DEBOOST).Sum(x => x.Value);
+
+
+            return (short)(boosts - deboosts);
         }
 
-        public void ApplySpellModification(short spellId, SpellModifierTypeEnum type, short value)
+        public void RemoveSpellModification(SpellModifier modifier)
         {
-            if (!Modifications.ContainsKey(spellId))
-            {
-                Modifications.Add(spellId, new Dictionary<SpellModifierTypeEnum, SpellModifier>());
-            }
+            Modifiers.Remove(modifier);
 
-            var modifiers = Modifications[spellId];
-
-            if (modifiers.ContainsKey(type))
-            {
-                UpdateModifier(modifiers[type], value);
-            }
-            else
-            {
-                modifiers[type] = CreateSpellModifier(type, spellId);
-                UpdateModifier(modifiers[type], value);
-            }
+            Fighter.Fight.Send(new RemoveSpellModifierMessage(Fighter.Id,
+                  (byte)modifier.Action, (byte)modifier.Type, modifier.SpellId));
         }
-
-        private void UpdateModifier(SpellModifier modifier, short value)
+        public void ApplySpellModification(short spellId, SpellModifierTypeEnum type, SpellModifierActionTypeEnum action, short value)
         {
-            modifier.Update(value);
+            var previous = Modifiers.FirstOrDefault(x => x.SpellId == spellId && x.Type == type && x.Action == action);
 
-            if (modifier.RequiresDeletion())
+            if (previous != null)
             {
-                Modifications[modifier.SpellId].Remove(modifier.Type);
+                var result = previous.Update(value);
 
-                if (Modifications[modifier.SpellId].Count == 0)
+                if (result == SpellModifierUpdateResult.RequiresDeletion)
                 {
-                    Modifications.Remove(modifier.SpellId);
+                    RemoveSpellModification(previous);
                 }
-
-                Fighter.Fight.Send(new RemoveSpellModifierMessage(Fighter.Id,
-                      (byte)modifier.Action, (byte)modifier.Type, modifier.SpellId));
+                else if (result == SpellModifierUpdateResult.Ok)
+                {
+                    Fighter.Fight.Send(new ApplySpellModifierMessage(Fighter.Id, previous.GetSpellModifierMessage()));
+                }
+               
+                return;
             }
             else
             {
+                SpellModifier modifier = new SpellModifier(spellId, type, action);
+                modifier.Update(value);
+                Modifiers.Add(modifier);
                 Fighter.Fight.Send(new ApplySpellModifierMessage(Fighter.Id, modifier.GetSpellModifierMessage()));
             }
-        }
 
-        private SpellModifier CreateSpellModifier(SpellModifierTypeEnum type, short spellId)
-        {
-            switch (type)
-            {
-                case SpellModifierTypeEnum.BASE_DAMAGE:
-                    return new SpellModifierBaseDamage(spellId);
-                case SpellModifierTypeEnum.LOS:
-                    return new SpellModifierLOS(spellId);
-                case SpellModifierTypeEnum.AP_COST:
-                    return new SpellModifierApCost(spellId);
-                case SpellModifierTypeEnum.RANGE_MAX:
-                    return new SpellModifierMaxRange(spellId);
-
-            }
-
-
-            throw new NotImplementedException($"Not implemented spell modifier {type}");
         }
     }
 }

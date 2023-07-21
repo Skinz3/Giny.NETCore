@@ -236,7 +236,7 @@ namespace Giny.World.Managers.Fights.Cast.Units
         public Jet EvaluateConcreteJet()
         {
 
-            short boost = Source.SpellModifiers.GetModifier(EffectHandler.CastHandler.Cast.SpellId, SpellModifierTypeEnum.BASE_DAMAGE);
+            short boost = Source.SpellModifiers.GetModifierBoost(EffectHandler.CastHandler.Cast.SpellId, SpellModifierTypeEnum.BASE_DAMAGE);
 
             if (BaseMaxDamages == 0 || BaseMaxDamages <= BaseMinDamages)
             {

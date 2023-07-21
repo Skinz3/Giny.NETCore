@@ -1,6 +1,7 @@
 ﻿using Giny.Protocol.Enums;
 using Giny.Protocol.Types;
 using Giny.World.Managers.Effects;
+using Giny.World.Managers.Fights.Buffs.SpellModification;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
 using System;
@@ -19,12 +20,16 @@ namespace Giny.World.Managers.Fights.Buffs.SpellBoost
 
         public override void Execute()
         {
-            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.BASE_DAMAGE, GetDelta());
+            Target.SpellModifiers.ApplySpellModification(SpellId,
+                SpellModifierTypeEnum.BASE_DAMAGE, SpellModifierActionTypeEnum.ACTION_BOOST, GetDelta());
+
             base.Execute();
         }
         public override void Dispell()
         {
-            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.BASE_DAMAGE, (short)-GetDelta());
+            Target.SpellModifiers.ApplySpellModification(SpellId,
+                SpellModifierTypeEnum.BASE_DAMAGE, SpellModifierActionTypeEnum.ACTION_BOOST, (short)-GetDelta());
+
             base.Dispell();
         }
         public override string ToString()
@@ -32,6 +37,6 @@ namespace Giny.World.Managers.Fights.Buffs.SpellBoost
             return $"SpellBoost (BaseDamages) {base.Cast.Spell.Record.Name} +{GetDelta()}";
         }
 
-       
+
     }
 }

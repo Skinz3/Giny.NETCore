@@ -147,7 +147,7 @@ namespace Giny.World.Managers.Fights.Effects
         }
 
         [SpellAppearance(2160)]
-        public static void MutantLapinoSkin(Fighter fighter,ref ServerEntityLook look)
+        public static void MutantLapinoSkin(Fighter fighter, ref ServerEntityLook look)
         {
             look.SetBones(7597);
         }
@@ -158,8 +158,13 @@ namespace Giny.World.Managers.Fights.Effects
             look.SetBones(4115);
         }
 
+        [SpellAppearance(1334)]
+        public static void JashninSkin(Fighter fighter, ref ServerEntityLook look)
+        {
+            look.SetBones(4828);
+        }
         [SpellAppearance(1333)]
-        public static void HarmonySkin(Fighter fighter,ref ServerEntityLook look)
+        public static void HarmonySkin(Fighter fighter, ref ServerEntityLook look)
         {
             look.SetBones(4817);
         }

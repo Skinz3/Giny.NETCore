@@ -26,10 +26,26 @@ namespace Giny.World.Managers.Fights.Effects.Heals
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
-            foreach (var target in targets)
+            Damage damage = GetTriggerToken<Damage>();
+
+            if (damage != null)
             {
-                double delta = Source.TotalDamageReceivedSequenced * (Effect.Min / 100d);
-                target.Heal(new Healing(Source, target, EffectSchoolEnum.Fix, delta, delta, this));
+                damage.Applied += delegate (DamageResult result)
+                {
+                    foreach (var target in targets)
+                    {
+                        var delta = result.Total * (Effect.Min / 100d);
+                        target.Heal(new Healing(Source, target, EffectSchoolEnum.Fix, delta, delta, this));
+                    }
+                };
+            }
+            else
+            {
+                foreach (var target in targets)
+                {
+                    double delta = Source.TotalDamageReceivedSequenced * (Effect.Min / 100d);
+                    target.Heal(new Healing(Source, target, EffectSchoolEnum.Fix, delta, delta, this));
+                }
             }
 
 

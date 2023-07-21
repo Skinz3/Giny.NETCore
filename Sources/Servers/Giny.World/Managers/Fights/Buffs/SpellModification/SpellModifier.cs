@@ -8,7 +8,12 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Buffs.SpellModification
 {
-    public abstract class SpellModifier
+    public enum SpellModifierUpdateResult
+    {
+        Ok,
+        RequiresDeletion,
+    }
+    public class SpellModifier
     {
         /// <summary>
         /// Value context
@@ -26,25 +31,79 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
         }
 
 
-        public abstract SpellModifierTypeEnum Type { get; }
-
-        public abstract SpellModifierActionTypeEnum Action { get; }
-
-        public SpellModifier(short spellId)
+        public SpellModifierTypeEnum Type
         {
-            this.SpellId = spellId;
+            get;
+            set;
         }
 
-        public abstract void Update(short value);
+        public SpellModifierActionTypeEnum Action
+        {
+            get;
+            private set;
+        }
 
-        public abstract bool RequiresDeletion();
 
+        public SpellModifier(short spellId, SpellModifierTypeEnum type, SpellModifierActionTypeEnum action)
+        {
+            this.SpellId = spellId;
+            this.Type = type;
+            this.Action = action;
+        }
+        /// <summary>
+        /// Update the modifier
+        /// </summary>
+        /// <param name="value">delta</param>
+        /// <returns>still valid</returns>
+
+        public SpellModifierUpdateResult Update(short value)
+        {
+            var oldValue = this.Value;
+
+            switch (Action)
+            {
+                case SpellModifierActionTypeEnum.ACTION_INVALID:
+                    throw new InvalidOperationException("Invalid spell modifier action.");
+                case SpellModifierActionTypeEnum.ACTION_BOOST:
+                    Value += value;
+                    break;
+                case SpellModifierActionTypeEnum.ACTION_DEBOOST:
+                    Value -= value;
+                    break;
+                case SpellModifierActionTypeEnum.ACTION_SET:
+                    Value = value;
+                    break;
+                default:
+                    break;
+            }
+
+            if (Action == SpellModifierActionTypeEnum.ACTION_SET && Math.Abs(value) != Math.Abs(oldValue))
+            {
+                throw new Exception("Spell modifier set overlap for spellId " + SpellId);
+            }
+
+            if (Action == SpellModifierActionTypeEnum.ACTION_SET && value == -oldValue)
+            {
+                return SpellModifierUpdateResult.RequiresDeletion;
+            }
+
+
+            if (Type == SpellModifierTypeEnum.LOS && Value == 1)
+            {
+                return SpellModifierUpdateResult.RequiresDeletion;
+            }
+
+            if ((Action == SpellModifierActionTypeEnum.ACTION_BOOST || Action == SpellModifierActionTypeEnum.ACTION_DEBOOST) && Value == 0)
+            {
+                return SpellModifierUpdateResult.RequiresDeletion;
+            }
+
+            return SpellModifierUpdateResult.Ok;
+        }
         public SpellModifierMessage GetSpellModifierMessage()
         {
             return new SpellModifierMessage(SpellId, (byte)Action, (byte)Type, Value, 0);
         }
-
-
 
 
     }

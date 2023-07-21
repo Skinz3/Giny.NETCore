@@ -1,6 +1,7 @@
 ﻿using Giny.IO.D2OClasses;
 using Giny.Protocol.Enums;
 using Giny.Protocol.Messages;
+using Giny.World.Managers.Fights.Buffs.SpellModification;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
 using Org.BouncyCastle.Asn1.X509;
@@ -20,12 +21,12 @@ namespace Giny.World.Managers.Fights.Buffs.SpellBoost
 
         public override void Execute()
         {
-            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.LOS, 0);
+            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.LOS, SpellModifierActionTypeEnum.ACTION_SET, 0);
             base.Execute();
         }
         public override void Dispell()
         {
-            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.LOS, 1);
+            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.LOS, SpellModifierActionTypeEnum.ACTION_SET, 1);
             base.Dispell();
         }
     }

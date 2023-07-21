@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.World.Managers.Fights.Effects.Buffs
+namespace Giny.World.Managers.Fights.Effects.Buffs.Spells
 {
     [SpellEffectHandler(EffectsEnum.Effect_IncreaseSpellAPCost)]
     [SpellEffectHandler(EffectsEnum.Effect_ReduceSpellApCost)]
@@ -24,18 +24,30 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
             short spellId = (short)Effect.Min;
             short delta = (short)Effect.Value;
 
-            bool substract = Effect.EffectEnum == EffectsEnum.Effect_ReduceSpellApCost;
-
             foreach (var target in targets)
             {
                 if (target.HasSpell(spellId))
                 {
                     int id = target.BuffIdProvider.Pop();
                     SpellBoostModifyApCostBuff buff = new SpellBoostModifyApCostBuff(id, spellId, delta,
-                        target, this, Effect.DispellableEnum, substract);
+                        target, this, Effect.DispellableEnum, GetModifierAction());
                     target.AddBuff(buff);
                 }
             }
         }
+
+        private SpellModifierActionTypeEnum GetModifierAction()
+        {
+            switch (Effect.EffectEnum)
+            {
+                case EffectsEnum.Effect_ReduceSpellApCost:
+                    return SpellModifierActionTypeEnum.ACTION_DEBOOST;
+                case EffectsEnum.Effect_IncreaseSpellAPCost:
+                    return SpellModifierActionTypeEnum.ACTION_BOOST;
+            }
+
+            throw new InvalidOperationException("Unable to compute spell modifier action from effect.");
+        }
+
     }
 }

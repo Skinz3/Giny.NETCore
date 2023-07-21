@@ -26,7 +26,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
         {
             Damage damage = GetTriggerToken<Damage>();
 
-            if (damage != null)
+            if (damage != null && damage.Computed.HasValue)
             {
                 int reduction = damage.Target.CalculateArmorValue((short)Effect.Min);
                 int dmgReduction = Math.Min(damage.Computed.Value, reduction);
@@ -39,7 +39,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
                 {
                     int id = target.BuffIdProvider.Pop();
                     Buff buff = new GlobalDamageReductionBuff(id,
-                       (short)Effect.Min,  target, this, Effect.DispellableEnum);
+                       (short)Effect.Min, target, this, Effect.DispellableEnum);
                     target.AddBuff(buff);
                 }
             }

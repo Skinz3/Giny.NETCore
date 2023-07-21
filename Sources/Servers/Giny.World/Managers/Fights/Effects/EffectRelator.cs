@@ -51,10 +51,10 @@ namespace Giny.World.Managers.Fights.Effects
                 case EffectsEnum.Effect_AddWeaponDamageBonus:
                     return CharacteristicEnum.WEAPON_POWER;
 
-                case EffectsEnum.Effect_MeleeDamageDonePercent:
+                case EffectsEnum.Effect_AddMeleeDamageMultiplier:
                     return CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_MELEE;
 
-                case EffectsEnum.Effect_RangedDamageDonePercent:
+                case EffectsEnum.Effect_AddRangeDamageMultiplier:
                     return CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_DISTANCE;
 
                 case EffectsEnum.Effect_AddDamageBonus:
@@ -69,13 +69,13 @@ namespace Giny.World.Managers.Fights.Effects
                 case EffectsEnum.Effect_AddDodgeAPProbability:
                     return CharacteristicEnum.DODGE_AP_LOST_PROBABILITY;
 
-                case EffectsEnum.Effect_AddMeleeResistance:
+                case EffectsEnum.Effect_SubMeleeDamageReceivedMultiplier:
                     return CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE;
 
-                case EffectsEnum.Effect_AddRangedResistance:
+                case EffectsEnum.Effect_SubRangeDamageReceivedMultiplier:
                     return CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_DISTANCE;
 
-                case EffectsEnum.Effect_AddSpellResistance:
+                case EffectsEnum.Effect_SubSpellReceivedDamageMultiplier:
                     return CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_SPELLS;
 
                 case EffectsEnum.Effect_AddLock:
@@ -143,8 +143,8 @@ namespace Giny.World.Managers.Fights.Effects
                 case EffectsEnum.Effect_AddTrapBonusPercent:
                     return CharacteristicEnum.TRAP_DAMAGE_BONUS_PERCENT;
 
-                case EffectsEnum.Effect_SubWeaponDamageDonePercent:
-                case EffectsEnum.Effect_WeaponDamageDonePercent:
+                case EffectsEnum.Effect_SubWeaponDamageMultiplier:
+                case EffectsEnum.Effect_AddWeaponDamageMultiplier:
                     return CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_WEAPON;
 
                 case EffectsEnum.Effect_AddPushDamageReduction:
@@ -165,7 +165,7 @@ namespace Giny.World.Managers.Fights.Effects
                 case EffectsEnum.Effect_AddCriticalDamageBonus:
                     return CharacteristicEnum.CRITICAL_DAMAGE_BONUS;
 
-                case EffectsEnum.Effect_SpellDamageDonePercent:
+                case EffectsEnum.Effect_AddSpellDamageMultiplier:
                     return CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_SPELLS;
 
                 case EffectsEnum.Effect_IncreaseSpellDamage:
@@ -192,10 +192,10 @@ namespace Giny.World.Managers.Fights.Effects
                 case EffectsEnum.Effect_SubWisdom:
                     return CharacteristicEnum.WISDOM;
 
-                case EffectsEnum.Effect_SubMeleeDamageDonePercent:
+                case EffectsEnum.Effect_SubMeleeDamageMultiplier:
                     return CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_MELEE;
 
-                case EffectsEnum.Effect_SubRangedDamageDonePercent:
+                case EffectsEnum.Effect_SubRangeDamageMultiplier:
                     return CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_DISTANCE;
 
                 case EffectsEnum.Effect_SubDamageBonus:
@@ -210,13 +210,13 @@ namespace Giny.World.Managers.Fights.Effects
                 case EffectsEnum.Effect_SubDodgeAPProbability:
                     return CharacteristicEnum.DODGE_AP_LOST_PROBABILITY;
 
-                case EffectsEnum.Effect_SubMeleeResistance:
+                case EffectsEnum.Effect_AddMeleeDamageReceivedMultiplier:
                     return CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE;
 
-                case EffectsEnum.Effect_SubRangedResistance:
+                case EffectsEnum.Effect_AddRangeDamageReceivedMultiplier:
                     return CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_DISTANCE;
 
-                case EffectsEnum.Effect_SubSpellResistance:
+                case EffectsEnum.Effect_AddSpellReceivedDamageMultiplier:
                     return CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_SPELLS;
 
                 case EffectsEnum.Effect_SubLock:
@@ -273,7 +273,7 @@ namespace Giny.World.Managers.Fights.Effects
                 case EffectsEnum.Effect_SubCriticalDamageReduction:
                     return CharacteristicEnum.CRITICAL_DAMAGE_REDUCTION;
 
-                case EffectsEnum.Effect_SubSpellDamageDonePercent:
+                case EffectsEnum.Effect_SubSpellDamageMultiplier:
                     return CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_SPELLS;
 
                 case EffectsEnum.Effect_ReduceFinalDamages:

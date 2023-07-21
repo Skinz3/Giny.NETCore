@@ -20,14 +20,12 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
     [SpellEffectHandler(EffectsEnum.Effect_SubChance)]
     [SpellEffectHandler(EffectsEnum.Effect_SubIntelligence)]
     [SpellEffectHandler(EffectsEnum.Effect_SubRange)]
-    [SpellEffectHandler(EffectsEnum.Effect_SubMeleeDamageDonePercent)]
+    [SpellEffectHandler(EffectsEnum.Effect_SubMeleeDamageMultiplier)]
     [SpellEffectHandler(EffectsEnum.Effect_SubCriticalHit)]
-    [SpellEffectHandler(EffectsEnum.Effect_SubRangedDamageDonePercent)]
+    [SpellEffectHandler(EffectsEnum.Effect_SubRangeDamageMultiplier)]
     [SpellEffectHandler(EffectsEnum.Effect_SubDodgeMPProbability)]
     [SpellEffectHandler(EffectsEnum.Effect_SubDodgeAPProbability)]
-    [SpellEffectHandler(EffectsEnum.Effect_SubMeleeResistance)]
-    [SpellEffectHandler(EffectsEnum.Effect_SubRangedResistance)]
-    [SpellEffectHandler(EffectsEnum.Effect_SubSpellResistance)]
+
     [SpellEffectHandler(EffectsEnum.Effect_SubLock)]
     [SpellEffectHandler(EffectsEnum.Effect_SubFireResistPercent)]
     [SpellEffectHandler(EffectsEnum.Effect_SubEarthResistPercent)]
@@ -46,8 +44,11 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
     [SpellEffectHandler(EffectsEnum.Effect_SubPushDamageReduction)]
     [SpellEffectHandler(EffectsEnum.Effect_SubHealBonus)]
     [SpellEffectHandler(EffectsEnum.Effect_SubCriticalDamageReduction)]
-    [SpellEffectHandler(EffectsEnum.Effect_SubSpellDamageDonePercent)]
+    [SpellEffectHandler(EffectsEnum.Effect_SubSpellDamageMultiplier)]
     [SpellEffectHandler(EffectsEnum.Effect_ReduceFinalDamages)]
+    [SpellEffectHandler(EffectsEnum.Effect_SubMeleeDamageReceivedMultiplier)]
+    [SpellEffectHandler(EffectsEnum.Effect_SubRangeDamageReceivedMultiplier)]
+    [SpellEffectHandler(EffectsEnum.Effect_SubSpellReceivedDamageMultiplier)]
     public class StatsDebuff : SpellEffectHandler
     {
          
