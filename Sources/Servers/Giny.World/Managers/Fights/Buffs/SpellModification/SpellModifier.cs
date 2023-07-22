@@ -72,7 +72,7 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
                     Value += value;
                     break;
                 case SpellModifierActionTypeEnum.ACTION_DEBOOST:
-                    Value -= value;
+                    Value += value;
                     break;
                 case SpellModifierActionTypeEnum.ACTION_SET:
                     Value = value;

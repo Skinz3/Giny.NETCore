@@ -45,7 +45,7 @@ namespace Giny.DatabasePatcher.Monsters
 
                         if (monsterRecord == null)
                         {
-                            Logger.Write($"Unknown monster {monsterId} skipping spawn...");
+                            Logger.Write($"Unknown monster {monsterId} skipping spawn...", Channels.Warning);
                             continue;
                         }
                         var spawnProbability = ComputeMonsterSpawnProbability(monsterRecord);

@@ -36,6 +36,8 @@ namespace Giny.World.Managers.Fights.Effects.Movements
                 return targetCells.First();
             }
 
+
+           
             for (int i = targetCells.Count - 1; i >= 0; i--)
             {
                 var cellFree = Source.Fight.IsCellFree(targetCells[i]);

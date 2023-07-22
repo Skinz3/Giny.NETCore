@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Marks
 {
+    [SpellEffectHandler(EffectsEnum.Effect_Glyph_CastingSpellImmediate)]
     [SpellEffectHandler(EffectsEnum.Effect_TurnEndGlyph)]
     [SpellEffectHandler(EffectsEnum.Effect_TurnBeginGlyph)]
     public class SpawnGlyph : SpellEffectHandler
@@ -42,6 +43,8 @@ namespace Giny.World.Managers.Fights.Effects.Marks
                     return MarkTriggerType.OnTurnBegin;
                 case EffectsEnum.Effect_TurnEndGlyph:
                     return MarkTriggerType.OnTurnEnd;
+                case EffectsEnum.Effect_Glyph_CastingSpellImmediate:
+                    return MarkTriggerType.Instant;
             }
 
             return MarkTriggerType.None;

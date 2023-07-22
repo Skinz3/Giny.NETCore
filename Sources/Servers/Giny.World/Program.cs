@@ -26,6 +26,8 @@ namespace Giny.World
             StartupManager.Instance.Initialize(Assembly.GetExecutingAssembly());
             IPCManager.Instance.ConnectToAuth();
 
+          
+
             ConsoleCommandsManager.Instance.ReadCommand();
         }
 

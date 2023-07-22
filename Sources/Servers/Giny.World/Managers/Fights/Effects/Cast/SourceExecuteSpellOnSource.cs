@@ -32,9 +32,10 @@ namespace Giny.World.Managers.Fights.Effects.Cast
                 source = token.GetSource();
             }
 
-            foreach (var target in targets) // Ratrapry (Prisma) verify source.
+
+            for (int i = 0; i < targets.Count(); i++)
             {
-                var targetCell = target.Cell;
+                var targetCell = source.Cell;// // Ratrapry (Prisma) verify source.
 
                 if (token != null) // Dérobade, sram
                 {
@@ -47,7 +48,6 @@ namespace Giny.World.Managers.Fights.Effects.Cast
                 cast.Silent = true;
                 source.CastSpell(cast);
             }
-
 
         }
     }

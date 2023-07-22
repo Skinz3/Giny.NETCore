@@ -35,7 +35,7 @@ namespace Giny.World.Managers
 
         public void PerformSave()
         {
-            Thread thread = new Thread(new ThreadStart(() =>
+            Task.Run(() =>
             {
                 if (WorldServer.Instance.Status == ServerStatusEnum.ONLINE)
                 {
@@ -61,10 +61,7 @@ namespace Giny.World.Managers
                 {
                     Logger.Write("Unable to save world server, server is busy...", Channels.Warning);
                 }
-            }));
-
-
-            thread.Start();
+            });
 
 
         }

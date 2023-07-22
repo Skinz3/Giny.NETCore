@@ -6,6 +6,7 @@ using Giny.World.Api;
 using Giny.World.Managers.Fights;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Results;
+using Giny.World.Managers.Monsters;
 using Giny.World.Modules;
 using Giny.World.Records.Items;
 using Giny.World.Records.Jobs;
@@ -48,17 +49,18 @@ namespace Giny.AdditionalDrop
 
             List<ItemRecord> droppedItems = new List<ItemRecord>();
 
-            foreach (var monster in monsterTeam.GetFighters<MonsterFighter>(false).Select(x => x.Monster.Record))
+            foreach (var monster in monsterTeam.GetFighters<MonsterFighter>(false))
             {
-                if (Drops.ContainsKey(monster))
+                if (Drops.ContainsKey(monster.Record))
                 {
-                    ItemRecord item = Drops[monster].Where(x => !droppedItems.Contains(x)).Random(random);
+                    ItemRecord item = Drops[monster.Record].Where(x => !droppedItems.Contains(x)).Random(random);
 
                     if (item == null)
                     {
                         continue;
                     }
-                    if (RollLoot(random, result.Fighter, item))
+
+                    if (RollLoot(random,result.Fighter, monster))
                     {
                         result.Character.Inventory.AddItem((short)item.Id, 1);
                         result.Loot.AddItem((short)item.Id, 1);
@@ -70,11 +72,11 @@ namespace Giny.AdditionalDrop
 
         }
 
-        public bool RollLoot(Random random, CharacterFighter fighter, ItemRecord item)
+        public bool RollLoot(Random random, CharacterFighter fighter, MonsterFighter monster)
         {
             var chance = random.Next(0, 100) + random.NextDouble();
 
-            var dropRate = 100d;
+            var dropRate = 5d;
 
             if (!(dropRate >= chance))
                 return false;

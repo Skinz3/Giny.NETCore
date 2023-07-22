@@ -33,7 +33,7 @@ namespace Giny.World.Records.Maps
             get;
             set;
         }
-        
+
         [D2OField("entranceMapId")]
         [Update]
         public long EntranceMapId
@@ -66,7 +66,7 @@ namespace Giny.World.Records.Maps
             {
                 if (mapId == currentMapId)
                 {
-                    if (index >= Rooms.Keys.Count-1)
+                    if (index >= Rooms.Keys.Count - 1)
                     {
                         return ExitMapId;
                     }
@@ -86,7 +86,11 @@ namespace Giny.World.Records.Maps
             return Dungeons.Values;
         }
 
-        public static DungeonRecord GetDungeonRecord(long mapId)
+        public static DungeonRecord GetDungeon(long id)
+        {
+            return Dungeons[id];
+        }
+        public static DungeonRecord GetDungeonByMapId(long mapId)
         {
             return Dungeons.Values.FirstOrDefault(x => x.Rooms.ContainsKey(mapId));
         }
@@ -99,7 +103,7 @@ namespace Giny.World.Records.Maps
             return "{" + Id + "} " + Name;
         }
 
-        
+
     }
 
     [ProtoContract]

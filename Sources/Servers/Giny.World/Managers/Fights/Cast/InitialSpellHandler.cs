@@ -83,10 +83,34 @@ namespace Giny.World.Managers.Fights.Cast
                 case BreedEnum.Eniripsa:
                     Eniripsa(fighter);
                     break;
+
+                case BreedEnum.Enutrof:
+                    Enutrof(fighter);
+                    break;
             }
+        }
+
+        private static void Enutrof(CharacterFighter fighter)
+        {
+            /*
+             * Tourbière
+             */
+            if (fighter.HasSpell(13358))
+            {
+                fighter.ExecuteSpell(23603, 1, fighter.Cell);
+            }
+
+            /* 
+             * Les doigts d'énutrof
+             */
+
+            fighter.ExecuteSpell(14330, 1, fighter.Cell);
         }
         private static void Ouginak(CharacterFighter fighter)
         {
+            /*
+             * Cerbère
+             */
             if (fighter.HasSpell(13758))
             {
                 fighter.ExecuteSpell(25726, 1, fighter.Cell);

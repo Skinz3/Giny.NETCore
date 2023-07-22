@@ -74,12 +74,7 @@ namespace Giny.World.Records.Challenges
             set;
         }
 
-        [Update]
-        public long InitialSpellLevelId
-        {
-            get;
-            set;
-        }
+       
         public static ChallengeRecord GetChallenge(int id)
         {
             Challenges.TryGetValue(id, out var challenge);

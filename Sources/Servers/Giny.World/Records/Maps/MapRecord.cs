@@ -245,7 +245,7 @@ namespace Giny.World.Records.Maps
 
             this.IsDungeonEntrance = DungeonRecord.IsDungeonEntrance(Id);
 
-            this.Dungeon = DungeonRecord.GetDungeonRecord(Id);
+            this.Dungeon = DungeonRecord.GetDungeonByMapId(Id);
         }
         public IEnumerable<CellRecord> GetMapChangeCells(MapScrollEnum scrollType)
         {
@@ -436,7 +436,10 @@ namespace Giny.World.Records.Maps
         [WIP("not working properly.")]
         public bool IsInMap()
         {
-            return OffsetX == 0 && OffsetY == 0;
+            var x = Point.X + OffsetX;
+            var y  = Point.Y + OffsetY;
+
+            return MapPoint.IsInMap(x, y);
         }
     }
     [ProtoContract]

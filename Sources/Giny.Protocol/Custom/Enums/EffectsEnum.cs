@@ -2201,7 +2201,7 @@
         /// <summary>
         /// Pose un glyphe de rang #2
         /// </summary>
-        Effect_Glyph_1165 = 1165,
+        Effect_Glyph_CastingSpellImmediate = 1165,
         /// <summary>
         /// #1{~1~2 à }#2 Puissance (glyphes)
         /// </summary>

@@ -18,7 +18,7 @@ namespace Giny.DatabasePatcher.Maps
     {
         public static void Patch()
         {
-            Logger.Write("Synchronize interactives elements ...");
+            Logger.Write("Spawning collect interactives ...");
 
             int count = 0;
             foreach (SkillRecord skillRecord in SkillRecord.GetSkills())

@@ -675,6 +675,11 @@ namespace Giny.World.Managers.Fights.Fighters
         [WIP("voir dofus nébuleux (Fight.Timeline.IndexOf(buff.Target) < Fight.Timeline.Index) ?")]
         public void AddBuff(Buff buff)
         {
+            /*if (buff.GetSource() == this && buff.Cast.GetParent() == null && IsSequencingTurnEnd) Fix harmonie Sadida ...
+            {
+                buff.Duration++;
+            }*/
+
             if (BuffMaxStackReached(buff)) // WIP censer cumuler la durée ?
             {
                 Buff oldBuff = Buffs.First(x => x.IsSimilar(buff));
@@ -1364,7 +1369,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 diagonal = Cell.Point.IsOnSameDiagonal(targetCell.Point);
                 direction = targetCell.Point.OrientationTo(Cell.Point, diagonal);
             }
-            if (diagonal) // Tir de barrage
+            if (diagonal && delta > 1) // Tir de barrage
             {
                 delta /= 2;
             }
@@ -1405,7 +1410,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 direction = Cell.Point.OrientationTo(targetCell.Point, diagonal);
             }
 
-            if (diagonal) // Tir de barrage
+            if (diagonal && delta > 1)
             {
                 delta /= 2;
             }
@@ -1881,7 +1886,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 }
                 else
                 {
-                   // UpdateBuff(this, buff); <---- not necessary anymore?
+                    // UpdateBuff(this, buff); <---- not necessary anymore?
                     break;
                 }
             }
@@ -2327,7 +2332,7 @@ namespace Giny.World.Managers.Fights.Fighters
         public void OnStatsBuff(EffectsEnum effectEnum)
         {
 
-          
+
         }
         private int CalculateErodedLife(int damages)
         {

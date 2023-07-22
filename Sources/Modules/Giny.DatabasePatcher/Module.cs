@@ -29,7 +29,8 @@ namespace Giny.DatabasePatcher
         public static void PatchCommand()
         {
             Logger.Write("Patching world database ...", Channels.Info);
-          //  ChallengeSpells.Patch();
+
+            Dungeons.Patch();
             Experiences.Patch();
             ItemAppearances.Patch();
             LivingObjects.Patch();

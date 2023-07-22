@@ -840,6 +840,11 @@ namespace Giny.World.Managers.Fights
             }
 
             mark.OnAdded();
+
+            if (mark.Triggers == MarkTriggerType.Instant)
+            {
+                mark.Trigger(mark.Source, MarkTriggerType.Instant);
+            }
         }
         public void RemoveMark(Mark mark)
         {

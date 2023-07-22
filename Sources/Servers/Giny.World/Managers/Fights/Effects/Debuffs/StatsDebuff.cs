@@ -72,21 +72,22 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
                 {
                     case EffectsEnum.Effect_SubRange:
                     case EffectsEnum.Effect_SubRange_135:
-
+                        target.TriggerBuffs(TriggerTypeEnum.OnRangeLost, null);
                         break;
 
                     case EffectsEnum.Effect_SubAPPercent:
                     case EffectsEnum.Effect_SubAP:
                     case EffectsEnum.Effect_SubAP_Roll:
-                        Source.TriggerBuffs(TriggerTypeEnum.OnCasterRemoveApAttempt, null);
+                       
                         target.TriggerBuffs(TriggerTypeEnum.OnApRemovalAttempt, null);
+                        Source.TriggerBuffs(TriggerTypeEnum.OnCasterRemoveApAttempt, null);
                         break;
 
                     case EffectsEnum.Effect_SubMPPercent:
                     case EffectsEnum.Effect_SubMP_Roll:
                     case EffectsEnum.Effect_SubMP:
-                        Source.TriggerBuffs(TriggerTypeEnum.OnCasterRemoveMpAttempt, null);
                         target.TriggerBuffs(TriggerTypeEnum.OnMpRemovalAttempt, null);
+                        Source.TriggerBuffs(TriggerTypeEnum.OnCasterRemoveMpAttempt, null);
                         break;
 
                 }

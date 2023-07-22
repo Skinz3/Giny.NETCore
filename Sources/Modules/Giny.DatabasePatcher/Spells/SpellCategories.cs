@@ -352,7 +352,7 @@ namespace Giny.DatabasePatcher.Spells
         private static readonly EffectsEnum[] MarkEffects = new EffectsEnum[]
         {
             EffectsEnum.Effect_Trap,
-            EffectsEnum.Effect_Glyph_1165,
+            EffectsEnum.Effect_Glyph_CastingSpellImmediate,
             EffectsEnum.Effect_GlyphAura,
             EffectsEnum.Effect_TurnBeginGlyph,
             EffectsEnum.Effect_TurnEndGlyph,

@@ -81,7 +81,7 @@ namespace Giny.World.Managers.Fights.Units
             jet.ComputeShapeEfficiencyModifiers(Target, EffectHandler);
 
 
-            Target.Fight.Warn("Min :" + (int)jet.Min + " Max:" + (int)  jet.Max);
+            //Target.Fight.Warn("Min :" + (int)jet.Min + " Max:" + (int)  jet.Max);
 
             Computed = jet.Generate(Source.Random, Source.HasRandDownModifier(), Source.HasRandUpModifier());
         }

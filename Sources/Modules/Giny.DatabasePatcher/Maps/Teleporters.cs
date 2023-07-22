@@ -4,6 +4,7 @@ using Giny.Protocol.Enums;
 using Giny.World.Managers.Generic;
 using Giny.World.Managers.Maps.Teleporters;
 using Giny.World.Records.Maps;
+using Org.BouncyCastle.Asn1.Pkcs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,25 +17,33 @@ namespace Giny.DatabasePatcher.Maps
     {
         private static int[] ZaapiGfxIds = new int[]
         {
-            9541,
-            15004,
-            34925
+            304418, // new brackmar
+            70520, // new bonta1
+            70521, // new bonta2
         };
 
-        private const int ZaapBones = 5247;
+
+
+        private static int[] ZaapBones = new int[]
+        {
+            5247, // Regular
+        };
+
 
         /*
          * Some zaap and zaapis, needs to be added manually.
          */
         public static void Patch()
         {
-            Logger.Write("Add zaapis ...");
+           
+            Logger.Write("Spawning teleporters ...");
 
             int count = 0;
             foreach (var map in MapRecord.GetMaps())
             {
                 foreach (var element in map.Elements)
                 {
+
                     if (ZaapiGfxIds.Contains(element.GfxId) && element.IsInMap())
                     {
                         if (!InteractiveSkillRecord.ExistAndHandled(element.Identifier))
@@ -50,8 +59,9 @@ namespace Giny.DatabasePatcher.Maps
                         }
                     }
 
-                    if (element.BonesId == ZaapBones && element.IsInMap())
+                    if (ZaapBones.Contains(element.BonesId) && element.IsInMap())
                     {
+
                         if (!InteractiveSkillRecord.ExistAndHandled(element.Identifier))
                         {
                             TeleportersManager.Instance.AddDestination(TeleporterTypeEnum.TELEPORTER_ZAAP,

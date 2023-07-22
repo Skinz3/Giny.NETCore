@@ -50,6 +50,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
 
                 target.TriggerBuffs(TriggerTypeEnum.OnMpRemovalAttempt, null);
 
+                Source.TriggerBuffs(TriggerTypeEnum.OnCasterRemoveMpAttempt, null);
 
             }
         }

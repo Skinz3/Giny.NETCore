@@ -62,57 +62,62 @@ namespace Giny.DatabasePatcher.Maps
                 }
             }
 
-
             Random rand = new Random();
 
             int succesCount = 0;
 
             foreach (var map in maps)
             {
-                int[] relativePatternsComplx = (from entry in patterns
-                                                where entry.Relativ
-                                                select entry.Complexity).ToArray<int>();
-                PlacementPattern[] relativPatterns = (from entry in patterns
-                                                      where entry.Relativ
-                                                      select entry).ShuffleWithProbabilities(relativePatternsComplx).ToArray<PlacementPattern>();
-                Lozenge searchZone = new Lozenge(0, SearchDeep);
-
-                var centerCell = map.GetCell(300);
-
-                CellRecord[] cells = searchZone.GetCells(centerCell, centerCell, map);
-
                 foreach (var cell in map.Cells)
                 {
                     cell.Blue = false;
                     cell.Red = false;
                 }
-                for (int j = 0; j < cells.Length; j++)
+
+                if (patterns.Count > 0)
                 {
-                    CellRecord center = cells[j];
+                    int[] relativePatternsComplx = (from entry in patterns
+                                                    where entry.Relativ
+                                                    select entry.Complexity).ToArray<int>();
+                    PlacementPattern[] relativPatterns = (from entry in patterns
+                                                          where entry.Relativ
+                                                          select entry).ShuffleWithProbabilities(relativePatternsComplx).ToArray<PlacementPattern>();
+                    Lozenge searchZone = new Lozenge(0, SearchDeep);
 
-                    var pattern = relativPatterns.FirstOrDefault((PlacementPattern entry) => entry.TestPattern(center.Point, map));
+                    var centerCell = map.GetCell(300);
 
-                    if (pattern != null)
+                    CellRecord[] cells = searchZone.GetCells(centerCell, centerCell, map);
+
+                    for (int j = 0; j < cells.Length; j++)
                     {
-                        CellRecord[] blues = (from entry in pattern.Blues
-                                              select map.GetCell(entry.X + center.Point.X, entry.Y + center.Point.Y)).ToArray();
-                        CellRecord[] reds = (from entry in pattern.Reds
-                                             select map.GetCell(entry.X + center.Point.X, entry.Y + center.Point.Y)).ToArray();
+                        CellRecord center = cells[j];
 
-                        for (int i = 0; i < blues.Length; i++)
+                        var pattern = relativPatterns.FirstOrDefault((PlacementPattern entry) => entry.TestPattern(center.Point, map));
+
+                        if (pattern != null)
                         {
-                            blues[i].Blue = true;
-                        }
+                            CellRecord[] blues = (from entry in pattern.Blues
+                                                  select map.GetCell(entry.X + center.Point.X, entry.Y + center.Point.Y)).ToArray();
+                            CellRecord[] reds = (from entry in pattern.Reds
+                                                 select map.GetCell(entry.X + center.Point.X, entry.Y + center.Point.Y)).ToArray();
 
-                        for (int i = 0; i < reds.Length; i++)
-                        {
-                            reds[i].Red = true;
-                        }
+                            for (int i = 0; i < blues.Length; i++)
+                            {
+                                blues[i].Blue = true;
+                            }
 
-                        succesCount++;
-                        break;
+                            for (int i = 0; i < reds.Length; i++)
+                            {
+                                reds[i].Red = true;
+                            }
+
+                            succesCount++;
+                            break;
+                        }
                     }
+
                 }
+
 
                 map.ReloadMembers();
                 map.UpdateInstantElement();
@@ -144,15 +149,17 @@ namespace Giny.DatabasePatcher.Maps
                     n = MaxPlacements;
                 }
 
-                var blues = cells.Shuffle().Take(n);
+                var randomCells = cells.Shuffle();
 
-                var reds = cells.Shuffle().Where(x => !blues.Contains(x)).Take(n);
-
+                var blues = randomCells.Take(n);
 
                 foreach (var blue in blues)
                 {
                     blue.Blue = true;
                 }
+
+
+                var reds = randomCells.Where(x => !x.Blue).Take(n);
 
                 foreach (var red in reds)
                 {

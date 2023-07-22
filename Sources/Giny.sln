@@ -51,6 +51,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Giny.CustomEnumsBuilder", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Giny.SpellTree", "Tools\Giny.SpellTree\Giny.SpellTree.csproj", "{95196DF3-E8B4-4126-B6D6-6D77F4C4BC79}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Giny.DungeonPatcher", "Giny.DungeonPatcher\Giny.DungeonPatcher.csproj", "{8A8115E7-FCA0-479A-A56A-1BD0BD806C78}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -133,6 +135,10 @@ Global
 		{95196DF3-E8B4-4126-B6D6-6D77F4C4BC79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95196DF3-E8B4-4126-B6D6-6D77F4C4BC79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95196DF3-E8B4-4126-B6D6-6D77F4C4BC79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A8115E7-FCA0-479A-A56A-1BD0BD806C78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A8115E7-FCA0-479A-A56A-1BD0BD806C78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A8115E7-FCA0-479A-A56A-1BD0BD806C78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A8115E7-FCA0-479A-A56A-1BD0BD806C78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -153,6 +159,7 @@ Global
 		{76D77F60-D22B-436B-9629-51EB94B302B4} = {6E5EEED7-2FC0-4EF3-A02D-5E15D62A7CB1}
 		{FCE82FB8-8C0F-4767-9A29-8338FA08F219} = {6E5EEED7-2FC0-4EF3-A02D-5E15D62A7CB1}
 		{95196DF3-E8B4-4126-B6D6-6D77F4C4BC79} = {CA7F2AB5-A31A-4566-B256-DC137396BD24}
+		{8A8115E7-FCA0-479A-A56A-1BD0BD806C78} = {CA7F2AB5-A31A-4566-B256-DC137396BD24}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BA783713-0DE5-461B-B1CF-8233D6F027FE}

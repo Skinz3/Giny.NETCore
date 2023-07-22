@@ -27,7 +27,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
         {
             foreach (var target in targets)
             {
-                if (this.Effect.Duration > 1)
+                if (this.Effect.Duration > 0)
                 {
                     base.AddStatBuff(target, (short)-Effect.Min, target.Stats.MovementPoints, Effect.DispellableEnum);
                 }
@@ -37,7 +37,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
                 }
                 target.TriggerBuffs(TriggerTypeEnum.OnMpRemovalAttempt, null);
 
-
+                Source.TriggerBuffs(TriggerTypeEnum.OnCasterRemoveMpAttempt, null);
 
             }
         }

@@ -49,6 +49,7 @@ namespace Giny.World.Managers.Fights.Effects.Steal
 
 
                 target.TriggerBuffs(TriggerTypeEnum.OnMpRemovalAttempt, null);
+                Source.TriggerBuffs(TriggerTypeEnum.OnCasterRemoveMpAttempt, null);
             }
         }
         private short RollMP(Fighter fighter, int maxValue)
