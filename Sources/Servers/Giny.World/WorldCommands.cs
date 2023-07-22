@@ -97,7 +97,6 @@ namespace Giny.World
         [ConsoleCommand("save")]
         public static void SaveCommand()
         {
-            Teleporters.Patch();
             WorldSaveManager.Instance.PerformSave();
         }
 

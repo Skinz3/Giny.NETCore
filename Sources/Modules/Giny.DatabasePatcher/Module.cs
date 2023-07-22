@@ -1,6 +1,5 @@
 ﻿using Giny.Core;
 using Giny.Core.Commands;
-using Giny.DatabasePatcher.Challenges;
 using Giny.DatabasePatcher.Experience;
 using Giny.DatabasePatcher.Items;
 using Giny.DatabasePatcher.Maps;
