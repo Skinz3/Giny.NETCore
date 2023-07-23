@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Giny.World.Records.Monsters
 {
     [Table("monsterspawns")]
-    public class MonsterSpawnRecord : ITable
+    public class MonsterSpawnRecord : IRecord
     {
         [Container]
         private static ConcurrentDictionary<long, MonsterSpawnRecord> MonsterSpawns = new ConcurrentDictionary<long, MonsterSpawnRecord>();

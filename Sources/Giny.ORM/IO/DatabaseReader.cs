@@ -48,9 +48,9 @@ namespace Giny.ORM.IO
             var definition = TableManager.Instance.GetDefinition(type);
             this.Properties = definition.Properties;
             this.TableName = definition.TableAttribute.TableName;
-            this.Elements = definition.TableAttribute.Load ? definition.ContainerValue : new Dictionary<long, ITable>();
+            this.Elements = definition.TableAttribute.Load ? definition.ContainerValue : new Dictionary<long, IRecord>();
         }
-        public ITable ReadFirst(MySqlConnection connection, string where)
+        public IRecord ReadFirst(MySqlConnection connection, string where)
         {
             lock (DatabaseManager.SyncRoot)
             {
@@ -73,16 +73,16 @@ namespace Giny.ORM.IO
                                 obj[i] = ConvertObject(this.m_reader[i], Properties[i]);
                         }
 
-                        var itable = (ITable)Activator.CreateInstance(Type); // expressions?
+                        var irecord = (IRecord)Activator.CreateInstance(Type); // expressions?
 
                         for (int i = 0; i < Properties.Length; i++)
                         {
-                            Properties[i].SetValue(itable, obj[i]);
+                            Properties[i].SetValue(irecord, obj[i]);
                         }
 
                         this.m_reader.Close();
 
-                        return itable;
+                        return irecord;
                     }
                     catch (Exception ex)
                     {
@@ -120,14 +120,14 @@ namespace Giny.ORM.IO
                         for (var i = 0; i < this.m_reader.FieldCount; i++)
                             obj[i] = ConvertObject(this.m_reader[i], Properties[i]);
 
-                        var itable = (ITable)Activator.CreateInstance(Type); // expressions?
+                        var irecord = (IRecord)Activator.CreateInstance(Type); // expressions?
 
                         for (int i = 0; i < Properties.Length; i++)
                         {
-                            Properties[i].SetValue(itable, obj[i]);
+                            Properties[i].SetValue(irecord, obj[i]);
                         }
 
-                        this.Elements.Add(itable.Id, itable);
+                        this.Elements.Add(irecord.Id, irecord);
                         n++;
 
                     }
@@ -232,11 +232,11 @@ namespace Giny.ORM.IO
             reader.ReadTable(DatabaseManager.Instance.UseProvider(), string.Format(QueryConstants.Select, reader.TableName, condition));
             return reader.Elements;
         }
-        public static IEnumerable<T> Read<T>() where T : ITable
+        public static IEnumerable<T> Read<T>() where T : IRecord
         {
             return Read(typeof(T), string.Empty).Values.Cast<T>();
         }
-        public static T ReadFirst<T>(string fieldName, string fieldValue) where T : ITable
+        public static T ReadFirst<T>(string fieldName, string fieldValue) where T : IRecord
         {
             DatabaseReader reader = new DatabaseReader(typeof(T));
             return (T)reader.ReadFirst(DatabaseManager.Instance.UseProvider(), string.Format("{0}='{1}'", fieldName, fieldValue));

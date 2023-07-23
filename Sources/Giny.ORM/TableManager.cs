@@ -136,14 +136,14 @@ namespace Giny.ORM
             var container = m_TableDefinitions[tableType].ContainerValue;
             container?.Clear();
         }
-        public void RemoveFromContainer(ITable element)
+        public void RemoveFromContainer(IRecord element)
         {
             var tableDefinition = m_TableDefinitions[element.GetType()];
             if (tableDefinition.Load)
                 tableDefinition.ContainerValue.Remove(element.Id);
         }
 
-        public void AddToContainer(ITable element)
+        public void AddToContainer(IRecord element)
         {
             var tableDefinition = m_TableDefinitions[element.GetType()];
 

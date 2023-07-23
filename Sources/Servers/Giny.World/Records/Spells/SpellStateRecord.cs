@@ -13,7 +13,7 @@ namespace Giny.World.Records.Spells
 {
     [D2OClass("SpellState")]
     [Table("spellStates")]
-    public class SpellStateRecord : ITable
+    public class SpellStateRecord : IRecord
     {
         [Container]
         private static ConcurrentDictionary<long, SpellStateRecord> SpellStates = new ConcurrentDictionary<long, SpellStateRecord>();

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Giny.World.Records.Guilds
 {
     [Table("guilds")]
-    public class GuildRecord : ITable
+    public class GuildRecord : IRecord
     {
         [Container]
         private static ConcurrentDictionary<long, GuildRecord> Guilds = new ConcurrentDictionary<long, GuildRecord>();

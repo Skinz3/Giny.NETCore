@@ -12,7 +12,7 @@ namespace Giny.World.Records.Maps
 {
     [D2OClass("Area")]
     [Table("areas")]
-    public class AreaRecord : ITable
+    public class AreaRecord : IRecord
     {
         [Container]
         private static ConcurrentDictionary<long, AreaRecord> Areas = new ConcurrentDictionary<long, AreaRecord>();

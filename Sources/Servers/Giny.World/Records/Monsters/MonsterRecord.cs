@@ -18,7 +18,7 @@ namespace Giny.World.Records.Monsters
 {
     [D2OClass("Monster")]
     [Table("monsters")]
-    public class MonsterRecord : ITable
+    public class MonsterRecord : IRecord
     {
         [Container]
         private static ConcurrentDictionary<long, MonsterRecord> Monsters = new ConcurrentDictionary<long, MonsterRecord>();

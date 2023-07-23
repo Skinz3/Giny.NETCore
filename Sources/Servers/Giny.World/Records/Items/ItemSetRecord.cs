@@ -13,7 +13,7 @@ namespace Giny.World.Records.Items
 {
     [D2OClass("ItemSet")]
     [Table("itemSets")]
-    public class ItemSetRecord : ITable
+    public class ItemSetRecord : IRecord
     {
         [Container]
         private static Dictionary<long, ItemSetRecord> ItemSets = new Dictionary<long, ItemSetRecord>();

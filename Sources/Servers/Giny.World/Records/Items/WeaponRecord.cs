@@ -15,7 +15,7 @@ namespace Giny.World.Records.Items
 {
     [D2OClass("Weapon")]
     [Table("weapons")]
-    public class WeaponRecord : ITable
+    public class WeaponRecord : IRecord
     {
         [Container]
         private static readonly ConcurrentDictionary<long, WeaponRecord> Weapons = new ConcurrentDictionary<long, WeaponRecord>();

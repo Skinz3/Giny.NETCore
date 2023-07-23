@@ -15,11 +15,11 @@ namespace Giny.ORM.Cyclic
     [WIP("threadsafe? using List?")]
     public class CyclicSaveTask : Singleton<CyclicSaveTask>
     {
-        private ConcurrentDictionary<Type, List<ITable>> _newElements = new ConcurrentDictionary<Type, List<ITable>>();
-        private ConcurrentDictionary<Type, List<ITable>> _updateElements = new ConcurrentDictionary<Type, List<ITable>>();
-        private ConcurrentDictionary<Type, List<ITable>> _removeElements = new ConcurrentDictionary<Type, List<ITable>>();
+        private ConcurrentDictionary<Type, List<IRecord>> _newElements = new ConcurrentDictionary<Type, List<IRecord>>();
+        private ConcurrentDictionary<Type, List<IRecord>> _updateElements = new ConcurrentDictionary<Type, List<IRecord>>();
+        private ConcurrentDictionary<Type, List<IRecord>> _removeElements = new ConcurrentDictionary<Type, List<IRecord>>();
 
-        public void AddElement(ITable element)
+        public void AddElement(IRecord element)
         {
             var type = element.GetType();
 
@@ -30,11 +30,11 @@ namespace Giny.ORM.Cyclic
             }
             else
             {
-                _newElements.TryAdd(type, new List<ITable> { element });
+                _newElements.TryAdd(type, new List<IRecord> { element });
             }
         }
 
-        public void UpdateElement(ITable element)
+        public void UpdateElement(IRecord element)
         {
             var type = element.GetType();
 
@@ -48,11 +48,11 @@ namespace Giny.ORM.Cyclic
             }
             else
             {
-                _updateElements.TryAdd(type, new List<ITable> { element });
+                _updateElements.TryAdd(type, new List<IRecord> { element });
             }
         }
 
-        public void RemoveElement(ITable element)
+        public void RemoveElement(IRecord element)
         {
             if (element == null)
                 return;
@@ -75,7 +75,7 @@ namespace Giny.ORM.Cyclic
             }
             else
             {
-                _removeElements.TryAdd(type, new List<ITable> { element });
+                _removeElements.TryAdd(type, new List<IRecord> { element });
             }
         }
 
@@ -85,7 +85,7 @@ namespace Giny.ORM.Cyclic
             var types = _removeElements.Keys.ToList();
             foreach (var type in types)
             {
-                List<ITable> elements;
+                List<IRecord> elements;
                 elements = _removeElements[type];
 
                 if (elements.Count > 0)
@@ -93,7 +93,7 @@ namespace Giny.ORM.Cyclic
                     try
                     {
                         TableManager.Instance.GetWriter(type).Use(elements.ToArray(), DatabaseAction.Remove);
-                        _removeElements[type] = new List<ITable>(_removeElements[type].Skip(elements.Count));
+                        _removeElements[type] = new List<IRecord>(_removeElements[type].Skip(elements.Count));
                     }
                     catch (Exception e)
                     {
@@ -107,7 +107,7 @@ namespace Giny.ORM.Cyclic
             types = _newElements.Keys.ToList();
             foreach (var type in types)
             {
-                List<ITable> elements;
+                List<IRecord> elements;
 
                 elements = _newElements[type];
 
@@ -116,7 +116,7 @@ namespace Giny.ORM.Cyclic
                     try
                     {
                         TableManager.Instance.GetWriter(type).Use(elements.ToArray(), DatabaseAction.Add);
-                        _newElements[type] = new List<ITable>(_newElements[type].Skip(elements.Count));
+                        _newElements[type] = new List<IRecord>(_newElements[type].Skip(elements.Count));
                     }
                     catch (Exception e)
                     {
@@ -131,7 +131,7 @@ namespace Giny.ORM.Cyclic
             types = _updateElements.Keys.ToList();
             foreach (var type in types)
             {
-                List<ITable> elements;
+                List<IRecord> elements;
 
                 elements = _updateElements[type];
 
@@ -140,7 +140,7 @@ namespace Giny.ORM.Cyclic
                     try
                     {
                         TableManager.Instance.GetWriter(type).Use(elements.ToArray(), DatabaseAction.Update);
-                        _updateElements[type] = new List<ITable>(_updateElements[type].Skip(elements.Count));
+                        _updateElements[type] = new List<IRecord>(_updateElements[type].Skip(elements.Count));
                     }
                     catch (Exception e)
                     {

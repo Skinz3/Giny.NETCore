@@ -13,7 +13,7 @@ namespace Giny.World.Records.Maps
 {
     [D2OClass("MapPosition")]
     [Table("mappositions")]
-    public class MapPositionRecord : ITable
+    public class MapPositionRecord : IRecord
     {
         [Container]
         private static ConcurrentDictionary<long, MapPositionRecord> MapPositions = new ConcurrentDictionary<long, MapPositionRecord>();

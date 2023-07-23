@@ -46,6 +46,7 @@ namespace Giny.DatabasePatcher.Maps
             int count = 0;
             foreach (var map in MapRecord.GetMaps())
             {
+             
                 foreach (var element in map.Elements)
                 {
 
@@ -66,6 +67,11 @@ namespace Giny.DatabasePatcher.Maps
 
                     if ((ZaapBones.Contains(element.BonesId) || ZaapGfxIds.Contains(element.GfxId)) && element.IsInMap())
                     {
+                        if (map.Subarea.AreaId == 58)
+                        {
+                            continue;
+                        }
+
                         if (!InteractiveSkillRecord.ExistAndHandled(element.Identifier))
                         {
                             TeleportersManager.Instance.AddDestination(TeleporterTypeEnum.TELEPORTER_ZAAP,

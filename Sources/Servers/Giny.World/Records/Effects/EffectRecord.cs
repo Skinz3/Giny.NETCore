@@ -13,7 +13,7 @@ namespace Giny.World.Records.Effects
 {
     [D2OClass("Effect")]
     [Table("effects")]
-    public class EffectRecord : ITable
+    public class EffectRecord : IRecord
     {
         [Container]
         private static readonly ConcurrentDictionary<long, EffectRecord> Effects = new ConcurrentDictionary<long, EffectRecord>();

@@ -14,7 +14,7 @@ namespace Giny.World.Records.Npcs
 {
     [D2OClass("Npc")]
     [Table("npcs")]
-    public class NpcRecord : ITable
+    public class NpcRecord : IRecord
     {
         [Container]
         private static ConcurrentDictionary<long, NpcRecord> Npcs = new ConcurrentDictionary<long, NpcRecord>();

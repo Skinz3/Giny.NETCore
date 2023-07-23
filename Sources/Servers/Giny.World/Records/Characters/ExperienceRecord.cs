@@ -12,7 +12,7 @@ namespace Giny.World.Records.Characters
 {
     [D2OClass("CharacterXPMapping")]
     [Table("experiences")]
-    public class ExperienceRecord : ITable
+    public class ExperienceRecord : IRecord
     {
         [Container]
         private static readonly ConcurrentDictionary<long, ExperienceRecord> Experiences = new ConcurrentDictionary<long, ExperienceRecord>();

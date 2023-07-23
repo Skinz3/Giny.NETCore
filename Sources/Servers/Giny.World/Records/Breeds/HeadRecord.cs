@@ -12,7 +12,7 @@ namespace Giny.World.Records.Breeds
 {
     [D2OClass("Head")]
     [Table("heads")]
-    public class HeadRecord : ITable
+    public class HeadRecord : IRecord
     {
         [Container]
         private static readonly ConcurrentDictionary<long, HeadRecord> Heads = new ConcurrentDictionary<long, HeadRecord>();

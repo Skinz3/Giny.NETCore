@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace Giny.World.Records.Characters
 {
     [Table("merchants")]
-    public class MerchantRecord : ITable
+    public class MerchantRecord : IRecord
     {
         [Container]
         private static readonly ConcurrentDictionary<long, MerchantRecord> Merchants = new ConcurrentDictionary<long, MerchantRecord>();

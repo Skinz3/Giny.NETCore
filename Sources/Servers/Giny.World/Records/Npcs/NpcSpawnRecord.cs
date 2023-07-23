@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Giny.World.Records.Npcs
 {
     [Table("npcspawns")]
-    public class NpcSpawnRecord : ITable
+    public class NpcSpawnRecord : IRecord
     {
         [Container]
         private static ConcurrentDictionary<long, NpcSpawnRecord> NpcSpawns = new ConcurrentDictionary<long, NpcSpawnRecord>();

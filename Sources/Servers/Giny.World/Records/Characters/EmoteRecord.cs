@@ -12,7 +12,7 @@ namespace Giny.World.Records.Characters
 {
     [D2OClass("Emoticon")]
     [Table("emotes")]
-    public class EmoteRecord : ITable
+    public class EmoteRecord : IRecord
     {
         [Container]
         private static readonly ConcurrentDictionary<long, EmoteRecord> Emotes = new ConcurrentDictionary<long, EmoteRecord>();

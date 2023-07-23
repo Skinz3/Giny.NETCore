@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 namespace Giny.World.Records.Characters
 {
     [Table("characters")]
-    public class CharacterRecord : ITable
+    public class CharacterRecord : IRecord
     {
         [Container]
         private static readonly ConcurrentDictionary<long, CharacterRecord> Characters = new ConcurrentDictionary<long, CharacterRecord>();

@@ -1,6 +1,6 @@
 ﻿namespace Giny.ORM.Interfaces
 {
-    public interface ITable
+    public interface IRecord
     {
         long Id
         {

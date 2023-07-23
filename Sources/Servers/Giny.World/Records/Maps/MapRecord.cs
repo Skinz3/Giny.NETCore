@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 namespace Giny.World.Records.Maps
 {
     [Table("maps")]
-    public class MapRecord : ITable
+    public class MapRecord : IRecord
     {
         [Container]
         private static ConcurrentDictionary<long, MapRecord> Maps = new ConcurrentDictionary<long, MapRecord>();

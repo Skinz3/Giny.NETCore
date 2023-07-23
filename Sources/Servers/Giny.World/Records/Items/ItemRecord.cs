@@ -17,7 +17,7 @@ namespace Giny.World.Records.Items
 {
     [D2OClass("Item")]
     [Table("items")]
-    public class ItemRecord : ITable
+    public class ItemRecord : IRecord
     {
         private const int MinimumItemPrice = 1;
 

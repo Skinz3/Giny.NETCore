@@ -93,7 +93,7 @@ namespace Giny.DatabaseSynchronizer
             foreach (var obj in objects)
             {
                 current++;
-                ITable table = (ITable)Convert.ChangeType(Activator.CreateInstance(tableType), tableType);
+                IRecord table = (IRecord)Convert.ChangeType(Activator.CreateInstance(tableType), tableType);
 
                 foreach (var property in tableType.GetProperties())
                 {
@@ -203,7 +203,7 @@ namespace Giny.DatabaseSynchronizer
                 }
 
                 logger.WriteProgressBar(current, objects.Length);
-                TableManager.Instance.GetWriter(tableType).Use(new ITable[] { table }, DatabaseAction.Add);
+                TableManager.Instance.GetWriter(tableType).Use(new IRecord[] { table }, DatabaseAction.Add);
             }
             logger.Flush();
         }

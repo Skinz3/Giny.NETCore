@@ -35,7 +35,7 @@ namespace Giny.ORM
         public void Initialize(Assembly recordsAssembly, string host, string database, string user, string password)
         {
             this.ConnectionProvider = new MySqlConnection(string.Format("Server={0};UserId={1};Password={2};Database={3}", host, user, password, database));
-            this.TableTypes = Array.FindAll(recordsAssembly.GetTypes(), x => x.GetInterface("ITable") != null);
+            this.TableTypes = Array.FindAll(recordsAssembly.GetTypes(), x => x.GetInterface("IRecord") != null);
             TableManager.Instance.Initialize(TableTypes);
         }
 
@@ -56,7 +56,7 @@ namespace Giny.ORM
                 return connection;
             }
         }
-        public void Reload<T>() where T : ITable
+        public void Reload<T>() where T : IRecord
         {
             var type = typeof(T);
             TableManager.Instance.ClearContainer(type);
@@ -91,7 +91,7 @@ namespace Giny.ORM
             reader.Read(this.UseProvider());
             OnEndLoadTable?.Invoke(type, tableName);
         }
-        public void LoadTable<T>() where T : ITable
+        public void LoadTable<T>() where T : IRecord
         {
             LoadTable(typeof(T));
         }
@@ -118,7 +118,7 @@ namespace Giny.ORM
             var definition = TableManager.Instance.GetDefinition(type);
             DropTableIfExists(definition.TableAttribute.TableName);
         }
-        public void DropTableIfExists<T>() where T : ITable
+        public void DropTableIfExists<T>() where T : IRecord
         {
             DropTableIfExists(TableManager.Instance.GetDefinition(typeof(T)).TableAttribute.TableName);
         }
@@ -140,7 +140,7 @@ namespace Giny.ORM
             }
         }
 
-        public void DeleteTable<T>() where T : ITable
+        public void DeleteTable<T>() where T : IRecord
         {
             var definition = TableManager.Instance.GetDefinition(typeof(T));
             DeleteTable(definition.TableAttribute.TableName);
@@ -181,7 +181,7 @@ namespace Giny.ORM
             }
         }
 
-        public void CreateTableIfNotExists<T>() where T : ITable
+        public void CreateTableIfNotExists<T>() where T : IRecord
         {
             CreateTableIfNotExists(typeof(T));
         }

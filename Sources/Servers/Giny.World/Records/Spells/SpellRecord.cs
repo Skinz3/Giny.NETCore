@@ -14,12 +14,12 @@ namespace Giny.World.Records.Spells
 {
     [D2OClass("Spell")]
     [Table("spells")]
-    public class SpellRecord : ITable
+    public class SpellRecord : IRecord
     {
         [Container]
         private static ConcurrentDictionary<long, SpellRecord> Spells = new ConcurrentDictionary<long, SpellRecord>();
 
-        long ITable.Id => Id;
+        long IRecord.Id => Id;
 
         [D2OField("id")]
         [Primary]

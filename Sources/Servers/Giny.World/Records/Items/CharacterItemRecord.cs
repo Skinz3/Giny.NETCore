@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 namespace Giny.World.Records.Items
 {
     [Table("CharactersItems")]
-    public class CharacterItemRecord : AbstractItem, ITable
+    public class CharacterItemRecord : AbstractItem, IRecord
     {
         [Container]
         private static readonly ConcurrentDictionary<long, CharacterItemRecord> CharactersItems = new ConcurrentDictionary<long, CharacterItemRecord>();
@@ -30,7 +30,7 @@ namespace Giny.World.Records.Items
             set;
         }
 
-        long ITable.Id => base.UId;
+        long IRecord.Id => base.UId;
 
         public CharacterItemRecord(long characterId, int uid, int gid, byte position, int quantity, EffectCollection effects, short appearanceId, string look)
         {

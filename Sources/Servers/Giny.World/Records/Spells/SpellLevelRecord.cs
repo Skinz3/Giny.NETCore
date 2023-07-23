@@ -15,7 +15,7 @@ namespace Giny.World.Records.Spells
 {
     [D2OClass("SpellLevel")]
     [Table("spellslevels")]
-    public class SpellLevelRecord : ITable
+    public class SpellLevelRecord : IRecord
     {
         [Container]
         private static Dictionary<long, SpellLevelRecord> SpellsLevels = new Dictionary<long, SpellLevelRecord>();

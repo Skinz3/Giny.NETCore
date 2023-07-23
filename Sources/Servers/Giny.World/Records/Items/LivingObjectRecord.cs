@@ -14,7 +14,7 @@ namespace Giny.World.Records.Items
 {
     [D2OClass("LivingObjectSkinJntMood")]
     [Table("livingobjects")]
-    public class LivingObjectRecord : ITable
+    public class LivingObjectRecord : IRecord
     {
         [Container]
         private static readonly ConcurrentDictionary<long, LivingObjectRecord> LivingObjects = new ConcurrentDictionary<long, LivingObjectRecord>();

@@ -12,7 +12,7 @@ namespace Giny.World.Records.Challenges
 {
     [Table("challenges")]
     [D2OClass("Challenge")]
-    public class ChallengeRecord : ITable
+    public class ChallengeRecord : IRecord
     {
         [Container]
         private static Dictionary<long, ChallengeRecord> Challenges = new Dictionary<long, ChallengeRecord>();

@@ -12,7 +12,7 @@ namespace Giny.World.Records.Tinsel
 {
     [D2OClass("Title")]
     [Table("titles")]
-    public class TitleRecord : ITable
+    public class TitleRecord : IRecord
     {
         [Container]
         private static ConcurrentDictionary<long, TitleRecord> Titles = new ConcurrentDictionary<long, TitleRecord>();

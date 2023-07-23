@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Giny.World.Records.Items
 {
     [Table("bankitems")]
-    public class BankItemRecord : AbstractItem, ITable
+    public class BankItemRecord : AbstractItem, IRecord
     {
         [Container]
         private static readonly ConcurrentDictionary<long, BankItemRecord> BankItems = new ConcurrentDictionary<long, BankItemRecord>();

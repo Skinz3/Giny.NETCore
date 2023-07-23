@@ -14,12 +14,12 @@ using System.Threading.Tasks;
 namespace Giny.Auth.Records
 {
     [Table("WorldServers")]
-    public class WorldServerRecord : ITable
+    public class WorldServerRecord : IRecord
     {
         [Container]
         private static ConcurrentDictionary<long, WorldServerRecord> WorldServers = new ConcurrentDictionary<long, WorldServerRecord>();
 
-        long ITable.Id => Id;
+        long IRecord.Id => Id;
 
         [Primary]
         public short Id

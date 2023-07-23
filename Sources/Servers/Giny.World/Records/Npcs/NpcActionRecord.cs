@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Giny.World.Records.Npcs
 {
     [Table("npcsactions")]
-    public class NpcActionRecord : ITable
+    public class NpcActionRecord : IRecord
     {
         [Container]
         private static ConcurrentDictionary<long, NpcActionRecord> NpcsActions = new ConcurrentDictionary<long, NpcActionRecord>();

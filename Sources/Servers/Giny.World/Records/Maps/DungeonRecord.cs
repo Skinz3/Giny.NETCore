@@ -13,7 +13,7 @@ namespace Giny.World.Records.Maps
 {
     [D2OClass("Dungeon")]
     [Table("dungeons")]
-    public class DungeonRecord : ITable
+    public class DungeonRecord : IRecord
     {
         [Container]
         private static Dictionary<long, DungeonRecord> Dungeons = new Dictionary<long, DungeonRecord>();

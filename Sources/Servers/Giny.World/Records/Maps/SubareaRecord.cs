@@ -19,7 +19,7 @@ namespace Giny.World.Records.Maps
 {
     [D2OClass("SubArea")]
     [Table("subareas")]
-    public class SubareaRecord : ITable
+    public class SubareaRecord : IRecord
     {
         [Container]
         private static ConcurrentDictionary<long, SubareaRecord> Subareas = new ConcurrentDictionary<long, SubareaRecord>();

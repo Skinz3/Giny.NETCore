@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Giny.World.Records.Accounts
 {
     [Table("worldaccounts")]
-    public class WorldAccountRecord : ITable
+    public class WorldAccountRecord : IRecord
     {
         [Container]
         private static readonly ConcurrentDictionary<long, WorldAccountRecord> WorldAccounts = new ConcurrentDictionary<long, WorldAccountRecord>();

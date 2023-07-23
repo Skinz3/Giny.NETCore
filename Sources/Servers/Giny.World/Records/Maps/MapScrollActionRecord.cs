@@ -14,7 +14,7 @@ namespace Giny.World.Records.Maps
 {
     [D2OClass("MapScrollAction")]
     [Table("mapscrollactions")]
-    public class MapScrollActionRecord : ITable
+    public class MapScrollActionRecord : IRecord
     {
         [Container]
         private static ConcurrentDictionary<long, MapScrollActionRecord> MapScrollActions = new ConcurrentDictionary<long, MapScrollActionRecord>();

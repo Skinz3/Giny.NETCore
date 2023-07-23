@@ -3,6 +3,7 @@ using Giny.Core.IO;
 using Giny.IO;
 using Giny.IO.D2I;
 using Giny.IO.D2O;
+using Giny.IO.D2OClasses;
 using Giny.IO.D2P;
 using Giny.ORM;
 using Giny.ORM.Interfaces;
@@ -64,6 +65,7 @@ namespace Giny.DatabaseSynchronizer
             DatabaseManager.Instance.DropTableIfExists<HeadRecord>();
             DatabaseManager.Instance.DropTableIfExists<EffectRecord>();
             DatabaseManager.Instance.DropTableIfExists<MapScrollActionRecord>();
+            DatabaseManager.Instance.DropTableIfExists<WaypointRecord>();
             DatabaseManager.Instance.DropTableIfExists<SpellRecord>();
             DatabaseManager.Instance.DropTableIfExists<SpellVariantRecord>();
             DatabaseManager.Instance.DropTableIfExists<ItemRecord>();

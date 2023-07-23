@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Giny.Auth.Records
 {
     [Table("worldcharacters")]
-    public class WorldCharacterRecord : ITable
+    public class WorldCharacterRecord : IRecord
     {
         [Container]
         private static ConcurrentDictionary<long, WorldCharacterRecord> WorldCharacters = new ConcurrentDictionary<long, WorldCharacterRecord>();

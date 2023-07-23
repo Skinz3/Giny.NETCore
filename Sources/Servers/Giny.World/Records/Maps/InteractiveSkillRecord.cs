@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace Giny.World.Records.Maps
 {
     [Table("interactiveskills")]
-    public class InteractiveSkillRecord : ITable
+    public class InteractiveSkillRecord : IRecord
     {
         [Container]
         private static ConcurrentDictionary<long, InteractiveSkillRecord> InteractiveSkills = new ConcurrentDictionary<long, InteractiveSkillRecord>();

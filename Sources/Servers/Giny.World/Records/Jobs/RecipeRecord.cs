@@ -16,7 +16,7 @@ namespace Giny.World.Records.Jobs
 {
     [D2OClass("Recipe")]
     [Table("recipes")]
-    public class RecipeRecord : ITable
+    public class RecipeRecord : IRecord
     {
         [Container]
         private static Dictionary<long, RecipeRecord> Recipes = new Dictionary<long, RecipeRecord>();

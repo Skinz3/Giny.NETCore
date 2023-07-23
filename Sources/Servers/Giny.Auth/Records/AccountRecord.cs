@@ -16,11 +16,11 @@ using System.Threading.Tasks;
 namespace Giny.Auth.Records
 {
     [Table("accounts", false)]
-    public class AccountRecord : ITable
+    public class AccountRecord : IRecord
     {
         public const int DefaultCharacterSlots = 5;
 
-        long ITable.Id => Id;
+        long IRecord.Id => Id;
 
         [Primary]
         public int Id

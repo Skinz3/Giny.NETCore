@@ -61,7 +61,7 @@ namespace Giny.ORM.IO
             this.PrimaryProperty = definition.PrimaryProperty;
             this.HasNoUpdateProperties = UpdateProperties.Length == 0;
         }
-        public void Use(ITable[] elements, DatabaseAction action)
+        public void Use(IRecord[] elements, DatabaseAction action)
         {
             lock (DatabaseManager.SyncRoot)
             {
@@ -82,7 +82,7 @@ namespace Giny.ORM.IO
             }
         }
 
-        private void AddElements(ITable[] elements)
+        private void AddElements(IRecord[] elements)
         {
             var command = new MySqlCommand(string.Empty, DatabaseManager.Instance.UseProvider());
 
@@ -119,7 +119,7 @@ namespace Giny.ORM.IO
             }
         }
 
-        private void UpdateElements(ITable[] elements)
+        private void UpdateElements(IRecord[] elements)
         {
             if (HasNoUpdateProperties)
             {
@@ -161,7 +161,7 @@ namespace Giny.ORM.IO
 
 
         }
-        private void DeleteElements(IEnumerable<ITable> elements)
+        private void DeleteElements(IEnumerable<IRecord> elements)
         {
             foreach (var element in elements)
             {
@@ -174,7 +174,7 @@ namespace Giny.ORM.IO
             }
         }
         /* Maybe store all properties info instead of calling .NET reflection methods? */
-        private object ConvertObject(PropertyInfo property, ITable element)
+        private object ConvertObject(PropertyInfo property, IRecord element)
         {
             var value = property.GetValue(element);
 
@@ -245,32 +245,32 @@ namespace Giny.ORM.IO
             return type.GetProperties().Where(property => property.GetCustomAttribute(typeof(IgnoreAttribute)) == null).OrderBy(x => x.MetadataToken).ToArray();
         }
 
-        public static void Update<T>(T item) where T : ITable
+        public static void Update<T>(T item) where T : IRecord
         {
-            TableManager.Instance.GetWriter(typeof(T)).Use(new ITable[] { item }, DatabaseAction.Update);
+            TableManager.Instance.GetWriter(typeof(T)).Use(new IRecord[] { item }, DatabaseAction.Update);
         }
 
-        public static void Update<T>(IEnumerable<T> items) where T : ITable
+        public static void Update<T>(IEnumerable<T> items) where T : IRecord
         {
-            TableManager.Instance.GetWriter(typeof(T)).Use(items.Cast<ITable>().ToArray(), DatabaseAction.Update);
+            TableManager.Instance.GetWriter(typeof(T)).Use(items.Cast<IRecord>().ToArray(), DatabaseAction.Update);
         }
 
-        public static void Insert<T>(T item) where T : ITable
+        public static void Insert<T>(T item) where T : IRecord
         {
-            TableManager.Instance.GetWriter(typeof(T)).Use(new ITable[] { item }, DatabaseAction.Add);
+            TableManager.Instance.GetWriter(typeof(T)).Use(new IRecord[] { item }, DatabaseAction.Add);
         }
-        public static void Insert<T>(IEnumerable<T> items) where T : ITable
+        public static void Insert<T>(IEnumerable<T> items) where T : IRecord
         {
-            TableManager.Instance.GetWriter(typeof(T)).Use(items.Cast<ITable>().ToArray(), DatabaseAction.Add);
+            TableManager.Instance.GetWriter(typeof(T)).Use(items.Cast<IRecord>().ToArray(), DatabaseAction.Add);
         }
 
-        public static void Remove<T>(T item) where T : ITable
+        public static void Remove<T>(T item) where T : IRecord
         {
-            TableManager.Instance.GetWriter(typeof(T)).Use(new ITable[] { item }, DatabaseAction.Remove);
+            TableManager.Instance.GetWriter(typeof(T)).Use(new IRecord[] { item }, DatabaseAction.Remove);
         }
-        public static void Remove<T>(IEnumerable<T> items) where T : ITable
+        public static void Remove<T>(IEnumerable<T> items) where T : IRecord
         {
-            TableManager.Instance.GetWriter(typeof(T)).Use(items.Cast<ITable>().ToArray(), DatabaseAction.Remove);
+            TableManager.Instance.GetWriter(typeof(T)).Use(items.Cast<IRecord>().ToArray(), DatabaseAction.Remove);
 
         }
         public static void CreateTable(Type type)
