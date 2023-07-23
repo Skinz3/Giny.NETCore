@@ -28,11 +28,15 @@ namespace Giny.DatabasePatcher.Maps
         private static int[] ZaapBones = new int[]
         {
             5247, // Regular
+
         };
 
         private static int[] ZaapGfxIds = new int[]
         {
            38003,
+           41939,
+           41724,
+           19804,
         };
 
         /*
@@ -67,7 +71,7 @@ namespace Giny.DatabasePatcher.Maps
 
                     if ((ZaapBones.Contains(element.BonesId) || ZaapGfxIds.Contains(element.GfxId)) && element.IsInMap())
                     {
-                        if (map.Subarea.AreaId == 58)
+                        if (map.Subarea.AreaId == 58) // habre sacs
                         {
                             continue;
                         }
