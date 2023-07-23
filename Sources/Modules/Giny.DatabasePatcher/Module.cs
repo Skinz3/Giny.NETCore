@@ -33,13 +33,13 @@ namespace Giny.DatabasePatcher
             Experiences.Patch();
             ItemAppearances.Patch();
             LivingObjects.Patch();
-            MapPlacements.Patch();
             SkillBones.Patch();
             InteractiveElements.Patch();
-            MonsterKamas.Patch();
             MonsterSpawns.Patch();
-            SpellCategories.Patch();
             Teleporters.Patch();
+            MapPlacements.Patch();
+            SpellCategories.Patch();
+            MonsterKamas.Patch();
             Logger.Write("World database patched.", Channels.Info);
         }
 

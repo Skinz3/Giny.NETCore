@@ -49,7 +49,7 @@ namespace Giny.DatabaseSynchronizer
 
             Logger.Write("Building D2O", Channels.Info);
 
-            foreach (var tableType in DatabaseManager.Instance.TableTypes)
+            foreach (var tableType in DatabaseManager.Instance.TableTypes.OrderBy(x=>x.Name))
             {
                 var attribute = tableType.GetCustomAttribute<D2OClassAttribute>();
 

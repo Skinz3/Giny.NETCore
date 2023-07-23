@@ -20,6 +20,7 @@ namespace Giny.DatabasePatcher.Maps
             304418, // new brackmar
             70520, // new bonta1
             70521, // new bonta2
+            70914, // frigost
         };
 
 
@@ -29,13 +30,17 @@ namespace Giny.DatabasePatcher.Maps
             5247, // Regular
         };
 
+        private static int[] ZaapGfxIds = new int[]
+        {
+           38003,
+        };
 
         /*
          * Some zaap and zaapis, needs to be added manually.
          */
         public static void Patch()
         {
-           
+
             Logger.Write("Spawning teleporters ...");
 
             int count = 0;
@@ -59,9 +64,8 @@ namespace Giny.DatabasePatcher.Maps
                         }
                     }
 
-                    if (ZaapBones.Contains(element.BonesId) && element.IsInMap())
+                    if ((ZaapBones.Contains(element.BonesId) || ZaapGfxIds.Contains(element.GfxId)) && element.IsInMap())
                     {
-
                         if (!InteractiveSkillRecord.ExistAndHandled(element.Identifier))
                         {
                             TeleportersManager.Instance.AddDestination(TeleporterTypeEnum.TELEPORTER_ZAAP,
@@ -69,7 +73,7 @@ namespace Giny.DatabasePatcher.Maps
                             GenericActionEnum.Zaap,
                             map,
                             element,
-                            1);
+                            map.Subarea.Area.SuperAreaId);
                             count++;
 
                         }

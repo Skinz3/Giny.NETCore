@@ -57,6 +57,7 @@ namespace Giny.DatabaseSynchronizer
 
             DatabaseManager.Instance.DropTableIfExists<RecipeRecord>();
             DatabaseManager.Instance.DropTableIfExists<SubareaRecord>();
+            DatabaseManager.Instance.DropTableIfExists<AreaRecord>();
             DatabaseManager.Instance.DropTableIfExists<ItemSetRecord>();
             DatabaseManager.Instance.DropTableIfExists<BreedRecord>();
             DatabaseManager.Instance.DropTableIfExists<ExperienceRecord>();

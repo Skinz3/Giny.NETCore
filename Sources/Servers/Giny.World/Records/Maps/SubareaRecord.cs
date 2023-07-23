@@ -1,6 +1,7 @@
 ﻿using Giny.Core.DesignPattern;
 using Giny.Core.Extensions;
 using Giny.IO.D2O;
+using Giny.IO.D2OClasses;
 using Giny.ORM;
 using Giny.ORM.Attributes;
 using Giny.ORM.Interfaces;
@@ -42,6 +43,12 @@ namespace Giny.World.Records.Maps
         {
             get;
             set;
+        }
+        [Ignore]
+        public AreaRecord Area
+        {
+            get;
+            private set;
         }
         [D2OField("level")]
         public uint Level
@@ -89,6 +96,7 @@ namespace Giny.World.Records.Maps
             foreach (var subarea in Subareas)
             {
                 subarea.Value.Monsters = MonsterSpawnRecord.GetMonsterSpawnRecords(subarea.Value.Id).ToArray();
+                subarea.Value.Area = AreaRecord.GetArea(subarea.Value.AreaId);
             }
         }
         public static SubareaRecord GetSubarea(short id)
