@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="Giny.MapEditor.TileSelection"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Giny.MapEditor"
+             mc:Ignorable="d" Height="246" Width="1920" >
+    <Grid >
+        <ListView x:Name="elementCategory" Margin="0,0,1546,0">
+        </ListView>
+
+        <ScrollViewer Margin="374,0,0,0">
+            <Canvas x:Name="tileCanvas"></Canvas>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

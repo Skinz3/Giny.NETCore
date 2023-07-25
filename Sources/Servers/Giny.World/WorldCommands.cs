@@ -3,13 +3,16 @@ using Giny.Core.Commands;
 using Giny.Core.Extensions;
 using Giny.Core.Misc;
 using Giny.ORM;
+using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
 using Giny.Protocol.IPC.Messages;
 using Giny.World.Managers;
 using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Entities.Npcs;
+using Giny.World.Managers.Generic;
 using Giny.World.Managers.Items;
 using Giny.World.Managers.Maps.Npcs;
+using Giny.World.Managers.Maps.Teleporters;
 using Giny.World.Modules;
 using Giny.World.Network;
 using Giny.World.Records;
@@ -36,7 +39,7 @@ namespace Giny.World
             Console.Clear();
             Logger.DrawLogo();
         }
-       
+
         [ConsoleCommand("rate")]
         public static void ExperienceRateCommand(double ratio)
         {
@@ -51,6 +54,60 @@ namespace Giny.World
 
 
         }
+
+        [ConsoleCommand("test")]
+       public static void Test()
+        {
+            int[] ZaapBones = new int[]
+       {
+            5247, // Regular
+
+       };
+
+            int[] ZaapGfxIds = new int[]
+                {
+           38003,
+           41939,
+           41724,
+           19804,
+                };
+
+
+            foreach (var map in MapRecord.GetMaps())
+            {
+
+                foreach (var element in map.Elements)
+                {
+
+                    if ((ZaapBones.Contains(element.BonesId) || ZaapGfxIds.Contains(element.GfxId)) && element.IsInMap())
+                    {
+                        if (map.Subarea.AreaId == 58) // havre sacs
+                        {
+                            continue;
+                        }
+
+                        var zoneId = 1;
+
+                        if (map.Subarea.AreaId == 45) // Incarnam
+                        {
+                            zoneId = 2;
+                        }
+
+                        if (!InteractiveSkillRecord.ExistAndHandled(element.Identifier))
+                        {
+                            TeleportersManager.Instance.AddDestination(TeleporterTypeEnum.TELEPORTER_ZAAP,
+                            InteractiveTypeEnum.ZAAP16,
+                            GenericActionEnum.Zaap,
+                            map,
+                            element,
+                            zoneId);
+
+                        }
+                    }
+                }
+            }
+        }
+
         [ConsoleCommand("reset")]
         public static void ResetCommand()
         {
@@ -100,7 +157,7 @@ namespace Giny.World
             WorldSaveManager.Instance.PerformSave();
         }
 
-     
+
         [ConsoleCommand("npcs")]
         public static void ReloadNpcsCommand()
         {
@@ -115,7 +172,7 @@ namespace Giny.World
             Logger.Write("Items Reloaded.", Channels.Log);
         }
 
-       
+
 
     }
 }

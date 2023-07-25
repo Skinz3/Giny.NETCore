@@ -11,6 +11,7 @@ using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Maps;
 using Giny.World.Managers.Maps.Elements;
 using Giny.World.Managers.Maps.Instances;
+using Giny.World.Network;
 using ProtoBuf;
 using System;
 using System.Collections.Concurrent;
@@ -433,12 +434,10 @@ namespace Giny.World.Records.Maps
             }
         }
 
-        [WIP("not working properly.")]
         public bool IsInMap()
         {
-            var x = Point.X + OffsetX;
-            var y  = Point.Y + OffsetY;
-
+            var x = Point.X + OffsetX + OffsetY;
+            var y = Point.Y + OffsetX - OffsetY;
             return MapPoint.IsInMap(x, y);
         }
     }

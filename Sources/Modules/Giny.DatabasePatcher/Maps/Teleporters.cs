@@ -68,12 +68,19 @@ namespace Giny.DatabasePatcher.Maps
                             count++;
                         }
                     }
-
+                   
                     if ((ZaapBones.Contains(element.BonesId) || ZaapGfxIds.Contains(element.GfxId)) && element.IsInMap())
                     {
-                        if (map.Subarea.AreaId == 58) // habre sacs
+                        if (map.Subarea.AreaId == 58) // havre sacs
                         {
                             continue;
+                        }
+
+                        var zoneId = 1;
+
+                        if (map.Subarea.AreaId == 45) // Incarnam
+                        {
+                            zoneId = 2;
                         }
 
                         if (!InteractiveSkillRecord.ExistAndHandled(element.Identifier))
@@ -83,7 +90,7 @@ namespace Giny.DatabasePatcher.Maps
                             GenericActionEnum.Zaap,
                             map,
                             element,
-                            map.Subarea.Area.SuperAreaId);
+                            zoneId);
                             count++;
 
                         }

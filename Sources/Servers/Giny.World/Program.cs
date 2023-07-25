@@ -31,6 +31,7 @@ namespace Giny.World
             ConsoleCommandsManager.Instance.ReadCommand();
         }
 
+
         [StartupInvoke("Protocol", StartupInvokePriority.SecondPass)]
         public static void InitializeProtocolManager()
         {

@@ -23,9 +23,6 @@ namespace Giny.DatabaseSynchronizer
 {
     class MapSynchronizer
     {
-        public const string MAP_ENCRYPTION_KEY = "649ae451ca33ec53bbcbcc33becf15f4";
-
-        public const string MAPS_PATH = "content/maps/";
 
         static Dictionary<int, EleGraphicalData> Elements;
 
@@ -34,12 +31,11 @@ namespace Giny.DatabaseSynchronizer
 
         private static void LoadD2PFile(string filePath)
         {
-            Logger.Write(Path.GetFileName(filePath) + "...");
-
+            Logger.Write("Loading Maps...");
 
             D2PFile file = new D2PFile(filePath);
 
-            var entries = file.ReadInstanceEntries();
+            var entries = file.ReadAllEntries();
 
             var current = 0;
 
@@ -158,18 +154,13 @@ namespace Giny.DatabaseSynchronizer
 
             Logger.Write("Building Maps...", Channels.Info);
 
-            foreach (var file in Directory.GetFiles(Path.Combine(ClientConstants.ClientPath, MAPS_PATH)))
-            {
-                if (Path.GetExtension(file) == ".ele")
-                {
-                    Elements = EleReader.ReadElements(file);
-                }
-                if (Path.GetExtension(file).ToLower() == ".d2p")
-                {
-                    LoadD2PFile(file);
-                }
-            }
 
+            var elementPath = Path.Combine(ClientConstants.ClientPath, ClientConstants.ElementsPath);
+            Elements = EleReader.ReadElements(elementPath);
+
+            var mapsPath = Path.Combine(ClientConstants.ClientPath, ClientConstants.Maps0Path);
+            LoadD2PFile(mapsPath);
         }
+
     }
 }

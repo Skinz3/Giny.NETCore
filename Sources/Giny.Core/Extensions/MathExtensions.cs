@@ -8,7 +8,7 @@ namespace Giny.Core.Extensions
 {
     public static class MathExtensions
     {
-        public static int Clamp(int value, int min, int max)
+        public static double Clamp(double value, double min, double max)
         {
             if (value > max)
             {

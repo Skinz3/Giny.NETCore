@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Giny.IO.DLM
 {
-    public class Layer
+    public class DlmLayer
     {
         public int LayerId
         {
@@ -18,11 +18,11 @@ namespace Giny.IO.DLM
             set;
         }
 
-        public Layer()
+        public DlmLayer()
         {
 
         }
-        public Layer(BigEndianReader _reader, sbyte mapVersion)
+        public DlmLayer(BigEndianReader _reader, sbyte mapVersion)
         {
             if (mapVersion >= 9)
             {

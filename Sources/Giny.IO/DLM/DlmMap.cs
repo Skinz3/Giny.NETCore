@@ -210,7 +210,7 @@ namespace Giny.IO.DLM
             set;
         }
 
-        public List<Layer> Layers
+        public List<DlmLayer> Layers
         {
             get;
             set;
@@ -458,11 +458,11 @@ namespace Giny.IO.DLM
 
             GroundCRC = reader.ReadInt();
             var layersCount = reader.ReadByte();
-            Layers = new List<Layer>();
+            Layers = new List<DlmLayer>();
 
             for (int i = 0; i < layersCount; i++)
             {
-                Layer layer = new Layer(reader, MapVersion);
+                DlmLayer layer = new DlmLayer(reader, MapVersion);
                 Layers.Add(layer);
             }
 

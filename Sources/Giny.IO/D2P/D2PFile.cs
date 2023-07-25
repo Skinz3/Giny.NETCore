@@ -114,7 +114,7 @@ namespace Giny.IO.D2P
                 this.m_isDisposed = true;
                 if (this.m_reader != null)
                 {
-                    //this.m_reader.Dispose();
+                    this.m_reader.Dispose();
                 }
                 if (this.m_links != null)
                 {
@@ -442,8 +442,7 @@ namespace Giny.IO.D2P
             return result;
         }
 
-
-        public Dictionary<D2PEntry, byte[]> ReadInstanceEntries()
+        public Dictionary<D2PEntry, byte[]> ReadEntriesOfInstanceOnly()
         {
             Dictionary<D2PEntry, byte[]> result = new Dictionary<D2PEntry, byte[]>();
             foreach (D2PEntry entry in this.GetEntriesOfInstanceOnly())
