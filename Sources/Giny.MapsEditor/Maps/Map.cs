@@ -3,23 +3,45 @@ using Giny.IO.DLM.Elements;
 using Giny.IO.ELE;
 using Giny.IO.ELE.Repertory;
 using Giny.Rendering.GFX;
+using Giny.Rendering.Graphics;
 using Giny.Rendering.Maps.Elements;
-using Giny.Rendering.SFML;
 using Giny.Rendering.Textures;
 using SFML.Graphics;
 using SFML.System;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Color = SFML.Graphics.Color;
 using View = SFML.Graphics.View;
+using Mouse = SFML.Window.Mouse;
+using System.Windows.Media.TextFormatting;
 
 namespace Giny.Rendering.Maps
 {
-    public class Map : IDrawable
+    public class Map : IDrawable, INotifyPropertyChanged
     {
+        public static List<LayerEnum> AllLayers = new List<LayerEnum>
+        {
+            LayerEnum.LAYER_GROUND,
+            LayerEnum.LAYER_ADDITIONAL_GROUND,
+            LayerEnum.LAYER_DECOR,
+            LayerEnum.LAYER_ADDITIONAL_DECOR,
+        };
+
+        public delegate void CellEventDelegate(Cell cell);
+
+        public event CellEventDelegate MouseEnterCell;
+
+        public event CellEventDelegate MouseLeaveCell;
+
+        public event CellEventDelegate MouseRightClickCell;
+
+        public event CellEventDelegate MouseLeftClickCell;
+
         public Vector2f Position
         {
             get;
@@ -60,12 +82,43 @@ namespace Giny.Rendering.Maps
             get;
             set;
         }
-        public bool DisplayBorders
+
+        private bool displayGrid;
+
+        public bool DisplayGrid
+        {
+            get
+            {
+                return displayGrid;
+            }
+            set
+            {
+                displayGrid = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisplayGrid)));
+            }
+        }
+
+
+        public bool GridVertexBuffer
         {
             get;
             set;
         } = true;
-
+        public bool TriggerEvents
+        {
+            get;
+            set;
+        }
+        private bool MouseLeftDown
+        {
+            get;
+            set;
+        }
+        private bool MouseRightDown
+        {
+            get;
+            set;
+        }
         public List<MapFixture> ForegroundFixtures
         {
             get;
@@ -78,6 +131,17 @@ namespace Giny.Rendering.Maps
             set;
         }
 
+
+        public bool DisplayFixtures
+        {
+            get;
+            set;
+        } = true;
+
+        public Vector2f Size => new Vector2f(Constants.CELL_WIDTH * Constants.MAP_WIDTH, Constants.CELL_HEIGHT * Constants.MAP_HEIGHT);
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         public Cell GetCell(int id)
         {
             return Cells[id];
@@ -86,7 +150,7 @@ namespace Giny.Rendering.Maps
         /// Get Cell from Pixel position
         /// </summary>
         /// <param name="position">Pixel position</param>
-        public Cell GetCell(Vector2f position)
+        public Cell? GetCell(Vector2f position)
         {
             return Cells.FirstOrDefault(x => x.Contains(position));
         }
@@ -111,6 +175,12 @@ namespace Giny.Rendering.Maps
             get;
             set;
         }
+
+        public Cell HoverCell
+        {
+            get;
+            private set;
+        }
         public Map(Vector2f position = new Vector2f())
         {
             this.Position = position;
@@ -119,9 +189,11 @@ namespace Giny.Rendering.Maps
             CreateCells();
             Build();
 
-            DisplayBorders = true;
+            DisplayGrid = true;
+            TriggerEvents = true;
 
         }
+
 
         public void AddElement(LayerEnum layer, int gfxId, int cellId, NormalGraphicalElementData elementData, IO.DLM.Elements.GraphicalElement dlmElement)
         {
@@ -139,7 +211,7 @@ namespace Giny.Rendering.Maps
                 Layers.Add(layer, new Layer());
             }
 
-            Layers[layer].AddElement(cell, record, dlmElement, elementData);
+            Layers[layer].Add(cell, record, dlmElement, elementData);
         }
         public T FindElement<T>(Func<T, bool> func) where T : MapElement
         {
@@ -159,14 +231,19 @@ namespace Giny.Rendering.Maps
             return null;
         }
 
-        public void Draw(RenderWindow window, params LayerEnum[] layerEnums)
+
+        public void Draw(RenderWindow window, List<LayerEnum> layerEnums)
         {
             View view = window.GetView();
 
-            foreach (var fixture in BackgroundFixtures)
+            if (DisplayFixtures)
             {
-                fixture.Draw(window);
+                foreach (var fixture in BackgroundFixtures)
+                {
+                    fixture.Draw(window);
+                }
             }
+
             foreach (var layer in Layers.Where(x => x.Key < LayerEnum.LAYER_DECOR))
             {
                 if (layerEnums.Contains(layer.Key))
@@ -175,9 +252,20 @@ namespace Giny.Rendering.Maps
                 }
             }
 
-            if (DisplayBorders)
+            if (DisplayGrid)
             {
-                GridBuffer.Draw(window, RenderStates.Default);
+                if (GridVertexBuffer)
+                {
+                    GridBuffer.Draw(window, RenderStates.Default);
+                }
+                else
+                {
+                    foreach (var cell in Cells)
+                    {
+                        cell.DrawBorders(window);
+                    }
+                }
+
             }
 
             foreach (var layer in Layers.Where(x => x.Key >= LayerEnum.LAYER_DECOR))
@@ -188,9 +276,100 @@ namespace Giny.Rendering.Maps
                 }
             }
 
-            foreach (var fixture in ForegroundFixtures)
+            if (DisplayFixtures)
             {
-                fixture.Draw(window);
+                foreach (var fixture in ForegroundFixtures)
+                {
+                    fixture.Draw(window);
+                }
+            }
+
+            if (TriggerEvents)
+            {
+                HandleEvents(window);
+            }
+        }
+
+
+        private void HandleEvents(RenderWindow window)
+        {
+            var pos = Mouse.GetPosition(window);
+
+            var worldPos = window.MapPixelToCoords(pos);
+
+            bool mouseLeftPressed = false;
+            bool mouseRightPressed = false;
+
+            if (Mouse.IsButtonPressed(Mouse.Button.Left))
+            {
+                if (!MouseLeftDown)
+                {
+                    mouseLeftPressed = true;
+                }
+                MouseLeftDown = true;
+
+
+            }
+            else
+            {
+                MouseLeftDown = false;
+            }
+
+
+            if (Mouse.IsButtonPressed(Mouse.Button.Right))
+            {
+                if (!MouseRightDown)
+                {
+                    mouseRightPressed = true;
+                }
+                MouseRightDown = true;
+
+
+            }
+            else
+            {
+                MouseRightDown = false;
+            }
+
+
+
+            foreach (var cell in Cells)
+            {
+                if (cell.Contains(worldPos))
+                {
+                    if (HoverCell == cell)
+                    {
+                        if (mouseLeftPressed)
+                        {
+                            MouseLeftClickCell?.Invoke(cell);
+                        }
+                        if (mouseRightPressed)
+                        {
+                            MouseRightClickCell?.Invoke(cell);
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        if (HoverCell != null)
+                        {
+                            MouseLeaveCell?.Invoke(HoverCell);
+                        }
+
+                        MouseEnterCell?.Invoke(cell);
+
+                        if (MouseLeftDown)
+                        {
+                            MouseLeftClickCell?.Invoke(cell);
+                        }
+                        if (MouseRightDown)
+                        {
+                            MouseRightClickCell?.Invoke(cell);
+                        }
+                    }
+                    HoverCell = cell;
+                    break;
+                }
             }
         }
         /// <summary>
@@ -199,7 +378,7 @@ namespace Giny.Rendering.Maps
         /// <param name="window"></param>
         public void Draw(RenderWindow window)
         {
-            Draw(window, LayerEnum.LAYER_GROUND, LayerEnum.LAYER_ADDITIONAL_GROUND, LayerEnum.LAYER_DECOR, LayerEnum.LAYER_ADDITIONAL_DECOR);
+            Draw(window, AllLayers);
         }
         private void CreateCells()
         {
@@ -210,14 +389,16 @@ namespace Giny.Rendering.Maps
                 Cells[i] = new Cell(this, i);
             }
 
+
             this.Layers = new Dictionary<LayerEnum, Layer>();
+
 
             ToogleBorders(true);
         }
 
         public void ToogleBorders(bool display)
         {
-            DisplayBorders = display;
+            DisplayGrid = display;
         }
 
         private void Build()
@@ -278,6 +459,65 @@ namespace Giny.Rendering.Maps
                 i += (uint)cellVertices.Count();
             }
         }
+        public DlmMap ToDLM()
+        {
+            DlmMap map = new DlmMap(Constants.MAP_DEFAULT_VERSION)
+            {
+                Id = Id,
+                TopNeighbourId = Top,
+                BottomNeighbourId = Bottom,
+                RightNeighbourId = Right,
+                LeftNeighbourId = Left,
+                SubareaId = SubareaId,
+                BackgroundFixtures = BackgroundFixtures.Select(x => x.GetDlmFixture()).ToList(),
+                ForegroundFixtures = ForegroundFixtures.Select(x => x.GetDlmFixture()).ToList(),
+                BackgroundAlpha = BackgroundColor.A,
+                BackgroundBlue = BackgroundColor.B,
+                BackgroundGreen = BackgroundColor.G,
+                BackgroundRed = BackgroundColor.R,
+
+                GridAlpha = 255,
+                GridBlue = 0,
+                GridGreen = 0,
+                GridRed = 0,
+            };
+
+            foreach (var layer in Layers)
+            {
+                DlmLayer dlmLayer = new DlmLayer();
+                dlmLayer.Cells = new List<DlmCell>();
+                dlmLayer.LayerId = (int)layer.Key;
+
+
+                foreach (var pair in layer.Value.Elements)
+                {
+                    DlmCell dlmCell = new DlmCell();
+                    dlmCell.CellId = (short)pair.Key.Id;
+                    dlmCell.Elements = new List<BasicElement>();
+
+                    foreach (var element in pair.Value)
+                    {
+                        dlmCell.Elements.Add(element.GetBasicElement());
+                    }
+
+                    dlmLayer.Cells.Add(dlmCell);
+                }
+
+
+                map.Layers.Add(dlmLayer);
+
+
+            }
+
+            map.Cells = new CellData[Constants.MAP_WIDTH * Constants.MAP_HEIGHT * 2];
+
+            for (short i = 0; i < map.Cells.Length; i++)
+            {
+                map.Cells[i] = this.GetCell(i).Data;
+            }
+            return map;
+        }
+
         public static Map FromDLM(DlmMap dlmMap, Dictionary<int, EleGraphicalData> elements, Vector2f position = default(Vector2f))
         {
             Map map = new Map(position);
@@ -316,20 +556,19 @@ namespace Giny.Rendering.Maps
                             {
                                 var textureRecord = TextureManager.Instance.GetTexture(elementData.Gfx);
 
-                                map.Layers[(LayerEnum)dlmLayer.LayerId].AddElement(cell, textureRecord, dlmElement, elementData);
+                                map.Layers[(LayerEnum)dlmLayer.LayerId].Add(cell, textureRecord, dlmElement, elementData);
                             }
                             else
                             {
                                 throw new Exception("unknown gfx.");
                             }
                         }
-
-
-                        if (element is EntityGraphicalElementData)
+                        else if (element is EntityGraphicalElementData)
                         {
                             var elementData = (EntityGraphicalElementData)element;
-                            map.Layers[(LayerEnum)dlmLayer.LayerId].AddElement(cell, elementData, dlmElement);
+                            map.Layers[(LayerEnum)dlmLayer.LayerId].Add(cell, elementData, dlmElement);
                         }
+
 
                     }
                 }
@@ -359,5 +598,19 @@ namespace Giny.Rendering.Maps
             return map;
         }
 
+        public void AddElement(LayerEnum layer, Cell cell, TextureRecord textureRecord, NormalGraphicalElementData ele)
+        {
+            var dlmElement = new GraphicalElement();
+            dlmElement.ElementId = (uint)ele.Id;
+            MapGraphicalElement element = new MapGraphicalElement(cell, textureRecord, dlmElement, ele);
+            element.ComputeCenterPixelOffset();
+
+            if (!Layers.ContainsKey(layer))
+            {
+                Layers.Add(layer, new Layer());
+            }
+
+            Layers[layer].Add(element);
+        }
     }
 }

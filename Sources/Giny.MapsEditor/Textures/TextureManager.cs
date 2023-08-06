@@ -69,6 +69,7 @@ namespace Giny.Rendering.GFX
             {
                 case ".png":
                     return TextureType.Png;
+                case ".jpeg":
                 case ".jpg":
                     return TextureType.Jpg;
                 case ".swf":

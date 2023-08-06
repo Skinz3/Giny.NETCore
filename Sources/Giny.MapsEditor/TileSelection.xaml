@@ -6,10 +6,14 @@
              xmlns:local="clr-namespace:Giny.MapEditor"
              mc:Ignorable="d" Height="246" Width="1920" >
     <Grid >
-        <ListView x:Name="elementCategory" Margin="0,0,1546,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <ListView Grid.Column="0" x:Name="elementCategory" >
         </ListView>
 
-        <ScrollViewer Margin="374,0,0,0">
+        <ScrollViewer Name="scrollViewer" ScrollChanged="ScrollViewer_ScrollChanged" HorizontalAlignment="Left" Grid.Column="1"   >
             <Canvas x:Name="tileCanvas"></Canvas>
         </ScrollViewer>
     </Grid>

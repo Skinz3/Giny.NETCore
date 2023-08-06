@@ -10,6 +10,7 @@ using Giny.ORM.Interfaces;
 using Giny.ORM.IO;
 using Giny.World.Managers.Entities.Look;
 using Giny.World.Records;
+using Giny.World.Records.Achievements;
 using Giny.World.Records.Breeds;
 using Giny.World.Records.Challenges;
 using Giny.World.Records.Characters;
@@ -82,6 +83,9 @@ namespace Giny.DatabaseSynchronizer
             DatabaseManager.Instance.DropTableIfExists<NpcRecord>();
             DatabaseManager.Instance.DropTableIfExists<SpellBombRecord>();
             DatabaseManager.Instance.DropTableIfExists<ChallengeRecord>();
+            DatabaseManager.Instance.DropTableIfExists<AchievementRewardRecord>();
+            DatabaseManager.Instance.DropTableIfExists<AchievementRecord>();
+            DatabaseManager.Instance.DropTableIfExists<AchievementObjectiveRecord>();
 
             if (SYNC_MAPS)
                 DatabaseManager.Instance.DropTableIfExists<MapRecord>();

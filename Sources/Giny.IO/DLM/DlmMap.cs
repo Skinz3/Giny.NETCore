@@ -25,6 +25,7 @@ namespace Giny.IO.DLM
 
         public const int MAP_CELLS_COUNT = 560;
 
+
         public sbyte MapVersion
         {
             get;
@@ -186,23 +187,7 @@ namespace Giny.IO.DLM
             set;
         }
 
-        public bool UseLowPassFilter
-        {
-            get;
-            set;
-        }
-
-        public bool UseReverb
-        {
-            get;
-            set;
-        }
-
-        public int PresetId
-        {
-            get;
-            set;
-        }
+      
 
         public bool IsUsingNewMovementSystem
         {
@@ -255,7 +240,50 @@ namespace Giny.IO.DLM
                 }
             }
         }
-       
+
+        public DlmMap(sbyte version)
+        {
+            this.BackgroundFixtures = new List<Fixture>();
+            this.ForegroundFixtures = new List<Fixture>();
+            this.Layers = new List<DlmLayer>();
+            this.Cells = new CellData[MAP_CELLS_COUNT];
+            this.MapVersion = version;
+        }
+
+        public byte[] Compress()
+        {
+            using (var writer = new BigEndianWriter())
+            {
+                this.Serialize(writer);
+
+                using (var rawStream = new MemoryStream(writer.Data))
+                {
+                    using (var compressStream = new MemoryStream())
+                    {
+                        using (var compressor = new DeflateStream(compressStream, CompressionMode.Compress))
+                        {
+                            rawStream.CopyTo(compressor);
+
+                            compressor.Close();
+
+                            var bytes = compressStream.ToArray();
+
+                            var dataWithHeader = new byte[bytes.Length + 2];
+
+                            dataWithHeader[0] = 120;
+                            dataWithHeader[1] = 218;
+
+                            Array.Copy(bytes, 0, dataWithHeader, 2, bytes.Length);
+
+                            return dataWithHeader;
+                        }
+
+                    }
+                }
+            }
+
+        }
+
         public void Serialize(BigEndianWriter writer)
         {
             writer.WriteSByte((sbyte)MAP_HEADER);
@@ -311,15 +339,6 @@ namespace Giny.IO.DLM
             {
                 writer.WriteInt(TacticalModeTemplateId);
             }
-
-            writer.WriteBoolean(UseLowPassFilter);
-            writer.WriteBoolean(UseReverb);
-
-            if (UseReverb)
-            {
-                writer.WriteInt(PresetId);
-            }
-
 
             writer.WriteByte((byte)BackgroundFixtures.Count);
 
@@ -433,6 +452,9 @@ namespace Giny.IO.DLM
                 this.TacticalModeTemplateId = reader.ReadInt();
             }
 
+
+
+
             int bgCount = reader.ReadSByte();
 
             BackgroundFixtures = new List<Fixture>();
@@ -484,6 +506,6 @@ namespace Giny.IO.DLM
             }
         }
 
-        
+
     }
 }

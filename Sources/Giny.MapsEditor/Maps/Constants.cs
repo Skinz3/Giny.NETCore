@@ -8,6 +8,8 @@ namespace Giny.Rendering.Maps
 {
     public class Constants
     {
+        public const sbyte MAP_DEFAULT_VERSION = 11;
+
         public static int MAP_WIDTH = 14;
 
         public static int MAP_HEIGHT = 20;

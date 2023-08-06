@@ -1,7 +1,7 @@
 ﻿using Giny.IO.DLM.Elements;
 using Giny.IO.ELE.Repertory;
+using Giny.Rendering.Graphics;
 using Giny.Rendering.Maps.Elements;
-using Giny.Rendering.SFML;
 using Giny.Rendering.Textures;
 using SFML.Graphics;
 using SFML.System;
@@ -25,25 +25,18 @@ namespace Giny.Rendering.Maps
             set;
         }
 
-        public void AddElement(Cell cell, TextureRecord record, GraphicalElement dlmElement, NormalGraphicalElementData elementData)
+        public void Add(Cell cell, TextureRecord record, GraphicalElement dlmElement, NormalGraphicalElementData elementData)
         {
             MapGraphicalElement element = new MapGraphicalElement(cell, record, dlmElement, elementData);
-
-            if (Elements.ContainsKey(cell))
-            {
-                Elements[cell].Add(element);
-            }
-            else
-            {
-                Elements[cell] = new List<MapElement>() { element };
-            }
+            Add(element);
         }
-        public void AddElement(Cell cell, EntityGraphicalElementData elementData, GraphicalElement dlmElement)
+
+        public void Add(Cell cell, EntityGraphicalElementData elementData, GraphicalElement dlmElement)
         {
             MapEntityElement element = new MapEntityElement(cell, dlmElement, elementData);
-            AddElement(element);
+            Add(element);
         }
-        private void AddElement(MapElement element)
+        public void Add(MapElement element)
         {
             if (Elements.ContainsKey(element.Cell))
             {
@@ -52,6 +45,26 @@ namespace Giny.Rendering.Maps
             else
             {
                 Elements[element.Cell] = new List<MapElement>() { element };
+            }
+        }
+
+        public MapElement? FirstOrDefault(Cell cell)
+        {
+            if (Elements.ContainsKey(cell))
+            {
+                return Elements[cell].FirstOrDefault();
+            }
+            return null;
+        }
+        public MapElement? Find(Cell cell, int elementId)
+        {
+            if (Elements.ContainsKey(cell))
+            {
+                return Elements[cell].FirstOrDefault(x => x.DlmElement.ElementId == elementId);
+            }
+            else
+            {
+                return null;
             }
         }
         public void Draw(RenderWindow window)
@@ -65,5 +78,9 @@ namespace Giny.Rendering.Maps
             }
         }
 
+        public void Remove(MapElement element)
+        {
+            Elements[element.Cell].Remove(element);
+        }
     }
 }

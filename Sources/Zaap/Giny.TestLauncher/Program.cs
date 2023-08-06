@@ -3,7 +3,21 @@
 using Giny.Core;
 using Giny.IO;
 using Giny.Zaap;
+using System.Diagnostics;
 using System.Reflection;
+
+
+
+
+var processes = Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName);
+
+foreach (var process in processes)
+{
+    if (process.Id != Process.GetCurrentProcess().Id)
+    {
+        process.Kill();
+    }
+}
 
 const int Port = 3001;
 string ClientPath = ClientConstants.ClientPath;

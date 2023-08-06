@@ -1,6 +1,6 @@
 ﻿using Giny.IO.DLM.Elements;
 using Giny.IO.ELE;
-using Giny.Rendering.SFML;
+using Giny.Rendering.Graphics;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Giny.Rendering.Maps.Elements
 {
-    public abstract class MapElement : IDrawable 
+    public abstract class MapElement : IDrawable
     {
         public Cell Cell
         {
@@ -33,5 +33,11 @@ namespace Giny.Rendering.Maps.Elements
         protected abstract Vector2f ComputePosition();
 
         public abstract void Draw(RenderWindow window);
+
+        public BasicElement GetBasicElement()
+        {
+            return this.DlmElement;
+        }
+
     }
 }

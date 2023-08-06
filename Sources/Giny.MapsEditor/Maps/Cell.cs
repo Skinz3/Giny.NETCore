@@ -84,6 +84,7 @@ namespace Giny.Rendering.Maps
         {
             Map = map;
             Id = id;
+            Data = new CellData();
         }
 
         public void ComputePolygon()

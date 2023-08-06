@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.Rendering.SFML
+namespace Giny.Rendering.Graphics
 {
     public interface IDrawable
     {

@@ -55,59 +55,6 @@ namespace Giny.World
 
         }
 
-        [ConsoleCommand("test")]
-       public static void Test()
-        {
-            int[] ZaapBones = new int[]
-       {
-            5247, // Regular
-
-       };
-
-            int[] ZaapGfxIds = new int[]
-                {
-           38003,
-           41939,
-           41724,
-           19804,
-                };
-
-
-            foreach (var map in MapRecord.GetMaps())
-            {
-
-                foreach (var element in map.Elements)
-                {
-
-                    if ((ZaapBones.Contains(element.BonesId) || ZaapGfxIds.Contains(element.GfxId)) && element.IsInMap())
-                    {
-                        if (map.Subarea.AreaId == 58) // havre sacs
-                        {
-                            continue;
-                        }
-
-                        var zoneId = 1;
-
-                        if (map.Subarea.AreaId == 45) // Incarnam
-                        {
-                            zoneId = 2;
-                        }
-
-                        if (!InteractiveSkillRecord.ExistAndHandled(element.Identifier))
-                        {
-                            TeleportersManager.Instance.AddDestination(TeleporterTypeEnum.TELEPORTER_ZAAP,
-                            InteractiveTypeEnum.ZAAP16,
-                            GenericActionEnum.Zaap,
-                            map,
-                            element,
-                            zoneId);
-
-                        }
-                    }
-                }
-            }
-        }
-
         [ConsoleCommand("reset")]
         public static void ResetCommand()
         {

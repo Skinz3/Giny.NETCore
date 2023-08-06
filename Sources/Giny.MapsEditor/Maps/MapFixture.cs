@@ -1,6 +1,6 @@
 ﻿using Giny.IO.DLM;
 using Giny.Rendering.GFX;
-using Giny.Rendering.SFML;
+using Giny.Rendering.Graphics;
 using Giny.Rendering.Textures;
 using SFML.Graphics;
 using SFML.System;
@@ -51,30 +51,36 @@ namespace Giny.Rendering.Maps
             var height = Sprite.TextureRect.Height;
             var halfWidth = width * 0.5f;
             var halfHeight = height * 0.5f;
-          
+
             Sprite.Origin = new Vector2f(halfWidth, halfHeight);
             Sprite.Scale = new Vector2f(FixtureData.XScale / 1000, FixtureData.YScale / 1000);
 
             Sprite.Rotation = FixtureData.Rotation / 100f;
             Sprite.Position += new Vector2f((FixtureData.OffsetX + Constants.CELL_HALF_WIDTH) * 1 + halfWidth, (FixtureData.OffsetY + Constants.CELL_HEIGHT) * 1 + halfHeight);
-            
+
+            Sprite.Color = new Color(255, 255, 255, (byte)FixtureData.Alpha);
             if (FixtureData.RedMultiplier > 0)
             {
 
             }
-           /* if (int(fixture.redMultiplier) || int(fixture.greenMultiplier) || fixture.blueMultiplier || fixture.alpha != 1)
-            {
-                this._clTrans.redMultiplier = fixture.redMultiplier / 127 + 1;
-                this._clTrans.greenMultiplier = fixture.greenMultiplier / 127 + 1;
-                this._clTrans.blueMultiplier = fixture.blueMultiplier / 127 + 1;
-                this._clTrans.alphaMultiplier = fixture.alpha / 255;
-                container.bitmapData.draw(bmpdt, this._m, this._clTrans, null, null, smoothing);
-            }*/
+            /* if (int(fixture.redMultiplier) || int(fixture.greenMultiplier) || fixture.blueMultiplier || fixture.alpha != 1)
+             {
+                 this._clTrans.redMultiplier = fixture.redMultiplier / 127 + 1;
+                 this._clTrans.greenMultiplier = fixture.greenMultiplier / 127 + 1;
+                 this._clTrans.blueMultiplier = fixture.blueMultiplier / 127 + 1;
+                 this._clTrans.alphaMultiplier = fixture.alpha / 255;
+                 container.bitmapData.draw(bmpdt, this._m, this._clTrans, null, null, smoothing);
+             }*/
         }
 
         public void Draw(RenderWindow window)
         {
             window.Draw(Sprite);
+        }
+
+        public Fixture GetDlmFixture()
+        {
+            return this.FixtureData;
         }
     }
 }

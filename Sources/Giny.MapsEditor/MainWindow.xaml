@@ -12,53 +12,96 @@
     </Window.Resources>
 
     <DockPanel>
-        <Menu Background="White" DockPanel.Dock="Top" Height="23">
-            <MenuItem Header="_File">
-                <MenuItem  Header="_New" />
-                <MenuItem Header="_Open" />
-                <MenuItem Header="_Save" />
-                <MenuItem Header="_Save as" />
+        <Menu FontFamily="{StaticResource Jost}"  Background="White" DockPanel.Dock="Top" Height="23">
+            <MenuItem Header="_File" >
+                <MenuItem  Header="_New" Click="NewMapClick" />
+                <MenuItem Header="_Open" Click="OpenClick" />
+                <MenuItem Header="_Save" Click="SaveClick" />
+                <MenuItem Header="_Export to client" />
+                <Separator></Separator>
+                <MenuItem Header="_Exit"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Display">
+                <MenuItem  Header="_Toggle FullScreen" Click="ToggleFullScreenClick" />
+                <MenuItem  Header="_Toggle Grid" Click="ToggleGridClick" />
+                <MenuItem  Header="_Client perspective" Click="ClientViewClick" />
+            </MenuItem>
+            <MenuItem Header="_Gfx">
+                <MenuItem  Header="_Remap GFX"  />
+                <MenuItem  Header="_Informations" Click="CacheDetailsClick" />
             </MenuItem>
         </Menu>
 
-        <Grid >
-            <WindowsFormsHost Name="host"  HorizontalAlignment="Left" Margin="268,0,0,593" Height="720" Width="1280"/>
-            <TabControl Margin="0,0,1652,315">
-                <TabItem Header="TabItem"/>
-                <TabItem Header="TabItem">
-                    <Grid Background="#FFE5E5E5"/>
-                </TabItem>
-            </TabControl>
-            <TabControl  Foreground="#575757" FontFamily="{StaticResource Jost}" FontSize="16"  Margin="0,731,0,0" >
-                <TabItem Foreground="#2e2e2e" Header="Elements">
-                    <local:TileSelection FontSize="16"  FontFamily="{StaticResource Jost}" x:Name="tileSelection" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Height="222" Margin="-3,0,3,0"></local:TileSelection>
-                </TabItem>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="280.04" />
+            </Grid.RowDefinitions>
 
-                <TabItem Header="TabItem">
-                    <Grid Background="#FFE5E5E5"/>
-                </TabItem>
-            </TabControl>
+            <Grid Grid.Row="0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1129"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <WindowsFormsHost Name="host"  Height="635" VerticalAlignment="Top" HorizontalAlignment="Center" Width="1129"/>
 
-            <TabControl  FontSize="16"  FontFamily="{StaticResource Jost}"  Margin="1602,0,0,315">
-                <TabItem  Header="Element"/>
-                <TabItem Header="Map">
-                    <Grid>
-                        <TextBlock VerticalAlignment="Top" Margin="6,16,230,0" Height="28">Map Id :</TextBlock>
-                        <TextBox x:Name="mapIdText" Margin="81,16,68,0" Height="28" VerticalAlignment="Top" ></TextBox>
-                        <Button Content="Go" Margin="249,16,10,0" VerticalAlignment="Top" Height="28" Click="Button_Click"/>
-                        <TextBlock VerticalAlignment="Top" Margin="6,49,10,0" Height="28"><Run Text="Top :"/></TextBlock>
-                        <TextBlock VerticalAlignment="Top" Margin="6,82,10,0" Height="28"><Run Text="Right :"/></TextBlock>
-                        <TextBlock  VerticalAlignment="Top" Margin="6,115,10,0" Height="28"><Run Text="Left : "/></TextBlock>
-                        <TextBlock   VerticalAlignment="Top" Margin="6,148,10,0" Height="28"><Run Text="Bottom : "/></TextBlock>
-                        <TextBox x:Name="topText" Margin="81,49,68,0" Height="28" VerticalAlignment="Top" />
-                        <TextBox x:Name="rightText" Margin="81,82,68,0" Height="28" VerticalAlignment="Top" />
-                        <TextBox x:Name="leftText" Margin="81,115,68,0" Height="28" VerticalAlignment="Top" />
-                        <TextBox x:Name="bottomText" Margin="81,148,68,0" Height="28" VerticalAlignment="Top" />
-                    </Grid>
 
-                </TabItem>
-            </TabControl>
 
+                <TabControl Grid.Column="1"  Height="620"  FontSize="15"  FontFamily="{StaticResource Jost}" HorizontalAlignment="Left" Width="381" Margin="10,8,0,0" VerticalAlignment="Top"  >
+                    <TabItem  Header="Element"/>
+                    <TabItem Header="Map">
+                        <Grid>
+                            <TextBlock VerticalAlignment="Top" Margin="6,16,230,0" Height="28">Map Id :</TextBlock>
+                            <TextBox x:Name="mapIdText" Margin="81,16,110,0" Height="28" VerticalAlignment="Top" ></TextBox>
+                            <Button Content="Go" Margin="265,16,10,0" VerticalAlignment="Top" Height="28" Click="LoadMapClick"/>
+                            <TextBlock VerticalAlignment="Top" Margin="6,49,10,0" Height="28"><Run Text="Top :"/></TextBlock>
+                            <TextBlock VerticalAlignment="Top" Margin="6,82,10,0" Height="28"><Run Text="Right :"/></TextBlock>
+                            <TextBlock  VerticalAlignment="Top" Margin="6,115,10,0" Height="28"><Run Text="Left : "/></TextBlock>
+                            <TextBlock   VerticalAlignment="Top" Margin="6,148,10,0" Height="28"><Run Text="Bottom : "/></TextBlock>
+                            <TextBox  IsReadOnly="True" x:Name="topText" Margin="81,49,110,0" Height="28" VerticalAlignment="Top" />
+                            <TextBox   IsReadOnly="True" x:Name="rightText" Margin="81,82,110,0" Height="28" VerticalAlignment="Top" />
+                            <TextBox  IsReadOnly="True" x:Name="leftText" Margin="81,115,110,0" Height="28" VerticalAlignment="Top" />
+                            <TextBox  IsReadOnly="True" x:Name="bottomText" Margin="81,148,110,0" Height="28" VerticalAlignment="Top" />
+                            <Button Content="Go" Margin="265,49,10,0" VerticalAlignment="Top" Height="28" Click="GoTopClick" />
+                            <Button Content="Go" Margin="265,82,10,0" VerticalAlignment="Top" Height="28" Click="GoRightClick"/>
+                            <Button Content="Go" Margin="265,115,10,0" VerticalAlignment="Top" Height="28" Click="GoLeftClick" />
+                            <Button Margin="265,148,10,0" VerticalAlignment="Top" Height="28" Click="GoBottomClick" />
+                            <Button Content="Random map" VerticalAlignment="Top" Height="28" Click="RandomMapClick" Margin="8,188,10,0" />
+                        </Grid>
+
+                    </TabItem>
+                    <TabItem  Header="Fixtures"/>
+                    <TabItem  Header="Cells"/>
+                </TabControl>
+
+
+            </Grid>
+            <Grid Grid.Row="1" >
+                <TabControl  Foreground="#575757" FontFamily="{StaticResource Jost}" FontSize="15" Margin="0,52,0,0"   >
+                    <TabItem Foreground="#2e2e2e" Header="Elements">
+                        <local:TileSelection FontSize="13"  FontFamily="{StaticResource Jost}" x:Name="tileSelection" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Height="222" Margin="-3,0,3,0"></local:TileSelection>
+                    </TabItem>
+
+                    <TabItem FontFamily="{StaticResource Jost}" Header="Drawing">
+                        <Grid>
+                            <CheckBox IsChecked="{Binding DisplayGrid, Mode=TwoWay}"  Content="Display grid" HorizontalAlignment="Left" Margin="242,72,0,0" VerticalAlignment="Top"/>
+                            <CheckBox x:Name="displayGround"  Content="Display ground" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="194" Click="DisplayLayerClick"/>
+                            <CheckBox x:Name="displayAdditionalGround" Content="Display additional ground" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="194" Click="DisplayLayerClick"/>
+                            <CheckBox x:Name="displayDecor"  Content="Display decor" HorizontalAlignment="Left" Margin="242,10,0,0" VerticalAlignment="Top" Width="146" Click="DisplayLayerClick"/>
+                            <CheckBox x:Name="displayAdditionalDecor"  Content="Display additional decor" HorizontalAlignment="Left" Margin="242,36,0,0" VerticalAlignment="Top" Width="194" Click="DisplayLayerClick"/>
+                            <Separator BorderThickness="0.3" HorizontalAlignment="Left" Margin="5,57,0,0" VerticalAlignment="Top" Height="15" Width="439"/>
+                            <CheckBox x:Name="displayBackgroundFixtures"  Content="Display Fixtures" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" Width="209" Click="DisplayLayerClick" Checked="DisplayLayerClick"/>
+                            <ComboBox Name="drawingLayer" HorizontalAlignment="Left" Margin="592,7,0,0" VerticalAlignment="Top" Width="197"/>
+                            <Label Content="Drawing Layer : " HorizontalAlignment="Left" Margin="473,5,0,0" VerticalAlignment="Top"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="On Map">
+                        <Grid>
+
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </Grid>
         </Grid>
     </DockPanel>
 </Window>

@@ -4,6 +4,7 @@ using SFML.Graphics;
 using SFML.System;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -65,7 +66,7 @@ namespace Giny.Rendering.Textures
             Texture.Smooth = PixelInterpolation;
         }
 
-      
+
 
         public BitmapImage GetIcon()
         {
@@ -86,9 +87,14 @@ namespace Giny.Rendering.Textures
             return Icon;
         }
 
-        public Sprite CreateSprite()
+        public Sprite CreateSprite(bool centerOrigin = false)
         {
             Sprite result = new Sprite(Texture);
+
+            if (centerOrigin)
+            {
+                result.Origin = new Vector2f(result.Texture.Size.X / 2, result.Texture.Size.Y / 2);
+            }
             return result;
         }
 

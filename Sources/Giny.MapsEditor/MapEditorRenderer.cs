@@ -4,8 +4,9 @@ using Giny.IO.D2P;
 using Giny.IO.DLM;
 using Giny.IO.ELE;
 using Giny.Rendering.GFX;
+using Giny.Rendering.Graphics;
 using Giny.Rendering.Maps;
-using Giny.Rendering.SFML;
+using Giny.Rendering.Textures;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
@@ -18,18 +19,82 @@ using System.Threading.Tasks;
 
 namespace Giny.MapEditor
 {
-    internal class MapEditorRenderer : Renderer
+    public class SelectedTile
     {
-        List<Map> Maps = new List<Map>();
+        public bool Selected => Sprite != null;
 
+        public Sprite? Sprite
+        {
+            get;
+            private set;
+        }
+        public TextureRecord? TextureRecord
+        {
+            get;
+            private set;
+        }
+
+        public SelectedTile()
+        {
+
+        }
+
+        public void Assign(TextureRecord texture)
+        {
+            TextureRecord = texture;
+            Sprite = texture.CreateSprite(true);
+            Sprite.Color = new Color(255, 255, 255, 120);
+        }
+
+
+    }
+    public class MapEditorRenderer : Renderer
+    {
+        private const float CameraSpeed = 20f;
+        public List<Map> Maps
+        {
+            get;
+            private set;
+        } = new List<Map>();
+
+        public Map CurrentMap
+        {
+            get;
+            set;
+        }
         RectangleShape ClientBounds
         {
             get;
             set;
         }
-        private Map GetMap(int id, Vector2f position)
+
+        public List<LayerEnum> DisplayedLayers
         {
-            return Map.FromDLM(MapsManager.Instance.ReadMap(id), MapsManager.Instance.Elements, position);
+            get;
+            set;
+        }
+
+        public SelectedTile CurrentTile
+        {
+            get;
+            set;
+        } = new SelectedTile();
+
+        private float CurrentZoom
+        {
+            get;
+            set;
+        } = 1f;
+
+        public Map GetMap(int id, Vector2f position)
+        {
+            var dlmMap = MapsManager.Instance.ReadMap(id);
+
+            if (dlmMap == null)
+            {
+                return null;
+            }
+            return Map.FromDLM(dlmMap, MapsManager.Instance.Elements, position);
         }
 
         public MapEditorRenderer(IntPtr handle) : base(handle)
@@ -37,7 +102,6 @@ namespace Giny.MapEditor
             var height = Constants.CELL_HEIGHT * Constants.MAP_HEIGHT;
 
             var width = Constants.CELL_WIDTH * Constants.MAP_WIDTH;
-
 
             var boundsWidth = width + Constants.CELL_HALF_WIDTH;
 
@@ -48,13 +112,17 @@ namespace Giny.MapEditor
             ClientBounds.OutlineColor = Color.Red;
             ClientBounds.FillColor = Color.Transparent;
 
+            DisplayedLayers = Map.AllLayers.ToList();
+
             Window.MouseWheelScrolled += MouseWheelScrolled;
 
         }
 
         private void MouseWheelScrolled(object? sender, MouseWheelScrollEventArgs e)
         {
-            this.View.Zoom(1 - (e.Delta / 50));
+            var zoom = 1 - (e.Delta / 50);
+            CurrentZoom = zoom;
+            this.View.Zoom(zoom);
         }
 
         public override Color ClearColor => Color.White;
@@ -65,78 +133,108 @@ namespace Giny.MapEditor
 
             foreach (var map in Maps)
             {
-                map.Draw(Window);
+                map.Draw(Window, DisplayedLayers);
             }
 
-            Window.Draw(ClientBounds);
+            // Window.Draw(ClientBounds);
+
+
+            if (CurrentTile.Selected)
+            {
+                var pos = Mouse.GetPosition(Window);
+
+                var worldPos = Window.MapPixelToCoords(pos, View);
+
+                var cell = CurrentMap.GetCell(worldPos);
+
+                if (cell != null)
+                {
+                    CurrentTile.Sprite!.Position = cell.Center;
+                    Window.Draw(CurrentTile.Sprite);
+                }
+            }
 
         }
 
 
-        public Map LoadMap(int id)
+        public void LoadMap(Map map)
         {
             Maps.Clear();
-
-
-            //  var height = Constants.CELL_HEIGHT * Constants.MAP_HEIGHT;
-
-            //   var width = Constants.CELL_WIDTH * Constants.MAP_WIDTH;
-
-            var map = GetMap(id, new Vector2f());
-
-            //   var topMap = LoadMap(map.Top, new Vector2f(0, -height));
-
-            //    var leftMap = LoadMap(map.Left, new Vector2f(-width, 0));
-
-            //   var rightMap = LoadMap(map.Right, new Vector2f(width, 0));
-
-            //    var bottomMap = LoadMap(map.Bottom, new Vector2f(0, height));
-
-
-            //  Maps.Add(LoadMap(topMap.Right, new Vector2f(width, -height)));
-
-            //    Maps.Add(topMap);
-            //    Maps.Add(rightMap);
-
             Maps.Add(map);
 
-            //    Maps.Add(LoadMap(topMap.Left, new Vector2f(-width, -height)));
-            //    Maps.Add(leftMap);
+            this.CurrentMap = map;
 
-            //   Maps.Add(LoadMap(bottomMap.Right, new Vector2f(width, height)));
+            //ClientView();
 
-            //   Maps.Add(bottomMap);
+            /* var height = Constants.CELL_HEIGHT * Constants.MAP_HEIGHT;
+
+               var width = Constants.CELL_WIDTH * Constants.MAP_WIDTH;
+            var topMap = GetMap(map.Top, new Vector2f(0, -height));
+
+            var leftMap = GetMap(map.Left, new Vector2f(-width, 0));
+
+            var rightMap = GetMap(map.Right, new Vector2f(width, 0));
+
+            var bottomMap = GetMap(map.Bottom, new Vector2f(0, height));
 
 
-            //  Maps.Add(LoadMap(bottomMap.Left, new Vector2f(-width, height)));
+            Maps.Add(GetMap(topMap.Right, new Vector2f(width, -height)));
 
-            return map;
+            Maps.Add(topMap);
+
+
+            Maps.Add(GetMap(topMap.Left, new Vector2f(-width, -height)));
+            Maps.Add(leftMap);
+
+            Maps.Add(rightMap); 
+            Maps.Add(GetMap(bottomMap.Right, new Vector2f(width, height)));
+
+            Maps.Add(bottomMap);
+
+            Maps.Add(GetMap(bottomMap.Left, new Vector2f(-width, height)));
+            */
+
 
         }
+
+
         private void HandleCameraMovement()
         {
-            var CameraSpeed = 20f;
-
 
             if (Keyboard.IsKeyPressed(Keyboard.Key.Q))
             {
-                View.Move(new Vector2f(-CameraSpeed, 0));
+                MoveCamera(new Vector2f(-CameraSpeed, 0));
             }
             else if (Keyboard.IsKeyPressed(Keyboard.Key.D))
             {
-                View.Move(new Vector2f(CameraSpeed, 0));
+                MoveCamera(new Vector2f(CameraSpeed, 0));
             }
             if (Keyboard.IsKeyPressed(Keyboard.Key.Z))
             {
-                View.Move(new Vector2f(0, -CameraSpeed));
+                MoveCamera(new Vector2f(0, -CameraSpeed));
             }
             else if (Keyboard.IsKeyPressed(Keyboard.Key.S))
             {
-                View.Move(new Vector2f(0, CameraSpeed));
+                MoveCamera(new Vector2f(0, CameraSpeed));
             }
 
 
         }
 
+        private void MoveCamera(Vector2f input)
+        {
+            MainWindow.Instance.FocusRenderer();
+            View.Move(input);
+        }
+
+
+
+        public void ClientView()
+        {
+            View.Center = new Vector2f(CurrentMap.Size.X / 2, CurrentMap.Size.Y / 2);
+            View.Size = new Vector2f(1920, 1080);
+            View.Move(new Vector2f(50, 85));
+
+        }
     }
 }

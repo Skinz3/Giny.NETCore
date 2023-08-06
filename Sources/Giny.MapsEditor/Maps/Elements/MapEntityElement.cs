@@ -33,5 +33,7 @@ namespace Giny.Rendering.Maps.Elements
         {
             return Cell.Center;
         }
+
+    
     }
 }

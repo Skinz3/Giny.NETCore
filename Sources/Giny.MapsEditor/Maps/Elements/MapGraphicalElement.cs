@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace Giny.Rendering.Maps.Elements
 {
@@ -55,7 +56,7 @@ namespace Giny.Rendering.Maps.Elements
 
             if (DlmElement.HueR == 0)
             {
-              //  Sprite.Scale = new Vector2f();
+                //  Sprite.Scale = new Vector2f();
 
             }
             else
@@ -96,6 +97,8 @@ namespace Giny.Rendering.Maps.Elements
         }
 
 
+
+
         public void Dispose()
         {
             Sprite.Dispose();
@@ -104,6 +107,15 @@ namespace Giny.Rendering.Maps.Elements
         public override void Draw(RenderWindow window)
         {
             window.Draw(Sprite);
+        }
+
+        public void ComputeCenterPixelOffset()
+        {
+            DlmElement.PixelOffsetX = (int)(this.ElementData.OriginX - (TextureRecord.Texture.Size.X / 2) - Constants.CELL_HALF_WIDTH);
+
+            DlmElement.PixelOffsetY = (int)(this.ElementData.OriginY - (TextureRecord.Texture.Size.Y / 2) - Constants.CELL_HALF_HEIGHT);
+
+            Sprite.Position = ComputePosition();
         }
     }
 }

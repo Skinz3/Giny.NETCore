@@ -32,7 +32,7 @@ namespace Giny.MapEditor.Textures
         {
             get;
             private set;
-        }
+        } = new TextureMapperFile();
 
         public void Initialize()
         {

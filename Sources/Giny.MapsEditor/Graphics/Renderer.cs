@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Color = SFML.Graphics.Color;
 
-namespace Giny.Rendering.SFML
+namespace Giny.Rendering.Graphics
 {
     public abstract class Renderer
     {
@@ -29,6 +29,7 @@ namespace Giny.Rendering.SFML
             get;
             set;
         }
+       
         public Renderer(IntPtr handle)
         {
             ContextSettings settings = new ContextSettings();
@@ -36,6 +37,7 @@ namespace Giny.Rendering.SFML
 
 
             this.Window = new RenderWindow(handle, settings);
+            Window.SetVerticalSyncEnabled(true);
             this.View = Window.GetView();
             Initialize();
         }

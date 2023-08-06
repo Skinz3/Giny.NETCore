@@ -13,7 +13,7 @@ namespace Giny.IO.Compression
         public static byte[] Compress(Stream input)
         {
             using (var compressStream = new MemoryStream())
-            using (var compressor = new DeflateStream(compressStream, CompressionLevel.Optimal))
+            using (var compressor = new DeflateStream(compressStream, CompressionMode.Compress))
             {
                 input.CopyTo(compressor);
                 compressor.Close();
