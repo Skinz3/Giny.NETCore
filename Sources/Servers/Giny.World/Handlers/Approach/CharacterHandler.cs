@@ -165,15 +165,19 @@ namespace Giny.World.Handlers.Approach
         }
         private static void ProcessSelection(WorldClient client)
         {
+
+            client.Send(new NotificationListMessage(new int[] { 2147483647 }));
+
+
             client.Send(new CharacterSelectedSuccessMessage(client.Character.Record.GetCharacterBaseInformations(),
                false));
-            client.Send(new NotificationListMessage(new int[] { 2147483647 }));
             client.Send(new CharacterCapabilitiesMessage(4095));
             client.Send(new SequenceNumberRequestMessage());
 
             /*
              * -- Do not change order --
              */
+            client.Character.RefreshAchievements(); 
             client.Character.RefreshJobs();
             client.Character.RefreshSpells();
             client.Character.RefreshGuild();

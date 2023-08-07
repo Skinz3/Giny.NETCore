@@ -5,6 +5,7 @@ using Giny.ORM.Attributes;
 using Giny.ORM.Interfaces;
 using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Types;
+using Giny.World.Managers.Achievements;
 using Giny.World.Managers.Entities.Look;
 using Giny.World.Managers.Experiences;
 using Giny.World.Managers.Shortcuts;
@@ -104,7 +105,7 @@ namespace Giny.World.Records.Characters
             get;
             set;
         }
-      
+
         [ProtoSerialize]
         [Update]
         public List<short> KnownEmotes
@@ -168,6 +169,13 @@ namespace Giny.World.Records.Characters
 
         [Update]
         public long GuildId
+        {
+            get;
+            set;
+        }
+
+        [Update]
+        public List<CharacterAchievement> AchievementsAchieved
         {
             get;
             set;
@@ -248,6 +256,7 @@ namespace Giny.World.Records.Characters
                 Spells = new List<CharacterSpell>(),
                 ActiveTitleId = 0,
                 KnownTitles = new List<short>(),
+                AchievementsAchieved = new List<CharacterAchievement>(),
                 Jobs = CharacterJob.New().ToArray(),
                 GuildId = 0,
             };

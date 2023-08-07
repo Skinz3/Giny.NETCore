@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Entities.Characters
 {
+    [WIP("Remove this.")]
     public class CharacterLevelRewardManager : Singleton<CharacterLevelRewardManager>
     {
         public const byte EMOTE_100 = 22;
@@ -57,7 +58,7 @@ namespace Giny.World.Managers.Entities.Characters
             AddRewardEmote(character, oldLevel, newLevel, 600, EMOTE_OMEGA_400);
             AddRewardEmote(character, oldLevel, newLevel, 700, EMOTE_OMEGA_500);
 
-
+            
             AddRewardOrnament(character, oldLevel, newLevel, 225, ORNAMENT_OMEGA_25);
             AddRewardOrnament(character, oldLevel, newLevel, 250, ORNAMENT_OMEGA_50);
             AddRewardOrnament(character, oldLevel, newLevel, 275, ORNAMENT_OMEGA_75);

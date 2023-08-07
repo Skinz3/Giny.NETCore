@@ -143,5 +143,16 @@ namespace Giny.World.Records.Achievements
             }
         }
 
+        public static AchievementRecord GetAchievement(int id)
+        {
+            if (Achievements.ContainsKey(id))
+            {
+                return Achievements[id];
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

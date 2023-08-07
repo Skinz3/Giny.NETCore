@@ -8,6 +8,7 @@ using Giny.Protocol.Messages;
 using Giny.Protocol.Types;
 using Giny.World.Api;
 using Giny.World.Handlers.Roleplay.Maps.Paths;
+using Giny.World.Managers.Achievements;
 using Giny.World.Managers.Bidshops;
 using Giny.World.Managers.Breeds;
 using Giny.World.Managers.Dialogs;
@@ -20,6 +21,7 @@ using Giny.World.Managers.Exchanges.Jobs;
 using Giny.World.Managers.Experiences;
 using Giny.World.Managers.Fights;
 using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Managers.Formulas;
 using Giny.World.Managers.Generic;
 using Giny.World.Managers.Guilds;
 using Giny.World.Managers.Items;
@@ -33,6 +35,7 @@ using Giny.World.Managers.Spells;
 using Giny.World.Managers.Stats;
 using Giny.World.Network;
 using Giny.World.Records;
+using Giny.World.Records.Achievements;
 using Giny.World.Records.Bidshops;
 using Giny.World.Records.Breeds;
 using Giny.World.Records.Characters;
@@ -105,6 +108,7 @@ namespace Giny.World.Managers.Entities.Characters
             get;
             set;
         }
+
         public EntityStats Stats => Record.Stats;
 
         public BreedRecord Breed
@@ -908,7 +912,7 @@ namespace Giny.World.Managers.Entities.Characters
         {
             Client.Send(new EmoteListMessage(Record.KnownEmotes.ToArray()));
         }
-        public bool LearnEmote(byte id)
+        public bool LearnEmote(short id)
         {
             if (!Record.KnownEmotes.Contains(id))
             {
@@ -1003,7 +1007,7 @@ namespace Giny.World.Managers.Entities.Characters
                 }
 
             }
-
+            // remove this (achievements do the job)
             CharacterLevelRewardManager.Instance.OnCharacterLevelUp(this, oldLevel, Level);
 
             if (HasParty)
@@ -1381,6 +1385,98 @@ namespace Giny.World.Managers.Entities.Characters
         {
             Client.Send(new TitlesAndOrnamentsListMessage(Record.KnownTitles.ToArray(), Record.KnownOrnaments.ToArray(), Record.ActiveTitleId, Record.ActiveOrnamentId)); ;
         }
+
+        public void RefreshAchievements()
+        {
+            IEnumerable<AchievementAchieved> achievementAchieveds = Record.AchievementsAchieved.Select(x => x.GetAchievementAchieved(Id));
+            Client.Send(new AchievementListMessage(achievementAchieveds.ToArray()));
+        }
+
+        public void ReachAchievement(AchievementRecord achievement)
+        {
+            var previousAchievement = Record.AchievementsAchieved.FirstOrDefault(x => x.AchievementId == achievement.Id);
+
+            if (previousAchievement != null)
+            {
+                return;
+            }
+
+            CharacterAchievement characterAchievement = new CharacterAchievement((short)achievement.Id, Level);
+            Record.AchievementsAchieved.Add(characterAchievement);
+
+            Client.Send(new AchievementFinishedMessage(
+                (AchievementAchievedRewardable)characterAchievement.GetAchievementAchieved(Id)));
+        }
+
+        public void RewardAllAchievements()
+        {
+            foreach (var achievement in Record.AchievementsAchieved.Where(x => !x.Rewarded))
+            {
+                RewardAchievement(achievement.AchievementId);
+            }
+        }
+
+        public void RewardAchievement(short achievementId)
+        {
+            CharacterAchievement achievement = Record.AchievementsAchieved.FirstOrDefault(x => x.AchievementId == achievementId);
+
+            if (achievement == null || achievement.Rewarded)
+            {
+                Client.Send(new AchievementRewardErrorMessage(achievementId));
+                return;
+            }
+
+            AchievementRecord record = AchievementRecord.GetAchievement(achievementId);
+
+            foreach (var reward in record.Rewards)
+            {
+                ApplyAchievementReward(record, reward);
+            }
+
+            achievement.Rewarded = true;
+            Client.Send(new AchievementRewardSuccessMessage(achievementId));
+        }
+
+        private void ApplyAchievementReward(AchievementRecord achievement, AchievementRewardRecord achievementReward)
+        {
+            foreach (var emoteId in achievementReward.EmotesReward)
+            {
+                LearnEmote((byte)emoteId);
+            }
+
+            for (int i = 0; i < achievementReward.ItemsReward.Count; i++)
+            {
+                var itemId = achievementReward.ItemsReward[i];
+                var quantity = achievementReward.ItemsQuantityReward[i];
+
+                Inventory.AddItem(itemId, quantity);
+            }
+
+            foreach (var titleId in achievementReward.TitlesReward)
+            {
+                LearnTitle((short)titleId);
+            }
+
+            foreach (var ornamentId in achievementReward.OrnamentsReward)
+            {
+                LearnOrnament((short)ornamentId, true);
+            }
+
+            if (achievementReward.KamasRatio > 0)
+            {
+                var kamas = AchievementsFormulas.Instance.GetKamasReward(achievementReward.KamasScaleWithPlayerLevel, achievement.Level,
+                      achievementReward.KamasRatio, 1, SafeLevel);
+
+                AddKamas(kamas);
+            }
+
+            if (achievementReward.ExperienceRatio > 0)
+            {
+                var experience = AchievementsFormulas.Instance.GetExperienceReward(SafeLevel, 0, achievement.Level, achievementReward.ExperienceRatio, 1);
+                AddExperience(experience);
+            }
+        }
+
         [WIP("still working?")]
         public void Restat()
         {
@@ -1447,7 +1543,7 @@ namespace Giny.World.Managers.Entities.Characters
         private void SendGameFightStartingMessage(Fight fight)
         {
             this.Client.Send(new GameFightStartingMessage((byte)fight.FightType,
-            (short)fight.Id, (double)fight.BlueTeam.TeamId, (double)fight.RedTeam.TeamId, fight.ContainsBoss(),new int[0]));
+            (short)fight.Id, (double)fight.BlueTeam.TeamId, (double)fight.RedTeam.TeamId, fight.ContainsBoss(), new int[0]));
         }
         public void DisplayNotification(string message)
         {
@@ -1589,6 +1685,8 @@ namespace Giny.World.Managers.Entities.Characters
         {
             return new CharacterMinimalInformations(Level, Id, Name);
         }
+
+
     }
 
 }

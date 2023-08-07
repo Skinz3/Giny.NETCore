@@ -162,7 +162,7 @@ namespace Giny.World.Network
             Characters = CharacterRecord.GetCharactersByAccountId(Account.Id);
             Send(new ServerSettingsMessage("fr", 0, 0, false, 1, 200, true));
 
-            SendServerOptionalFeatures(OptionalFeaturesEnum.PVP_KIS);
+            SendServerOptionalFeatures(OptionalFeaturesEnum.PVP_KIS, OptionalFeaturesEnum.CHARACTER_XP);
 
             Send(new ServerSessionConstantsMessage(new ServerSessionConstant[]
            {
@@ -183,7 +183,7 @@ namespace Giny.World.Network
                }
            }));
 
-            Send(new AccountCapabilitiesMessage(Account.Id, true, 0,true));
+            Send(new AccountCapabilitiesMessage(Account.Id, true, 0, true));
 
             Send(new TrustStatusMessage(true));
 

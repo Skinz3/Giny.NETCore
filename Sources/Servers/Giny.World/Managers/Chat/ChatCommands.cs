@@ -21,6 +21,7 @@ using Giny.World.Managers.Maps.Teleporters;
 using Giny.World.Managers.Monsters;
 using Giny.World.Managers.Stats;
 using Giny.World.Network;
+using Giny.World.Records.Achievements;
 using Giny.World.Records.Items;
 using Giny.World.Records.Jobs;
 using Giny.World.Records.Maps;
@@ -486,6 +487,17 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
+            for (int i = 1100; i < 1200; i++)
+            {
+                var achievement = AchievementRecord.GetAchievement(i);
+
+                if (achievement != null)
+                {
+                    client.Character.ReachAchievement(achievement);
+                }
+
+            }
+
 
             if (client.Character.Fighter == null)
                 return;
