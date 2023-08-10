@@ -118,7 +118,8 @@ namespace Giny.World.Managers.Entities.Look
 
             if (str.StartsWith("["))
             {
-                str = new string(str.Skip(3).ToArray());
+                throw new NotImplementedException("Unknown entity look format : " + str);
+              //  str = new string(str.Skip(3).ToArray());
             }
 
             if (string.IsNullOrEmpty(str) || str[0] != '{')

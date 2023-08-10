@@ -45,7 +45,20 @@ namespace Giny.World.Handlers.Maps
         {
             if (client.Character.Record.MapId == message.mapId)
             {
+
+                SubareaRecord? oldSubarea = null;
+
+                if (client.Character.Map != null)
+                {
+                    oldSubarea = client.Character.Map.Subarea;
+                }
+
                 client.Character.Map = MapRecord.GetMap((int)message.mapId);
+
+                if (oldSubarea != client.Character.Map.Subarea)
+                {
+                    client.Character.OnSubareaChange(oldSubarea, client.Character.Map.Subarea);
+                }
 
                 if (client.Character.Map == null)
                 {

@@ -487,17 +487,21 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
-            for (int i = 1100; i < 1200; i++)
+            foreach (var subarea in SubareaRecord.GetSubareas())
             {
-                var achievement = AchievementRecord.GetAchievement(i);
-
-                if (achievement != null)
+                if (subarea.AchievementRecord != null)
                 {
-                    client.Character.ReachAchievement(achievement);
+                    client.Character.ReachAchievement(subarea.AchievementRecord);
                 }
-
             }
 
+
+            var achievmeents = AchievementRecord.GetAchievements().Take(50);
+
+            foreach (var item in achievmeents)
+            {
+                client.Character.ReachAchievement(item);    
+            }
 
             if (client.Character.Fighter == null)
                 return;

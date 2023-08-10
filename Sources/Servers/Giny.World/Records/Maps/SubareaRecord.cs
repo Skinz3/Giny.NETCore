@@ -5,6 +5,7 @@ using Giny.IO.D2OClasses;
 using Giny.ORM;
 using Giny.ORM.Attributes;
 using Giny.ORM.Interfaces;
+using Giny.World.Records.Achievements;
 using Giny.World.Records.Monsters;
 using Giny.World.Records.Npcs;
 using ProtoBuf;
@@ -89,16 +90,40 @@ namespace Giny.World.Records.Maps
             get;
             set;
         }
+        [Update]
+        public int AchievementId
+        {
+            get;
+            set;
+        } = -1;
 
-        [StartupInvoke("Subareas spawns", StartupInvokePriority.ThirdPass)]
+        [Ignore]
+        public AchievementRecord? AchievementRecord
+        {
+            get;
+            private set;
+        }
+        [StartupInvoke("Subarea members", StartupInvokePriority.ThirdPass)]
         public static void Initialize()
         {
-            foreach (var subarea in Subareas)
+            foreach (var subarea in Subareas.Values)
             {
-                subarea.Value.Monsters = MonsterSpawnRecord.GetMonsterSpawnRecords(subarea.Value.Id).ToArray();
-                subarea.Value.Area = AreaRecord.GetArea(subarea.Value.AreaId);
+                subarea.ReloadMembers();
+
             }
         }
+
+        public void ReloadMembers()
+        {
+            Monsters = MonsterSpawnRecord.GetMonsterSpawnRecords(Id).ToArray();
+            Area = AreaRecord.GetArea(AreaId);
+
+            if (AchievementId > 0)
+            {
+                AchievementRecord = AchievementRecord.GetAchievement(AchievementId);
+            }
+        }
+
         public static SubareaRecord GetSubarea(short id)
         {
             SubareaRecord result = null;

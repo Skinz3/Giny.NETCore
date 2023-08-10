@@ -178,6 +178,9 @@ namespace Giny.ORM.IO
         /* Maybe store all properties info instead of calling .NET reflection methods? */
         private object ConvertObject(object obj, PropertyInfo property)
         {
+           
+
+
             MethodInfo deserializationMethod = TableManager.Instance.GetDeserializationMethods(property.PropertyType);
 
             if (property.PropertyType.BaseType == typeof(Enum))
@@ -194,7 +197,7 @@ namespace Giny.ORM.IO
             }
             else if (deserializationMethod != null)
             {
-                return deserializationMethod.Invoke(null, new object[] { obj });
+                return deserializationMethod.Invoke(null, new object[] { obj is DBNull ? null : obj });
             }
             else if (property.PropertyType.IsGenericType)
             {

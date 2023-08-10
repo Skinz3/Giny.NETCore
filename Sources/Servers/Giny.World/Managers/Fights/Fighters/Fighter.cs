@@ -1766,6 +1766,11 @@ namespace Giny.World.Managers.Fights.Fighters
             this.FightStartCell = this.Cell;
         }
 
+        public virtual void OnFightEnding()
+        {
+
+        }
+
         public short[] GetPreviousPositions()
         {
             return MovementHistory.GetEntries(2).Select(x => (short)x.Cell.Id).ToArray();

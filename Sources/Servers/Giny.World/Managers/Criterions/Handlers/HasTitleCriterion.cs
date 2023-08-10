@@ -1,15 +1,20 @@
-﻿using Giny.World.Network;
+﻿using Giny.World.Managers.Criterias;
+using Giny.World.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.World.Managers.Criterias
+namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criteria("TL")]
-    public class HasTitleCriteria : Criteria
+    [Criterion("TL")]
+    public class HasTitleCriterion : Criterion
     {
+        public HasTitleCriterion(string criteriaFull) : base(criteriaFull)
+        {
+        }
+
         public override bool Eval(WorldClient client)
         {
             bool obj = client.Character.HasTitle(short.Parse(CriteriaValue));

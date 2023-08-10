@@ -96,7 +96,7 @@ namespace Giny.World.Managers.Entities.Npcs
             if (character.Busy)
                 return;
 
-            var actions = SpawnRecord.Actions.Where(x => x.Action == actionType).Where(x => CriteriaManager.Instance.EvaluateCriterias(character.Client, x.Criteria));
+            var actions = SpawnRecord.Actions.Where(x => x.Action == actionType).Where(x => CriteriaExpression.Eval(x.Criteria, character.Client));
 
             if (actions.Count() > 1)
             {

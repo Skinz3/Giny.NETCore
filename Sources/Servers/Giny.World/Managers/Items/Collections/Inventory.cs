@@ -381,7 +381,7 @@ namespace Giny.World.Managers.Items.Collections
 
             foreach (var item2 in GetEquipedItems())
             {
-                if (item != item2 && !CriteriaManager.Instance.EvaluateCriterias(Character.Client, item2.Record.Criteria))
+                if (item != item2 && !CriteriaExpression.Eval(item2.Record.Criteria,Character.Client))
                     SetItemPosition(item2.UId, CharacterInventoryPositionEnum.INVENTORY_POSITION_NOT_EQUIPED, item2.Quantity);
             }
 
@@ -512,7 +512,7 @@ namespace Giny.World.Managers.Items.Collections
                     OnError(ObjectErrorEnum.LEVEL_TOO_LOW);
                     return;
                 }
-                if (!CriteriaManager.Instance.EvaluateCriterias(Character.Client, item.Record.Criteria))
+                if (!CriteriaExpression.Eval(item.Record.Criteria, Character.Client))
                 {
                     OnError(ObjectErrorEnum.CRITERIONS);
                     return;

@@ -1,11 +1,13 @@
 ﻿using Giny.Core;
 using Giny.Core.Commands;
+using Giny.DatabasePatcher.Achievements;
 using Giny.DatabasePatcher.Experience;
 using Giny.DatabasePatcher.Items;
 using Giny.DatabasePatcher.Maps;
 using Giny.DatabasePatcher.Monsters;
 using Giny.DatabasePatcher.Skills;
 using Giny.DatabasePatcher.Spells;
+using Giny.IO.D2OClasses;
 using Giny.World.Modules;
 using System.Reflection;
 
@@ -21,7 +23,7 @@ namespace Giny.DatabasePatcher
 
         public void Initialize()
         {
-           // Patch here
+            // Patch here
         }
 
         [ConsoleCommand("patch")]
@@ -29,6 +31,8 @@ namespace Giny.DatabasePatcher
         {
             Logger.Write("Patching world database ...", Channels.Info);
 
+            LevelAchievements.Patch();
+            SubareaAchievements.Patch();
             Dungeons.Patch();
             Experiences.Patch();
             ItemAppearances.Patch();

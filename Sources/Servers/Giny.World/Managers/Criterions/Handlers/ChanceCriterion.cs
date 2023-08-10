@@ -1,23 +1,32 @@
-﻿using Giny.World.Network;
+﻿using Giny.World.Managers.Criterias;
+using Giny.World.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.World.Managers.Criterias
+namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criteria("cc")]
-    public class ChanceCriteria : Criteria
+    [Criterion("cc")]
+    public class ChanceCriterion : Criterion
     {
+        public ChanceCriterion(string criteriaFull) : base(criteriaFull)
+        {
+        }
+
         public override bool Eval(WorldClient client)
         {
             return BasicEval(CriteriaValue, ComparaisonSymbol, client.Character.Record.Stats.Chance.Additional);
         }
     }
-    [Criteria("CC")]
-    public class TotalChanceCriteria : Criteria
+    [Criterion("CC")]
+    public class TotalChanceCriterion : Criterion
     {
+        public TotalChanceCriterion(string criteriaFull) : base(criteriaFull)
+        {
+        }
+
         public override bool Eval(WorldClient client)
         {
             return BasicEval(CriteriaValue, ComparaisonSymbol, client.Character.Record.Stats.Chance.Total());

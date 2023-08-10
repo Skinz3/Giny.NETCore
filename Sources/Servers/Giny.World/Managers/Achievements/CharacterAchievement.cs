@@ -1,4 +1,6 @@
 ﻿using Giny.Protocol.Types;
+using Giny.World.Managers.Entities.Characters;
+using Giny.World.Records.Achievements;
 using ProtoBuf;
 using System;
 using System.Collections.Generic;
@@ -31,6 +33,20 @@ namespace Giny.World.Managers.Achievements
             get;
             set;
         }
+        [ProtoMember(4)]
+        public List<int> FinishedObjectives
+        {
+            get;
+            set;
+        } = new List<int>();
+
+        public bool Finished => FinishedObjectives.Count == Record.Objectives.Count;
+
+        public AchievementRecord Record
+        {
+            get;
+            private set;
+        }
         public CharacterAchievement()
         {
 
@@ -38,13 +54,60 @@ namespace Giny.World.Managers.Achievements
         public CharacterAchievement(short achievementId, short finishedLevel, bool rewarded = false)
         {
             AchievementId = achievementId;
-            FinishedLevel = finishedLevel;  
+            FinishedLevel = finishedLevel;
             Rewarded = rewarded;
+        }
+
+        public void Achieve()
+        {
+            foreach (var objectiveRecord in Record.Objectives)
+            {
+                ReachObjective(objectiveRecord.Id);
+            }
+        }
+
+        public void Initialize()
+        {
+            this.Record = AchievementRecord.GetAchievement(AchievementId);
         }
 
         public AchievementAchieved GetAchievementAchieved(long characterId)
         {
             return Rewarded ? new AchievementAchieved(AchievementId, characterId) : new AchievementAchievedRewardable(FinishedLevel, AchievementId, characterId);
+        }
+
+        public void ReachObjective(long id)
+        {
+            if (Finished)
+            {
+                return;
+            }
+
+            if (!FinishedObjectives.Contains((int)id))
+            {
+                FinishedObjectives.Add((int)id);
+            }
+        }
+
+        public Achievement GetAchievement(Character character)
+        {
+            List<AchievementObjective> finishedObjectives = new List<AchievementObjective>();
+
+            foreach (var objectiveId in FinishedObjectives)
+            {
+                var objectiveRecord = Record.Objectives.FirstOrDefault(x => x.Id == objectiveId);
+
+                finishedObjectives.Add(new AchievementObjective(objectiveId, objectiveRecord.GetMaxValue()));
+            }
+
+            List<AchievementStartedObjective> startedObjectives = new List<AchievementStartedObjective>();
+
+            foreach (var objectiveRecord in Record.Objectives.Where(x => !FinishedObjectives.Contains((int)x.Id)))
+            {
+                startedObjectives.Add(new AchievementStartedObjective(objectiveRecord.GetValue(character.Client), (int)objectiveRecord.Id, objectiveRecord.GetMaxValue()));
+            }
+
+            return new Achievement(AchievementId, finishedObjectives.ToArray(), startedObjectives.ToArray());
         }
     }
 }

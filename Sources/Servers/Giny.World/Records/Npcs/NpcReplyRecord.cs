@@ -1,5 +1,6 @@
 ﻿using Giny.ORM.Attributes;
 using Giny.ORM.Interfaces;
+using Giny.World.Managers.Criterias;
 using Giny.World.Managers.Generic;
 using System;
 using System.Collections.Concurrent;
@@ -67,6 +68,8 @@ namespace Giny.World.Records.Npcs
             get;
             set;
         }
+
+
 
         public static IEnumerable<NpcReplyRecord> GetNpcReplies(long spawnId, int messageId)
         {

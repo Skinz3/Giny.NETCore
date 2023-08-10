@@ -1,4 +1,5 @@
-﻿using Giny.World.Managers.Entities.Characters;
+﻿using Giny.World.Managers.Criterias;
+using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Generic;
 using Giny.World.Managers.Maps.Instances;
 using Giny.World.Records.Maps;

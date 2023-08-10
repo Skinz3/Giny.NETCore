@@ -1,6 +1,7 @@
 ﻿using Giny.ORM.Attributes;
 using Giny.ORM.Interfaces;
 using Giny.Protocol.Custom.Enums;
+using Giny.World.Managers.Criterias;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;

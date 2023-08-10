@@ -1031,6 +1031,12 @@ namespace Giny.World.Managers.Fights
                                                                                     new NamedPartyTeamWithOutcome[0]));
             }
 
+
+            foreach (var fighter in GetFighters<Fighter>())
+            {
+                fighter.OnFightEnding();
+            }
+
             long targetMapId = TargetMapId.HasValue ? TargetMapId.Value : Map.Id;
 
             foreach (CharacterFighter current in this.GetFighters<CharacterFighter>(false))

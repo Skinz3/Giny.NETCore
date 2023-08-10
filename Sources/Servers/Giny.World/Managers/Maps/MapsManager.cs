@@ -7,6 +7,7 @@ using Giny.ORM;
 using Giny.Protocol.Custom.Enums;
 using Giny.World.Api;
 using Giny.World.Handlers.Roleplay.Maps.Paths;
+using Giny.World.Managers.Criterias;
 using Giny.World.Managers.Generic;
 using Giny.World.Managers.Maps.Instances;
 using Giny.World.Managers.Monsters;

@@ -67,6 +67,10 @@ namespace Giny.World.Managers.Fights.Challenges
             return Fight.Map.IsDungeonMap ? NumberOfChallengesDungeon : NumberOfChallengesNormal;
         }
 
+        public int GetNumberOfChallengesSucceeed()
+        {
+            return this.ActiveChallenges.Count(x => x.Success);
+        }
         public void DisplayChallengeProposal()
         {
             Fight.AddPlacementDelay(ChallengeSelectionTime);

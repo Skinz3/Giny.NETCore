@@ -365,7 +365,7 @@ namespace Giny.World.Managers.Items
 
         public bool UseItem(Character character, CharacterItemRecord item)
         {
-            if (!CriteriaManager.Instance.EvaluateCriterias(character.Client, item.Record.Criteria))
+            if (!CriteriaExpression.Eval(item.Record.Criteria, character.Client))
             {
                 character.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 34);
                 return false;

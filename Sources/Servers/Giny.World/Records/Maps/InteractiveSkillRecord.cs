@@ -3,6 +3,7 @@ using Giny.ORM.Attributes;
 using Giny.ORM.Interfaces;
 using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Types;
+using Giny.World.Managers.Criterias;
 using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Generic;
 using System;

@@ -5,21 +5,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.World.Managers.Criterias
+namespace Giny.World.Managers.Criterions.Handlers
 {
-    public abstract class Criteria
+    public abstract class Criterion
     {
-        private const char EqualSymbol = '=';
+        protected const char EqualSymbol = '=';
 
-        private const char InferiorSymbol = '<';
+        protected const char InferiorSymbol = '<';
 
-        private const char SuperiorSymbol = '>';
+        protected const char SuperiorSymbol = '>';
 
-        public char ComparaisonSymbol => CriteriaFull.Remove(0, 2).Take(1).ToArray()[0]; 
+        public char ComparaisonSymbol => CriteriaFull.Remove(0, 2).Take(1).ToArray()[0];
 
-        public string CriteriaValue => CriteriaFull.Remove(0, 3); 
+        public string CriteriaValue => CriteriaFull.Remove(0, 3);
 
-        public string CriteriaFull { get; set; }
+        public string CriteriaFull
+        {
+            get;
+            private set;
+        }
+        public virtual short MaxValue => 1;
+
+        public Criterion()
+        {
+
+        }
+
+        public Criterion(string criteriaFull)
+        {
+            CriteriaFull = criteriaFull;
+        }
 
         public abstract bool Eval(WorldClient client);
 
@@ -44,6 +59,11 @@ namespace Giny.World.Managers.Criterias
             }
 
             return false;
+        }
+
+        public virtual short GetCurrentValue(WorldClient client)
+        {
+            return 0;
         }
     }
 }

@@ -11,6 +11,7 @@ using Giny.World.Handlers.Roleplay.Maps.Paths;
 using Giny.World.Managers.Achievements;
 using Giny.World.Managers.Bidshops;
 using Giny.World.Managers.Breeds;
+using Giny.World.Managers.Criterias;
 using Giny.World.Managers.Dialogs;
 using Giny.World.Managers.Dialogs.DialogBox;
 using Giny.World.Managers.Entities.Characters.HumanOptions;
@@ -274,6 +275,12 @@ namespace Giny.World.Managers.Entities.Characters
             private set;
         }
 
+        public int? AchievementPoints
+        {
+            get;
+            private set;
+        }
+
         public FighterRefusedReasonEnum CanRequestFight(Character target)
         {
             FighterRefusedReasonEnum result;
@@ -376,8 +383,11 @@ namespace Giny.World.Managers.Entities.Characters
             this.GeneralShortcutBar = new GeneralShortcutBar(this);
             this.SpellShortcutBar = new SpellShortcutBar(this);
             this.HumanOptions = new List<CharacterHumanOption>();
+
             this.SkillsAllowed = SkillsManager.Instance.GetAllowedSkills(this);
             this.Collecting = false;
+
+            this.AchievementPoints = Record.Achievements.Where(x => x.Finished).Sum(x => x.Record.Points);
         }
 
 
@@ -1007,7 +1017,9 @@ namespace Giny.World.Managers.Entities.Characters
                 }
 
             }
-            // remove this (achievements do the job)
+
+            AchievementManager.Instance.OnPlayerChangeLevel(this);
+            // remove this (achievements do the job) ?
             CharacterLevelRewardManager.Instance.OnCharacterLevelUp(this, oldLevel, Level);
 
             if (HasParty)
@@ -1388,39 +1400,127 @@ namespace Giny.World.Managers.Entities.Characters
 
         public void RefreshAchievements()
         {
-            IEnumerable<AchievementAchieved> achievementAchieveds = Record.AchievementsAchieved.Select(x => x.GetAchievementAchieved(Id));
+            IEnumerable<AchievementAchieved> achievementAchieveds = Record.Achievements.Select(x => x.GetAchievementAchieved(Id));
             Client.Send(new AchievementListMessage(achievementAchieveds.ToArray()));
         }
-
-        public void ReachAchievement(AchievementRecord achievement)
+        public IEnumerable<CharacterAchievement> GetFinishedAchievements()
         {
-            var previousAchievement = Record.AchievementsAchieved.FirstOrDefault(x => x.AchievementId == achievement.Id);
+            return Record.Achievements.Where(x => x.Finished);
+        }
 
-            if (previousAchievement != null)
+        public IEnumerable<CharacterAchievement> GetStartedAchievements()
+        {
+            return Record.Achievements.Where(x => !x.Finished);
+        }
+
+        public CharacterAchievement? GetAchievement(int id)
+        {
+            return Record.Achievements.FirstOrDefault(x => x.AchievementId == id);
+        }
+
+        public void ReachAchievementObjective(AchievementRecord record, AchievementObjectiveRecord objective)
+        {
+            var characterAchievement = GetAchievement((int)record.Id);
+
+
+            if (characterAchievement == null)
+            {
+                characterAchievement = new CharacterAchievement((short)record.Id, SafeLevel);
+                characterAchievement.Initialize();
+                Record.Achievements.Add(characterAchievement);
+            }
+
+            if (characterAchievement.Finished)
             {
                 return;
             }
 
-            CharacterAchievement characterAchievement = new CharacterAchievement((short)achievement.Id, Level);
-            Record.AchievementsAchieved.Add(characterAchievement);
+            characterAchievement.ReachObjective(objective.Id);
+
+            if (characterAchievement.Finished)
+            {
+                ReachAchievement(record);
+            }
+
+        }
+        public void ReachAchievement(AchievementRecord achievement)
+        {
+            var characterAchievement = GetAchievement((int)achievement.Id);
+
+            if (characterAchievement == null)
+            {
+                characterAchievement = new CharacterAchievement((short)achievement.Id, SafeLevel);
+                characterAchievement.Initialize();
+
+                Record.Achievements.Add(characterAchievement);
+            }
+
+            if (characterAchievement.Rewarded)
+            {
+                return;
+            }
+
+            characterAchievement.Achieve();
+
+            AchievementPoints += achievement.Points;
 
             Client.Send(new AchievementFinishedMessage(
                 (AchievementAchievedRewardable)characterAchievement.GetAchievementAchieved(Id)));
+
+            AchievementManager.Instance.OnPlayerReachObjective(this);
         }
 
+
+
+        public void SendAchievementDetailedList(short categoryId)
+        {
+            var startedAchievements = new List<Achievement>();
+            var finishedAchievements = new List<Achievement>();
+
+            var list = AchievementRecord.GetAchievementsByCategory(categoryId);
+
+            foreach (var record in list)
+            {
+                var characterAchievement = GetAchievement((int)record.Id);
+
+                if (characterAchievement != null)
+                {
+                    if (characterAchievement.Finished)
+                    {
+                        finishedAchievements.Add(characterAchievement.GetAchievement(this));
+                    }
+                    else
+                    {
+                        startedAchievements.Add(characterAchievement.GetAchievement(this));
+                    }
+                }
+                else
+                {
+                    startedAchievements.Add(record.GetAchievement(this));
+                }
+            }
+
+            Client.Send(new AchievementDetailedListMessage(startedAchievements.ToArray(), finishedAchievements.ToArray()));
+        }
+        public bool IsAchievementFinished(long id)
+        {
+            return Record.Achievements.Any(x => x.AchievementId == id && x.Finished);
+        }
         public void RewardAllAchievements()
         {
-            foreach (var achievement in Record.AchievementsAchieved.Where(x => !x.Rewarded))
+            foreach (var achievement in Record.Achievements.Where(x => !x.Rewarded && x.Finished).ToArray())
             {
                 RewardAchievement(achievement.AchievementId);
             }
         }
 
+
+
         public void RewardAchievement(short achievementId)
         {
-            CharacterAchievement achievement = Record.AchievementsAchieved.FirstOrDefault(x => x.AchievementId == achievementId);
+            CharacterAchievement achievement = Record.Achievements.FirstOrDefault(x => x.AchievementId == achievementId);
 
-            if (achievement == null || achievement.Rewarded)
+            if (achievement == null || achievement.Rewarded || !achievement.Finished)
             {
                 Client.Send(new AchievementRewardErrorMessage(achievementId));
                 return;
@@ -1430,52 +1530,53 @@ namespace Giny.World.Managers.Entities.Characters
 
             foreach (var reward in record.Rewards)
             {
-                ApplyAchievementReward(record, reward);
+                ApplyAchievementReward(achievement, record, reward);
             }
 
             achievement.Rewarded = true;
             Client.Send(new AchievementRewardSuccessMessage(achievementId));
         }
 
-        private void ApplyAchievementReward(AchievementRecord achievement, AchievementRewardRecord achievementReward)
+        private void ApplyAchievementReward(CharacterAchievement characterAchievement, AchievementRecord achievementRecord, AchievementRewardRecord achievementRewardRecord)
         {
-            foreach (var emoteId in achievementReward.EmotesReward)
+            foreach (var emoteId in achievementRewardRecord.EmotesReward)
             {
                 LearnEmote((byte)emoteId);
             }
 
-            for (int i = 0; i < achievementReward.ItemsReward.Count; i++)
+            for (int i = 0; i < achievementRewardRecord.ItemsReward.Count; i++)
             {
-                var itemId = achievementReward.ItemsReward[i];
-                var quantity = achievementReward.ItemsQuantityReward[i];
+                var itemId = achievementRewardRecord.ItemsReward[i];
+                var quantity = achievementRewardRecord.ItemsQuantityReward[i];
 
                 Inventory.AddItem(itemId, quantity);
             }
 
-            foreach (var titleId in achievementReward.TitlesReward)
+            foreach (var titleId in achievementRewardRecord.TitlesReward)
             {
                 LearnTitle((short)titleId);
             }
 
-            foreach (var ornamentId in achievementReward.OrnamentsReward)
+            foreach (var ornamentId in achievementRewardRecord.OrnamentsReward)
             {
                 LearnOrnament((short)ornamentId, true);
             }
 
-            if (achievementReward.KamasRatio > 0)
+            if (achievementRewardRecord.KamasRatio > 0)
             {
-                var kamas = AchievementsFormulas.Instance.GetKamasReward(achievementReward.KamasScaleWithPlayerLevel, achievement.Level,
-                      achievementReward.KamasRatio, 1, SafeLevel);
+                var kamas = AchievementsFormulas.Instance.GetKamasReward(achievementRewardRecord.KamasScaleWithPlayerLevel, achievementRecord.Level,
+                      achievementRewardRecord.KamasRatio, 1, characterAchievement.FinishedLevel);
 
                 AddKamas(kamas);
             }
 
-            if (achievementReward.ExperienceRatio > 0)
+            if (achievementRewardRecord.ExperienceRatio > 0)
             {
-                var experience = AchievementsFormulas.Instance.GetExperienceReward(SafeLevel, 0, achievement.Level, achievementReward.ExperienceRatio, 1);
+                var experience = AchievementsFormulas.Instance.GetExperienceReward(characterAchievement.FinishedLevel, 0, achievementRecord.Level, achievementRewardRecord.ExperienceRatio, 1);
                 AddExperience(experience);
             }
         }
+
 
         [WIP("still working?")]
         public void Restat()
@@ -1686,6 +1787,10 @@ namespace Giny.World.Managers.Entities.Characters
             return new CharacterMinimalInformations(Level, Id, Name);
         }
 
+        public void OnSubareaChange(SubareaRecord? oldSubarea, SubareaRecord subarea)
+        {
+            AchievementManager.Instance.OnPlayerChangeSubarea(this);
+        }
 
     }
 

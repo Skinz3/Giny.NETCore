@@ -3,6 +3,9 @@ using Giny.Core.DesignPattern;
 using Giny.IO.D2O;
 using Giny.ORM.Attributes;
 using Giny.ORM.Interfaces;
+using Giny.Protocol.Types;
+using Giny.World.Managers.Criterias;
+using Giny.World.Managers.Entities.Characters;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -44,7 +47,7 @@ namespace Giny.World.Records.Achievements
 
         [I18NField]
         [D2OField("descriptionId")]
-        public string DescriptionId
+        public string Description
         {
             get;
             set;
@@ -71,6 +74,7 @@ namespace Giny.World.Records.Achievements
             set;
         }
 
+        [Update]
         [D2OField("objectiveIds")]
         public List<int> ObjectiveIds
         {
@@ -105,15 +109,16 @@ namespace Giny.World.Records.Achievements
             Rewards = new List<AchievementRewardRecord>();
             Objectives = new List<AchievementObjectiveRecord>();
 
+
             foreach (var objectiveId in ObjectiveIds)
             {
                 AchievementObjectiveRecord objective = AchievementObjectiveRecord.GetAchievementObjective(objectiveId);
 
                 if (objective == null)
                 {
-                    Logger.Write($"Achievement objective not found ({objectiveId})", Channels.Warning);
                     continue;
                 }
+
 
                 Objectives.Add(objective);
             }
@@ -125,16 +130,16 @@ namespace Giny.World.Records.Achievements
 
                 if (reward == null)
                 {
-                    Logger.Write($"Achievement reward not found ({rewardId})", Channels.Warning);
                     continue;
                 }
 
                 Rewards.Add(reward);
             }
 
+
         }
 
-        [StartupInvoke("Achievements members", StartupInvokePriority.SixthPath)]
+        [StartupInvoke("Achievements members", StartupInvokePriority.FifthPass)]
         public static void Initialize()
         {
             foreach (var achievement in Achievements.Values)
@@ -143,6 +148,15 @@ namespace Giny.World.Records.Achievements
             }
         }
 
+        public Achievement GetAchievement(Character character)
+        {
+            return new Achievement((short)Id, new AchievementObjective[0], Objectives.Select(x =>
+            new AchievementStartedObjective(x.GetValue(character.Client), (int)x.Id, x.GetMaxValue())).ToArray());
+        }
+        public static List<AchievementRecord> GetAchievements()
+        {
+            return Achievements.Values.ToList();
+        }
         public static AchievementRecord GetAchievement(int id)
         {
             if (Achievements.ContainsKey(id))
@@ -153,6 +167,11 @@ namespace Giny.World.Records.Achievements
             {
                 return null;
             }
+        }
+
+        public static List<AchievementRecord> GetAchievementsByCategory(short categoryId)
+        {
+            return Achievements.Values.Where(x => x.CategoryId == categoryId).ToList();
         }
     }
 }

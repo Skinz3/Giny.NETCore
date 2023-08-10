@@ -174,12 +174,14 @@ namespace Giny.World.Records.Characters
             set;
         }
 
+        [ProtoSerialize]
         [Update]
-        public List<CharacterAchievement> AchievementsAchieved
+        public List<CharacterAchievement> Achievements
         {
             get;
             set;
         }
+
         [Ignore]
         public int? FightId
         {
@@ -219,9 +221,14 @@ namespace Giny.World.Records.Characters
             long lastId = Characters.Count > 0 ? Characters.Keys.OrderByDescending(x => x).First() : 0;
             idProvider = new UniqueLongIdProvider(lastId);
 
-            foreach (var character in Characters)
+            foreach (var character in Characters.Values)
             {
-                character.Value.Stats.Initialize();
+                character.Stats.Initialize();
+
+                foreach (var characterAchievement in character.Achievements)
+                {
+                    characterAchievement.Initialize();
+                }
             }
         }
 
@@ -256,7 +263,7 @@ namespace Giny.World.Records.Characters
                 Spells = new List<CharacterSpell>(),
                 ActiveTitleId = 0,
                 KnownTitles = new List<short>(),
-                AchievementsAchieved = new List<CharacterAchievement>(),
+                Achievements = new List<CharacterAchievement>(),
                 Jobs = CharacterJob.New().ToArray(),
                 GuildId = 0,
             };

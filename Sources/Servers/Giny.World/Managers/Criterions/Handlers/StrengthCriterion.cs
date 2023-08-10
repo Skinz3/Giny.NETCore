@@ -1,23 +1,32 @@
-﻿using Giny.World.Network;
+﻿using Giny.World.Managers.Criterias;
+using Giny.World.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.World.Managers.Criterias
+namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criteria("cs")]
-    public class StrengthCriteria : Criteria
+    [Criterion("cs")]
+    public class StrengthCriterion : Criterion
     {
+        public StrengthCriterion(string criteriaFull) : base(criteriaFull)
+        {
+        }
+
         public override bool Eval(WorldClient client)
         {
             return BasicEval(CriteriaValue, ComparaisonSymbol, client.Character.Record.Stats.Strength.Additional);
         }
     }
-    [Criteria("CS")]
-    public class TotalStrengthCriteria : Criteria
+    [Criterion("CS")]
+    public class TotalStrengthCriterion : Criterion
     {
+        public TotalStrengthCriterion(string criteriaFull) : base(criteriaFull)
+        {
+        }
+
         public override bool Eval(WorldClient client)
         {
             return BasicEval(CriteriaValue, ComparaisonSymbol, client.Character.Record.Stats.Strength.Total());

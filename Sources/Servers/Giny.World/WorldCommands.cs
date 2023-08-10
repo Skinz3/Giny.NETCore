@@ -1,5 +1,6 @@
 ﻿using Giny.Core;
 using Giny.Core.Commands;
+using Giny.Core.DesignPattern;
 using Giny.Core.Extensions;
 using Giny.Core.Misc;
 using Giny.ORM;
@@ -17,6 +18,7 @@ using Giny.World.Modules;
 using Giny.World.Network;
 using Giny.World.Records;
 using Giny.World.Records.Accounts;
+using Giny.World.Records.Achievements;
 using Giny.World.Records.Characters;
 using Giny.World.Records.Guilds;
 using Giny.World.Records.Items;
@@ -118,8 +120,5 @@ namespace Giny.World
             ItemsManager.Instance.Reload();
             Logger.Write("Items Reloaded.", Channels.Log);
         }
-
-
-
     }
 }

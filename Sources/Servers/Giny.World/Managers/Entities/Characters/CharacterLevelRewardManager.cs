@@ -18,10 +18,6 @@ namespace Giny.World.Managers.Entities.Characters
         public const byte EMOTE_OMEGA_400 = 174;
         public const byte EMOTE_OMEGA_500 = 175;
 
-        public const byte ORNAMENT_100 = 13;
-        public const byte ORNAMENT_160 = 14;
-        public const byte ORNAMENT_200 = 15;
-
         public const byte ORNAMENT_OMEGA_25 = 111;
         public const byte ORNAMENT_OMEGA_50 = 112;
         public const byte ORNAMENT_OMEGA_75 = 113;
@@ -45,12 +41,7 @@ namespace Giny.World.Managers.Entities.Characters
             {
                 character.Stats.ActionPoints.Base += 1;
             }
-
             AddRewardEmote(character, oldLevel, newLevel, 100, EMOTE_100);
-            AddRewardOrnament(character, oldLevel, newLevel, 100, ORNAMENT_100);
-
-            AddRewardOrnament(character, oldLevel, newLevel, 160, ORNAMENT_160);
-            AddRewardOrnament(character, oldLevel, newLevel, 200, ORNAMENT_200);
 
             AddRewardEmote(character, oldLevel, newLevel, 300, EMOTE_OMEGA_100);
             AddRewardEmote(character, oldLevel, newLevel, 400, EMOTE_OMEGA_200);

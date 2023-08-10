@@ -1,4 +1,5 @@
 ﻿using Giny.Protocol.Custom.Enums;
+using Giny.World.Managers.Criterias;
 using Giny.World.Network;
 using System;
 using System.Collections.Generic;
@@ -6,11 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.World.Managers.Criterias
+namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criteria("PO")]
-    public class HasItemCriteria : Criteria
+    [Criterion("PO")]
+    public class HasItemCriterion : Criterion
     {
+        public HasItemCriterion(string criteriaFull) : base(criteriaFull)
+        {
+        }
+
         public override bool Eval(WorldClient client)
         {
             var criteria = CriteriaFull.Remove(0, 3).Split(',');
@@ -45,12 +50,15 @@ namespace Giny.World.Managers.Criterias
             {
                 throw new Exception("Invalid comparaison symbol. (HasItemCriteria)");
             }
-            
+
         }
     }
-    [Criteria("PT")]
-    public class HasItemOfTypeCriteria : Criteria
+    [Criterion("PT")]
+    public class HasItemOfTypeCriteria : Criterion
     {
+        public HasItemOfTypeCriteria(string criteriaFull) : base(criteriaFull)
+        {
+        }
 
         public override bool Eval(WorldClient client)
         {

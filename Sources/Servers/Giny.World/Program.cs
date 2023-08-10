@@ -5,6 +5,7 @@ using Giny.Core.Network.Messages;
 using Giny.IO.RawPatch;
 using Giny.Protocol;
 using Giny.Protocol.Messages;
+using Giny.World.Managers.Criterias;
 using Giny.World.Modules;
 using Giny.World.Network;
 using System.Reflection;
@@ -17,6 +18,8 @@ namespace Giny.World
     /// </summary>
     class Program
     {
+
+
         static void Main(string[] args)
         {
             /* WIPManager.Analyse(Assembly.GetExecutingAssembly());

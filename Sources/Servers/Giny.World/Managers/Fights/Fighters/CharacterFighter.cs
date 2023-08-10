@@ -7,6 +7,7 @@ using Giny.Protocol.Enums;
 using Giny.Protocol.Messages;
 using Giny.Protocol.Types;
 using Giny.World.Api;
+using Giny.World.Managers.Achievements;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Entities.Look;
@@ -523,6 +524,10 @@ namespace Giny.World.Managers.Fights.Fighters
             LeftRound = Fight.RoundNumber;
         }
 
+        public override void OnFightEnding()
+        {
+            AchievementManager.Instance.OnPlayerFightEnding(this);
+        }
         public override bool MustSkipTurn()
         {
             return base.MustSkipTurn();

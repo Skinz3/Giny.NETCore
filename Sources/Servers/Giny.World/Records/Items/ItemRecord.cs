@@ -5,6 +5,7 @@ using Giny.ORM.Interfaces;
 using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
 using Giny.Protocol.Types;
+using Giny.World.Managers.Criterias;
 using Giny.World.Managers.Effects;
 using System;
 using System.Collections.Concurrent;

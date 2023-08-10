@@ -1,6 +1,10 @@
-﻿using Giny.IO.D2O;
+﻿using Giny.Core.DesignPattern;
+using Giny.IO.D2O;
 using Giny.ORM.Attributes;
 using Giny.ORM.Interfaces;
+using Giny.World.Managers.Criterias;
+using Giny.World.Managers.Criterions.Handlers;
+using Giny.World.Network;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -25,6 +29,14 @@ namespace Giny.World.Records.Achievements
             set;
         }
 
+        [D2OField("achievementId")]
+        public int AchievementId
+        {
+            get;
+            set;
+        }
+
+
         [D2OField("order")]
         public int ObjectiveOrder
         {
@@ -46,6 +58,28 @@ namespace Giny.World.Records.Achievements
             set;
         }
 
+        [Ignore]
+        public CriteriaExpression CriteriaExpression
+        {
+            get;
+            set;
+        }
+
+
+        [StartupInvoke(StartupInvokePriority.FifthPass)]
+        public static void Initialize()
+        {
+            foreach (var objective in AchievementObjectives.Values)
+            {
+                objective.CriteriaExpression = new CriteriaExpression(objective.Criterion);
+            }
+        }
+
+
+        public static List<AchievementObjectiveRecord> GetAchievementObjectives()
+        {
+            return AchievementObjectives.Values.ToList();
+        }
         public static AchievementObjectiveRecord? GetAchievementObjective(long id)
         {
             if (AchievementObjectives.ContainsKey(id))
@@ -59,5 +93,36 @@ namespace Giny.World.Records.Achievements
 
         }
 
+        public short GetValue(WorldClient client)
+        {
+            var criterion = GetMainCriterion();
+
+            if (criterion != null)
+            {
+                return criterion.GetCurrentValue(client);
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        public short GetMaxValue()
+        {
+            var criterion = GetMainCriterion();
+
+            if (criterion != null)
+            {
+                return criterion.MaxValue;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
+        private Criterion GetMainCriterion()
+        {
+            return CriteriaExpression.FindCriterionHandlers().Where(x => !(x is UnknownCriterion)).FirstOrDefault();
+        }
     }
 }
