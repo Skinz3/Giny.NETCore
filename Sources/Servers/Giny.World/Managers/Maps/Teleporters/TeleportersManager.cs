@@ -15,6 +15,8 @@ namespace Giny.World.Managers.Maps.Teleporters
 {
     public class TeleportersManager : Singleton<TeleportersManager>
     {
+        private readonly object locker = new object();
+
         private Dictionary<TeleporterTypeEnum, Dictionary<int, List<long>>> m_destinations = new Dictionary<TeleporterTypeEnum, Dictionary<int, List<long>>>();
 
         [StartupInvoke(StartupInvokePriority.SixthPath)]
@@ -60,34 +62,54 @@ namespace Giny.World.Managers.Maps.Teleporters
 
         public List<long> GetMaps(TeleporterTypeEnum teleporterType, int zoneId)
         {
-            return m_destinations[teleporterType][zoneId];
+            lock (locker)
+            {
+                return m_destinations[teleporterType][zoneId];
+            }
         }
+        public List<long> GetMaps(TeleporterTypeEnum teleporterType)
+        {
+            lock (locker)
+            {
+                List<long> results = new List<long>();
 
+                foreach (var pair in m_destinations[teleporterType])
+                {
+                    results.AddRange(pair.Value);
+                }
+
+                return results;
+            }
+        }
         public void AddDestination(TeleporterTypeEnum teleporterType, InteractiveTypeEnum interactiveType, GenericActionEnum genericAction, MapRecord targetMap, InteractiveElementRecord element, int zoneId)
         {
-            var destinations = m_destinations[teleporterType];
-
-            if (!destinations.ContainsKey(zoneId))
+            lock (locker)
             {
-                destinations.Add(zoneId, new List<long>());
-            }
+                var destinations = m_destinations[teleporterType];
 
-            if (destinations[zoneId].Contains(targetMap.Id))
-            {
-                return;
-            }
+                if (!destinations.ContainsKey(zoneId))
+                {
+                    destinations.Add(zoneId, new List<long>());
+                }
 
-            MapsManager.Instance.AddInteractiveSkill(targetMap, element.Identifier, genericAction,
-                interactiveType, SkillTypeEnum.USE114, zoneId.ToString());
+                if (destinations[zoneId].Contains(targetMap.Id))
+                {
+                    return;
+                }
+
+                MapsManager.Instance.AddInteractiveSkill(targetMap, element.Identifier, genericAction,
+                    interactiveType, SkillTypeEnum.USE114, zoneId.ToString());
 
 
-            if (!destinations.ContainsKey(zoneId))
-            {
-                destinations.Add(zoneId, new List<long>() { targetMap.Id });
-            }
-            else
-            {
-                destinations[zoneId].Add(targetMap.Id);
+                if (!destinations.ContainsKey(zoneId))
+                {
+                    destinations.Add(zoneId, new List<long>() { targetMap.Id });
+                }
+                else
+                {
+                    destinations[zoneId].Add(targetMap.Id);
+                }
+
             }
 
         }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Records.Items
 {
-    [Table("BidshopItems")]
+    [Table("bidshop_items")]
     public class BidShopItemRecord : AbstractItem, IRecord
     {
         [Container]

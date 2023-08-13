@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Giny.Auth.Records
 {
-    [Table("worldcharacters")]
+    [Table("world_characters")]
     public class WorldCharacterRecord : IRecord
     {
         [Container]

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Giny.World.Records.Spells
 {
     [D2OClass("SpellState")]
-    [Table("spellStates")]
+    [Table("spell_states")]
     public class SpellStateRecord : IRecord
     {
         [Container]

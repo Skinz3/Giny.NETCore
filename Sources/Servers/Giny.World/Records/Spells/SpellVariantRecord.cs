@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Giny.World.Records.Spells
 {
     [D2OClass("SpellVariant")]
-    [Table("spellvariants")]
+    [Table("spell_variants")]
     public class SpellVariantRecord : IRecord
     {
         [Container]

@@ -11,6 +11,11 @@ namespace Giny.Core.Network
 {
     public class Http
     {
+        public static async Task<string> GetAsync(HttpClient client, string url)
+        {
+            var response = await client.GetAsync(url);
+            return await response.Content.ReadAsStringAsync();
+        }
         public static string Get(string url)
         {
             string result = string.Empty;
@@ -26,7 +31,7 @@ namespace Giny.Core.Network
             }
             return result;
         }
-        public static async Task<string> Post(HttpClient client, string url, Dictionary<string, string> values)
+        public static async Task<string> PostAsync(HttpClient client, string url, Dictionary<string, string> values)
         {
             var content = new FormUrlEncodedContent(values);
 

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Records.Npcs
 {
-    [Table("npcspawns")]
+    [Table("npc_spawns")]
     public class NpcSpawnRecord : IRecord
     {
         [Container]

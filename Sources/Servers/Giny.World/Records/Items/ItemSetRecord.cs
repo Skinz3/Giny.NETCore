@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Giny.World.Records.Items
 {
     [D2OClass("ItemSet")]
-    [Table("itemSets")]
+    [Table("item_sets")]
     public class ItemSetRecord : IRecord
     {
         [Container]

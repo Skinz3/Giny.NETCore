@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Records.Npcs
 {
-    [Table("npcsactions")]
+    [Table("npc_actions")]
     public class NpcActionRecord : IRecord
     {
         [Container]

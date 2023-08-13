@@ -4,6 +4,8 @@ using Giny.World.Managers.Effects;
 using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Stats;
 using Giny.World.Records.Items;
+using Giny.World.Records.Maps;
+using Giny.World.Records.Tinsel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +14,35 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Items
 {
-    class ItemUses
+    public class ItemUses
     {
+        [ItemUsageHandler(EffectsEnum.Effect_AddTitle)]
+        public static bool AddTitle(Character character,EffectInteger effect)
+        {
+            var titleId = (short)effect.Value;
+
+            if (TitleRecord.Exists(titleId))
+            {
+                character.LearnTitle(titleId);
+                return true;
+            }
+
+            return false;
+        }
+        [ItemUsageHandler(EffectsEnum.Effect_ItemTeleportMapReference)]
+        public static bool TeleportToMapReference(Character character, EffectInteger effect)
+        {
+            MapReferenceRecord? reference = MapReferenceRecord.GetMapReference(effect.Value);
+
+            if (reference == null)
+            {
+                return false;
+            }
+
+            character.Teleport(reference.MapId, reference.CellId);
+            return true;
+
+        }
         [ItemUsageHandler(EffectsEnum.Effect_ConsultDocument)]
         public static bool ConsultDocument(Character character, EffectInteger effect)
         {

@@ -71,6 +71,7 @@ namespace Giny.DatabaseSynchronizer
             DatabaseManager.Instance.DropTableIfExists<ItemRecord>();
             DatabaseManager.Instance.DropTableIfExists<SpellStateRecord>();
             DatabaseManager.Instance.DropTableIfExists<WeaponRecord>();
+            DatabaseManager.Instance.DropTableIfExists<MapReferenceRecord>();
             DatabaseManager.Instance.DropTableIfExists<LivingObjectRecord>();
             DatabaseManager.Instance.DropTableIfExists<EmoteRecord>();
             DatabaseManager.Instance.DropTableIfExists<SpellLevelRecord>();

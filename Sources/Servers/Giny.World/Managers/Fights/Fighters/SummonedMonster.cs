@@ -110,7 +110,6 @@ namespace Giny.World.Managers.Fights.Fighters
                 }
             };
         }
-
         public override Spell GetSpell(short spellId)
         {
             var record = Record.SpellRecords[spellId];

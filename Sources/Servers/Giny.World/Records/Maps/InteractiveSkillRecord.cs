@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Records.Maps
 {
-    [Table("interactiveskills")]
+    [Table("interactive_skills")]
     public class InteractiveSkillRecord : IRecord
     {
         [Container]

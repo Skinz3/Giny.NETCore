@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Records.Monsters
 {
-    [Table("monsterspawns")]
+    [Table("monster_spawns")]
     public class MonsterSpawnRecord : IRecord
     {
         [Container]

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Giny.World.Records.Maps
 {
     [D2OClass("MapPosition")]
-    [Table("mappositions")]
+    [Table("map_positions")]
     public class MapPositionRecord : IRecord
     {
         [Container]

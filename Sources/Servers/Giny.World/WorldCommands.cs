@@ -74,7 +74,6 @@ namespace Giny.World
 
                     DatabaseManager.Instance.DeleteTable<WorldAccountRecord>();
                     DatabaseManager.Instance.DeleteTable<BankItemRecord>();
-                    DatabaseManager.Instance.DeleteTable<MerchantRecord>();
                     DatabaseManager.Instance.DeleteTable<BidShopItemRecord>();
                     DatabaseManager.Instance.DeleteTable<CharacterItemRecord>();
                     DatabaseManager.Instance.DeleteTable<BidShopItemRecord>();

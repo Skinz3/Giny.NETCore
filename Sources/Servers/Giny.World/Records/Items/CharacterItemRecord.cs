@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Records.Items
 {
-    [Table("CharactersItems")]
+    [Table("character_items")]
     public class CharacterItemRecord : AbstractItem, IRecord
     {
         [Container]

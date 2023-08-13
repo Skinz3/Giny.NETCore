@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Giny.Auth.Records
 {
-    [Table("WorldServers")]
+    [Table("world_servers")]
     public class WorldServerRecord : IRecord
     {
         [Container]

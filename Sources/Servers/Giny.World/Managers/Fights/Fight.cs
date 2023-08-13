@@ -94,7 +94,7 @@ namespace Giny.World.Managers.Fights
         public bool Started
         {
             get;
-            private set;
+            set;
         }
         /*
          * Fight Started and 
@@ -103,8 +103,22 @@ namespace Giny.World.Managers.Fights
         public bool StartAcknowledged
         {
             get;
-            private set;
+            set;
         }
+
+        public bool Ended
+        {
+            get;
+            set;
+        }
+
+        public bool PlacementStarted
+        {
+            get;
+            set;
+        }
+
+
         public CellRecord Cell
         {
             get;
@@ -161,11 +175,6 @@ namespace Giny.World.Managers.Fights
                 return Timeline.RoundNumber;
             }
         }
-        public bool Ended
-        {
-            get;
-            private set;
-        }
 
         public SequenceManager SequenceManager
         {
@@ -196,7 +205,9 @@ namespace Giny.World.Managers.Fights
             private set;
         }
 
-        public bool PlacementStarted
+
+
+        public FightPhaseEnum Phase
         {
             get;
             private set;
@@ -262,26 +273,27 @@ namespace Giny.World.Managers.Fights
 
         public Fight(Character origin, int id, MapRecord map, FightTeam blueTeam, FightTeam redTeam, CellRecord cell)
         {
-            this.Id = id;
-            this.Map = map;
-            this.Origin = origin;
-            this.BlueTeam = blueTeam;
-            this.RedTeam = redTeam;
-            this.BlueTeam.Fight = this;
-            this.RedTeam.Fight = this;
-            this.Timeline = new FightTimeline(this);
-            this.Cell = cell;
-            this.Started = false;
-            this.StartAcknowledged = false;
-            this.CreationTime = DateTime.Now;
-            this.SequenceManager = new SequenceManager(this);
-            this.Synchronizer = null;
-            this.Marks = new List<Mark>();
-            this.Buffs = new List<Buff>();
+            Id = id;
+            Map = map;
+            Origin = origin;
+            BlueTeam = blueTeam;
+            RedTeam = redTeam;
+            BlueTeam.Fight = this;
+            RedTeam.Fight = this;
+
+            Timeline = new FightTimeline(this);
+            Cell = cell;
+
+            Phase = FightPhaseEnum.PrePlacement;
+            CreationTime = DateTime.Now;
+            SequenceManager = new SequenceManager(this);
+            Synchronizer = null;
+            Marks = new List<Mark>();
+            Buffs = new List<Buff>();
 
             if (GetPlacementDelay() > 0)
             {
-                this.PlacementTimer = new ActionTimer(GetPlacementDelay() * 1000, StartFighting, false);
+                PlacementTimer = new ActionTimer(GetPlacementDelay() * 1000, StartFighting, false);
 
             }
         }
@@ -303,8 +315,8 @@ namespace Giny.World.Managers.Fights
         }
         public virtual void OnSetReady(Fighter fighter, bool isReady)
         {
-            this.Send(new GameFightHumanReadyStateMessage(fighter.Id, isReady));
-            this.CheckFightStart();
+            Send(new GameFightHumanReadyStateMessage(fighter.Id, isReady));
+            CheckFightStart();
 
         }
         public void UpdateTeams()
@@ -385,6 +397,7 @@ namespace Giny.World.Managers.Fights
 
             OnPlacementStarted();
 
+            Phase = FightPhaseEnum.Placement;
             this.PlacementStarted = true;
 
             FightEventApi.PlacementStarted(this);
@@ -463,6 +476,8 @@ namespace Giny.World.Managers.Fights
 
             this.StartTime = DateTime.Now;
 
+            Phase = FightPhaseEnum.Started;
+
             this.Started = true;
 
             UpdateEntitiesPositions();
@@ -496,6 +511,7 @@ namespace Giny.World.Managers.Fights
         private void StartFight()
         {
             this.StartAcknowledged = true;
+            Phase = FightPhaseEnum.StartedAck;
             Synchronizer = null;
             StartTurn();
         }
@@ -952,7 +968,7 @@ namespace Giny.World.Managers.Fights
         {
             if (BlueTeam.Alives == 0 || RedTeam.Alives == 0 && !Ended)
             {
-                Ended = true;
+                Phase = FightPhaseEnum.Ended;
 
                 if (Started)
                 {

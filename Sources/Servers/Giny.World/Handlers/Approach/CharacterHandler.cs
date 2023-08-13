@@ -186,6 +186,7 @@ namespace Giny.World.Handlers.Approach
             client.Character.RefreshShortcuts();
             client.Character.CreateHumanOptions();
             client.Character.RefreshArenaInfos();
+            client.Character.SendZaapDestinations();
             client.Character.SendServerExperienceModificator();
             client.Character.OnCharacterLoadingComplete();
         }

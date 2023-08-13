@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace Giny.World.Records.Maps
 {
     [D2OClass("MapScrollAction")]
-    [Table("mapscrollactions")]
+    [Table("map_scroll_actions")]
     public class MapScrollActionRecord : IRecord
     {
         [Container]

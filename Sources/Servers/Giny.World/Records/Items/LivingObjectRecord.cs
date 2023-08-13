@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace Giny.World.Records.Items
 {
     [D2OClass("LivingObjectSkinJntMood")]
-    [Table("livingobjects")]
+    [Table("living_objects")]
     public class LivingObjectRecord : IRecord
     {
         [Container]

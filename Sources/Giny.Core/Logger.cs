@@ -19,8 +19,8 @@ namespace Giny.Core
     {
         private static Dictionary<ConsoleColor, ConsoleColor> Colors = new Dictionary<ConsoleColor, ConsoleColor>()
         {
-            {ConsoleColor.DarkBlue,ConsoleColor.Blue },
-            {ConsoleColor.DarkGreen,ConsoleColor.Green },
+           // {ConsoleColor.DarkBlue,ConsoleColor.Blue },
+           // {ConsoleColor.DarkGreen,ConsoleColor.Green },
             {ConsoleColor.DarkMagenta,ConsoleColor.Magenta },
         };
         static Logger()

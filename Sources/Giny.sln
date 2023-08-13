@@ -51,7 +51,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Giny.CustomEnumsBuilder", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Giny.SpellTree", "Tools\Giny.SpellTree\Giny.SpellTree.csproj", "{95196DF3-E8B4-4126-B6D6-6D77F4C4BC79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Giny.MapEditor", "Giny.MapsEditor\Giny.MapEditor.csproj", "{6DD0E919-92B9-4F4F-859B-45A0DFA28EBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Giny.MapEditor", "Giny.MapsEditor\Giny.MapEditor.csproj", "{6DD0E919-92B9-4F4F-859B-45A0DFA28EBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

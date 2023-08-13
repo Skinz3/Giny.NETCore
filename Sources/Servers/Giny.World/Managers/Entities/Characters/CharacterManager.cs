@@ -95,9 +95,6 @@ namespace Giny.World.Managers.Entities.Characters
         {
             character.RemoveInstantElement();
 
-            MerchantRecord record = MerchantRecord.RemoveMerchant(character.Id);
-
-            
             CharacterItemRecord.RemoveCharacterItems(character.Id);
 
             if (character.GuildId != 0)

@@ -62,7 +62,7 @@ namespace Giny.World.Modules
         {
             foreach (var module in m_modules)
             {
-                Logger.WriteColor1("Applying '" + module.Key + "'");
+                Logger.WriteColor2("Applying '" + module.Key + "'");
                 module.Value.Initialize();
                 module.Value.CreateHooks();
             }
@@ -78,7 +78,7 @@ namespace Giny.World.Modules
 
             string moduleName = type.GetCustomAttribute<ModuleAttribute>().ModuleName;
             IModule module = (IModule)Activator.CreateInstance(type);
-            Logger.WriteColor1("Module '" + moduleName + "' loaded");
+            Logger.Write("Module '" + moduleName + "' loaded");
             m_modules.Add(moduleName, module);
         }
     }

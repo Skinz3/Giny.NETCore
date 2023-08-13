@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Records.Npcs
 {
-    [Table("npcreplies")]
+    [Table("npc_replies")]
     public class NpcReplyRecord : IRecord, IGenericActionParameter
     {
         [Container]

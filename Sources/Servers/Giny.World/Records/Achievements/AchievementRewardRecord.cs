@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Records.Achievements
 {
-    [Table("achievementrewards")]
+    [Table("achievement_rewards")]
     [D2OClass("AchievementReward")]
     public class AchievementRewardRecord : IRecord
     {

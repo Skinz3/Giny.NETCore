@@ -29,6 +29,7 @@ using Giny.World.Managers.Items;
 using Giny.World.Managers.Items.Collections;
 using Giny.World.Managers.Maps;
 using Giny.World.Managers.Maps.Elements;
+using Giny.World.Managers.Maps.Teleporters;
 using Giny.World.Managers.Parties;
 using Giny.World.Managers.Shortcuts;
 using Giny.World.Managers.Skills;
@@ -581,6 +582,11 @@ namespace Giny.World.Managers.Entities.Characters
                 GuildMember = Guild.Record.GetMember(Id);
                 SendGuildMembership();
             }
+        }
+
+        public void SendZaapDestinations()
+        {
+            Client.Send(new KnownZaapListMessage(TeleportersManager.Instance.GetMaps(TeleporterTypeEnum.TELEPORTER_ZAAP).Select(x => (double)x).ToArray()));
         }
         public void SendGuildMembership()
         {

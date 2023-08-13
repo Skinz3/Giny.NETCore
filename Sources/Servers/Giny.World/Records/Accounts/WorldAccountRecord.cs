@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Records.Accounts
 {
-    [Table("worldaccounts")]
+    [Table("world_accounts")]
     public class WorldAccountRecord : IRecord
     {
         [Container]

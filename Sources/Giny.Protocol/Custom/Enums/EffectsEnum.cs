@@ -1426,7 +1426,7 @@
         /// <summary>
         /// Téléporte
         /// </summary>
-        Effect_826 = 826,
+        Effect_ItemTeleportMapReference = 826,
         /// <summary>
         /// Oublier un sort
         /// </summary>
