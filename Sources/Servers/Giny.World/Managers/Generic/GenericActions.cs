@@ -6,6 +6,7 @@ using Giny.World.Records.Bidshops;
 using Giny.World.Records.Items;
 using Giny.World.Records.Maps;
 using Giny.World.Records.Monsters;
+using Giny.World.Records.Npcs;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -17,6 +18,7 @@ namespace Giny.World.Managers.Generic
 {
     public class GenericActions
     {
+
         [GenericActionHandler(GenericActionEnum.Unhandled)]
         public static void HandleUnhandled(Character character, IGenericActionParameter parameter)
         {
@@ -178,6 +180,7 @@ namespace Giny.World.Managers.Generic
         {
             character.DisplayNotification(parameter.Param1);
         }
+       
         [GenericActionHandler(GenericActionEnum.Fight)]
         public static void HandleFight(Character character, IGenericActionParameter parameter)
         {
@@ -206,5 +209,6 @@ namespace Giny.World.Managers.Generic
                 character.ReplyWarning("Unable to create contextual fight. Empty monsters list.");
             }
         }
+
     }
 }

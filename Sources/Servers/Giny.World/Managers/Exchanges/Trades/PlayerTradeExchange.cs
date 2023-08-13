@@ -3,6 +3,7 @@ using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
 using Giny.Protocol.Messages;
 using Giny.World.Managers.Entities.Characters;
+using Giny.World.Managers.Exchanges.Trades;
 using Giny.World.Managers.Items;
 using Giny.World.Managers.Items.Collections;
 using Giny.World.Records.Items;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Exchanges
 {
-    public class PlayerTradeExchange : Exchange
+    public class PlayerTradeExchange : TradeExchange
     {
         public override ExchangeTypeEnum ExchangeType
         {
@@ -24,7 +25,7 @@ namespace Giny.World.Managers.Exchanges
             }
         }
 
-        private TradeItemCollection Items
+        private PlayerTradeItemCollection Items
         {
             get;
             set;
@@ -44,7 +45,7 @@ namespace Giny.World.Managers.Exchanges
         public PlayerTradeExchange(Character character, Character target)
             : base(character)
         {
-            this.Items = new TradeItemCollection(character, target);
+            this.Items = new PlayerTradeItemCollection(character, target);
             this.Target = target;
         }
 
@@ -85,45 +86,8 @@ namespace Giny.World.Managers.Exchanges
 
             Character.Dialog = null;
         }
-        private bool CanMoveItem(CharacterItemRecord item, int quantity)
-        {
-            if (item.PositionEnum != CharacterInventoryPositionEnum.INVENTORY_POSITION_NOT_EQUIPED || !item.CanBeExchanged())
-                return false;
 
-            CharacterItemRecord exchanged = null;
-
-            exchanged = Items.GetItem(item.GId, item.Effects);
-
-            if (exchanged != null && exchanged.UId != item.UId)
-                return false;
-
-            exchanged = Items.GetItem(item.UId);
-
-            if (exchanged == null)
-            {
-                return true;
-            }
-
-            if (exchanged.Quantity + quantity > item.Quantity)
-                return false;
-            else
-                return true;
-        }
-        public void TransferAllFromInventory()
-        {
-            foreach (var item in Character.Inventory.GetItems().Where(x => !x.IsEquiped()))
-            {
-                MoveItem(item.UId, item.Quantity);
-            }
-        }
-
-        public void TransferAllToInventory()
-        {
-            foreach (var item in Items.GetItems())
-            {
-                MoveItem(item.UId, -item.Quantity);
-            }
-        }
+      
 
         public override void MoveItem(int uid, int quantity)
         {
@@ -131,7 +95,7 @@ namespace Giny.World.Managers.Exchanges
             {
                 CharacterItemRecord item = Character.Inventory.GetItem(uid);
 
-                if (item != null && CanMoveItem(item, quantity))
+                if (item != null && Items.CanMoveItem(item, quantity))
                 {
                     if (Target.GetDialog<PlayerTradeExchange>().IsReady)
                     {
@@ -228,6 +192,11 @@ namespace Giny.World.Managers.Exchanges
         public override void ModifyItemPriced(int objectUID, int quantity, long price)
         {
             throw new NotImplementedException();
+        }
+
+        public override IEnumerable<CharacterItemRecord> GetItems()
+        {
+            return Items.GetItems();
         }
     }
 }

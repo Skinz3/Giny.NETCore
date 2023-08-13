@@ -197,10 +197,7 @@ namespace Giny.World.Managers.Items.Collections
         {
             return GetItems().FirstOrDefault(x => x.Record.TypeEnum == type);
         }
-        public CharacterItemRecord GetFirstItem(short gid, int minimumQuantity)
-        {
-            return GetItems().FirstOrDefault(x => x.GId == gid && x.Quantity >= minimumQuantity);
-        }
+      
         public void Refresh()
         {
             Character.Client.Send(new InventoryContentMessage(this.GetObjectsItems(), Character.Record.Kamas));

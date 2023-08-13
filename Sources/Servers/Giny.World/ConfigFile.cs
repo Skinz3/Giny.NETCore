@@ -96,11 +96,6 @@ namespace Giny.World
             set;
         } = 400;
 
-        public short MaxMerchantPerMap
-        {
-            get;
-            set;
-        } = 5;
 
         public short ApLimit
         {

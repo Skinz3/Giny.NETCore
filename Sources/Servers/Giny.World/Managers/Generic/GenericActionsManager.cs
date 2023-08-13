@@ -1,6 +1,7 @@
 ﻿using Giny.Core;
 using Giny.Core.DesignPattern;
 using Giny.World.Managers.Entities.Characters;
+using Giny.World.Modules;
 using Giny.World.Records.Npcs;
 using System;
 using System.Collections.Generic;
@@ -18,14 +19,18 @@ namespace Giny.World.Managers.Generic
         [StartupInvoke(StartupInvokePriority.SixthPath)]
         public void Initialize()
         {
-            foreach (var method in typeof(GenericActions).GetMethods())
+            foreach (var type in AssemblyCore.GetTypes())
             {
-                var attribute = method.GetCustomAttribute<GenericActionHandlerAttribute>();
-
-                if (attribute != null)
+                foreach (var method in type.GetMethods())
                 {
-                    m_handlers.Add(attribute.ActionEnum, method);
+                    var attribute = method.GetCustomAttribute<GenericActionHandlerAttribute>();
+
+                    if (attribute != null)
+                    {
+                        m_handlers.Add(attribute.ActionEnum, method);
+                    }
                 }
+              
             }
         }
         public bool IsHandled(IGenericActionParameter parameter)

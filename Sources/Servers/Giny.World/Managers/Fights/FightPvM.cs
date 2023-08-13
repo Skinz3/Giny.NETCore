@@ -173,7 +173,7 @@ namespace Giny.World.Managers.Fights
                     }
                 }
 
-                if (fighter is CharacterFighter && this.PlacementStarted)
+                if (fighter is CharacterFighter && this.Phase == FightPhaseEnum.Placement)
                 {
                     Challenges.OnFighterJoined((CharacterFighter)fighter);
                 }

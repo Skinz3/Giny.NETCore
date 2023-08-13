@@ -37,6 +37,8 @@ namespace Giny.DatabasePatcher.Maps
            41939,
            41724,
            19804,
+           37410,
+           67779,
         };
 
         /*

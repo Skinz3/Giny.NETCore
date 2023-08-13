@@ -5,6 +5,7 @@ using Giny.World.Managers.Dialogs.DialogBox;
 using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Exchanges;
 using Giny.World.Managers.Exchanges.Jobs;
+using Giny.World.Managers.Exchanges.Trades;
 using Giny.World.Network;
 using System;
 using System.Collections.Generic;
@@ -19,21 +20,22 @@ namespace Giny.World.Handlers.Roleplay.Exchanges
         [MessageHandler]
         public static void HandleExchangeObjectTransfertAllToInv(ExchangeObjectTransfertAllToInvMessage message, WorldClient client)
         {
-            if (client.Character.IsInDialog<PlayerTradeExchange>())
+            if (client.Character.IsInDialog<TradeExchange>())
             {
-                client.Character.GetDialog<PlayerTradeExchange>().TransferAllToInventory();
+                client.Character.GetDialog<TradeExchange>().TransferAllToInventory();
             }
         }
         [MessageHandler]
         public static void HandleExchangeObjectTransfertAllFromInv(ExchangeObjectTransfertAllFromInvMessage message, WorldClient client)
         {
-            if (client.Character.IsInDialog<PlayerTradeExchange>())
+            if (client.Character.IsInDialog<TradeExchange>())
             {
-                client.Character.GetDialog<PlayerTradeExchange>().TransferAllFromInventory();
+                client.Character.GetDialog<TradeExchange>().TransferAllFromInventory();
             }
+
         }
-       
-       
+
+
         [MessageHandler]
         public static void HandleExchangeCraftCountRequest(ExchangeCraftCountRequestMessage message, WorldClient client)
         {
@@ -66,7 +68,7 @@ namespace Giny.World.Handlers.Roleplay.Exchanges
                 client.Character.GetDialog<Exchange>().ModifyItemPriced(message.objectUID, message.quantity, message.price);
             }
         }
-     
+
         [MessageHandler]
         public static void HandleExchangeBuyMessage(ExchangeBuyMessage message, WorldClient client)
         {
@@ -74,7 +76,7 @@ namespace Giny.World.Handlers.Roleplay.Exchanges
             {
                 client.Character.GetDialog<BuySellExchange>().Buy((short)message.objectToBuyId, message.quantity);
             }
-          
+
         }
         [MessageHandler]
         public static void HandleExchangeObjectMoveMessage(ExchangeObjectMoveMessage message, WorldClient client)

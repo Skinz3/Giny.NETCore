@@ -106,6 +106,10 @@ namespace Giny.World.Managers.Maps.Elements
             }
         }
 
+        protected override bool IsSkillEnabled(Character character, SkillRecord record)
+        {
+            return base.IsSkillEnabled(character, record) && this.State != StatedElementState.Unactive;
+        }
         private void OnUsedCallback_Elapsed(object sender, ElapsedEventArgs e)
         {
             OnUsedCallback.Dispose();
@@ -137,7 +141,9 @@ namespace Giny.World.Managers.Maps.Elements
         {
             this.State = state;
             MapInstance.Send(new StatedElementUpdatedMessage(GetStatedElement()));
-        }
+
+            this.Update();
+        }   
         public void Grow()
         {
             if (State == StatedElementState.Unactive)

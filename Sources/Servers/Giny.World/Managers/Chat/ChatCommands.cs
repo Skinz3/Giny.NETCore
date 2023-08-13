@@ -484,9 +484,34 @@ namespace Giny.World.Managers.Chat
                 client.Character.Reply(buff, Color.CornflowerBlue);
             }
         }
+
+        [ChatCommand("spellAnim", ServerRoleEnum.Moderator)]
+        public static void SpellAnimCommand(WorldClient client, short spellId)
+        {
+            client.Character.PlaySpellAnimOnMap(client.Character.CellId, spellId, 1, DirectionsEnum.DIRECTION_SOUTH_EAST);
+
+        }
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
+            foreach (var item in AchievementRecord.GetAchievements())
+            {
+                client.Character.ReachAchievement(item);
+            }
+           // client.Send(new GameActionItemListMessage(new GameActionItem[] { new GameActionItem(2469, "hello", "why", "eiejd", "eij", new ObjectItemInformationWithQuantity[] {new ObjectItemInformationWithQuantity(1,2469,new ObjectEffect[0])}) }));
+            // 22691
+
+            // 22693 pas mal
+
+            // 22700 ok mais hors sujet
+
+            // 22777 ok
+
+            return;
+
+                
+
+
             foreach (var subarea in SubareaRecord.GetSubareas())
             {
                 if (subarea.AchievementRecord != null)
@@ -500,7 +525,7 @@ namespace Giny.World.Managers.Chat
 
             foreach (var item in achievmeents)
             {
-                client.Character.ReachAchievement(item);    
+                client.Character.ReachAchievement(item);
             }
 
             if (client.Character.Fighter == null)

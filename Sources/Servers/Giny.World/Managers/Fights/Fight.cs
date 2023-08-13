@@ -91,32 +91,14 @@ namespace Giny.World.Managers.Fights
          * (We casted initial spells, waiting 
          * for client ack.)
          */
-        public bool Started
-        {
-            get;
-            set;
-        }
+        public bool Started => Phase == FightPhaseEnum.Started || Phase == FightPhaseEnum.StartedAck || Phase == FightPhaseEnum.Ended;
         /*
          * Fight Started and 
          * server acknoledged it.
          */
-        public bool StartAcknowledged
-        {
-            get;
-            set;
-        }
+        public bool StartAcknowledged => Phase == FightPhaseEnum.StartedAck || Phase == FightPhaseEnum.Ended;
 
-        public bool Ended
-        {
-            get;
-            set;
-        }
-
-        public bool PlacementStarted
-        {
-            get;
-            set;
-        }
+        public bool Ended => Phase == FightPhaseEnum.Ended;
 
 
         public CellRecord Cell
@@ -398,7 +380,6 @@ namespace Giny.World.Managers.Fights
             OnPlacementStarted();
 
             Phase = FightPhaseEnum.Placement;
-            this.PlacementStarted = true;
 
             FightEventApi.PlacementStarted(this);
 
@@ -478,7 +459,6 @@ namespace Giny.World.Managers.Fights
 
             Phase = FightPhaseEnum.Started;
 
-            this.Started = true;
 
             UpdateEntitiesPositions();
 
@@ -510,7 +490,6 @@ namespace Giny.World.Managers.Fights
 
         private void StartFight()
         {
-            this.StartAcknowledged = true;
             Phase = FightPhaseEnum.StartedAck;
             Synchronizer = null;
             StartTurn();

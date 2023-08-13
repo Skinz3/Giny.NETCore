@@ -33,10 +33,16 @@ namespace Giny.World.Managers.Maps.Npcs
         }
 
         [NpcActionHandler(NpcActionsEnum.TALK)]
-        public static void HandleTalkAction(Character character, Npc npc, NpcActionRecord record)
+        public static void HandleTalkAction(Character character, Npc npc, NpcActionRecord action)
         {
-            character.TalkToNpc(npc, record);
+            character.TalkToNpc(npc, action);
         }
-        
+
+        [NpcActionHandler(NpcActionsEnum.EXCHANGE)]
+        public static void HandleExchangeAction(Character character, Npc npc, NpcActionRecord action)
+        {
+            character.OpenNpcTradeExchange(npc, action);
+        }
+
     }
 }

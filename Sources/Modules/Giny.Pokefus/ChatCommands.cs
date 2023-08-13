@@ -13,11 +13,16 @@ namespace Giny.Pokefus
 {
     class ChatCommands
     {
+        [ChatCommand("reloadpokefus", ServerRoleEnum.Administrator)]
+        public static void ReloadPokefusCommand(WorldClient client)
+        {
+            PokefusWishManager.Initialize();
+        }
         [ChatCommand("pokefus", ServerRoleEnum.GamemasterPadawan)]
         public static void PokefusCommand(WorldClient client, short monsterId)
         {
             MonsterRecord monsterRecord = MonsterRecord.GetMonsterRecord(monsterId);
-            CharacterItemRecord item = PokefusManager.Instance.CreatePokefusItem(client.Character.Id, monsterRecord, 1);
+            CharacterItemRecord item = PokefusManager.Instance.CreatePokefusItem(client.Character.Id, ItemRecord.GetItem(2469), monsterRecord, 1);
             client.Character.Inventory.AddItem(item);
             client.Character.Reply("Pokefus " + monsterRecord.Name + " added.");
         }

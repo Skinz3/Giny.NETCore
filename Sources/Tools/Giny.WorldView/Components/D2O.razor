@@ -9,7 +9,7 @@
 @using System.Collections;
 
 <MudGrid>
-    <MudItem xs="2">
+    <MudItem xs="3">
 
         <MudPaper Outlined=true>
             <MudList Dense="true" Clickable="true">
@@ -93,7 +93,7 @@
 
     private bool FilterFunc(object element, string searchString)
     {
-      
+
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
 
@@ -126,12 +126,32 @@
             if (value is MonsterBonusCharacteristics)
             {
                 var v = (MonsterBonusCharacteristics)value;
-                return "LifePoints :" + v.lifePoints; 
+                return "LifePoints :" + v.lifePoints;
             }
             if (value is IEnumerable collection && !(value is string))
             {
-                string collectionString = string.Join(", ", collection.Cast<object>());
-                result = collectionString;
+                var TEST = value.GetType();
+
+                if (value is List<List<int>>)
+                {
+                    var val = value as List<List<int>>;
+
+                    string res = "";
+                    foreach (var v in val)
+                    {
+                        res += string.Join(',', v);
+                        res += ";";
+                    }
+                    result = res;
+                }
+                else
+                {
+
+                    string collectionString = string.Join(", ", collection.Cast<object>());
+                    result = collectionString;
+                }
+
+
             }
             else if (property.Name == "LongNameId" || property.Name == "NameId" || property.Name == "ShortNameId"
             || property.Name == "DescriptionId")

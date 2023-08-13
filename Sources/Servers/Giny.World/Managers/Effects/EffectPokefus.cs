@@ -12,7 +12,7 @@ namespace Giny.Pokefus.Effects
     [ProtoContract]
     public class EffectPokefus : EffectCustom
     {
-        private const string Description = "Contrôle du monstre {0} Grade : {1}";
+        private const string Description = "Pokéfus <b>{0} ({1})</b>";
 
         [ProtoMember(18)]
         public short MonsterId

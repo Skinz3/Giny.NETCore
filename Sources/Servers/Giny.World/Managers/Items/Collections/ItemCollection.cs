@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Items.Collections
 {
-    public abstract class ItemCollection<T> where T : AbstractItem
+    public abstract class ItemCollection<T>  where T : AbstractItem
     {
         private IDictionary<int, T> m_items;
 
@@ -104,6 +104,11 @@ namespace Giny.World.Managers.Items.Collections
 
         }
 
+
+        public T? GetFirstItem(short gid, int minimumQuantity)
+        {
+            return GetItems().FirstOrDefault(x => x.GId == gid && x.Quantity >= minimumQuantity);
+        }
 
         public virtual void RemoveItems(Dictionary<int, int> pairs)
         {

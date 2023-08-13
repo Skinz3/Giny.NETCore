@@ -18,6 +18,7 @@ namespace Giny.Pokefus
     {
         public void Initialize()
         {
+            PokefusWishManager.Initialize();
             PokefusManager.Instance.Initialize();
         }
 
@@ -34,7 +35,7 @@ namespace Giny.Pokefus
 
         public void Dispose()
         {
-          // ?
+
         }
     }
 }

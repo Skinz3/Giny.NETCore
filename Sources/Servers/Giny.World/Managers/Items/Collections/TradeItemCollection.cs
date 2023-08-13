@@ -1,5 +1,4 @@
-﻿using Giny.Protocol.Messages;
-using Giny.World.Managers.Entities.Characters;
+﻿using Giny.Protocol.Enums;
 using Giny.World.Records.Items;
 using System;
 using System.Collections.Generic;
@@ -11,68 +10,29 @@ namespace Giny.World.Managers.Items.Collections
 {
     public class TradeItemCollection : ItemCollection<CharacterItemRecord>
     {
-        private Character Character
+        public bool CanMoveItem(CharacterItemRecord item, int quantity)
         {
-            get;
-            set;
-        }
-        private Character Target
-        {
-            get;
-            set;
-        }
-        public TradeItemCollection(Character character, Character target)
-        {
-            this.Character = character;
-            this.Target = target;
-        }
+            if (item.PositionEnum != CharacterInventoryPositionEnum.INVENTORY_POSITION_NOT_EQUIPED || !item.CanBeExchanged())
+                return false;
 
-        public override void OnItemUnstacked(CharacterItemRecord item, int quantity)
-        {
-            OnObjectModified(item);
-        }
-        public override void OnItemStacked(CharacterItemRecord item, int quantity)
-        {
-            OnObjectModified(item);
-        }
-        public override void OnItemRemoved(CharacterItemRecord item)
-        {
-            Character.Client.Send(new ExchangeObjectRemovedMessage()
+            CharacterItemRecord exchanged = null;
+
+            exchanged = this.GetItem(item.GId, item.Effects);
+
+            if (exchanged != null && exchanged.UId != item.UId)
+                return false;
+
+            exchanged = this.GetItem(item.UId);
+
+            if (exchanged == null)
             {
-                remote = false,
-                objectUID = item.UId
-            });
-            Target.Client.Send(new ExchangeObjectRemovedMessage
-            {
-                remote = true,
-                objectUID = item.UId
-            });
-        }
-        public override void OnItemAdded(CharacterItemRecord item)
-        {
-            Character.Client.Send(new ExchangeObjectAddedMessage()
-            {
-                remote = false,
-                @object = item.GetObjectItem()
-            });
-            Target.Client.Send(new ExchangeObjectAddedMessage()
-            {
-                remote = true,
-                @object = item.GetObjectItem()
-            });
-        }
-        private void OnObjectModified(CharacterItemRecord obj)
-        {
-            Character.Client.Send(new ExchangeObjectModifiedMessage()
-            {
-                remote = false,
-                @object = obj.GetObjectItem(),
-            });
-            Target.Client.Send(new ExchangeObjectModifiedMessage()
-            {
-                remote = true,
-                @object = obj.GetObjectItem(),
-            });
+                return true;
+            }
+
+            if (exchanged.Quantity + quantity > item.Quantity)
+                return false;
+            else
+                return true;
         }
     }
 }

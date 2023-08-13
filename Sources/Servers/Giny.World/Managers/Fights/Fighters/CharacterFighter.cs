@@ -341,7 +341,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 disposition = GetEntityDispositionInformations(),
                 look = Look.ToEntityLook(),
                 previousPositions = GetPreviousPositions(),
-                wave = 0,
+                wave = 1,
                 spawnInfo = new GameContextBasicSpawnInformation()
                 {
                     alive = Alive,

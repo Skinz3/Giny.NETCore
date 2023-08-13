@@ -188,18 +188,16 @@ namespace Giny.World.Managers.Maps.Instances
             }
         }
 
-        public Fight GetFight(short fightId)
+        public Fight? GetFight(short fightId)
         {
-            Fight result = null;
+            Fight? result;
             m_fights.TryGetValue(fightId, out result);
             return result;
         }
 
         public void RemoveFight(Fight fight)
         {
-            Fight result = null;
-
-            m_fights.TryRemove(fight.Id, out result);
+            m_fights.TryRemove(fight.Id, out _);
 
             RemoveBlades(fight);
 

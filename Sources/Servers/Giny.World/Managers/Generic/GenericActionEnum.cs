@@ -28,6 +28,7 @@ namespace Giny.World.Managers.Generic
         Fight,
         Smithmagic,
         RuneTrade,
+        PokefusWish,
         Unhandled,
     }
 }

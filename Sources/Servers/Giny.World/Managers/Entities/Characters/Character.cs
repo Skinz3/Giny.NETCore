@@ -19,6 +19,7 @@ using Giny.World.Managers.Entities.Look;
 using Giny.World.Managers.Entities.Npcs;
 using Giny.World.Managers.Exchanges;
 using Giny.World.Managers.Exchanges.Jobs;
+using Giny.World.Managers.Exchanges.Trades;
 using Giny.World.Managers.Experiences;
 using Giny.World.Managers.Fights;
 using Giny.World.Managers.Fights.Fighters;
@@ -588,6 +589,17 @@ namespace Giny.World.Managers.Entities.Characters
         {
             Client.Send(new KnownZaapListMessage(TeleportersManager.Instance.GetMaps(TeleporterTypeEnum.TELEPORTER_ZAAP).Select(x => (double)x).ToArray()));
         }
+
+        public void PlaySpellAnimOnMap(short cellId, short spellId, short spellLevel, DirectionsEnum direction)
+        {
+            Map.Instance.Send(new GameRolePlaySpellAnimMessage(Id, cellId, spellId, spellLevel, (short)direction));
+            this.Direction = direction;
+        }
+        public void PlaySpellAnim(short cellId, short spellId, short spellLevel, DirectionsEnum direction)
+        {
+            Client.Send(new GameRolePlaySpellAnimMessage(Id, cellId, spellId, spellLevel, (short)direction));
+            this.Direction = direction;
+        }
         public void SendGuildMembership()
         {
             Client.Send(new GuildMembershipMessage()
@@ -641,6 +653,10 @@ namespace Giny.World.Managers.Entities.Characters
         {
             this.OpenDialog(new BuySellExchange(this, npc, itemToSell, tokenId));
         }
+        public void OpenNpcTradeExchange(Npc npc, NpcActionRecord action)
+        {
+            this.OpenDialog(new NpcTradeExchange(this, npc, action));
+        }
         public void OpenBuyExchange(BidShopRecord bidshop)
         {
             this.OpenDialog(new BuyExchange(this, bidshop));
@@ -673,6 +689,7 @@ namespace Giny.World.Managers.Entities.Characters
         {
             this.OpenDialog(new NpcTalkDialog(this, npc, action));
         }
+
         public void OpenDialog(Dialog dialog)
         {
             if (!Busy)
