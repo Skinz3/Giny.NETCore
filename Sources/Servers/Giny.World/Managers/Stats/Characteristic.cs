@@ -71,7 +71,7 @@ namespace Giny.World.Managers.Stats
             };
         }
 
-       
+
         public virtual CharacterCharacteristic GetCharacterCharacteristic(CharacteristicEnum characteristic)
         {
             return new CharacterCharacteristicValue(TotalInContext(), (short)characteristic);

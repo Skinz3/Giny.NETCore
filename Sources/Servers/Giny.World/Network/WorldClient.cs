@@ -126,7 +126,7 @@ namespace Giny.World.Network
 
             for (int i = 0; i < Characters.Count; i++)
             {
-                characters[i] = Characters[i].GetCharacterBaseInformations();
+                characters[i] = Characters[i].GetCharacterBaseInformations(true);
             }
 
             Send(new CharactersListMessage(characters));
@@ -160,7 +160,8 @@ namespace Giny.World.Network
             LoadWorldAccount();
             SendBasicTime();
             Characters = CharacterRecord.GetCharactersByAccountId(Account.Id);
-            Send(new ServerSettingsMessage("fr", 0, 0, false, 1, 200, true));
+
+            Send(new ServerSettingsMessage("fr", 0, (byte)WorldServer.Instance.GetServerType(), false, 1, 200, true));
 
             SendServerOptionalFeatures(OptionalFeaturesEnum.PVP_KIS, OptionalFeaturesEnum.CHARACTER_XP);
 

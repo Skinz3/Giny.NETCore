@@ -119,28 +119,7 @@ namespace Giny.World.Handlers.Maps
 
                 if (group != null && client.Character.CellId == group.CellId)
                 {
-                    if (client.Character.Map.BlueCells.Count >= group.MonsterCount && client.Character.Map.RedCells.Count() >= client.Character.FighterCount)
-                    {
-                        client.Character.Map.Instance.RemoveEntity(group.Id);
-
-                        CellRecord cell = client.Character.Map.GetCell(group.CellId);
-
-                        FightPvM fight = FightManager.Instance.CreateFightPvM(client.Character, group, client.Character.Map, cell);
-
-                        foreach (var monsterFighter in group.CreateFighters(fight.BlueTeam))
-                        {
-                            fight.BlueTeam.AddFighter(monsterFighter);
-                        }
-
-                        fight.RedTeam.AddFighter(client.Character.CreateFighter(fight.RedTeam));
-
-                        fight.StartPlacement();
-
-                    }
-                    else
-                    {
-                        client.Character.ReplyWarning("Invalid map placements. Unable to fight.");
-                    }
+                    group.Agress(client.Character);
                 }
                 else
                 {

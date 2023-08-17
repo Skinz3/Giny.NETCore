@@ -14,7 +14,7 @@ namespace Giny.World.Records.Bidshops
     public class BidShopRecord : IRecord
     {
         [Container]
-        private static readonly ConcurrentDictionary<long, BidShopRecord> Bidshops = new ConcurrentDictionary<long, BidShopRecord>();
+        private static readonly Dictionary<long, BidShopRecord> Bidshops = new Dictionary<long, BidShopRecord>();
 
         [Primary]
         public long Id

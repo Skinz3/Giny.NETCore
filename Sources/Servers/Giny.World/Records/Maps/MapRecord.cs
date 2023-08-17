@@ -27,7 +27,7 @@ namespace Giny.World.Records.Maps
     public class MapRecord : IRecord
     {
         [Container]
-        private static ConcurrentDictionary<long, MapRecord> Maps = new ConcurrentDictionary<long, MapRecord>();
+        private static Dictionary<long, MapRecord> Maps = new Dictionary<long, MapRecord>();
 
         [Primary]
         public long Id

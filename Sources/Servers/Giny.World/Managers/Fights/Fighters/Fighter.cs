@@ -284,7 +284,7 @@ namespace Giny.World.Managers.Fights.Fighters
         }
         public Fighter(FightTeam team, CellRecord roleplayCell)
         {
-            this.Team = team;
+            Team = team;
             this.RoleplayCell = roleplayCell;
             this.Loot = new Loot();
             this.Buffs = new List<Buff>();
@@ -307,9 +307,9 @@ namespace Giny.World.Managers.Fights.Fighters
             this.TurnStartCell = this.Cell;
             this.MovementHistory = new MovementHistory(this);
 
-            this.Look = CreateLook();
-            this.BaseLook = Look.Clone();
-            this.Stats = CreateStats();
+            Look = CreateLook();
+            BaseLook = Look.Clone();
+            Stats = CreateStats();
 
             foreach (var stat in Stats.GetCharacteristics<Characteristic>())
             {
@@ -320,6 +320,7 @@ namespace Giny.World.Managers.Fights.Fighters
             }
         }
 
+       
 
         public void FindPlacementDirection()
         {
@@ -342,11 +343,11 @@ namespace Giny.World.Managers.Fights.Fighters
             }
             if (tuple == null)
             {
-                this.Direction = DirectionsEnum.DIRECTION_SOUTH_WEST;
+                Direction = DirectionsEnum.DIRECTION_SOUTH_WEST;
             }
             else
             {
-                this.Direction = this.Cell.Point.OrientationTo(new MapPoint((short)tuple.Item1), false);
+                Direction = this.Cell.Point.OrientationTo(new MapPoint((short)tuple.Item1), false);
             }
         }
 
@@ -512,9 +513,9 @@ namespace Giny.World.Managers.Fights.Fighters
 
                         mpCost = (short)(path.Count - 1);
 
-                        this.Cell = Fight.Map.GetCell(path.Last().Id);
+                        Cell = Fight.Map.GetCell(path.Last().Id);
 
-                        this.Direction = path[path.Count - 2].Point.OrientationTo(path[path.Count - 1].Point);
+                        Direction = path[path.Count - 2].Point.OrientationTo(path[path.Count - 1].Point);
 
                         if (Stats.InvisibilityState == GameActionFightInvisibilityStateEnum.INVISIBLE)
                         {
@@ -609,7 +610,7 @@ namespace Giny.World.Managers.Fights.Fighters
             {
                 lock (Fight)
                 {
-                    this.Cell = Fight.Map.GetCell(cellId);
+                    Cell = Fight.Map.GetCell(cellId);
 
                     if (send)
                     {
@@ -1308,7 +1309,7 @@ namespace Giny.World.Managers.Fights.Fighters
             {
                 if (IsFighterTurn)
                 {
-                    this.WasTeleportedInInvalidCell = true;
+                    WasTeleportedInInvalidCell = true;
                 }
                 return null;
             }
@@ -1336,7 +1337,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
             var oldCell = Cell;
 
-            this.Cell = targetCell;
+            Cell = targetCell;
 
             if (register)
                 MovementHistory.OnCellChanged(oldCell);
@@ -1448,7 +1449,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
             finalLook.Rescale(1 + rescaleValue);
 
-            this.Look = finalLook;
+            Look = finalLook;
 
             this.Fight.Send(new GameActionFightChangeLookMessage()
             {
@@ -1464,7 +1465,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
             if (movement.Type != MovementType.Walk && source != this)
             {
-                this.LastAttacker = source;
+                LastAttacker = source;
             }
             if (movement.Type == MovementType.Walk && Carried != null)
             {
@@ -1651,7 +1652,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
             var oldCell = this.Cell;
 
-            this.Cell = Fight.Map.GetCell(destinationPoint);
+            Cell = Fight.Map.GetCell(destinationPoint);
 
             TriggerMovementBuffs(new Movement(type, source, 0));
 
@@ -1673,10 +1674,10 @@ namespace Giny.World.Managers.Fights.Fighters
             }
 
             target.LastExchangedPositionSequenced = target.Cell;
-            this.LastExchangedPositionSequenced = this.Cell;
+            LastExchangedPositionSequenced = this.Cell;
 
             CellRecord cell = this.Cell;
-            this.Cell = target.Cell;
+            Cell = target.Cell;
             target.Cell = cell;
 
 
@@ -1763,7 +1764,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public virtual void OnFightStarted()
         {
-            this.FightStartCell = this.Cell;
+            FightStartCell = this.Cell;
         }
 
         public virtual void OnFightEnding()
@@ -2463,14 +2464,14 @@ namespace Giny.World.Managers.Fights.Fighters
                 {
                     this.Stats.LifePoints = 0;
 
-                    this.DeathTime = DateTime.Now;
+                    DeathTime = DateTime.Now;
 
                     Death token = new Death(killedBy, this);
 
                     TriggerBuffs(TriggerTypeEnum.OnDeath, token);
                     killedBy.TriggerBuffs(TriggerTypeEnum.OnKill, token);
 
-                    this.Alive = false;
+                    Alive = false;
 
                     KillAllSummons();
                     RemoveAllCastedBuffs();

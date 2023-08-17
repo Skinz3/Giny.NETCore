@@ -251,7 +251,7 @@ namespace Giny.World.Managers.Entities.Characters
         {
             get
             {
-                return Record.Look;
+                return Record.GetActiveLook();
             }
             set
             {
@@ -447,6 +447,8 @@ namespace Giny.World.Managers.Entities.Characters
             this.Context = context;
             Client.Send(new GameContextCreateMessage((byte)Context));
         }
+
+
 
         public void CreateHumanOptions()
         {
@@ -924,7 +926,10 @@ namespace Giny.World.Managers.Entities.Characters
                 if (clientCellId == CellId)
                 {
                     if (Look.RemoveAura())
-                        RefreshActorOnMap();
+                    {
+                        RefreshLookOnMap();
+                    }
+
                     this.Direction = (DirectionsEnum)PathReader.GetDirection(keyMovements.Last());
                     this.MovedCell = PathReader.ReadCell(keyMovements.Last());
                     this.IsMoving = true;
@@ -978,13 +983,13 @@ namespace Giny.World.Managers.Entities.Characters
             if (!ChangeMap)
             {
                 if (Look.RemoveAura())
-                    RefreshActorOnMap();
+                    RefreshLookOnMap();
 
                 if (template.IsAura)
                 {
                     short bonesId = EntityLookManager.Instance.GetAuraBones(this, emoteId);
                     this.Look.AddAura(bonesId);
-                    this.RefreshActorOnMap();
+                    this.RefreshLookOnMap();
                 }
                 else
                 {
@@ -1059,13 +1064,22 @@ namespace Giny.World.Managers.Entities.Characters
 
         public void OnCharacterLoadingComplete()
         {
-            OnConnected();
             this.CharacterLoadingComplete = true;
             Client.Send(new CharacterLoadingCompleteMessage());
+            OnConnected();
+
         }
         private void OnConnected()
         {
-            this.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 89, new string[0]); // not only when just created in th
+            TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 89, new string[0]); // not only when just created in th
+
+            if (WorldServer.Instance.GetServerType() == GameServerTypeEnum.SERVER_TYPE_EPIC)
+            {
+                /*
+                 * Bienvenue sur le serveur Épique. La mort contre les monstres est définitive
+                 */
+                TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 440);
+            }
 
             this.Client.Send(new AlmanachCalendarDateMessage(1)); // for monsters!
 
@@ -1423,7 +1437,7 @@ namespace Giny.World.Managers.Entities.Characters
 
         public void RefreshAchievements()
         {
-            IEnumerable<AchievementAchieved> achievementAchieveds = Record.Achievements.Select(x => x.GetAchievementAchieved(Id));
+            IEnumerable<AchievementAchieved> achievementAchieveds = Record.Achievements.Where(x => x.Finished).Select(x => x.GetAchievementAchieved(Id));
             Client.Send(new AchievementListMessage(achievementAchieveds.ToArray()));
         }
         public IEnumerable<CharacterAchievement> GetFinishedAchievements()
@@ -1619,7 +1633,7 @@ namespace Giny.World.Managers.Entities.Characters
         public CharacterFighter CreateFighter(FightTeam team)
         {
             if (Look.RemoveAura())
-                RefreshActorOnMap();
+                RefreshLookOnMap();
 
             this.MovementKeys = null;
             this.IsMoving = false;
@@ -1814,6 +1828,7 @@ namespace Giny.World.Managers.Entities.Characters
         {
             AchievementManager.Instance.OnPlayerChangeSubarea(this);
         }
+
 
     }
 

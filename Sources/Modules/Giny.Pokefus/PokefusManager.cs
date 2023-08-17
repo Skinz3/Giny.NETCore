@@ -34,7 +34,7 @@ namespace Giny.Pokefus
 
         private const string PokefusLevelRequirementMessage = "Vous devez être niveau {0} pour pouvoir équiper ce pokéfus.";
 
-        private const string PokefusLevelUpMessage = "Felicitation ! Votre Pokefus {0} passe niveau {1}";
+        private const string PokefusLevelUpMessage = "Felicitation ! Votre Pokefus <b>{0}</b> passe niveau <b>{1}</b>.";
 
         private const string CannotCastMessage = "Le sort : {0} ne peut pas être lancé par un pokéfus.";
 
@@ -100,7 +100,7 @@ namespace Giny.Pokefus
 
                 if (level != effectLevel.Level)
                 {
-                    character.DisplayPopup(1, "Serveur", string.Format(PokefusLevelUpMessage, effect.MonsterName, effectLevel.Level));
+                    character.Reply(string.Format(PokefusLevelUpMessage, effect.MonsterName, effectLevel.Level));
                 }
 
                 character.Inventory.OnItemModified(item);

@@ -37,8 +37,6 @@ namespace Giny.World.Managers.Exchanges
                 return BidshopsManager.Instance.GetItems(BidShop.Id);
             }
         }
-
-
         private int GIdWatched
         {
             get;
@@ -63,18 +61,13 @@ namespace Giny.World.Managers.Exchanges
             Character.Client.Send(new ExchangeTypesExchangerDescriptionForUserMessage(type, gids));
         }
         [WIP]
-        public void ShowList(int gid,bool follow) // follow?
+        public void ShowList(int gid, bool follow) // follow?
         {
             GIdWatched = gid;
-
             var items = SortedItems(GetItemsByGId(gid));
-
-            Character.Client.Send(new ExchangeTypesItemsExchangerDescriptionForUserMessage()
-            {
-                objectType = (int)TypeWatched,
-                itemTypeDescriptions = items,
-            });
-
+            Character.Client.Send(new ExchangeTypesItemsExchangerDescriptionForUserMessage(gid, (int)TypeWatched,
+                items));
+           
         }
         [WIP("Some bug concerning UID Quantities ...?")]
         public void Buy(int uid, int quantity, long price)

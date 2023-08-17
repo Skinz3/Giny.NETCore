@@ -17,6 +17,8 @@ namespace Giny.World.Network
 {
     public class WorldServer : Singleton<WorldServer>
     {
+        private readonly object m_locker = new object();
+
         private List<WorldClient> Clients
         {
             get;
@@ -81,14 +83,14 @@ namespace Giny.World.Network
         }
         public IEnumerable<WorldClient> GetOnlineClients()
         {
-            lock (Clients)
+            lock (m_locker)
             {
                 return Clients.Where(x => x.InGame).ToArray();
             }
         }
         public IEnumerable<WorldClient> GetClients()
         {
-            lock (Clients)
+            lock (m_locker)
             {
                 return Clients.ToArray();
             }
@@ -98,7 +100,7 @@ namespace Giny.World.Network
         /// </summary>
         public WorldClient GetClient(Func<WorldClient, bool> predicate)
         {
-            lock (Clients)
+            lock (m_locker)
             {
                 return Clients.FirstOrDefault(predicate);
             }
@@ -122,7 +124,7 @@ namespace Giny.World.Network
         /// </summary>
         public WorldClient GetOnlineClient(Func<WorldClient, bool> predicate)
         {
-            lock (Clients)
+            lock (m_locker)
             {
                 return Clients.Where(x => x.InGame).FirstOrDefault(predicate);
             }
@@ -136,7 +138,7 @@ namespace Giny.World.Network
 
             WorldClient client = new WorldClient(acceptSocket);
 
-            lock (Clients)
+            lock (m_locker)
             {
                 Clients.Add(client);
 
@@ -146,11 +148,18 @@ namespace Giny.World.Network
                 }
             }
         }
+
+        public GameServerTypeEnum GetServerType()
+        {
+            return ConfigFile.Instance.ServerType;
+        }
+        public bool IsEpicOrHardcore()
+        {
+            return GetServerType() == GameServerTypeEnum.SERVER_TYPE_EPIC || GetServerType() == GameServerTypeEnum.SERVER_TYPE_HARDCORE;
+        }
         public void RemoveClient(WorldClient client)
         {
-
-
-            lock (Clients)
+            lock (m_locker)
             {
                 if (ConfigFile.Instance.LogProtocol)
                 {

@@ -16,7 +16,7 @@ namespace Giny.World.Records.Achievements
     public class AchievementRewardRecord : IRecord
     {
         [Container]
-        private static readonly ConcurrentDictionary<long, AchievementRewardRecord> AchievementRewards = new ConcurrentDictionary<long, AchievementRewardRecord>();
+        private static readonly Dictionary<long, AchievementRewardRecord> AchievementRewards = new Dictionary<long, AchievementRewardRecord>();
 
         [D2OField("id")]
         [Primary]

@@ -17,7 +17,7 @@ namespace Giny.World.Records.Items
     public class LivingObjectRecord : IRecord
     {
         [Container]
-        private static readonly ConcurrentDictionary<long, LivingObjectRecord> LivingObjects = new ConcurrentDictionary<long, LivingObjectRecord>();
+        private static readonly Dictionary<long, LivingObjectRecord> LivingObjects = new Dictionary<long, LivingObjectRecord>();
 
         [Primary]
         [D2OField("skinId")]

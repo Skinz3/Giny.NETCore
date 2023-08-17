@@ -111,15 +111,15 @@ namespace Giny.World.Managers.Entities.Look
             var result = index + 1 << 24 | color.ToArgb() & 16777215;
             return result;
         }
-        public ServerEntityLook Parse(string str)
+        public ServerEntityLook? Parse(string str)
         {
-            if (str == string.Empty)
+            if (str == null || str == string.Empty)
                 return null;
 
             if (str.StartsWith("["))
             {
                 throw new NotImplementedException("Unknown entity look format : " + str);
-              //  str = new string(str.Skip(3).ToArray());
+                //  str = new string(str.Skip(3).ToArray());
             }
 
             if (string.IsNullOrEmpty(str) || str[0] != '{')
@@ -195,9 +195,9 @@ namespace Giny.World.Managers.Entities.Look
             return new ServerEntityLook(bones, skins, colors, scales, list);
         }
 
-        public ServerEntityLook CreateLookFromBones(short bonesId, short scale)
+        public ServerEntityLook CreateLookFromBones(short bonesId, short scale = 100)
         {
-            return new ServerEntityLook(bonesId, new List<short>(), new List<int>(), new List<short>() { scale }, new ServerSubentityLook[0]);
+            return new ServerEntityLook(bonesId, new List<short>(), new List<int>(), scale != 100 ? new List<short>() { scale } : new List<short>(), new ServerSubentityLook[0]);
         }
 
         private ServerEntityLook GetMountLook(Character character, ServerEntityLook mountLook)

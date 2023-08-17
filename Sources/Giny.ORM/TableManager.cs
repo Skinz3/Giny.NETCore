@@ -145,7 +145,13 @@ namespace Giny.ORM
 
         public void AddToContainer(IRecord element)
         {
-            var tableDefinition = m_TableDefinitions[element.GetType()];
+            var tableDefinition = GetDefinition(element.GetType());
+
+            if (tableDefinition == null)
+            {
+                Logger.Write("Unable to access table definition for " + element.GetType().Name, Channels.Critical);
+                return;
+            }
 
             if (tableDefinition.Load)
             {
@@ -160,25 +166,25 @@ namespace Giny.ORM
             }
         }
 
-        public DatabaseWriter GetWriter(Type type)
+        public DatabaseWriter? GetWriter(Type type)
         {
-            return m_writers[type];
+            m_writers.TryGetValue(type, out DatabaseWriter? writer);
+            return writer;
         }
-        public TableDefinitions GetDefinition(Type type)
+        public TableDefinitions? GetDefinition(Type type)
         {
-            return m_TableDefinitions[type];
+            m_TableDefinitions.TryGetValue(type, out TableDefinitions? tableDefinition);
+            return tableDefinition;
         }
 
         public MethodInfo GetDeserializationMethods(Type type)
         {
-            MethodInfo result = null;
-            m_deserializationMethods.TryGetValue(type, out result);
+            m_deserializationMethods.TryGetValue(type, out MethodInfo result);
             return result;
         }
         public MethodInfo GetSerializationMethods(Type type)
         {
-            MethodInfo result = null;
-            m_serializationMethods.TryGetValue(type, out result);
+            m_serializationMethods.TryGetValue(type, out MethodInfo result);
             return result;
         }
         /// <summary>

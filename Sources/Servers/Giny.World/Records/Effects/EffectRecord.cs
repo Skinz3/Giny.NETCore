@@ -16,7 +16,7 @@ namespace Giny.World.Records.Effects
     public class EffectRecord : IRecord
     {
         [Container]
-        private static readonly ConcurrentDictionary<long, EffectRecord> Effects = new ConcurrentDictionary<long, EffectRecord>();
+        private static readonly Dictionary<long, EffectRecord> Effects = new Dictionary<long, EffectRecord>();
 
         [D2OField("id")]
         [Primary]

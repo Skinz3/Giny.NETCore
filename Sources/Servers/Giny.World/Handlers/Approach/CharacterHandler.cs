@@ -12,6 +12,7 @@ using Giny.World.Managers.Breeds;
 using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Entities.Characters.HumanOptions;
 using Giny.World.Managers.Entities.Look;
+using Giny.World.Managers.Hardcore;
 using Giny.World.Network;
 using Giny.World.Records;
 using Giny.World.Records.Breeds;
@@ -152,15 +153,41 @@ namespace Giny.World.Handlers.Approach
         [MessageHandler]
         public static void HandleCharacterSelectionMessage(CharacterSelectionMessage message, WorldClient client)
         {
-            CharacterRecord character = client.GetCharacter(message.id);
+            CharacterRecord record = client.GetCharacter(message.id);
 
-            if (character == null)
+            if (record == null || record.HardcoreInformations.DeathState == HardcoreOrEpicDeathStateEnum.DEATH_STATE_DEAD)
             {
                 client.Send(new CharacterSelectedErrorMessage());
                 return;
             }
 
-            client.Character = new Character(client, character);
+
+            client.Character = new Character(client, record);
+            ProcessSelection(client);
+        }
+
+        [MessageHandler]
+        public static void HandleCharacterReplayRequest(CharacterReplayRequestMessage message, WorldClient client)
+        {
+            CharacterRecord record = client.GetCharacter(message.characterId);
+
+            if (record == null)
+            {
+                return;
+            }
+
+            if (record.HardcoreInformations.DeathState != HardcoreOrEpicDeathStateEnum.DEATH_STATE_DEAD)
+            {
+                return;
+            }
+
+            HardcoreManager.Instance.ReplayCharacter(record);
+
+
+            client.Character = new Character(client, record);
+            client.Character.OnLevelChanged(1, (short)(client.Character.Level - 1));
+            BreedManager.Instance.LearnBreedSpells(client.Character);
+
             ProcessSelection(client);
         }
         private static void ProcessSelection(WorldClient client)
@@ -169,15 +196,18 @@ namespace Giny.World.Handlers.Approach
             client.Send(new NotificationListMessage(new int[] { 2147483647 }));
 
 
-            client.Send(new CharacterSelectedSuccessMessage(client.Character.Record.GetCharacterBaseInformations(),
+            client.Send(new CharacterSelectedSuccessMessage(client.Character.Record.GetCharacterBaseInformations(false),
                false));
+
             client.Send(new CharacterCapabilitiesMessage(4095));
             client.Send(new SequenceNumberRequestMessage());
+
+
 
             /*
              * -- Do not change order --
              */
-            client.Character.RefreshAchievements(); 
+            client.Character.RefreshAchievements();
             client.Character.RefreshJobs();
             client.Character.RefreshSpells();
             client.Character.RefreshGuild();

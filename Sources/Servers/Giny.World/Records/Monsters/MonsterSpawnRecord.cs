@@ -13,7 +13,7 @@ namespace Giny.World.Records.Monsters
     public class MonsterSpawnRecord : IRecord
     {
         [Container]
-        private static ConcurrentDictionary<long, MonsterSpawnRecord> MonsterSpawns = new ConcurrentDictionary<long, MonsterSpawnRecord>();
+        private static Dictionary<long, MonsterSpawnRecord> MonsterSpawns = new Dictionary<long, MonsterSpawnRecord>();
 
         [Primary]
         public long Id
@@ -40,13 +40,14 @@ namespace Giny.World.Records.Monsters
         {
             return MonsterSpawns.Count;
         }
-        public static IEnumerable<MonsterSpawnRecord> GetMonsterSpawnRecords(long subareaId)
+        public static List<MonsterSpawnRecord> GetMonsterSpawnRecords(long subareaId)
         {
-            return MonsterSpawns.Values.Where(x => x.SubareaId == subareaId);
+            return MonsterSpawns.Values.Where(x => x.SubareaId == subareaId).ToList();
         }
-        public static IEnumerable<MonsterSpawnRecord> GetMonsterSpawnRecords()
+
+        public static List<MonsterSpawnRecord> GetMonsterSpawnRecords()
         {
-            return MonsterSpawns.Values;
+            return MonsterSpawns.Values.ToList();
         }
     }
 }

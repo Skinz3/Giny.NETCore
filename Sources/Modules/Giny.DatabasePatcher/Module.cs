@@ -31,6 +31,7 @@ namespace Giny.DatabasePatcher
         {
             Logger.Write("Patching world database ...", Channels.Info);
 
+            Bidshops.Patch();
             LevelAchievements.Patch();
             SubareaAchievements.Patch();
             Dungeons.Patch();
@@ -44,6 +45,7 @@ namespace Giny.DatabasePatcher
             MapPlacements.Patch();
             SpellCategories.Patch();
             MonsterKamas.Patch();
+
             Logger.Write("World database patched.", Channels.Info);
         }
 

@@ -3,6 +3,7 @@ using Giny.IO.D2O;
 using Giny.ORM.Attributes;
 using Giny.ORM.Interfaces;
 using Giny.Protocol.Custom.Enums;
+using Giny.Protocol.Enums;
 using Giny.World.Managers.Entities.Look;
 using Giny.World.Records.Spells;
 using ProtoBuf;
@@ -20,7 +21,7 @@ namespace Giny.World.Records.Breeds
     public class BreedRecord : IRecord
     {
         [Container]
-        private static readonly ConcurrentDictionary<long, BreedRecord> Breeds = new ConcurrentDictionary<long, BreedRecord>();
+        private static readonly Dictionary<long, BreedRecord> Breeds = new Dictionary<long, BreedRecord>();
 
         long IRecord.Id => Id;
 
@@ -120,6 +121,9 @@ namespace Giny.World.Records.Breeds
             private set;
         }
 
+        [Ignore]
+        public BreedEnum BreedEnum => (BreedEnum)Id;
+
         public int GetStatUpgradeCostIndex(int actualpoints, StatUpgradeCost[] upgradeCost)
         {
             int result;
@@ -166,17 +170,7 @@ namespace Giny.World.Records.Breeds
                 }
             }
         }
-        [CustomDeserialize]
-        private static ServerEntityLook Deserialize(string str)
-        {
-            return EntityLookManager.Instance.Parse(str);
-        }
-
-        [CustomSerialize]
-        private static string Serialize(ServerEntityLook look)
-        {
-            return EntityLookManager.Instance.ConvertToString(look);
-        }
+      
 
         public static BreedRecord GetBreed(byte breedId)
         {

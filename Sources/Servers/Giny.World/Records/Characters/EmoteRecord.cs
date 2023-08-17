@@ -15,7 +15,7 @@ namespace Giny.World.Records.Characters
     public class EmoteRecord : IRecord
     {
         [Container]
-        private static readonly ConcurrentDictionary<long, EmoteRecord> Emotes = new ConcurrentDictionary<long, EmoteRecord>();
+        private static readonly Dictionary<long, EmoteRecord> Emotes = new Dictionary<long, EmoteRecord>();
 
         [D2OField("id")]
         [Primary]

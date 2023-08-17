@@ -31,7 +31,7 @@ using Rune = Giny.World.Managers.Fights.Marks.Rune;
 
 namespace Giny.World.Managers.Fights
 {
-    public abstract class Fight : INetworkEntity
+    public abstract class Fight : INetworkEntity, IDisposable
     {
         public const int TurnTime = 30;
 
@@ -91,14 +91,26 @@ namespace Giny.World.Managers.Fights
          * (We casted initial spells, waiting 
          * for client ack.)
          */
-        public bool Started => Phase == FightPhaseEnum.Started || Phase == FightPhaseEnum.StartedAck || Phase == FightPhaseEnum.Ended;
+        public bool Started
+        {
+            get;
+            set;
+        }
         /*
          * Fight Started and 
          * server acknoledged it.
          */
-        public bool StartAcknowledged => Phase == FightPhaseEnum.StartedAck || Phase == FightPhaseEnum.Ended;
+        public bool StartAcknowledged
+        {
+            get;
+            set;
+        }
 
-        public bool Ended => Phase == FightPhaseEnum.Ended;
+        public bool Ended
+        {
+            get;
+            set;
+        }
 
 
         public CellRecord Cell
@@ -265,6 +277,7 @@ namespace Giny.World.Managers.Fights
 
             Timeline = new FightTimeline(this);
             Cell = cell;
+
 
             Phase = FightPhaseEnum.PrePlacement;
             CreationTime = DateTime.Now;
@@ -457,6 +470,7 @@ namespace Giny.World.Managers.Fights
 
             this.StartTime = DateTime.Now;
 
+            Started = true;
             Phase = FightPhaseEnum.Started;
 
 
@@ -490,6 +504,7 @@ namespace Giny.World.Managers.Fights
 
         private void StartFight()
         {
+            StartAcknowledged = true;
             Phase = FightPhaseEnum.StartedAck;
             Synchronizer = null;
             StartTurn();
@@ -947,6 +962,7 @@ namespace Giny.World.Managers.Fights
         {
             if (BlueTeam.Alives == 0 || RedTeam.Alives == 0 && !Ended)
             {
+                Ended = true;
                 Phase = FightPhaseEnum.Ended;
 
                 if (Started)
@@ -1027,7 +1043,7 @@ namespace Giny.World.Managers.Fights
             }
 
 
-            foreach (var fighter in GetFighters<Fighter>())
+            foreach (var fighter in GetFighters<Fighter>(false))
             {
                 fighter.OnFightEnding();
             }
@@ -1128,8 +1144,11 @@ namespace Giny.World.Managers.Fights
 
             this.RedTeam = null;
             this.BlueTeam = null;
+
             Map.Instance.RemoveFight(this);
             FightManager.Instance.RemoveFight(this);
+
+            GC.SuppressFinalize(this);
         }
 
         public bool ContainsBoss()

@@ -17,7 +17,7 @@ namespace Giny.World.Managers.Stats
     [ProtoInclude(8, typeof(RelativeCharacteristic))]
     [ProtoInclude(9, typeof(ResistanceCharacteristic))]
     [ProtoInclude(10, typeof(ErosionCharacteristic))]
-    [ProtoInclude(11,typeof(InitiativeCharacteristic))]
+    [ProtoInclude(11, typeof(InitiativeCharacteristic))]
     public class DetailedCharacteristic : Characteristic
     {
         public virtual short? Limit => null;
@@ -33,7 +33,14 @@ namespace Giny.World.Managers.Stats
             }
             set
             {
-                base.Base = value;
+                if (Limit.HasValue && value > Limit)
+                {
+                    this.Base = Limit.Value;
+                }
+                else
+                {
+                    base.Base = value;
+                }
             }
         }
         [ProtoMember(2)]
@@ -49,6 +56,19 @@ namespace Giny.World.Managers.Stats
             set;
         }
 
+        public DetailedCharacteristic(short @base)
+        {
+            this.Base = @base;
+
+            if (Limit.HasValue && Base > Limit)
+            {
+                Base = Limit.Value;
+            }
+        }
+        public DetailedCharacteristic()
+        {
+
+        }
         /// <summary>
         /// We dont clone context...?
         /// </summary>

@@ -16,7 +16,7 @@ namespace Giny.World.Records.Maps
     public class MapPositionRecord : IRecord
     {
         [Container]
-        private static ConcurrentDictionary<long, MapPositionRecord> MapPositions = new ConcurrentDictionary<long, MapPositionRecord>();
+        private static Dictionary<long, MapPositionRecord> MapPositions = new Dictionary<long, MapPositionRecord>();
 
         [Primary]
         [D2OField("id")]

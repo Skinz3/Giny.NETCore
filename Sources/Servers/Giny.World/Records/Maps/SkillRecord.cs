@@ -16,7 +16,7 @@ namespace Giny.World.Records.Maps
     public class SkillRecord : IRecord
     {
         [Container]
-        private static ConcurrentDictionary<long, SkillRecord> Skills = new ConcurrentDictionary<long, SkillRecord>();
+        private static Dictionary<long, SkillRecord> Skills = new Dictionary<long, SkillRecord>();
 
         [Primary]
         [D2OField("id")]

@@ -11,6 +11,7 @@ using Giny.World.Managers.Experiences;
 using Giny.World.Managers.Shortcuts;
 using Giny.World.Managers.Spells;
 using Giny.World.Managers.Stats;
+using Giny.World.Network;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -23,6 +24,8 @@ namespace Giny.World.Records.Characters
     [Table("characters")]
     public class CharacterRecord : IRecord
     {
+        private static readonly object _lock = new object();
+
         [Container]
         private static readonly ConcurrentDictionary<long, CharacterRecord> Characters = new ConcurrentDictionary<long, CharacterRecord>();
 
@@ -47,6 +50,13 @@ namespace Giny.World.Records.Characters
         }
         [Update]
         public ServerEntityLook Look
+        {
+            get;
+            set;
+        }
+
+        [Update]
+        public ServerEntityLook? ContextualLook
         {
             get;
             set;
@@ -161,7 +171,7 @@ namespace Giny.World.Records.Characters
         }
         [ProtoSerialize]
         [Update]
-        public CharacterJob[] Jobs
+        public List<CharacterJob> Jobs
         {
             get;
             set;
@@ -177,6 +187,14 @@ namespace Giny.World.Records.Characters
         [ProtoSerialize]
         [Update]
         public List<CharacterAchievement> Achievements
+        {
+            get;
+            set;
+        }
+
+        [Update]
+        [ProtoSerialize]
+        public HardcoreInformations HardcoreInformations
         {
             get;
             set;
@@ -206,14 +224,25 @@ namespace Giny.World.Records.Characters
         }
 
 
-        public CharacterRecord()
-        {
 
-        }
-        public CharacterBaseInformations GetCharacterBaseInformations()
+        public CharacterBaseInformations GetCharacterBaseInformations(bool characterList)
         {
+            if (characterList && WorldServer.Instance.IsEpicOrHardcore())
+            {
+                return new CharacterHardcoreOrEpicInformations((byte)HardcoreInformations.DeathState,
+                    HardcoreInformations.DeathCount, HardcoreInformations.DeathMaxLevel, Id,
+                    Name, ExperienceManager.Instance.GetCharacterLevel(Experience),
+                    GetActiveLook().ToEntityLook(), BreedId, Sex);
+            }
+
+
             return new CharacterBaseInformations(Sex, Id, Name, ExperienceManager.Instance.GetCharacterLevel(Experience),
-            Look.ToEntityLook(), BreedId);
+            GetActiveLook().ToEntityLook(), BreedId);
+        }
+
+        public ServerEntityLook GetActiveLook()
+        {
+            return ContextualLook != null ? ContextualLook : Look;
         }
         [StartupInvoke(StartupInvokePriority.Last)]
         public static void Initialize()
@@ -235,7 +264,11 @@ namespace Giny.World.Records.Characters
 
         public static bool NameExist(string name)
         {
-            return Characters.Values.Any(x => x.Name.ToLower() == name.ToLower());
+            lock (_lock)
+            {
+                return Characters.Values.Any(x => x.Name.ToLower() == name.ToLower());
+
+            }
         }
 
         public static CharacterRecord Create(long id, string name, int accountId, ServerEntityLook look, byte breedId, short cosmeticId, bool sex)
@@ -253,7 +286,7 @@ namespace Giny.World.Records.Characters
                 Look = look,
                 Name = name,
                 Sex = sex,
-                Stats = EntityStats.New(ConfigFile.Instance.StartLevel, breedId),
+                Stats = EntityStats.New(ConfigFile.Instance.StartLevel),
                 Kamas = 0,
                 KnownEmotes = new List<short>() { 1 },
                 Shortcuts = new List<CharacterShortcut>(),
@@ -264,21 +297,32 @@ namespace Giny.World.Records.Characters
                 ActiveTitleId = 0,
                 KnownTitles = new List<short>(),
                 Achievements = new List<CharacterAchievement>(),
-                Jobs = CharacterJob.New().ToArray(),
+                Jobs = CharacterJob.New(),
                 GuildId = 0,
+                HardcoreInformations = new HardcoreInformations(),
+                ContextualLook = null,
             };
         }
         public static CharacterRecord GetCharacterRecord(long id)
         {
-            return Characters.TryGetValue(id);
+            lock (_lock)
+            {
+                return Characters.TryGetValue(id);
+            }
         }
         public static IEnumerable<CharacterRecord> GetCharacterRecords()
         {
-            return Characters.Values;
+            lock (_lock)
+            {
+                return Characters.Values;
+            }
         }
         public static List<CharacterRecord> GetCharactersByAccountId(int id)
         {
-            return Characters.Values.Where(x => x.AccountId == id).ToList();
+            lock (_lock)
+            {
+                return Characters.Values.Where(x => x.AccountId == id).ToList();
+            }
         }
         public static long NextId()
         {

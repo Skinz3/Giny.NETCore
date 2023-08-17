@@ -20,7 +20,7 @@ namespace Giny.World.Records.Achievements
     public class AchievementRecord : IRecord
     {
         [Container]
-        private static readonly ConcurrentDictionary<long, AchievementRecord> Achievements = new ConcurrentDictionary<long, AchievementRecord>();
+        private static readonly Dictionary<long, AchievementRecord> Achievements = new Dictionary<long, AchievementRecord>();
 
         [D2OField("id")]
         [Primary]

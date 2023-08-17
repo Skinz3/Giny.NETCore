@@ -58,8 +58,11 @@ namespace Giny.Pokefus.Fight.Fighters
             stats.LifePoints = lifePoints;
             stats.MaxLifePoints = lifePoints;
 
+
             return stats;
         }
+
+      
         public override void Initialize()
         {
             this.SetController((CharacterFighter)Summoner);

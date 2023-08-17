@@ -310,7 +310,7 @@ namespace Giny.World.Managers.Stats
                 }
             }
         }
-        public static EntityStats New(short level, byte breedId)
+        public static EntityStats New(short level)
         {
             var stats = new EntityStats()
             {

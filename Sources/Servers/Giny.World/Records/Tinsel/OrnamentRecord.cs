@@ -15,7 +15,7 @@ namespace Giny.World.Records.Tinsel
     public class OrnamentRecord : IRecord
     {
         [Container]
-        private static ConcurrentDictionary<long, OrnamentRecord> Ornaments = new ConcurrentDictionary<long, OrnamentRecord>();
+        private static Dictionary<long, OrnamentRecord> Ornaments = new Dictionary<long, OrnamentRecord>();
 
         [Primary]
         [D2OField("id")]

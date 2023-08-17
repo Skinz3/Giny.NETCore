@@ -15,7 +15,7 @@ namespace Giny.World.Records.Npcs
     public class NpcActionRecord : IRecord
     {
         [Container]
-        private static ConcurrentDictionary<long, NpcActionRecord> NpcsActions = new ConcurrentDictionary<long, NpcActionRecord>();
+        private static Dictionary<long, NpcActionRecord> NpcsActions = new Dictionary<long, NpcActionRecord>();
 
         [Primary]
         public long Id

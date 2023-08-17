@@ -17,7 +17,7 @@ namespace Giny.World.Records.Npcs
     public class NpcRecord : IRecord
     {
         [Container]
-        private static ConcurrentDictionary<long, NpcRecord> Npcs = new ConcurrentDictionary<long, NpcRecord>();
+        private static Dictionary<long, NpcRecord> Npcs = new Dictionary<long, NpcRecord>();
 
         [Primary]
         [D2OField("id")]

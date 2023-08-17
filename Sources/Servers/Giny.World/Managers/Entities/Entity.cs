@@ -68,6 +68,11 @@ namespace Giny.World.Managers.Entities
             if (Map != null && Map.Instance != null)
                 Map.Instance.Send(message);
         }
+        public void RefreshLookOnMap()
+        {
+            SendMap(new GameContextRefreshEntityLookMessage(Id, Look.ToEntityLook()));
+        }
+
         public void RefreshActorOnMap()
         {
             SendMap(new GameRolePlayShowActorMessage(GetActorInformations()));

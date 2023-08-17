@@ -9,7 +9,7 @@
 @using System.Collections;
 
 <MudGrid>
-    <MudItem xs="3">
+    <MudItem xs="2">
 
         <MudPaper Outlined=true>
             <MudList Dense="true" Clickable="true">
@@ -154,7 +154,7 @@
 
             }
             else if (property.Name == "LongNameId" || property.Name == "NameId" || property.Name == "ShortNameId"
-            || property.Name == "DescriptionId")
+            || property.Name == "DescriptionId" || property.Name == "TextId")
             {
                 result = D2IManager.GetText(int.Parse(value.ToString()));
             }
@@ -163,10 +163,11 @@
                 result = value.ToString();
             }
 
+            const int sizeMax = 100;
 
-            if (result.Length > 40)
+            if (result.Length > sizeMax)
             {
-                result = result.Substring(0, 40);
+                result = result.Substring(0, 100);
                 result += "...";
             }
             return result;

@@ -83,7 +83,7 @@ namespace Giny.World.Managers.Entities.Characters
                     }
                 }
             }
-            if (message.name.Contains(" "))
+            if (message.name.Contains(" ")) // REGEX
             {
                 return CharacterCreationResultEnum.ERR_INVALID_NAME;
             }

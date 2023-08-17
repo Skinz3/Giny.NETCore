@@ -644,7 +644,7 @@ namespace Giny.World.Managers.Items.Collections
             targeted.UpdateElement();
             OnItemModified(targeted);
             RefreshWeight();
-            Character.RefreshActorOnMap();
+            Character.RefreshLookOnMap();
             Character.RefreshStats();
             Character.Client.Send(new WrapperObjectAssociatedMessage()
             {
@@ -697,7 +697,7 @@ namespace Giny.World.Managers.Items.Collections
                 item.UpdateElement();
 
                 RefreshWeight();
-                Character.RefreshActorOnMap();
+                Character.RefreshLookOnMap();
                 Character.RefreshStats();
             }
 

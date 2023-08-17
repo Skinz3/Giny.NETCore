@@ -17,6 +17,7 @@ namespace Giny.Pokefus
         public static void ReloadPokefusCommand(WorldClient client)
         {
             PokefusWishManager.Initialize();
+            client.Character.ReplyWarning("Pokefus reloaded.");
         }
         [ChatCommand("pokefus", ServerRoleEnum.GamemasterPadawan)]
         public static void PokefusCommand(WorldClient client, short monsterId)

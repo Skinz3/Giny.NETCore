@@ -56,7 +56,7 @@ namespace Giny.World.Managers.Items
                     if (targeted.PositionEnum != CharacterInventoryPositionEnum.INVENTORY_POSITION_NOT_EQUIPED && record.Skinnable)
                     {
                         character.Inventory.UpdateItemAppearence(targeted, livingObject.AppearanceId);
-                        character.RefreshActorOnMap();
+                        character.RefreshLookOnMap();
                     }
 
                     character.Inventory.RemoveItem(livingObject, livingObject.Quantity);
@@ -95,7 +95,7 @@ namespace Giny.World.Managers.Items
                         item.AppearanceId = skin;
                     }
 
-                    character.RefreshActorOnMap();
+                    character.RefreshLookOnMap();
                 }
 
                 effect.Value = (short)skinIndex;

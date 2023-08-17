@@ -10,6 +10,16 @@ namespace Giny.World.Managers.Stats
     [ProtoContract]
     public class ApCharacteristic : UsableCharacteristic
     {
+        public ApCharacteristic(short @base) : base(@base)
+        {
+
+        }
+
+        public ApCharacteristic()
+        {
+
+        }
+
         public override short? Limit => ConfigFile.Instance.ApLimit;
 
         public override bool ContextualLimit => false;
@@ -25,9 +35,8 @@ namespace Giny.World.Managers.Stats
 
         public static new ApCharacteristic New(short @base)
         {
-            return new ApCharacteristic()
+            return new ApCharacteristic(@base)
             {
-                Base = @base,
                 Additional = 0,
                 Context = 0,
                 Objects = 0
@@ -35,10 +44,9 @@ namespace Giny.World.Managers.Stats
         }
         public override Characteristic Clone()
         {
-            return new ApCharacteristic()
+            return new ApCharacteristic(Base)
             {
                 Additional = Additional,
-                Base = Base,
                 Objects = Objects
             };
         }

@@ -15,7 +15,7 @@ namespace Giny.World.Records.Breeds
     public class HeadRecord : IRecord
     {
         [Container]
-        private static readonly ConcurrentDictionary<long, HeadRecord> Heads = new ConcurrentDictionary<long, HeadRecord>();
+        private static readonly Dictionary<long, HeadRecord> Heads = new Dictionary<long, HeadRecord>();
 
         [D2OField("id")]
         [Primary]

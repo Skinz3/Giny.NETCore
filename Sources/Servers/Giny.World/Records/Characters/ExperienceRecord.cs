@@ -15,7 +15,7 @@ namespace Giny.World.Records.Characters
     public class ExperienceRecord : IRecord
     {
         [Container]
-        private static readonly ConcurrentDictionary<long, ExperienceRecord> Experiences = new ConcurrentDictionary<long, ExperienceRecord>();
+        private static readonly Dictionary<long, ExperienceRecord> Experiences = new Dictionary<long, ExperienceRecord>();
 
         [Ignore]
         public long Id => Level;

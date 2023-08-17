@@ -77,14 +77,18 @@ namespace Giny.World.Records.Items
             this.Look = Record.Look;
         }
 
-        public static IEnumerable<CharacterItemRecord> GetCharacterItems(long characterId)
+        public static List<CharacterItemRecord> GetCharacterItems(long characterId)
         {
-            return CharactersItems.Values.Where(x => x.CharacterId == characterId);
+            List<CharacterItemRecord> result = new List<CharacterItemRecord>();
+
+            lock (CharactersItems)
+            {
+                result.AddRange(CharactersItems.Values.Where(x => x.CharacterId == characterId));
+            }
+
+            return result;
         }
-        public static IEnumerable<CharacterItemRecord> GetCharacterItems()
-        {
-            return CharactersItems.Values;
-        }
+
         public static long GetCharactersItemsCount()
         {
             return CharactersItems.Count;

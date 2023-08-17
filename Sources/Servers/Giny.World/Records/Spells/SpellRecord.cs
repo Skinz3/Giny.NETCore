@@ -17,7 +17,7 @@ namespace Giny.World.Records.Spells
     public class SpellRecord : IRecord
     {
         [Container]
-        private static ConcurrentDictionary<long, SpellRecord> Spells = new ConcurrentDictionary<long, SpellRecord>();
+        private static Dictionary<long, SpellRecord> Spells = new Dictionary<long, SpellRecord>();
 
         long IRecord.Id => Id;
 

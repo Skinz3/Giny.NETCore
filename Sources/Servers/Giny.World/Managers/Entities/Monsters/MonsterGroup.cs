@@ -1,9 +1,11 @@
 ﻿using Giny.Core.DesignPattern;
 using Giny.Core.Extensions;
 using Giny.Protocol.Custom.Enums;
+using Giny.Protocol.Enums;
 using Giny.Protocol.Messages;
 using Giny.Protocol.Types;
 using Giny.World.Managers.Entities;
+using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Entities.Look;
 using Giny.World.Managers.Fights;
 using Giny.World.Managers.Fights.Cast;
@@ -38,6 +40,7 @@ namespace Giny.World.Managers.Monsters
             this.CellId = cellId;
             this.m_UId = Map.Instance.PopNextNPEntityId();
             this.CreationDate = DateTime.Now;
+            this.CanBeAggressed = true;
         }
 
         public override string Name
@@ -46,6 +49,12 @@ namespace Giny.World.Managers.Monsters
             {
                 return Leader.Record.Name;
             }
+        }
+
+        public bool CanBeAggressed
+        {
+            get;
+            set;
         }
 
         private long m_UId;
@@ -154,13 +163,45 @@ namespace Giny.World.Managers.Monsters
                 disposition = new EntityDispositionInformations(CellId, (byte)Direction),
                 hasHardcoreDrop = false,
                 look = Look.ToEntityLook(),
-                lootShare = 0,
+                lootShare =0,
                 staticInfos = GetGroupMonsterStaticInformations(),
             };
         }
         public override string ToString()
         {
             return "Monsters (" + Name + "' group)";
+        }
+
+        public void Agress(Character character)
+        {
+            if (!CanBeAggressed || !Map.Position.AllowMonsterAgression)
+            {
+                character.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 293);
+                return;
+            }
+
+            if (Map.BlueCells.Count >= MonsterCount && Map.RedCells.Count() >= character.FighterCount)
+            {
+                character.Map.Instance.RemoveEntity(Id);
+
+                CellRecord cell = character.Map.GetCell(CellId);
+
+                FightPvM fight = FightManager.Instance.CreateFightPvM(character, this, Map, cell);
+
+                foreach (var monsterFighter in CreateFighters(fight.BlueTeam))
+                {
+                    fight.BlueTeam.AddFighter(monsterFighter);
+                }
+
+                fight.RedTeam.AddFighter(character.CreateFighter(fight.RedTeam));
+
+                fight.StartPlacement();
+
+            }
+            else
+            {
+                character.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 456);
+            }
         }
     }
 }

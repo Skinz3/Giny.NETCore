@@ -15,7 +15,7 @@ namespace Giny.World.Records.Spells
     public class SpellVariantRecord : IRecord
     {
         [Container]
-        private static ConcurrentDictionary<long, SpellVariantRecord> SpellVariants = new ConcurrentDictionary<long, SpellVariantRecord>();
+        private static Dictionary<long, SpellVariantRecord> SpellVariants = new Dictionary<long, SpellVariantRecord>();
 
         [Primary]
         [D2OField("id")]

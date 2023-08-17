@@ -8,6 +8,7 @@ using Giny.World.Managers.Effects;
 using Giny.World.Managers.Entities.Look;
 using Giny.World.Managers.Entities.Npcs;
 using Giny.World.Managers.Experiences;
+using Giny.World.Managers.Fights;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Results;
 using Giny.World.Managers.Fights.Units;
@@ -114,8 +115,15 @@ namespace Giny.World.Managers.Chat
         public static void LookCommand(WorldClient client, string lookStr)
         {
             var look = EntityLookManager.Instance.Parse(System.Web.HttpUtility.HtmlDecode(lookStr));
-            client.Character.Look = look;
-            client.Character.RefreshActorOnMap();
+            client.Character.Record.ContextualLook = look;
+            client.Character.RefreshLookOnMap();
+
+        }
+        [ChatCommand("unlook", ServerRoleEnum.Administrator)]
+        public static void UnlookCommand(WorldClient client)
+        {
+            client.Character.Record.ContextualLook = null;
+            client.Character.RefreshLookOnMap();
         }
         [ChatCommand("sun", ServerRoleEnum.Administrator)]
         public static void AddSunCommand(WorldClient client, int elementId, int mapId, short cellId)
@@ -337,6 +345,11 @@ namespace Giny.World.Managers.Chat
 
             client.Character.Reply("Zaapi added.");
         }
+        [ChatCommand("fights", ServerRoleEnum.Administrator)]
+        public static void FightsCommand(WorldClient client)
+        {
+            client.Character.ReplyWarning("Fights count : <b>" + FightManager.Instance.GetFightCount() + "</b>.");
+        }
         [ChatCommand("nocollide", ServerRoleEnum.Administrator)]
         public static void NoCollideCommand(WorldClient client)
         {
@@ -491,14 +504,30 @@ namespace Giny.World.Managers.Chat
             client.Character.PlaySpellAnimOnMap(client.Character.CellId, spellId, 1, DirectionsEnum.DIRECTION_SOUTH_EAST);
 
         }
+
+        [ChatCommand("shop", ServerRoleEnum.Administrator)]
+        public static void ShopCommand(WorldClient client)
+        {
+            client.Character.Teleport(224920584);
+        }
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
-            foreach (var item in AchievementRecord.GetAchievements())
+            if (client.Character.Fighter == null)
+                return;
+
+
+
+
+
+            using (var seq = client.Character.Fighter.Fight.SequenceManager.StartSequence(Fights.Sequences.SequenceTypeEnum.SEQUENCE_SPELL))
             {
-                client.Character.ReachAchievement(item);
+                client.Character.Fighter.InflictDamage(new Damage(client.Character.Fighter, client.Character.Fighter, EffectSchoolEnum.Fix, 300, 300));
             }
-           // client.Send(new GameActionItemListMessage(new GameActionItem[] { new GameActionItem(2469, "hello", "why", "eiejd", "eij", new ObjectItemInformationWithQuantity[] {new ObjectItemInformationWithQuantity(1,2469,new ObjectEffect[0])}) }));
+
+
+
+            // client.Send(new GameActionItemListMessage(new GameActionItem[] { new GameActionItem(2469, "hello", "why", "eiejd", "eij", new ObjectItemInformationWithQuantity[] {new ObjectItemInformationWithQuantity(1,2469,new ObjectEffect[0])}) }));
             // 22691
 
             // 22693 pas mal
@@ -509,7 +538,7 @@ namespace Giny.World.Managers.Chat
 
             return;
 
-                
+
 
 
             foreach (var subarea in SubareaRecord.GetSubareas())
@@ -528,17 +557,6 @@ namespace Giny.World.Managers.Chat
                 client.Character.ReachAchievement(item);
             }
 
-            if (client.Character.Fighter == null)
-                return;
-
-
-
-
-
-            using (var seq = client.Character.Fighter.Fight.SequenceManager.StartSequence(Fights.Sequences.SequenceTypeEnum.SEQUENCE_SPELL))
-            {
-                client.Character.Fighter.InflictDamage(new Damage(client.Character.Fighter, client.Character.Fighter, EffectSchoolEnum.Fix, 300, 300));
-            }
 
 
             return;

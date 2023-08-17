@@ -10,6 +10,15 @@ namespace Giny.World.Managers.Stats
 {
     public abstract class UsableCharacteristic : DetailedCharacteristic
     {
+
+        public UsableCharacteristic()
+        {
+
+        }
+        public UsableCharacteristic(short @base) : base(@base)
+        {
+
+        }
         private short m_used;
 
         public short Used

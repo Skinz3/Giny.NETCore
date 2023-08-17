@@ -65,7 +65,7 @@ namespace Giny.World.Handlers.Items
             if (item != null)
             {
                 LivingObjectManager.Instance.DissociateLivingObject(client.Character, item);
-                client.Character.RefreshActorOnMap();
+                client.Character.RefreshLookOnMap();
                 client.Character.Inventory.RefreshWeight();
             }
         }

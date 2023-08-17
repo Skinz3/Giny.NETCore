@@ -21,7 +21,7 @@ namespace Giny.World.Records.Monsters
     public class MonsterRecord : IRecord
     {
         [Container]
-        private static ConcurrentDictionary<long, MonsterRecord> Monsters = new ConcurrentDictionary<long, MonsterRecord>();
+        private static Dictionary<long, MonsterRecord> Monsters = new Dictionary<long, MonsterRecord>();
 
         [Primary]
         [D2OField("id")]

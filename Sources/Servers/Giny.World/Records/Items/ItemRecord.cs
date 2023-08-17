@@ -23,7 +23,7 @@ namespace Giny.World.Records.Items
         private const int MinimumItemPrice = 1;
 
         [Container]
-        private static readonly ConcurrentDictionary<long, ItemRecord> Items = new ConcurrentDictionary<long, ItemRecord>();
+        private static readonly Dictionary<long, ItemRecord> Items = new Dictionary<long, ItemRecord>();
 
         [D2OField("id")]
         [Primary]
@@ -205,7 +205,7 @@ namespace Giny.World.Records.Items
                 }
             }
 
-        
+
         }
         public static IEnumerable<ItemRecord> GetItems()
         {

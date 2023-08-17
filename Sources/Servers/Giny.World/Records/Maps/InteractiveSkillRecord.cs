@@ -19,7 +19,7 @@ namespace Giny.World.Records.Maps
     public class InteractiveSkillRecord : IRecord
     {
         [Container]
-        private static ConcurrentDictionary<long, InteractiveSkillRecord> InteractiveSkills = new ConcurrentDictionary<long, InteractiveSkillRecord>();
+        private static Dictionary<long, InteractiveSkillRecord> InteractiveSkills = new Dictionary<long, InteractiveSkillRecord>();
 
         [Primary]
         public long Id

@@ -14,6 +14,8 @@ namespace Giny.World.Logging
     {
         private const string Path = "logs.txt";
 
+        static object _lock = new object();
+
         private LogFile File
         {
             get;
@@ -34,6 +36,7 @@ namespace Giny.World.Logging
             }
 
             string source = "Unknown";
+
             long mapId = -1;
 
             if (client.Ip != null)
@@ -43,10 +46,14 @@ namespace Giny.World.Logging
             if (client.Character != null)
             {
                 source = client.Character.Name;
+            }
+
+            if (client.Character.Map != null)
+            {
                 mapId = client.Character.Map.Id;
             }
 
-            lock (File)
+            lock (_lock)
             {
                 File.AppendError(source, mapId, message, ex);
             }

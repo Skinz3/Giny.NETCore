@@ -15,7 +15,7 @@ namespace Giny.World.Records.Maps
     public class MapReferenceRecord : IRecord
     {
         [Container]
-        private static ConcurrentDictionary<long, MapReferenceRecord> MapReferences = new ConcurrentDictionary<long, MapReferenceRecord>();
+        private static Dictionary<long, MapReferenceRecord> MapReferences = new Dictionary<long, MapReferenceRecord>();
 
         [D2OField("id")]
         [Primary]

@@ -15,7 +15,7 @@ namespace Giny.World.Records.Tinsel
     public class TitleRecord : IRecord
     {
         [Container]
-        private static ConcurrentDictionary<long, TitleRecord> Titles = new ConcurrentDictionary<long, TitleRecord>();
+        private static Dictionary<long, TitleRecord> Titles = new Dictionary<long, TitleRecord>();
 
         [Primary]
         [D2OField("id")]

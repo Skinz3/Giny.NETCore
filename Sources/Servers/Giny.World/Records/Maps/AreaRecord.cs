@@ -15,7 +15,7 @@ namespace Giny.World.Records.Maps
     public class AreaRecord : IRecord
     {
         [Container]
-        private static ConcurrentDictionary<long, AreaRecord> Areas = new ConcurrentDictionary<long, AreaRecord>();
+        private static Dictionary<long, AreaRecord> Areas = new Dictionary<long, AreaRecord>();
 
         [D2OField("id")]
         [Primary]

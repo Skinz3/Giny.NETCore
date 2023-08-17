@@ -66,7 +66,7 @@ namespace Giny.World.Records.Characters
             long experienceForNextLevel = ExperienceManager.Instance.GetJobXPForNextLevel(Level);
             return new JobExperience(JobId, (byte)Level, Experience, experienceForLevel, experienceForNextLevel);
         }
-        public static IEnumerable<CharacterJob> New()
+        public static List<CharacterJob> New()
         {
             List<CharacterJob> jobs = new List<CharacterJob>();
 
@@ -78,8 +78,9 @@ namespace Giny.World.Records.Characters
                     Experience = 0,
 
                 };
-                yield return characterJob;
+                jobs.Add(characterJob);
             }
+            return jobs;
 
         }
 

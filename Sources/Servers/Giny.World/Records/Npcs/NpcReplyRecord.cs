@@ -15,7 +15,7 @@ namespace Giny.World.Records.Npcs
     public class NpcReplyRecord : IRecord, IGenericActionParameter
     {
         [Container]
-        private static ConcurrentDictionary<long, NpcReplyRecord> NpcReplies = new ConcurrentDictionary<long, NpcReplyRecord>();
+        private static Dictionary<long, NpcReplyRecord> NpcReplies = new Dictionary<long, NpcReplyRecord>();
 
         [Primary]
         public long Id

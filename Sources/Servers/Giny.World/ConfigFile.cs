@@ -1,6 +1,9 @@
 ﻿using Giny.Core;
 using Giny.Core.DesignPattern;
 using Giny.Core.IO;
+using Giny.Protocol.Enums;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,6 +28,14 @@ namespace Giny.World
             get;
             set;
         } = 291;
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public GameServerTypeEnum ServerType
+        {
+            get;
+            set;
+        } = GameServerTypeEnum.SERVER_TYPE_CLASSICAL;
+
         public string Host
         {
             get;

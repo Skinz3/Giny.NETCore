@@ -1,0 +1,54 @@
+{
+  "Data": [
+{
+      "Indice": 1,
+      "Monsters": {
+        "Bouftou": 0.1,
+        "Bouftou Royal": 0.01,
+        "Boufton Blanc": 0.15,
+	"Boufton Noir": 0.15,
+        "Bouftou des Cavernes" : 0.1,
+        "Chef de Guerre Bouftou": 0.1,
+        "Bouftou troglodyte": 0.1,
+	"Bouftou d'Halouine":0.12,
+        "Ballotin le Bouftou": 0.12,
+        "Bouftonmouth":0.1,
+        "Bouftoxik":0.03,
+        "Royalmouth":0.01,
+      }
+    },
+    {
+      "Indice": 2,
+      "Monsters": {
+        "Abrakne": 0.1,
+        "Abrakne Sombre": 0.1,
+        "Abraknyde": 0.1,
+	"Abraknyde Ancestral": 0.01,
+        "Abraknyde Chétif" : 0.1,
+        "Abraknyde invoqué": 0.2,
+	"Abraknyde Malade":0.12,
+        "Abraknyde Sombre": 0.12,
+        "Abraknyde Vénérable":0.1,
+        "Abrazif":0.03,
+        "Chêne Mou":0.008,
+      } 
+     },
+      {
+      "Indice": 3,
+      "Monsters": {
+        "Tofu Royal": 0.008,
+        "Tofu d'Halouine": 0.1,
+        "Tofu Dégénéré": 0.1,
+	"Bomberfu": 0.1,
+        "Tofoune" : 0.1,
+        "Tofu Mutant": 0.1,
+	"Tofukaz":0.09,
+        "Tofuzmo": 0.07,
+        "Tofu Ventripotent":0.1,
+        "Tofuldebeu l'Explosif":0.03,
+        "Tofu":0.1,
+      }
+    }
+],
+  "StaticMonsters": {"Larve Bleue":0.3,"Larve Verte":0.3,"Tournesol Sauvage":0.3,"Crabe":0.3}
+}

@@ -22,6 +22,8 @@ namespace Giny.World.Managers.Bidshops
         [StartupInvoke("Bidshops", StartupInvokePriority.SixthPath)]
         public void Initialize()
         {
+            m_bidshopItems.Clear();
+
             foreach (var bidshop in BidShopRecord.GetBidShops())
             {
                 m_bidshopItems.TryAdd(bidshop.Id, new ConcurrentDictionary<long, BidShopItemRecord>());

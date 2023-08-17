@@ -15,7 +15,7 @@ namespace Giny.World.Records.Npcs
     public class NpcSpawnRecord : IRecord
     {
         [Container]
-        private static ConcurrentDictionary<long, NpcSpawnRecord> NpcSpawns = new ConcurrentDictionary<long, NpcSpawnRecord>();
+        private static Dictionary<long, NpcSpawnRecord> NpcSpawns = new Dictionary<long, NpcSpawnRecord>();
 
         [Primary]
         public long Id

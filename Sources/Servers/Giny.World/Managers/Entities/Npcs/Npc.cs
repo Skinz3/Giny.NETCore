@@ -73,15 +73,17 @@ namespace Giny.World.Managers.Entities.Npcs
             }
         }
 
+        private ServerEntityLook? m_customLook;
+
         public override ServerEntityLook Look
         {
             get
             {
-                return Template.Look;
+                return m_customLook == null ? Template.Look : m_customLook;
             }
             set
             {
-                throw new NotSupportedException("not authorized.");
+                m_customLook = value;
             }
         }
 

@@ -19,6 +19,7 @@ using Giny.World.Managers.Fights.Sequences;
 using Giny.World.Managers.Fights.Stats;
 using Giny.World.Managers.Fights.Synchronisation;
 using Giny.World.Managers.Fights.Units;
+using Giny.World.Managers.Hardcore;
 using Giny.World.Managers.Items;
 using Giny.World.Managers.Items.Collections;
 using Giny.World.Managers.Spells;
@@ -527,6 +528,11 @@ namespace Giny.World.Managers.Fights.Fighters
         public override void OnFightEnding()
         {
             AchievementManager.Instance.OnPlayerFightEnding(this);
+
+            if (Fight.Winners != Team)
+            {
+                HardcoreManager.Instance.OnCharacterLooseFight(this);
+            }
         }
         public override bool MustSkipTurn()
         {
