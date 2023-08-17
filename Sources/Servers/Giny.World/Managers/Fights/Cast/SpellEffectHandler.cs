@@ -100,7 +100,7 @@ namespace Giny.World.Managers.Fights.Cast
          * Sorts d'invocations avec TargetMask
          * Karcham & Chamrak
          */
-        [WIP]
+        [Annotation]
         protected bool CasterCriterionSatisfied
         {
             get;
@@ -246,7 +246,7 @@ namespace Giny.World.Managers.Fights.Cast
             return Zone.GetCells(TargetCell, CastCell, Source.Fight.Map).ToList();
         }
 
-        [WIP("usage?")]
+        [Annotation("usage?")]
         public virtual bool CanApply()
         {
             return true;

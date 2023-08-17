@@ -60,7 +60,7 @@ namespace Giny.World.Managers.Entities.Characters
         }
         public CharacterCreationResultEnum CanCreateCharacter(CharacterCreationRequestMessage message, WorldClient client)
         {
-            if (WorldServer.Instance.Status != ServerStatusEnum.ONLINE || !IPCManager.Instance.Connected || client.InGame)
+            if (WorldServer.Instance.GetServerStatus() != ServerStatusEnum.ONLINE || !IPCManager.Instance.Connected || client.InGame)
             {
                 return CharacterCreationResultEnum.ERR_NO_REASON;
             }
@@ -90,7 +90,7 @@ namespace Giny.World.Managers.Entities.Characters
 
             return CharacterCreationResultEnum.OK;
         }
-        [WIP("constant checking")]
+        [Annotation("constant checking")]
         public void DeleteCharacter(CharacterRecord character)
         {
             character.RemoveInstantElement();

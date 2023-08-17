@@ -124,7 +124,7 @@ namespace Giny.World.Managers.Entities.Characters
             get;
             private set;
         }
-        [WIP("useless?")]
+        [Annotation("useless?")]
         public GuildMemberRecord GuildMember
         {
             get;
@@ -368,7 +368,7 @@ namespace Giny.World.Managers.Entities.Characters
             get;
             set;
         }
-        [WIP("pokefus , companions (verification cellule)")]
+        [Annotation("pokefus , companions (verification cellule)")]
         public int FighterCount => 1;
 
         public Character(WorldClient client, CharacterRecord record) : base(null)
@@ -1018,7 +1018,7 @@ namespace Giny.World.Managers.Entities.Characters
         {
             this.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_MESSAGE, 22, new object[] { quantity, gid });
         }
-        [WIP]
+        [Annotation]
         public void OnLevelChanged(short oldLevel, short amount)
         {
             if (CharacterLoadingComplete)
@@ -1115,14 +1115,14 @@ namespace Giny.World.Managers.Entities.Characters
             }
         */
 
-        [WIP]
+        [Annotation]
         public void RefreshArenaInfos()
         {
             var infos = new ArenaRankInfos(new ArenaRanking(1, 2), new ArenaLeagueRanking(1, 1, 200, 100, 1), 1, 2, 3);
             Client.Send(new GameRolePlayArenaUpdatePlayerInfosAllQueuesMessage(infos, infos, infos));
 
         }
-        [WIP]
+        [Annotation]
         public void OnEnterMap()
         {
 
@@ -1615,7 +1615,7 @@ namespace Giny.World.Managers.Entities.Characters
         }
 
 
-        [WIP("still working?")]
+        [Annotation("still working?")]
         public void Restat()
         {
             int vitality = this.Stats[CharacteristicEnum.VITALITY].Base;
@@ -1677,7 +1677,7 @@ namespace Giny.World.Managers.Entities.Characters
             }
 
         }
-        [WIP("monsters? int[0]")]
+        [Annotation("monsters? int[0]")]
         private void SendGameFightStartingMessage(Fight fight)
         {
             this.Client.Send(new GameFightStartingMessage((byte)fight.FightType,

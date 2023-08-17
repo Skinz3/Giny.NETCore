@@ -60,7 +60,7 @@ namespace Giny.World.Managers.Exchanges
             var gids = GetGIDs(TypeWatched);
             Character.Client.Send(new ExchangeTypesExchangerDescriptionForUserMessage(type, gids));
         }
-        [WIP]
+        [Annotation]
         public void ShowList(int gid, bool follow) // follow?
         {
             GIdWatched = gid;
@@ -69,7 +69,7 @@ namespace Giny.World.Managers.Exchanges
                 items));
            
         }
-        [WIP("Some bug concerning UID Quantities ...?")]
+        [Annotation("Some bug concerning UID Quantities ...?")]
         public void Buy(int uid, int quantity, long price)
         {
             bool bought = false;

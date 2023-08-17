@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Entities.Characters
 {
-    [WIP("Remove this.")]
+    [Annotation("Remove this.")]
     public class CharacterLevelRewardManager : Singleton<CharacterLevelRewardManager>
     {
         public const byte EMOTE_100 = 22;

@@ -13,7 +13,7 @@ namespace Giny.IO.D2I
     /// <summary>
     /// Dofus Language File *.d2i
     /// </summary>
-    [WIP("make an D2IManager (as D2O) for tools.")]
+    [Annotation("make an D2IManager (as D2O) for tools.")]
     public class D2IFile
     {
         private readonly Dictionary<int, D2IEntry<int>> m_entries = new Dictionary<int, D2IEntry<int>>();

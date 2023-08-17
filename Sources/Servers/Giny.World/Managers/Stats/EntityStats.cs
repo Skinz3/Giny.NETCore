@@ -40,7 +40,7 @@ namespace Giny.World.Managers.Stats
             }
         }
 
-        [WIP("formule inexact (arrondi)")]
+        [Annotation("formule inexact (arrondi)")]
         public double LifePercentage => (LifePoints / (double)MaxLifePoints) * 100;
 
 

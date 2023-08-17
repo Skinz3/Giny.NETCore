@@ -59,7 +59,7 @@ namespace Giny.World.Records.Guilds
         {
 
         }
-        [WIP]
+        [Annotation]
         public GuildMemberRecord(Character character, bool owner)
         {
             CharacterId = character.Id;
@@ -70,7 +70,7 @@ namespace Giny.World.Records.Guilds
             Rights = owner ? GuildRightsEnum.RIGHT_MANAGE_RANKS_AND_RIGHTS : 0;
         }
 
-        [WIP]
+        [Annotation]
         public GuildMemberInfo ToGuildMember(Guild guild)
         {
             bool connected = guild.IsMemberConnected(CharacterId);

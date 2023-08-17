@@ -306,7 +306,7 @@ namespace Giny.World.Managers.Fights.Stats
                 summonerId, summoned,
                 (byte)owner.GetInvisibilityStateFor(target));
         }
-        [WIP]
+        [Annotation]
         public GameFightCharacteristics GetGameFightCharacteristics(Fighter owner, CharacterFighter target, CharacteristicEnum? selected = null)
         {
 

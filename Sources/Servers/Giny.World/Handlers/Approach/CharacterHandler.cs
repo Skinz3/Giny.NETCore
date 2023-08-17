@@ -125,7 +125,7 @@ namespace Giny.World.Handlers.Approach
         {
             var character = client.GetCharacter(message.characterId);
 
-            if (WorldServer.Instance.Status != ServerStatusEnum.ONLINE || character == null || !IPCManager.Instance.Connected || client.InGame)
+            if (WorldServer.Instance.GetServerStatus() != ServerStatusEnum.ONLINE || character == null || !IPCManager.Instance.Connected || client.InGame)
             {
                 client.Send(new CharacterDeletionErrorMessage((byte)CharacterDeletionErrorEnum.DEL_ERR_NO_REASON));
                 return;
@@ -153,6 +153,12 @@ namespace Giny.World.Handlers.Approach
         [MessageHandler]
         public static void HandleCharacterSelectionMessage(CharacterSelectionMessage message, WorldClient client)
         {
+            if (WorldServer.Instance.GetServerStatus() != ServerStatusEnum.ONLINE || !IPCManager.Instance.Connected || client.InGame)
+            {
+                client.Send(new CharacterSelectedErrorMessage());
+                return;
+            }
+
             CharacterRecord record = client.GetCharacter(message.id);
 
             if (record == null || record.HardcoreInformations.DeathState == HardcoreOrEpicDeathStateEnum.DEATH_STATE_DEAD)
@@ -169,6 +175,12 @@ namespace Giny.World.Handlers.Approach
         [MessageHandler]
         public static void HandleCharacterReplayRequest(CharacterReplayRequestMessage message, WorldClient client)
         {
+            if (WorldServer.Instance.GetServerStatus() != ServerStatusEnum.ONLINE || !IPCManager.Instance.Connected || client.InGame)
+            {
+                client.Send(new CharacterDeletionErrorMessage((byte)CharacterDeletionErrorEnum.DEL_ERR_NO_REASON));
+                return;
+            }
+
             CharacterRecord record = client.GetCharacter(message.characterId);
 
             if (record == null)

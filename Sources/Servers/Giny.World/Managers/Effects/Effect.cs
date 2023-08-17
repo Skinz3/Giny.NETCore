@@ -117,7 +117,7 @@ namespace Giny.World.Managers.Effects
 
         private List<Trigger> m_triggers;
 
-        [WIP]
+        [Annotation]
         public List<Trigger> Triggers
         {
             get
@@ -149,7 +149,7 @@ namespace Giny.World.Managers.Effects
         {
             return ZoneManager.Instance.BuildZone(RawZone, direction);
         }
-        [WIP]
+        [Annotation]
         private Trigger ParseTrigger(string input)
         {
             string identifier = input.RemoveNumbers();

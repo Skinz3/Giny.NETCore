@@ -250,7 +250,7 @@ namespace Giny.World.Managers.Fights.Fighters
         /*
          * Prevent some Telefrag recursive issues (Desynchronisaiton)
          */
-        [WIP] // work on sram traps and test again desynchronisation
+        [Annotation] // work on sram traps and test again desynchronisation
         public CellRecord LastExchangedPositionSequenced
         {
             get;
@@ -673,7 +673,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
             BuffIdProvider.Push(buff.Id);
         }
-        [WIP("voir dofus nébuleux (Fight.Timeline.IndexOf(buff.Target) < Fight.Timeline.Index) ?")]
+        [Annotation("voir dofus nébuleux (Fight.Timeline.IndexOf(buff.Target) < Fight.Timeline.Index) ?")]
         public void AddBuff(Buff buff)
         {
             /*if (buff.GetSource() == this && buff.Cast.GetParent() == null && IsSequencingTurnEnd) Fix harmonie Sadida ...
@@ -912,7 +912,7 @@ namespace Giny.World.Managers.Fights.Fighters
             }
         }
 
-        [WIP]
+        [Annotation]
         public virtual bool CastSpell(SpellCast cast)
         {
 
@@ -1021,7 +1021,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
         }
 
-        [WIP("see stump")]
+        [Annotation("see stump")]
         private void OnSpellCasting(SpellCastHandler handler)
         {
             if (handler.Cast.Animation)
@@ -1103,7 +1103,7 @@ namespace Giny.World.Managers.Fights.Fighters
             Fight.Send(new GameActionFightNoSpellCastMessage(cast.Spell.Record.Id == 0 ? 0 : (int)cast.Spell.Level.Id));
         }
 
-        [WIP]
+        [Annotation]
         public virtual SpellCastResult CanCastSpell(SpellCast cast)
         {
 
@@ -1266,7 +1266,7 @@ namespace Giny.World.Managers.Fights.Fighters
         {
             TriggerBuffs(TriggerTypeEnum.OnStateAdded, buff, (short)buff.Record.Id);
         }
-        [WIP("remove this tuple")]
+        [Annotation("remove this tuple")]
         public void TeleportToPortal(Fighter source)
         {
             Tuple<Portal, Portal> pair = PortalManager.Instance.GetPortalsTuple(Fight, this.Cell.Id);
@@ -1658,7 +1658,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
             MovementHistory.OnCellChanged(oldCell);
         }
-        [WIP("teleport triggered")]
+        [Annotation("teleport triggered")]
         public void SwitchPosition(Fighter target, bool register = true)
         {
             if (!CanSwitchPosition() || !CanBeMoved() || !target.CanSwitchPosition() || !target.CanBeMoved())
@@ -1711,7 +1711,7 @@ namespace Giny.World.Managers.Fights.Fighters
             OnInvisibilityStateChanged(state, oldState, source);
         }
 
-        [WIP("show fighter, invalid")]
+        [Annotation("show fighter, invalid")]
         private void OnInvisibilityStateChanged(GameActionFightInvisibilityStateEnum state, GameActionFightInvisibilityStateEnum oldState, Fighter source)
         {
             foreach (var fighter in Fight.GetAllConnectedFighters())
@@ -1837,7 +1837,7 @@ namespace Giny.World.Managers.Fights.Fighters
         {
             return GetBuffs<StateBuff>().Where(x => x.Record.Incurable).Any(y => HasState(y.StateId));
         }
-        [WIP("trigger V ? ")]
+        [Annotation("trigger V ? ")]
         public void Heal(Healing healing)
         {
             healing.Compute();
@@ -1980,7 +1980,7 @@ namespace Giny.World.Managers.Fights.Fighters
             RefreshStats(CharacteristicEnum.HIT_POINTS);
             RefreshStats(CharacteristicEnum.HIT_POINT_LOSS);
         }
-        [WIP("deprecated?")]
+        [Annotation("deprecated?")]
         private void UpdateBuff(Fighter source, Buff buff)
         {
             Fight.Send(new GameActionFightDispellableEffectMessage()
@@ -1990,7 +1990,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 sourceId = source.Id,
             });
         }
-        [WIP("only spell damage reflection are mutlplied by wisdom")] // verify this information
+        [Annotation("only spell damage reflection are mutlplied by wisdom")] // verify this information
         public virtual int CalculateDamageReflection(int damage)
         {
             var reflectDamages = Stats[CharacteristicEnum.REFLECT_DAMAGE].TotalInContext() * (1 + (Stats.Wisdom.TotalInContext() / 100));

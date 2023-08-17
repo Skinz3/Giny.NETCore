@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Damages
 {
-    [WIP]
+    [Annotation]
     [SpellEffectHandler(EffectsEnum.Effect_DamageIntercept)]
     public class DamageIntercept : SpellEffectHandler
     {

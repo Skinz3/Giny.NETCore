@@ -117,7 +117,7 @@ namespace Giny.World.Network
         public override void OnHandlingError(NetworkMessage message, Delegate handler, Exception ex)
         {
             Logger.Write(string.Format("Unable to handle message {0} {1} : '{2}'", message.ToString(), handler.Method.Name, ex.ToString()), Channels.Warning);
-            LogManager.Instance.OnError(this, message, ex);
+            LogManager.Instance.AppendError(this, message, ex);
         }
 
         public void SendCharactersList()
@@ -152,7 +152,7 @@ namespace Giny.World.Network
                 this.WorldAccount.AddElement();
             }
         }
-        [WIP]
+        [Annotation]
         public void OnAccountReceived()
         {
             Send(new AccountInformationsUpdateMessage(DateTime.Now.AddYears(3).GetUnixTimeStampDouble()));

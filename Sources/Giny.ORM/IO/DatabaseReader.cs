@@ -93,7 +93,7 @@ namespace Giny.ORM.IO
                 }
             }
         }
-        private void ReadTable(MySqlConnection connection, string parameter)
+        private void Select(MySqlConnection connection, string parameter)
         {
             lock (DatabaseManager.SyncRoot)
             {
@@ -104,7 +104,7 @@ namespace Giny.ORM.IO
                     {
                         this.m_reader = command.ExecuteReader();
                     }
-                    catch 
+                    catch
                     {
                         this.m_reader?.Close();
                         Logger.Write("Unable to read table " + TableName, Channels.Warning);
@@ -135,13 +135,13 @@ namespace Giny.ORM.IO
                 }
             }
         }
-        public void Read(MySqlConnection connection)
+        public void Select(MySqlConnection connection)
         {
-            this.ReadTable(connection, string.Format(QueryConstants.Select, TableName));
+            this.Select(connection, string.Format(QueryConstants.Select, TableName));
         }
         public void Read(MySqlConnection connection, string condition)
         {
-            this.ReadTable(connection, string.Format(QueryConstants.Select, TableName, condition));
+            this.Select(connection, string.Format(QueryConstants.Select, TableName, condition));
         }
         public long Count(MySqlConnection connection)
         {
@@ -163,7 +163,7 @@ namespace Giny.ORM.IO
             {
                 DatabaseManager.Instance.DropTableIfExists(Type);
                 DatabaseManager.Instance.CreateTableIfNotExists(Type);
-                ReadTable(connection, parameter);
+                Select(connection, parameter);
             }
             else if (result.ToLower() == "n")
             {
@@ -178,7 +178,7 @@ namespace Giny.ORM.IO
         /* Maybe store all properties info instead of calling .NET reflection methods? */
         private object ConvertObject(object obj, PropertyInfo property)
         {
-           
+
 
 
             MethodInfo deserializationMethod = TableManager.Instance.GetDeserializationMethods(property.PropertyType);
@@ -229,20 +229,32 @@ namespace Giny.ORM.IO
                 throw new Exception(exception);
             }
         }
-        private static IDictionary Read(Type type, string condition)
+        private static IDictionary Select(Type type)
         {
             DatabaseReader reader = new DatabaseReader(type);
-            reader.ReadTable(DatabaseManager.Instance.UseProvider(), string.Format(QueryConstants.Select, reader.TableName, condition));
+            reader.Select(DatabaseManager.Instance.UseProvider(), string.Format(QueryConstants.Select, reader.TableName));
             return reader.Elements;
         }
-        public static IEnumerable<T> Read<T>() where T : IRecord
+        public static IEnumerable<T> Select<T>() where T : IRecord
         {
-            return Read(typeof(T), string.Empty).Values.Cast<T>();
+            return Select(typeof(T)).Values.Cast<T>();
+        }
+        public static IEnumerable<T> Select<T>(string fieldName, object fieldValue) where T : IRecord
+        {
+            var type = typeof(T);
+            DatabaseReader reader = new DatabaseReader(type);
+            reader.Select(DatabaseManager.Instance.UseProvider(), string.Format(QueryConstants.SelectWhere, reader.TableName, fieldName + "=" + fieldValue));
+            return reader.Elements.Values.Cast<T>();
         }
         public static T ReadFirst<T>(string fieldName, string fieldValue) where T : IRecord
         {
             DatabaseReader reader = new DatabaseReader(typeof(T));
             return (T)reader.ReadFirst(DatabaseManager.Instance.UseProvider(), string.Format("{0}='{1}'", fieldName, fieldValue));
+        }
+        public static long Count<T>()
+        {
+            DatabaseReader reader = new DatabaseReader(typeof(T));
+            return reader.Count(DatabaseManager.Instance.UseProvider());
         }
     }
 }

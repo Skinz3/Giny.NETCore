@@ -144,9 +144,7 @@ namespace Giny.ORM.IO
 
                 var text = string.Format("{0}", string.Join(",", sb.ToString()));
 
-                string arg1 = TableName;
-                string arg2 = text;
-                command.CommandText += string.Format(QueryConstants.Update, arg1, arg2, PrimaryProperty.Name, elements[i].Id.ToString()) + ";";
+                command.CommandText += string.Format(QueryConstants.UpdateWhere, TableName, text, PrimaryProperty.Name + "=" + elements[i].Id.ToString()) + ";";
             }
 
             try
@@ -165,7 +163,7 @@ namespace Giny.ORM.IO
         {
             foreach (var element in elements)
             {
-                var commandString = string.Format(QueryConstants.Remove, TableName, PrimaryProperty.Name, PrimaryProperty.GetValue(element));
+                var commandString = string.Format(QueryConstants.DeleteWhere, TableName, PrimaryProperty.Name + "=" + PrimaryProperty.GetValue(element));
 
                 using (var command = new MySqlCommand(commandString, DatabaseManager.Instance.UseProvider()))
                 {
@@ -222,7 +220,7 @@ namespace Giny.ORM.IO
 
                     foreach (var v in values)
                     {
-                        results.Add(v.ToString().Replace(",","."));
+                        results.Add(v.ToString().Replace(",", "."));
                     }
                     return string.Join(",", results);
                 }
@@ -264,18 +262,21 @@ namespace Giny.ORM.IO
             TableManager.Instance.GetWriter(typeof(T)).Use(items.Cast<IRecord>().ToArray(), DatabaseAction.Add);
         }
 
-        public static void Remove<T>(T item) where T : IRecord
+        public static void Delete<T>(string fieldName, object value) where T : IRecord
+        {
+            var definition = TableManager.Instance.GetDefinition(typeof(T));
+
+            DatabaseManager.Instance.Query(string.Format(QueryConstants.DeleteWhere, definition.TableAttribute.TableName,
+                fieldName, value));
+        }
+        public static void Delete<T>(T item) where T : IRecord
         {
             TableManager.Instance.GetWriter(typeof(T)).Use(new IRecord[] { item }, DatabaseAction.Remove);
         }
-        public static void Remove<T>(IEnumerable<T> items) where T : IRecord
+        public static void Delete<T>(IEnumerable<T> items) where T : IRecord
         {
             TableManager.Instance.GetWriter(typeof(T)).Use(items.Cast<IRecord>().ToArray(), DatabaseAction.Remove);
 
-        }
-        public static void CreateTable(Type type)
-        {
-            DatabaseManager.Instance.CreateTableIfNotExists(type);
         }
 
     }

@@ -87,7 +87,7 @@ namespace Giny.World.Managers.Maps
                 {
                     ActionIdentifier = genericAction,
                     Criteria = string.Empty,
-                    Id = TableManager.Instance.PopId<InteractiveSkillRecord>(),
+                    Id = TableManager.Instance.GetNextIdFromContainer<InteractiveSkillRecord>(),
                     Identifier = element.Identifier,
                     MapId = map.Id,
                     Param1 = param1,

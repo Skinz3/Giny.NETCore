@@ -332,7 +332,7 @@ namespace Giny.World.Managers.Fights.Fighters
             return true;
         }
 
-        [WIP]
+        [Annotation]
         public override GameFightFighterInformations GetFightFighterInformations(CharacterFighter target)
         {
 
@@ -500,7 +500,7 @@ namespace Giny.World.Managers.Fights.Fighters
         }
 
 
-        [WIP("Handle the void loop ? No character in fight... Such cancer")]
+        [Annotation("Handle the void loop ? No character in fight... Such cancer")]
         public void OnDisconnected()
         {
             /* Character.Record.FightId = this.Fight.Id;
@@ -619,7 +619,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 waitTime = total,
             });
         }
-        [WIP]
+        [Annotation]
         private void SendFightResume()
         {
             Send(new GameFightResumeMessage()
@@ -635,7 +635,7 @@ namespace Giny.World.Managers.Fights.Fighters
             });
         }
 
-        [WIP] // some synchronization problems
+        [Annotation] // some synchronization problems
         public void OnReconnect(Character character)
         {
             this.Character = character;

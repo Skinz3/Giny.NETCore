@@ -42,7 +42,7 @@ namespace Giny.World.Managers.Maps.Instances
             }
         }
 
-        [WIP("thread safe..")]
+        [Annotation("thread safe..")]
         private List<MapElement> m_elements = new List<MapElement>();
 
         private ConcurrentDictionary<long, Entity> m_entities = new ConcurrentDictionary<long, Entity>();

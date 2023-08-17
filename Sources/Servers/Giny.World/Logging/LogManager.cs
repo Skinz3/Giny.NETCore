@@ -14,6 +14,8 @@ namespace Giny.World.Logging
     {
         private const string Path = "logs.txt";
 
+        private static string ClientErrorLine = "{0} Source : {1} MapId : {2} Message : {3} Exception : {4}" + Environment.NewLine + Environment.NewLine;
+
         static object _lock = new object();
 
         private LogFile File
@@ -28,7 +30,8 @@ namespace Giny.World.Logging
             File = new LogFile(Path);
         }
 
-        public void OnError(WorldClient client, NetworkMessage message, Exception ex)
+
+        public void AppendError(WorldClient client, NetworkMessage message, Exception ex)
         {
             if (client == null || message == null)
             {
@@ -53,10 +56,14 @@ namespace Giny.World.Logging
                 mapId = client.Character.Map.Id;
             }
 
-            lock (_lock)
-            {
-                File.AppendError(source, mapId, message, ex);
-            }
+            string content = string.Format(ClientErrorLine, DateTime.UtcNow, source, mapId, message.GetType().Name, ex);
+            File.AppendError(content);
+
+        }
+        public void AppendError(string message, Exception ex)
+        {
+            string content = message + " : " + ex;
+            File.AppendError(content);
         }
     }
 }

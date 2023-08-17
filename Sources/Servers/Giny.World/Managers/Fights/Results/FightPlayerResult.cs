@@ -76,7 +76,7 @@ namespace Giny.World.Managers.Fights.Results
                 wave = 0
             };
         }
-        [WIP]
+        [Annotation]
         public override void Apply()
         {
             this.Character.AddKamas((int)base.Loot.Kamas);
@@ -98,7 +98,7 @@ namespace Giny.World.Managers.Fights.Results
 
             this.Character.RefreshStats();
         }
-        [WIP]
+        [Annotation]
         public void AddEarnedExperience(double bonusRatio, int mapRewardRate)
         {
             FightXp fightXp = FightFormulas.Instance.GetExperiencePvM(Fighter, mapRewardRate);
@@ -145,7 +145,7 @@ namespace Giny.World.Managers.Fights.Results
                 }
             }
         }
-        [WIP]
+        [Annotation]
         public void SetEarnedHonor(short honor, short dishonor)
         {
             /* if (this.PvpData == null)

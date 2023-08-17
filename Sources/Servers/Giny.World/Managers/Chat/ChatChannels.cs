@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Chat
 {
-    [WIP("Muted")]
+    [Annotation("Muted")]
     class ChatChannels
     {
         public const double GlobalChannelIntervalSeconds = 20;

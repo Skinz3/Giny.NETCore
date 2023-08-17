@@ -95,7 +95,7 @@ namespace Giny.Auth.Records
 
         public static IEnumerable<AccountRecord> ReadAccountRecords()
         {
-            return DatabaseReader.Read<AccountRecord>();
+            return DatabaseReader.Select<AccountRecord>();
         }
         public static AccountRecord ReadAccount(int accountId)
         {

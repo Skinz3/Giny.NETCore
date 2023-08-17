@@ -21,7 +21,7 @@ namespace Giny.World.Managers.Effects.Targets
             this.Required = required;
         }
 
-        [WIP("todo")]
+        [Annotation("todo")]
         public override bool IsTargetValid(Fighter actor, SpellEffectHandler handler)
         {
             return true;

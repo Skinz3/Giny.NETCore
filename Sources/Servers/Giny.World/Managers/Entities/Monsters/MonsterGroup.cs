@@ -113,7 +113,7 @@ namespace Giny.World.Managers.Monsters
             this.CellId = keys.Last();
         }
 
-        [WIP]
+        [Annotation]
         public void MoveRandomly()
         {
             Random random = new Random();

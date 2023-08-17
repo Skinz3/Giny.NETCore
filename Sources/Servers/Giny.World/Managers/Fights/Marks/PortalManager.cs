@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Marks
 {
-    [WIP]
+    [Annotation]
     public class PortalManager : Singleton<PortalManager>
     {
         private const int Same = 0;

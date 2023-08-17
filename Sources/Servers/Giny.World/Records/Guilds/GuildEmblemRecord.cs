@@ -60,7 +60,7 @@ namespace Giny.World.Records.Guilds
             };
         }
 
-        [WIP("override operators.")]
+        [Annotation("override operators.")]
         public override bool Equals(object obj)
         {
             GuildEmblemRecord emblem = obj as GuildEmblemRecord;

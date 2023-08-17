@@ -56,9 +56,9 @@ namespace Giny.World.Records.Items
                 UId = ItemsManager.Instance.PopItemUID(),
             };
         }
-        public static int GetLastItemUID()
+        public static long GetLastItemUID()
         {
-            return (int)BankItems.Keys.OrderByDescending(x => x).FirstOrDefault();
+            return BankItems.Keys.OrderByDescending(x => x).FirstOrDefault();
         }
         public static IEnumerable<BankItemRecord> GetBankItems(int accountId)
         {

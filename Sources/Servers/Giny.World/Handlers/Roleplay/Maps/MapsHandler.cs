@@ -23,7 +23,7 @@ namespace Giny.World.Handlers.Maps
 {
     class MapsHandler
     {
-        [WIP("check areaId")]
+        [Annotation("check areaId")]
         [MessageHandler]
         public static void HandleFriendJoinRequestMessage(FriendJoinRequestMessage message, WorldClient client)
         {

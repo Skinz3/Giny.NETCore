@@ -148,7 +148,7 @@ namespace Giny.Auth.Network
                 Send(new LoginQueueStatusMessage(0, 0));
             }
         }
-        [WIP("parameters?")]
+        [Annotation("parameters?")]
         public void OnIdentificationSuccess(bool wasConnected)
         {
             Send(new IdentificationSuccessMessage(Account.Username, new AccountTagInformation(Account.Nickname, Account.Id.ToString()),

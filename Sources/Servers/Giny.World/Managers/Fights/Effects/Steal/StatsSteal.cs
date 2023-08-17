@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Steal
 {
-    [WIP("Weird client behaviour for steal range ? maybe we also should override client buff effect.id (and not only customActionId) ? GetBuffDisplayedEffect()")]
+    [Annotation("Weird client behaviour for steal range ? maybe we also should override client buff effect.id (and not only customActionId) ? GetBuffDisplayedEffect()")]
     [SpellEffectHandler(EffectsEnum.Effect_StealChance)]
     [SpellEffectHandler(EffectsEnum.Effect_StealWisdom)]
     [SpellEffectHandler(EffectsEnum.Effect_StealIntelligence)]

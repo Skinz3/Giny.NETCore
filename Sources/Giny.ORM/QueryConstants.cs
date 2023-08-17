@@ -27,9 +27,9 @@ namespace Giny.ORM
 
         public const string Insert = "INSERT INTO `{0}` VALUES {1}";
 
-        public const string Update = "UPDATE `{0}` SET {1} WHERE {2} = {3}";
+        public const string UpdateWhere = "UPDATE `{0}` SET {1} WHERE {2}";
 
-        public const string Remove = "DELETE FROM `{0}` WHERE `{1}` = {2}";
+        public const string DeleteWhere = "DELETE FROM `{0}` WHERE {1}";
 
         public const string PrimaryKey = "PRIMARY KEY ({0})";
 

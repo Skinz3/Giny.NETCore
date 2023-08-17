@@ -91,7 +91,7 @@ namespace Giny.World.Managers.Guilds
             UniqueIdProvider = new UniqueIdProvider(lastId);
 
         }
-        [WIP]
+        [Annotation]
         public void RemoveGuild(Guild guild)
         {
             guild.Record.RemoveElement();
@@ -147,7 +147,7 @@ namespace Giny.World.Managers.Guilds
         {
             return Guilds[guildId];
         }
-        [WIP]
+        [Annotation]
         public void OnCharacterDeleted(CharacterRecord character)
         {
             Guild guild = GetGuild(character.GuildId);

@@ -12,25 +12,25 @@ using System.Timers;
 
 namespace Giny.ORM.Cyclic
 {
-    [WIP("threadsafe? using List?")]
+    [Annotation("threadsafe? using List?")]
     public class CyclicSaveTask : Singleton<CyclicSaveTask>
     {
-        private ConcurrentDictionary<Type, List<IRecord>> _newElements = new ConcurrentDictionary<Type, List<IRecord>>();
-        private ConcurrentDictionary<Type, List<IRecord>> _updateElements = new ConcurrentDictionary<Type, List<IRecord>>();
-        private ConcurrentDictionary<Type, List<IRecord>> _removeElements = new ConcurrentDictionary<Type, List<IRecord>>();
+        private ConcurrentDictionary<Type, List<IRecord>> ElementsToAdd = new ConcurrentDictionary<Type, List<IRecord>>();
+        private ConcurrentDictionary<Type, List<IRecord>> ElementsToUpdate = new ConcurrentDictionary<Type, List<IRecord>>();
+        private ConcurrentDictionary<Type, List<IRecord>> ElementsToRemove = new ConcurrentDictionary<Type, List<IRecord>>();
 
         public void AddElement(IRecord element)
         {
             var type = element.GetType();
 
-            if (_newElements.ContainsKey(type))
+            if (ElementsToAdd.ContainsKey(type))
             {
-                if (!_newElements[type].Contains(element))
-                    _newElements[type].Add(element);
+                if (!ElementsToAdd[type].Contains(element))
+                    ElementsToAdd[type].Add(element);
             }
             else
             {
-                _newElements.TryAdd(type, new List<IRecord> { element });
+                ElementsToAdd.TryAdd(type, new List<IRecord> { element });
             }
         }
 
@@ -38,17 +38,17 @@ namespace Giny.ORM.Cyclic
         {
             var type = element.GetType();
 
-            if (_newElements.ContainsKey(type) && _newElements[type].Contains(element))
+            if (ElementsToAdd.ContainsKey(type) && ElementsToAdd[type].Contains(element))
                 return;
 
-            if (_updateElements.ContainsKey(type))
+            if (ElementsToUpdate.ContainsKey(type))
             {
-                if (!_updateElements[type].Contains(element))
-                    _updateElements[type].Add(element);
+                if (!ElementsToUpdate[type].Contains(element))
+                    ElementsToUpdate[type].Add(element);
             }
             else
             {
-                _updateElements.TryAdd(type, new List<IRecord> { element });
+                ElementsToUpdate.TryAdd(type, new List<IRecord> { element });
             }
         }
 
@@ -59,41 +59,41 @@ namespace Giny.ORM.Cyclic
 
             var type = element.GetType();
 
-            if (_newElements.ContainsKey(type) && _newElements[type].Contains(element))
+            if (ElementsToAdd.ContainsKey(type) && ElementsToAdd[type].Contains(element))
             {
-                _newElements[type].Remove(element);
+                ElementsToAdd[type].Remove(element);
                 return;
             }
 
-            if (_updateElements.ContainsKey(type) && _updateElements[type].Contains(element))
-                _updateElements[type].Remove(element);
+            if (ElementsToUpdate.ContainsKey(type) && ElementsToUpdate[type].Contains(element))
+                ElementsToUpdate[type].Remove(element);
 
-            if (_removeElements.ContainsKey(type))
+            if (ElementsToRemove.ContainsKey(type))
             {
-                if (!_removeElements[type].Contains(element))
-                    _removeElements[type].Add(element);
+                if (!ElementsToRemove[type].Contains(element))
+                    ElementsToRemove[type].Add(element);
             }
             else
             {
-                _removeElements.TryAdd(type, new List<IRecord> { element });
+                ElementsToRemove.TryAdd(type, new List<IRecord> { element });
             }
         }
 
 
         public void Save()
         {
-            var types = _removeElements.Keys.ToList();
+            var types = ElementsToRemove.Keys.ToList();
             foreach (var type in types)
             {
                 List<IRecord> elements;
-                elements = _removeElements[type];
+                elements = ElementsToRemove[type];
 
                 if (elements.Count > 0)
                 {
                     try
                     {
                         TableManager.Instance.GetWriter(type).Use(elements.ToArray(), DatabaseAction.Remove);
-                        _removeElements[type] = new List<IRecord>(_removeElements[type].Skip(elements.Count));
+                        ElementsToRemove[type] = new List<IRecord>(ElementsToRemove[type].Skip(elements.Count));
                     }
                     catch (Exception e)
                     {
@@ -104,19 +104,19 @@ namespace Giny.ORM.Cyclic
 
             }
 
-            types = _newElements.Keys.ToList();
+            types = ElementsToAdd.Keys.ToList();
             foreach (var type in types)
             {
                 List<IRecord> elements;
 
-                elements = _newElements[type];
+                elements = ElementsToAdd[type];
 
                 if (elements.Count > 0)
                 {
                     try
                     {
                         TableManager.Instance.GetWriter(type).Use(elements.ToArray(), DatabaseAction.Add);
-                        _newElements[type] = new List<IRecord>(_newElements[type].Skip(elements.Count));
+                        ElementsToAdd[type] = new List<IRecord>(ElementsToAdd[type].Skip(elements.Count));
                     }
                     catch (Exception e)
                     {
@@ -128,19 +128,20 @@ namespace Giny.ORM.Cyclic
 
             }
 
-            types = _updateElements.Keys.ToList();
+            types = ElementsToUpdate.Keys.ToList();
+
             foreach (var type in types)
             {
                 List<IRecord> elements;
 
-                elements = _updateElements[type];
+                elements = ElementsToUpdate[type];
 
                 if (elements.Count > 0)
                 {
                     try
                     {
                         TableManager.Instance.GetWriter(type).Use(elements.ToArray(), DatabaseAction.Update);
-                        _updateElements[type] = new List<IRecord>(_updateElements[type].Skip(elements.Count));
+                        ElementsToUpdate[type] = new List<IRecord>(ElementsToUpdate[type].Skip(elements.Count));
                     }
                     catch (Exception e)
                     {

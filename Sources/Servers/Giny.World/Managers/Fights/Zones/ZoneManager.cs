@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Zones
 {
-    [WIP("add weapon functions (weaponManager)")]
+    [Annotation("add weapon functions (weaponManager)")]
     public class ZoneManager : Singleton<ZoneManager>
     {
         public const int EFFECTSHAPE_DEFAULT_EFFICIENCY = 10;

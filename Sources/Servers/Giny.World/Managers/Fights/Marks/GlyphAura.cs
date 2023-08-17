@@ -54,7 +54,7 @@ namespace Giny.World.Managers.Fights.Marks
             }
         }
 
-        [WIP("2 times sames aura glyph wont work")]
+        [Annotation("2 times sames aura glyph wont work")]
         private void Leave(Fighter fighter)
         {
             fighter.Moved -= OnFighterMove;

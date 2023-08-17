@@ -16,7 +16,7 @@ namespace Giny.World.Managers.Criterions.Handlers
         {
         }
 
-        [WIP] // alignement
+        [Annotation] // alignement
         public override bool Eval(WorldClient client)
         {
             return false;

@@ -21,7 +21,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
         {
         }
 
-        [WIP]
+        [Annotation]
         protected override void Apply(IEnumerable<Fighter> targets)
         {
             Damage damage = GetTriggerToken<Damage>();

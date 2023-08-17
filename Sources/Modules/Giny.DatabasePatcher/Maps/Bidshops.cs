@@ -53,7 +53,7 @@ namespace Giny.DatabasePatcher.Maps
                 Logger.Write("Unable to find map for element " + elementIdentifier + ". Cannot create bidshop", Channels.Warning);
                 return;
             }
-            var id = TableManager.Instance.PopId<BidShopRecord>();
+            var id = TableManager.Instance.GetNextIdFromContainer<BidShopRecord>();
 
             BidShopRecord record = new BidShopRecord()
             {
@@ -68,7 +68,7 @@ namespace Giny.DatabasePatcher.Maps
             {
                 ActionIdentifier = GenericActionEnum.Bidshop,
                 Criteria = string.Empty,
-                Id = TableManager.Instance.PopId<InteractiveSkillRecord>(),
+                Id = TableManager.Instance.GetNextIdFromContainer<InteractiveSkillRecord>(),
                 Identifier = elementIdentifier,
                 MapId = targetMap.Id,
                 Param1 = id.ToString(),

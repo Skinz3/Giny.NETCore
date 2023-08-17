@@ -1,4 +1,5 @@
 ﻿using Giny.Core.Network.Messages;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +11,8 @@ namespace Giny.Core.Logging
 {
     public class LogFile
     {
-        private static string ErrorLine = "{0} Source : {1} MapId : {2} Message : {3} Exception : {4}" + Environment.NewLine + Environment.NewLine;
+
+        private object _lock = new object();
 
         private string Path
         {
@@ -27,10 +29,13 @@ namespace Giny.Core.Logging
             }
         }
 
-        public void AppendError(string source, long mapId, NetworkMessage message, Exception ex)
+        public void AppendError(string message)
         {
-            string value = string.Format(ErrorLine, DateTime.UtcNow, source, mapId, message.GetType().Name, ex);
-            File.AppendAllText(Path, value);
+            lock (_lock)
+            {
+                File.AppendAllText(Path, message );
+            }
         }
+       
     }
 }

@@ -182,7 +182,7 @@ namespace Giny.World.Managers.Guilds
          * 1 meneur
          * 2 bras droit
          */
-        [WIP]
+        [Annotation]
         public void ChangeParameters(GuildMemberRecord member, byte experienceGivenPercent, int rank)
         {
 
@@ -279,7 +279,7 @@ namespace Giny.World.Managers.Guilds
                 character.Client.Send(message);
             }
         }
-        [WIP("paddocks?")]
+        [Annotation("paddocks?")]
         public GuildInformationsGeneralMessage GetGuildInformationsGeneralMessage()
         {
             return new GuildInformationsGeneralMessage()
@@ -292,7 +292,7 @@ namespace Giny.World.Managers.Guilds
                 level = Level,
             };
         }
-        [WIP]
+        [Annotation]
         public GuildInformationsMembersMessage GetGuildInformationsMembersMessage()
         {
             foreach (var member in Record.Members.ToArray()) // remove this loop

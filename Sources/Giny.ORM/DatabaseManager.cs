@@ -62,7 +62,7 @@ namespace Giny.ORM
             TableManager.Instance.ClearContainer(type);
 
             DatabaseReader reader = new DatabaseReader(type);
-            reader.Read(UseProvider());
+            reader.Select(UseProvider());
         }
         public void LoadTables()
         {
@@ -88,7 +88,7 @@ namespace Giny.ORM
             var reader = new DatabaseReader(type);
             var tableName = reader.TableName;
             OnStartLoadTable?.Invoke(type, tableName);
-            reader.Read(this.UseProvider());
+            reader.Select(this.UseProvider());
             OnEndLoadTable?.Invoke(type, tableName);
         }
         public void LoadTable<T>() where T : IRecord
@@ -111,7 +111,7 @@ namespace Giny.ORM
         }
         public void DropTableIfExists(string tableName)
         {
-            Query(string.Format(QueryConstants.Drop, tableName), UseProvider());
+            Query(string.Format(QueryConstants.Drop, tableName));
         }
         public void DropTableIfExists(Type type)
         {
@@ -122,11 +122,11 @@ namespace Giny.ORM
         {
             DropTableIfExists(TableManager.Instance.GetDefinition(typeof(T)).TableAttribute.TableName);
         }
-        public void Query(string query, MySqlConnection connection)
+        public void Query(string query)
         {
             lock (SyncRoot)
             {
-                using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                using (MySqlCommand cmd = new MySqlCommand(query, UseProvider()))
                 {
                     try
                     {
@@ -140,6 +140,16 @@ namespace Giny.ORM
             }
         }
 
+        public object QueryScalar(string query)
+        {
+            lock (SyncRoot)
+            {
+                using (MySqlCommand cmd = new MySqlCommand(query, UseProvider()))
+                {
+                    return cmd.ExecuteScalar();
+                }
+            }
+        }
         public void DeleteTable<T>() where T : IRecord
         {
             var definition = TableManager.Instance.GetDefinition(typeof(T));
@@ -147,7 +157,7 @@ namespace Giny.ORM
         }
         public void DeleteTable(string tableName)
         {
-            Query(string.Format(QueryConstants.Delete, tableName), UseProvider());
+            Query(string.Format(QueryConstants.Delete, tableName));
         }
         public void CreateTableIfNotExists(Type type)
         {
@@ -170,7 +180,7 @@ namespace Giny.ORM
             else
                 str = str.Remove(str.Length - 1, 1);
 
-            this.Query(string.Format(QueryConstants.Create, tableName, str), UseProvider());
+            this.Query(string.Format(QueryConstants.Create, tableName, str));
 
         }
         public void CreateAllTablesIfNotExists()

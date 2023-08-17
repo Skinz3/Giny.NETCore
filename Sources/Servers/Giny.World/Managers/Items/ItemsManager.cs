@@ -193,12 +193,11 @@ namespace Giny.World.Managers.Items
         [StartupInvoke("Items manager", StartupInvokePriority.SixthPath)]
         public void Initialize()
         {
-            int lastUID = CharacterItemRecord.GetLastItemUID();
+            long lastUID = CharacterItemRecord.GetLastItemUID();
             lastUID = Math.Max(lastUID, BankItemRecord.GetLastItemUID());
             lastUID = Math.Max(lastUID, BidShopItemRecord.GetLastItemUID());
 
-
-            m_idprovider = new UniqueIdProvider(lastUID);
+            m_idprovider = new UniqueIdProvider((int)lastUID);
 
             foreach (var type in AssemblyCore.GetTypes())
             {
@@ -300,7 +299,6 @@ namespace Giny.World.Managers.Items
         {
             DatabaseManager.Instance.Reload<ItemRecord>();
             DatabaseManager.Instance.Reload<WeaponRecord>();
-
             WeaponRecord.Initialize();
             ItemRecord.Initialize();
         }

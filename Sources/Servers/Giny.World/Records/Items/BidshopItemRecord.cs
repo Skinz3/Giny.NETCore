@@ -97,7 +97,7 @@ namespace Giny.World.Records.Items
                 objectType = (int)Record.TypeEnum,
             };
         }
-        [WIP("date")]
+        [Annotation("date")]
         public ObjectItemQuantityPriceDateEffects GetObjectItemQuantityPriceDateEffects()
         {
             return new ObjectItemQuantityPriceDateEffects()
@@ -113,7 +113,7 @@ namespace Giny.World.Records.Items
         {
             return BidshopItems.Values;
         }
-        [WIP("unsoldDelay")]
+        [Annotation("unsoldDelay")]
         public ObjectItemToSellInBid GetObjectItemToSellInBid()
         {
             return new ObjectItemToSellInBid()

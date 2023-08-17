@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Heals
 {
-    [WIP("heal zone efficiency (éni)")] // Verifier le calcul pour tout ces effets
+    [Annotation("heal zone efficiency (éni)")] // Verifier le calcul pour tout ces effets
     [SpellEffectHandler(EffectsEnum.Effect_HealHP_143)]
     [SpellEffectHandler(EffectsEnum.Effect_HealHP_81)]
     [SpellEffectHandler(EffectsEnum.Effect_HealHP_108)]

@@ -148,7 +148,7 @@ namespace Giny.World.Managers.Items.Collections
             Character.OnItemAdded(item);
         }
 
-        [WIP]
+        [Annotation]
         public override void OnItemAdded(CharacterItemRecord item)
         {
             item.UId = ItemsManager.Instance.PopItemUID();

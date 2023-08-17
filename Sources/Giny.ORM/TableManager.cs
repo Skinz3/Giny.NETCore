@@ -187,15 +187,38 @@ namespace Giny.ORM
             m_serializationMethods.TryGetValue(type, out MethodInfo result);
             return result;
         }
+
+
+        public long GetLastIdFromQuery<T>() where T : IRecord
+        {
+            var definition = m_TableDefinitions[typeof(T)];
+
+            string query = $@"SELECT MAX({definition.PrimaryProperty.Name}) FROM {definition.TableAttribute.TableName}";
+
+            var result = DatabaseManager.Instance.QueryScalar(query);
+
+            return result is DBNull ? 1 : (long)Convert.ChangeType(result, typeof(long));
+        }
+        public long GetNextIdFromQuery<T>() where T : IRecord
+        {
+            return GetLastIdFromQuery<T>() + 1;
+
+        }
         /// <summary>
         /// Use Id provider for better performances.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         [PerformanceIssue]
-        public long PopId<T>()
+        public long GetNextIdFromContainer<T>() where T : IRecord
         {
             var definition = m_TableDefinitions[typeof(T)];
+
+            if (definition.ContainerValue == null || !definition.Load)
+            {
+                throw new InvalidOperationException("Unable to get next id from the container, either due to its nonexistence or the table not being loaded.");
+            }
+
             var ids = (IEnumerable<long>)definition.ContainerValue.Keys;
 
             if (ids.Count() == 0)

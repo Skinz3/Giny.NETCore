@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Giny.Core.DesignPattern
 {
-    public class WIPManager
+    public class AnnotationsManager
     {
         public static BindingFlags BindingFlags = BindingFlags.NonPublic | BindingFlags.Public
           | BindingFlags.Default | BindingFlags.GetField | BindingFlags.SetField | BindingFlags.Instance | BindingFlags.Static;
@@ -23,7 +23,7 @@ namespace Giny.Core.DesignPattern
             Stopwatch stopwatch = Stopwatch.StartNew();
             foreach (var type in assembly.GetTypes())
             {
-                WIPAttribute attribute = type.GetCustomAttributes(false).OfType<WIPAttribute>().FirstOrDefault();
+                AnnotationAttribute attribute = type.GetCustomAttributes(false).OfType<AnnotationAttribute>().FirstOrDefault();
 
                 if (attribute != null)
                 {
@@ -32,7 +32,7 @@ namespace Giny.Core.DesignPattern
 
                 foreach (var method in type.GetMethods(BindingFlags).Where(x => x.DeclaringType == type))
                 {
-                    attribute = method.GetCustomAttributes(false).OfType<WIPAttribute>().FirstOrDefault();
+                    attribute = method.GetCustomAttributes(false).OfType<AnnotationAttribute>().FirstOrDefault();
 
                     if (attribute != null)
                     {
@@ -41,7 +41,7 @@ namespace Giny.Core.DesignPattern
                 }
                 foreach (var field in type.GetFields(BindingFlags))
                 {
-                    attribute = field.GetCustomAttributes(false).OfType<WIPAttribute>().FirstOrDefault();
+                    attribute = field.GetCustomAttributes(false).OfType<AnnotationAttribute>().FirstOrDefault();
 
                     if (attribute != null)
                     {
@@ -50,7 +50,7 @@ namespace Giny.Core.DesignPattern
                 }
                 foreach (var property in type.GetProperties(BindingFlags))
                 {
-                    attribute = property.GetCustomAttributes(false).OfType<WIPAttribute>().FirstOrDefault();
+                    attribute = property.GetCustomAttributes(false).OfType<AnnotationAttribute>().FirstOrDefault();
 
                     if (attribute != null)
                     {
@@ -69,14 +69,14 @@ namespace Giny.Core.DesignPattern
         }
     }
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = false)]
-    public class WIPAttribute : Attribute
+    public class AnnotationAttribute : Attribute
     {
         public string Comment
         {
             get;
             private set;
         }
-        public WIPAttribute(string comment = null)
+        public AnnotationAttribute(string comment = null)
         {
             this.Comment = comment;
         }

@@ -19,16 +19,18 @@ namespace Giny.World.Network
     {
         private readonly object m_locker = new object();
 
+        private readonly object m_statusLocker = new object();
+
         private List<WorldClient> Clients
         {
             get;
             set;
         }
 
-        public ServerStatusEnum Status
+        private ServerStatusEnum Status
         {
             get;
-            private set;
+            set;
         } = ServerStatusEnum.STARTING;
 
 
@@ -180,11 +182,22 @@ namespace Giny.World.Network
         }
         public void SetServerStatus(ServerStatusEnum status)
         {
-            this.Status = status;
-
-            if (IPCManager.Instance.Connected)
+            lock (m_statusLocker)
             {
-                SendServerStatusToAuth();
+                this.Status = status;
+
+                if (IPCManager.Instance.Connected)
+                {
+                    SendServerStatusToAuth();
+                }
+            }
+
+        }
+        public ServerStatusEnum GetServerStatus()
+        {
+            lock (m_statusLocker)
+            {
+                return Status;
             }
         }
         public void Send(NetworkMessage message)

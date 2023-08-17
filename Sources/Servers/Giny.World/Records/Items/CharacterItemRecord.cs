@@ -1,7 +1,9 @@
-﻿using Giny.Core.Extensions;
+﻿using Giny.Core.DesignPattern;
+using Giny.Core.Extensions;
 using Giny.ORM;
 using Giny.ORM.Attributes;
 using Giny.ORM.Interfaces;
+using Giny.ORM.IO;
 using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
 using Giny.Protocol.Types;
@@ -17,12 +19,9 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Records.Items
 {
-    [Table("character_items")]
+    [Table("character_items", false)]
     public class CharacterItemRecord : AbstractItem, IRecord
     {
-        [Container]
-        private static readonly ConcurrentDictionary<long, CharacterItemRecord> CharactersItems = new ConcurrentDictionary<long, CharacterItemRecord>();
-
         [Update]
         public long CharacterId
         {
@@ -79,20 +78,9 @@ namespace Giny.World.Records.Items
 
         public static List<CharacterItemRecord> GetCharacterItems(long characterId)
         {
-            List<CharacterItemRecord> result = new List<CharacterItemRecord>();
-
-            lock (CharactersItems)
-            {
-                result.AddRange(CharactersItems.Values.Where(x => x.CharacterId == characterId));
-            }
-
-            return result;
+            return DatabaseReader.Select<CharacterItemRecord>("CharacterId", characterId).ToList();
         }
 
-        public static long GetCharactersItemsCount()
-        {
-            return CharactersItems.Count;
-        }
 
         public override string ToString()
         {
@@ -103,9 +91,13 @@ namespace Giny.World.Records.Items
             return Record.Exchangeable;
         }
 
+        /// <summary>
+        /// Return the maximum item UID
+        /// Use this method wisely, direct SQL query
+        /// </summary>
         public static int GetLastItemUID()
         {
-            return (int)CharactersItems.Keys.OrderByDescending(x => x).FirstOrDefault();
+            return (int)TableManager.Instance.GetLastIdFromQuery<CharacterItemRecord>();
         }
         public override AbstractItem CloneWithUID()
         {
@@ -118,8 +110,7 @@ namespace Giny.World.Records.Items
 
         public static void RemoveCharacterItems(long characterId)
         {
-            CharacterItemRecord[] items = CharactersItems.Values.Where(x => x.CharacterId == characterId).ToArray();
-            items.RemoveInstantElements();
+            DatabaseWriter.Delete<CharacterItemRecord>("CharacterId", characterId);
         }
 
         public override void Initialize()
