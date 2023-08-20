@@ -36,7 +36,7 @@ namespace Giny.World.Handlers
         [MessageHandler]
         public static void HandleGameContextReadyMessage(GameContextReadyMessage message, WorldClient client)
         {
-            
+            client.Character.OnGameContextReady(message.mapId);
         }
     }
 }

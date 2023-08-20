@@ -2,6 +2,7 @@
 using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
 using Giny.Protocol.Types;
+using Giny.World.Managers.Breeds;
 using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Fights.Effects.Summons;
 using Giny.World.Managers.Fights.Fighters;
@@ -32,32 +33,14 @@ namespace Giny.World.Managers.Fights.Stats
 
         public Characteristic Erosion => this[CharacteristicEnum.PERMANENT_DAMAGE_PERCENT];
 
-
-        public int ErodedLife
-        {
-            get
-            {
-                return BaseMaxLife - MaxLifePoints;
-            }
-        }
-        public int BaseMaxLife
-        {
-            get;
-            set;
-        }
-
-        public short ShieldPoints => this[CharacteristicEnum.SHIELD].TotalInContext();
+        public int ShieldPoints => this[CharacteristicEnum.SHIELD].TotalInContext();
         public short DamageMultiplier
         {
             get;
             set;
         }
 
-      
-
-      
-    
-        public void SetShield(short delta)
+        public void SetShield(int delta)
         {
             if (delta >= 0)
             {
@@ -137,11 +120,9 @@ namespace Giny.World.Managers.Fights.Stats
 
             this.CriticalHitWeapon = character.Stats.CriticalHitWeapon;
             this.Energy = character.Stats.Energy;
-            this.LifePoints = character.Stats.LifePoints;
-            this.MaxLifePoints = character.Stats.MaxLifePoints;
+
             this.MaxEnergyPoints = character.Stats.MaxEnergyPoints;
             InvisibilityState = GameActionFightInvisibilityStateEnum.VISIBLE;
-            this.BaseMaxLife = MaxLifePoints;
 
             this.Initialize();
 
@@ -155,11 +136,9 @@ namespace Giny.World.Managers.Fights.Stats
 
             this.CriticalHitWeapon = other.CriticalHitWeapon;
             this.Energy = other.Energy;
-            this.LifePoints = other.LifePoints;
-            this.MaxLifePoints = other.MaxLifePoints;
+
             this.MaxEnergyPoints = other.MaxEnergyPoints;
             this.InvisibilityState = GameActionFightInvisibilityStateEnum.VISIBLE;
-            this.BaseMaxLife = MaxLifePoints;
             this.Initialize();
         }
         /*
@@ -168,6 +147,8 @@ namespace Giny.World.Managers.Fights.Stats
          */
         public FighterStats(MonsterGrade monsterGrade, Fighter? summoner = null, double coeff = 1d)
         {
+            this[CharacteristicEnum.HIT_POINT_LOSS] = LifeLossCharacteristic.New();
+            this[CharacteristicEnum.HIT_POINTS] = LifeCharacteristic.New((int)(monsterGrade.LifePoints * coeff));
             this[CharacteristicEnum.INITIATIVE] = InitiativeCharacteristic.Zero();
             this[CharacteristicEnum.ACTION_POINTS] = ApCharacteristic.New(monsterGrade.ActionPoints);
             this[CharacteristicEnum.AIR_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
@@ -232,7 +213,7 @@ namespace Giny.World.Managers.Fights.Stats
 
             InvisibilityState = GameActionFightInvisibilityStateEnum.VISIBLE;
 
-            this.MaxLifePoints = (int)(monsterGrade.LifePoints * coeff);
+
 
 
             if (summoner != null)
@@ -240,8 +221,7 @@ namespace Giny.World.Managers.Fights.Stats
                 this.ApplyBonusCharacteristics(monsterGrade.BonusCharacteristics, summoner);
             }
 
-            this.BaseMaxLife = MaxLifePoints;
-            this.LifePoints = MaxLifePoints;
+
             this.CriticalHitWeapon = 0;
             this.Energy = 0;
             this.GlobalDamageReduction = 0;
@@ -252,18 +232,12 @@ namespace Giny.World.Managers.Fights.Stats
 
             this.Initialize();
         }
-        public override int GetHitPoints()
-        {
-            return base.GetHitPoints() + ErodedLife;
-        }
-        public override int GetMissingLife()
-        {
-            return base.GetMissingLife() - ErodedLife;
-        }
+
         private void ApplyBonusCharacteristics(MonsterBonusCharacteristics bonus, Fighter summoner)
         {
-            var delta = (bonus.LifePoints / 100d) * (summoner.Stats.BaseMaxLife - summoner.Stats[CharacteristicEnum.VITALITY].TotalInContext());
-            MaxLifePoints += (int)delta;
+            var delta = (bonus.LifePoints / 100d) * (summoner.Stats.Life.Total() - summoner.Stats[CharacteristicEnum.VITALITY].TotalInContext());
+
+            Life.Base += (int)delta;
 
             AddStatsPercentSummoner(summoner, bonus.Agility, CharacteristicEnum.AGILITY);
             AddStatsPercentSummoner(summoner, bonus.Strength, CharacteristicEnum.STRENGTH);
@@ -302,12 +276,14 @@ namespace Giny.World.Managers.Fights.Stats
             bool summoned = summoner != null;
             var summonerId = summoned ? summoner.Id : 0;
 
-            return new GameFightCharacteristics(new CharacterCharacteristics(owner.Stats.GetCharacterCharacteristics()),
+            bool withLife = !owner.Fight.Started;
+
+            return new GameFightCharacteristics(new CharacterCharacteristics(owner.Stats.GetAllCharacterCharacteristics(withLife)),
                 summonerId, summoned,
                 (byte)owner.GetInvisibilityStateFor(target));
         }
         [Annotation]
-        public GameFightCharacteristics GetGameFightCharacteristics(Fighter owner, CharacterFighter target, CharacteristicEnum? selected = null)
+        public GameFightCharacteristics GetGameFightCharacteristics(Fighter owner, CharacterFighter target, CharacteristicEnum selected)
         {
 
             Fighter summoner = owner.GetSummoner();

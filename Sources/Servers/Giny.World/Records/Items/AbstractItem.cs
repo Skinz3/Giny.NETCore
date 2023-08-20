@@ -108,7 +108,7 @@ namespace Giny.World.Records.Items
 
         public abstract AbstractItem CloneWithoutUID();
 
-        public abstract void Initialize();
+        public abstract void OnCreated();
 
       
         public CharacterItemRecord ToCharacterItemRecord(long characterId)

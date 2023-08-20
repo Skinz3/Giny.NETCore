@@ -10,12 +10,11 @@ namespace Giny.World.Managers.Stats
 {
     public abstract class UsableCharacteristic : DetailedCharacteristic
     {
-
         public UsableCharacteristic()
         {
 
         }
-        public UsableCharacteristic(short @base) : base(@base)
+        public UsableCharacteristic(int @base) : base(@base)
         {
 
         }
@@ -32,7 +31,6 @@ namespace Giny.World.Managers.Stats
                 m_used = value;
             }
         }
-
         public override CharacterCharacteristic GetCharacterCharacteristic(CharacteristicEnum characteristic)
         {
             return new CharacterUsableCharacteristicDetailed(Math.Abs(Used), (short)characteristic, Base, Additional, Objects,

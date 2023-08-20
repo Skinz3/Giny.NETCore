@@ -81,10 +81,7 @@ namespace Giny.World.Records.Items
 
         }
 
-        public static int GetLastItemUID()
-        {
-            return (int)BidshopItems.Keys.OrderByDescending(x => x).FirstOrDefault();
-        }
+    
 
         public BidExchangerObjectInfo GetBidExchangerObjectInfo(long[] prices)
         {
@@ -127,7 +124,7 @@ namespace Giny.World.Records.Items
             };
         }
 
-        public override void Initialize()
+        public override void OnCreated()
         {
 
         }

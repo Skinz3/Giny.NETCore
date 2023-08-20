@@ -24,15 +24,17 @@ namespace Giny.World.Managers
 {
     public class WorldSaveManager : Singleton<WorldSaveManager>
     {
-        public const double SAVE_INTERVAL_MINUTES = 30;
-
-        private ActionTimer m_callback;
-
-        [StartupInvoke("Cyclic backup", StartupInvokePriority.Last)]
-        public void CreateNextTask()
+        private ActionTimer CallbackTimer
         {
-            m_callback = new ActionTimer((int)((SAVE_INTERVAL_MINUTES * 60) * 1000), PerformSave, true);
-            m_callback.Start();
+            get;
+            set;
+        }
+
+        [StartupInvoke("Periodic persistence", StartupInvokePriority.Last)]
+        public void Initialize()
+        {
+            CallbackTimer = new ActionTimer((int)(ConfigFile.Instance.SaveIntervalMinutes * 60 * 1000), PerformSave, true); ;
+            CallbackTimer.Start();
         }
 
 
@@ -43,16 +45,11 @@ namespace Giny.World.Managers
                 Stopwatch stopwatch = Stopwatch.StartNew();
                 WorldServer.Instance.SetServerStatus(ServerStatusEnum.SAVING);
 
-                WorldServer.Instance.Foreach(x => x.Character.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 164));
+                //WorldServer.Instance.Foreach(x => x.Character.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 164));
 
                 foreach (var client in WorldServer.Instance.GetClients().Where(x => x.Character != null))
                 {
                     client.Character.Record.UpdateElement();
-                }
-
-                foreach (var spell in SpellRecord.GetSpellRecords())
-                {
-                    spell.UpdateElement();
                 }
 
                 try
@@ -65,7 +62,7 @@ namespace Giny.World.Managers
                     Logger.Write("Unable to save worldserver : " + ex, Channels.Critical);
                 }
 
-                WorldServer.Instance.Foreach(x => x.Character.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 165));
+                // WorldServer.Instance.Foreach(x => x.Character.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 165));
 
                 WorldServer.Instance.SetServerStatus(ServerStatusEnum.ONLINE);
 

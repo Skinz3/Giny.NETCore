@@ -25,39 +25,20 @@ namespace Giny.World.Managers.Stats
     {
         public const short BaseSummonsCount = 1;
 
+        public int LifePoints => (Life.TotalInContext() + Life.Eroded) - LifeLoss.TotalInContext();
 
-        private int m_lifePoints;
+        public int MaxLifePoints => Life.TotalInContext();
 
-        public int LifePoints
-        {
-            get
-            {
-                return m_lifePoints;
-            }
-            set
-            {
-                m_lifePoints = value;
-            }
-        }
-
-        [Annotation("formule inexact (arrondi)")]
-        public double LifePercentage => (LifePoints / (double)MaxLifePoints) * 100;
-
-
-        [ProtoMember(1)]
-        public int MaxLifePoints
-        {
-            get;
-            set;
-        }
+        public double LifePercentage => (LifePoints / (double)MaxLifePoints) * 100d;
 
         public int MissingLife
         {
             get
             {
-                return MaxLifePoints - LifePoints;
+                return LifeLoss.TotalInContext();
             }
         }
+
         [ProtoMember(2)]
         public short MaxEnergyPoints
         {
@@ -95,6 +76,10 @@ namespace Giny.World.Managers.Stats
             get;
             set;
         }
+
+        public LifeCharacteristic Life => this.GetCharacteristic<LifeCharacteristic>(CharacteristicEnum.HIT_POINTS);
+
+        public LifeLossCharacteristic LifeLoss => this.GetCharacteristic<LifeLossCharacteristic>(CharacteristicEnum.HIT_POINT_LOSS);
 
         public DetailedCharacteristic Strength
         {
@@ -176,22 +161,25 @@ namespace Giny.World.Managers.Stats
 
         public void Initialize()
         {
-            this.LifePoints = this.MaxLifePoints;
             this.Energy = this.MaxEnergyPoints;
 
-            ((RelativeCharacteristic)this[CharacteristicEnum.DODGE_AP_LOST_PROBABILITY]).Bind(Wisdom);
-            ((RelativeCharacteristic)this[CharacteristicEnum.AP_REDUCTION]).Bind(Wisdom);
+            GetCharacteristic<RelativeCharacteristic>(CharacteristicEnum.DODGE_AP_LOST_PROBABILITY).Bind(Wisdom);
 
-            ((RelativeCharacteristic)this[CharacteristicEnum.DODGE_MP_LOST_PROBABILITY]).Bind(Wisdom);
-            ((RelativeCharacteristic)this[CharacteristicEnum.MP_REDUCTION]).Bind(Wisdom);
+            GetCharacteristic<RelativeCharacteristic>(CharacteristicEnum.AP_REDUCTION).Bind(Wisdom);
+
+            GetCharacteristic<RelativeCharacteristic>(CharacteristicEnum.DODGE_MP_LOST_PROBABILITY).Bind(Wisdom);
+            GetCharacteristic<RelativeCharacteristic>(CharacteristicEnum.MP_REDUCTION).Bind(Wisdom);
+
+            GetCharacteristic<RelativeCharacteristic>(CharacteristicEnum.TACKLE_BLOCK).Bind(Agility);
+            GetCharacteristic<RelativeCharacteristic>(CharacteristicEnum.TACKLE_EVADE).Bind(Agility);
 
 
-            ((RelativeCharacteristic)this[CharacteristicEnum.TACKLE_BLOCK]).Bind(Agility);
-            ((RelativeCharacteristic)this[CharacteristicEnum.TACKLE_EVADE]).Bind(Agility);
+            GetCharacteristic<RelativeCharacteristic>(CharacteristicEnum.MAGIC_FIND).Bind(Chance);
+            GetCharacteristic<InitiativeCharacteristic>(CharacteristicEnum.INITIATIVE).Bind(this);
 
-            ((RelativeCharacteristic)this[CharacteristicEnum.MAGIC_FIND]).Bind(Chance);
+            Life.Bind(GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.VITALITY));
 
-            ((InitiativeCharacteristic)this[CharacteristicEnum.INITIATIVE]).Bind(this);
+            LifeLoss.Bind(Life);
 
         }
         public Characteristic GetCharacteristic(StatsBoostEnum statId)
@@ -221,42 +209,26 @@ namespace Giny.World.Managers.Stats
         }
 
 
-        public CharacterCharacteristic[] GetCharacterCharacteristics(CharacteristicEnum? characteristicEnum = null)
+        public CharacterCharacteristic[] GetCharacterCharacteristics(CharacteristicEnum characteristicEnum)
         {
-
-            if (characteristicEnum.HasValue)
-            {
-                if (characteristicEnum == CharacteristicEnum.HIT_POINTS)
-                {
-                    return new CharacterCharacteristic[] { new CharacterCharacteristicValue(GetHitPoints(), (short)CharacteristicEnum.HIT_POINTS) };
-                }
-                else if (characteristicEnum == CharacteristicEnum.HIT_POINT_LOSS)
-                {
-                    return new CharacterCharacteristic[] { new CharacterCharacteristicValue(GetMissingLife(), (short)CharacteristicEnum.HIT_POINT_LOSS) };
-                }
-                var characterCharateristic = this.GetCharacteristic<Characteristic>(characteristicEnum.Value).GetCharacterCharacteristic(characteristicEnum.Value);
-                return new CharacterCharacteristic[] { characterCharateristic };
-            }
-            else
-            {
-                return GetCharacterCharacteristics();
-            }
+            var characterCharateristic = this.GetCharacteristic<Characteristic>(characteristicEnum).GetCharacterCharacteristic(characteristicEnum);
+            return new CharacterCharacteristic[] { characterCharateristic };
 
         }
 
-        private CharacterCharacteristic[] GetCharacterCharacteristics()
+        public CharacterCharacteristic[] GetAllCharacterCharacteristics(bool life)
         {
             List<CharacterCharacteristic> results = new List<CharacterCharacteristic>();
 
             foreach (KeyValuePair<CharacteristicEnum, Characteristic> stat in this.GetCharacteristics<Characteristic>())
             {
+                if ((stat.Key == CharacteristicEnum.HIT_POINTS || stat.Key == CharacteristicEnum.HIT_POINT_LOSS) && !life)
+                {
+                    continue;
+                }
                 var characterCharacteristic = stat.Value.GetCharacterCharacteristic(stat.Key);
                 results.Add(characterCharacteristic);
             }
-
-
-            results.Add(new CharacterCharacteristicValue(GetHitPoints(), (short)CharacteristicEnum.HIT_POINTS));
-            results.Add(new CharacterCharacteristicValue(GetMissingLife(), (short)CharacteristicEnum.HIT_POINT_LOSS));
 
             results.Add(new CharacterCharacteristicValue(MaxEnergyPoints, (short)CharacteristicEnum.MAX_ENERGY_POINTS));
             results.Add(new CharacterCharacteristicValue(Energy, (short)CharacteristicEnum.ENERGY_POINTS));
@@ -266,14 +238,7 @@ namespace Giny.World.Managers.Stats
 
             return results.ToArray();
         }
-        public virtual int GetMissingLife()
-        {
-            return -MissingLife;
-        }
-        public virtual int GetHitPoints()
-        {
-            return MaxLifePoints - this[CharacteristicEnum.VITALITY].TotalInContext();
-        }
+
         public CharacterCharacteristicsInformations GetCharacterCharacteristicsInformations(Character character)
         {
             var alignementInfos = new ActorExtendedAlignmentInformations(0, 0, 0, 0, 0, 0, 0, 0);
@@ -282,7 +247,7 @@ namespace Giny.World.Managers.Stats
             {
                 alignmentInfos = alignementInfos,
                 experienceBonusLimit = 0,
-                characteristics = GetCharacterCharacteristics(),
+                characteristics = GetAllCharacterCharacteristics(true),
                 probationTime = 0,
                 spellModifiers = new SpellModifierMessage[0],
                 criticalHitWeapon = CriticalHitWeapon,
@@ -310,17 +275,22 @@ namespace Giny.World.Managers.Stats
                 }
             }
         }
+
+        public void SetLifeZero()
+        {
+            LifeLoss.Context = Life.TotalInContext();
+        }
         public static EntityStats New(short level)
         {
             var stats = new EntityStats()
             {
-                LifePoints = BreedManager.BreedDefaultLife,
-                MaxLifePoints = BreedManager.BreedDefaultLife,
                 MaxEnergyPoints = (short)(level * 100),
                 Energy = (short)(level * 100),
                 CriticalHitWeapon = 0,
             };
 
+            stats[CharacteristicEnum.HIT_POINT_LOSS] = LifeLossCharacteristic.New();
+            stats[CharacteristicEnum.HIT_POINTS] = LifeCharacteristic.New(BreedManager.BreedDefaultLife);
             stats[CharacteristicEnum.INITIATIVE] = InitiativeCharacteristic.Zero();
             stats[CharacteristicEnum.STATS_POINTS] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.ACTION_POINTS] = ApCharacteristic.New(ConfigFile.Instance.StartAp);
@@ -420,6 +390,7 @@ namespace Giny.World.Managers.Stats
             }
             return results;
         }
+
 
     }
 }

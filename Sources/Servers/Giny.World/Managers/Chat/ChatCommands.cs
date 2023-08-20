@@ -393,7 +393,7 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("item", ServerRoleEnum.GamemasterPadawan)]
         public static void AddItemCommand(WorldClient client, short itemId, int quantity)
         {
-            client.Character.Inventory.AddItem(itemId, quantity, true);
+            client.Character.Inventory.AddItem(itemId, quantity, false);
             client.Character.NotifyItemGained(itemId, quantity);
         }
         [ChatCommand("relative", ServerRoleEnum.Administrator)]
@@ -513,18 +513,15 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
+
             if (client.Character.Fighter == null)
                 return;
-
-
-
 
 
             using (var seq = client.Character.Fighter.Fight.SequenceManager.StartSequence(Fights.Sequences.SequenceTypeEnum.SEQUENCE_SPELL))
             {
                 client.Character.Fighter.InflictDamage(new Damage(client.Character.Fighter, client.Character.Fighter, EffectSchoolEnum.Fix, 300, 300));
             }
-
 
 
             // client.Send(new GameActionItemListMessage(new GameActionItem[] { new GameActionItem(2469, "hello", "why", "eiejd", "eij", new ObjectItemInformationWithQuantity[] {new ObjectItemInformationWithQuantity(1,2469,new ObjectEffect[0])}) }));
@@ -538,24 +535,6 @@ namespace Giny.World.Managers.Chat
 
             return;
 
-
-
-
-            foreach (var subarea in SubareaRecord.GetSubareas())
-            {
-                if (subarea.AchievementRecord != null)
-                {
-                    client.Character.ReachAchievement(subarea.AchievementRecord);
-                }
-            }
-
-
-            var achievmeents = AchievementRecord.GetAchievements().Take(50);
-
-            foreach (var item in achievmeents)
-            {
-                client.Character.ReachAchievement(item);
-            }
 
 
 

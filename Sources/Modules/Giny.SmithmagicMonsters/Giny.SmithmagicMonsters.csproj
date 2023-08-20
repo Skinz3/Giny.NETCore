@@ -1,10 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <BaseOutputPath></BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +11,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy &quot;$(TargetDir)\Giny.DofusDrop.dll&quot; &quot;$(SolutionDir)\Servers\Giny.World\bin\Debug\net6.0\Modules\Giny.DofusDrop.dll&quot;" />
+    <Exec Command="copy &quot;$(TargetDir)\Giny.SmithmagicMonsters.dll&quot; &quot;$(SolutionDir)\Servers\Giny.World\bin\Debug\net6.0\Modules\Giny.SmithmagicMonsters.dll&quot;" />
   </Target>
 
 </Project>

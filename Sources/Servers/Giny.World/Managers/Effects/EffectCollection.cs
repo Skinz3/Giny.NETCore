@@ -56,7 +56,7 @@ namespace Giny.World.Managers.Effects
         {
             EffectCollection result = new EffectCollection();
 
-            AsyncRandom random = new AsyncRandom();
+            Random random = new Random();
 
             foreach (var effect in this.OfType<EffectDice>())
             {

@@ -64,8 +64,8 @@ namespace Giny.World.Handlers.Roleplay.Stats
                         if (statId == StatsBoostEnum.VITALITY)
                         {
                             int num5 = num - characteristic.Base;
-                            client.Character.Record.Stats.LifePoints += num5;
-                            client.Character.Record.Stats.MaxLifePoints += num5;
+
+                            client.Character.Record.Stats.Life.Base += num5;
                         }
 
                         characteristic.Base = (short)num;

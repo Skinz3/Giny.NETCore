@@ -50,7 +50,7 @@ namespace Giny.World.Managers.Effects
         {
 
         }
-        public EffectInteger Generate(AsyncRandom random, bool perfect = false)
+        public EffectInteger Generate(Random random, bool perfect = false)
         {
             if (Value != 0)
             {

@@ -11,39 +11,38 @@ namespace Giny.World.Managers.Stats
     public class PointDodgeCharacteristic : RelativeCharacteristic
     {
         [ProtoMember(1)]
-        public override short Base
+        public override int Base
         {
             get => base.Base;
             set => base.Base = value;
         }
         [ProtoMember(2)]
-        public override short Additional
+        public override int Additional
         {
             get => base.Additional;
             set => base.Additional = value;
         }
-        [ProtoMember(3)]
-        public override short Objects
+        public override int Objects
         {
             get => base.Objects;
             set => base.Objects = value;
         }
 
-        public override short Total()
+        public override int Total()
         {
-            short total = base.Total();
+            int total = base.Total();
             return (short)(total > 0 ? total : 0);
         }
-        public override short TotalInContext()
+        public override int TotalInContext()
         {
-            short totalInContext = base.Total();
-            return (short)(totalInContext > 0 ? totalInContext : 0);
+            int totalInContext = base.Total();
+            return  totalInContext > 0 ? totalInContext : 0;
         }
         public static new PointDodgeCharacteristic Zero()
         {
             return new PointDodgeCharacteristic();
         }
-        public static new PointDodgeCharacteristic New(short delta)
+        public static new PointDodgeCharacteristic New(int delta)
         {
             return new PointDodgeCharacteristic()
             {

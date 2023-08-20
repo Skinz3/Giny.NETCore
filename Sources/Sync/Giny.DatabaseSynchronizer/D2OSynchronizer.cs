@@ -1,6 +1,5 @@
 ﻿using Giny.Core;
 using Giny.Core.Logging;
-using Giny.Core.Misc;
 using Giny.IO;
 using Giny.IO.D2O;
 using Giny.IO.D2OClasses;
@@ -66,22 +65,7 @@ namespace Giny.DatabaseSynchronizer
 
         }
 
-        private static void LogClasseFields(string classname)
-        {
-            var reader = d2oReaders.FirstOrDefault(x => x.Classes.Values.Any(j => j.Name == classname));
-            var d2oClassDefinition = reader.Classes.FirstOrDefault(x => x.Value.Name == classname);
-
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append(classname);
-
-            foreach (var field in d2oClassDefinition.Value.Fields)
-            {
-                sb.Append(Environment.NewLine + "-" + field.Key + ":" + field.Value.TypeId);
-            }
-
-            Notepad.Open(sb.ToString());
-        }
+        
         private static void BuildFromObjects(object[] objects, Type tableType)
         {
             var objectType = objects.First().GetType();

@@ -13,7 +13,7 @@ namespace Giny.ORM
 {
     public class DatabaseManager : Singleton<DatabaseManager>
     {
-        public static object SyncRoot = new object();
+        public static object DatabaseLocker = new object();
 
         private MySqlConnection ConnectionProvider
         {
@@ -45,7 +45,7 @@ namespace Giny.ORM
         }
         private MySqlConnection UseProvider(MySqlConnection connection)
         {
-            lock (SyncRoot)
+            lock (DatabaseLocker)
             {
                 if (!connection.Ping())
                 {
@@ -124,7 +124,7 @@ namespace Giny.ORM
         }
         public void Query(string query)
         {
-            lock (SyncRoot)
+            lock (DatabaseLocker)
             {
                 using (MySqlCommand cmd = new MySqlCommand(query, UseProvider()))
                 {
@@ -142,7 +142,7 @@ namespace Giny.ORM
 
         public object QueryScalar(string query)
         {
-            lock (SyncRoot)
+            lock (DatabaseLocker)
             {
                 using (MySqlCommand cmd = new MySqlCommand(query, UseProvider()))
                 {

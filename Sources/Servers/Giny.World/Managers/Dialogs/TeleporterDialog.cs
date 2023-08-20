@@ -44,6 +44,12 @@ namespace Giny.World.Managers.Dialogs
             {
                 MapRecord targetMap = MapRecord.GetMap(zaapMaps[i]);
 
+                if (targetMap == null)
+                {
+                    character.ReplyWarning($"Skipping unknown zaap destination ({zaapMaps[i]}.");
+                    continue;
+                }
+
                 Destinations.Add(targetMap.Id, new TeleportDestination()
                 {
                     cost = GetCost(targetMap, character.Map),
@@ -53,6 +59,11 @@ namespace Giny.World.Managers.Dialogs
                     subAreaId = targetMap.SubareaId,
                 });
             }
+        }
+
+        public TeleporterDialog(Character character) : base(character)
+        {
+            Destinations = new Dictionary<long, TeleportDestination>();
         }
         public override void Close()
         {

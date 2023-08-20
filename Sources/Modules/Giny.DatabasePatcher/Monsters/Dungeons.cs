@@ -861,46 +861,9 @@ namespace Giny.DatabasePatcher.Monsters
             dungeon.Rooms.Add(202641408, new MonsterRoom(10, 6029, 6028, 6027, 6026, 6029, 6028, 6030, 6030));
             dungeon.Rooms.Add(202642432, new MonsterRoom(10));
 
-            /* Songes Infinis */
+            
 
-            dungeon = DungeonRecord.GetDungeon(135);
-            /* Kardorim,Tournesol Affamé,Mob l'Éponge,Noximilien l'Horloger,Bouftou Royal,Scarabosse Doré,Batofu,Boostache*/
-            dungeon.Rooms.Add(200279040, new MonsterRoom(10, 4051, 799, 928, 5781, 147, 797, 800, 2975));
-            /* Chafer Rōnin,Kankreblath,Coffre des Forgerons,Shin Larve,Bworkette,Corailleur Magistral,Sapik,Bouftou Royal*/
-            dungeon.Rooms.Add(195559426, new MonsterRoom(10, 3238, 3945, 252, 457, 792, 1027, 1179, 147));
-            /* Kwakwa,Gelée Royale Bleue,Gelée Royale Menthe,Gelée Royale Fraise,Wa Wabbit,Gelée Royale Citron,Blop Coco Royal,Blop Griotte Royal*/
-            dungeon.Rooms.Add(204604416, new MonsterRoom(10, 2995, 58, 85, 86, 180, 430, 1184, 1185));
-            /* Blop Indigo Royal,Blop Reinette Royal,Kanniboul Ebil,Mawabouaino,Craqueleur Légendaire,Gourlo le Terrible,Nelween,Draegnerys*/
-            dungeon.Rooms.Add(204212224, new MonsterRoom(10, 1186, 1187, 2960, 5653, 669, 1051, 3100, 5823));
-            /* Wa Wobot,Mantiscore,Abraknyde Ancestral,Le Chouque,Reine Nyée,Choudini,Dragon Cochon,Moon*/
-            dungeon.Rooms.Add(204213248, new MonsterRoom(10, 3460, 4621, 173, 230, 3996, 4860, 113, 226));
-            /* Meulou,Koulosse,Grozilla Somnambule,Grasmera Somnambule,Halouine,Malléfisk,Kharnozor,Daïgoro*/
-            dungeon.Rooms.Add(204213250, new MonsterRoom(10, 232, 670, 3295, 3298, 3306, 3652, 5819, 6343));
-            /* Maître Corbac,Papa Nowel,Rat Noir,Rat Blanc,Silf le Rasboul Majeur,Pounicheur,Damadrya,Minotoror*/
-            dungeon.Rooms.Add(204213252, new MonsterRoom(10, 289, 872, 939, 940, 1071, 4278, 6326, 121));
-            /* Tofu Royal,Skeunk,Crocabulia,Blop Multicolore Royal,Fraktale,Royalmouth,Haute Truche,Capitaine Ekarlatte*/
-            dungeon.Rooms.Add(204214276, new MonsterRoom(10, 382, 780, 854, 1188, 3852, 2854, 3618, 3753));
-            /* El Piko,Tanukouï San,Nagate,Hell Mina,Chêne Mou,Tynril Consterné,Tynril Déconcerté,Goultime*/
-            dungeon.Rooms.Add(204215300, new MonsterRoom(10, 4609, 6218, 6256, 107, 257, 1072, 1085, 4880));
-            /* Tynril Perfide,Tynril Ahuri,Shihan,Hanshi,Founoroshi,Sphincter Cell,Vampire Dupyr,Phossile*/
-            dungeon.Rooms.Add(162791438, new MonsterRoom(10, 1086, 1087, 6204, 6212, 6249, 943, 2786, 3651));
-            /* Minotot,Kimbo,Kanigroula,Ush Galesh,Shogun Tofugawa,Mansot Royal,XLII,Père Ver*/
-            dungeon.Rooms.Add(162791444, new MonsterRoom(10, 827, 1045, 3556, 4264, 6388, 2848, 3849, 4726));
-            /* Comte Razof,Obsidiantre,Demi Papa Nowel,Fuji Givrefoux Nourricière,Glourséleste,Jorbak,Grozilla Épuisé,Grasmera Épuisé*/
-            dungeon.Rooms.Add(196083718, new MonsterRoom(10, 4803, 2924, 874, 3234, 2864, 2772, 3294, 3297));
-            /* Kolosso,Professeur Xa,Klime,Nileza,Sylargh,Comte Harebourg,Nasumara,Predagob*/
-            dungeon.Rooms.Add(200805378, new MonsterRoom(10, 2986, 2992, 3384, 3397, 3409, 3416, 6437, 4834));
-            /* Torkélonia,Servitude,Misère,Guerre,Corruption,Khepricorne,Hyperscampe,Shushu Debruk'Sayl*/
-            dungeon.Rooms.Add(196083720, new MonsterRoom(10, 5806, 5955, 5990, 6014, 6026, 4734, 3533, 4816));
-            /* Merkator,Roi Nidas,Reine des Voleurs,Protozorreur,Vortex,Chalœil,Dantinéa,Larve de Koutoulou*/
-            dungeon.Rooms.Add(200805380, new MonsterRoom(10, 3534, 3648, 3726, 3828, 3835, 4263, 4444, 4453));
-            /* Capitaine Meno,Tal Kasha,Anerice la Shushess,Ilyzaelle,Solar,Bethel Akarna,Dazak Martegel,Prêtresse de Kao*/
-            dungeon.Rooms.Add(196083712, new MonsterRoom(10, 4460, 4744, 4882, 4967, 5100, 5110, 5319, 5666));
-            /* Koumiho,Ben le Ripate,Bworker,Ougah,Père Fwetar,Toxoliath,Qu'Tan,Grolloum*/
-            dungeon.Rooms.Add(201589765, new MonsterRoom(10, 6394, 2877, 478, 1159, 1194, 3752, 1195, 2942));
-            /* Korriandre,Gorgouille,Jorbak,Wukirigi,Wulan,Oto Mustam,Garde du Conseil,Aigripoil*/
-            dungeon.Rooms.Add(196084736, new MonsterRoom(10, 2968, 3137, 2772, 6560, 6563, 1145, 4382, 3669));
-            dungeon.Rooms.Add(196084744, new MonsterRoom(10));
+
 
             foreach (var value in DungeonRecord.GetDungeonRecords())
             {

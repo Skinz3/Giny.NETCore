@@ -325,9 +325,10 @@ namespace Giny.World.Records.Maps
             };
         }
 
-        public static MapRecord GetMap(long mapId)
+        public static MapRecord? GetMap(long mapId)
         {
-            return Maps[mapId];
+            Maps.TryGetValue(mapId, out MapRecord? mapRecord);
+            return mapRecord;
         }
         public static IEnumerable<MapRecord> GetMaps(Point point)
         {

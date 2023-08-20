@@ -56,8 +56,6 @@ namespace Giny.World.Managers.Items
         public static void AddVitality(Character character, int delta)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.VITALITY).Objects += (short)delta;
-            character.Record.Stats.LifePoints += (short)delta;
-            character.Record.Stats.MaxLifePoints += (short)delta;
         }
         [ItemEffect(EffectsEnum.Effect_AddHealth)]
         public static void AddHealth(Character character, int delta)
@@ -68,8 +66,7 @@ namespace Giny.World.Managers.Items
         public static void SubVitality(Character character, int delta)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.VITALITY).Objects -= (short)delta;
-            character.Record.Stats.LifePoints -= (short)delta;
-            character.Record.Stats.MaxLifePoints -= (short)delta;
+
         }
         [ItemEffect(EffectsEnum.Effect_AddInitiative)]
         public static void AddInitiative(Character character, int delta)
@@ -305,8 +302,10 @@ namespace Giny.World.Managers.Items
         {
             if (delta > 0)
             {
-                character.LearnTitle((short)delta);
-                character.ActiveTitle((short)delta);
+                if (character.LearnTitle((short)delta))
+                {
+                    character.ActiveTitle((short)delta);
+                }
             }
             else
             {

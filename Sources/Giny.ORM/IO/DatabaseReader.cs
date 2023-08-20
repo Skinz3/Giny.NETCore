@@ -52,7 +52,7 @@ namespace Giny.ORM.IO
         }
         public IRecord ReadFirst(MySqlConnection connection, string where)
         {
-            lock (DatabaseManager.SyncRoot)
+            lock (DatabaseManager.DatabaseLocker)
             {
                 using (var command = new MySqlCommand(string.Format(QueryConstants.SelectWhere, TableName, where), connection))
                 {
@@ -95,7 +95,7 @@ namespace Giny.ORM.IO
         }
         private void Select(MySqlConnection connection, string parameter)
         {
-            lock (DatabaseManager.SyncRoot)
+            lock (DatabaseManager.DatabaseLocker)
             {
                 using (var command = new MySqlCommand(parameter, connection))
                 {
@@ -145,7 +145,7 @@ namespace Giny.ORM.IO
         }
         public long Count(MySqlConnection connection)
         {
-            lock (DatabaseManager.SyncRoot)
+            lock (DatabaseManager.DatabaseLocker)
             {
                 using (MySqlCommand cmd = new MySqlCommand(string.Format(QueryConstants.Count, TableName), connection))
                 {

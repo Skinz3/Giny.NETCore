@@ -10,22 +10,21 @@ namespace Giny.World.Managers.Stats
     [ProtoContract]
     public class RangeCharacteristic : DetailedCharacteristic
     {
-        public const short RangeLimit = 6;
+        public const int RangeLimit = 6;
 
-        public override short? Limit => RangeLimit;
+        public override int? Limit => RangeLimit;
 
         public override bool ContextualLimit => true;
        
         [ProtoMember(1)]
-        public override short Base { get => base.Base; set => base.Base = value; }
+        public override int Base { get => base.Base; set => base.Base = value; }
 
         [ProtoMember(2)]
-        public override short Additional { get => base.Additional; set => base.Additional = value; }
+        public override int Additional { get => base.Additional; set => base.Additional = value; }
 
-        [ProtoMember(3)]
-        public override short Objects { get => base.Objects; set => base.Objects = value; }
+        public override int Objects { get => base.Objects; set => base.Objects = value; }
 
-        public new static RangeCharacteristic New(short @base)
+        public new static RangeCharacteristic New(int @base)
         {
             return new RangeCharacteristic()
             {

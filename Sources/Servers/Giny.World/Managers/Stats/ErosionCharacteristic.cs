@@ -10,23 +10,22 @@ namespace Giny.World.Managers.Stats
     [ProtoContract]
     public class ErosionCharacteristic : DetailedCharacteristic
     {
-        public const short ErosionLimit = 50;
+        public const int ErosionLimit = 50;
 
-        public override short? Limit => ErosionLimit;
+        public override int? Limit => ErosionLimit;
 
         public override bool ContextualLimit => true;
 
 
         [ProtoMember(1)]
-        public override short Base { get => base.Base; set => base.Base = value; }
+        public override int Base { get => base.Base; set => base.Base = value; }
 
         [ProtoMember(2)]
-        public override short Additional { get => base.Additional; set => base.Additional = value; }
+        public override int Additional { get => base.Additional; set => base.Additional = value; }
 
-        [ProtoMember(3)]
-        public override short Objects { get => base.Objects; set => base.Objects = value; }
+        public override int Objects { get => base.Objects; set => base.Objects = value; }
 
-        public static new ErosionCharacteristic New(short @base)
+        public static new ErosionCharacteristic New(int @base)
         {
             return new ErosionCharacteristic()
             {

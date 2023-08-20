@@ -193,9 +193,9 @@ namespace Giny.World.Managers.Items
         [StartupInvoke("Items manager", StartupInvokePriority.SixthPath)]
         public void Initialize()
         {
-            long lastUID = CharacterItemRecord.GetLastItemUID();
-            lastUID = Math.Max(lastUID, BankItemRecord.GetLastItemUID());
-            lastUID = Math.Max(lastUID, BidShopItemRecord.GetLastItemUID());
+            long lastUID = TableManager.Instance.GetLastIdFromContainer<CharacterItemRecord>();
+            lastUID = Math.Max(lastUID, TableManager.Instance.GetLastIdFromContainer<BankItemRecord>());
+            lastUID = Math.Max(lastUID, TableManager.Instance.GetLastIdFromContainer<BidShopItemRecord>());
 
             m_idprovider = new UniqueIdProvider((int)lastUID);
 

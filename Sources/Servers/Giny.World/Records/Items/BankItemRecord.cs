@@ -56,10 +56,6 @@ namespace Giny.World.Records.Items
                 UId = ItemsManager.Instance.PopItemUID(),
             };
         }
-        public static long GetLastItemUID()
-        {
-            return BankItems.Keys.OrderByDescending(x => x).FirstOrDefault();
-        }
         public static IEnumerable<BankItemRecord> GetBankItems(int accountId)
         {
             return BankItems.Values.Where(x => x.AccountId == accountId);
@@ -68,7 +64,7 @@ namespace Giny.World.Records.Items
         {
             return BankItems.Values;
         }
-        public override void Initialize()
+        public override void OnCreated()
         {
            
         }

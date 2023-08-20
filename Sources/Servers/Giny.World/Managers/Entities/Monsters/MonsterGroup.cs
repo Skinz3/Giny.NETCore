@@ -174,7 +174,7 @@ namespace Giny.World.Managers.Monsters
 
         public void Agress(Character character)
         {
-            if (!CanBeAggressed || !Map.Position.AllowMonsterAgression)
+            if (!CanBeAggressed)
             {
                 character.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 293);
                 return;

@@ -212,6 +212,11 @@ namespace Giny.ORM
         [PerformanceIssue]
         public long GetNextIdFromContainer<T>() where T : IRecord
         {
+            return GetLastIdFromContainer<T>() + 1;
+        }
+        [PerformanceIssue]
+        public long GetLastIdFromContainer<T>() where T : IRecord
+        {
             var definition = m_TableDefinitions[typeof(T)];
 
             if (definition.ContainerValue == null || !definition.Load)
@@ -225,7 +230,7 @@ namespace Giny.ORM
             {
                 return 1;
             }
-            return ids.OrderByDescending(x => x).First() + 1;
+            return ids.OrderByDescending(x => x).First();
         }
     }
 }

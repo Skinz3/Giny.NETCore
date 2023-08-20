@@ -399,6 +399,8 @@ namespace Giny.World.Managers.Fights.Fighters
                     Fight.CheckFightStart();
                 }
 
+                HardcoreManager.Instance.OnCharacterLooseFight(this);
+
                 if (teleportToSpawn)
                     Character.RejoinMap(Character.Record.MapId, Fight.FightType, false, Fight.SpawnJoin);
                 else
@@ -448,6 +450,8 @@ namespace Giny.World.Managers.Fights.Fighters
             {
                 this.Team.RemoveFighter(this);
 
+                HardcoreManager.Instance.OnCharacterLooseFight(this);
+
                 this.Character.RejoinMap(Character.Record.MapId, Fight.FightType, false, Fight.SpawnJoin);
             }
         }
@@ -463,6 +467,10 @@ namespace Giny.World.Managers.Fights.Fighters
         public override void OnTurnBegin()
         {
 
+
+            Character.Reply("Lifepoints :" + Stats.LifePoints);
+            Character.Reply("MaxLifepoints:" + Stats.MaxLifePoints);
+            Character.Reply("Erroded" + Stats.Life.Eroded);
 
             if (Disconnected)
             {
@@ -676,6 +684,9 @@ namespace Giny.World.Managers.Fights.Fighters
 
         }
 
-
+        public bool CanQuitFight()
+        {
+            return true;
+        }
     }
 }

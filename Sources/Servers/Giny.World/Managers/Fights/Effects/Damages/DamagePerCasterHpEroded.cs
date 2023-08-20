@@ -28,7 +28,7 @@ namespace Giny.World.Managers.Fights.Effects.Damages
         {
             foreach (var target in targets)
             {
-                double damagesAmount = Source.Stats.ErodedLife * Effect.Min / 100d;
+                double damagesAmount = Source.Stats.Life.Eroded * Effect.Min / 100d;
                 Damage damages = new Damage(Source, target, GetEffectSchool(), damagesAmount, damagesAmount, this);
                 damages.IgnoreBoost = true;
                 damages.IgnoreResistances = true; // good

@@ -27,13 +27,23 @@ namespace Giny.World.Handlers.Maps
         [MessageHandler]
         public static void HandleFriendJoinRequestMessage(FriendJoinRequestMessage message, WorldClient client)
         {
-            //  client.Character.Teleport(target.Character.Record.MapId, target.Character.Map.Instance.GetNearEntityCell(target.Character.GetCell()));
+
+            var target = WorldServer.Instance.GetClient(message.target);
+
+            if (target == null)
+            {
+                return;
+            }
+
+            if (target.Character.Map.Subarea.AreaId != 45 || client.Character.Map.Subarea.AreaId != 45)
+            {
+                client.Character.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_MESSAGE, 493);
+                return;
+            }
+            client.Character.Teleport(target.Character.Record.MapId, target.Character.Map.Instance.GetNearEntityCell(target.Character.GetCell()));
         }
         [MessageHandler]
-        public static void HandleGameMapChangeOriantation(GameMapChangeOrientationRequestMessage message, WorldClient client)
-        {
-            client.Character.SetDirection((DirectionsEnum)message.direction);
-        }
+        public static void HandleGameMapChangeOrientation(GameMapChangeOrientationRequestMessage message, WorldClient client) => client.Character.SetDirection((DirectionsEnum)message.direction);
         [MessageHandler]
         public static void HandleEmotePlayRequestMessage(EmotePlayRequestMessage message, WorldClient client)
         {
@@ -45,7 +55,6 @@ namespace Giny.World.Handlers.Maps
         {
             if (client.Character.Record.MapId == message.mapId)
             {
-
                 SubareaRecord? oldSubarea = null;
 
                 if (client.Character.Map != null)

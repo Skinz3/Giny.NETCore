@@ -32,9 +32,7 @@ namespace Giny.World.Handlers.Roleplay.Exchanges
             {
                 client.Character.GetDialog<TradeExchange>().TransferAllFromInventory();
             }
-
         }
-
 
         [MessageHandler]
         public static void HandleExchangeCraftCountRequest(ExchangeCraftCountRequestMessage message, WorldClient client)
@@ -113,6 +111,7 @@ namespace Giny.World.Handlers.Roleplay.Exchanges
                 client.Character.OnExchangeError(ExchangeErrorEnum.REQUEST_IMPOSSIBLE);
                 return;
             }
+      
             if (target.Busy)
             {
                 client.Character.OnExchangeError(ExchangeErrorEnum.REQUEST_CHARACTER_OCCUPIED);

@@ -17,7 +17,7 @@ namespace Giny.World.Managers.Items
     public class ItemUses
     {
         [ItemUsageHandler(EffectsEnum.Effect_AddTitle)]
-        public static bool AddTitle(Character character,EffectInteger effect)
+        public static bool AddTitle(Character character, EffectInteger effect)
         {
             var titleId = (short)effect.Value;
 
@@ -101,8 +101,7 @@ namespace Giny.World.Managers.Items
         public static bool PermanentVitality(Character character, EffectInteger effect)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.VITALITY).Additional += (short)effect.Value;
-            character.Record.Stats.LifePoints += effect.Value;
-            character.Record.Stats.MaxLifePoints += effect.Value;
+            character.Record.Stats.Life.Base += effect.Value;
             character.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_MESSAGE, 13, effect.Value);
             return true;
         }

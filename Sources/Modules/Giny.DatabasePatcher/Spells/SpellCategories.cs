@@ -1,7 +1,6 @@
 ﻿using Giny.Core;
 using Giny.Core.DesignPattern;
 using Giny.Core.Extensions;
-using Giny.Core.Misc;
 using Giny.ORM;
 using Giny.Protocol.Enums;
 using Giny.World.Records.Spells;

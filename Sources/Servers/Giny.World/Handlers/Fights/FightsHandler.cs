@@ -11,6 +11,7 @@ using Giny.World.Managers.Fights.Fighters;
 using Giny.Protocol.Enums;
 using Giny.World.Records.Spells;
 using Giny.World.Managers.Spells;
+using Giny.World.Managers.Hardcore;
 
 namespace Giny.World.Handlers.Fights
 {
@@ -44,8 +45,18 @@ namespace Giny.World.Handlers.Fights
         [MessageHandler]
         public static void HandleGameContextQuitMessage(GameContextQuitMessage message, WorldClient client)
         {
+
             if (client.Character.Fighting)
+            {
+                if (!client.Character.Fighter.CanQuitFight())
+                {
+                    client.Character.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 288);
+                    return;
+                }
+
                 client.Character.Fighter.Leave(true);
+
+            }
         }
         [MessageHandler]
         public static void HandleGameFightPlacementPositionRequestMessage(GameFightPlacementPositionRequestMessage message, WorldClient client)

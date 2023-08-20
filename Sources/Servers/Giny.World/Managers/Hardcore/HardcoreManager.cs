@@ -11,9 +11,11 @@ using Giny.World.Managers.Entities.Look;
 using Giny.World.Managers.Experiences;
 using Giny.World.Managers.Fights;
 using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Managers.Shortcuts;
 using Giny.World.Managers.Spells;
 using Giny.World.Managers.Stats;
 using Giny.World.Network;
+using Giny.World.Records.Breeds;
 using Giny.World.Records.Characters;
 using Giny.World.Records.Items;
 using System;
@@ -94,6 +96,9 @@ namespace Giny.World.Managers.Hardcore
         {
             short bonesId = GraveBones[character.Breed.BreedEnum];
 
+            character.Inventory.UnequipAll();
+
+
             character.Record.ContextualLook = EntityLookManager.Instance.CreateLookFromBones(bonesId);
 
             character.Record.HardcoreInformations.DeathState = HardcoreOrEpicDeathStateEnum.DEATH_STATE_DEAD;
@@ -104,7 +109,6 @@ namespace Giny.World.Managers.Hardcore
             {
                 character.Record.HardcoreInformations.DeathMaxLevel = character.Level;
             }
-
 
             character.Client.Send(new GameRolePlayGameOverMessage());
         }
@@ -122,6 +126,7 @@ namespace Giny.World.Managers.Hardcore
             record.ActiveTitleId = 0;
             record.ContextualLook = null;
             record.Spells = new List<CharacterSpell>();
+            record.Shortcuts = new List<CharacterShortcut>();
             record.Stats = EntityStats.New(ReplayLevel);
             record.Jobs = CharacterJob.New();
             record.MapId = ConfigFile.Instance.SpawnMapId;
@@ -131,5 +136,6 @@ namespace Giny.World.Managers.Hardcore
 
             record.UpdateElement();
         }
+
     }
 }

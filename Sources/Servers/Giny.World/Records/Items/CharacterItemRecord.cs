@@ -1,4 +1,5 @@
-﻿using Giny.Core.DesignPattern;
+﻿using Giny.Core;
+using Giny.Core.DesignPattern;
 using Giny.Core.Extensions;
 using Giny.ORM;
 using Giny.ORM.Attributes;
@@ -19,9 +20,12 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Records.Items
 {
-    [Table("character_items", false)]
+    [Table("character_items")]
     public class CharacterItemRecord : AbstractItem, IRecord
     {
+        [Container]
+        private static ConcurrentDictionary<long, CharacterItemRecord> CharacterItems = new ConcurrentDictionary<long, CharacterItemRecord>();
+
         [Update]
         public long CharacterId
         {
@@ -29,6 +33,7 @@ namespace Giny.World.Records.Items
             set;
         }
 
+        [Ignore]
         long IRecord.Id => base.UId;
 
         public CharacterItemRecord(long characterId, int uid, int gid, byte position, int quantity, EffectCollection effects, short appearanceId, string look)
@@ -78,7 +83,8 @@ namespace Giny.World.Records.Items
 
         public static List<CharacterItemRecord> GetCharacterItems(long characterId)
         {
-            return DatabaseReader.Select<CharacterItemRecord>("CharacterId", characterId).ToList();
+            var results = CharacterItems.Values.Where(x => x.CharacterId == characterId).ToList();
+            return results;
         }
 
 
@@ -91,14 +97,7 @@ namespace Giny.World.Records.Items
             return Record.Exchangeable;
         }
 
-        /// <summary>
-        /// Return the maximum item UID
-        /// Use this method wisely, direct SQL query
-        /// </summary>
-        public static int GetLastItemUID()
-        {
-            return (int)TableManager.Instance.GetLastIdFromQuery<CharacterItemRecord>();
-        }
+
         public override AbstractItem CloneWithUID()
         {
             return new CharacterItemRecord(CharacterId, UId, GId, Position, Quantity, this.Effects.Clone(), AppearanceId, Look); /* shouldnt we clone each effects? */
@@ -111,9 +110,16 @@ namespace Giny.World.Records.Items
         public static void RemoveCharacterItems(long characterId)
         {
             DatabaseWriter.Delete<CharacterItemRecord>("CharacterId", characterId);
+
+            var items = CharacterItems.Values.Where(x => x.CharacterId == characterId).ToList();
+
+            foreach (var item in items)
+            {
+                CharacterItems.TryRemove(item.UId);
+            }
         }
 
-        public override void Initialize()
+        public override void OnCreated()
         {
             switch (Record.TypeEnum)
             {

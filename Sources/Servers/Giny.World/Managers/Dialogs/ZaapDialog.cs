@@ -24,6 +24,11 @@ namespace Giny.World.Managers.Dialogs
 
         }
 
+        public ZaapDialog(Character character) : base(character)
+        {
+
+        }
+
         public override void Open()
         {
             this.Character.Client.Send(new ZaapDestinationsMessage(Character.Record.SpawnPointMapId,
@@ -38,14 +43,18 @@ namespace Giny.World.Managers.Dialogs
             }
             var destination = Destinations[map.Id];
 
+            short cellId;
+
             var zaapElement = map.GetFirstElementRecord(InteractiveTypeEnum.ZAAP16);
 
-            if (zaapElement == null)
+            if (zaapElement != null)
             {
-                return;
+                cellId = map.GetNearCell(InteractiveTypeEnum.ZAAP16);
             }
-
-            short cellId = map.GetNearCell(InteractiveTypeEnum.ZAAP16);
+            else
+            {
+                cellId = map.RandomWalkableCell().Id;
+            }
 
             if (this.Character.RemoveKamas(destination.cost))
             {

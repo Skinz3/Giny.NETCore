@@ -10,6 +10,7 @@ using Giny.World.Managers.Effects;
 using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Entities.Look;
 using Giny.World.Managers.Formulas;
+using Giny.World.Managers.Stats;
 using Giny.World.Records.Items;
 using System;
 using System.Collections.Generic;
@@ -197,7 +198,7 @@ namespace Giny.World.Managers.Items.Collections
         {
             return GetItems().FirstOrDefault(x => x.Record.TypeEnum == type);
         }
-      
+
         public void Refresh()
         {
             Character.Client.Send(new InventoryContentMessage(this.GetObjectsItems(), Character.Record.Kamas));
@@ -220,6 +221,19 @@ namespace Giny.World.Managers.Items.Collections
         public CharacterItemRecord GetWeapon()
         {
             return GetEquipedItem(CharacterInventoryPositionEnum.ACCESSORY_POSITION_WEAPON);
+        }
+
+        public void ApplyEquipementItemsEffects()
+        {
+            foreach (var stats in Character.Stats.GetCharacteristics<DetailedCharacteristic>().Values)
+            {
+                stats.Objects = 0;
+            }
+
+            foreach (var item in GetEquipedItems())
+            {
+                ItemEffectsManager.Instance.AddEffects(Character, item.Effects);
+            }
         }
         private void OnItemMoved(CharacterItemRecord item, CharacterInventoryPositionEnum lastPosition)
         {
@@ -378,7 +392,7 @@ namespace Giny.World.Managers.Items.Collections
 
             foreach (var item2 in GetEquipedItems())
             {
-                if (item != item2 && !CriteriaExpression.Eval(item2.Record.Criteria,Character.Client))
+                if (item != item2 && !CriteriaExpression.Eval(item2.Record.Criteria, Character.Client))
                     SetItemPosition(item2.UId, CharacterInventoryPositionEnum.INVENTORY_POSITION_NOT_EQUIPED, item2.Quantity);
             }
 
@@ -735,6 +749,10 @@ namespace Giny.World.Managers.Items.Collections
         {
             Character.Client.Send(new ObjectMovementMessage(item.UId, (byte)newPosition));
         }
+
+
+
+
 
         /*  public void DropItem(uint uid, uint quantity)
           {

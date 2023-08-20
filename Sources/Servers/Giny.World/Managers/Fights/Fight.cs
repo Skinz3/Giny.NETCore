@@ -929,6 +929,9 @@ namespace Giny.World.Managers.Fights
                 Synchronize(fighter);
             }
         }
+        /// <summary>
+        /// Unused anymore?
+        /// </summary>
         public void Synchronize(CharacterFighter fighter)
         {
             fighter.Send(new GameFightSynchronizeMessage(GetFighters().Select(x => x.GetFightFighterInformations(fighter)).ToArray()));

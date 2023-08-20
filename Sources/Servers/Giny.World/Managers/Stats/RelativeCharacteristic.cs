@@ -18,27 +18,26 @@ namespace Giny.World.Managers.Stats
             get;
             set;
         }
-        public short RelativDelta
+        public int RelativDelta
         {
             get
             {
-                return (short)(Relativ.Total() / 10d);
+                return (int)(Relativ.Total() / 10d);
             }
         }
         [ProtoMember(1)]
-        public override short Base
+        public override int Base
         {
             get => base.Base;
             set => base.Base = value;
         }
         [ProtoMember(2)]
-        public override short Additional
+        public override int Additional
         {
             get => base.Additional;
             set => base.Additional = value;
         }
-        [ProtoMember(3)]
-        public override short Objects
+        public override int Objects
         {
             get => base.Objects;
             set => base.Objects = value;
@@ -81,9 +80,9 @@ namespace Giny.World.Managers.Stats
                 Relativ = Relativ,
             };
         }
-        public override short Total()
+        public override int Total()
         {
-            return (short)(RelativDelta + Base + Additional + Objects);
+            return  RelativDelta + Base + Additional + Objects;
         }
     }
 }

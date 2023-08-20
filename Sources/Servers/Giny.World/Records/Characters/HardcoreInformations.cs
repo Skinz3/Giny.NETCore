@@ -34,5 +34,10 @@ namespace Giny.World.Records.Characters
             get;
             set;
         }
+
+        public bool IsDead()
+        {
+            return DeathState != HardcoreOrEpicDeathStateEnum.DEATH_STATE_ALIVE;
+        }
     }
 }

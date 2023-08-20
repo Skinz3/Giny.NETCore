@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Giny.Core.Network
 {
-    public abstract class TcpClient
+    public abstract class TcpClient : IDisposable
     {
         public const int BUFFER_LENGTH = 8192;
 
@@ -157,7 +157,7 @@ namespace Giny.Core.Network
             }
         }
 
-        private void Dispose()
+        public virtual void Dispose()
         {
             Socket?.Shutdown(SocketShutdown.Both);
             Socket?.Close();
@@ -165,6 +165,5 @@ namespace Giny.Core.Network
             Socket = null;
 
         }
-
     }
 }

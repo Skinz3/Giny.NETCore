@@ -11,19 +11,41 @@ namespace Giny.World.Managers.Stats
 {
     [ProtoContract]
     [ProtoInclude(3, typeof(DetailedCharacteristic))]
+    [ProtoInclude(13, typeof(LifeLossCharacteristic))]
     public class Characteristic
     {
         public event Action<Characteristic> OnContextChanged;
 
         [ProtoMember(1)]
-        public virtual short Base
+        public virtual int Base
         {
             get;
             set;
         }
 
+
+        public Characteristic()
+        {
+
+        }
+
+        public Characteristic(int @base)
+        {
+            this.Base = @base;
+        }
+        /// <summary>
+        /// When value change, automatically notify its value 
+        /// to client in fights.
+        /// </summary>
+        public virtual bool FightCallback
+        {
+            get
+            {
+                return true;
+            }
+        }
         // ignore
-        public virtual short Context
+        public virtual int Context
         {
             get
             {
@@ -41,7 +63,7 @@ namespace Giny.World.Managers.Stats
             }
         }
 
-        private short m_context
+        private int m_context
         {
             get;
             set;
@@ -60,7 +82,7 @@ namespace Giny.World.Managers.Stats
         {
             return New(0);
         }
-        public static Characteristic New(short @base)
+        public static Characteristic New(int @base)
         {
             return new Characteristic()
             {
@@ -76,11 +98,11 @@ namespace Giny.World.Managers.Stats
         {
             return new CharacterCharacteristicValue(TotalInContext(), (short)characteristic);
         }
-        public virtual short Total()
+        public virtual int Total()
         {
             return Base;
         }
-        public virtual short TotalInContext()
+        public virtual int TotalInContext()
         {
             return (short)(Total() + Context);
         }

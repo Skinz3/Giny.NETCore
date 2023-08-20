@@ -63,7 +63,7 @@ namespace Giny.ORM.IO
         }
         public void Use(IRecord[] elements, DatabaseAction action)
         {
-            lock (DatabaseManager.SyncRoot)
+            lock (DatabaseManager.DatabaseLocker)
             {
                 switch (action)
                 {
@@ -267,7 +267,7 @@ namespace Giny.ORM.IO
             var definition = TableManager.Instance.GetDefinition(typeof(T));
 
             DatabaseManager.Instance.Query(string.Format(QueryConstants.DeleteWhere, definition.TableAttribute.TableName,
-                fieldName, value));
+                fieldName + "=" + value));
         }
         public static void Delete<T>(T item) where T : IRecord
         {

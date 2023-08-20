@@ -313,14 +313,18 @@ namespace Giny.World.Managers.Fights.Fighters
 
             foreach (var stat in Stats.GetCharacteristics<Characteristic>())
             {
-                stat.Value.OnContextChanged += ((Characteristic characteristic) =>
+                if (stat.Value.FightCallback)
                 {
-                    this.RefreshStats(stat.Key);
-                });
+                    stat.Value.OnContextChanged += ((Characteristic characteristic) =>
+                    {
+                        this.RefreshStats(stat.Key);
+                    });
+                }
+
             }
         }
 
-       
+
 
         public void FindPlacementDirection()
         {
@@ -1864,7 +1868,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
             if (delta > 0)
             {
-                Stats.LifePoints += delta;
+                Stats.LifeLoss.Context -= delta;
 
                 Fight.Send(new GameActionFightLifePointsGainMessage(Id, delta, (short)ActionsEnum.ACTION_CHARACTER_LIFE_POINTS_WIN_NO_BOOST,
                 healing.Source.Id));
@@ -1916,28 +1920,17 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public void RemoveVitality(short delta)
         {
-            Stats.LifePoints -= delta;
-
-            if (Stats.LifePoints < 0)
-            {
-                Stats.LifePoints = 0;
-            }
+            Stats.LifeLoss.Context += delta;
 
             TriggerBuffs(TriggerTypeEnum.LifeAffected, null);
             TriggerBuffs(TriggerTypeEnum.LifePointsAffected, null);
-
 
             RefreshStats(CharacteristicEnum.HIT_POINT_LOSS);
 
         }
         public void AddVitality(short delta)
         {
-            Stats.LifePoints += delta;
-
-            if (Stats.LifePoints >= Stats.MaxLifePoints)
-            {
-                Stats.LifePoints = Stats.MaxLifePoints;
-            }
+            Stats.Life.Context -= delta;
 
             TriggerBuffs(TriggerTypeEnum.LifeAffected, null);
             TriggerBuffs(TriggerTypeEnum.LifePointsAffected, null);
@@ -1947,38 +1940,22 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public void AddMaxVitality(short delta)
         {
-            Stats.BaseMaxLife += delta;
-            Stats.MaxLifePoints += delta;
-            Stats.LifePoints += delta;
+            Stats[CharacteristicEnum.VITALITY].Context += delta;
+
 
             TriggerBuffs(TriggerTypeEnum.LifeAffected, null);
             TriggerBuffs(TriggerTypeEnum.LifePointsAffected, null);
             TriggerBuffs(TriggerTypeEnum.MaxLifePointsAffected, null);
-
-            RefreshStats(CharacteristicEnum.HIT_POINTS);
-            RefreshStats(CharacteristicEnum.HIT_POINT_LOSS);
         }
         public void RemoveMaxVitality(short delta)
         {
-            Stats.BaseMaxLife -= delta;
-            Stats.MaxLifePoints -= delta;
-            Stats.LifePoints -= delta;
+            Stats[CharacteristicEnum.VITALITY].Context -= delta;
 
-            if (Stats.LifePoints < 0)
-            {
-                Stats.LifePoints = 0;
-            }
-            if (Stats.MaxLifePoints < 0)
-            {
-                Stats.MaxLifePoints = 0;
-            }
 
             TriggerBuffs(TriggerTypeEnum.LifeAffected, null);
             TriggerBuffs(TriggerTypeEnum.LifePointsAffected, null);
             TriggerBuffs(TriggerTypeEnum.MaxLifePointsAffected, null);
 
-            RefreshStats(CharacteristicEnum.HIT_POINTS);
-            RefreshStats(CharacteristicEnum.HIT_POINT_LOSS);
         }
         [Annotation("deprecated?")]
         private void UpdateBuff(Fighter source, Buff buff)
@@ -1990,7 +1967,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 sourceId = source.Id,
             });
         }
-        [Annotation("only spell damage reflection are mutlplied by wisdom")] // verify this information
+        [Annotation("only spell damage reflection are multiplied by wisdom")] // verify this information
         public virtual int CalculateDamageReflection(int damage)
         {
             var reflectDamages = Stats[CharacteristicEnum.REFLECT_DAMAGE].TotalInContext() * (1 + (Stats.Wisdom.TotalInContext() / 100));
@@ -2061,13 +2038,12 @@ namespace Giny.World.Managers.Fights.Fighters
                     if (Stats.LifePoints - num <= 0)
                     {
                         lifeLoss = Stats.LifePoints;
-                        Stats.LifePoints = 0;
+                        Stats.SetLifeZero();
                     }
                     else
                     {
-                        Stats.MaxLifePoints -= permanentDamages;
-                        Stats.LifePoints -= num;
-
+                        Stats.Life.Eroded += permanentDamages; // TODO
+                        Stats.LifeLoss.Context += num;
                     }
 
                     DispellShieldBuffs(damage.Source, shieldLoss);
@@ -2108,13 +2084,12 @@ namespace Giny.World.Managers.Fights.Fighters
                     });
 
                     lifeLoss = (short)Stats.LifePoints;
-                    Stats.LifePoints = 0;
+                    Stats.SetLifeZero();
                 }
                 else
                 {
-
-                    Stats.MaxLifePoints -= permanentDamages;
-                    Stats.LifePoints -= delta;
+                    Stats.Life.Eroded += permanentDamages;
+                    Stats.LifeLoss.Context += delta;
                     lifeLoss = delta;
 
 
@@ -2462,7 +2437,7 @@ namespace Giny.World.Managers.Fights.Fighters
             {
                 using (var sequence = Fight.SequenceManager.StartSequence(SequenceTypeEnum.SEQUENCE_CHARACTER_DEATH))
                 {
-                    this.Stats.LifePoints = 0;
+                    this.Stats.SetLifeZero();
 
                     DeathTime = DateTime.Now;
 

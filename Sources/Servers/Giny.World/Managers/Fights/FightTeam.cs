@@ -128,7 +128,7 @@ namespace Giny.World.Managers.Fights
         {
             foreach (var target in GetFighters<Fighter>())
             {
-                target.Stats.LifePoints = 0;
+                target.Stats.SetLifeZero(); // TODO
                 target.Die(target);
             }
 

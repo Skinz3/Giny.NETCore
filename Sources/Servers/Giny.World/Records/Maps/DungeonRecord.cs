@@ -49,6 +49,13 @@ namespace Giny.World.Records.Maps
             set;
         }
 
+        [D2OField("optimalPlayerLevel")]
+        public short OptimalPlayerLevel
+        {
+            get;
+            set;
+        }
+
         [D2OField("mapIds")]
         [ProtoSerialize]
         [Update]

@@ -17,6 +17,8 @@ namespace Giny.Auth.Network.IPC
 {
     public class IPCClient : Client
     {
+        static object _lock = new object();
+
         public WorldServerRecord WorldServerRecord
         {
             get;
@@ -49,17 +51,21 @@ namespace Giny.Auth.Network.IPC
         }
         public override void OnMessageReceived(NetworkMessage message)
         {
+
             var ipcMessage = message as IPCMessage;
 
-            Logger.Write("(IPC) Received " + message);
+            lock (_lock)
+            {
+                Logger.Write("(IPC) Received " + message);
 
-            if ((ipcMessage.authSide) && ipcMessage.requestId > -1)
-            {
-                IPCRequestManager.ReceiveRequest(ipcMessage);
-            }
-            else
-            {
-                ProtocolMessageManager.HandleMessage(message, this);
+                if ((ipcMessage.authSide) && ipcMessage.requestId > -1)
+                {
+                    IPCRequestManager.ReceiveRequest(ipcMessage);
+                }
+                else
+                {
+                    ProtocolMessageManager.HandleMessage(message, this);
+                }
             }
         }
 
@@ -79,14 +85,18 @@ namespace Giny.Auth.Network.IPC
         {
             Logger.Write("(IPC) client disconnected.");
 
-            if (WorldServerRecord != null)
+            lock (_lock)
             {
-                WorldServerRecord.Status = ServerStatusEnum.OFFLINE;
-                IPCHandler.OnServerStatusUpdated(WorldServerRecord);
-                IPCServer.Instance.RemoveClient(WorldServerRecord.Id);
+
+                if (WorldServerRecord != null)
+                {
+                    WorldServerRecord.Status = ServerStatusEnum.OFFLINE;
+                    IPCHandler.OnServerStatusUpdated(WorldServerRecord);
+                    IPCServer.Instance.RemoveClient(WorldServerRecord.Id);
+                }
             }
         }
 
-        
+
     }
 }

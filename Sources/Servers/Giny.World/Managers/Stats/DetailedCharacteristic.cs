@@ -18,14 +18,15 @@ namespace Giny.World.Managers.Stats
     [ProtoInclude(9, typeof(ResistanceCharacteristic))]
     [ProtoInclude(10, typeof(ErosionCharacteristic))]
     [ProtoInclude(11, typeof(InitiativeCharacteristic))]
+    [ProtoInclude(12, typeof(LifeCharacteristic))]
     public class DetailedCharacteristic : Characteristic
     {
-        public virtual short? Limit => null;
+        public virtual int? Limit => null;
 
         public virtual bool ContextualLimit => false;
 
         [ProtoMember(1)]
-        public override short Base
+        public override int Base
         {
             get
             {
@@ -44,19 +45,18 @@ namespace Giny.World.Managers.Stats
             }
         }
         [ProtoMember(2)]
-        public virtual short Additional
+        public virtual int Additional
         {
             get;
             set;
         }
-        [ProtoMember(3)]
-        public virtual short Objects
+        public virtual int Objects
         {
             get;
             set;
         }
 
-        public DetailedCharacteristic(short @base)
+        public DetailedCharacteristic(int @base)
         {
             this.Base = @base;
 
@@ -99,9 +99,9 @@ namespace Giny.World.Managers.Stats
         {
             return new CharacterCharacteristicDetailed(Base, Additional, Objects, 0, Context, (short)characteristic);
         }
-        public override short Total()
+        public override int Total()
         {
-            var total = (short)(Base + Additional + Objects);
+            var total = Base + Additional + Objects;
 
             if (!Limit.HasValue)
             {
@@ -109,9 +109,9 @@ namespace Giny.World.Managers.Stats
             }
             return total > Limit.Value ? Limit.Value : total;
         }
-        public override short TotalInContext()
+        public override int TotalInContext()
         {
-            var totalContext = (short)(Total() + Context);
+            var totalContext = Total() + Context;
 
             if (ContextualLimit && Limit.HasValue)
             {

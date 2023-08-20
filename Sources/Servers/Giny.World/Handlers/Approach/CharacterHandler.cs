@@ -71,7 +71,7 @@ namespace Giny.World.Handlers.Approach
             client.Character.OnLevelChanged(1, (short)(client.Character.Level - 1));
             BreedManager.Instance.LearnBreedSpells(client.Character);
             newCharacter.AddInstantElement();
-            client.Character.JustCreated = true;
+            client.Character.JustCreatedOrReplayed = true;
             ProcessSelection(client);
         }
         [MessageHandler]
@@ -197,6 +197,7 @@ namespace Giny.World.Handlers.Approach
 
 
             client.Character = new Character(client, record);
+            client.Character.JustCreatedOrReplayed = true;
             client.Character.OnLevelChanged(1, (short)(client.Character.Level - 1));
             BreedManager.Instance.LearnBreedSpells(client.Character);
 
@@ -228,7 +229,7 @@ namespace Giny.World.Handlers.Approach
             client.Character.RefreshShortcuts();
             client.Character.CreateHumanOptions();
             client.Character.RefreshArenaInfos();
-            client.Character.SendZaapDestinations();
+            client.Character.SendKnownZaapList();
             client.Character.SendServerExperienceModificator();
             client.Character.OnCharacterLoadingComplete();
         }

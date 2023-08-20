@@ -23,7 +23,7 @@ namespace Giny.World.Managers.Stats
 
         }
 
-        public static new InitiativeCharacteristic New(short @base)
+        public static new InitiativeCharacteristic New(int @base)
         {
             throw new InvalidOperationException("Cannot create initiative characteristic from base.");
         }
@@ -38,9 +38,9 @@ namespace Giny.World.Managers.Stats
             return new CharacterCharacteristicDetailed(Base + GetNaturalInitiative(), Additional, Objects, 0, Context, (short)characteristic);
         }
 
-        private short GetNaturalInitiative()
+        private int GetNaturalInitiative()
         {
-            var totalContext = (short)(Total() + Context);
+            var totalContext = Total() + Context;
 
             if (ContextualLimit && Limit.HasValue)
             {
@@ -49,17 +49,17 @@ namespace Giny.World.Managers.Stats
 
             var diff = totalContext - (Base + Additional + Objects + Context);
 
-            return (short)diff;
+            return diff;
         }
 
-        private short GetTotalInitiative()
+        private int GetTotalInitiative()
         {
             var initiative = Base + Additional + Objects;
             double num1 = Stats.Total() + initiative;
             double num2 = Stats.LifePoints / (double)Stats.MaxLifePoints;
             double value = num1 * num2;
             value = value > 0 ? value : 0;
-            return (short)value;
+            return (int)value;
         }
         public override Characteristic Clone()
         {
@@ -75,7 +75,7 @@ namespace Giny.World.Managers.Stats
         {
             this.Stats = stats;
         }
-        public override short Total()
+        public override int Total()
         {
             var total = GetTotalInitiative();
 

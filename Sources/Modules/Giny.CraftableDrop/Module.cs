@@ -23,8 +23,15 @@ namespace Giny.AdditionalDrop
     [Module("Craftable Drop")]
     public class Module : IModule
     {
-        private ConcurrentDictionary<MonsterRecord, ConcurrentBag<ItemRecord>> Drops = new ConcurrentDictionary<MonsterRecord, ConcurrentBag<ItemRecord>>();
+        private Dictionary<MonsterRecord, List<ItemRecord>> Drops = new Dictionary<MonsterRecord, List<ItemRecord>>();
 
+        const double UpperBoundDropRateItem = 50d;
+
+        const double LowerBoundsDropRateItem = 5d;
+
+        const double UpperBoundDropRateMonster = 50d;
+
+        const double LowerBoundsDropRateMonster = 10d;
 
         public void CreateHooks()
         {
@@ -47,41 +54,72 @@ namespace Giny.AdditionalDrop
 
             var monsterTeam = result.Fight.GetTeam(TeamTypeEnum.TEAM_TYPE_MONSTER);
 
-            List<ItemRecord> droppedItems = new List<ItemRecord>();
-
             foreach (var monster in monsterTeam.GetFighters<MonsterFighter>(false))
             {
                 if (Drops.ContainsKey(monster.Record))
                 {
-                    ItemRecord item = Drops[monster.Record].Where(x => !droppedItems.Contains(x)).Random(random);
 
-                    if (item == null)
+                    var monsterDropProbability = ComputeMonsterDropProbability(monster);
+
+                    if (random.Next(0, 101) < monsterDropProbability)
                     {
                         continue;
                     }
 
-                    if (RollLoot(random,result.Fighter, monster))
+
+                    var drops = Drops[monster.Record];
+
+                    Dictionary<ItemRecord, double> dropRates = new Dictionary<ItemRecord, double>();
+
+                    foreach (var item in drops)
                     {
-                        result.Character.Inventory.AddItem((short)item.Id, 1);
-                        result.Loot.AddItem((short)item.Id, 1);
-                        droppedItems.Add(item);
+                        dropRates.Add(item, ComputeItemDropProbability(item) / drops.Count);
                     }
+
+                    Dictionary<ItemRecord, double> results = new Dictionary<ItemRecord, double>();
+
+                    foreach (var pair in dropRates)
+                    {
+                        var chance = random.Next(0, 100 + 1);
+
+                        if (chance < pair.Value)
+                        {
+                            results.Add(pair.Key, pair.Value);
+                        }
+                    }
+
+
+                    if (results.Count > 0)
+                    {
+                        var droppedItem = results.OrderBy(x => x.Value).First().Key;
+                        result.Character.Inventory.AddItem((short)droppedItem.Id, 1);
+                        result.Loot.AddItem((short)droppedItem.Id, 1);
+                    }
+
 
                 }
             }
 
         }
 
-        public bool RollLoot(Random random, CharacterFighter fighter, MonsterFighter monster)
+        private double ComputeItemDropProbability(ItemRecord item)
         {
-            var chance = random.Next(0, 100) + random.NextDouble();
+            double a = (LowerBoundsDropRateItem - UpperBoundDropRateItem) / 199d;
+            double b = UpperBoundDropRateItem - a;
 
-            var dropRate = 5d;
+            double level = Math.Min(200d, item.Level);
 
-            if (!(dropRate >= chance))
-                return false;
+            return (a * level) + b;
+        }
 
-            return true;
+        private double ComputeMonsterDropProbability(MonsterFighter monster)
+        {
+            double a = (LowerBoundsDropRateMonster - UpperBoundDropRateMonster) / 199d;
+            double b = UpperBoundDropRateMonster - a;
+
+            double level = Math.Min(200d, monster.Level);
+
+            return (a * level) + b;
         }
 
 
@@ -118,11 +156,14 @@ namespace Giny.AdditionalDrop
 
                         if (!Drops.ContainsKey(monster))
                         {
-                            Drops.TryAdd(monster, new ConcurrentBag<ItemRecord>() { item });
+                            Drops.TryAdd(monster, new List<ItemRecord>() { item });
                         }
                         else
                         {
-                            Drops[monster].Add(item);
+                            if (!Drops[monster].Contains(item))
+                            {
+                                Drops[monster].Add(item);
+                            }
                         }
 
                     }

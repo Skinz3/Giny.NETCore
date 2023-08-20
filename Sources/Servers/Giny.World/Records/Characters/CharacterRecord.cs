@@ -24,8 +24,6 @@ namespace Giny.World.Records.Characters
     [Table("characters")]
     public class CharacterRecord : IRecord
     {
-        private static readonly object _lock = new object();
-
         [Container]
         private static readonly ConcurrentDictionary<long, CharacterRecord> Characters = new ConcurrentDictionary<long, CharacterRecord>();
 
@@ -264,11 +262,7 @@ namespace Giny.World.Records.Characters
 
         public static bool NameExist(string name)
         {
-            lock (_lock)
-            {
-                return Characters.Values.Any(x => x.Name.ToLower() == name.ToLower());
-
-            }
+            return Characters.Values.Any(x => x.Name.ToLower() == name.ToLower());
         }
 
         public static CharacterRecord Create(long id, string name, int accountId, ServerEntityLook look, byte breedId, short cosmeticId, bool sex)
@@ -305,24 +299,15 @@ namespace Giny.World.Records.Characters
         }
         public static CharacterRecord GetCharacterRecord(long id)
         {
-            lock (_lock)
-            {
-                return Characters.TryGetValue(id);
-            }
+            return Characters.TryGetValue(id);
         }
         public static IEnumerable<CharacterRecord> GetCharacterRecords()
         {
-            lock (_lock)
-            {
-                return Characters.Values;
-            }
+            return Characters.Values.ToList();
         }
         public static List<CharacterRecord> GetCharactersByAccountId(int id)
         {
-            lock (_lock)
-            {
-                return Characters.Values.Where(x => x.AccountId == id).ToList();
-            }
+            return Characters.Values.Where(x => x.AccountId == id).ToList();
         }
         public static long NextId()
         {

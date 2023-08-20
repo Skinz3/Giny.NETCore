@@ -167,6 +167,12 @@ namespace Giny.World
             set;
         } = true;
 
+        public double SaveIntervalMinutes
+        {
+            get;
+            set;
+        } = 30d;
+
         [StartupInvoke("Config", StartupInvokePriority.Initial)]
         public static void Initialize()
         {

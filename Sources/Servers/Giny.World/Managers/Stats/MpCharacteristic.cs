@@ -10,32 +10,31 @@ namespace Giny.World.Managers.Stats
     [ProtoContract]
     public class MpCharacteristic : UsableCharacteristic
     {
-        public override short? Limit => ConfigFile.Instance.MpLimit;
+        public override int? Limit => ConfigFile.Instance.MpLimit;
 
         public override bool ContextualLimit => false;
 
         [ProtoMember(1)]
-        public override short Base
+        public override int Base
         {
             get => base.Base;
             set => base.Base = value;
         }
 
         [ProtoMember(2)]
-        public override short Additional
+        public override int Additional
         {
             get => base.Additional;
             set => base.Additional = value;
         }
 
-        [ProtoMember(3)]
-        public override short Objects
+        public override int Objects
         {
             get => base.Objects;
             set => base.Objects = value;
         }
 
-        public new static MpCharacteristic New(short @base)
+        public new static MpCharacteristic New(int @base)
         {
             return new MpCharacteristic()
             {

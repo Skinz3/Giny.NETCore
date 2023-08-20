@@ -10,7 +10,7 @@ namespace Giny.World.Managers.Stats
     [ProtoContract]
     public class ApCharacteristic : UsableCharacteristic
     {
-        public ApCharacteristic(short @base) : base(@base)
+        public ApCharacteristic(int @base) : base(@base)
         {
 
         }
@@ -20,20 +20,19 @@ namespace Giny.World.Managers.Stats
 
         }
 
-        public override short? Limit => ConfigFile.Instance.ApLimit;
+        public override int? Limit => ConfigFile.Instance.ApLimit;
 
         public override bool ContextualLimit => false;
 
         [ProtoMember(1)]
-        public override short Base { get => base.Base; set => base.Base = value; }
+        public override int Base { get => base.Base; set => base.Base = value; }
 
         [ProtoMember(2)]
-        public override short Additional { get => base.Additional; set => base.Additional = value; }
+        public override int Additional { get => base.Additional; set => base.Additional = value; }
 
-        [ProtoMember(3)]
-        public override short Objects { get => base.Objects; set => base.Objects = value; }
+        public override int Objects { get => base.Objects; set => base.Objects = value; }
 
-        public static new ApCharacteristic New(short @base)
+        public static new ApCharacteristic New(int @base)
         {
             return new ApCharacteristic(@base)
             {

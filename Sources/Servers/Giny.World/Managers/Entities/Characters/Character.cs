@@ -89,7 +89,7 @@ namespace Giny.World.Managers.Entities.Characters
             private set;
         }
 
-        public bool Busy => Dialog != null || RequestBox != null || ChangeMap || Collecting || IsMoving;
+        public bool Busy => Dialog != null || RequestBox != null || ChangeMap || Collecting || IsMoving || IsDead();
 
         public CharacterFighter Fighter
         {
@@ -132,7 +132,7 @@ namespace Giny.World.Managers.Entities.Characters
         }
         public bool HasGuild => Record.GuildId != 0;
 
-        public bool JustCreated
+        public bool JustCreatedOrReplayed
         {
             get;
             set;
@@ -379,7 +379,10 @@ namespace Giny.World.Managers.Entities.Characters
             this.Level = ExperienceManager.Instance.GetCharacterLevel(Experience);
             this.Breed = BreedRecord.GetBreed(record.BreedId);
 
-            this.Inventory = new Inventory(this, CharacterItemRecord.GetCharacterItems(Id));
+            this.Inventory = new Inventory(this, CharacterItemRecord.GetCharacterItems(this.Id));
+
+            this.Inventory.ApplyEquipementItemsEffects();
+
             this.BankItems = new BankItemCollection(this, BankItemRecord.GetBankItems(Client.Account.Id));
             this.GuestedParties = new List<Party>();
             this.GeneralShortcutBar = new GeneralShortcutBar(this);
@@ -587,7 +590,7 @@ namespace Giny.World.Managers.Entities.Characters
             }
         }
 
-        public void SendZaapDestinations()
+        public void SendKnownZaapList()
         {
             Client.Send(new KnownZaapListMessage(TeleportersManager.Instance.GetMaps(TeleporterTypeEnum.TELEPORTER_ZAAP).Select(x => (double)x).ToArray()));
         }
@@ -865,9 +868,21 @@ namespace Giny.World.Managers.Entities.Characters
 
             if (teleportMap != null)
             {
-
                 if (Record.MapId != teleportMap.Id)
+                {
                     ChangeMap = true;
+                }
+                else
+                {
+                    if (cellId.HasValue && CellId == cellId.Value && Map != null && Map.Id == teleportMap.Id)
+                    {
+                        /*
+                         * La destination se trouve être la carte courante, la téléportation est annulée.
+                         */
+                        TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 597);
+                        return;
+                    }
+                }
 
                 if (cellId < 0 || cellId > 560)
                     cellId = teleportMap.RandomWalkableCell().Id;
@@ -894,7 +909,10 @@ namespace Giny.World.Managers.Entities.Characters
             }
             else
             {
-                Client.Character.ReplyError("Unknown map.");
+                /*
+                 * Téléportation impossible, il n'existe pas de destination possible.
+                 */
+                TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_MESSAGE, 493);
             }
         }
         public void EndMove()
@@ -1039,8 +1057,8 @@ namespace Giny.World.Managers.Entities.Characters
                         amount = (short)(ExperienceManager.MaxLevel - oldLevel);
                     }
 
-                    Record.Stats.LifePoints += (5 * amount);
-                    Record.Stats.MaxLifePoints += (5 * amount);
+                    Record.Stats.Life.Base += (5 * amount);
+
                     this.Stats[CharacteristicEnum.STATS_POINTS].Base += (short)(5 * amount);
                 }
 
@@ -1082,6 +1100,14 @@ namespace Giny.World.Managers.Entities.Characters
             }
 
             this.Client.Send(new AlmanachCalendarDateMessage(1)); // for monsters!
+
+            if (JustCreatedOrReplayed)
+            {
+                foreach (var item in InitialItemRecord.GetInitialItemRecords())
+                {
+                    Inventory.AddItem(item.GId, item.Quantity, true);
+                }
+            }
 
             this.Reply(ConfigFile.Instance.WelcomeMessage, Color.CornflowerBlue);
             CheckSoldItems();
@@ -1128,7 +1154,7 @@ namespace Giny.World.Managers.Entities.Characters
 
             this.ChangeMap = false;
 
-            if (this.Busy)
+            if (this.IsInDialog())
                 this.LeaveDialog();
 
             if (!Fighting)
@@ -1155,12 +1181,18 @@ namespace Giny.World.Managers.Entities.Characters
                 Party.UpdateMember(this);
             }
         }
+
+        public bool IsDead()
+        {
+            return Record.HardcoreInformations.IsDead();
+        }
         public void OnDisconnected()
         {
             Record.UpdateElement();
 
             Record.InGameContext = false;
             Guild?.OnDisconnected(this);
+
 
             if (Dialog != null)
                 Dialog.Close();
@@ -1619,8 +1651,7 @@ namespace Giny.World.Managers.Entities.Characters
         public void Restat()
         {
             int vitality = this.Stats[CharacteristicEnum.VITALITY].Base;
-            this.Stats.LifePoints -= vitality;
-            this.Stats.MaxLifePoints -= vitality;
+            this.Stats.Life.Base -= vitality;
             this.Stats[CharacteristicEnum.VITALITY].Base = 0;
             this.Stats.Agility.Base = 0;
             this.Stats.Intelligence.Base = 0;
@@ -1745,7 +1776,15 @@ namespace Giny.World.Managers.Entities.Characters
         {
             Client.Send(new PartyCannotJoinErrorMessage((byte)reason, partyId));
         }
+        public void OnSubareaChange(SubareaRecord? oldSubarea, SubareaRecord subarea)
+        {
+            AchievementManager.Instance.OnPlayerChangeSubarea(this);
+        }
 
+        public void OnGameContextReady(double mapId)
+        {
+
+        }
         public void InviteParty(Character character)
         {
             if (!this.HasParty)
@@ -1822,11 +1861,6 @@ namespace Giny.World.Managers.Entities.Characters
         public CharacterMinimalInformations GetCharacterMinimalInformations()
         {
             return new CharacterMinimalInformations(Level, Id, Name);
-        }
-
-        public void OnSubareaChange(SubareaRecord? oldSubarea, SubareaRecord subarea)
-        {
-            AchievementManager.Instance.OnPlayerChangeSubarea(this);
         }
 
 

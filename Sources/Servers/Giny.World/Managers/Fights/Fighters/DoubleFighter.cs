@@ -33,7 +33,7 @@ namespace Giny.World.Managers.Fights.Fighters
         {
             base.OnTurnEnded();
         }
-       
+
         public override ServerEntityLook CreateLook()
         {
             return Summoner.Look.Clone();
@@ -41,9 +41,7 @@ namespace Giny.World.Managers.Fights.Fighters
         public override FighterStats CreateStats()
         {
             var stats = new FighterStats(Summoner.Stats);
-            stats.BaseMaxLife = Summoner.Stats.BaseMaxLife;
-            stats.MaxLifePoints = stats.BaseMaxLife;
-            stats.LifePoints = stats.BaseMaxLife;
+            stats.Life.Base = stats.Life.Total();
             return stats;
         }
         public override GameFightFighterInformations GetFightFighterInformations(CharacterFighter to)
@@ -53,7 +51,7 @@ namespace Giny.World.Managers.Fights.Fighters
             fighterInformations.disposition = GetEntityDispositionInformations();
             fighterInformations.look = this.Look.ToEntityLook();
             fighterInformations.previousPositions = GetPreviousPositions();
-            fighterInformations.spawnInfo =  new GameContextBasicSpawnInformation()
+            fighterInformations.spawnInfo = new GameContextBasicSpawnInformation()
             {
                 alive = Alive,
                 informations = new GameContextActorPositionInformations(Id, GetEntityDispositionInformations()),
@@ -79,7 +77,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public override void OnSummoned()
         {
-            
+
         }
     }
 }

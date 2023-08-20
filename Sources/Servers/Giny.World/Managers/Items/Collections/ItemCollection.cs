@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Items.Collections
 {
-    public abstract class ItemCollection<T>  where T : AbstractItem
+    public abstract class ItemCollection<T> where T : AbstractItem
     {
         private IDictionary<int, T> m_items;
 
@@ -73,7 +73,7 @@ namespace Giny.World.Managers.Items.Collections
 
             foreach (var item in items)
             {
-                item.Initialize();
+                item.OnCreated();
 
                 T sameItem = GetSameItem(item.GId, item.Effects);
 
@@ -143,7 +143,7 @@ namespace Giny.World.Managers.Items.Collections
         }
         public virtual void AddItem(T item)
         {
-            item.Initialize();
+            item.OnCreated();
 
             T sameItem = GetSameItem(item.GId, item.Effects);
 
@@ -163,7 +163,7 @@ namespace Giny.World.Managers.Items.Collections
 
         public virtual T AddItem(T item, int quantity)
         {
-            item.Initialize();
+            item.OnCreated();
 
             T sameItem = GetSameItem(item.GId, item.Effects);
 
@@ -274,6 +274,11 @@ namespace Giny.World.Managers.Items.Collections
         protected virtual IDictionary<int, T> CreateContainer()
         {
             return new Dictionary<int, T>();
+        }
+
+        protected IDictionary<int, T> GetContainer()
+        {
+            return m_items;
         }
 
         public static Dictionary<List<T>, EffectCollection> SortByEffects(IEnumerable<T> items)

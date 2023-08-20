@@ -27,6 +27,14 @@ namespace Giny.World.Handlers.Roleplay.Maps
         [MessageHandler]
         public static void HandleZaapRespawnSaveRequest(ZaapRespawnSaveRequestMessage message, WorldClient client)
         {
+            var dialog = client.Character.GetDialog<ZaapDialog>();
+
+            if (dialog == null || dialog.TeleporterType != TeleporterTypeEnum.TELEPORTER_ZAAP)
+            {
+                client.Character.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 243);
+                return;
+            }
+
             client.Character.Record.SpawnPointMapId = client.Character.Map.Id;
             client.Send(new ZaapRespawnUpdatedMessage(client.Character.Record.SpawnPointMapId));
         }
