@@ -104,3 +104,7 @@ getproperty QName(PackageNamespace(""),"cellColor")
 add
 callpropvoid QName(Namespace("com.ankamagames.jerakine.logger:Logger"),"warn"), 1
 ````
+
+CharacteristicEnum
+
+dont sync it directly. Values are missing in client

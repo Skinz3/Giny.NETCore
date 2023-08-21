@@ -1868,7 +1868,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
             if (delta > 0)
             {
-                Stats.LifeLoss.Context -= delta;
+                Stats.Life.Current += delta;
 
                 Fight.Send(new GameActionFightLifePointsGainMessage(Id, delta, (short)ActionsEnum.ACTION_CHARACTER_LIFE_POINTS_WIN_NO_BOOST,
                 healing.Source.Id));
@@ -1920,7 +1920,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public void RemoveVitality(short delta)
         {
-            Stats.LifeLoss.Context += delta;
+            Stats.Life.Current -= delta;
 
             TriggerBuffs(TriggerTypeEnum.LifeAffected, null);
             TriggerBuffs(TriggerTypeEnum.LifePointsAffected, null);
@@ -1967,7 +1967,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 sourceId = source.Id,
             });
         }
-        [Annotation("only spell damage reflection are multiplied by wisdom")] // verify this information
+        [Annotation("only spell damage reflection are mutlplied by wisdom")] // verify this information
         public virtual int CalculateDamageReflection(int damage)
         {
             var reflectDamages = Stats[CharacteristicEnum.REFLECT_DAMAGE].TotalInContext() * (1 + (Stats.Wisdom.TotalInContext() / 100));
@@ -2038,12 +2038,12 @@ namespace Giny.World.Managers.Fights.Fighters
                     if (Stats.LifePoints - num <= 0)
                     {
                         lifeLoss = Stats.LifePoints;
-                        Stats.SetLifeZero();
+                        Stats.Life.Current = 0;
                     }
                     else
                     {
-                        Stats.Life.Eroded += permanentDamages; // TODO
-                        Stats.LifeLoss.Context += num;
+                        Stats.Life.Eroded += permanentDamages;  
+                        Stats.Life.Current -= num;
                     }
 
                     DispellShieldBuffs(damage.Source, shieldLoss);
@@ -2084,12 +2084,12 @@ namespace Giny.World.Managers.Fights.Fighters
                     });
 
                     lifeLoss = (short)Stats.LifePoints;
-                    Stats.SetLifeZero();
+                    Stats.Life.Current = 0;
                 }
                 else
                 {
                     Stats.Life.Eroded += permanentDamages;
-                    Stats.LifeLoss.Context += delta;
+                    Stats.Life.Current -= delta;
                     lifeLoss = delta;
 
 
@@ -2437,7 +2437,7 @@ namespace Giny.World.Managers.Fights.Fighters
             {
                 using (var sequence = Fight.SequenceManager.StartSequence(SequenceTypeEnum.SEQUENCE_CHARACTER_DEATH))
                 {
-                    this.Stats.SetLifeZero();
+                    this.Stats.Life.Current = 0;
 
                     DeathTime = DateTime.Now;
 

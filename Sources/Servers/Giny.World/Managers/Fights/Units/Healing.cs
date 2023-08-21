@@ -78,8 +78,10 @@ namespace Giny.World.Managers.Fights.Units
 
             Jet jet = EvaluateConcreteJet();
 
+
             jet.ComputeShapeEfficiencyModifiers(Target, EffectHandler);
 
+            jet.ApplyMultiplicator(Source.Stats[CharacteristicEnum.HEAL_MULTIPLIER].TotalInContext());
 
             //Target.Fight.Warn("Min :" + (int)jet.Min + " Max:" + (int)  jet.Max);
 

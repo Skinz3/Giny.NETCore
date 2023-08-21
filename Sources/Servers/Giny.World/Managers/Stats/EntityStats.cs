@@ -25,17 +25,16 @@ namespace Giny.World.Managers.Stats
     {
         public const short BaseSummonsCount = 1;
 
-        public int LifePoints => (Life.TotalInContext() + Life.Eroded) - LifeLoss.TotalInContext();
+        public int LifePoints => Life.Current;
 
         public int MaxLifePoints => Life.TotalInContext();
 
-        public double LifePercentage => (LifePoints / (double)MaxLifePoints) * 100d;
 
         public int MissingLife
         {
             get
             {
-                return LifeLoss.TotalInContext();
+                return MaxLifePoints - LifePoints;
             }
         }
 
@@ -78,8 +77,6 @@ namespace Giny.World.Managers.Stats
         }
 
         public LifeCharacteristic Life => this.GetCharacteristic<LifeCharacteristic>(CharacteristicEnum.HIT_POINTS);
-
-        public LifeLossCharacteristic LifeLoss => this.GetCharacteristic<LifeLossCharacteristic>(CharacteristicEnum.HIT_POINT_LOSS);
 
         public DetailedCharacteristic Strength
         {
@@ -177,10 +174,7 @@ namespace Giny.World.Managers.Stats
             GetCharacteristic<RelativeCharacteristic>(CharacteristicEnum.MAGIC_FIND).Bind(Chance);
             GetCharacteristic<InitiativeCharacteristic>(CharacteristicEnum.INITIATIVE).Bind(this);
 
-            Life.Bind(GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.VITALITY));
-
-            LifeLoss.Bind(Life);
-
+            Life.Initialize(GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.VITALITY));
         }
         public Characteristic GetCharacteristic(StatsBoostEnum statId)
         {
@@ -222,7 +216,7 @@ namespace Giny.World.Managers.Stats
 
             foreach (KeyValuePair<CharacteristicEnum, Characteristic> stat in this.GetCharacteristics<Characteristic>())
             {
-                if ((stat.Key == CharacteristicEnum.HIT_POINTS || stat.Key == CharacteristicEnum.HIT_POINT_LOSS) && !life)
+                if (stat.Key == CharacteristicEnum.HIT_POINTS && !life)
                 {
                     continue;
                 }
@@ -234,7 +228,16 @@ namespace Giny.World.Managers.Stats
             results.Add(new CharacterCharacteristicValue(Energy, (short)CharacteristicEnum.ENERGY_POINTS));
 
 
-            results.Add(new CharacterCharacteristicDetailed(100, 0, 0, 0, 0, 143)); // wtf ankama, for client, 143 is dealt heal multiplier.
+            if (life)
+            {
+                results.Add(Life.GetHitpointLossCharactersitic());
+            }
+
+            if (life)
+            {
+                results.Add(new CharacterCharacteristicDetailed(0, 0, 0, 0, 0, (short)CharacteristicEnum.ERODED_LIFE));
+
+            }
 
             return results.ToArray();
         }
@@ -276,10 +279,7 @@ namespace Giny.World.Managers.Stats
             }
         }
 
-        public void SetLifeZero()
-        {
-            LifeLoss.Context = Life.TotalInContext();
-        }
+
         public static EntityStats New(short level)
         {
             var stats = new EntityStats()
@@ -289,7 +289,7 @@ namespace Giny.World.Managers.Stats
                 CriticalHitWeapon = 0,
             };
 
-            stats[CharacteristicEnum.HIT_POINT_LOSS] = LifeLossCharacteristic.New();
+
             stats[CharacteristicEnum.HIT_POINTS] = LifeCharacteristic.New(BreedManager.BreedDefaultLife);
             stats[CharacteristicEnum.INITIATIVE] = InitiativeCharacteristic.Zero();
             stats[CharacteristicEnum.STATS_POINTS] = DetailedCharacteristic.Zero();
@@ -353,6 +353,7 @@ namespace Giny.World.Managers.Stats
             stats[CharacteristicEnum.DAMAGE_PERCENT_SPELL] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.SHIELD] = Characteristic.Zero();
             stats[CharacteristicEnum.PERMANENT_DAMAGE_PERCENT] = ErosionCharacteristic.New(FighterStats.NaturalErosion);
+            stats[CharacteristicEnum.HEAL_MULTIPLIER] = DetailedCharacteristic.New(100);
             stats.Initialize();
 
             return stats;

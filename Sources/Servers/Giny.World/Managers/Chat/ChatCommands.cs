@@ -514,9 +514,16 @@ namespace Giny.World.Managers.Chat
         public static void TestCommand(WorldClient client)
         {
 
+            
+
+
+            client.Character.Stats.Life.Current = client.Character.Stats.MaxLifePoints;
+
+            client.Character.RefreshStats();
+            return;
+
             if (client.Character.Fighter == null)
                 return;
-
 
             using (var seq = client.Character.Fighter.Fight.SequenceManager.StartSequence(Fights.Sequences.SequenceTypeEnum.SEQUENCE_SPELL))
             {

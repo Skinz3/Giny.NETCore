@@ -147,7 +147,6 @@ namespace Giny.World.Managers.Fights.Stats
          */
         public FighterStats(MonsterGrade monsterGrade, Fighter? summoner = null, double coeff = 1d)
         {
-            this[CharacteristicEnum.HIT_POINT_LOSS] = LifeLossCharacteristic.New();
             this[CharacteristicEnum.HIT_POINTS] = LifeCharacteristic.New((int)(monsterGrade.LifePoints * coeff));
             this[CharacteristicEnum.INITIATIVE] = InitiativeCharacteristic.Zero();
             this[CharacteristicEnum.ACTION_POINTS] = ApCharacteristic.New(monsterGrade.ActionPoints);
@@ -210,6 +209,7 @@ namespace Giny.World.Managers.Fights.Stats
             this[CharacteristicEnum.DAMAGE_PERCENT_SPELL] = DetailedCharacteristic.Zero();
             this[CharacteristicEnum.SHIELD] = Characteristic.New(0);
             this[CharacteristicEnum.PERMANENT_DAMAGE_PERCENT] = ErosionCharacteristic.New(NaturalErosion);
+            this[CharacteristicEnum.HEAL_MULTIPLIER] = DetailedCharacteristic.New(100);
 
             InvisibilityState = GameActionFightInvisibilityStateEnum.VISIBLE;
 

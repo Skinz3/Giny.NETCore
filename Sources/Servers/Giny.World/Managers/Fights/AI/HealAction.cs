@@ -20,9 +20,9 @@ namespace Giny.World.Managers.Fights.AI
         {
             foreach (var spellRecord in Fighter.GetSpells().Where(x => x.Category.HasFlag(SpellCategoryEnum.Healing)))
             {
-                foreach (var ally in Fighter.Team.GetFighters<Fighter>().OrderBy(x => x.Stats.LifePercentage))
+                foreach (var ally in Fighter.Team.GetFighters<Fighter>().OrderBy(x => x.Stats.Life.Percentage))
                 {
-                    if (ally.Stats.LifePercentage < 100)
+                    if (ally.Stats.Life.Percentage < 100)
                     {
                         Fighter.CastSpell(spellRecord.Id, ally.Cell.Id);
                     }

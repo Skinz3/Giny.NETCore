@@ -1,5 +1,8 @@
 namespace Giny.Protocol.Custom.Enums
 {
+    /// <summary>
+    /// Warning ! Some values not in client
+    /// </summary>
     public enum CharacteristicEnum
     {
         HIT_POINTS = 0,
@@ -86,6 +89,7 @@ namespace Giny.Protocol.Custom.Enums
         EXTRA_SCALE = 99,
         PASS_TURN = 100,
         RESIST_PERCENT = 101,
+        ERODED_LIFE = 102, // missing in d2o
         WEAPON_POWER = 103,
         INCOMING_PERCENT_DAMAGE_MULTIPLICATOR = 104,
         INCOMING_PERCENT_HEAL_MULTIPLICATOR = 105,
@@ -117,9 +121,9 @@ namespace Giny.Protocol.Custom.Enums
         EXTRA_SCALE_PERCENT = 140,
         RECEIVED_DAMAGE_MULTIPLIER_SPELLS = 141,
         RECEIVED_DAMAGE_MULTIPLIER_WEAPON = 142,
+        HEAL_MULTIPLIER = 143, // Missing in d2o (i dont know what is 156)
         UNKNOWN = 146,
         CUR_PERMANENT_DAMAGE = 147,
         DEALT_HEAL_MULTIPLIER = 156,
-
     }
 }

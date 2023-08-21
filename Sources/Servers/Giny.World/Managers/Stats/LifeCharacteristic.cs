@@ -31,6 +31,29 @@ namespace Giny.World.Managers.Stats
             get;
             set;
         }
+
+        public int Loss
+        {
+            get;
+            set;
+        }
+
+        public int Current
+        {
+            get
+            {
+                return (TotalInContext() - Loss) + Eroded;
+            }
+            set
+            {
+                Loss = TotalInContext() - value + Eroded;
+            }
+        }
+
+        public double Percentage => Current / (double)TotalInContext() * 100d;
+
+        public int TotalWithoutErosion => base.TotalInContext() + Vitality.TotalInContext();
+
         public override bool FightCallback => false;
 
         public LifeCharacteristic()
@@ -50,15 +73,17 @@ namespace Giny.World.Managers.Stats
                 Objects = this.Objects,
             };
         }
+
+        public CharacterCharacteristic GetHitpointLossCharactersitic()
+        {
+            return new CharacterCharacteristicValue(-Loss, (short)CharacteristicEnum.HIT_POINT_LOSS);
+        }
         public override CharacterCharacteristic GetCharacterCharacteristic(CharacteristicEnum characteristic)
         {
-            var value = TotalInContext();
-            return new CharacterCharacteristicValue(value, (short)characteristic);
-
-            return base.GetCharacterCharacteristic(characteristic);
+            return new CharacterCharacteristicValue(TotalWithoutErosion, (short)characteristic);
         }
 
-        public void Bind(DetailedCharacteristic vitality)
+        public void Initialize(DetailedCharacteristic vitality)
         {
             this.Vitality = vitality;
         }
@@ -67,10 +92,14 @@ namespace Giny.World.Managers.Stats
             return new LifeCharacteristic(@base);
         }
 
+        public override int Total()
+        {
+            return base.Total() + Vitality.Total();
+        }
         public override int TotalInContext()
         {
-            return base.TotalInContext() + this.Vitality.TotalInContext() - Eroded;
+            return base.TotalInContext() + Vitality.TotalInContext() - Eroded;
         }
-   
+
     }
 }

@@ -11,7 +11,6 @@ namespace Giny.World.Managers.Stats
 {
     [ProtoContract]
     [ProtoInclude(3, typeof(DetailedCharacteristic))]
-    [ProtoInclude(13, typeof(LifeLossCharacteristic))]
     public class Characteristic
     {
         public event Action<Characteristic> OnContextChanged;
