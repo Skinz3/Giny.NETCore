@@ -331,7 +331,7 @@ namespace Giny.World.Managers.Maps.Instances
         }
         protected InteractiveElement[] GetInteractiveElements(Character character)
         {
-            return GetElements<MapInteractiveElement>().Select(x => x.GetInteractiveElement(character)).ToArray(); // todo create mapinteractiveelement and mapstatedelement
+            return GetElements<MapInteractiveElement>().Select(x => x.GetInteractiveElement(character)).ToArray(); 
         }
         protected StatedElement[] GetStatedElements()
         {

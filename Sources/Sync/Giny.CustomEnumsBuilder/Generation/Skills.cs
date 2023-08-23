@@ -12,7 +12,7 @@ namespace Giny.EnumsBuilder.Generation
     {
         public override string ClassName => "SkillTypeEnum";
 
-        protected override string GenerateEnumContent(List<D2OReader> readers, D2IFile d2i)
+        protected override string GenerateEnumContent(List<D2OReader> readers)
         {
             var skills = readers.FirstOrDefault(x => x.Classes.Any(w => w.Value.Name == "Skill")).EnumerateObjects().Cast<Giny.IO.D2OClasses.Skill>();
 
@@ -20,7 +20,7 @@ namespace Giny.EnumsBuilder.Generation
 
             foreach (var skill in skills)
             {
-                string name = d2i.GetText((int)skill.NameId);
+                string name = D2IManager.GetText((int)skill.NameId, "en");
                 sb.AppendLine(ApplyRules(name) + skill.id + "=" + skill.id + ",");
             }
 

@@ -125,7 +125,7 @@
     } = new()
     {
         new LoadingStep("D2O Files",()=>D2OManager.Initialize(Path.Combine(ConfigFile.Instance.ClientPath, ClientConstants.D2oDirectory)) ),
-        new LoadingStep("D2I Files",()=>D2IManager.Initialize(Path.Combine(ConfigFile.Instance.ClientPath, ClientConstants.i18nPathFR)) ),
+        new LoadingStep("D2I Files",()=>D2IManager.Initialize(Path.Combine(ConfigFile.Instance.ClientPath, ClientConstants.i18nPath)) ),
         new LoadingStep("Effects",()=> DatabaseManager.Instance.LoadTable<EffectRecord>()),
         new LoadingStep("Breeds",()=>DatabaseManager.Instance.LoadTable<BreedRecord>()),
         new LoadingStep("Items",()=>DatabaseManager.Instance.LoadTable<ItemRecord>()),

@@ -33,7 +33,7 @@ namespace Giny.World.Managers.Stats
         }
         public override CharacterCharacteristic GetCharacterCharacteristic(CharacteristicEnum characteristic)
         {
-            return new CharacterUsableCharacteristicDetailed(Math.Abs(Used), (short)characteristic, Base, Additional, Objects,
+            return new CharacterUsableCharacteristicDetailed(Math.Abs(Used), (short)characteristic, Base, Additional, ObjectsWithLimit,
                 0, Context);
         }
     }

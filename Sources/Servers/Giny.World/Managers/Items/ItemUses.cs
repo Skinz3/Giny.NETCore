@@ -101,7 +101,6 @@ namespace Giny.World.Managers.Items
         public static bool PermanentVitality(Character character, EffectInteger effect)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.VITALITY).Additional += (short)effect.Value;
-            character.Record.Stats.Life.Base += effect.Value;
             character.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_MESSAGE, 13, effect.Value);
             return true;
         }

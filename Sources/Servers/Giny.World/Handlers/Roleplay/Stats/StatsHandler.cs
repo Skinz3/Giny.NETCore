@@ -61,12 +61,6 @@ namespace Giny.World.Handlers.Roleplay.Stats
                             thresholdIndex = client.Character.Breed.GetStatUpgradeCostIndex(num, upgradeCosts);
                         }
 
-                        if (statId == StatsBoostEnum.VITALITY)
-                        {
-                            int num5 = num - characteristic.Base;
-
-                            client.Character.Record.Stats.Life.Base += num5;
-                        }
 
                         characteristic.Base = (short)num;
 

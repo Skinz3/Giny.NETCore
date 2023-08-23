@@ -12,7 +12,7 @@ namespace Giny.EnumsBuilder.Generation
     {
         public override string ClassName => "CharacteristicEnum";
 
-        protected override string GenerateEnumContent(List<D2OReader> readers, D2IFile d2i)
+        protected override string GenerateEnumContent(List<D2OReader> readers)
         {
             var characteristics = readers.FirstOrDefault(x => x.Classes.Any(w => w.Value.Name == "Characteristic")).EnumerateObjects().Cast<Giny.IO.D2OClasses.Characteristic>();
 

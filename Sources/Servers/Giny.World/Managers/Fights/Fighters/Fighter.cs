@@ -1930,7 +1930,7 @@ namespace Giny.World.Managers.Fights.Fighters
         }
         public void AddVitality(short delta)
         {
-            Stats.Life.Context -= delta;
+            Stats.Life.Current += delta;
 
             TriggerBuffs(TriggerTypeEnum.LifeAffected, null);
             TriggerBuffs(TriggerTypeEnum.LifePointsAffected, null);

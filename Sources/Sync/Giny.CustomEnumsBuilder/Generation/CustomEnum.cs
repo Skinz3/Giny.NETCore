@@ -38,11 +38,11 @@ namespace Giny.EnumsBuilder.Generation
 
         public abstract string ClassName { get; }
 
-        protected abstract string GenerateEnumContent(List<D2OReader> readers, D2IFile d2i);
+        protected abstract string GenerateEnumContent(List<D2OReader> readers);
 
-        public string Generate(List<D2OReader> readers, D2IFile d2i)
+        public string Generate(List<D2OReader> readers)
         {
-            string content = GenerateEnumContent(readers, d2i);
+            string content = GenerateEnumContent(readers);
 
             StringBuilder sb = new StringBuilder();
 

@@ -12,7 +12,7 @@ namespace Giny.EnumsBuilder.Generation
     {
         public override string ClassName => "MonsterRacesEnum";
 
-        protected override string GenerateEnumContent(List<D2OReader> readers, D2IFile d2i)
+        protected override string GenerateEnumContent(List<D2OReader> readers)
         {
             var races = readers.FirstOrDefault(x => x.Classes.Any(w => w.Value.Name == "MonsterRace")).EnumerateObjects().Cast<Giny.IO.D2OClasses.MonsterRace>();
 
@@ -20,7 +20,7 @@ namespace Giny.EnumsBuilder.Generation
 
             foreach (var race in races)
             {
-                var text = d2i.GetText((int)race.nameId);
+                var text = D2IManager.GetText((int)race.nameId,"en");
                 sb.AppendLine(ApplyRules(text) + "=" + race.id + ",");
             }
 

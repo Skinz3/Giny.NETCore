@@ -26,12 +26,7 @@ namespace Giny.EnumsBuilder
 
             var clientPath = ClientConstants.ClientPath;
 
-            if (!Directory.Exists(clientPath))
-            {
-                Logger.Write("Unable to locate dofus client. Edit App.config", Channels.Warning);
-                Console.ReadLine();
-                return;
-            }
+            D2IManager.Initialize(Path.Combine(clientPath, ClientConstants.i18nPath));
 
             if (!Directory.Exists(OutputPath))
             {
@@ -48,18 +43,16 @@ namespace Giny.EnumsBuilder
                     d2oReaders.Add(new D2OReader(file));
             }
 
-            D2IFile d2iFile = new D2IFile(Path.Combine(clientPath, ClientConstants.i18nPathEN));
-
             Logger.Write("Building enums ... ", Channels.Info);
 
-            Build(d2iFile, d2oReaders);
+            Build(d2oReaders);
 
             Logger.Write("Custom enums generated successfully.", Channels.Info);
 
             Console.ReadLine();
         }
 
-        private static void Build(D2IFile d2iFile, List<D2OReader> d2oReaders)
+        private static void Build(List<D2OReader> d2oReaders)
         {
             foreach (var type in Assembly.GetExecutingAssembly().GetTypes())
             {
@@ -68,7 +61,7 @@ namespace Giny.EnumsBuilder
                     CustomEnum @enum = (CustomEnum)Activator.CreateInstance(type);
                     string filename = @enum.ClassName + ".cs";
                     string filepath = Path.Combine(OutputPath, filename);
-                    string fileContent = @enum.Generate(d2oReaders, d2iFile);
+                    string fileContent = @enum.Generate(d2oReaders);
 
                     SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(fileContent);
                     SyntaxNode formattedNode = Formatter.Format(syntaxTree.GetRoot(), new AdhocWorkspace());

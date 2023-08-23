@@ -56,6 +56,34 @@ namespace Giny.World.Managers.Stats
             set;
         }
 
+        protected int ObjectsWithLimit
+        {
+            get
+            {
+                if (Limit.HasValue)
+                {
+                    var total = TotalWithoutLimit();
+
+                    if (total > Limit.Value)
+                    {
+                        var diff = total - Limit.Value;
+
+                        return Objects - diff;
+
+
+                    }
+                    else
+                    {
+                        return Objects;
+                    }
+                }
+                else
+                {
+                    return Objects;
+                }
+            }
+        }
+
         public DetailedCharacteristic(int @base)
         {
             this.Base = @base;
@@ -97,21 +125,20 @@ namespace Giny.World.Managers.Stats
         }
         public override CharacterCharacteristic GetCharacterCharacteristic(CharacteristicEnum characteristic)
         {
-            return new CharacterCharacteristicDetailed(Base, Additional, Objects, 0, Context, (short)characteristic);
+            return new CharacterCharacteristicDetailed(Base, Additional, ObjectsWithLimit, 0, Context, (short)characteristic);
+        }
+
+        public int TotalWithoutLimit()
+        {
+            return Base + Additional + Objects;
         }
         public override int Total()
         {
-            var total = Base + Additional + Objects;
-
-            if (!Limit.HasValue)
-            {
-                return total;
-            }
-            return total > Limit.Value ? Limit.Value : total;
+            return Base + Additional + ObjectsWithLimit;
         }
         public override int TotalInContext()
         {
-            var totalContext = Total() + Context;
+            var totalContext = Base + Additional + ObjectsWithLimit + Context;
 
             if (ContextualLimit && Limit.HasValue)
             {

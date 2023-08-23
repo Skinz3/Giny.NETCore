@@ -114,6 +114,13 @@ namespace Giny.World.Records.Breeds
             get;
             set;
         }
+        [Update]
+        public short GraveBonesId
+        {
+            get;
+            set;
+        }
+
         [Ignore]
         public SpellRecord[] Spells
         {
@@ -123,6 +130,7 @@ namespace Giny.World.Records.Breeds
 
         [Ignore]
         public BreedEnum BreedEnum => (BreedEnum)Id;
+
 
         public int GetStatUpgradeCostIndex(int actualpoints, StatUpgradeCost[] upgradeCost)
         {

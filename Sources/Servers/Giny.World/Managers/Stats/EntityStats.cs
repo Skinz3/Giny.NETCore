@@ -133,22 +133,22 @@ namespace Giny.World.Managers.Stats
                 this[CharacteristicEnum.INTELLIGENCE] = value;
             }
         }
-        public UsableCharacteristic ActionPoints
+        public ApCharacteristic ActionPoints
         {
             get
             {
-                return (UsableCharacteristic)this[CharacteristicEnum.ACTION_POINTS];
+                return (ApCharacteristic)this[CharacteristicEnum.ACTION_POINTS];
             }
             set
             {
                 this[CharacteristicEnum.ACTION_POINTS] = value;
             }
         }
-        public UsableCharacteristic MovementPoints
+        public MpCharacteristic MovementPoints
         {
             get
             {
-                return (UsableCharacteristic)this[CharacteristicEnum.MOVEMENT_POINTS];
+                return (MpCharacteristic)this[CharacteristicEnum.MOVEMENT_POINTS];
             }
             set
             {
@@ -156,7 +156,18 @@ namespace Giny.World.Managers.Stats
             }
         }
 
-        public void Initialize()
+        public RangeCharacteristic Range
+        {
+            get
+            {
+                return (RangeCharacteristic)this[CharacteristicEnum.RANGE];
+            }
+            set
+            {
+                this[CharacteristicEnum.MOVEMENT_POINTS] = value;
+            }
+        }
+        public virtual void Initialize()
         {
             this.Energy = this.MaxEnergyPoints;
 
@@ -174,7 +185,8 @@ namespace Giny.World.Managers.Stats
             GetCharacteristic<RelativeCharacteristic>(CharacteristicEnum.MAGIC_FIND).Bind(Chance);
             GetCharacteristic<InitiativeCharacteristic>(CharacteristicEnum.INITIATIVE).Bind(this);
 
-            Life.Initialize(GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.VITALITY));
+            Life.Bind(GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.VITALITY));
+
         }
         public Characteristic GetCharacteristic(StatsBoostEnum statId)
         {
@@ -216,10 +228,17 @@ namespace Giny.World.Managers.Stats
 
             foreach (KeyValuePair<CharacteristicEnum, Characteristic> stat in this.GetCharacteristics<Characteristic>())
             {
-                if (stat.Key == CharacteristicEnum.HIT_POINTS && !life)
+                if (stat.Key == CharacteristicEnum.HIT_POINTS)
                 {
-                    continue;
+                    if (!life)
+                    {
+                        continue;
+                    }
+
+                    results.Add(Life.GetHitpointLossCharactersitic());
+                    results.Add(Life.GetErodedLifeCharacteristic());
                 }
+
                 var characterCharacteristic = stat.Value.GetCharacterCharacteristic(stat.Key);
                 results.Add(characterCharacteristic);
             }
@@ -227,17 +246,6 @@ namespace Giny.World.Managers.Stats
             results.Add(new CharacterCharacteristicValue(MaxEnergyPoints, (short)CharacteristicEnum.MAX_ENERGY_POINTS));
             results.Add(new CharacterCharacteristicValue(Energy, (short)CharacteristicEnum.ENERGY_POINTS));
 
-
-            if (life)
-            {
-                results.Add(Life.GetHitpointLossCharactersitic());
-            }
-
-            if (life)
-            {
-                results.Add(new CharacterCharacteristicDetailed(0, 0, 0, 0, 0, (short)CharacteristicEnum.ERODED_LIFE));
-
-            }
 
             return results.ToArray();
         }

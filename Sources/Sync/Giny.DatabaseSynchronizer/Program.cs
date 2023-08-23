@@ -39,10 +39,7 @@ namespace Giny.DatabaseSynchronizer
     class Program
     {
         public static bool SYNC_D2O = true;
-        public static bool SYNC_MAPS = false;
-
-        public static D2IFile D2IFileFR;
-        public static D2IFile D2IFileEN;
+        public static bool SYNC_MAPS = true;
 
         static void Main(string[] args)
         {
@@ -51,8 +48,7 @@ namespace Giny.DatabaseSynchronizer
 
             Logger.Write("Starting synchronization...", Channels.Info);
 
-            D2IFileFR = new D2IFile(Path.Combine(ClientConstants.ClientPath, ClientConstants.i18nPathFR));
-            D2IFileEN = new D2IFile(Path.Combine(ClientConstants.ClientPath, ClientConstants.i18nPathEN));
+            D2IManager.Initialize(Path.Combine(ClientConstants.ClientPath, ClientConstants.i18nPath));
 
             DatabaseManager.Instance.Initialize(Assembly.GetAssembly(typeof(BreedRecord)),
               "127.0.0.1", "giny_world", "root", "");

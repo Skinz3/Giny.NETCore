@@ -12,7 +12,7 @@ namespace Giny.EnumsBuilder.Generation
     {
         public override string ClassName => "ItemTypeEnum";
 
-        protected override string GenerateEnumContent(List<D2OReader> readers, D2IFile d2i)
+        protected override string GenerateEnumContent(List<D2OReader> readers)
         {
             var types = readers.FirstOrDefault(x => x.Classes.Any(w => w.Value.Name == "ItemType")).EnumerateObjects().Cast<Giny.IO.D2OClasses.ItemType>();
 
@@ -20,7 +20,7 @@ namespace Giny.EnumsBuilder.Generation
 
             foreach (var type in types)
             {
-                var text = d2i.GetText((int)type.nameId);
+                var text = D2IManager.GetText((int)type.nameId, "en");
                 sb.AppendLine(ApplyRules(text) + "=" + type.id + ",");
             }
 

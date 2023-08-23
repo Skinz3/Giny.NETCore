@@ -826,7 +826,8 @@ namespace Giny.World.Managers.Entities.Characters
         }
         public void RefreshStats()
         {
-            Client.Send(new CharacterStatsListMessage(Record.Stats.GetCharacterCharacteristicsInformations(this)));
+            var stats = Record.Stats.GetCharacterCharacteristicsInformations(this);
+            Client.Send(new CharacterStatsListMessage(stats));
         }
 
         public void OnStatUpgradeResult(StatsUpgradeResultEnum result, short nbCharacBoost)
@@ -1650,8 +1651,6 @@ namespace Giny.World.Managers.Entities.Characters
         [Annotation("still working?")]
         public void Restat()
         {
-            int vitality = this.Stats[CharacteristicEnum.VITALITY].Base;
-            this.Stats.Life.Base -= vitality;
             this.Stats[CharacteristicEnum.VITALITY].Base = 0;
             this.Stats.Agility.Base = 0;
             this.Stats.Intelligence.Base = 0;

@@ -514,10 +514,10 @@ namespace Giny.World.Managers.Chat
         public static void TestCommand(WorldClient client)
         {
 
-            
+            var test = client.Character.Stats[CharacteristicEnum.RANGE].Total();
 
 
-            client.Character.Stats.Life.Current = client.Character.Stats.MaxLifePoints;
+
 
             client.Character.RefreshStats();
             return;

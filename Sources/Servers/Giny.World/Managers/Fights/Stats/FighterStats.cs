@@ -25,6 +25,7 @@ namespace Giny.World.Managers.Fights.Stats
 
         public const short MaxErosion = 50;
 
+
         public GameActionFightInvisibilityStateEnum InvisibilityState
         {
             get;
@@ -39,6 +40,14 @@ namespace Giny.World.Managers.Fights.Stats
             get;
             set;
         }
+        /// <summary>
+        /// Do the cliet have received life 
+        /// </summary>
+        public bool LifeSended
+        {
+            get;
+            set;
+        } = false;
 
         public void SetShield(int delta)
         {
@@ -141,6 +150,11 @@ namespace Giny.World.Managers.Fights.Stats
             this.InvisibilityState = GameActionFightInvisibilityStateEnum.VISIBLE;
             this.Initialize();
         }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+        }
         /*
          * Todo : Summoned / SummonerId
          * bonusCharacteristic.lifePoints * (caster.lifePoints - caster.vitality.total)  + (grade.lifePoints * statsCoeff)
@@ -213,7 +227,7 @@ namespace Giny.World.Managers.Fights.Stats
 
             InvisibilityState = GameActionFightInvisibilityStateEnum.VISIBLE;
 
-
+            this.Initialize();
 
 
             if (summoner != null)
@@ -230,7 +244,6 @@ namespace Giny.World.Managers.Fights.Stats
 
 
 
-            this.Initialize();
         }
 
         private void ApplyBonusCharacteristics(MonsterBonusCharacteristics bonus, Fighter summoner)
@@ -276,11 +289,16 @@ namespace Giny.World.Managers.Fights.Stats
             bool summoned = summoner != null;
             var summonerId = summoned ? summoner.Id : 0;
 
-            bool withLife = !owner.Fight.Started;
-
-            return new GameFightCharacteristics(new CharacterCharacteristics(owner.Stats.GetAllCharacterCharacteristics(withLife)),
+            var result = new GameFightCharacteristics(new CharacterCharacteristics(owner.Stats.GetAllCharacterCharacteristics(!LifeSended)),
                 summonerId, summoned,
                 (byte)owner.GetInvisibilityStateFor(target));
+
+            if (!LifeSended)
+            {
+                LifeSended = true;
+            }
+
+            return result;
         }
         [Annotation]
         public GameFightCharacteristics GetGameFightCharacteristics(Fighter owner, CharacterFighter target, CharacteristicEnum selected)

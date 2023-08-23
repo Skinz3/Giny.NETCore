@@ -29,31 +29,7 @@ namespace Giny.World.Managers.Hardcore
     /// </summary>
     public class HardcoreManager : Singleton<HardcoreManager>
     {
-        /// <summary>
-        /// Put in BreedRecord, and patch in DatabasePatcher module.
-        /// </summary>
-        private Dictionary<BreedEnum, short> GraveBones = new Dictionary<BreedEnum, short>()
-        {
-            { BreedEnum.Feca,2384 },
-            { BreedEnum.Osamodas,2380 },
-            { BreedEnum.Enutrof,2373 },
-            { BreedEnum.Sram,2376 },
-            { BreedEnum.Xelor,2386 },
-            { BreedEnum.Ecaflip,2378 },
-            { BreedEnum.Eniripsa,2383 },
-            { BreedEnum.Iop,2374 },
-            { BreedEnum.Cra,2372 },
-            { BreedEnum.Sadida,2381 },
-            { BreedEnum.Sacrieur,2379 },
-            { BreedEnum.Pandawa , 2375 },
-            { BreedEnum.Roublard ,2382 },
-            { BreedEnum.Zobal , 2377 },
-            { BreedEnum.Steamer, 2385 },
-            { BreedEnum.Eliotrope, 3091 },
-            { BreedEnum.Huppermage, 0 }, // ?
-            { BreedEnum.Ouginak, 0 }, // ?
-            { BreedEnum.Forgelance, 0 }, // ?
-        };
+       
 
         private const int ReplayLevel = 1;
 
@@ -94,12 +70,9 @@ namespace Giny.World.Managers.Hardcore
         }
         private void KillCharacter(Character character)
         {
-            short bonesId = GraveBones[character.Breed.BreedEnum];
-
             character.Inventory.UnequipAll();
 
-
-            character.Record.ContextualLook = EntityLookManager.Instance.CreateLookFromBones(bonesId);
+            character.Record.ContextualLook = EntityLookManager.Instance.CreateLookFromBones(character.Breed.GraveBonesId);
 
             character.Record.HardcoreInformations.DeathState = HardcoreOrEpicDeathStateEnum.DEATH_STATE_DEAD;
 

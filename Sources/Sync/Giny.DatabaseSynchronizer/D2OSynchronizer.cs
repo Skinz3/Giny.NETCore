@@ -1,6 +1,7 @@
 ﻿using Giny.Core;
 using Giny.Core.Logging;
 using Giny.IO;
+using Giny.IO.D2I;
 using Giny.IO.D2O;
 using Giny.IO.D2OClasses;
 using Giny.ORM;
@@ -48,7 +49,7 @@ namespace Giny.DatabaseSynchronizer
 
             Logger.Write("Building D2O", Channels.Info);
 
-            foreach (var tableType in DatabaseManager.Instance.TableTypes.OrderBy(x=>x.Name))
+            foreach (var tableType in DatabaseManager.Instance.TableTypes.OrderBy(x => x.Name))
             {
                 var attribute = tableType.GetCustomAttribute<D2OClassAttribute>();
 
@@ -65,7 +66,7 @@ namespace Giny.DatabaseSynchronizer
 
         }
 
-        
+
         private static void BuildFromObjects(object[] objects, Type tableType)
         {
             var objectType = objects.First().GetType();
@@ -98,7 +99,7 @@ namespace Giny.DatabaseSynchronizer
                         if (i18nField != null)
                         {
                             int key = int.Parse(d2oField.GetValue(obj).ToString()); // uint / int cast
-                            property.SetValue(table, Program.D2IFileFR.GetText(key));
+                            property.SetValue(table, D2IManager.GetText(key));
                         }
                         else
                         {

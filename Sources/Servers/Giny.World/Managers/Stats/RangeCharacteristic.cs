@@ -14,8 +14,6 @@ namespace Giny.World.Managers.Stats
 
         public override int? Limit => RangeLimit;
 
-        public override bool ContextualLimit => true;
-       
         [ProtoMember(1)]
         public override int Base { get => base.Base; set => base.Base = value; }
 

@@ -396,6 +396,7 @@ namespace Giny.World.Managers.Items.Collections
                     SetItemPosition(item2.UId, CharacterInventoryPositionEnum.INVENTORY_POSITION_NOT_EQUIPED, item2.Quantity);
             }
 
+            
             InventoryEventApi.ItemEquipped(Character, item);
 
         }
@@ -634,12 +635,24 @@ namespace Giny.World.Managers.Items.Collections
 
             }
 
+
+            if (Character.Stats.ActionPoints.TotalWithoutLimit() > Character.Stats.ActionPoints.Limit ||
+                Character.Stats.MovementPoints.TotalWithoutLimit() > Character.Stats.MovementPoints.Limit ||
+                Character.Stats.Range.TotalWithoutLimit() > Character.Stats.Range.Limit)
+            {
+                Character.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_MESSAGE, 255);
+            }
+
+
+
             item.UpdateElement();
             OnObjectMoved(item, position);
             RefreshWeight();
             Character.Record.UpdateElement();
             Character.RefreshActorOnMap();
             Character.RefreshStats();
+
+
 
         }
         private void Associate(CharacterItemRecord item, CharacterItemRecord targeted)

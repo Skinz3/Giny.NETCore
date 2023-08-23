@@ -55,7 +55,14 @@ namespace Giny.World.Managers.Items
         [ItemEffect(EffectsEnum.Effect_AddVitality)]
         public static void AddVitality(Character character, int delta)
         {
+            var test1 = character.Stats.LifePoints;
+
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.VITALITY).Objects += (short)delta;
+
+
+            var vit = character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.VITALITY).TotalInContext();
+
+            var test = character.Stats.LifePoints;
         }
         [ItemEffect(EffectsEnum.Effect_AddHealth)]
         public static void AddHealth(Character character, int delta)

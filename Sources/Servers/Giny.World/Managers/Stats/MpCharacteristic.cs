@@ -12,7 +12,6 @@ namespace Giny.World.Managers.Stats
     {
         public override int? Limit => ConfigFile.Instance.MpLimit;
 
-        public override bool ContextualLimit => false;
 
         [ProtoMember(1)]
         public override int Base

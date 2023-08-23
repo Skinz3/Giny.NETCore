@@ -1,6 +1,7 @@
 ﻿using Giny.Core;
 using Giny.Core.Commands;
 using Giny.DatabasePatcher.Achievements;
+using Giny.DatabasePatcher.Breeds;
 using Giny.DatabasePatcher.Experience;
 using Giny.DatabasePatcher.Items;
 using Giny.DatabasePatcher.Maps;
@@ -35,6 +36,7 @@ namespace Giny.DatabasePatcher
             LevelAchievements.Patch();
             SubareaAchievements.Patch();
             Dungeons.Patch();
+            BreedGraves.Patch();
             Experiences.Patch();
             ItemAppearances.Patch();
             LivingObjects.Patch();

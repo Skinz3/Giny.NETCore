@@ -54,9 +54,9 @@ namespace Giny.Pokefus.Fight.Fighters
             stats.Chance = DetailedCharacteristic.New((short)(statsMax * coeff));
             stats.Agility = DetailedCharacteristic.New((short)(statsMax * coeff));
             stats.Strength = DetailedCharacteristic.New((short)(statsMax * coeff));
-            stats.BaseMaxLife = lifePoints;
-            stats.LifePoints = lifePoints;
-            stats.MaxLifePoints = lifePoints;
+
+            stats.Life.Base = lifePoints;
+            stats.Life.Current = lifePoints;
 
 
             return stats;

@@ -74,16 +74,16 @@ namespace Giny.World.Managers.Stats
             };
         }
 
-        public CharacterCharacteristic GetHitpointLossCharactersitic()
-        {
-            return new CharacterCharacteristicValue(-Loss, (short)CharacteristicEnum.HIT_POINT_LOSS);
-        }
+
         public override CharacterCharacteristic GetCharacterCharacteristic(CharacteristicEnum characteristic)
         {
-            return new CharacterCharacteristicValue(TotalWithoutErosion, (short)characteristic);
+            //  return new CharacterCharacteristicValue(TotalWithoutErosion, (short)characteristic); ---> fights
+
+
+            return new CharacterCharacteristicDetailed(Base, Additional, Objects, 0, Context, (short)characteristic);
         }
 
-        public void Initialize(DetailedCharacteristic vitality)
+        public void Bind(DetailedCharacteristic vitality)
         {
             this.Vitality = vitality;
         }
@@ -99,6 +99,14 @@ namespace Giny.World.Managers.Stats
         public override int TotalInContext()
         {
             return base.TotalInContext() + Vitality.TotalInContext() - Eroded;
+        }
+        public CharacterCharacteristic GetHitpointLossCharactersitic()
+        {
+            return new CharacterCharacteristicValue(-Loss, (short)CharacteristicEnum.HIT_POINT_LOSS);
+        }
+        public CharacterCharacteristic GetErodedLifeCharacteristic()
+        {
+            return new CharacterCharacteristicDetailed(Eroded, 0, 0, 0, 0, (short)CharacteristicEnum.ERODED_LIFE);
         }
 
     }

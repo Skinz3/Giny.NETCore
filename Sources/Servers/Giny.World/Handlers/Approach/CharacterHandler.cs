@@ -177,7 +177,6 @@ namespace Giny.World.Handlers.Approach
         {
             if (WorldServer.Instance.GetServerStatus() != ServerStatusEnum.ONLINE || !IPCManager.Instance.Connected || client.InGame)
             {
-                client.Send(new CharacterDeletionErrorMessage((byte)CharacterDeletionErrorEnum.DEL_ERR_NO_REASON));
                 return;
             }
 
@@ -189,6 +188,11 @@ namespace Giny.World.Handlers.Approach
             }
 
             if (record.HardcoreInformations.DeathState != HardcoreOrEpicDeathStateEnum.DEATH_STATE_DEAD)
+            {
+                return;
+            }
+
+            if (!WorldServer.Instance.IsEpicOrHardcore())
             {
                 return;
             }

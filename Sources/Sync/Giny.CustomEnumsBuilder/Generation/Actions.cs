@@ -15,7 +15,7 @@ namespace Giny.CustomEnumsBuilder.Generation
     {
         public override string ClassName => "ActionsEnum";
 
-        protected override string GenerateEnumContent(List<D2OReader> readers, D2IFile d2i)
+        protected override string GenerateEnumContent(List<D2OReader> readers)
         {
             StringBuilder sb = new StringBuilder();
 
