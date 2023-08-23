@@ -396,7 +396,7 @@ namespace Giny.World.Managers.Items.Collections
                     SetItemPosition(item2.UId, CharacterInventoryPositionEnum.INVENTORY_POSITION_NOT_EQUIPED, item2.Quantity);
             }
 
-            
+
             InventoryEventApi.ItemEquipped(Character, item);
 
         }
@@ -500,6 +500,7 @@ namespace Giny.World.Managers.Items.Collections
             var item = GetItem(uid);
             SetItemPosition(item, position, quantity);
         }
+        [Annotation("Unsafe criterions verification")]
         private void SetItemPosition(CharacterItemRecord item, CharacterInventoryPositionEnum position, int quantity)
         {
             if (item == null)
@@ -524,11 +525,23 @@ namespace Giny.World.Managers.Items.Collections
                     OnError(ObjectErrorEnum.LEVEL_TOO_LOW);
                     return;
                 }
-                if (!CriteriaExpression.Eval(item.Record.Criteria, Character.Client))
+
+                /*
+                 * Check criterions, after add the effects.
+                 * Is this method unsafe?
+                 */
+                ItemEffectsManager.Instance.AddEffects(Character, item.Effects);
+
+                bool result = CriteriaExpression.Eval(item.Record.Criteria, Character.Client);
+
+                ItemEffectsManager.Instance.RemoveEffects(Character, item.Effects);
+
+                if (!result)
                 {
                     OnError(ObjectErrorEnum.CRITERIONS);
                     return;
                 }
+
                 if (item.PositionEnum == CharacterInventoryPositionEnum.INVENTORY_POSITION_NOT_EQUIPED && DofusPositions.Contains((CharacterInventoryPositionEnum)item.Position) && DofusPositions.Contains((CharacterInventoryPositionEnum)position))
                     return;
 
