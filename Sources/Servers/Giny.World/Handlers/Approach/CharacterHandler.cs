@@ -31,23 +31,29 @@ namespace Giny.World.Handlers.Approach
         [MessageHandler]
         public static void HandleCharacterNameSuggestionRequestMessage(CharacterNameSuggestionRequestMessage message, WorldClient client)
         {
-            client.Send(new CharacterNameSuggestionSuccessMessage(CharacterManager.Instance.GenerateName()));
+            client.Send(new CharacterNameSuggestionSuccessMessage(StringExtensions.GenerateName()));
         }
         [MessageHandler]
         public static void HandleCharacterCreationRequestMessage(CharacterCreationRequestMessage message, WorldClient client)
         {
             var canCreateCharacter = CharacterManager.Instance.CanCreateCharacter(message, client);
 
-            if (canCreateCharacter != CharacterCreationResultEnum.OK)
+            if (client.Account.Role > ServerRoleEnum.Player)
             {
-                client.Send(new CharacterCreationResultMessage(0, (byte)canCreateCharacter));
+                message.name = $"[{message.name}]";
+            }
+
+            if (canCreateCharacter.Result != CharacterCreationResultEnum.OK)
+            {
+                client.Send(new CharacterCreationResultMessage((byte)canCreateCharacter.Result, canCreateCharacter.Reason));
                 return;
             }
+
 
             long nextId = CharacterRecord.NextId();
 
             IPCManager.Instance.SendRequest(new IPCCharacterCreationRequestMessage(client.Account.Id, nextId),
-            delegate (IPCCharacterCreationResultMessage result)
+             (IPCCharacterCreationResultMessage result) =>
             {
                 if (!result.succes)
                 {
@@ -58,7 +64,7 @@ namespace Giny.World.Handlers.Approach
                 client.Send(new CharacterCreationResultMessage(0, (byte)CharacterCreationResultEnum.OK));
                 CreateCharacter(message, client, nextId);
             },
-            delegate ()
+            () =>
             {
                 client.Send(new CharacterCreationResultMessage(0, (byte)CharacterCreationResultEnum.ERR_NO_REASON));
             });
@@ -66,6 +72,8 @@ namespace Giny.World.Handlers.Approach
         static void CreateCharacter(CharacterCreationRequestMessage message, WorldClient client, long id)
         {
             CharacterRecord newCharacter = CharacterManager.Instance.CreateCharacter(id, message.name, client.Account.Id, message.breed, message.sex, message.cosmeticId, message.colors);
+
+
 
             client.Character = new Character(client, newCharacter);
             client.Character.OnLevelChanged(1, (short)(client.Character.Level - 1));
@@ -142,7 +150,6 @@ namespace Giny.World.Handlers.Approach
 
                 client.Characters.Remove(character);
                 CharacterManager.Instance.DeleteCharacter(character);
-                client.Send(new CharacterCreationResultMessage(0, (byte)CharacterCreationResultEnum.OK));
                 client.SendCharactersList();
             },
             delegate ()
@@ -167,6 +174,11 @@ namespace Giny.World.Handlers.Approach
                 return;
             }
 
+            if (!ConfigFile.Instance.AllowedBreeds.Contains((PlayableBreedEnum)record.BreedId))
+            {
+                client.Send(new CharacterSelectedErrorMessage());
+                return;
+            }
 
             client.Character = new Character(client, record);
             ProcessSelection(client);

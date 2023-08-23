@@ -16,7 +16,7 @@ namespace Giny.World
 {
     public class ConfigFile
     {
-        public const string CONFIG_PATH = "config.json";
+        public const string ConfigPath = "config.json";
 
         public static ConfigFile Instance
         {
@@ -173,17 +173,27 @@ namespace Giny.World
             set;
         } = 30d;
 
+        [JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
+        public List<PlayableBreedEnum> AllowedBreeds
+        {
+            get;
+            set;
+        }
+
         [StartupInvoke("Config", StartupInvokePriority.Initial)]
         public static void Initialize()
         {
-            if (File.Exists(CONFIG_PATH))
+            if (File.Exists(ConfigPath))
             {
                 try
                 {
-                    Instance = Json.Deserialize<ConfigFile>(File.ReadAllText(CONFIG_PATH));
+
+                    Instance = Json.Deserialize<ConfigFile>(File.ReadAllText(ConfigPath));
+                    Logger.Write($"Configuration loaded with host : '{Instance.Host}:{Instance.Port}'");
                 }
                 catch
                 {
+                    Logger.Write("Unable to load configuration. Recreating it", Channels.Warning);
                     CreateConfig();
                 }
 
@@ -196,12 +206,36 @@ namespace Giny.World
         public static void CreateConfig()
         {
             Instance = new ConfigFile();
+
+            Instance.AllowedBreeds = new List<PlayableBreedEnum>()
+            {
+                PlayableBreedEnum.Feca ,
+                PlayableBreedEnum.Osamodas,
+                PlayableBreedEnum.Enutrof,
+                PlayableBreedEnum.Sram,
+                PlayableBreedEnum.Xelor,
+                PlayableBreedEnum.Ecaflip,
+                PlayableBreedEnum.Eniripsa,
+                PlayableBreedEnum.Iop,
+                PlayableBreedEnum.Cra,
+                PlayableBreedEnum.Sadida,
+                PlayableBreedEnum.Sacrieur,
+                PlayableBreedEnum.Pandawa,
+                PlayableBreedEnum.Roublard,
+                PlayableBreedEnum.Zobal,
+                PlayableBreedEnum.Steamer,
+                PlayableBreedEnum.Eliotrope,
+                PlayableBreedEnum.Huppermage,
+                PlayableBreedEnum.Ouginak,
+                PlayableBreedEnum.Forgelance,
+            };
+
             Save();
-            Logger.Write("Configuration file created!");
+            Logger.Write("Configuration file created !");
         }
         public static void Save()
         {
-            File.WriteAllText(CONFIG_PATH, Json.Serialize(Instance));
+            File.WriteAllText(ConfigPath, Json.Serialize(Instance));
         }
 
     }

@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ubiety.Dns.Core.Records;
 
 namespace Giny.World.Records.Characters
 {
@@ -220,7 +221,6 @@ namespace Giny.World.Records.Characters
             get;
             set;
         }
-
 
 
         public CharacterBaseInformations GetCharacterBaseInformations(bool characterList)

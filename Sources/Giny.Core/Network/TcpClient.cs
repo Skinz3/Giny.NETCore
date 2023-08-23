@@ -30,11 +30,11 @@ namespace Giny.Core.Network
             get;
             set;
         }
-        public IPEndPoint EndPoint
+        public IPEndPoint? EndPoint
         {
             get
             {
-                return Socket.RemoteEndPoint as IPEndPoint;
+                return Socket == null ? null : Socket.RemoteEndPoint as IPEndPoint;
             }
         }
         public string Ip

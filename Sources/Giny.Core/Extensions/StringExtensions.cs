@@ -10,6 +10,40 @@ namespace Giny.Core.Extensions
 {
     public static class StringExtensions
     {
+        private const string Vowels = "aeiouy";
+        private const string Consonants = "bcdfghjklmnpqrstvwxz";
+
+        private static char RandomVowel(Random rand)
+        {
+            return Vowels[rand.Next(0, Vowels.Length - 1)];
+        }
+        private static char RandomConsonant(Random rand)
+        {
+            return Consonants[rand.Next(0, Consonants.Length - 1)];
+        }
+
+        private static char GetChar(bool vowel, Random rand)
+        {
+            return vowel ? RandomVowel(rand) : RandomConsonant(rand);
+        }
+        public static string GenerateName()
+        {
+            var rand = new Random();
+            var namelen = rand.Next(5, 10);
+            var name = string.Empty;
+
+            var vowel = rand.Next(0, 2) == 0;
+            name += GetChar(vowel, rand).ToString(CultureInfo.InvariantCulture).ToUpper();
+            vowel = !vowel;
+
+            for (var i = 0; i < namelen - 1; i++)
+            {
+                name += GetChar(vowel, rand);
+                vowel = !vowel;
+            }
+            return name;
+        }
+ 
         public static string AddLineBreaks(this string input, char separator, int maxSeparator)
         {
             StringBuilder result = new StringBuilder();

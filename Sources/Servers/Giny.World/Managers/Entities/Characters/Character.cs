@@ -1739,6 +1739,8 @@ namespace Giny.World.Managers.Entities.Characters
         }
 
 
+
+
         public void AddFollower(ServerEntityLook look)
         {
             GetHumanOption<CharacterHumanOptionFollowers>().Add(look);
