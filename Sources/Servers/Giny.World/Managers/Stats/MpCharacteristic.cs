@@ -1,4 +1,5 @@
-﻿using ProtoBuf;
+﻿using Giny.Core.IO.Configuration;
+using ProtoBuf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Giny.World.Managers.Stats
     [ProtoContract]
     public class MpCharacteristic : UsableCharacteristic
     {
-        public override int? Limit => ConfigFile.Instance.MpLimit;
+        public override int? Limit => ConfigManager<WorldConfig>.Instance.MpLimit;
 
 
         [ProtoMember(1)]

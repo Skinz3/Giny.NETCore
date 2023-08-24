@@ -1,5 +1,6 @@
 ﻿using Giny.Core;
 using Giny.Core.DesignPattern;
+using Giny.Core.IO.Configuration;
 using Giny.Core.Network.IPC;
 using Giny.Protocol.Enums;
 using Giny.Protocol.IPC.Messages;
@@ -27,8 +28,10 @@ namespace Giny.World.Network
 
         public void ConnectToAuth()
         {
+            var config = ConfigManager<WorldConfig>.Instance;
+
             Client = new IPCClient();
-            Client.Connect(ConfigFile.Instance.IPCHost, ConfigFile.Instance.IPCPort);
+            Client.Connect(config.IPCHost, config.IPCPort);
         }
 
         public void SendRequest<T>(IPCMessage message, IPCRequestManager.RequestCallbackDelegate<T> sucess, IPCRequestManager.RequestCallbackErrorDelegate error) where T : IPCMessage
@@ -55,13 +58,15 @@ namespace Giny.World.Network
 
         public void OnConnected()
         {
+            var config = ConfigManager<WorldConfig>.Instance;
+
             Logger.Write("Connected to IPCServer");
-            Client.Send(new HandshakeMessage(ConfigFile.Instance.ServerId));
+            Client.Send(new HandshakeMessage(config.ServerId));
             Connected = true;
 
             if (!WorldServer.Instance.Started)
             {
-                WorldServer.Instance.Start(ConfigFile.Instance.Host, ConfigFile.Instance.Port);
+                WorldServer.Instance.Start(config.Host, config.Port);
             }
             else
             {

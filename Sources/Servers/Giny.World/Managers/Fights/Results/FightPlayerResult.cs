@@ -1,5 +1,6 @@
 ﻿
 using Giny.Core.DesignPattern;
+using Giny.Core.IO.Configuration;
 using Giny.ORM;
 using Giny.Protocol.Enums;
 using Giny.Protocol.Types;
@@ -102,7 +103,7 @@ namespace Giny.World.Managers.Fights.Results
         public void AddEarnedExperience(double bonusRatio, int mapRewardRate)
         {
             FightXp fightXp = FightFormulas.Instance.GetExperiencePvM(Fighter, mapRewardRate);
-            fightXp.ApplyMultiplicator(ConfigFile.Instance.XpRate);
+            fightXp.ApplyMultiplicator(ConfigManager<WorldConfig>.Instance.XpRate);
             fightXp.ApplyBonus(bonusRatio);
 
             var experience = fightXp.Xp;

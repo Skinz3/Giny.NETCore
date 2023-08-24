@@ -1,5 +1,6 @@
 ﻿using Giny.Core;
 using Giny.Core.Extensions;
+using Giny.Core.IO.Configuration;
 using Giny.Core.Network.Messages;
 using Giny.ORM;
 using Giny.Protocol.Custom.Enums;
@@ -174,7 +175,7 @@ namespace Giny.World.Handlers.Approach
                 return;
             }
 
-            if (!ConfigFile.Instance.AllowedBreeds.Contains((PlayableBreedEnum)record.BreedId))
+            if (!ConfigManager<WorldConfig>.Instance.AllowedBreeds.Contains((PlayableBreedEnum)record.BreedId))
             {
                 client.Send(new CharacterSelectedErrorMessage());
                 return;

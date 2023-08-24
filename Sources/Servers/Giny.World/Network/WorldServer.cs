@@ -1,5 +1,6 @@
 ﻿using Giny.Core;
 using Giny.Core.DesignPattern;
+using Giny.Core.IO.Configuration;
 using Giny.Core.Network;
 using Giny.Core.Network.Messages;
 using Giny.Protocol.Enums;
@@ -133,7 +134,7 @@ namespace Giny.World.Network
         }
         private void OnClientConnected(Socket acceptSocket)
         {
-            if (ConfigFile.Instance.LogProtocol)
+            if (ConfigManager<WorldConfig>.Instance.LogProtocol)
             {
                 Logger.Write("(World) New client connected.");
             }
@@ -153,7 +154,7 @@ namespace Giny.World.Network
 
         public GameServerTypeEnum GetServerType()
         {
-            return ConfigFile.Instance.ServerType;
+            return ConfigManager<WorldConfig>.Instance.ServerType;
         }
         public bool IsEpicOrHardcore()
         {
@@ -163,7 +164,7 @@ namespace Giny.World.Network
         {
             lock (m_locker)
             {
-                if (ConfigFile.Instance.LogProtocol)
+                if (ConfigManager<WorldConfig>.Instance.LogProtocol)
                 {
                     Logger.Write("(World) Client disconnected.", Channels.Info);
                 }

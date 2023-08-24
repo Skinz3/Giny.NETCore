@@ -1,17 +1,18 @@
-﻿@using Giny.WorldView.Config;
+﻿@using Giny.Core.IO.Configuration;
+@using Giny.WorldView.Config;
 
 <MudContainer>
     <br />
-    <MudTextField @bind-Value="ConfigFile.Instance.SQLHost" Label="Ip MySQL" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Filled.SettingsEthernet" AdornmentColor="Color.Primary" />
+    <MudTextField @bind-Value="ConfigManager<WorldViewConfig>.Instance.SQLHost" Label="Ip MySQL" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Filled.SettingsEthernet" AdornmentColor="Color.Primary" />
     <br />
-    <MudTextField @bind-Value="ConfigFile.Instance.SQLDBName" Label="Nom de la base" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Filled.Layers" AdornmentColor="Color.Primary" />
+    <MudTextField @bind-Value="ConfigManager<WorldViewConfig>.Instance.SQLDBName" Label="Nom de la base" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Filled.Layers" AdornmentColor="Color.Primary" />
     <br />
-    <MudTextField @bind-Value="ConfigFile.Instance.SQLUser" Label="Nom d'utilisateur" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Filled.People" AdornmentColor="Color.Primary" />
+    <MudTextField @bind-Value="ConfigManager<WorldViewConfig>.Instance.SQLUser" Label="Nom d'utilisateur" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Filled.People" AdornmentColor="Color.Primary" />
     <br />
-    <MudTextField @bind-Value="ConfigFile.Instance.SQLPassword" Label="Mot de passe" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Filled.Password" AdornmentColor="Color.Primary" />
+    <MudTextField @bind-Value="ConfigManager<WorldViewConfig>.Instance.SQLPassword" Label="Mot de passe" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Filled.Password" AdornmentColor="Color.Primary" />
     <br />
 
-    <MudTextField @bind-Value="ConfigFile.Instance.ClientPath" Label="Chemin client" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Filled.Computer" AdornmentColor="Color.Primary" />
+    <MudTextField @bind-Value="ConfigManager<WorldViewConfig>.Instance.ClientPath" Label="Chemin client" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Filled.Computer" AdornmentColor="Color.Primary" />
     <br />
     <MudButton OnClick=OnSaveClick StartIcon="@Icons.Filled.Save" Style="height: 50px;float:right" Variant="Variant.Filled" Size="Size.Large" Color="Color.Primary">Sauvegarder</MudButton>
 </MudContainer>
@@ -26,7 +27,7 @@
 
     private void OnSaveClick()
     {
-        ConfigFile.Save();
+        ConfigManager<WorldViewConfig>.Save(WorldViewConfig.Filepath);
         Parent.Navigate(PageEnum.Loader);
     }
 }

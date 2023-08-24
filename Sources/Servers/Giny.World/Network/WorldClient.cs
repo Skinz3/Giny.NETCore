@@ -25,6 +25,7 @@ using Giny.World.Records.Items;
 using Giny.World.Managers.Items.Collections;
 using Giny.Core.DesignPattern;
 using Giny.World.Logging;
+using Giny.Core.IO.Configuration;
 
 namespace Giny.World.Network
 {
@@ -95,7 +96,7 @@ namespace Giny.World.Network
         }
         public override void OnMessageReceived(NetworkMessage message)
         {
-            if (ConfigFile.Instance.LogProtocol)
+            if (ConfigManager<WorldConfig>.Instance.LogProtocol)
                 Logger.Write("(World) Received " + message, Channels.Info);
 
             ProtocolMessageManager.HandleMessage(message, this);
@@ -103,13 +104,13 @@ namespace Giny.World.Network
 
         public override void OnSended(IAsyncResult result)
         {
-            if (ConfigFile.Instance.LogProtocol)
+            if (ConfigManager<WorldConfig>.Instance.LogProtocol)
                 Logger.Write("(World) Send " + result.AsyncState);
         }
 
         public override void OnMessageUnhandled(NetworkMessage message)
         {
-            if (ConfigFile.Instance.LogProtocol)
+            if (ConfigManager<WorldConfig>.Instance.LogProtocol)
                 Logger.Write(string.Format("No Handler: ({0}) {1}", message.MessageId, message.ToString()), Channels.Warning);
 
         }

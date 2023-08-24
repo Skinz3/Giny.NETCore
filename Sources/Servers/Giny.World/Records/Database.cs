@@ -1,6 +1,7 @@
 ﻿using Giny.Core;
 using Giny.Core.DesignPattern;
 using Giny.Core.Extensions;
+using Giny.Core.IO.Configuration;
 using Giny.Core.Logging;
 using Giny.ORM;
 using System;
@@ -21,8 +22,10 @@ namespace Giny.World.Records
         {
             DatabaseManager.Instance.OnTablesLoadProgress += OnLoadProgress;
 
-            DatabaseManager.Instance.Initialize(Assembly.GetExecutingAssembly(), ConfigFile.Instance.SQLHost,
-               ConfigFile.Instance.SQLDBName, ConfigFile.Instance.SQLUser, ConfigFile.Instance.SQLPassword);
+            WorldConfig config = ConfigManager<WorldConfig>.Instance;
+
+            DatabaseManager.Instance.Initialize(Assembly.GetExecutingAssembly(), config.SQLHost,
+               config.SQLDBName, config.SQLUser, config.SQLPassword);
 
             DatabaseManager.Instance.LoadTables();
 

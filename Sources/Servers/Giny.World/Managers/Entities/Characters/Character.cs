@@ -1,6 +1,7 @@
 ﻿
 using Giny.Core.DesignPattern;
 using Giny.Core.Extensions;
+using Giny.Core.IO.Configuration;
 using Giny.ORM;
 using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
@@ -430,7 +431,7 @@ namespace Giny.World.Managers.Entities.Characters
         }
         public void SendServerExperienceModificator()
         {
-            Client.Send(new ServerExperienceModificatorMessage((short)(ConfigFile.Instance.XpRate * 100d)));
+            Client.Send(new ServerExperienceModificatorMessage((short)(ConfigManager<WorldConfig>.Instance.XpRate * 100d)));
         }
         public void DebugHighlightCells(Color color, IEnumerable<CellRecord> cells)
         {
@@ -1110,7 +1111,7 @@ namespace Giny.World.Managers.Entities.Characters
                 }
             }
 
-            this.Reply(ConfigFile.Instance.WelcomeMessage, Color.CornflowerBlue);
+            this.Reply(ConfigManager<WorldConfig>.Instance.WelcomeMessage, Color.CornflowerBlue);
             CheckSoldItems();
             Guild?.OnConnected(this);
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using Giny.Core.IO.Configuration;
 using Giny.Core.Time;
 using Giny.Protocol.Messages;
 using Giny.Protocol.Types;
@@ -131,7 +132,7 @@ namespace Giny.World.Managers.Maps.Elements
 
                 if (job != null)
                 {
-                    this.Character.AddJobExp(Skill.Record.ParentJobId, (long)((5 * Skill.Record.MinLevel) * ConfigFile.Instance.JobRate));
+                    this.Character.AddJobExp(Skill.Record.ParentJobId, (long)((5 * Skill.Record.MinLevel) * ConfigManager<WorldConfig>.Instance.JobRate));
                 }
                 this.Character.Collecting = false;
                 this.Character = null;
@@ -143,7 +144,7 @@ namespace Giny.World.Managers.Maps.Elements
             MapInstance.Send(new StatedElementUpdatedMessage(GetStatedElement()));
 
             this.Update();
-        }   
+        }
         public void Grow()
         {
             if (State == StatedElementState.Unactive)

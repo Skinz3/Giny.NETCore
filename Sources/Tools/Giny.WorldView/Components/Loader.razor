@@ -1,4 +1,5 @@
-﻿@using Giny.IO.D2I;
+﻿@using Giny.Core.IO.Configuration;
+@using Giny.IO.D2I;
 @using Giny.IO.D2O;
 @using Giny.IO;
 @using Giny.ORM
@@ -27,7 +28,7 @@
     <MudText Align="Align.Center" Typo="Typo.subtitle2">WorldEditor</MudText>
     <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
 
-  
+
     <MudTimeline Class="mt-12" TimelineOrientation="TimelineOrientation.Horizontal">
 
 
@@ -124,8 +125,8 @@
         set;
     } = new()
     {
-        new LoadingStep("D2O Files",()=>D2OManager.Initialize(Path.Combine(ConfigFile.Instance.ClientPath, ClientConstants.D2oDirectory)) ),
-        new LoadingStep("D2I Files",()=>D2IManager.Initialize(Path.Combine(ConfigFile.Instance.ClientPath, ClientConstants.i18nPath)) ),
+        new LoadingStep("D2O Files",()=>D2OManager.Initialize(Path.Combine(ConfigManager<WorldViewConfig>.Instance.ClientPath, ClientConstants.D2oDirectory)) ),
+        new LoadingStep("D2I Files",()=>D2IManager.Initialize(Path.Combine(ConfigManager<WorldViewConfig>.Instance.ClientPath, ClientConstants.i18nPath)) ),
         new LoadingStep("Effects",()=> DatabaseManager.Instance.LoadTable<EffectRecord>()),
         new LoadingStep("Breeds",()=>DatabaseManager.Instance.LoadTable<BreedRecord>()),
         new LoadingStep("Items",()=>DatabaseManager.Instance.LoadTable<ItemRecord>()),
@@ -140,10 +141,12 @@
 
     protected override void OnInitialized()
     {
-        ConfigFile.Initialize();
+        ConfigManager<WorldViewConfig>.Load(WorldViewConfig.Filepath);
+
+        WorldViewConfig config = ConfigManager<WorldViewConfig>.Instance;
 
         DatabaseManager.Instance.Initialize(Assembly.GetAssembly(typeof(SpellRecord)),
-        ConfigFile.Instance.SQLHost, ConfigFile.Instance.SQLDBName, ConfigFile.Instance.SQLUser, ConfigFile.Instance.SQLPassword);
+        config.SQLHost, config.SQLDBName, config.SQLUser, config.SQLPassword);
 
         try
         {
@@ -202,7 +205,7 @@
     }
     private bool IsClientPathValid()
     {
-        var d2oPath = Path.Combine(ConfigFile.Instance.ClientPath, ClientConstants.D2oDirectory);
+        var d2oPath = Path.Combine(ConfigManager<WorldViewConfig>.Instance.ClientPath, ClientConstants.D2oDirectory);
 
         if (!Directory.Exists(d2oPath))
         {

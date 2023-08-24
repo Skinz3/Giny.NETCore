@@ -1,5 +1,6 @@
 ﻿using Giny.Core;
 using Giny.Core.DesignPattern;
+using Giny.Core.IO.Configuration;
 using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Types;
 using Giny.World.Managers.Breeds;
@@ -301,8 +302,8 @@ namespace Giny.World.Managers.Stats
             stats[CharacteristicEnum.HIT_POINTS] = LifeCharacteristic.New(BreedManager.BreedDefaultLife);
             stats[CharacteristicEnum.INITIATIVE] = InitiativeCharacteristic.Zero();
             stats[CharacteristicEnum.STATS_POINTS] = DetailedCharacteristic.Zero();
-            stats[CharacteristicEnum.ACTION_POINTS] = ApCharacteristic.New(ConfigFile.Instance.StartAp);
-            stats[CharacteristicEnum.MOVEMENT_POINTS] = MpCharacteristic.New(ConfigFile.Instance.StartMp);
+            stats[CharacteristicEnum.ACTION_POINTS] = ApCharacteristic.New(ConfigManager<WorldConfig>.Instance.StartAp);
+            stats[CharacteristicEnum.MOVEMENT_POINTS] = MpCharacteristic.New(ConfigManager<WorldConfig>.Instance.StartMp);
             stats[CharacteristicEnum.AGILITY] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.AIR_DAMAGE_BONUS] = DetailedCharacteristic.Zero();
             stats[CharacteristicEnum.AIR_ELEMENT_REDUCTION] = DetailedCharacteristic.Zero();

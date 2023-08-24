@@ -1,4 +1,5 @@
 ﻿using Giny.Core.Extensions;
+using Giny.Core.IO.Configuration;
 using Giny.ORM;
 using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
@@ -275,7 +276,7 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("start", ServerRoleEnum.Player)]
         public static void StartCommand(WorldClient client)
         {
-            client.Character.Teleport(ConfigFile.Instance.SpawnMapId, ConfigFile.Instance.SpawnCellId);
+            client.Character.Teleport(ConfigManager<WorldConfig>.Instance.SpawnMapId, ConfigManager<WorldConfig>.Instance.SpawnCellId);
         }
         [ChatCommand("itemlist", ServerRoleEnum.Administrator)]
         public static void ItemListCommand(WorldClient client, short id)

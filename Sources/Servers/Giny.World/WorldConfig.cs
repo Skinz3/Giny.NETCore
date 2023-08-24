@@ -1,28 +1,19 @@
 ﻿using Giny.Core;
 using Giny.Core.DesignPattern;
-using Giny.Core.IO;
+using Giny.Core.IO.Configuration;
 using Giny.Protocol.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace Giny.World
 {
-    public class ConfigFile
+    public class WorldConfig : IConfigFile
     {
-        public const string ConfigPath = "config.json";
-
-        public static ConfigFile Instance
-        {
-            get;
-            private set;
-        }
         public short ServerId
         {
             get;
@@ -180,34 +171,10 @@ namespace Giny.World
             set;
         }
 
-        [StartupInvoke("Config", StartupInvokePriority.Initial)]
-        public static void Initialize()
+
+        public void OnCreated()
         {
-            if (File.Exists(ConfigPath))
-            {
-                try
-                {
-
-                    Instance = Json.Deserialize<ConfigFile>(File.ReadAllText(ConfigPath));
-                    Logger.Write($"Configuration loaded with host : '{Instance.Host}:{Instance.Port}'");
-                }
-                catch
-                {
-                    Logger.Write("Unable to load configuration. Recreating it", Channels.Warning);
-                    CreateConfig();
-                }
-
-            }
-            else
-            {
-                CreateConfig();
-            }
-        }
-        public static void CreateConfig()
-        {
-            Instance = new ConfigFile();
-
-            Instance.AllowedBreeds = new List<PlayableBreedEnum>()
+            AllowedBreeds = new List<PlayableBreedEnum>()
             {
                 PlayableBreedEnum.Feca ,
                 PlayableBreedEnum.Osamodas,
@@ -230,13 +197,22 @@ namespace Giny.World
                 PlayableBreedEnum.Forgelance,
             };
 
-            Save();
             Logger.Write("Configuration file created !");
+
         }
-        public static void Save()
+
+        public void OnLoaded()
         {
-            File.WriteAllText(ConfigPath, Json.Serialize(Instance));
+            Logger.Write($"Configuration loaded");
         }
+
+
+        [StartupInvoke("Configuration", StartupInvokePriority.Initial)]
+        public static void Initialize()
+        {
+            ConfigManager<WorldConfig>.Load("config.json");
+        }
+
 
     }
 }

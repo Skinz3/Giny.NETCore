@@ -1,6 +1,7 @@
 ﻿using Giny.Core;
 using Giny.Core.Commands;
 using Giny.Core.DesignPattern;
+using Giny.Core.IO.Configuration;
 using Giny.Core.Network.Messages;
 using Giny.IO.RawPatch;
 using Giny.Protocol;
@@ -12,6 +13,7 @@ using Giny.World.Modules;
 using Giny.World.Network;
 using Giny.World.Records.Maps;
 using Giny.World.Records.Npcs;
+using System.Configuration;
 using System.Reflection;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -25,6 +27,8 @@ namespace Giny.World
     {
         static void Main(string[] args)
         {
+            
+
             /* WIPManager.Analyse(Assembly.GetExecutingAssembly());
               Console.Read(); */
 

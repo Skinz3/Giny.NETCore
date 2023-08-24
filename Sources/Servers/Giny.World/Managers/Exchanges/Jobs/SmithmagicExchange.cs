@@ -1,5 +1,6 @@
 ﻿using Giny.Core.DesignPattern;
 using Giny.Core.Extensions;
+using Giny.Core.IO.Configuration;
 using Giny.Core.Time;
 using Giny.ORM;
 using Giny.Protocol.Custom.Enums;
@@ -150,7 +151,7 @@ namespace Giny.World.Managers.Exchanges.Jobs
             {
                 double n = Math.Abs(TargetItem.Record.Level / (double)CharacterJob.Level);
                 double n2 = GetRuneWeigth();
-                long exp = (long)((n * n2 + 5) * ConfigFile.Instance.JobRate);
+                long exp = (long)((n * n2 + 5) * ConfigManager<WorldConfig>.Instance.JobRate);
                 Character.AddJobExp(CharacterJob.JobId, exp);
             }
 

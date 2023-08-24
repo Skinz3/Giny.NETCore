@@ -2,6 +2,7 @@
 using Giny.Core.Commands;
 using Giny.Core.DesignPattern;
 using Giny.Core.Extensions;
+using Giny.Core.IO.Configuration;
 using Giny.Core.Misc;
 using Giny.ORM;
 using Giny.ORM.Cyclic;
@@ -48,14 +49,14 @@ namespace Giny.World
         [ConsoleCommand("rate")]
         public static void ExperienceRateCommand(double ratio)
         {
-            ConfigFile.Instance.XpRate = ratio;
+            ConfigManager<WorldConfig>.Instance.XpRate = ratio;
 
             foreach (var client in WorldServer.Instance.GetOnlineClients())
             {
                 client.Character.SendServerExperienceModificator();
             }
 
-            Logger.Write("Experience rate multiplicator is now set to : " + ConfigFile.Instance.XpRate, Channels.Info);
+            Logger.Write("Experience rate multiplicator is now set to : " + ConfigManager<WorldConfig>.Instance.XpRate, Channels.Info);
 
 
         }

@@ -1,4 +1,5 @@
 ﻿using Giny.Core.DesignPattern;
+using Giny.Core.IO.Configuration;
 using Giny.Protocol.Enums;
 using Giny.World.Managers.Fights;
 using Giny.World.Managers.Fights.Fighters;
@@ -191,7 +192,7 @@ namespace Giny.World.Managers.Formulas
 
             var itemRate = item.GetDropRate((int)dropper.Grade.GradeId);
 
-            var rate = (itemRate * (looterPP / 100d)) * ConfigFile.Instance.DropRate;
+            var rate = (itemRate * (looterPP / 100d)) * ConfigManager<WorldConfig>.Instance.DropRate;
 
             return rate;
         }

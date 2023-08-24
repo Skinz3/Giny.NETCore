@@ -13,6 +13,7 @@ using Giny.Protocol.Messages;
 using System.Reflection;
 using Giny.Auth.Network.IPC;
 using Giny.Core.Commands;
+using Giny.Core.IO.Configuration;
 
 namespace Giny.Auth
 {
@@ -23,16 +24,20 @@ namespace Giny.Auth
             Logger.DrawLogo();
             StartupManager.Instance.Initialize(Assembly.GetExecutingAssembly());
 
-            IPCServer.Instance.Start(ConfigFile.Instance.IPCHost, ConfigFile.Instance.IPCPort);
-            AuthServer.Instance.Start(ConfigFile.Instance.Host, ConfigFile.Instance.Port);
+            AuthConfig config = ConfigManager<AuthConfig>.Instance;
+
+            IPCServer.Instance.Start(config.IPCHost, config.IPCPort);
+            AuthServer.Instance.Start(config.Host, config.Port);
             ConsoleCommandsManager.Instance.ReadCommand();
-            
+
         }
         [StartupInvoke("Database", StartupInvokePriority.SecondPass)]
         public static void InitializeDatabase()
         {
-            DatabaseManager.Instance.Initialize(Assembly.GetExecutingAssembly(), ConfigFile.Instance.SQLHost,
-               ConfigFile.Instance.SQLDBName, ConfigFile.Instance.SQLUser, ConfigFile.Instance.SQLPassword);
+            AuthConfig config = ConfigManager<AuthConfig>.Instance;
+
+            DatabaseManager.Instance.Initialize(Assembly.GetExecutingAssembly(), config.SQLHost,
+               config.SQLDBName, config.SQLUser, config.SQLPassword);
             DatabaseManager.Instance.LoadTables();
         }
         [StartupInvoke("Protocol", StartupInvokePriority.Initial)]
@@ -41,7 +46,7 @@ namespace Giny.Auth
             ProtocolMessageManager.Initialize(Assembly.GetAssembly(typeof(RawDataMessage)), Assembly.GetAssembly(typeof(Program)));
             ProtocolTypeManager.Initialize();
         }
-        [StartupInvoke("SWF patches",StartupInvokePriority.Last)]
+        [StartupInvoke("SWF patches", StartupInvokePriority.Last)]
         public static void InitializeRawPatches()
         {
             RawPatchManager.Instance.Initialize();

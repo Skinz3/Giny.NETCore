@@ -1,5 +1,6 @@
 ﻿using Giny.Core;
 using Giny.Core.DesignPattern;
+using Giny.Core.IO.Configuration;
 using Giny.ORM;
 using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
@@ -33,7 +34,7 @@ namespace Giny.World.Managers.Entities.Characters
             {
                 return new CharacterCreationResult(CharacterCreationResultEnum.ERR_NO_REASON);
             }
-            if (!ConfigFile.Instance.AllowedBreeds.Contains((PlayableBreedEnum)message.breed))
+            if (!ConfigManager<WorldConfig>.Instance.AllowedBreeds.Contains((PlayableBreedEnum)message.breed))
             {
                 return new CharacterCreationResult(CharacterCreationResultEnum.ERR_NOT_ALLOWED);
             }

@@ -1,5 +1,6 @@
 ﻿using Giny.Core.DesignPattern;
 using Giny.Core.Extensions;
+using Giny.Core.IO.Configuration;
 using Giny.Core.Pool;
 using Giny.ORM.Attributes;
 using Giny.ORM.Interfaces;
@@ -267,24 +268,26 @@ namespace Giny.World.Records.Characters
 
         public static CharacterRecord Create(long id, string name, int accountId, ServerEntityLook look, byte breedId, short cosmeticId, bool sex)
         {
+            WorldConfig config = ConfigManager<WorldConfig>.Instance;
+
             return new CharacterRecord()
             {
                 AccountId = accountId,
                 BreedId = breedId,
-                MapId = ConfigFile.Instance.SpawnMapId,
-                CellId = ConfigFile.Instance.SpawnCellId,
+                MapId = config.SpawnMapId,
+                CellId = ConfigManager<WorldConfig>.Instance.SpawnCellId,
                 CosmeticId = cosmeticId,
                 Direction = 0,
-                Experience = ExperienceManager.Instance.GetCharacterXPForLevel(ConfigFile.Instance.StartLevel),
+                Experience = ExperienceManager.Instance.GetCharacterXPForLevel(config.StartLevel),
                 Id = id,
                 Look = look,
                 Name = name,
                 Sex = sex,
-                Stats = EntityStats.New(ConfigFile.Instance.StartLevel),
+                Stats = EntityStats.New(config.StartLevel),
                 Kamas = 0,
                 KnownEmotes = new List<short>() { 1 },
                 Shortcuts = new List<CharacterShortcut>(),
-                SpawnPointMapId = ConfigFile.Instance.SpawnMapId,
+                SpawnPointMapId = config.SpawnMapId,
                 KnownOrnaments = new List<short>(),
                 ActiveOrnamentId = 0,
                 Spells = new List<CharacterSpell>(),

@@ -1,4 +1,5 @@
 ﻿using Giny.Core.DesignPattern;
+using Giny.Core.IO.Configuration;
 using Giny.Core.Time;
 using Giny.World.Managers.Experiences;
 using Giny.World.Records.Maps;
@@ -46,7 +47,7 @@ namespace Giny.World.Managers.Formulas
             {
                 result = value;
             }
-            return (int)(Math.Floor(result) * ConfigFile.Instance.JobRate);
+            return (int)(Math.Floor(result) * ConfigManager<WorldConfig>.Instance.JobRate);
         }
     }
 }

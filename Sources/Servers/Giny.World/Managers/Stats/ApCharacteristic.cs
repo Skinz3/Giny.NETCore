@@ -1,4 +1,5 @@
-﻿using ProtoBuf;
+﻿using Giny.Core.IO.Configuration;
+using ProtoBuf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Giny.World.Managers.Stats
 
         }
 
-        public override int? Limit => ConfigFile.Instance.ApLimit;
+        public override int? Limit => ConfigManager<WorldConfig>.Instance.ApLimit;
 
 
         [ProtoMember(1)]

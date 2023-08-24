@@ -1,4 +1,5 @@
 ﻿using Giny.Core.DesignPattern;
+using Giny.Core.IO.Configuration;
 using Giny.IO.D2OClasses;
 using Giny.ORM;
 using Giny.Protocol.Custom.Enums;
@@ -102,8 +103,8 @@ namespace Giny.World.Managers.Hardcore
             record.Shortcuts = new List<CharacterShortcut>();
             record.Stats = EntityStats.New(ReplayLevel);
             record.Jobs = CharacterJob.New();
-            record.MapId = ConfigFile.Instance.SpawnMapId;
-            record.CellId = ConfigFile.Instance.SpawnCellId;
+            record.MapId = ConfigManager<WorldConfig>.Instance.SpawnMapId;
+            record.CellId = ConfigManager<WorldConfig>.Instance.SpawnCellId;
 
             CharacterItemRecord.RemoveCharacterItems(record.Id);
 

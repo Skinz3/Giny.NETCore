@@ -1,6 +1,7 @@
 ﻿using Giny.Core;
 using Giny.Core.DesignPattern;
 using Giny.Core.Extensions;
+using Giny.Core.IO.Configuration;
 using Giny.Core.Time;
 using Giny.ORM;
 using Giny.ORM.Cyclic;
@@ -33,7 +34,7 @@ namespace Giny.World.Managers
         [StartupInvoke("Periodic persistence", StartupInvokePriority.Last)]
         public void Initialize()
         {
-            CallbackTimer = new ActionTimer((int)(ConfigFile.Instance.SaveIntervalMinutes * 60 * 1000), PerformSave, true); ;
+            CallbackTimer = new ActionTimer((int)(ConfigManager<WorldConfig>.Instance.SaveIntervalMinutes * 60 * 1000), PerformSave, true); ;
             CallbackTimer.Start();
         }
 
