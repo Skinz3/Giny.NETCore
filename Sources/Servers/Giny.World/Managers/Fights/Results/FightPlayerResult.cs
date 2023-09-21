@@ -124,7 +124,7 @@ namespace Giny.World.Managers.Fights.Results
                     {
                         this.ExperienceData.ShowExperienceForGuild = true;
                         this.ExperienceData.ExperienceForGuild += num2;
-                        this.Character.Guild.Record.UpdateElement();
+                        this.Character.Guild.Record.UpdateLater();
                     }
                 }
 

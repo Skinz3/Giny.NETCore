@@ -198,14 +198,14 @@ namespace Giny.World.Managers.Exchanges
             if (client != null)
             {
                 client.WorldAccount.BankKamas += item.Price;
-                client.WorldAccount.UpdateElement();
+                client.WorldAccount.UpdateLater();
                 client.Character.NotifyItemSelled(item.GId, item.Quantity, item.Price);
                 BidshopsManager.Instance.RemoveItem(BidShop.Id, item);
             }
             else
             {
                 item.Sold = true;
-                item.UpdateElement();
+                item.UpdateLater();
             }
         }
 

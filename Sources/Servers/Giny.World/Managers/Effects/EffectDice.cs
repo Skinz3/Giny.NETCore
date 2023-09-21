@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Giny.Core.Extensions;
 using Giny.Core.Time;
+using Giny.IO.D2OClasses;
 using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
 using Giny.Protocol.Types;
 using Giny.World.Managers.Effects.Targets;
 using Giny.World.Managers.Fights.Cast;
+using Giny.World.Records.Effects;
 using ProtoBuf;
 
 namespace Giny.World.Managers.Effects
@@ -112,6 +115,48 @@ namespace Giny.World.Managers.Effects
                 diceNum = Min,
                 diceSide = Max,
             };
+        }
+
+        public override string GetDescription()
+        {
+            EffectRecord record = EffectRecord.GetEffectRecord(EffectEnum);
+            var result = record.Description;
+
+            var min = Min.ToString();
+            var max = Max.ToString();
+
+            if (Max > Min)
+            {
+                result = result.Replace("#1", min);
+                result = result.Replace("#2", max);
+                result = result.Replace("{", "");
+                result = result.Replace("}", "");
+                result = result.Replace("~1", "");
+                result = result.Replace("~2", "");
+            }
+            else
+            {
+                result = result.Replace("#2", "");
+                result = result.Replace("#1", min);
+
+                result = result.Replace("à -", "");
+                result = result.Replace("à", "");
+                result = result.Replace("{", "");
+                result = result.Replace("}", "");
+                result = result.Replace("~1", "");
+                result = result.Replace("~2", "");
+
+            }
+            result = result.Replace("~ps", "");
+            result = result.Replace("~zs", "");
+
+            result = result.Replace("#3", Value.ToString());
+
+            if (string.IsNullOrWhiteSpace(result))
+            {
+                result = EffectEnum.ToString().Replace("Effect_", "");
+            }
+            return result;
         }
     }
 }

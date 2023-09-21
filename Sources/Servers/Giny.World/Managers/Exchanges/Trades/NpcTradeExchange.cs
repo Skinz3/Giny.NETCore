@@ -28,6 +28,31 @@ namespace Giny.World.Managers.Exchanges.Trades
             get;
             set;
         } = new Dictionary<ItemRecord, ItemRecord>();
+
+
+        public static TradeRule Build(NpcActionRecord action)
+        {
+            var rule = new TradeRule();
+
+            rule.Rate = double.Parse(action.Param2);
+
+            var split = action.Param1.Split(',');
+
+            foreach (var pair in split)
+            {
+                var itemSplit = pair.Split(':');
+                var gid1 = itemSplit[0];
+                var gid2 = itemSplit[1];
+
+                var item1 = ItemRecord.GetItem(long.Parse(gid1));
+                var item2 = ItemRecord.GetItem(long.Parse(gid2));
+
+                rule.Items.Add(item1, item2);
+            }
+
+            return rule;
+        }
+
     }
     public class NpcTradeExchange : TradeExchange
     {
@@ -55,31 +80,10 @@ namespace Giny.World.Managers.Exchanges.Trades
         {
             Npc = npc;
             NpcAction = action;
-            Items = new NpcTradeItemCollection(character, BuildTradeRules());
+            Items = new NpcTradeItemCollection(character, TradeRule.Build(action));
         }
 
-        private TradeRule BuildTradeRules()
-        {
-            var rule = new TradeRule();
 
-            rule.Rate = double.Parse(NpcAction.Param2);
-
-            var split = this.NpcAction.Param1.Split(',');
-
-            foreach (var pair in split)
-            {
-                var itemSplit = pair.Split(':');
-                var gid1 = itemSplit[0];
-                var gid2 = itemSplit[1];
-
-                var item1 = ItemRecord.GetItem(long.Parse(gid1));
-                var item2 = ItemRecord.GetItem(long.Parse(gid2));
-
-                rule.Items.Add(item1, item2);
-            }
-
-            return rule;
-        }
 
         public override void ModifyItemPriced(int objectUID, int quantity, long price)
         {

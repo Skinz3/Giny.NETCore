@@ -107,7 +107,7 @@ namespace Giny.World.Managers.Effects.Targets
             }
             catch (Exception ex)
             {
-                throw new Exception("Invalid target criterion : " + str, ex);
+                throw new InvalidDataException("Invalid trigger " + str);
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using Giny.Core.DesignPattern;
 using Giny.Core.Extensions;
+using Giny.IO.D2OClasses;
 using Giny.Pokefus.Effects;
 using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
@@ -7,6 +8,7 @@ using Giny.Protocol.Types;
 using Giny.World.Managers.Effects.Targets;
 using Giny.World.Managers.Fights.Triggers;
 using Giny.World.Managers.Fights.Zones;
+using Giny.World.Records.Effects;
 using Giny.World.Records.Maps;
 using ProtoBuf;
 using System;
@@ -31,6 +33,10 @@ namespace Giny.World.Managers.Effects
             get
             {
                 return (EffectsEnum)EffectId;
+            }
+            set
+            {
+                EffectId = (short)value;  
             }
         }
         [ProtoMember(1)]
@@ -106,7 +112,17 @@ namespace Giny.World.Managers.Effects
             set;
         }
 
-        public FightDispellableEnum DispellableEnum => (FightDispellableEnum)Dispellable;
+        public FightDispellableEnum DispellableEnum
+        {
+            get
+            {
+                return  (FightDispellableEnum)Dispellable;
+            }
+            set
+            {
+                Dispellable = (int)value;
+            }
+        }
 
         [ProtoMember(17)]
         public string RawZone
@@ -392,6 +408,11 @@ namespace Giny.World.Managers.Effects
             }
 
             return false;
+        }
+
+        public virtual string GetDescription()
+        {
+            return EffectEnum.ToString();
         }
     }
 }

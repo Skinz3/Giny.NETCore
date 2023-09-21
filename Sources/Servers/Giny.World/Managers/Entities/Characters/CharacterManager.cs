@@ -56,7 +56,7 @@ namespace Giny.World.Managers.Entities.Characters
         [Annotation("constant checking")]
         public void DeleteCharacter(CharacterRecord character)
         {
-            character.RemoveInstantElement();
+            character.RemoveNow();
 
             CharacterItemRecord.RemoveCharacterItems(character.Id);
 

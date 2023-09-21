@@ -1,0 +1,457 @@
+﻿@using Giny.IO.D2O;
+@using Giny.IO.D2OClasses;
+@using Giny.Protocol.Enums;
+@using Giny.World.Managers.Effects;
+@using Giny.World.Records.Spells;
+@using Giny.WorldEditor.Caching;
+
+@if (SelectedSpell != null)
+{
+
+    <div class="d-flex flex-row  flex-grow-1 gap-2 mb-2">
+        <MudCard Class="flex-1" Outlined="true">
+            <MudCardContent>
+                <div class="d-flex gap-4">
+                    <MudPaper Class="d-flex align-center justify-center" Outlined=true Elevation="0" Style="width:55px;height:55px">
+                        @if (ImageSource != null)
+                        {
+                            <MudImage Width="55" Height="55" Src="@ImageSource" />
+
+                        }
+                        else
+                        {
+                            <MudProgressCircular Color="Color.Primary" Size="Size.Small" Indeterminate="true" />
+
+                        }
+                    </MudPaper>
+                    <MudTextField Label="Name" @bind-Value="SelectedSpell.Name"></MudTextField>
+                </div>
+
+                <MudTextField Label="Description" @bind-Value="SelectedSpell.Description"></MudTextField>
+                <MudField Label="Category">@SelectedSpell.Category.ToString()</MudField>
+            </MudCardContent>
+        </MudCard>
+        <div Class="d-flex flex-column pa-2 gap-2" Outlined=false Elevation="0">
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" IconColor="Color.Primary" Size="Size.Large">Save</MudButton>
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Autorenew" IconColor="Color.Primary" Size="Size.Large">Reload</MudButton>
+
+        </div>
+    </div>
+
+    <br />
+    <MudGrid>
+        <MudItem xs="3">
+            <div Class="d-flex flex-column mud-width-full gap-4">
+
+
+                <MudPaper Outlined=true>
+                    <MudListSubheader>
+                        <MudText>Grades</MudText>
+                    </MudListSubheader>
+                    <MudList Dense="true" Clickable="true">
+
+                        @foreach (SpellLevelRecord level in SelectedSpell.Levels)
+                        {
+                            <MudListItem OnClick="() => SelectSpellLevel(level)" Text=@level.ToString() />
+                        }
+                        <div class="d-flex flex-row gap-2 pa-2">
+                            <MudButton IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Add" Variant="Variant.Filled">Add</MudButton>
+                            <MudButton IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Delete" Variant="Variant.Filled">Delete</MudButton>
+                        </div>
+                    </MudList>
+                </MudPaper>
+
+                @if (SelectedSpellLevel != null)
+                {
+                    <MudPaper Outlined=true>
+                        <MudList Dense="true" Clickable="true" Style="max-height:300px;overflow-y:scroll">
+                            <MudListSubheader>
+                                <MudText>Grade @SelectedSpellLevel.Grade</MudText>
+                            </MudListSubheader>
+                            @foreach (EffectDice effect in SelectedSpellLevel.Effects)
+                            {
+                                <MudListItem OnClick="() => SelectEffect(effect)" Text=@effect.GetDescription() />
+                            }
+
+                            <div class="d-flex flex-row gap-2 pa-2">
+                                <MudButton Class="flex-grow-1" IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Add" Variant="Variant.Filled">Add</MudButton>
+                                <MudButton Class="flex-grow-1" IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Delete" Variant="Variant.Filled">Delete</MudButton>
+                            </div>
+
+                        </MudList>
+
+                    </MudPaper>
+
+
+                }
+            </div>
+        </MudItem>
+
+        @if (SelectedEffect != null)
+        {
+            <MudItem xs="9">
+
+
+                <MudCard>
+                    <MudCardContent>
+                        <MudText><b>@SelectedEffect.EffectEnum</b></MudText>
+                        <br />
+
+
+                        <MudSimpleTable Dense="true" Striped=false Elevation=10 Hover=false Bordered="true" Outlined=true>
+
+                            <tbody Style="grid-auto-columns: minmax(10px, auto);">
+                                <tr>
+                                    <td>
+                                        <MudNumericField HideSpinButtons="true" Variant=" Variant.Text" Label="Min" @bind-Value="SelectedEffect.Min"></MudNumericField>
+                                    </td>
+                                    <td>
+                                        <MudNumericField HideSpinButtons="true" Variant=" Variant.Text" Label="Max" @bind-Value="SelectedEffect.Max"></MudNumericField>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <MudNumericField HideSpinButtons="true" Variant=" Variant.Text" Label="Value" @bind-Value="SelectedEffect.Value"></MudNumericField>
+                                    </td>
+                                    <td>
+                                        <MudNumericField HideSpinButtons="true" Variant=" Variant.Text" Label="Duration" @bind-Value="SelectedEffect.Duration"></MudNumericField>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <MudNumericField HideSpinButtons="true" Variant=" Variant.Text" Label="Delay" @bind-Value="SelectedEffect.Delay"></MudNumericField>
+                                    </td>
+                                    <td>
+                                        <MudNumericField HideSpinButtons="true" Variant=" Variant.Text" Label="Random" @bind-Value="SelectedEffect.Random"></MudNumericField>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <MudTextField Variant=" Variant.Text" Label="Target Masks" @bind-Value="SelectedEffect.TargetMask"></MudTextField>
+                                    </td>
+                                    <td>@GetEffectTargets()</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <MudTextField Variant=" Variant.Text" Label="Triggers" @bind-Value="SelectedEffect.RawTriggers"></MudTextField>
+                                    </td>
+                                    <td>@GetEffectTriggers()</td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <MudTextField Variant=" Variant.Text" Label="RawZone" @bind-Value="SelectedEffect.RawZone"></MudTextField>
+                                    </td>
+                                    <td>
+                                        @SelectedEffect.RawZone
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <MudSelect @bind-Value="SelectedEffect.DispellableEnum" Label="Dispellable">
+                                            @foreach (FightDispellableEnum item in Enum.GetValues(typeof(FightDispellableEnum)))
+                                            {
+                                                <MudSelectItem Value="@item">@item</MudSelectItem>
+                                            }
+                                        </MudSelect>
+                                    </td>
+                                    <td>
+                                        <MudNumericField HideSpinButtons="true" Variant=" Variant.Text" Label="Group" @bind-Value="SelectedEffect.Group"></MudNumericField>
+                                    </td>
+                                </tr>
+
+
+
+                                @if (@SelectedEffect.IsSpellCastEffect())
+                                {
+                                    <tr>
+                                        <td>Casted Spell</td>
+                                        <td>@(SpellHelper.GetTargetSpellName(SelectedEffect))</td>
+                                    </tr>
+                                }
+
+                                @if (SpellHelper.IsSummonEffect(@SelectedEffect.EffectEnum))
+                                {
+                                    <tr>
+                                        <td>Summoned Monster</td>
+                                        <td>@(SpellHelper.GetSummonedMonsterName(SelectedEffect))</td>
+                                    </tr>
+                                }
+
+                                @if (SelectedEffect.EffectEnum == EffectsEnum.Effect_AddState || SelectedEffect.EffectEnum == EffectsEnum.Effect_DispelState)
+                                {
+                                    <tr>
+                                        <td>Spell State</td>
+                                        <td>@(SpellHelper.GetSpellStateName(SelectedEffect))</td>
+                                    </tr>
+                                }
+
+                                @if (SelectedEffect.EffectEnum == EffectsEnum.Effect_SpellBoostBaseDamage ||
+                               SelectedEffect.EffectEnum == EffectsEnum.Effect_SpellBoostMinimalRange ||
+                               SelectedEffect.EffectEnum == EffectsEnum.Effect_AddSpellRangeMax)
+                                {
+                                    <tr>
+                                        <td>Buffed Spell</td>
+                                        <td>@(SpellHelper.GetTargetSpellName(SelectedEffect))</td>
+                                    </tr>
+                                }
+
+                                @if (SelectedEffect.EffectEnum == EffectsEnum.Effect_RemoveSpellEffects)
+                                {
+                                    <tr>
+                                        <td>Debuffed Spell</td>
+                                        <td>@(SpellHelper.GetDebuffedSpellName(SelectedEffect))</td>
+                                    </tr>
+                                }
+
+
+
+
+                            </tbody>
+                        </MudSimpleTable>
+
+
+                    </MudCardContent>
+                    @if (@SelectedEffect.IsSpellCastEffect())
+                    {
+                        <MudCardActions>
+                            <MudButton OnClick="()=> OnExploreClick(SelectedEffect)" Variant="Variant.Text" Color="Color.Primary">Explore</MudButton>
+                        </MudCardActions>
+                    }
+                </MudCard>
+            </MudItem>
+        }
+
+
+        @if (SelectedEffect == null && SelectedSpellLevel != null)
+        {
+            <MudItem xs="9">
+
+
+                <MudCard>
+                    <MudCardContent>
+                        <MudText><b>@("Grade " + SelectedSpellLevel.Grade)</b></MudText>
+                        <br />
+
+
+                        <MudSimpleTable Dense="true" Striped=false Elevation=10 Hover=false Bordered="true" Outlined=true>
+
+                            <tbody Style="grid-auto-columns: minmax(10px, auto);">
+                                <tr>
+                                    <td>
+                                        <MudNumericField HideSpinButtons="true" Variant=" Variant.Text" Label="ApCost" @bind-Value="SelectedSpellLevel.ApCost"></MudNumericField>
+                                    </td>
+                                    <td>
+                                        <MudNumericField HideSpinButtons="true" Variant=" Variant.Text" Label="CriticalHitProbability" @bind-Value="SelectedSpellLevel.CriticalHitProbability"></MudNumericField>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <MudNumericField HideSpinButtons="true" Variant=" Variant.Text" Label="MinRange" @bind-Value="SelectedSpellLevel.MinRange"></MudNumericField>
+
+                                    </td>
+
+                                    <td>
+                                        <MudNumericField HideSpinButtons="true" Variant=" Variant.Text" Label="MaxRange" @bind-Value="SelectedSpellLevel.MaxRange"></MudNumericField>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td class="d-flex flex-column align-start justify-center ">
+                                        <MudText Typo="Typo.caption">RangeCanBeBoosted </MudText>
+                                        <MudSwitch Size="Size.Medium" @bind-Checked="@SelectedSpellLevel.RangeCanBeBoosted" Color="Color.Primary" />
+                                    </td>
+
+                                    <td>
+                                        <MudNumericField HideSpinButtons="true" Variant=" Variant.Text" Label="MaxStacks" @bind-Value="SelectedSpellLevel.MaxStack"></MudNumericField>
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <MudNumericField HideSpinButtons="true" Variant=" Variant.Text" Label="MaxCastPerTarget" @bind-Value="SelectedSpellLevel.MaxCastPerTarget"></MudNumericField>
+                                    </td>
+                                    <td>
+                                        <MudNumericField HideSpinButtons="true" Variant=" Variant.Text" Label="MaxCastPerTurn" @bind-Value="SelectedSpellLevel.MaxCastPerTurn"></MudNumericField>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <MudNumericField HideSpinButtons="true" Variant=" Variant.Text" Label="MinCastInterval" @bind-Value="SelectedSpellLevel.MinCastInterval"></MudNumericField>
+                                    </td>
+                                    <td>
+                                        <MudNumericField HideSpinButtons="true" Variant=" Variant.Text" Label="InitialCooldown" @bind-Value="SelectedSpellLevel.InitialCooldown"></MudNumericField>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <MudNumericField HideSpinButtons="true" Variant=" Variant.Text" Label="GlobalCooldown" @bind-Value="SelectedSpellLevel.GlobalCooldown"></MudNumericField>
+                                    </td>
+                                    <td>
+                                        <MudNumericField HideSpinButtons="true" Variant=" Variant.Text" Label="SpellBreed" @bind-Value="SelectedSpellLevel.SpellBreed"></MudNumericField>
+
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </MudSimpleTable>
+
+
+                    </MudCardContent>
+
+                </MudCard>
+            </MudItem>
+        }
+
+
+
+
+
+
+
+    </MudGrid>
+}
+
+
+
+@code {
+
+
+
+
+    [Inject]
+    private IDialogService DialogService
+    {
+        get;
+        set;
+    }
+
+    [Parameter]
+    public SpellRecord SelectedSpell
+    {
+        get;
+        set;
+    }
+    [Parameter]
+    public SpellLevelRecord SelectedSpellLevel
+    {
+        get;
+        set;
+    }
+    [Parameter]
+    public EffectDice SelectedEffect
+    {
+        get;
+        set;
+    }
+
+
+    private Spell D2OSpell
+    {
+
+        get;
+        set;
+    }
+    private string ImageSource
+    {
+        get;
+        set;
+    }
+
+    private string GetEffectTargets()
+    {
+        try
+        {
+            return SelectedEffect.GetTargetsString();
+        }
+        catch
+        {
+            return "Invalid";
+        }
+    }
+    private string GetEffectTriggers()
+    {
+        try
+        {
+            return SpellHelper.TriggersToString(SelectedEffect.Triggers);
+        }
+        catch
+        {
+            return "Invalid";
+        }
+    }
+
+    public void SelectEffect(EffectDice effect)
+    {
+        SelectedEffect = effect;
+        StateHasChanged();
+
+    }
+    private void LoadSpellIcon()
+    {
+        Task.Run(async () =>
+        {
+            try
+            {
+                var base64image = await ExternalResources.GetSpellIcon((int)D2OSpell.IconId);
+                var source = string.Format("data:image/png;base64,{0}", base64image);
+                ImageSource = source;
+
+
+            }
+            catch
+            {
+                var source = string.Format("data:image/png;base64,{0}", ExternalResources.GetItemIcon(0));
+                ImageSource = source;
+            }
+            finally
+            {
+                await this.InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
+            }
+        });
+    }
+    public void SelectSpell(SpellRecord spell)
+    {
+        D2OSpell = D2OManager.GetObject<Spell>("Spells.d2o", spell.Id);
+        LoadSpellIcon();
+        ImageSource = null;
+        SelectedSpell = spell;
+        SelectedSpellLevel = null;
+        SelectedEffect = null;
+        StateHasChanged();
+    }
+    public void SelectSpellLevel(SpellLevelRecord level)
+    {
+        SelectedSpellLevel = level;
+        SelectedEffect = null;
+        StateHasChanged();
+    }
+
+    private void OnExploreClick(EffectDice effect)
+    {
+        var spell = SpellRecord.GetSpellRecord((short)effect.Min);
+
+        if (spell != null)
+        {
+
+            SelectSpell(spell);
+            SelectSpellLevel(spell.GetLevel((byte)effect.Max));
+        }
+        else
+        {
+            DialogService.ShowMessageBox("Erreur", "Le sort demandé est introuvable.");
+        }
+
+    }
+
+}

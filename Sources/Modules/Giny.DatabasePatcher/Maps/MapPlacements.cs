@@ -120,7 +120,7 @@ namespace Giny.DatabasePatcher.Maps
 
 
                 map.ReloadMembers();
-                map.UpdateInstantElement();
+                map.UpdateNow();
 
             }
 
@@ -169,7 +169,7 @@ namespace Giny.DatabasePatcher.Maps
                 succesCount++;
 
                 map.ReloadMembers();
-                map.UpdateInstantElement();
+                map.UpdateNow();
             }
 
             Logger.Write(string.Format("{0} on {1} maps fixed ({2:0.0}%)", succesCount, mapsCount, succesCount / (double)mapsCount * 100.0));

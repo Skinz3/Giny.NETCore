@@ -150,7 +150,7 @@ namespace Giny.World.Network
             if (this.WorldAccount == null)
             {
                 this.WorldAccount = WorldAccountRecord.Create(this.Account.Id);
-                this.WorldAccount.AddElement();
+                this.WorldAccount.AddLater();
             }
         }
         [Annotation]

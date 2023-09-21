@@ -1,0 +1,77 @@
+﻿@using Giny.World.Managers.Generic;
+<MudPaper MinWidth="200px" Class="pa-3">
+
+    <MudSelect @bind-Value="Action.ActionIdentifier" Label="Action">
+        @foreach (GenericActionEnum item in Enum.GetValues(typeof(GenericActionEnum)))
+        {
+            <MudSelectItem Value="@item">@item</MudSelectItem>
+        }
+    </MudSelect>
+
+    @if (GetParam1Label() != null)
+    {
+        <MudTextField Label="@GetParam1Label()" @bind-Value="Action.Param1"></MudTextField>
+
+    }
+
+    @if (GetParam2Label() != null)
+    {
+        <MudTextField Label="@GetParam2Label()" @bind-Value="Action.Param2"></MudTextField>
+    }
+    @if (GetParam3Label() != null)
+    {
+        <MudTextField Label="Param3" @bind-Value="Action.Param3"></MudTextField>
+    }
+</MudPaper>
+
+@code {
+    [Parameter]
+    public IGenericAction Action
+    {
+        get;
+        set;
+    }
+    public string GetParam3Label()
+    {
+        return null;
+    }
+
+
+    public string GetParam2Label()
+    {
+        switch (Action.ActionIdentifier)
+        {
+            case GenericActionEnum.RemoveItem:
+            case GenericActionEnum.AddItem:
+                return "Quantity";
+            case GenericActionEnum.Teleport:
+                return "CellId";
+
+        }
+
+        return null;
+    }
+
+    public string GetParam1Label()
+    {
+        switch (Action.ActionIdentifier)
+        {
+            case GenericActionEnum.Zaap:
+                return "Zone";
+            case GenericActionEnum.AddKamas:
+                return "Amount";
+            case GenericActionEnum.RemoveItem:
+            case GenericActionEnum.AddItem:
+                return "ItemId";
+            case GenericActionEnum.Teleport:
+                return "MapId";
+            case GenericActionEnum.LearnTitle:
+                return "TitleId";
+            case GenericActionEnum.PokefusWish:
+                return "Wish count";
+
+        }
+
+        return null;
+    }
+}

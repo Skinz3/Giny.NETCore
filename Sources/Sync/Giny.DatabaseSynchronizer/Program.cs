@@ -20,6 +20,7 @@ using Giny.World.Records.Jobs;
 using Giny.World.Records.Maps;
 using Giny.World.Records.Monsters;
 using Giny.World.Records.Npcs;
+using Giny.World.Records.Quests;
 using Giny.World.Records.Spells;
 using Giny.World.Records.Tinsel;
 using System;
@@ -53,36 +54,44 @@ namespace Giny.DatabaseSynchronizer
             DatabaseManager.Instance.Initialize(Assembly.GetAssembly(typeof(BreedRecord)),
               "127.0.0.1", "giny_world", "root", "");
 
-            DatabaseManager.Instance.DropTableIfExists<RecipeRecord>();
-            DatabaseManager.Instance.DropTableIfExists<SubareaRecord>();
-            DatabaseManager.Instance.DropTableIfExists<AreaRecord>();
-            DatabaseManager.Instance.DropTableIfExists<ItemSetRecord>();
-            DatabaseManager.Instance.DropTableIfExists<BreedRecord>();
-            DatabaseManager.Instance.DropTableIfExists<ExperienceRecord>();
-            DatabaseManager.Instance.DropTableIfExists<HeadRecord>();
-            DatabaseManager.Instance.DropTableIfExists<EffectRecord>();
-            DatabaseManager.Instance.DropTableIfExists<MapScrollActionRecord>();
-            DatabaseManager.Instance.DropTableIfExists<SpellRecord>();
-            DatabaseManager.Instance.DropTableIfExists<SpellVariantRecord>();
-            DatabaseManager.Instance.DropTableIfExists<ItemRecord>();
-            DatabaseManager.Instance.DropTableIfExists<SpellStateRecord>();
-            DatabaseManager.Instance.DropTableIfExists<WeaponRecord>();
-            DatabaseManager.Instance.DropTableIfExists<MapReferenceRecord>();
-            DatabaseManager.Instance.DropTableIfExists<LivingObjectRecord>();
-            DatabaseManager.Instance.DropTableIfExists<EmoteRecord>();
-            DatabaseManager.Instance.DropTableIfExists<SpellLevelRecord>();
-            DatabaseManager.Instance.DropTableIfExists<OrnamentRecord>();
-            DatabaseManager.Instance.DropTableIfExists<TitleRecord>();
-            DatabaseManager.Instance.DropTableIfExists<MonsterRecord>();
-            DatabaseManager.Instance.DropTableIfExists<SkillRecord>();
-            DatabaseManager.Instance.DropTableIfExists<DungeonRecord>();
-            DatabaseManager.Instance.DropTableIfExists<MapPositionRecord>();
-            DatabaseManager.Instance.DropTableIfExists<NpcRecord>();
-            DatabaseManager.Instance.DropTableIfExists<SpellBombRecord>();
-            DatabaseManager.Instance.DropTableIfExists<ChallengeRecord>();
-            DatabaseManager.Instance.DropTableIfExists<AchievementRewardRecord>();
-            DatabaseManager.Instance.DropTableIfExists<AchievementRecord>();
-            DatabaseManager.Instance.DropTableIfExists<AchievementObjectiveRecord>();
+            if (SYNC_D2O)
+            {
+
+                DatabaseManager.Instance.DropTableIfExists<RecipeRecord>();
+                DatabaseManager.Instance.DropTableIfExists<SubareaRecord>();
+                DatabaseManager.Instance.DropTableIfExists<AreaRecord>();
+                DatabaseManager.Instance.DropTableIfExists<ItemSetRecord>();
+                DatabaseManager.Instance.DropTableIfExists<BreedRecord>();
+                DatabaseManager.Instance.DropTableIfExists<ExperienceRecord>();
+                DatabaseManager.Instance.DropTableIfExists<HeadRecord>();
+                DatabaseManager.Instance.DropTableIfExists<EffectRecord>();
+                DatabaseManager.Instance.DropTableIfExists<MapScrollActionRecord>();
+                DatabaseManager.Instance.DropTableIfExists<SpellRecord>();
+                DatabaseManager.Instance.DropTableIfExists<SpellVariantRecord>();
+                DatabaseManager.Instance.DropTableIfExists<ItemRecord>();
+                DatabaseManager.Instance.DropTableIfExists<QuestStepRecord>();
+                DatabaseManager.Instance.DropTableIfExists<QuestStepRewardRecord>();
+                DatabaseManager.Instance.DropTableIfExists<QuestRecord>();
+                DatabaseManager.Instance.DropTableIfExists<SpellStateRecord>();
+                DatabaseManager.Instance.DropTableIfExists<WeaponRecord>();
+                DatabaseManager.Instance.DropTableIfExists<MapReferenceRecord>();
+                DatabaseManager.Instance.DropTableIfExists<LivingObjectRecord>();
+                DatabaseManager.Instance.DropTableIfExists<EmoteRecord>();
+                DatabaseManager.Instance.DropTableIfExists<SpellLevelRecord>();
+                DatabaseManager.Instance.DropTableIfExists<OrnamentRecord>();
+                DatabaseManager.Instance.DropTableIfExists<TitleRecord>();
+                DatabaseManager.Instance.DropTableIfExists<MonsterRecord>();
+                DatabaseManager.Instance.DropTableIfExists<SkillRecord>();
+                DatabaseManager.Instance.DropTableIfExists<DungeonRecord>();
+                DatabaseManager.Instance.DropTableIfExists<MapPositionRecord>();
+                DatabaseManager.Instance.DropTableIfExists<NpcRecord>();
+                DatabaseManager.Instance.DropTableIfExists<SpellBombRecord>();
+                DatabaseManager.Instance.DropTableIfExists<ChallengeRecord>();
+                DatabaseManager.Instance.DropTableIfExists<AchievementRewardRecord>();
+                DatabaseManager.Instance.DropTableIfExists<AchievementRecord>();
+                DatabaseManager.Instance.DropTableIfExists<AchievementObjectiveRecord>();
+            }
+
 
             if (SYNC_MAPS)
                 DatabaseManager.Instance.DropTableIfExists<MapRecord>();

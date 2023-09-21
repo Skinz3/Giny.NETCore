@@ -79,7 +79,7 @@ namespace Giny.Auth.Handlers
                 ServerId = client.WorldServerRecord.Id,
                 Id = WorldCharacterRecord.NextId(),
             };
-            record.AddInstantElement();
+            record.AddNow();
 
             client.SendIPCAnswer(new IPCCharacterCreationResultMessage(true), message);
         }
@@ -92,7 +92,7 @@ namespace Giny.Auth.Handlers
             }
 
             var worldCharacterRecord = WorldCharacterRecord.Get(message.accountId, message.characterId);
-            worldCharacterRecord.RemoveInstantElement();
+            worldCharacterRecord.RemoveNow();
 
             client.SendIPCAnswer(new IPCCharacterDeletionResultMessage(true), message);
         }
@@ -102,7 +102,7 @@ namespace Giny.Auth.Handlers
         {
             try
             {
-                WorldCharacterRecord.Get(client.WorldServerRecord.Id).RemoveInstantElements();
+                WorldCharacterRecord.Get(client.WorldServerRecord.Id).RemoveNow();
                 client.SendIPCAnswer(new ResetWorldResultMessage(true), message);
             }
             catch (Exception ex)

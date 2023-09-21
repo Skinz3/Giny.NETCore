@@ -79,7 +79,7 @@ namespace Giny.World.Handlers.Approach
             client.Character = new Character(client, newCharacter);
             client.Character.OnLevelChanged(1, (short)(client.Character.Level - 1));
             BreedManager.Instance.LearnBreedSpells(client.Character);
-            newCharacter.AddInstantElement();
+            newCharacter.AddNow();
             client.Character.JustCreatedOrReplayed = true;
             ProcessSelection(client);
         }

@@ -9,6 +9,7 @@ using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Results;
 using Giny.World.Managers.Items;
 using Giny.World.Modules;
+using Giny.World.Records.Effects;
 using Giny.World.Records.Items;
 using Giny.World.Records.Maps;
 
@@ -41,6 +42,8 @@ namespace Giny.SmithmagicMonsters
 
         private const int ExoRate = 15;
 
+        private const int ItemUpgradeToleranceLevel = 30;
+
         public void CreateHooks()
         {
             FightEventApi.OnPlayerResultApplied += OnResultApplied;
@@ -71,10 +74,11 @@ namespace Giny.SmithmagicMonsters
                 return;
             }
 
-            CharacterItemRecord item = result.Character.Inventory.GetEquipedItems().Where(x => CanBeUpgraded(x)).Random(random);
+            CharacterItemRecord item = result.Character.Inventory.GetEquipedItems().Where(x => CanBeUpgraded(result.Fight.Map.Dungeon, x)).Random(random);
 
             if (item == null)
             {
+                result.Character.ReplyWarning("Aucune statistique n'a pu être augmenté. Vous ne possedez d'objet elligible.");
                 return;
             }
 
@@ -100,14 +104,13 @@ namespace Giny.SmithmagicMonsters
             {
                 item.Effects.Add(new EffectInteger(ExoEffects.Random(random), 1));
 
-                character.Reply($"Votre objet <b>[{item.Record.Name}]</b> à obtenu une ligne exotique ! ");
+                character.Reply($"Votre objet <b>[{item.Record.Name}]</b> à obtenu une ligne exotique !");
             }
             else
             {
                 var itemEffects = item.Effects.OfType<EffectInteger>();
 
                 EffectInteger boostedEffect = null;
-
 
                 boostedEffect = itemEffects.Where(x => EffectCanBeUpgraded(item, x)).Random(random);
 
@@ -143,12 +146,11 @@ namespace Giny.SmithmagicMonsters
                     difference = Math.Min(1, difference);
                 }
 
-
                 boostedEffect.Value += difference;
 
-                var index = item.Effects.ToList().IndexOf(boostedEffect) + 1;
+                var description = GetAddEffectDescription(boostedEffect.EffectEnum, difference);
 
-                character.Reply($"La statistique <b>{index}</b> de  <b>[{item.Record.Name}]</b> a <b>augmentée de {difference}</b> !");
+                character.Reply($"<b>{description}</b> a été ajouté à <b>[{item.Record.Name}]</b> !");
 
             }
 
@@ -158,8 +160,26 @@ namespace Giny.SmithmagicMonsters
 
         }
 
-        private bool CanBeUpgraded(CharacterItemRecord item)
+        private string GetAddEffectDescription(EffectsEnum effectEnum, int delta)
         {
+            EffectRecord effect = EffectRecord.GetEffectRecord(effectEnum);
+
+            var result = effect.Description;
+
+            result = result.Replace("#1", delta.ToString());
+            result = result.Replace("{~1~2 à -}", "");
+            result = result.Replace("{~1~2 à }", "");
+            result = result.Replace("#2", "");
+
+            return result;
+        }
+
+        private bool CanBeUpgraded(DungeonRecord record, CharacterItemRecord item)
+        {
+            if (record.OptimalPlayerLevel + ItemUpgradeToleranceLevel < item.Record.Level)
+            {
+                return false;
+            }
             if (!SmithmagicItemTypes.Contains(item.Record.TypeEnum))
             {
                 return false;
@@ -180,7 +200,7 @@ namespace Giny.SmithmagicMonsters
             return valid;
         }
 
-       
+
         private bool ItemHasExo(CharacterItemRecord item)
         {
             return item.Effects.Any(x => ExoEffects.Contains(x.EffectEnum) && !item.Record.Effects.Any(y => y.EffectEnum == x.EffectEnum));

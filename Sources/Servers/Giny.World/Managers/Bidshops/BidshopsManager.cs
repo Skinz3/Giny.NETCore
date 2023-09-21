@@ -37,12 +37,12 @@ namespace Giny.World.Managers.Bidshops
         public void AddItem(long bidshopId, BidShopItemRecord item)
         {
             m_bidshopItems[bidshopId].TryAdd(item.UId, item);
-            item.AddElement();
+            item.AddLater();
         }
         public void RemoveItem(long bidshopId, BidShopItemRecord item)
         {
             m_bidshopItems[bidshopId].TryRemove(item.UId);
-            item.RemoveElement();
+            item.RemoveLater();
         }
         public IEnumerable<BidShopItemRecord> GetItems(long bidshopId)
         {

@@ -406,7 +406,7 @@ namespace Giny.World.Managers.Entities.Characters
                 foreach (var item in bidHouseItems)
                 {
                     Client.WorldAccount.BankKamas += item.Price;
-                    Client.WorldAccount.UpdateElement();
+                    Client.WorldAccount.UpdateLater();
                     BidshopsManager.Instance.RemoveItem(item.BidShopId, item);
                 }
 
@@ -1190,7 +1190,7 @@ namespace Giny.World.Managers.Entities.Characters
         }
         public void OnDisconnected()
         {
-            Record.UpdateElement();
+            Record.UpdateLater();
 
             Record.InGameContext = false;
             Guild?.OnDisconnected(this);

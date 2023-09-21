@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Giny.World.Records.Npcs
 {
     [Table("npc_replies")]
-    public class NpcReplyRecord : IRecord, IGenericActionParameter
+    public class NpcReplyRecord : IRecord, IGenericAction
     {
         [Container]
         private static Dictionary<long, NpcReplyRecord> NpcReplies = new Dictionary<long, NpcReplyRecord>();

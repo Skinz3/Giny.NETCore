@@ -76,9 +76,9 @@ namespace Giny.DatabasePatcher.Maps
                 Type = InteractiveTypeEnum.EQUIPMENT_MARKETPLACE314,
             };
 
-            interactiveSkill.AddInstantElement();
+            interactiveSkill.AddNow();
 
-            record.AddInstantElement();
+            record.AddNow();
 
             targetMap.ReloadMembers();
             targetMap.Instance.Reload();

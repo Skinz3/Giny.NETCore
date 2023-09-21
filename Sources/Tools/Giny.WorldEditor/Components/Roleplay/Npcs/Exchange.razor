@@ -1,0 +1,101 @@
+﻿@using Giny.Core.Extensions;
+@using Giny.IO.D2I;
+@using Giny.IO.D2O;
+@using Giny.IO.D2OClasses;
+@using Giny.Protocol.Custom.Enums;
+@using Giny.World.Managers.Effects
+@using Giny.World.Managers.Exchanges.Trades;
+@using Giny.World.Records.Items
+@using Giny.World.Records.Npcs;
+@using Giny.WorldEditor.Caching;
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+
+<MudPaper Class="flex-1 pa-4" Outlined=true>
+
+
+    <MudSimpleTable Dense="false" Striped=false Elevation=10 Hover=false Bordered="true" Outlined=true>
+
+        <tbody Style="grid-auto-columns: minmax(10px, auto);">
+
+
+
+            @foreach (var pair in Rule.Items)
+            {
+
+                <tr>
+                    <td>
+                        <MudText Style="font-weight:bold">1</MudText>
+                    </td>
+
+                    <td>
+                        <div class="d-flex gap-2 align-center">
+                            <MudImage Src="@GetItemIcon(pair.Key)"></MudImage>
+                            <MudText>@(pair.Key.Name)</MudText>
+                            </div>
+
+                        </td>
+
+                        <td>
+                            <div class="d-flex align-center justify-center">
+                                <MudText Typo="Typo.h6" Style="font-weight:bold">=</MudText>
+                            </div>
+                        </td>
+                        <td>
+                            <MudText Style="font-weight:bold">@Rule.Rate</MudText>
+                        </td>
+                        <td>
+                            <div class="d-flex gap-2 align-center">
+                                <MudImage Src="@GetItemIcon(pair.Value)"></MudImage>
+                                <MudText>@(pair.Value.Name)</MudText>
+                            </div>
+                        </td>
+
+
+                    </tr>
+            }
+
+        </tbody>
+    </MudSimpleTable>
+
+
+</MudPaper>
+
+@code {
+
+    [Parameter]
+    public NpcActionRecord NpcAction
+    {
+        get;
+        set;
+    }
+    [Parameter]
+    public NpcSpawnRecord NpcSpawn
+    {
+        get;
+        set;
+    }
+
+    private TradeRule Rule
+    {
+        get;
+        set;
+    }
+
+    private string GetItemIcon(ItemRecord item)
+    {
+        Item d2oItem = D2OCache.GetItem((int)item.Id);
+
+        var base64image = ExternalResources.GetItemIcon((int)d2oItem.IconId);
+        var source = string.Format("data:image/png;base64,{0}", base64image);
+
+        return source;
+    }
+
+    protected override void OnInitialized()
+    {
+        Rule = TradeRule.Build(NpcAction);
+
+        base.OnInitialized();
+    }
+
+}

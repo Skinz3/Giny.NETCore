@@ -100,7 +100,7 @@ namespace Giny.World.Records.Npcs
 
         public override string ToString()
         {
-            return "(Id : " + Id + ") " + Template.Name + " (MapId : " + MapId + ")";
+            return "(" + Id + ") " + Template.Name + " (Map : " + MapId + ")";
         }
     }
 }

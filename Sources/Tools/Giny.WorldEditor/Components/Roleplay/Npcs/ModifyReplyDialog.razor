@@ -1,0 +1,133 @@
+﻿@using Giny.IO.D2I;
+@using Giny.IO.D2OClasses;
+@using Giny.ORM;
+@using Giny.World.Managers.Generic;
+@using Giny.World.Records.Npcs;
+<MudDialog>
+    <DialogContent>
+        <MudTextField Lines="3" @bind-Value=ReplyText Class="mb-2"></MudTextField>
+
+        <div class="d-flex gap-2">
+
+
+
+            <MudPaper Width="300px">
+                <MudList Color="Color.Primary" Dense="true" Clickable="true">
+                    <MudListSubheader>
+                        Actions
+                    </MudListSubheader>
+
+                    <div style="max-height:200px;overflow-y:scroll">
+                        @foreach (var replyRecord in Replies)
+                        {
+                            <MudListItem Icon="@Icons.Material.Filled.Build" IconColor=Color.Primary Typo="Typo.body2" OnClick="() =>SelectReply(replyRecord)" Text=@replyRecord.ActionIdentifier.ToString() />
+                        }
+                    </div>
+                    <MudListItem>
+                        <MudButton Style="width:100%" OnClick="AddReplyAction" StartIcon="@Icons.Material.Filled.Add" IconColor="Color.Primary" Variant="Variant.Filled">Add Reply</MudButton>
+
+                    </MudListItem>
+                </MudList>
+            </MudPaper>
+
+            <GenericAction Action="SelectedReply"></GenericAction>
+
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color=Color.Primary OnClick="Save">Save</MudButton>
+    </DialogActions>
+
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    private string ReplyText
+    {
+        get;
+        set;
+    }
+    [Parameter]
+    public Npc D2ONpc
+    {
+        get;
+        set;
+    }
+
+    [Parameter]
+
+    public List<NpcReplyRecord> Replies
+    {
+        get;
+        set;
+    }
+    [Parameter]
+    public NpcSpawnRecord SpawnRecord
+    {
+        get;
+        set;
+    }
+
+    [Parameter]
+    public NpcActionRecord ActionRecord
+    {
+        get;
+        set;
+    }
+
+    private NpcReplyRecord SelectedReply
+    {
+        get;
+        set;
+    }
+
+    private string GetReplyText(NpcReplyRecord reply)
+    {
+        var pair = D2ONpc.DialogReplies.FirstOrDefault(x => x[0] == reply.ReplyId);
+
+        var text = D2IManager.GetText(pair[1]);
+
+        return text;
+    }
+
+    private void SelectReply(NpcReplyRecord record)
+    {
+        this.SelectedReply = record;
+        ReplyText = @GetReplyText(SelectedReply);
+    }
+    private void AddReplyAction()
+    {
+        var reply = new NpcReplyRecord()
+            {
+                ActionIdentifier = GenericActionEnum.None,
+                Criteria = "",
+                MessageId = int.Parse(ActionRecord.Param1),
+                NpcSpawnId = ActionRecord.NpcSpawnId,
+                Param1 = "",
+                Param2 = "",
+                Param3 = "",
+                Id = TableManager.Instance.GetNextIdFromContainer<NpcReplyRecord>(),
+                ReplyId = SelectedReply.ReplyId
+
+            };
+
+        reply.AddLater();
+        Replies.Add(reply);
+    }
+    protected override void OnInitialized()
+    {
+        SelectReply(Replies.First());
+        base.OnInitialized();
+    }
+
+    void Save()
+    {
+        foreach (var reply in Replies)
+        {
+            reply.UpdateLater();
+        }
+
+
+        MudDialog.Close(DialogResult.Ok<bool>(true));
+    }
+}

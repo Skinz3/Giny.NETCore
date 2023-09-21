@@ -47,7 +47,7 @@ namespace Giny.DatabasePatcher.Monsters
                 monster.MinDroppedKamas = minDroppedKamas / 2;
                 monster.MaxDroppedKamas = maxDroppedKamas / 2;
 
-                monster.UpdateInstantElement();
+                monster.UpdateNow();
             }
         }
     }

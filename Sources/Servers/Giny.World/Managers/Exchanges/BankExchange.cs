@@ -98,7 +98,7 @@ namespace Giny.World.Managers.Exchanges
             }
 
             Character.Client.WorldAccount.BankKamas += quantity;
-            Character.Client.WorldAccount.UpdateElement();
+            Character.Client.WorldAccount.UpdateLater();
             Character.Client.Send(new StorageKamasUpdateMessage((int)Character.Client.WorldAccount.BankKamas));
         }
 

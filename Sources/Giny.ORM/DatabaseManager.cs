@@ -15,6 +15,8 @@ namespace Giny.ORM
     {
         public static object DatabaseLocker = new object();
 
+        public const string ConnectionString = "Server={0};UserId={1};Password={2};Database={3}";
+
         private MySqlConnection ConnectionProvider
         {
             get;
@@ -34,7 +36,7 @@ namespace Giny.ORM
 
         public void Initialize(Assembly recordsAssembly, string host, string database, string user, string password)
         {
-            this.ConnectionProvider = new MySqlConnection(string.Format("Server={0};UserId={1};Password={2};Database={3}", host, user, password, database));
+            this.ConnectionProvider = new MySqlConnection(string.Format(ConnectionString, host, user, password, database));
             this.TableTypes = Array.FindAll(recordsAssembly.GetTypes(), x => x.GetInterface("IRecord") != null);
             TableManager.Instance.Initialize(TableTypes);
         }
@@ -70,7 +72,6 @@ namespace Giny.ORM
 
             foreach (var tableType in TableTypes)
             {
-
                 var definition = TableManager.Instance.GetDefinition(tableType);
                 var attribute = definition.TableAttribute;
 
@@ -140,6 +141,7 @@ namespace Giny.ORM
             }
         }
 
+
         public object QueryScalar(string query)
         {
             lock (DatabaseLocker)
@@ -190,11 +192,9 @@ namespace Giny.ORM
                 CreateTableIfNotExists(type);
             }
         }
-
         public void CreateTableIfNotExists<T>() where T : IRecord
         {
             CreateTableIfNotExists(typeof(T));
         }
-
     }
 }

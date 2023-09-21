@@ -345,7 +345,7 @@ namespace Giny.World.Managers.Exchanges.Jobs
                 targetItem.Effects.Add((Effect)addedEffect.Clone());
             }
 
-            targetItem.UpdateElement();
+            targetItem.UpdateLater();
 
         }
         public override void SetCount(int count)

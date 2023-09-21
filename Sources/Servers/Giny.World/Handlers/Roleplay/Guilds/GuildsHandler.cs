@@ -19,6 +19,11 @@ namespace Giny.World.Handlers.Roleplay.Guilds
     class GuildsHandler
     {
         [MessageHandler]
+        public static void HandleStopListenGuildChestStructureMessage(StopListenGuildChestStructureMessage message,WorldClient client)
+        {
+
+        }
+        [MessageHandler]
         public static void HandleGuildCreationRequest(GuildCreationValidMessage message, WorldClient client)
         {
             GuildCreationResultEnum result = GuildsManager.Instance.CreateGuild(client.Character, message.guildName, message.guildEmblem);

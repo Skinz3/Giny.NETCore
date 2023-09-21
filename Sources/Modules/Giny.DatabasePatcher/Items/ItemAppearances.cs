@@ -121,7 +121,7 @@ namespace Giny.DatabasePatcher.Items
                                     if (itemRecord.Look == string.Empty || itemRecord.Look == null)
                                     {
                                         itemRecord.Look = look;
-                                        itemRecord.UpdateInstantElement();
+                                        itemRecord.UpdateNow();
                                     }
                                 }
                             }
@@ -146,7 +146,7 @@ namespace Giny.DatabasePatcher.Items
                     if (item.Look != string.Empty && item.Look != itemRecord.Look)
                     {
                         itemRecord.Look = item.Look;
-                        itemRecord.UpdateInstantElement();
+                        itemRecord.UpdateNow();
                     }
                 }
             }
@@ -162,12 +162,12 @@ namespace Giny.DatabasePatcher.Items
                 if (weapon != null)
                 {
                     weapon.AppearenceId = (short)appearenceId;
-                    weapon.UpdateInstantElement();
+                    weapon.UpdateNow();
                 }
                 else
                 {
                     itemRecord.AppearenceId = (short)appearenceId;
-                    itemRecord.UpdateInstantElement();
+                    itemRecord.UpdateNow();
                 }
 
             }

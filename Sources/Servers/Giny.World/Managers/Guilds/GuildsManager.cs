@@ -94,7 +94,7 @@ namespace Giny.World.Managers.Guilds
         [Annotation]
         public void RemoveGuild(Guild guild)
         {
-            guild.Record.RemoveElement();
+            guild.Record.RemoveLater();
             Guilds.TryRemove(guild.Id);
         }
         public GuildCreationResultEnum CreateGuild(Character owner, string guildName, SocialEmblem guildEmblem)
@@ -134,7 +134,7 @@ namespace Giny.World.Managers.Guilds
             {
                 Guilds.TryAdd(record.Id, instance);
 
-                record.AddElement();
+                record.AddLater();
                 return GuildCreationResultEnum.GUILD_CREATE_OK;
             }
             else

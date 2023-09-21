@@ -1,0 +1,238 @@
+﻿@using Giny.Core.IO.Configuration;
+@using Giny.Core.Network;
+@using Giny.IO;
+@using Giny.ORM;
+@using Giny.WorldEditor.Config;
+@using MySql.Data.MySqlClient;
+
+<MudContainer>
+    <br />
+    <MudTextField TextChanged="UpdateMySQL" @bind-Value="ConfigManager<WorldViewConfig>.Instance.SQLHost" Label="Ip MySQL" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Filled.SettingsEthernet" AdornmentColor="Color.Primary" />
+    <br />
+    <MudTextField TextChanged="UpdateMySQL" @bind-Value="ConfigManager<WorldViewConfig>.Instance.SQLDBName" Label="Nom de la base" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Filled.Layers" AdornmentColor="Color.Primary" />
+    <br />
+    <MudTextField TextChanged="UpdateMySQL" @bind-Value="ConfigManager<WorldViewConfig>.Instance.SQLUser" Label="Nom d'utilisateur" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Filled.People" AdornmentColor="Color.Primary" />
+    <br />
+    <MudTextField InputType=InputType.Password TextChanged="UpdateMySQL" @bind-Value="ConfigManager<WorldViewConfig>.Instance.SQLPassword" Label="Mot de passe" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Filled.Password" AdornmentColor="Color.Primary" />
+
+    <div Class="pa-3">
+
+        @if (!MySqlReached.HasValue)
+        {
+            <MudAlert Severity="Severity.Info">Trying to connect to MySQL server ...</MudAlert>
+        }
+        else if (MySqlReached.Value)
+        {
+            <MudAlert Severity="Severity.Success">
+                MySQL Connection established.
+            </MudAlert>
+        }
+        else
+        {
+            <MudAlert Severity="Severity.Error">
+                Unable to reach MySQL Database
+                <br /> @MySQLError
+            </MudAlert>
+        }
+    </div>
+
+
+
+    <MudTextField @bind-Value="ClientPath" Label="Client path" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Filled.Computer" AdornmentColor="Color.Primary" />
+
+    <div Class="pa-3">
+
+        @if (ClientInformation != null)
+        {
+            <MudAlert Severity="Severity.Success">Version : @ClientInformation.Version</MudAlert>
+        }
+        else
+        {
+            <MudAlert Severity="Severity.Error">
+                The path to the dofus client is invalid.
+            </MudAlert>
+        }
+
+    </div>
+
+
+
+    <MudTextField Class="mt-4" @bind-Value="WorldApiUrl" Label="World Api" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Filled.Cloud" AdornmentColor="Color.Primary" />
+
+    <div Class="pa-3">
+
+        @if (!ApiReached.HasValue)
+        {
+            <MudAlert Severity="Severity.Info">Trying to connect to @WorldApiUrl ...</MudAlert>
+        }
+        else if (ApiReached.Value)
+        {
+            <MudAlert Severity="Severity.Success">
+                Connection established.
+            </MudAlert>
+        }
+        else
+        {
+            <MudAlert Severity="Severity.Warning">
+                Unable to reach the world api. Please verify endpoint. This does not prevent you from using the tool but certain features will not be available
+                <br /> @WorldApiError
+            </MudAlert>
+        }
+
+    </div>
+
+
+    <br />
+    <MudButton OnClick=OnSaveClick StartIcon="@Icons.Filled.Save" Style="height: 50px;float:right" Variant="Variant.Filled" Size="Size.Large" Color="Color.Primary">Sauvegarder</MudButton>
+</MudContainer>
+
+@code {
+    [CascadingParameter]
+    public Home Parent
+    {
+        get;
+        set;
+    }
+
+    private ClientInformation ClientInformation
+    {
+        get;
+        set;
+    }
+
+    private bool? ApiReached
+    {
+        get;
+        set;
+    }
+
+    private bool? MySqlReached
+    {
+        get;
+        set;
+    }
+    private string ClientPath
+    {
+        get
+        {
+            return ConfigManager<WorldViewConfig>.Instance.ClientPath;
+        }
+        set
+        {
+            ConfigManager<WorldViewConfig>.Instance.ClientPath = value;
+            UpdateClientInfos();
+        }
+    }
+
+    private string WorldApiUrl
+    {
+
+        get
+        {
+            return ConfigManager<WorldViewConfig>.Instance.WorldApiUrl;
+        }
+        set
+        {
+            ConfigManager<WorldViewConfig>.Instance.WorldApiUrl = value;
+            UpdateApi();
+        }
+    }
+    private string? WorldApiError
+    {
+        get;
+        set;
+    }
+    private string? MySQLError
+    {
+        get;
+        set;
+    }
+
+    private void OnSaveClick()
+    {
+        ConfigManager<WorldViewConfig>.Save(WorldViewConfig.Filepath);
+        Parent.Navigate(PageEnum.Loader);
+        AppState.Initialized = false;
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        UpdateMySQL();
+        UpdateClientInfos();
+        UpdateApi();
+    }
+
+    private void UpdateMySQL()
+    {
+        MySqlReached = null;
+        MySQLError = null;
+
+        Task.Run(async () =>
+       {
+           MySqlReached = CanReachMySQL();
+           await InvokeAsync(() =>
+       {
+           StateHasChanged();
+       });
+       });
+
+
+
+    }
+    private void UpdateClientInfos()
+    {
+        ClientInformation = ClientConstants.DumpInformations(ConfigManager<WorldViewConfig>.Instance.ClientPath);
+    }
+
+    private void UpdateApi()
+    {
+        WorldApiError = null;
+        ApiReached = null;
+
+        Task.Run(async () =>
+        {
+            ApiReached = CanReachApi();
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
+        });
+
+
+    }
+
+    private bool CanReachMySQL()
+    {
+        var config = ConfigManager<WorldViewConfig>.Instance;
+
+        var connectionString = string.Format(DatabaseManager.ConnectionString, config.SQLHost, config.SQLUser, config.SQLPassword, config.SQLDBName);
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            try
+            {
+                connection.Open();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MySQLError = ex.Message.ToString();
+                return false;
+            }
+        }
+    }
+    private bool CanReachApi()
+    {
+        try
+        {
+            var result = Http.Get(WorldApiUrl + WorldApi.Stats);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            WorldApiError = ex.Message.ToString();
+            return false;
+        }
+    }
+}

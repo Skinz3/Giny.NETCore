@@ -1,0 +1,72 @@
+﻿@using Giny.IO.D2I;
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+
+
+
+<div class="d-flex flex-row  flex-grow-1 gap-2 mb-4">
+
+    <MudPaper Class="flex-1"  Outlined=false Elevation="0">
+        <MudTextField Variant="Variant.Outlined" @bind-Value=Search></MudTextField>
+
+    </MudPaper>
+
+    <div Class="d-flex flex-column pa-2 gap-2" >
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" IconColor="Color.Primary" Size="Size.Large">Save</MudButton>
+
+    </div>
+
+
+
+</div>
+
+
+<MudSimpleTable Hover=true Bordered=true Dense=true FixedHeader=true Style="height:600px">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Content</th>
+        </tr>
+    </thead>
+    <tbody>
+        <Virtualize Items="@Entries">
+            <tr>
+
+                <td>@context.Key</td>
+                <td>
+                    <MudInput Style="width:100%" @bind-Value=@context.Text></MudInput>
+                </td>
+            </tr>
+        </Virtualize>
+
+    </tbody>
+</MudSimpleTable>
+@code {
+    private string m_search;
+
+    private string Search
+    {
+        get
+        {
+            return m_search;
+        }
+        set
+        {
+            m_search = value;
+            PerformSearch();
+        }
+    }
+    private List<D2IEntry<int>> Entries
+    {
+        get;
+        set;
+    }
+    protected override void OnInitialized()
+    {
+        Entries = D2IManager.GetAllText().ToList();
+        base.OnInitialized();
+    }
+    private void PerformSearch()
+    {
+        Entries = D2IManager.GetAllText().Where(x => x.Text.ToLower().Contains(Search.ToLower())).ToList();
+    }
+}

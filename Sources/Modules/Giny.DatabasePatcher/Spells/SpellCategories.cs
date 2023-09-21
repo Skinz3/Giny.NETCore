@@ -438,7 +438,7 @@ namespace Giny.DatabasePatcher.Spells
             else
                 record.Category = SpellCategoryEnum.None;
 
-            record.UpdateInstantElement();
+            record.UpdateNow();
 
 
 

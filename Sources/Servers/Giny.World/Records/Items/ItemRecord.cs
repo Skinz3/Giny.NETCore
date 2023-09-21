@@ -231,7 +231,7 @@ namespace Giny.World.Records.Items
 
         public override string ToString()
         {
-            return "{" + Id + "} " + Name;
+            return "(" + Id + ") " + Name;
         }
 
     }

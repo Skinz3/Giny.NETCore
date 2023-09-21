@@ -68,7 +68,7 @@ namespace Giny.World.Managers.Guilds
 
             GuildMemberRecord memberRecord = new GuildMemberRecord(character, owner);
             Record.Members.Add(memberRecord);
-            Record.UpdateElement();
+            Record.UpdateLater();
             OnlineMembers.TryAdd(character.Id, character);
             character.OnGuildJoined(this, memberRecord);
             return true;
@@ -128,7 +128,7 @@ namespace Giny.World.Managers.Guilds
 
             Record.Members.Remove(member);
 
-            Record.UpdateElement();
+            Record.UpdateLater();
 
             Send(new GuildMemberLeavingMessage()
             {
@@ -148,7 +148,7 @@ namespace Giny.World.Managers.Guilds
 
             Experience += amount;
             member.GivenExperience += amount;
-            Record.UpdateElement();
+            Record.UpdateLater();
 
             if (this.Level > level)
             {
@@ -193,7 +193,7 @@ namespace Giny.World.Managers.Guilds
             //      member.Rights = (GuildRightsBitEnum)rights;
             member.ExperienceGivenPercent = experienceGivenPercent;
             member.Rank = rank;
-            Record.UpdateElement();
+            Record.UpdateLater();
 
             Character character = GetOnlineMember(member.CharacterId);
 
@@ -207,6 +207,10 @@ namespace Giny.World.Managers.Guilds
         public Character GetOnlineMember(long id)
         {
             return OnlineMembers.TryGetValue(id);
+        }
+        public Character GetOnlineMember(string name)
+        {
+            return OnlineMembers.Values.FirstOrDefault(x => x.Name == name);
         }
         public void SetMotd(Character source, string content)
         {
@@ -223,7 +227,7 @@ namespace Giny.World.Managers.Guilds
                 MemberName = source.Name,
             };
 
-            Record.UpdateElement();
+            Record.UpdateLater();
 
             RefreshMotd();
 
@@ -305,10 +309,7 @@ namespace Giny.World.Managers.Guilds
                 }
             }
 
-            return new GuildInformationsMembersMessage()
-            {
-                members = Record.Members.Select(x => x.ToGuildMember(this)).ToArray(),
-            };
+            return new GuildInformationsMembersMessage(Record.Members.Select(x => x.ToGuildMember(this)).ToArray());
         }
     }
 }

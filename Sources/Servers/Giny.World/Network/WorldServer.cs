@@ -210,7 +210,7 @@ namespace Giny.World.Network
         }
         private void OnServerStarted()
         {
-            Logger.Write("(World) World Server started", Channels.Log);
+            Logger.Write($"(World) World Server started '{Server.EndPoint.Address}:{Server.EndPoint.Port}' ", Channels.Info);
             SetServerStatus(ServerStatusEnum.ONLINE);
         }
     }

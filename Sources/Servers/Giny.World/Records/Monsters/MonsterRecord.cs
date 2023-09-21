@@ -214,7 +214,7 @@ namespace Giny.World.Records.Monsters
 
         public override string ToString()
         {
-            return "{" + Id + "} " + Name;
+            return "(" + Id + ") " + Name;
         }
     }
 }

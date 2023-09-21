@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Giny.World.Managers.Maps.Elements
 {
-    public abstract class MapElement : IGenericActionParameter
+    public abstract class MapElement : IGenericAction
     {
         public InteractiveElementRecord Record
         {
@@ -15,20 +15,35 @@ namespace Giny.World.Managers.Maps.Elements
             private set;
         }
 
-        public GenericActionEnum ActionIdentifier => Record.Skill.ActionIdentifier;
-
-        public string Param1 => Record.Skill.Param1;
-
-        public string Param2 => Record.Skill.Param2;
-
-        public string Param3 => Record.Skill.Param3;
-
-        public string Criteria => Record.Skill.Criteria;
-
         protected MapInstance MapInstance
         {
             get;
             private set;
+        }
+        public GenericActionEnum ActionIdentifier
+        {
+            get => Record.Skill.ActionIdentifier;
+            set => Record.Skill.ActionIdentifier = value;
+        }
+        public string Param1
+        {
+            get => Record.Skill.Param1;
+            set => Record.Skill.Param1 = value;
+        }
+        public string Param2
+        {
+            get => Record.Skill.Param2;
+            set => Record.Skill.Param2 = value;
+        }
+        public string Param3
+        {
+            get => Record.Skill.Param3;
+            set => Record.Skill.Param3 = value;
+        }
+        public string Criteria
+        {
+            get => Record.Skill.Criteria;
+            set => Record.Skill.Criteria = value;
         }
 
         public MapElement(InteractiveElementRecord record, MapInstance mapInstance)

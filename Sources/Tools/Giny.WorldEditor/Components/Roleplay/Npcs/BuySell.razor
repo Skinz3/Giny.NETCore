@@ -1,0 +1,89 @@
+﻿@using Giny.Core.Extensions;
+@using Giny.IO.D2I;
+@using Giny.IO.D2O;
+@using Giny.IO.D2OClasses;
+@using Giny.Protocol.Custom.Enums;
+@using Giny.World.Managers.Effects
+@using Giny.World.Records.Items
+@using Giny.World.Records.Npcs;
+@using Giny.WorldEditor.Caching;
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+
+<MudPaper Class="flex-1 pa-4" Outlined=true>
+
+
+    <MudDataGrid Style="max-height:500px;overflow-y:scroll" Dense=true Hover=true Striped=false Bordered=true Items="@Items">
+        <Columns>
+
+            <PropertyColumn Property="x => x.Id" />
+
+
+            <TemplateColumn Title="Icon">
+                <CellTemplate>
+                    <MudImage Src="@GetItemIcon(context.Item)" />
+                </CellTemplate>
+            </TemplateColumn>
+
+            <PropertyColumn Property="x => x.Name" />
+            <PropertyColumn Property="x => x.Price" />
+            <PropertyColumn Property="x => x.Level" />
+
+            <TemplateColumn Title="Actions">
+                <CellTemplate>
+                    <MudStack Row>
+                        <MudButton Size="@Size.Small" StartIcon="@Icons.Material.Filled.Delete" IconColor="Color.Primary" Variant="@Variant.Text" Color="@Color.Primary">Delete</MudButton>
+                    </MudStack>
+                </CellTemplate>
+            </TemplateColumn>
+
+        </Columns>
+    </MudDataGrid>
+
+
+</MudPaper>
+
+@code {
+
+
+    [Parameter]
+    public NpcActionRecord NpcAction
+    {
+        get;
+        set;
+    }
+    [Parameter]
+    public NpcSpawnRecord NpcSpawn
+    {
+        get;
+        set;
+    }
+
+    private List<ItemRecord> Items
+    {
+        get;
+        set;
+    }
+
+    private string GetItemIcon(ItemRecord item)
+    {
+        Item d2oItem = D2OCache.GetItem((int)item.Id);
+
+        var base64image = ExternalResources.GetItemIcon((int)d2oItem.IconId);
+        var source = string.Format("data:image/png;base64,{0}", base64image);
+
+        return source;
+    }
+
+    protected override void OnInitialized()
+    {
+        Items = new List<ItemRecord>();
+
+        foreach (var itemId in NpcAction.Param1.Split(','))
+        {
+            ItemRecord item = ItemRecord.GetItem(long.Parse(itemId));
+            Items.Add(item);
+        }
+        base.OnInitialized();
+    }
+
+}

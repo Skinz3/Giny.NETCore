@@ -23,11 +23,9 @@ namespace Giny.DatabaseSynchronizer
 {
     class MapSynchronizer
     {
-
         static Dictionary<int, EleGraphicalData> Elements;
 
         private static Dictionary<long, MapPosition> MapPositions;
-
 
         private static void LoadD2PFile(string filePath)
         {
@@ -134,7 +132,7 @@ namespace Giny.DatabaseSynchronizer
                     }
                 }
                 record.Elements = elements.ToArray();
-                record.AddInstantElement();
+                record.AddNow();
 
                 logger.WriteProgressBar(current, entries.Count);
             }

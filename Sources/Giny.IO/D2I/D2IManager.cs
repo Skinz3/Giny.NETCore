@@ -24,6 +24,8 @@ namespace Giny.IO.D2I
 
         public static void Initialize(string path)
         {
+            FilesPaths.Clear();
+            Files.Clear();
             foreach (var file in Directory.GetFiles(path))
             {
                 if (Path.GetExtension(file) == I18NExtension)
@@ -34,7 +36,12 @@ namespace Giny.IO.D2I
 
             }
         }
-        public static string GetText(int id, string lang = "fr")
+        public static IEnumerable<D2IEntry<int>> GetAllText(string lang = "fr")
+        {
+            InitializeLanguageFile(lang);
+            return Files[lang].GetAllText();
+        }
+        private static void InitializeLanguageFile(string lang)
         {
             if (!Files.ContainsKey(lang))
             {
@@ -47,9 +54,18 @@ namespace Giny.IO.D2I
                     throw new FileNotFoundException("Unable to find d2i file for lang " + lang);
                 }
             }
-
+        }
+        public static string GetText(int id, string lang = "fr")
+        {
+            InitializeLanguageFile(lang);
             return Files[lang].GetText(id);
-
+        }
+        public static void SaveAll()
+        {
+            foreach (var file in Files)
+            {
+                file.Value.Save();
+            }
         }
     }
 }

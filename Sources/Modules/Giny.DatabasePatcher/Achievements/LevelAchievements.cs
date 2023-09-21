@@ -65,8 +65,8 @@ namespace Giny.DatabasePatcher.Achievements
 
             achievementRecord.ReloadMembers();
 
-            objective.AddInstantElement();
-            achievementRecord.UpdateInstantElement();
+            objective.AddNow();
+            achievementRecord.UpdateNow();
         }
     }
 }

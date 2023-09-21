@@ -295,7 +295,7 @@ namespace Giny.World.Managers.Fights.Stats
 
             if (!LifeSended)
             {
-                LifeSended = true;
+              //  LifeSended = true;
             }
 
             return result;

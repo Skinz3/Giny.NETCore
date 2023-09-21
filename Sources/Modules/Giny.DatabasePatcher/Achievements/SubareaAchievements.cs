@@ -258,7 +258,7 @@ namespace Giny.DatabasePatcher.Achievements
                 }
 
                 subarea.ReloadMembers();
-                subarea.UpdateInstantElement();
+                subarea.UpdateNow();
             }
 
             Logger.Write(count + " subarea achievements added.");

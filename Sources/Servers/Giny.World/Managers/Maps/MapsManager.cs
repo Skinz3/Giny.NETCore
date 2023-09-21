@@ -76,7 +76,7 @@ namespace Giny.World.Managers.Maps
                 element.Skill.SkillId = skillType;
                 element.Skill.Type = interactiveType;
                 element.Skill.ActionIdentifier = genericAction;
-                element.Skill.UpdateInstantElement();
+                element.Skill.UpdateNow();
                 element.Skill.Record = SkillRecord.GetSkill(skillType);
                 map.Instance.Reload();
             }
@@ -99,7 +99,7 @@ namespace Giny.World.Managers.Maps
                 };
 
                 element.Skill = skillRecord;
-                skillRecord.AddInstantElement();
+                skillRecord.AddNow();
                 map.Instance.Reload();
             }
             return true;

@@ -34,7 +34,7 @@ namespace Giny.World.Handlers.Roleplay.Items
             }
 
             item.EraseMimicry();
-            item.UpdateElement();
+            item.UpdateLater();
             client.Character.Inventory.Refresh();
             client.Character.RefreshLookOnMap();
             client.Character.RefreshStats();

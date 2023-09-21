@@ -57,7 +57,7 @@ namespace Giny.World.Managers.Exchanges
             {
                 item.Price = price;
                 item.Quantity = quantity;
-                item.UpdateElement();
+                item.UpdateLater();
                 Open();
             }
         }

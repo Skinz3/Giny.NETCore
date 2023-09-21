@@ -57,7 +57,7 @@ namespace Giny.Auth.Network
         }
         private void OnServerStarted()
         {
-            Logger.Write("(Auth) Server started", Channels.Log);
+            Logger.Write($"(Auth) Server started '{Server.EndPoint.Address}:{Server.EndPoint.Port}'", Channels.Info);
         }
         public AuthClient GetClient(int accountId)
         {

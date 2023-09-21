@@ -92,7 +92,7 @@ namespace Giny.DatabasePatcher.Items
                     record.MaximumLevel = LivingObjectsMaxiumLevels[(int)record.Id];
                 }
 
-                record.UpdateInstantElement();
+                record.UpdateNow();
             }
         }
 

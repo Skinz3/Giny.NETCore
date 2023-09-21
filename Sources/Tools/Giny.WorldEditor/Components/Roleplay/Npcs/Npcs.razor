@@ -1,0 +1,299 @@
+﻿@using Giny.Core.Extensions;
+@using Giny.IO.D2I;
+@using Giny.IO.D2O;
+@using Giny.IO.D2OClasses;
+@using Giny.ORM.Cyclic;
+@using Giny.Protocol.Custom.Enums;
+@using Giny.World.Managers.Effects
+@using Giny.World.Records.Items
+@using Giny.World.Records.Npcs;
+@using Giny.WorldEditor.Caching;
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Giny.ORM;
+@inject ISnackbar Snackbar
+
+<MudGrid>
+    <MudItem xs="3">
+
+        <MudPaper Outlined=true>
+            <MudList Color="Color.Success" Dense="true" Clickable="true">
+                <MudListSubheader>
+                    <MudTextField Label="Search" TextChanged=OnSearchTextChanged @bind-Value="@Search"
+                                  AdornmentColor="Color.Primary" AdornmentIcon="@Icons.Filled.Search"
+                                  Adornment="Adornment.End" Immediate="true" Variant="Variant.Outlined" />
+                </MudListSubheader>
+
+                <div style="height:70vh;overflow-y:scroll">
+                    <Virtualize Items="@SearchResults">
+                        <MudListItem OnClick="() => SelectNpcSpawn(context)" Text=@context.ToString() />
+                    </Virtualize>
+                </div>
+
+            </MudList>
+
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="9">
+        @if (SelectedSpawn != null)
+        {
+            <div class="d-flex flex-row  flex-grow-1 gap-2 mb-2">
+
+                <MudCard Class="flex-1" Outlined="true">
+                    <MudCardContent Class="d-flex flex-row gap-3">
+
+                        <MudPaper Class="d-flex align-center justify-center " Outlined=false Elevation="0" Style="width:160px;height:160px">
+                            @if (ImageSource != null)
+                            {
+                                <MudImage Width="160" Height="160" Src="@ImageSource" />
+
+                            }
+                            else
+                            {
+                                <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
+
+                            }
+                        </MudPaper>
+
+                        <div>
+                            <MudTextField Label="Name" @bind-Value="SelectedSpawn.Template.Name"></MudTextField>
+                            <MudTextField Label="Map" @bind-Value="SelectedSpawn.MapId"></MudTextField>
+                            <MudTextField Label="Cell" @bind-Value="SelectedSpawn.CellId"></MudTextField>
+                        </div>
+
+                    </MudCardContent>
+
+                </MudCard>
+
+                <MudPaper Class="flex-1" Outlined=true>
+                    <MudList Class="d-flex flex-column" Dense="true" Clickable="true">
+                        <MudListSubheader>
+                            Actions
+                        </MudListSubheader>
+                        @foreach (NpcActionRecord action in SelectedSpawn.Actions)
+                        {
+                            <MudListItem Icon="@Icons.Material.Filled.Build" IconColor=Color.Primary OnClick="() => SelectAction(action)" Text=@GetActionText(action.Action) />
+                        }
+
+
+                    </MudList>
+                    <div class="d-flex flex-row gap-2 pa-2">
+                        <MudButton OnClick="AddAction" Class="flex-grow-1" IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Add" Variant="Variant.Filled">Add</MudButton>
+                        <MudButton Class="flex-grow-1" IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Delete" Variant="Variant.Filled">Delete</MudButton>
+                    </div>
+
+                </MudPaper>
+
+                <MudPaper Class="d-flex flex-column pa-2 gap-2" Outlined=false Elevation="0">
+                    <MudButton OnClick="SaveNpcs" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" IconColor="Color.Primary" Size="Size.Large">
+                        Save
+                    </MudButton>
+                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Autorenew" IconColor="Color.Primary" Size="Size.Large">Reload</MudButton>
+
+                </MudPaper>
+
+
+
+            </div>
+
+            @if (SelectedAction != null)
+            {
+                <MudItem>
+                    @if (SelectedAction.Action == NpcActionsEnum.EXCHANGE)
+                    {
+                        <Exchange NpcAction="SelectedAction" NpcSpawn="SelectedSpawn"></Exchange>
+                    }
+                    else if (SelectedAction.Action == NpcActionsEnum.TALK)
+                    {
+                        <NpcTalk NpcAction="SelectedAction" NpcSpawn="SelectedSpawn"></NpcTalk>
+
+                    }
+                    else if (SelectedAction.Action == NpcActionsEnum.BUYSELL)
+                    {
+                        <BuySell NpcAction="SelectedAction" NpcSpawn="SelectedSpawn"></BuySell>
+                    }
+                </MudItem>
+
+            }
+        }
+    </MudItem>
+
+
+
+
+</MudGrid>
+
+@code {
+    [Inject] private IDialogService DialogService { get; set; }
+    [CascadingParameter]
+    public Home Parent
+    {
+        get;
+        set;
+    }
+
+
+    private string ImageSource
+    {
+        get;
+        set;
+    }
+
+    private NpcActionRecord SelectedAction
+    {
+        get;
+        set;
+    }
+    private NpcSpawnRecord SelectedSpawn
+    {
+        get;
+        set;
+    }
+    private List<NpcSpawnRecord> SearchResults
+    {
+        get;
+        set;
+    } = new List<NpcSpawnRecord>();
+
+    private string Search
+    {
+        get;
+        set;
+    } = "";
+
+    private Npc D2ONpc
+    {
+        get;
+        set;
+    }
+
+    private async void AddAction()
+    {
+        var parameters = new DialogParameters<AddNpcActionDialog>();
+        parameters.Add(x => x.SpawnRecord, SelectedSpawn);
+
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, CloseButton = true, ClassBackground = "dialog-open" };
+        var dialog = DialogService.Show<AddNpcActionDialog>("Add action", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            var action = (NpcActionsEnum)result.Data;
+
+            NpcActionRecord record = new NpcActionRecord()
+                {
+                    Action = action,
+                    Criteria = string.Empty,
+                    Id = TableManager.Instance.GetNextIdFromContainer<NpcActionRecord>(),
+                    NpcSpawnId = SelectedSpawn.Id,
+                    Param1 = string.Empty,
+                    Param2 = string.Empty,
+                    Param3 = string.Empty,
+                };
+
+
+            if (action == NpcActionsEnum.TALK)
+            {
+                record.Param1 = D2ONpc.DialogMessages[0][0].ToString();
+            }
+
+            SelectedSpawn.Actions.Add(record);
+            record.AddLater();
+
+            StateHasChanged();
+
+        }
+    }
+
+    private void SaveNpcs()
+    {
+        Task.Run(() =>
+        {
+            SaveManager.Save(Parent);
+
+            if (WorldApi.SendReloadNpcs())
+            {
+                Snackbar.Add("Npcs saved successfully. World server updated.", Severity.Success);
+            }
+            else
+            {
+                Snackbar.Add("Npcs saved successfully. Unable to communicate with the world API. The world server has not been updated.", Severity.Info);
+            }
+        });
+
+    }
+    private string GetActionText(NpcActionsEnum action)
+    {
+        switch (action)
+        {
+            case NpcActionsEnum.TALK:
+                return "Talk";
+            case NpcActionsEnum.EXCHANGE:
+                return "Trade";
+            case NpcActionsEnum.BUYSELL:
+                return "Buy/Sell";
+        }
+
+        return action.ToString();
+    }
+    private void OnSearchTextChanged()
+    {
+        SearchResults = NpcSpawnRecord.GetNpcSpawns().Where(x => x.ToString().ToLower().Contains(Search.ToLower())).ToList();
+        StateHasChanged();
+    }
+
+    private void SelectNpcSpawn(NpcSpawnRecord item)
+    {
+        SelectedSpawn = item;
+        SelectedAction = null;
+
+        ImageSource = null;
+
+        D2ONpc = D2OCache.GetNpc((int)SelectedSpawn.Template.Id);
+
+        LoadNpcIcon();
+
+    }
+    private void LoadNpcIcon()
+    {
+        Task.Run(async () =>
+        {
+            try
+            {
+                var base64image = await ExternalResources.GetEntityLookIcon(D2ONpc.Look, 200);
+                var source = string.Format("data:image/png;base64,{0}", base64image);
+                ImageSource = source;
+
+
+            }
+            catch (Exception ex)
+            {
+                var source = string.Format("data:image/png;base64,{0}", ExternalResources.GetItemIcon(0));
+                ImageSource = source;
+            }
+            finally
+            {
+                await this.InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
+            }
+        });
+    }
+
+    private string GetMessageText(int messageId)
+    {
+        var pair = D2ONpc.dialogMessages.FirstOrDefault(x => x[0] == messageId);
+
+        var text = D2IManager.GetText(pair[1]);
+
+        return text;
+    }
+    private void SelectAction(NpcActionRecord action)
+    {
+        SelectedAction = action;
+
+
+    }
+}

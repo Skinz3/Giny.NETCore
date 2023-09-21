@@ -33,11 +33,11 @@ namespace Giny.World.Managers.Generic
               
             }
         }
-        public bool IsHandled(IGenericActionParameter parameter)
+        public bool IsHandled(IGenericAction parameter)
         {
             return m_handlers.ContainsKey(parameter.ActionIdentifier);
         }
-        public bool Handle(Character character, IGenericActionParameter parameter)
+        public bool Handle(Character character, IGenericAction parameter)
         {
             if (m_handlers.ContainsKey(parameter.ActionIdentifier))
             {

@@ -33,7 +33,7 @@ namespace Giny.DatabasePatcher.Monsters
 
             long id = 1;
 
-            MonsterSpawnRecord.GetMonsterSpawnRecords().ToArray().RemoveInstantElements();
+            MonsterSpawnRecord.GetMonsterSpawnRecords().ToArray().RemoveNow();
 
             foreach (var subArea in SubareaRecord.GetSubareas())
             {
@@ -60,7 +60,7 @@ namespace Giny.DatabasePatcher.Monsters
                                 SubareaId = (short)subArea.Id,
                             };
                             id++;
-                            record.AddInstantElement();
+                            record.AddNow();
                         }
                     }
 

@@ -1,0 +1,180 @@
+﻿@using Giny.Core.Extensions;
+@using Giny.IO.D2I;
+@using Giny.IO.D2O;
+@using Giny.IO.D2OClasses;
+@using Giny.Protocol.Custom.Enums;
+@using Giny.World.Managers.Effects
+@using Giny.World.Records.Items
+@using Giny.World.Records.Npcs;
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@inject IDialogService DialogService
+
+@using Giny.ORM;
+
+
+
+<MudPaper Class="flex-1 pa-4" Outlined=true>
+
+
+    <div class="d-flex flex-row gap-4">
+
+        <MudTextField Lines="5" Label="Message" @bind-Value="NpcMessage"></MudTextField>
+        <MudButton StartIcon="@Icons.Material.Filled.CompareArrows" IconColor="Color.Primary" Variant="Variant.Filled">Select</MudButton>
+    </div>
+
+    <MudTextField Label="Action criteria" @bind-Value="NpcAction.Criteria"></MudTextField>
+    <MudPaper Class="d-flex flex-column gap-3 pa-2 mt-2">
+
+        @foreach (IGrouping<int, NpcReplyRecord> reply in Replies.GroupBy(x => x.ReplyId))
+        {
+            <MudCard Outlined=true>
+                <MudCardHeader>
+
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.body1">@(reply.Key)</MudText>
+                            <MudText Typo="Typo.body2">@GetReplyText(reply.First())</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+
+                    <MudCardActions Class="gap-4">
+                        <MudButton StartIcon="@Icons.Material.Filled.Edit" IconColor="Color.Primary" OnClick="() => EditReply(reply.Key)" Variant="Variant.Text">@("Modify (" + reply.Count() + ")")</MudButton>
+                        <MudButton StartIcon="@Icons.Material.Filled.Delete" IconColor="Color.Primary" OnClick="() => DeleteReply(reply.Key)" Variant="Variant.Text">Delete</MudButton>
+                    </MudCardActions>
+                </MudCard>
+
+        }
+
+    </MudPaper>
+
+    @if (NpcMessage != null)
+    {
+        <MudPaper Outlined="false" Elevation="0" Class="d-flex flex-column pa-2 gap-2">
+            <MudButton OnClick="AddReplyClick" StartIcon="@Icons.Material.Filled.Add" IconColor="Color.Primary" Variant="Variant.Filled">Add Reply</MudButton>
+        </MudPaper>
+    }
+</MudPaper>
+
+@code {
+
+    private string NpcMessage
+    {
+        get;
+        set;
+    }
+
+    private List<NpcReplyRecord> Replies
+    {
+        get;
+        set;
+    }
+    [Parameter]
+    public NpcActionRecord NpcAction
+    {
+        get;
+        set;
+    }
+    [Parameter]
+    public NpcSpawnRecord NpcSpawn
+    {
+        get;
+        set;
+    }
+
+    private Npc D2ONpc
+    {
+        get;
+        set;
+    }
+    private void DeleteReply(int replyId)
+    {
+        var replies = Replies.Where(x => x.ReplyId == replyId);
+
+        foreach (var reply in replies)
+        {
+            reply.RemoveLater();
+        }
+
+        Replies.RemoveAll(x => x.ReplyId == replyId);
+
+        RefreshData();
+        StateHasChanged();
+    }
+    private async void EditReply(int replyId)
+    {
+        var parameters = new DialogParameters<ModifyReplyDialog>();
+
+        var replies = Replies.Where(x => x.ReplyId == replyId).ToList();
+
+        parameters.Add(x => x.SpawnRecord, NpcSpawn);
+        parameters.Add(x => x.ActionRecord, NpcAction);
+        parameters.Add(x => x.D2ONpc, D2ONpc);
+        parameters.Add(x => x.Replies, replies);
+
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, CloseButton = true, ClassBackground = "dialog-open" };
+        var dialog = DialogService.Show<ModifyReplyDialog>("Modify reply", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            RefreshData();
+            StateHasChanged();
+        }
+    }
+
+    private async void AddReplyClick()
+    {
+        var parameters = new DialogParameters<AddReplyDialog>();
+        parameters.Add(x => x.SpawnRecord, NpcSpawn);
+        parameters.Add(x => x.ActionRecord, NpcAction);
+        parameters.Add(x => x.D2ONpc, D2ONpc);
+
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, CloseButton = true, ClassBackground = "dialog-open" };
+        var dialog = DialogService.Show<AddReplyDialog>("Add reply", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            RefreshData();
+            StateHasChanged();
+        }
+
+    }
+
+    private string GetReplyText(NpcReplyRecord reply)
+    {
+        var pair = D2ONpc.DialogReplies.FirstOrDefault(x => x[0] == reply.ReplyId);
+
+        var text = D2IManager.GetText(pair[1]);
+
+        return text;
+    }
+    private string GetMessageText(int messageId)
+    {
+        var pair = D2ONpc.dialogMessages.FirstOrDefault(x => x[0] == messageId);
+
+        var text = D2IManager.GetText(pair[1]);
+
+        return text;
+    }
+
+    private void RefreshData()
+    {
+        if (int.TryParse(NpcAction.Param1, out var messageId))
+        {
+            this.NpcMessage = GetMessageText(messageId);
+        }
+        else
+        {
+            this.NpcMessage = null;
+        }
+
+        Replies = NpcReplyRecord.GetNpcReplies(NpcAction.NpcSpawnId, messageId).ToList();
+    }
+    protected override void OnInitialized()
+    {
+        D2ONpc = D2OManager.GetObject<Npc>("Npcs.d2o", (int)NpcSpawn.Template.Id);
+        RefreshData();
+        base.OnInitialized();
+    }
+
+}

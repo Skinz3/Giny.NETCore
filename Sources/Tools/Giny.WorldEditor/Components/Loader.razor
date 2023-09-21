@@ -1,0 +1,341 @@
+﻿@using Giny.Core.IO.Configuration;
+@using Giny.Core.Network;
+@using Giny.IO.D2O;
+@using Giny.WorldEditor.Caching;
+@using Giny.Core.IO.Configuration;
+@using Giny.IO.D2I;
+@using Giny.IO;
+@using Giny.ORM
+@using Giny.Protocol;
+@using Giny.World.Managers.Fights.Effects
+@using Giny.World.Modules
+@using Giny.World.Records.Breeds
+@using Giny.World.Records.Effects
+@using Giny.World.Records.Items
+@using Giny.World.Records.Maps;
+@using Giny.World.Records.Monsters
+@using Giny.World.Records.Npcs;
+@using Giny.World.Records.Spells;
+@using System.Reflection
+@using Giny.WorldEditor.Config
+@using System.Diagnostics;
+
+@inject NavigationManager UriHelper
+@implements IDisposable
+
+@code
+{
+    int i = 0;
+}
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge">
+    <div style="height:160px" class="d-flex flex-column flex-1 align-center ">
+
+        <MudImage Width=150 Height="150" Style="opacity:0.8" Src="giny.png"></MudImage>
+
+        <div style="position:relative;top:-55px;left:55px">
+            <MudText Color=Color.Surface Typo="Typo.h5">Giny</MudText>
+            <MudText Style="position:relative;top:-7px" Color=Color.Surface Typo="Typo.caption">World Editor</MudText>
+        </div>
+    </div>
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+
+
+    <MudTimeline Class="mt-12" TimelineOrientation="TimelineOrientation.Horizontal">
+
+        @foreach (var step in Steps)
+        {
+            var align = TimelineAlign.Start;
+
+            if (i % 2 == 0)
+            {
+                align = TimelineAlign.Start;
+            }
+            else
+            {
+                align = TimelineAlign.Start;
+            }
+
+            if (step.Done)
+            {
+                <MudTimelineItem Elevation="25" TimelineAlign="@align" Size="Size.Small" Color="Color.Success">
+                    <ItemContent>
+                        <MudAlert Severity="Severity.Success">@("Finished in " + step.ExecutionTime + "s")</MudAlert>
+                        </ItemContent>
+                        <ItemOpposite>
+                            <MudText Typo="Typo.button" Color="Color.Success">@step.Name</MudText>
+                            <MudText Style="white-space:nowrap" Typo="Typo.body2" Class="mud-text-secondary">Loaded.</MudText>
+                        </ItemOpposite>
+                    </MudTimelineItem>
+
+            }
+            else if (step.Error)
+            {
+                <MudTimelineItem Elevation="25" TimelineAlign="@align" Size="Size.Small" Color="Color.Error">
+                    <ItemContent>
+                        <MudAlert Severity="Severity.Error">Exception thrown</MudAlert>
+                    </ItemContent>
+                    <ItemOpposite>
+                        <MudText Typo="Typo.button" Color="Color.Error">@step.Name</MudText>
+                        <MudText Style="white-space:nowrap" Typo="Typo.body2" Class="mud-text-secondary">Error</MudText>
+                    </ItemOpposite>
+                </MudTimelineItem>
+            }
+            else if (step.Running)
+            {
+
+                <MudTimelineItem Elevation="25" TimelineAlign="@align" Size="Size.Small" Color="Color.Info">
+                    <ItemContent>
+                        <MudAlert Style="white-space:nowrap" Severity="Severity.Info">Loading...</MudAlert>
+                    </ItemContent>
+                    <ItemOpposite>
+                        <MudText Typo="Typo.button" Color="Color.Info">@step.Name</MudText>
+                        <MudText Style="white-space:nowrap" Typo="Typo.body2" Class="mud-text-secondary">Loading...</MudText>
+                    </ItemOpposite>
+                </MudTimelineItem>
+
+
+
+            }
+            else
+            {
+                <MudTimelineItem Elevation="25" TimelineAlign="@align" Size="Size.Small" Color="Color.Default">
+                    <ItemContent>
+                        <MudText Typo="Typo.body2" Style="text-align:center;" Class="mud-text-secondary">Pending...</MudText>
+                    </ItemContent>
+
+                    <ItemOpposite>
+                        <MudText Typo="Typo.button" Color="Color.Primary">@step.Name</MudText>
+                        <MudText Style="white-space:nowrap" Typo="Typo.body2" Class="mud-text-secondary">Pending...</MudText>
+                    </ItemOpposite>
+                </MudTimelineItem>
+
+            }
+
+            i++;
+
+
+
+
+        }
+    </MudTimeline>
+
+
+
+</MudContainer>
+
+
+
+
+@code {
+    [Inject] private IDialogService DialogService { get; set; }
+    @inject ISnackbar Snackbar
+
+    private int Index;
+
+    [CascadingParameter]
+    public Home Parent
+    {
+        get;
+        set;
+    }
+
+
+    private Task LoadTask
+    {
+        get;
+        set;
+    }
+
+    private List<LoadingStep> Steps
+    {
+        get;
+        set;
+    } = new()
+    {
+        new LoadingStep("D2I Files",()=>D2IManager.Initialize(Path.Combine(ConfigManager<WorldViewConfig>.Instance.ClientPath, ClientConstants.i18nPath)) ),
+        new LoadingStep("D2O Files",LoadD2O ),
+        new LoadingStep("External Resources",ExternalResources.Initialize),
+        new LoadingStep("Spells",LoadSpells),
+        new LoadingStep("Npcs",LoadNpcs),
+        new LoadingStep("Other records",LoadRoleplayMisc),
+        new LoadingStep("Links", LoadLinks),
+
+    };
+
+    private void TryToConnectApi()
+    {
+
+        try
+        {
+            var result = Http.Get(ConfigManager<WorldViewConfig>.Instance.WorldApiUrl + WorldApi.Stats);
+            Snackbar.Add("Connection with the world server established.", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add("Unable to connect to the world server, check that the server is online or edit the configuration.", Severity.Info);
+        }
+
+
+    }
+
+    protected override void OnInitialized()
+    {
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
+        Snackbar.Configuration.MaximumOpacity = 80;
+
+        ConfigManager<WorldViewConfig>.Load(WorldViewConfig.Filepath);
+
+        WorldViewConfig config = ConfigManager<WorldViewConfig>.Instance;
+
+        DatabaseManager.Instance.Initialize(Assembly.GetAssembly(typeof(SpellRecord)),
+        config.SQLHost, config.SQLDBName, config.SQLUser, config.SQLPassword);
+
+        try
+        {
+            DatabaseManager.Instance.UseProvider();
+        }
+        catch (Exception ex)
+        {
+            OnConfigurationError("The current settings do not allow connecting to the database. Please edit the configuration");
+            return;
+
+        }
+
+        if (!IsClientPathValid())
+        {
+            OnConfigurationError("The current settings cannot locate the client, please edit the configuration.");
+            return;
+        }
+
+        DatabaseManager.Instance.OnStartLoadTable += OnStartLoadTable;
+
+        Task.Run(() =>
+        {
+            TryToConnectApi();
+        });
+
+        LoadTask = Task.Run(() =>
+           {
+               AssemblyCore.OnAssembliesLoaded();
+
+               foreach (var step in Steps)
+               {
+                   Stopwatch st = Stopwatch.StartNew();
+                   try
+                   {
+                       step.Execute();
+                   }
+                   catch (Exception ex)
+                   {
+
+                       step.Error = true;
+                       InvokeAsync(() =>
+                  {
+                      DisplayError(ex.Message);
+                      StateHasChanged();
+                  });
+                       AppState.Initialized = true;
+                       return;
+                   }
+                   step.ExecutionTime = (long)Math.Round(st.Elapsed.TotalSeconds);
+                   OnStepReached();
+               }
+
+
+               InvokeAsync(() =>
+               {
+                   AppState.Initialized = true;
+                   Parent.DrawerOpen = true;
+                   Parent.Navigate(PageEnum.SpellExplorer);
+               });
+
+
+           });
+
+    }
+    public void UpdateState()
+    {
+        this.InvokeAsync(() =>
+        {
+            StateHasChanged();
+
+        });
+    }
+    private static void LoadD2O()
+    {
+        D2OManager.Initialize(Path.Combine(ConfigManager<WorldViewConfig>.Instance.ClientPath, ClientConstants.D2oDirectory));
+        D2OCache.Initialize();
+    }
+    private static void LoadLinks()
+    {
+        NpcRecord.Initialize();
+        NpcSpawnRecord.Initialize();
+        SpellEffectManager.Instance.Initialize();
+        SpellRecord.Initialize();
+
+    }
+    private static void LoadRoleplayMisc()
+    {
+        DatabaseManager.Instance.LoadTable<BreedRecord>();
+        DatabaseManager.Instance.LoadTable<ItemRecord>();
+        DatabaseManager.Instance.LoadTable<MonsterRecord>();
+        DatabaseManager.Instance.LoadTable<DungeonRecord>();
+        DatabaseManager.Instance.LoadTable<MapPositionRecord>();
+
+
+    }
+    private static void LoadSpells()
+    {
+        DatabaseManager.Instance.LoadTable<EffectRecord>();
+        DatabaseManager.Instance.LoadTable<SpellRecord>();
+        DatabaseManager.Instance.LoadTable<SpellLevelRecord>();
+        DatabaseManager.Instance.LoadTable<SpellStateRecord>();
+    }
+    private static void LoadNpcs()
+    {
+
+        DatabaseManager.Instance.LoadTable<NpcSpawnRecord>();
+        DatabaseManager.Instance.LoadTable<NpcActionRecord>();
+        DatabaseManager.Instance.LoadTable<NpcReplyRecord>();
+        DatabaseManager.Instance.LoadTable<NpcRecord>();
+    }
+    private bool IsClientPathValid()
+    {
+        var d2oPath = Path.Combine(ConfigManager<WorldViewConfig>.Instance.ClientPath, ClientConstants.D2oDirectory);
+
+        if (!Directory.Exists(d2oPath))
+        {
+            return false;
+        }
+
+        return true;
+    }
+    private void OnConfigurationError(string message)
+    {
+        AppState.Initialized = true;
+        DisplayError(message);
+        Parent.Navigate(PageEnum.Configuration);
+    }
+    private void DisplayError(string message)
+    {
+        DialogService.ShowMessageBox(
+         "Erreur",
+         message);
+    }
+    public void Dispose()
+    {
+        // Kill Load Task
+    }
+    private void OnStepReached()
+    {
+        InvokeAsync(() =>
+              {
+                  StateHasChanged();
+              });
+    }
+    private void OnStartLoadTable(Type type, string name)
+    {
+        //OnStepReached(type.Name);
+    }
+}

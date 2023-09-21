@@ -50,7 +50,7 @@ namespace Giny.World.Managers
 
                 foreach (var client in WorldServer.Instance.GetClients().Where(x => x.Character != null))
                 {
-                    client.Character.Record.UpdateElement();
+                    client.Character.Record.UpdateLater();
                 }
 
                 try

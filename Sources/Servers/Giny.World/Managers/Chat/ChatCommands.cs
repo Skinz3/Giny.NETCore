@@ -182,7 +182,7 @@ namespace Giny.World.Managers.Chat
                 client.Character.ReplyWarning("Unable to find skill : " + elementId);
                 return;
             }
-            element.Skill.RemoveInstantElement();
+            element.Skill.RemoveNow();
             element.Skill = null;
 
             client.Character.Map.Instance.Reload();
@@ -296,6 +296,13 @@ namespace Giny.World.Managers.Chat
             {
                 client.Character.ReplyWarning("This title do not exists.");
             }
+        }
+        [ChatCommand("guild",ServerRoleEnum.Administrator)]
+        public static void GuildCommand(WorldClient client)
+        {
+            client.Character.Inventory.AddItem(1575, 1);
+
+            client.Character.OpenGuildCreationDialog();
         }
         [ChatCommand("ornament", ServerRoleEnum.GamemasterPadawan)]
         public static void AddOrnamentCommand(WorldClient client, short id)

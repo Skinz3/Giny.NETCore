@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
@@ -8,12 +8,25 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Compile Remove="Web\**" />
-		<EmbeddedResource Remove="Web\**" />
-		<None Remove="Web\**" />
+	  <None Remove="appsettings.Development.json" />
+	  <None Remove="appsettings.json" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Include="appsettings.Development.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	  <Content Include="appsettings.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
 		<ProjectReference Include="..\..\Giny.Core\Giny.Core.csproj" />
 		<ProjectReference Include="..\..\Giny.IO\Giny.IO.csproj" />
 		<ProjectReference Include="..\..\Giny.ORM\Giny.ORM.csproj" />

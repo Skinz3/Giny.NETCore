@@ -1,0 +1,202 @@
+﻿@using Giny.IO.D2O;
+@using Giny.IO.D2OClasses;
+@using Giny.Protocol.Enums;
+@using Giny.World.Managers.Effects
+@using Giny.World.Records.Effects;
+@using Giny.World.Records.Items
+@using Giny.WorldEditor.Caching;
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+
+<MudGrid>
+    <MudItem xs="3">
+
+        <MudPaper Outlined=true>
+            <MudList Dense="true" Clickable="true">
+                <MudListSubheader>
+                    <MudTextField Label="Search" TextChanged=OnSearchTextChanged @bind-Value="@Search"
+                                  AdornmentColor="Color.Primary" AdornmentIcon="@Icons.Filled.Search"
+                                  Adornment="Adornment.End" Immediate="true" Variant="Variant.Outlined" />
+                </MudListSubheader>
+
+                <div style="height:70vh;overflow-y:scroll">
+                    <Virtualize Items="@SearchResults">
+                        <MudListItem OnClick="() => SelectItem(context)" Text=@context.ToString() />
+                    </Virtualize>
+                </div>
+
+            </MudList>
+
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="9">
+        @if (SelectedItem != null)
+        {
+            <div class="d-flex flex-row  flex-grow-1 gap-2 mb-2">
+                <MudCard Class="flex-1" Outlined="true">
+                    <MudCardContent>
+                        <div class="d-flex gap-4">
+                            <MudImage Src="@ImageSource" Elevation="0" Class="rounded-lg" />
+                            <MudTextField Label="Name" @bind-Value="SelectedItem.Name"></MudTextField>
+                        </div>
+
+                        <MudTextField Label="Level" @bind-Value="SelectedItem.Level"></MudTextField>
+                        <MudTextField Label="Price" @bind-Value="SelectedItem.Price"></MudTextField>
+                        <MudField Label="Type" Variant="Variant.Text">@SelectedItem.TypeEnum</MudField>
+                    </MudCardContent>
+                </MudCard>
+                <div Class="d-flex flex-column pa-2 gap-2" Outlined=false Elevation="0">
+                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" IconColor="Color.Primary" Size="Size.Large">Save</MudButton>
+                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Autorenew" IconColor="Color.Primary" Size="Size.Large">Reload</MudButton>
+
+                </div>
+            </div>
+            <MudGrid>
+
+
+                <MudItem Class="mt-3" xs="3">
+                    <MudPaper Outlined=true>
+                        <MudList Dense="true" Clickable="true">
+                            <MudListSubheader>
+                                Effets
+                            </MudListSubheader>
+                            @foreach (var effect in SelectedItem.Effects)
+                            {
+                                <MudListItem OnClick="() => SelectEffect(effect)" IconColor="Color.Primary" Text=@effect.GetDescription() />
+                            }
+
+                            <div class="d-flex flex-column gap-2 pa-2">
+                                <MudButton OnClick="CreateEffect" Class="flex-grow-1" IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Add" Variant="Variant.Filled">Add</MudButton>
+                                <MudButton OnClick="CreateEffect" Class="flex-grow-1" IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Delete" Variant="Variant.Filled">Delete</MudButton>
+                            </div>
+
+
+                        </MudList>
+                    </MudPaper>
+                </MudItem>
+
+                @if (SelectedEffect != null)
+                {
+                    <MudItem Class="mt-3" xs="9 ">
+                        <MudSimpleTable Dense="true" Striped=false Elevation=10 Hover=false Bordered="true" Outlined=true>
+
+                            <tbody Style="grid-auto-columns: minmax(10px, auto);">
+                                <tr>
+                                    <td>
+                                        <MudAutocomplete T="EffectsEnum" Label="Effect" @bind-Value="SelectedEffect.EffectEnum" SearchFunc="@Search1"
+                                                         ResetValueOnEmptyText="false"
+                                                         CoerceText="true" CoerceValue="true" />
+                                    </td>
+                                    <td>
+                                        <MudField Label="Description" Variant="Variant.Text">  @SelectedEffect.GetDescription()</MudField>
+
+                                    </td>
+                                </tr>
+                                <tr>
+
+                                    <td>
+                                        <MudNumericField Variant="Variant.Text" Label="Min" @bind-Value="SelectedEffect.Min"></MudNumericField>
+                                    </td>
+                                    <td>
+                                        <MudNumericField Variant="Variant.Text" Label="Max" @bind-Value="SelectedEffect.Max"></MudNumericField>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <MudNumericField Variant="Variant.Text" Label="Value" @bind-Value="SelectedEffect.Value"></MudNumericField>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </MudSimpleTable>
+                    </MudItem>
+                }
+
+            </MudGrid>
+
+        }
+    </MudItem>
+
+
+
+
+</MudGrid>
+
+@code {
+
+    private async Task<IEnumerable<EffectsEnum>> Search1(string value)
+    {
+        var effects = Enum.GetValues<EffectsEnum>();
+        // In real life use an asynchronous function for fetching data from an api.
+        await Task.Delay(5);
+
+        // if text is null or empty, show complete list
+        if (string.IsNullOrEmpty(value))
+            return effects;
+        return effects.Where(x => x.ToString().Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+    private ItemRecord SelectedItem
+    {
+        get;
+        set;
+    }
+    private Item D2OItem
+    {
+        get;
+        set;
+    }
+    private List<ItemRecord> SearchResults
+    {
+        get;
+        set;
+    } = new List<ItemRecord>();
+
+    private EffectDice SelectedEffect
+    {
+        get;
+        set;
+    }
+
+    private string Search
+    {
+        get;
+        set;
+    } = "";
+
+    private string ImageSource
+    {
+        get; set;
+
+    }
+
+    private void SelectEffect(World.Managers.Effects.Effect effect)
+    {
+        this.SelectedEffect = effect as EffectDice;
+        StateHasChanged();
+    }
+
+    private void CreateEffect()
+    {
+        SelectedItem.Effects.Add(new EffectDice(EffectsEnum.Effect_AddVitality, 0, 0, 0));
+        StateHasChanged();
+    }
+
+    private void OnSearchTextChanged()
+    {
+        SearchResults = ItemRecord.GetItems().Where(x => x.ToString().ToLower().Contains(Search.ToLower())).ToList();
+        StateHasChanged();
+    }
+
+    public void SelectItem(ItemRecord item)
+    {
+        SelectedItem = item;
+        SelectedEffect = null;
+        D2OItem = D2OCache.GetItem((int)item.Id);
+
+        var base64image = ExternalResources.GetItemIcon((int)D2OItem.IconId);
+        var source = string.Format("data:image/png;base64,{0}", base64image);
+        ImageSource = source;
+    }
+
+}

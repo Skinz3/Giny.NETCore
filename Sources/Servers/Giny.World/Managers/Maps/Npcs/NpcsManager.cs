@@ -68,7 +68,7 @@ namespace Giny.World.Managers.Maps.Npcs
             npc.SpawnRecord.Direction = newDirection;
             npc.SpawnRecord.MapId = newMapId;
             npc.SetId(newMap.Instance.PopNextNPEntityId());
-            npc.SpawnRecord.UpdateInstantElement();
+            npc.SpawnRecord.UpdateNow();
 
             previousMap.Instance.RemoveEntity(npc.Id);
             newMap.Instance.AddEntity(npc);
@@ -81,10 +81,10 @@ namespace Giny.World.Managers.Maps.Npcs
             NpcSpawnRecord spawnRecord = NpcSpawnRecord.GetNpcSpawnRecord(spawnRecordId);
             IEnumerable<NpcActionRecord> npcActions = NpcActionRecord.GetNpcActions(spawnRecord.Id);
 
-            NpcReplyRecord.GetNpcReplies().Where(x => x.NpcSpawnId == spawnRecordId).RemoveInstantElements();
+            NpcReplyRecord.GetNpcReplies().Where(x => x.NpcSpawnId == spawnRecordId).RemoveNow();
 
-            spawnRecord.RemoveInstantElement();
-            npcActions.RemoveInstantElements();
+            spawnRecord.RemoveNow();
+            npcActions.RemoveNow();
 
             MapRecord map = MapRecord.GetMap(spawnRecord.MapId);
             Npc npc = map.Instance.GetEntity<Npc>(x => x.SpawnRecord.Id == spawnRecordId);
@@ -132,7 +132,7 @@ namespace Giny.World.Managers.Maps.Npcs
                 Actions = new List<NpcActionRecord>(),
             };
 
-            spawnRecord.AddInstantElement();
+            spawnRecord.AddNow();
 
             Npc npc = new Npc(spawnRecord, targetMap);
 
@@ -173,8 +173,8 @@ namespace Giny.World.Managers.Maps.Npcs
                 Actions = new List<NpcActionRecord>() { actionRecord },
             };
 
-            spawnRecord.AddInstantElement();
-            actionRecord.AddInstantElement();
+            spawnRecord.AddNow();
+            actionRecord.AddNow();
 
             Npc npc = new Npc(spawnRecord, targetMap);
             targetMap.Instance.AddEntity(npc);

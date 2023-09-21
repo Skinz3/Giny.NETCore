@@ -25,13 +25,13 @@ namespace Giny.AdditionalDrop
     {
         private Dictionary<MonsterRecord, List<ItemRecord>> Drops = new Dictionary<MonsterRecord, List<ItemRecord>>();
 
-        const double UpperBoundDropRateItem = 50d;
+        const double UpperBoundDropRateItem = 7d;
 
-        const double LowerBoundsDropRateItem = 5d;
+        const double LowerBoundsDropRateItem = 1d;
 
-        const double UpperBoundDropRateMonster = 50d;
+        const double UpperBoundDropRateMonster = 5d;
 
-        const double LowerBoundsDropRateMonster = 10d;
+        const double LowerBoundsDropRateMonster = 1d;
 
         public void CreateHooks()
         {
@@ -135,6 +135,15 @@ namespace Giny.AdditionalDrop
 
                     foreach (var recipe in recipes)
                     {
+                        var ingredients = recipe.Ingredients.Select(x => ItemRecord.GetItem(x)).ToArray();
+
+                        var max = ingredients.OrderByDescending(x => x.Level).FirstOrDefault();
+
+                        if (max.Id != gid)
+                        {
+                            continue;
+                        }
+
                         if (monster.Drops.Any(x => x.ItemGId == recipe.ResultId))
                         {
                             continue;

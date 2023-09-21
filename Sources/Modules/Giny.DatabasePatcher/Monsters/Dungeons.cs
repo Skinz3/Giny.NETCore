@@ -867,7 +867,7 @@ namespace Giny.DatabasePatcher.Monsters
 
             foreach (var value in DungeonRecord.GetDungeonRecords())
             {
-                value.UpdateInstantElement();
+                value.UpdateNow();
             }
 
         }

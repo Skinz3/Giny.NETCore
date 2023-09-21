@@ -1,6 +1,12 @@
 ﻿using Giny.Core;
 using Giny.Core.DesignPattern;
-using Microsoft.Owin.Hosting;
+using Giny.Core.IO.Configuration;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,27 +15,49 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Web
 {
-    public class WebApi : Singleton<WebApi>
+    internal class WebApi
     {
-        public static string Address = "http://" + ConfigFile.Instance.APIHost + ":" + ConfigFile.Instance.APIPort + "/";
-
-        private IDisposable WebServer
+        [StartupInvoke("WebApi", StartupInvokePriority.Last)]
+        public static void Start()
         {
-            get;
-            set;
-        }
+            var builder = WebApplication.CreateBuilder();
 
-        [StartupInvoke("Web Api", StartupInvokePriority.Last)] 
-        public void Start()
-        {
-            this.WebServer = WebApp.Start<Startup>(Address);
-            Logger.Write("Web Api started : " + Address);
-        }
 
-        public void Stop()
-        {
-            Logger.Write("Web Api stopped");
-            this.WebServer.Dispose();
+            builder.Logging.ClearProviders();
+
+            // Add services to the container.
+
+            builder.Services.AddControllers();
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
+            var app = builder.Build();
+
+            var config = ConfigManager<WorldConfig>.Instance;
+
+
+            string apiUrl = $"http://{config.APIHost}:{config.APIPort}";
+
+            app.Urls.Clear();
+
+
+            app.Urls.Add(apiUrl);
+
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+            app.UseAuthorization();
+            app.MapControllers();
+
+            Thread thread = new Thread(app.Run);
+            thread.Start();
+
+            Logger.Write($"Web api started '{apiUrl}'");
+
         }
     }
 }

@@ -56,7 +56,7 @@ namespace Giny.World.Managers.Entities.Npcs
             set
             {
                 SpawnRecord.CellId = value;
-                SpawnRecord.UpdateInstantElement();
+                SpawnRecord.UpdateNow();
             }
         }
 
@@ -69,7 +69,7 @@ namespace Giny.World.Managers.Entities.Npcs
             set
             {
                 SpawnRecord.Direction = value;
-                SpawnRecord.UpdateInstantElement();
+                SpawnRecord.UpdateNow();
             }
         }
 

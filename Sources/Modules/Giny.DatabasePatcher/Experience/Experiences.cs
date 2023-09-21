@@ -435,7 +435,7 @@ namespace Giny.DatabasePatcher.Experience
                 {
                     record.ExperienceGuild = GuildExperiences[record.Level];
                 }
-                record.UpdateInstantElement();
+                record.UpdateNow();
             }
         }
     }

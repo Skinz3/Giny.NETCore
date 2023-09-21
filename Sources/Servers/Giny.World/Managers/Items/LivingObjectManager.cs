@@ -101,7 +101,7 @@ namespace Giny.World.Managers.Items
                 effect.Value = (short)skinIndex;
                 character.Inventory.OnItemModified(item);
                 character.Inventory.RefreshWeight();
-                item.UpdateElement();
+                item.UpdateLater();
             }
             else
             {
@@ -158,7 +158,7 @@ namespace Giny.World.Managers.Items
                     }
 
                 }
-                item.UpdateElement();
+                item.UpdateLater();
 
 
             }

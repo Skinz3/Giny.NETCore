@@ -96,6 +96,8 @@ namespace Giny.World.Records.Effects
             set;
         }
 
+
+ 
         public static EffectRecord GetEffectRecord(EffectsEnum effectEnum)
         {
             return Effects[(long)effectEnum];

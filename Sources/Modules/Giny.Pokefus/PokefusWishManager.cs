@@ -41,7 +41,7 @@ namespace Giny.Pokefus
         static object locker = new object();
 
         [GenericActionHandler(GenericActionEnum.PokefusWish)]
-        public static void HandlePokefusAction(Character character, IGenericActionParameter parameter)
+        public static void HandlePokefusAction(Character character, IGenericAction parameter)
         {
             character.Inventory.Unequip(Protocol.Enums.CharacterInventoryPositionEnum.ACCESSORY_POSITION_PETS);
 

@@ -1,0 +1,227 @@
+﻿@page "/home"
+
+
+@using Giny.WorldEditor.Components.Fights
+@using Giny.WorldEditor.Components.Roleplay
+@using Giny.WorldEditor.Components.Roleplay.Npcs
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using MudBlazor
+@using Giny.World.Records.Spells;
+
+@inherits LayoutComponentBase
+@inject NavigationManager UriHelper
+@inject IDialogService DialogService
+
+@page "/"
+
+<MudThemeProvider @bind-IsDarkMode="@DarkMode" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+
+<style>
+    .dialog-open {
+        backdrop-filter: blur(5px);
+    }
+
+    * {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
+</style>
+
+
+<MudLayout Style="position:fixed">
+
+
+    <MudPaper Elevation="1">
+
+        <MudToolBar>
+            <MudIconButton OnClick="@ToggleDrawer" Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Class="mr-5" />
+
+
+            <MudSpacer />
+
+            @if (Saving)
+            {
+                <MudAlert Dense=true Severity="Severity.Info">Save in progress...</MudAlert>
+
+
+            }
+
+
+            <MudToggleIconButton @bind-Toggled=@DarkMode
+                                 Icon="@Icons.Filled.LightMode" Title="Off"
+                                 ToggledIcon="@Icons.Filled.DarkMode" ToggledTitle="On" />
+
+            <MudIconButton Icon="@Icons.Material.Outlined.Notifications" />
+            <MudIconButton Icon="@Icons.Material.Outlined.PushPin" />
+            <MudIconButton OnClick="()=> Navigate(PageEnum.Configuration)" Icon="@Icons.Material.Outlined.Settings" Color="Color.Inherit" />
+        </MudToolBar>
+        <MudDrawer @bind-Open="@DrawerOpen" Elevation="1">
+            <MudDrawerHeader>
+                <div style="height:110px;margin-top:10px;margin-left:30px" class="d-flex flex-column flex-1  ">
+
+                    <MudImage Width=100 Height="100" Style="opacity:0.8" Src="giny.png"></MudImage>
+
+                    <div style="position:relative;top:-42px;left:65px">
+                        <MudText Color=Color.Surface Typo="Typo.h6">Giny</MudText>
+                        <MudText Style="position:relative;top:-10px" Color=Color.Surface Typo="Typo.caption">World Editor</MudText>
+                    </div>
+                </div>
+
+            </MudDrawerHeader>
+            <MudNavMenu>
+                <MudTreeView Style="max-height:700px;overflow-y:scroll;padding-bottom:50px" Color=Color.Primary T="string">
+                    <MudTreeViewItem Icon="@Icons.Outlined.LocalFireDepartment" Value="@("Fights")">
+                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.SpellExplorer)" Match="NavLinkMatch.All">Spells</MudNavLink>
+                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.EffectsRelator)" Match="NavLinkMatch.All">Spells by effects</MudNavLink>
+                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.TriggersRelator)" Match="NavLinkMatch.All">Spells by triggers</MudNavLink>
+                    </MudTreeViewItem>
+
+                    <MudTreeViewItem Icon="@Icons.Outlined.Brightness4" Value="@("Roleplay")">
+                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Dungeons)" Match="NavLinkMatch.All">Dungeons</MudNavLink>
+                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Items)" Match="NavLinkMatch.All">Items</MudNavLink>
+                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Npcs)" Match="NavLinkMatch.All">Npcs</MudNavLink>
+                    </MudTreeViewItem>
+
+                    <MudTreeViewItem Icon="@Icons.Outlined.FilterDrama" Value="@("Server")">
+                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Server)" Match="NavLinkMatch.All">Server management</MudNavLink>
+                    </MudTreeViewItem>
+
+
+                    <MudTreeViewItem Icon="@Icons.Outlined.Computer" Value="@("Client")">
+                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.D2O)" Match="NavLinkMatch.All">D2O</MudNavLink>
+                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.D2I)" Match="NavLinkMatch.All">D2I</MudNavLink>
+                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.D2P)" Match="NavLinkMatch.All">D2P</MudNavLink>
+                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.SWL)" Match="NavLinkMatch.All">SWL</MudNavLink>
+                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.MapEditor)" Match="NavLinkMatch.All">MapEditor</MudNavLink>
+                    </MudTreeViewItem>
+
+                    <MudTreeViewItem Icon="@Icons.Material.Outlined.Settings" Value="@("Settings")">
+                        <MudNavLink Icon="@Icons.Material.Filled.ArrowRight" OnClick="() => Navigate(PageEnum.Configuration)" Match="NavLinkMatch.All">Configuration</MudNavLink>
+
+                    </MudTreeViewItem>
+
+
+                </MudTreeView>
+
+
+            </MudNavMenu>
+        </MudDrawer>
+    </MudPaper>
+
+    <MudMainContent Class="pa-4">
+        <CascadingValue Value="this">
+
+            @if (AppState.Page == PageEnum.Loader)
+            {
+                <Loader></Loader>
+            }
+            else if (AppState.Page == PageEnum.SpellExplorer)
+            {
+                <SpellExplorer></SpellExplorer>
+            }
+            else if (AppState.Page == PageEnum.EffectsRelator)
+            {
+                <EffectsRelator></EffectsRelator>
+            }
+            else if (AppState.Page == PageEnum.TriggersRelator)
+            {
+                <TriggersRelator></TriggersRelator>
+            }
+            else if (AppState.Page == PageEnum.Items)
+            {
+                <Items></Items>
+            }
+            else if (AppState.Page == PageEnum.D2O)
+            {
+                <D2O></D2O>
+            }
+            else if (AppState.Page == PageEnum.D2I)
+            {
+                <D2I></D2I>
+            }
+            else if (AppState.Page == PageEnum.Dungeons)
+            {
+                <Dungeons></Dungeons>
+            }
+            else if (AppState.Page == PageEnum.Npcs)
+            {
+                <Npcs></Npcs>
+            }
+            else if (AppState.Page == PageEnum.Configuration)
+            {
+                <Configuration></Configuration>
+            }
+            else if (AppState.Page == PageEnum.Server)
+            {
+                <ServerManagement></ServerManagement>
+            }
+
+        </CascadingValue>
+
+    </MudMainContent>
+</MudLayout>
+
+
+@code {
+    private bool DarkMode
+    {
+        get;
+        set;
+    } = true;
+
+    public bool DrawerOpen
+    {
+        get;
+        set;
+    } = false;
+
+
+    bool Saving
+    {
+
+        get;
+        set;
+    } = false;
+
+
+    public async Task NotifySaving(bool saving)
+    {
+        this.Saving = saving;
+
+        await InvokeAsync(() =>
+        {
+            this.StateHasChanged();
+
+        });
+
+    }
+    public void Navigate(PageEnum page)
+    {
+
+        if (!AppState.Initialized)
+        {
+            DialogOptions options = new DialogOptions() { ClassBackground = "dialog-open" };
+            DialogService.ShowMessageBox("Loading", "Please wait for the application to finish loading.", "OK", null, null, options);
+            return;
+        }
+        AppState.Page = page;
+        StateHasChanged();
+
+    }
+
+
+    void ToggleDrawer()
+    {
+        DrawerOpen = !DrawerOpen;
+    }
+}
+

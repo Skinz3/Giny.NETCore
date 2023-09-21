@@ -64,7 +64,7 @@ namespace Giny.Auth.Handlers
             if (client.Account.LastSelectedServerId != serverId)
             {
                 client.Account.LastSelectedServerId = serverId;
-                client.Account.UpdateInstantElement();
+                client.Account.UpdateNow();
             }
 
             var ipcClient = IPCServer.Instance.GetClient(serverId);
@@ -150,7 +150,7 @@ namespace Giny.Auth.Handlers
             try
             {
                 client.Account.Nickname = message.nickname;
-                client.Account.UpdateInstantElement();
+                client.Account.UpdateNow();
                 client.Send(new NicknameAcceptedMessage());
             }
             catch (Exception ex)
@@ -212,7 +212,7 @@ namespace Giny.Auth.Handlers
             if (!client.Account.IPs.Contains(client.Ip))
             {
                 client.Account.IPs.Add(client.Ip);
-                client.Account.UpdateInstantElement();
+                client.Account.UpdateNow();
             }
 
             AuthClient loggedClient = AuthServer.Instance.GetClient(client.Account.Id);

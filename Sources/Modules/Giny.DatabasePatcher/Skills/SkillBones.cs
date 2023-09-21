@@ -89,7 +89,7 @@ namespace Giny.DatabasePatcher.Skills
                     skillRecord.ParentBonesIds = SkillsBonesIds[skillRecord.Id].ToList();
                 }
 
-                skillRecord.UpdateInstantElement();
+                skillRecord.UpdateNow();
             }
         }
     }

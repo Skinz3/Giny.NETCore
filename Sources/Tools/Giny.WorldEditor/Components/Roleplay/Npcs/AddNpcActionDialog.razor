@@ -1,0 +1,84 @@
+﻿@using Giny.IO.D2I;
+@using Giny.IO.D2OClasses;
+@using Giny.ORM;
+@using Giny.World.Records.Npcs;
+
+@using Giny.Protocol.Custom.Enums
+
+<MudDialog>
+    <DialogContent>
+        <MudPaper Style="width:300px" Elevation="0" Outlined=false>
+            @if (Actions.Count > 0)
+            {
+                <MudSelect @bind-Value="SelectedAction" Label="Action">
+                    @foreach (NpcActionsEnum item in Actions)
+                    {
+                        <MudSelectItem Value="@item">@item.ToString()</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            else
+            {
+                <MudText>No actions available</MudText>
+            }
+        </MudPaper>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+
+        @if (Actions.Count > 0)
+        {
+            <MudButton OnClick="AddAction">Add</MudButton>
+
+        }
+    </DialogActions>
+</MudDialog>
+@code {
+
+ 
+
+
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public NpcSpawnRecord SpawnRecord
+    {
+        get;
+        set;
+    }
+
+    private List<NpcActionsEnum> Actions
+    {
+        get;
+        set;
+    }
+
+    private NpcActionsEnum SelectedAction
+    {
+        get;
+        set;
+    }
+    private List<NpcActionsEnum> GetActions()
+    {
+        var list = SpawnRecord.Template.Actions.Select(x => (NpcActionsEnum)x).ToList();
+
+        list.RemoveAll(x => SpawnRecord.Actions.Any(y => y.Action == x));
+
+        return list;
+    }
+
+    protected override void OnInitialized()
+    {
+        this.Actions = GetActions();
+
+        if (Actions.Count > 0)
+        {
+            SelectedAction = Actions.First();
+        }
+        base.OnInitialized();
+    }
+
+    void AddAction() => MudDialog.Close<NpcActionsEnum>(SelectedAction);
+
+    void Cancel() => MudDialog.Cancel();
+}

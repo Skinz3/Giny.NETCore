@@ -350,7 +350,7 @@ namespace Giny.World.Managers.Items
             item.Quantity = quantity;
             newItem.Quantity -= quantity;
 
-            item.UpdateElement();
+            item.UpdateLater();
 
             return newItem;
         }

@@ -1,0 +1,241 @@
+﻿@using Giny.Core.Extensions;
+@using Giny.IO.D2I;
+@using Giny.IO.D2O;
+@using Giny.IO.D2OClasses;
+@using Giny.Protocol.Enums;
+@using Giny.World.Managers.Fights.Effects;
+@using Giny.World.Records.Breeds;
+@using Giny.World.Records.Maps;
+@using Giny.World.Records.Monsters;
+@using Giny.World.Records.Spells;
+@using Giny.WorldEditor.Config;
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.AspNetCore.Components;
+@using MudBlazor.Services;
+@using System.Reflection;
+@using System.Collections;
+@using System.Collections.Concurrent;
+@inject IDialogService DialogService
+
+
+
+<MudGrid>
+
+    <MudItem xs="2">
+        <MudPaper Outlined=true>
+
+            <MudList Dense="true" Clickable="true">
+
+
+                <MudListSubheader>
+
+                    <MudCheckBox @bind-Checked="@UnhandledOnly" Color="Color.Primary"> <MudText Typo="Typo.body2">  Non géré uniquement</MudText> </MudCheckBox>
+                    <MudCheckBox @bind-Checked="@BreedSpellsOnly" Color="Color.Primary"><MudText Typo="Typo.body2"> Sorts de classe</MudText></MudCheckBox>
+
+                    <MudTextField Label="Search" TextChanged=OnSearchTextChanged @bind-Value="@Search"
+                                  AdornmentColor="Color.Primary" AdornmentIcon="@Icons.Filled.Search"
+                                  Adornment="Adornment.End" Immediate="true" Variant="Variant.Outlined" />
+                </MudListSubheader>
+
+                <div style="height:70vh;overflow-y:scroll">
+
+                    <Virtualize Items="@SearchResults">
+                        <MudListItem OnClick="() => SelectTrigger(context)" Text=@context.ToString() />
+                    </Virtualize>
+                </div>
+
+            </MudList>
+
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="2">
+        <MudPaper Outlined=true>
+
+            <MudList Dense="true" Clickable="true">
+                <MudListSubheader>
+                    <MudText>@SelectedTrigger</MudText>
+                </MudListSubheader>
+
+                <div style="height:80vh;overflow-y:scroll">
+
+                    <Virtualize Items="@DisplayedSpells">
+                        <MudListItem OnClick="() => DisplaySpell(context)" Text=@(GetSpellName(context)) />
+                    </Virtualize>
+                </div>
+
+            </MudList>
+
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="8">
+
+        <SpellComponent @ref="spellComponent"></SpellComponent>
+    </MudItem>
+
+
+
+</MudGrid>
+
+
+@code {
+    [CascadingParameter]
+    public Home Parent
+    {
+        get;
+        set;
+    }
+    private string Search
+    {
+        get;
+        set;
+    } = "";
+
+
+
+    bool m_unhandledOnly;
+
+    bool UnhandledOnly
+    {
+        get
+        {
+            return m_unhandledOnly;
+        }
+        set
+        {
+            m_unhandledOnly = value;
+            OnSearchParameterChange();
+        }
+    }
+
+    bool m_breedSpellsOnly;
+
+    bool BreedSpellsOnly
+    {
+        get
+        {
+            return m_breedSpellsOnly;
+        }
+        set
+        {
+            m_breedSpellsOnly = value;
+            OnSearchParameterChange();
+        }
+    }
+
+    Dictionary<string, List<SpellRecord>> TriggerSpells = new Dictionary<string, List<SpellRecord>>();
+
+    List<string> SearchResults = new();
+
+    List<SpellRecord> DisplayedSpells = new();
+
+    private SpellComponent spellComponent;
+
+    private string SelectedTrigger
+    {
+        get;
+        set;
+    }
+    string GetSpellName(SpellRecord record)
+    {
+        var breedName = SpellHelper.GetSpellDescriptionWithBreed(record);
+        return breedName != null ? breedName : record.ToString();
+    }
+
+    private void OnSearchTextChanged()
+    {
+        SearchResults = TriggerSpells.Keys.Where(x => x.ToString().ToLower().Contains(Search.ToLower())).ToList();
+        StateHasChanged();
+    }
+    private void SelectTrigger(string trigger)
+    {
+        SelectedTrigger = trigger;
+
+        if (!BreedSpellsOnly)
+        {
+            DisplayedSpells = TriggerSpells[trigger].ToList();
+        }
+        else
+        {
+            DisplayedSpells = TriggerSpells[trigger].Where(x => SpellHelper.GetSpellDescriptionWithBreed(x) != null).ToList();
+        }
+    }
+
+    private void DisplaySpell(SpellRecord record)
+    {
+        spellComponent.SelectSpell(record);
+    }
+    private void OnSearchParameterChange()
+    {
+        var results = BreedSpellsOnly ? GetBreedSpellsOnlyTriggers() : TriggerSpells.Keys.ToList();
+
+        if (UnhandledOnly)
+        {
+            results = results.Where(x => x.ToString().Contains("(Unknown)")).ToList();
+        }
+
+        SearchResults = results;
+        DisplayedSpells = new List<SpellRecord>();
+        SelectedTrigger = null;
+
+    }
+    private List<string> GetBreedSpellsOnlyTriggers()
+    {
+        List<string> searchResults = new();
+
+        foreach (var pair in TriggerSpells)
+        {
+            foreach (var spell in pair.Value)
+            {
+                if (SpellHelper.GetSpellDescriptionWithBreed(spell) != null)
+                {
+                    searchResults.Add(pair.Key);
+                    break;
+                }
+            }
+        }
+        return searchResults;
+    }
+
+
+
+    private void InternalLoad()
+    {
+        var spellRecords = SpellRecord.GetSpellRecords();
+        int i = 0;
+        int n = spellRecords.Count();
+
+        foreach (var spell in spellRecords)
+        {
+            foreach (var level in spell.Levels)
+            {
+                foreach (var effect in level.Effects)
+                {
+                    int index = 0;
+                    foreach (var trigger in effect.RawTriggers.Split('|'))
+                    {
+                        string triggerName = trigger.RemoveNumbers() + " (" + effect.Triggers[index].Type + ")";
+
+                        if (!TriggerSpells.ContainsKey(triggerName))
+                        {
+                            TriggerSpells.Add(triggerName, new List<SpellRecord>());
+                        }
+
+
+                        if (!TriggerSpells[triggerName].Contains(spell))
+                            TriggerSpells[triggerName].Add(spell);
+                        index++;
+                    }
+
+                }
+            }
+            i++;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        InternalLoad();
+    }
+}

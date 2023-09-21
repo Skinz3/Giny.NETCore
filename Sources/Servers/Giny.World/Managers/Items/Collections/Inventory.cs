@@ -102,7 +102,7 @@ namespace Giny.World.Managers.Items.Collections
         {
             foreach (var item in items)
             {
-                item.UpdateElement();
+                item.UpdateLater();
             }
 
             Character.Client.Send(new ObjectsQuantityMessage(Array.ConvertAll(items.ToArray(), x => x.GetObjectItemQuantity())));
@@ -111,7 +111,7 @@ namespace Giny.World.Managers.Items.Collections
 
         public override void OnItemQuantityChanged(CharacterItemRecord item, int quantity)
         {
-            item.UpdateElement();
+            item.UpdateLater();
             UpdateItemQuantity(item);
             RefreshWeight();
         }
@@ -120,7 +120,7 @@ namespace Giny.World.Managers.Items.Collections
         {
             foreach (var item in items)
             {
-                item.RemoveElement();
+                item.RemoveLater();
                 Character.GeneralShortcutBar.OnItemRemoved(item);
             }
             Character.Client.Send(new ObjectsDeletedMessage(Array.ConvertAll(items.ToArray(), x => x.UId)));
@@ -133,7 +133,7 @@ namespace Giny.World.Managers.Items.Collections
             foreach (var item in items)
             {
                 item.UId = ItemsManager.Instance.PopItemUID();
-                item.AddElement();
+                item.AddLater();
                 Character.OnItemAdded(item);
             }
             Character.Client.Send(new ObjectsAddedMessage(Array.ConvertAll(items.ToArray(), x => x.GetObjectItem())));
@@ -142,7 +142,7 @@ namespace Giny.World.Managers.Items.Collections
 
         public override void OnItemRemoved(CharacterItemRecord item)
         {
-            item.RemoveElement();
+            item.RemoveLater();
             Character.Client.Send(new ObjectDeletedMessage(item.UId));
             Character.GeneralShortcutBar.OnItemRemoved(item);
             RefreshWeight();
@@ -153,7 +153,7 @@ namespace Giny.World.Managers.Items.Collections
         public override void OnItemAdded(CharacterItemRecord item)
         {
             item.UId = ItemsManager.Instance.PopItemUID();
-            item.AddElement();
+            item.AddLater();
             Character.Client.Send(new ObjectAddedMessage(item.GetObjectItem(), 0)); // 0??????
             RefreshWeight();
         }
@@ -386,7 +386,7 @@ namespace Giny.World.Managers.Items.Collections
                 UpdateItemQuantity(item);
             }
 
-            item.UpdateElement();
+            item.UpdateLater();
 
             OnItemMoved(item, lastPosition);
 
@@ -418,7 +418,7 @@ namespace Giny.World.Managers.Items.Collections
                     {
                         item.PositionEnum = CharacterInventoryPositionEnum.INVENTORY_POSITION_NOT_EQUIPED;
                         sameItem.Quantity += quantity;
-                        sameItem.UpdateElement();
+                        sameItem.UpdateLater();
                         this.UpdateItemQuantity(sameItem);
                         this.RemoveItem(item.UId, item.Quantity);
                     }
@@ -431,7 +431,7 @@ namespace Giny.World.Managers.Items.Collections
                 else
                 {
                     item.PositionEnum = CharacterInventoryPositionEnum.INVENTORY_POSITION_NOT_EQUIPED;
-                    item.UpdateElement();
+                    item.UpdateLater();
                 }
 
                 OnItemMoved(item, lastPosition);
@@ -587,7 +587,7 @@ namespace Giny.World.Managers.Items.Collections
                         CharacterItemRecord newItem = ItemsManager.Instance.CutItem(item, 1, CharacterInventoryPositionEnum.INVENTORY_POSITION_NOT_EQUIPED);
                         LivingObjectManager.Instance.AssociateLivingObject(Character, item, targeted);
                         AddItem(newItem);
-                        item.UpdateElement();
+                        item.UpdateLater();
                         UpdateItemQuantity(item);
                         return;
                     }
@@ -621,7 +621,7 @@ namespace Giny.World.Managers.Items.Collections
                         this.Associate(item, targeted);
                         AddItem(newItem);
                         UpdateItemQuantity(item);
-                        item.UpdateElement();
+                        item.UpdateLater();
 
                     }
                     else
@@ -658,10 +658,10 @@ namespace Giny.World.Managers.Items.Collections
 
 
 
-            item.UpdateElement();
+            item.UpdateLater();
             OnObjectMoved(item, position);
             RefreshWeight();
-            Character.Record.UpdateElement();
+            Character.Record.UpdateLater();
             Character.RefreshActorOnMap();
             Character.RefreshStats();
 
@@ -681,7 +681,7 @@ namespace Giny.World.Managers.Items.Collections
                 UpdateItemAppearence(targeted, item.AppearanceId);
             }
             targeted.Effects.Add(new EffectInteger(EffectsEnum.Effect_Apparence_Wrapper, (short)item.Record.Id));
-            targeted.UpdateElement();
+            targeted.UpdateLater();
             OnItemModified(targeted);
             RefreshWeight();
             Character.RefreshLookOnMap();
@@ -734,7 +734,7 @@ namespace Giny.World.Managers.Items.Collections
                 {
                     OnItemModified(item);
                 }
-                item.UpdateElement();
+                item.UpdateLater();
 
                 RefreshWeight();
                 Character.RefreshLookOnMap();
@@ -762,7 +762,7 @@ namespace Giny.World.Managers.Items.Collections
             if (item2 != null)
             {
                 item2.Quantity += item.Quantity;
-                item2.UpdateElement();
+                item2.UpdateLater();
                 OnItemModified(item2);
                 RemoveItem(item, item.Quantity);
                 return true;

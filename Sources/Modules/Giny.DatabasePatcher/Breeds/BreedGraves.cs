@@ -48,7 +48,7 @@ namespace Giny.DatabasePatcher.Breeds
                 }
 
                 breed.GraveBonesId = GraveBones[breed.BreedEnum];
-                breed.UpdateInstantElement();
+                breed.UpdateNow();
             }
         }
     }

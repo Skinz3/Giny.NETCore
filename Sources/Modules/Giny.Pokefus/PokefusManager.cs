@@ -105,7 +105,7 @@ namespace Giny.Pokefus
 
                 character.Inventory.OnItemModified(item);
 
-                item.UpdateElement();
+                item.UpdateLater();
             }
 
             return true;
