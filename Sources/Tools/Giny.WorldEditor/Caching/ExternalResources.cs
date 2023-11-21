@@ -13,9 +13,13 @@ namespace Giny.WorldEditor.Caching
     {
         static D2PFile ItemIconsFile;
 
+        static D2PFile MonsterIconsFile;
+
         public static void Initialize()
         {
             ItemIconsFile = new D2PFile(Path.Combine(ClientConstants.ClientPath, ClientConstants.ItemBitmap0Path));
+
+            MonsterIconsFile = new D2PFile(Path.Combine(ClientConstants.ClientPath,ClientConstants.MonsterBitmap0Path));
         }
 
         public static async Task<string> GetSpellIcon(int iconId)
@@ -34,6 +38,14 @@ namespace Giny.WorldEditor.Caching
             // 
             string url = string.Format("https://www.dofusbook.net/flash/{0}/full/1/{1}_{1}.png", hexString, size);
             return await GetBase64FromUrlAsync(url);
+        }
+
+        public static string GetMonsterIcon(short monsterId)
+        {
+            var icon = MonsterIconsFile.Entries.FirstOrDefault(x => Path.GetFileNameWithoutExtension(x.FileName) == monsterId.ToString());
+            var entryData = MonsterIconsFile.ReadFile(icon);
+            string base64String = Convert.ToBase64String(entryData);
+            return base64String;
         }
         public static string GetItemIcon(int iconId)
         {

@@ -4,6 +4,7 @@
 @using Giny.ORM;
 @using Giny.WorldEditor.Config;
 @using MySql.Data.MySqlClient;
+  
 
 <MudContainer>
     <br />
@@ -226,7 +227,7 @@
     {
         try
         {
-            var result = Http.Get(WorldApiUrl + WorldApi.Stats);
+            var result = Http.Get(WorldApiUrl + WorldApi.StatsPath);
             return true;
         }
         catch (Exception ex)

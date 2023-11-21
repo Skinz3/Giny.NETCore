@@ -41,6 +41,7 @@ namespace Giny.IO.D2I
             InitializeLanguageFile(lang);
             return Files[lang].GetAllText();
         }
+
         private static void InitializeLanguageFile(string lang)
         {
             if (!Files.ContainsKey(lang))
@@ -54,6 +55,11 @@ namespace Giny.IO.D2I
                     throw new FileNotFoundException("Unable to find d2i file for lang " + lang);
                 }
             }
+        }
+        public static void SetText(int id, string text, string lang = "fr")
+        {
+            InitializeLanguageFile(lang);
+            Files[lang].SetText(id, text);
         }
         public static string GetText(int id, string lang = "fr")
         {

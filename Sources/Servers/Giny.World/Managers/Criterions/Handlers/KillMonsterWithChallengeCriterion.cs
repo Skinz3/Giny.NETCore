@@ -27,7 +27,7 @@ namespace Giny.World.Managers.Criterions.Handlers
         }
         public KillMonsterWithChallengeCriterion(string criteriaFull) : base(criteriaFull)
         {
-            var split = CriteriaValue.Split(',');
+            var split = Value.Split(',');
 
 
             MonsterId = short.Parse(split[0]);

@@ -17,9 +17,18 @@ namespace Giny.World.Managers.Criterions.Handlers
 
         public override bool Eval(WorldClient client)
         {
-            bool obj = client.Character.HasTitle(short.Parse(CriteriaValue));
+            bool flag = client.Character.HasTitle(short.Parse(Value));
 
-            return ComparaisonSymbol == '=' ? obj : !obj;
+            switch (Operator)
+            {
+                case CriterionComparaisonOperator.Equal:
+                    return flag;
+                case CriterionComparaisonOperator.Negation:
+                    return !flag;
+                default:
+                    throw new NotImplementedException("Not implemented operator for has title criterion " + Operator);
+            }
+
         }
     }
 }

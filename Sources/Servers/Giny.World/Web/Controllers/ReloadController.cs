@@ -1,4 +1,5 @@
-﻿using Giny.World.Managers.Maps.Npcs;
+﻿using Giny.World.Managers.Items;
+using Giny.World.Managers.Maps.Npcs;
 using Giny.World.Network;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -18,7 +19,20 @@ namespace Giny.World.Web.Controllers
         {
             try
             {
-                NpcsManager.Instance.ReloadNpcs();
+                NpcsManager.Instance.Reload();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        [Route("items")]
+        public bool ReloadItems()
+        {
+            try
+            {
+                ItemsManager.Instance.Reload();
                 return true;
             }
             catch

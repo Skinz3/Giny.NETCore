@@ -104,7 +104,7 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("npcs", ServerRoleEnum.Administrator)]
         public static void ReloadNpcs(WorldClient client)
         {
-            NpcsManager.Instance.ReloadNpcs();
+            NpcsManager.Instance.Reload();
             client.Character.ReplyWarning("Npcs reloaded.");
         }
         [ChatCommand("event", ServerRoleEnum.Player)] // in module

@@ -1,10 +1,12 @@
-﻿@using Giny.IO.D2O;
+﻿@using Giny.IO.D2I;
+@using Giny.IO.D2O;
 @using Giny.IO.D2OClasses;
 @using Giny.Protocol.Enums;
 @using Giny.World.Managers.Effects
 @using Giny.World.Records.Effects;
 @using Giny.World.Records.Items
 @using Giny.WorldEditor.Caching;
+@using Giny.ORM;
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 
 <MudGrid>
@@ -37,7 +39,7 @@
                     <MudCardContent>
                         <div class="d-flex gap-4">
                             <MudImage Src="@ImageSource" Elevation="0" Class="rounded-lg" />
-                            <MudTextField Label="Name" @bind-Value="SelectedItem.Name"></MudTextField>
+                            <MudTextField TextChanged="OnItemNameChange" Label="Name" @bind-Value="SelectedItem.Name"></MudTextField>
                         </div>
 
                         <MudTextField Label="Level" @bind-Value="SelectedItem.Level"></MudTextField>
@@ -45,11 +47,7 @@
                         <MudField Label="Type" Variant="Variant.Text">@SelectedItem.TypeEnum</MudField>
                     </MudCardContent>
                 </MudCard>
-                <div Class="d-flex flex-column pa-2 gap-2" Outlined=false Elevation="0">
-                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" IconColor="Color.Primary" Size="Size.Large">Save</MudButton>
-                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Autorenew" IconColor="Color.Primary" Size="Size.Large">Reload</MudButton>
-
-                </div>
+                
             </div>
             <MudGrid>
 
@@ -67,7 +65,7 @@
 
                             <div class="d-flex flex-column gap-2 pa-2">
                                 <MudButton OnClick="CreateEffect" Class="flex-grow-1" IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Add" Variant="Variant.Filled">Add</MudButton>
-                                <MudButton OnClick="CreateEffect" Class="flex-grow-1" IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Delete" Variant="Variant.Filled">Delete</MudButton>
+                                <MudButton OnClick="DeleteEffect" Class="flex-grow-1" IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Delete" Variant="Variant.Filled">Delete</MudButton>
                             </div>
 
 
@@ -95,15 +93,15 @@
                                 <tr>
 
                                     <td>
-                                        <MudNumericField Variant="Variant.Text" Label="Min" @bind-Value="SelectedEffect.Min"></MudNumericField>
+                                        <MudNumericField TextChanged="SelectedItem.UpdateLater" Variant="Variant.Text" Label="Min" @bind-Value="SelectedEffect.Min"></MudNumericField>
                                     </td>
                                     <td>
-                                        <MudNumericField Variant="Variant.Text" Label="Max" @bind-Value="SelectedEffect.Max"></MudNumericField>
+                                        <MudNumericField TextChanged="SelectedItem.UpdateLater" Variant="Variant.Text" Label="Max" @bind-Value="SelectedEffect.Max"></MudNumericField>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <MudNumericField Variant="Variant.Text" Label="Value" @bind-Value="SelectedEffect.Value"></MudNumericField>
+                                        <MudNumericField TextChanged="SelectedItem.UpdateLater" Variant="Variant.Text" Label="Value" @bind-Value="SelectedEffect.Value"></MudNumericField>
                                     </td>
 
                                 </tr>
@@ -124,6 +122,21 @@
 
 @code {
 
+    private void DeleteEffect()
+    {
+        if (SelectedEffect != null)
+        {
+            SelectedItem.Effects.Remove(SelectedEffect);
+            SelectedItem.UpdateLater();
+        }
+    
+    }
+    private void OnItemNameChange()
+    {
+        D2IManager.SetText((int)D2OItem.NameId, SelectedItem.Name);
+
+        SelectedItem.UpdateLater();
+    }
     private async Task<IEnumerable<EffectsEnum>> Search1(string value)
     {
         var effects = Enum.GetValues<EffectsEnum>();
@@ -180,6 +193,7 @@
     {
         SelectedItem.Effects.Add(new EffectDice(EffectsEnum.Effect_AddVitality, 0, 0, 0));
         StateHasChanged();
+        SelectedItem.UpdateLater();
     }
 
     private void OnSearchTextChanged()
@@ -197,6 +211,7 @@
         var base64image = ExternalResources.GetItemIcon((int)D2OItem.IconId);
         var source = string.Format("data:image/png;base64,{0}", base64image);
         ImageSource = source;
+
     }
 
 }

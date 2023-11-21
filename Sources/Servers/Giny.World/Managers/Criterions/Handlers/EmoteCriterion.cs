@@ -17,7 +17,7 @@ namespace Giny.World.Managers.Criterions.Handlers
 
         public override bool Eval(WorldClient client)
         {
-            return !client.Character.Record.KnownEmotes.Contains((byte)int.Parse(CriteriaValue));
+            return !client.Character.Record.KnownEmotes.Contains((byte)int.Parse(Value));
         }
     }
 }

@@ -20,6 +20,7 @@
 @using Giny.WorldEditor.Config
 @using System.Diagnostics;
 
+
 @inject NavigationManager UriHelper
 @implements IDisposable
 
@@ -29,7 +30,7 @@
 }
 
 <MudContainer MaxWidth="MaxWidth.ExtraLarge">
-    <div style="height:160px" class="d-flex flex-column flex-1 align-center ">
+    <div style="height:170px;margin-top:24px" class="d-flex flex-column flex-1 align-center ">
 
         <MudImage Width=150 Height="150" Style="opacity:0.8" Src="giny.png"></MudImage>
 
@@ -155,7 +156,7 @@
     {
         new LoadingStep("D2I Files",()=>D2IManager.Initialize(Path.Combine(ConfigManager<WorldViewConfig>.Instance.ClientPath, ClientConstants.i18nPath)) ),
         new LoadingStep("D2O Files",LoadD2O ),
-        new LoadingStep("External Resources",ExternalResources.Initialize),
+        new LoadingStep("Client resources",ExternalResources.Initialize),
         new LoadingStep("Spells",LoadSpells),
         new LoadingStep("Npcs",LoadNpcs),
         new LoadingStep("Other records",LoadRoleplayMisc),
@@ -165,24 +166,20 @@
 
     private void TryToConnectApi()
     {
-
-        try
+        if (WorldApi.Available())
         {
-            var result = Http.Get(ConfigManager<WorldViewConfig>.Instance.WorldApiUrl + WorldApi.Stats);
             Snackbar.Add("Connection with the world server established.", Severity.Success);
         }
-        catch (Exception ex)
+        else
         {
-            Snackbar.Add("Unable to connect to the world server, check that the server is online or edit the configuration.", Severity.Info);
+            Snackbar.Add("Unable to connect to the world server, verify that the server is online or edit the configuration.", Severity.Info);
         }
-
-
     }
 
     protected override void OnInitialized()
     {
         Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
-        Snackbar.Configuration.MaximumOpacity = 80;
+        Snackbar.Configuration.MaximumOpacity = 90;
 
         ConfigManager<WorldViewConfig>.Load(WorldViewConfig.Filepath);
 

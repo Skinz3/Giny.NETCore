@@ -8,10 +8,13 @@
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using MudBlazor
 @using Giny.World.Records.Spells;
+@using System.Diagnostics;
 
 @inherits LayoutComponentBase
 @inject NavigationManager UriHelper
 @inject IDialogService DialogService
+@inject ISnackbar Snackbar
+
 
 @page "/"
 
@@ -21,6 +24,9 @@
 
 
 <style>
+    body{
+        overflow-x : hidden;
+    }
     .dialog-open {
         backdrop-filter: blur(5px);
     }
@@ -37,7 +43,7 @@
 </style>
 
 
-<MudLayout Style="position:fixed">
+<MudLayout   > <!-- Style="position:fixed" -->
 
 
     <MudPaper Elevation="1">
@@ -48,11 +54,9 @@
 
             <MudSpacer />
 
-            @if (Saving)
+            @if (Notification != null)
             {
-                <MudAlert Dense=true Severity="Severity.Info">Save in progress...</MudAlert>
-
-
+                <MudAlert Dense=true Severity="@NotificationSeverity.Value">@Notification</MudAlert>
             }
 
 
@@ -60,8 +64,8 @@
                                  Icon="@Icons.Filled.LightMode" Title="Off"
                                  ToggledIcon="@Icons.Filled.DarkMode" ToggledTitle="On" />
 
-            <MudIconButton Icon="@Icons.Material.Outlined.Notifications" />
-            <MudIconButton Icon="@Icons.Material.Outlined.PushPin" />
+            <MudIconButton OnClick="GlobalSave" Icon="@Icons.Material.Outlined.Save" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Cancel" OnClick="CloseClient" />
             <MudIconButton OnClick="()=> Navigate(PageEnum.Configuration)" Icon="@Icons.Material.Outlined.Settings" Color="Color.Inherit" />
         </MudToolBar>
         <MudDrawer @bind-Open="@DrawerOpen" Elevation="1">
@@ -92,7 +96,7 @@
                     </MudTreeViewItem>
 
                     <MudTreeViewItem Icon="@Icons.Outlined.FilterDrama" Value="@("Server")">
-                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Server)" Match="NavLinkMatch.All">Server management</MudNavLink>
+                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Server)" Match="NavLinkMatch.All">Realtime inspector</MudNavLink>
                     </MudTreeViewItem>
 
 
@@ -119,7 +123,6 @@
 
     <MudMainContent Class="pa-4">
         <CascadingValue Value="this">
-
             @if (AppState.Page == PageEnum.Loader)
             {
                 <Loader></Loader>
@@ -162,7 +165,7 @@
             }
             else if (AppState.Page == PageEnum.Server)
             {
-                <ServerManagement></ServerManagement>
+                <RealtimeInspector></RealtimeInspector>
             }
 
         </CascadingValue>
@@ -185,17 +188,44 @@
     } = false;
 
 
-    bool Saving
-    {
 
+    private string? Notification
+    {
         get;
         set;
-    } = false;
-
-
-    public async Task NotifySaving(bool saving)
+    }
+    private Severity? NotificationSeverity
     {
-        this.Saving = saving;
+        get;
+        set;
+    }
+
+
+    private void CloseClient()
+    {
+        foreach (var process in Process.GetProcessesByName("Dofus"))
+        {
+            process.Kill();
+        }
+
+        AddSnackbar("All dofus instances are closed.", Severity.Info);
+    }
+    public async Task SetNotification(string message, Severity severity)
+    {
+        this.Notification = message;
+        this.NotificationSeverity = severity;
+
+        await InvokeAsync(() =>
+        {
+            this.StateHasChanged();
+
+        });
+    }
+
+    public async Task RemoveNotification()
+    {
+        this.Notification = null;
+        this.NotificationSeverity = null;
 
         await InvokeAsync(() =>
         {
@@ -204,13 +234,48 @@
         });
 
     }
+
+    public void AddSnackbar(string message, Severity severity)
+    {
+        Snackbar.Add(message, severity);
+    }
+
+    private void GlobalSave()
+    {
+        if (!AppState.Initialized)
+        {
+            OpenRequiresLoadingDialog();
+            return;
+        }
+        Task.Run(() =>
+       {
+           WorldManager.SaveDatabase(this);
+
+           WorldManager.SaveI18N(this);
+
+           if (WorldApi.Available())
+           {
+               WorldManager.RequestReload(this);
+
+           }
+
+           AddSnackbar("Change applied successfully.", Severity.Success);
+
+
+
+       });
+    }
+    private void OpenRequiresLoadingDialog()
+    {
+        DialogOptions options = new DialogOptions() { ClassBackground = "dialog-open" };
+        DialogService.ShowMessageBox("Loading", "Please wait for the application to finish loading.", "OK", null, null, options);
+    }
     public void Navigate(PageEnum page)
     {
 
         if (!AppState.Initialized)
         {
-            DialogOptions options = new DialogOptions() { ClassBackground = "dialog-open" };
-            DialogService.ShowMessageBox("Loading", "Please wait for the application to finish loading.", "OK", null, null, options);
+            OpenRequiresLoadingDialog();
             return;
         }
         AppState.Page = page;

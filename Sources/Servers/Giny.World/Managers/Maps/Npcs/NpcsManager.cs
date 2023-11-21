@@ -92,7 +92,7 @@ namespace Giny.World.Managers.Maps.Npcs
             map.Instance.Reload();
         }
 
-        public void ReloadNpcs()
+        public void Reload()
         {
             DatabaseManager.Instance.Reload<NpcSpawnRecord>();
             DatabaseManager.Instance.Reload<NpcReplyRecord>();

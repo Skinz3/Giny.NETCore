@@ -18,7 +18,7 @@ namespace Giny.World.Managers.Criterions.Handlers
 
         public override bool Eval(WorldClient client)
         {
-            if (client.Character.Inventory.MaximumItemSetCount() < int.Parse(CriteriaValue))
+            if (client.Character.Inventory.MaximumItemSetCount() < int.Parse(Value))
             {
                 return true;
             }

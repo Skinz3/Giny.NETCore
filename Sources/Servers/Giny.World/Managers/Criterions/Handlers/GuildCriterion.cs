@@ -34,7 +34,7 @@ namespace Giny.World.Managers.Criterions.Handlers
             {
                 return false;
             }
-            return BasicEval(CriteriaValue, ComparaisonSymbol, client.Character.Guild.Level);
+            return ArithmeticEval(client.Character.Guild.Level);
         }
     }
 }

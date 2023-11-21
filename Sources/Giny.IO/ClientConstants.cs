@@ -22,12 +22,15 @@ namespace Giny.IO
 
         public const string ItemBitmap0Path = "content/gfx/items/bitmap0.d2p";
 
+        public const string MonsterBitmap0Path = "content/gfx/monsters/monsters0.d2p";
+
         public const string MapEncryptionKey = "649ae451ca33ec53bbcbcc33becf15f4";
 
         /// <summary>
         /// Debug only
         /// </summary>
         public const string ClientPath = "C:\\Users\\olivi\\Desktop\\Giny .NET Core\\Dofus";
+
 
         public static ClientInformation DumpInformations(string clientPath)
         {

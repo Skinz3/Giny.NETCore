@@ -5,11 +5,9 @@
 @using Giny.World.Records.Npcs;
 <MudDialog>
     <DialogContent>
-        <MudTextField Lines="3" @bind-Value=ReplyText Class="mb-2"></MudTextField>
+        <MudTextField TextChanged=OnReplyTextChanged Lines="3" @bind-Value=ReplyText Class="mb-2"></MudTextField>
 
         <div class="d-flex gap-2">
-
-
 
             <MudPaper Width="300px">
                 <MudList Color="Color.Primary" Dense="true" Clickable="true">
@@ -81,6 +79,12 @@
         set;
     }
 
+    private void OnReplyTextChanged()
+    {
+        var textId = D2ONpc.DialogReplies.FirstOrDefault(x => x[0] == Replies.First().ReplyId)[1];
+        D2IManager.SetText(textId, ReplyText);
+
+    }
     private string GetReplyText(NpcReplyRecord reply)
     {
         var pair = D2ONpc.DialogReplies.FirstOrDefault(x => x[0] == reply.ReplyId);

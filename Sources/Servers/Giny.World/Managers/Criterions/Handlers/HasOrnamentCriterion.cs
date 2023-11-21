@@ -17,8 +17,17 @@ namespace Giny.World.Managers.Criterions.Handlers
 
         public override bool Eval(WorldClient client)
         {
-            bool obj = client.Character.HasOrnament(short.Parse(CriteriaValue));
-            return ComparaisonSymbol == '=' ? obj : !obj;
+            bool flag = client.Character.HasOrnament(short.Parse(Value));
+
+            switch (Operator)
+            {
+                case CriterionComparaisonOperator.Equal:
+                    return flag;
+                case CriterionComparaisonOperator.Negation:
+                    return !flag;
+            }
+
+            throw new NotImplementedException("Invalid operator to eval ornament criterion " + Operator);
         }
     }
 

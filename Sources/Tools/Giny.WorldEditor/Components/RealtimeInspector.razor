@@ -1,0 +1,103 @@
+﻿@using Giny.Core.IO.Configuration;
+@using Giny.WorldEditor.Config;
+<div class="d-flex flex-column gap-4 pa-4">
+
+
+    
+
+    <div class="d-flex align-center gap-4 justify-space-between">
+        <MudText Typo="Typo.h5">Realtime inspector</MudText>
+        <MudButton style="width:10%" OnClick=Update Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Autorenew" IconColor="Color.Primary" Size="Size.Large">Update</MudButton>
+
+    </div>
+    
+    @if (!ApiAvailable)
+    {
+        <MudAlert Severity="Severity.Warning">Unable to connect to world server via web API. Please check that the server is running or modifying the configuration.</MudAlert>
+    }
+
+    @if (ApiAvailable)
+    {
+        <MudSimpleTable  Dense=false Bordered=true Hover=true>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Value</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Api Host</td>
+                    <td><MudLink>@(ConfigManager<WorldViewConfig>.Instance.WorldApiUrl)</MudLink></td>
+                </tr>
+                <tr>
+                    <td>Date</td>
+                    <td>@LastTimestamp</td>
+                </tr>
+                <tr>
+                    <td>Number of clients</td>
+                    <td>@Stats.Online</td>
+                </tr>
+                <tr>
+                    <td>Number of ip(s)</td>
+                    <td>@Stats.OnlineIps</td>
+                </tr>
+                <tr>
+                    <td>Client peak</td>
+                    <td>@Stats.Peak</td>
+                </tr>
+                <tr>
+                    <td>Fights</td>
+                    <td>@Stats.Fights</td>
+                </tr>
+                <tr>
+                    <td>Memory</td>
+                    <td><b>@Stats.Memory</b></td>
+                </tr>
+            </tbody>
+        </MudSimpleTable>
+    }
+
+
+
+</div>
+
+@code {
+
+    private Stats Stats
+    {
+        get;
+        set;
+    }
+
+    public bool ApiAvailable
+    {
+        get;
+        set;
+    }
+
+    private DateTime LastTimestamp
+    {
+        get;
+        set;
+    }
+
+    private void Update()
+    {
+        this.ApiAvailable = WorldApi.Available();
+
+        if (ApiAvailable)
+        {
+            this.Stats = WorldApi.GetStats();
+
+            this.LastTimestamp = DateTime.Now;
+        }
+
+    }
+    protected override void OnInitialized()
+    {
+        Update();
+        base.OnInitialized();
+    }
+}

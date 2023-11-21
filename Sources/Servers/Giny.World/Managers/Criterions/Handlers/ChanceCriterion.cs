@@ -17,7 +17,7 @@ namespace Giny.World.Managers.Criterions.Handlers
 
         public override bool Eval(WorldClient client)
         {
-            return BasicEval(CriteriaValue, ComparaisonSymbol, client.Character.Record.Stats.Chance.Additional);
+            return ArithmeticEval(client.Character.Record.Stats.Chance.Additional);
         }
     }
     [Criterion("CC")]
@@ -29,7 +29,7 @@ namespace Giny.World.Managers.Criterions.Handlers
 
         public override bool Eval(WorldClient client)
         {
-            return BasicEval(CriteriaValue, ComparaisonSymbol, client.Character.Record.Stats.Chance.Total());
+            return ArithmeticEval(client.Character.Record.Stats.Chance.Total());
         }
     }
 }

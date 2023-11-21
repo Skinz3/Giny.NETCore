@@ -1,23 +1,24 @@
-﻿using Giny.World.Managers.Criterias;
+﻿using Giny.Protocol.Custom.Enums;
 using Giny.World.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Giny.World.Managers.Criterias;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criterion("CP")]
-    public class ActionPointsCriterion : Criterion
+    [Criterion("PT")]
+    public class HasSpellCriterion : Criterion
     {
-        public ActionPointsCriterion(string criteriaFull) : base(criteriaFull)
+        public HasSpellCriterion()
         {
-        }
 
+        }
         public override bool Eval(WorldClient client)
         {
-            return ArithmeticEval(client.Character.Record.Stats.ActionPoints.Total());
+            return !client.Character.HasSpell(short.Parse(Value));
         }
     }
 }

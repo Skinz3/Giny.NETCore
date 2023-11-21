@@ -15,25 +15,14 @@ namespace Giny.World.Managers.Criterions.Handlers
         {
         }
 
-        public override short MaxValue => (short)(int.Parse(CriteriaValue) + 1);
+        public override short MaxValue => (short)(int.Parse(Value) + 1);
 
         public override bool Eval(WorldClient client)
         {
-            var required = short.Parse(CriteriaValue);
+            var required = short.Parse(Value);
 
-            switch (ComparaisonSymbol)
-            {
-                case SuperiorSymbol:
-                    return client.Character.AchievementPoints > required;
-
-                case InferiorSymbol:
-                    return client.Character.AchievementPoints < required;
-
-                case EqualSymbol:
-                    return client.Character.AchievementPoints == required;
-            }
-
-            return false;
+            return ArithmeticEval(client.Character.AchievementPoints.Value);
+            
         }
         public override short GetCurrentValue(WorldClient client)
         {

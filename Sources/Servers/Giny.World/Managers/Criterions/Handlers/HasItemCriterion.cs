@@ -18,7 +18,7 @@ namespace Giny.World.Managers.Criterions.Handlers
 
         public override bool Eval(WorldClient client)
         {
-            var criteria = CriteriaFull.Remove(0, 3).Split(',');
+            var criteria = Text.Remove(0, 3).Split(',');
             int quantity = 1;
             short gid = short.Parse(criteria[0]);
 
@@ -27,15 +27,15 @@ namespace Giny.World.Managers.Criterions.Handlers
                 quantity = int.Parse(criteria[1]);
             }
 
-            if (ComparaisonSymbol == '=')
+            if (Operator == CriterionComparaisonOperator.Equal)
             {
                 return client.Character.Inventory.Exist(gid, quantity);
             }
-            else if (ComparaisonSymbol == '!')
+            else if (Operator == CriterionComparaisonOperator.Negation)
             {
                 return !client.Character.Inventory.Exist(gid, quantity);
             }
-            else if (ComparaisonSymbol == 'X')
+            else if (Operator == CriterionComparaisonOperator.X)
             {
                 foreach (var item in client.Character.Inventory.GetEquipedItems())
                 {
@@ -53,18 +53,5 @@ namespace Giny.World.Managers.Criterions.Handlers
 
         }
     }
-    [Criterion("PT")]
-    public class HasItemOfTypeCriteria : Criterion
-    {
-        public HasItemOfTypeCriteria(string criteriaFull) : base(criteriaFull)
-        {
-        }
 
-        public override bool Eval(WorldClient client)
-        {
-            var type = (ItemTypeEnum)int.Parse(CriteriaValue);
-            var item = client.Character.Inventory.GetFirstItem(type);
-            return item != null;
-        }
-    }
 }

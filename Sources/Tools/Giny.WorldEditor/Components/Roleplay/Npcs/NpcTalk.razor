@@ -8,7 +8,6 @@
 @using Giny.World.Records.Npcs;
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @inject IDialogService DialogService
-
 @using Giny.ORM;
 
 
@@ -18,7 +17,7 @@
 
     <div class="d-flex flex-row gap-4">
 
-        <MudTextField Lines="5" Label="Message" @bind-Value="NpcMessage"></MudTextField>
+        <MudTextField Lines="5" TextChanged="OnNpcMessageChanged"  Label="Message" @bind-Value="NpcMessage"></MudTextField>
         <MudButton StartIcon="@Icons.Material.Filled.CompareArrows" IconColor="Color.Primary" Variant="Variant.Filled">Select</MudButton>
     </div>
 
@@ -98,6 +97,15 @@
 
         RefreshData();
         StateHasChanged();
+    }
+    private void OnNpcMessageChanged()
+    {
+        if (int.TryParse(NpcAction.Param1, out var messageId))
+        {
+            var textId = D2ONpc.dialogMessages.FirstOrDefault(x => x[0] == messageId)[1];
+
+            D2IManager.SetText(textId, NpcMessage);
+        }
     }
     private async void EditReply(int replyId)
     {

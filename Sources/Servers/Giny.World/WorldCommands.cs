@@ -121,7 +121,7 @@ namespace Giny.World
         [ConsoleCommand("npcs")]
         public static void ReloadNpcsCommand()
         {
-            NpcsManager.Instance.ReloadNpcs();
+            NpcsManager.Instance.Reload();
             Logger.Write("Npcs reloaded");
         }
 

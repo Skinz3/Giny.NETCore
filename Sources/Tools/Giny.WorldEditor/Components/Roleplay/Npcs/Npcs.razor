@@ -12,7 +12,7 @@
 @using Giny.ORM;
 @inject ISnackbar Snackbar
 
-<MudGrid>
+<MudGrid >
     <MudItem xs="3">
 
         <MudPaper Outlined=true>
@@ -55,8 +55,8 @@
                             }
                         </MudPaper>
 
-                        <div>
-                            <MudTextField Label="Name" @bind-Value="SelectedSpawn.Template.Name"></MudTextField>
+                        <div class="flex-1">
+                            <MudTextField Label="Name" TextChanged="OnNpcNameChanged" @bind-Value="SelectedSpawn.Template.Name"></MudTextField>
                             <MudTextField Label="Map" @bind-Value="SelectedSpawn.MapId"></MudTextField>
                             <MudTextField Label="Cell" @bind-Value="SelectedSpawn.CellId"></MudTextField>
                         </div>
@@ -65,7 +65,7 @@
 
                 </MudCard>
 
-                <MudPaper Class="flex-1" Outlined=true>
+                <MudPaper Class="" Outlined=true>
                     <MudList Class="d-flex flex-column" Dense="true" Clickable="true">
                         <MudListSubheader>
                             Actions
@@ -79,18 +79,11 @@
                     </MudList>
                     <div class="d-flex flex-row gap-2 pa-2">
                         <MudButton OnClick="AddAction" Class="flex-grow-1" IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Add" Variant="Variant.Filled">Add</MudButton>
-                        <MudButton Class="flex-grow-1" IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Delete" Variant="Variant.Filled">Delete</MudButton>
+                        <MudButton OnClick="RemoveAction" Class="flex-grow-1" IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Delete" Variant="Variant.Filled">Delete</MudButton>
                     </div>
 
                 </MudPaper>
 
-                <MudPaper Class="d-flex flex-column pa-2 gap-2" Outlined=false Elevation="0">
-                    <MudButton OnClick="SaveNpcs" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" IconColor="Color.Primary" Size="Size.Large">
-                        Save
-                    </MudButton>
-                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Autorenew" IconColor="Color.Primary" Size="Size.Large">Reload</MudButton>
-
-                </MudPaper>
 
 
 
@@ -99,19 +92,22 @@
             @if (SelectedAction != null)
             {
                 <MudItem>
-                    @if (SelectedAction.Action == NpcActionsEnum.EXCHANGE)
-                    {
-                        <Exchange NpcAction="SelectedAction" NpcSpawn="SelectedSpawn"></Exchange>
-                    }
-                    else if (SelectedAction.Action == NpcActionsEnum.TALK)
-                    {
-                        <NpcTalk NpcAction="SelectedAction" NpcSpawn="SelectedSpawn"></NpcTalk>
+                    <div >
+                        @if (SelectedAction.Action == NpcActionsEnum.EXCHANGE)
+                        {
+                            <Exchange NpcAction="SelectedAction" NpcSpawn="SelectedSpawn"></Exchange>
+                        }
+                        else if (SelectedAction.Action == NpcActionsEnum.TALK)
+                        {
+                            <NpcTalk NpcAction="SelectedAction" NpcSpawn="SelectedSpawn"></NpcTalk>
 
-                    }
-                    else if (SelectedAction.Action == NpcActionsEnum.BUYSELL)
-                    {
-                        <BuySell NpcAction="SelectedAction" NpcSpawn="SelectedSpawn"></BuySell>
-                    }
+                        }
+                        else if (SelectedAction.Action == NpcActionsEnum.BUYSELL)
+                        {
+                            <BuySell NpcAction="SelectedAction" NpcSpawn="SelectedSpawn"></BuySell>
+                        }
+                    </div>
+
                 </MudItem>
 
             }
@@ -125,6 +121,7 @@
 
 @code {
     [Inject] private IDialogService DialogService { get; set; }
+
     [CascadingParameter]
     public Home Parent
     {
@@ -167,6 +164,20 @@
         set;
     }
 
+    private void OnNpcNameChanged()
+    {
+        SelectedSpawn.Template.UpdateLater();
+
+        D2IManager.SetText((int)D2ONpc.NameId, SelectedSpawn.Template.Name);
+    }
+
+    private void RemoveAction()
+    {
+        SelectedSpawn.Actions.Remove(SelectedAction);
+        SelectedAction.RemoveLater();
+
+        SelectedAction = SelectedSpawn.Actions.FirstOrDefault();
+    }
     private async void AddAction()
     {
         var parameters = new DialogParameters<AddNpcActionDialog>();
@@ -206,23 +217,7 @@
         }
     }
 
-    private void SaveNpcs()
-    {
-        Task.Run(() =>
-        {
-            SaveManager.Save(Parent);
 
-            if (WorldApi.SendReloadNpcs())
-            {
-                Snackbar.Add("Npcs saved successfully. World server updated.", Severity.Success);
-            }
-            else
-            {
-                Snackbar.Add("Npcs saved successfully. Unable to communicate with the world API. The world server has not been updated.", Severity.Info);
-            }
-        });
-
-    }
     private string GetActionText(NpcActionsEnum action)
     {
         switch (action)

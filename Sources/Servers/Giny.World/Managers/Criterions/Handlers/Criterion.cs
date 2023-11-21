@@ -9,17 +9,19 @@ namespace Giny.World.Managers.Criterions.Handlers
 {
     public abstract class Criterion
     {
-        protected const char EqualSymbol = '=';
+        protected CriterionComparaisonOperator Operator
+        {
+            get;
+            private set;
+        }
 
-        protected const char InferiorSymbol = '<';
+        public string Value
+        {
+            get;
+            private set;
+        }
 
-        protected const char SuperiorSymbol = '>';
-
-        public char ComparaisonSymbol => CriteriaFull.Remove(0, 2).Take(1).ToArray()[0];
-
-        public string CriteriaValue => CriteriaFull.Remove(0, 3);
-
-        public string CriteriaFull
+        public string Text
         {
             get;
             private set;
@@ -33,26 +35,57 @@ namespace Giny.World.Managers.Criterions.Handlers
 
         public Criterion(string criteriaFull)
         {
-            CriteriaFull = criteriaFull;
+            Text = criteriaFull;
+            Parse();
+
+        }
+
+        private void Parse()
+        {
+            var rawOperator = Text.Remove(0, 2).Take(1).ToArray()[0];
+
+            Value = Text.Remove(0, 3);
+
+            switch (rawOperator)
+            {
+                case '<':
+                    Operator = CriterionComparaisonOperator.Inferior;
+                    break;
+                case '>':
+                    Operator = CriterionComparaisonOperator.Superior;
+                    break;
+                case '!':
+                    Operator = CriterionComparaisonOperator.Negation;
+                    break;
+                case '=':
+                    Operator = CriterionComparaisonOperator.Equal;
+                    break;
+                case 'X':
+                    Operator = CriterionComparaisonOperator.X;
+                    break;
+
+                default:
+                    throw new NotImplementedException("Unhandled criterion operator : " + rawOperator);
+            }
         }
 
         public abstract bool Eval(WorldClient client);
 
-        public static bool BasicEval(string criteriavalue, char comparaisonsymbol, int delta)
+        protected bool ArithmeticEval(int delta)
         {
-            int criterialDelta = int.Parse(criteriavalue);
+            int criterialDelta = int.Parse(Value);
 
-            switch (comparaisonsymbol)
+            switch (Operator)
             {
-                case EqualSymbol:
+                case CriterionComparaisonOperator.Equal:
                     if (delta == criterialDelta)
                         return true;
                     break;
-                case InferiorSymbol:
+                case CriterionComparaisonOperator.Inferior:
                     if (delta < criterialDelta)
                         return true;
                     break;
-                case SuperiorSymbol:
+                case CriterionComparaisonOperator.Superior:
                     if (delta > criterialDelta)
                         return true;
                     break;
