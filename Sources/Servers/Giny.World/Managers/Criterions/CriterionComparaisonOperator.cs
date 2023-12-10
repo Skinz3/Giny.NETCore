@@ -14,5 +14,6 @@ namespace Giny.World.Managers.Criterions
         Inferior,
         Negation,
         X,
+        Tilde, // ~
     }
 }

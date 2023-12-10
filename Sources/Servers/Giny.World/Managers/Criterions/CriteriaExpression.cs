@@ -38,7 +38,7 @@ namespace Giny.World.Managers.Criterias
 
         private Node BuildNode(string expression)
         {
-            if (expression == null || string.IsNullOrWhiteSpace(expression))
+            if (expression == null || expression == "null" || string.IsNullOrWhiteSpace(expression))
             {
                 return new EmptyNode();
             }

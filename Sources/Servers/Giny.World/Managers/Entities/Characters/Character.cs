@@ -491,7 +491,7 @@ namespace Giny.World.Managers.Entities.Characters
             }
             RefreshShortcuts();
         }
-        public void LearnSpell(short spellId, bool notify)
+        public bool LearnSpell(short spellId, bool notify)
         {
             if (!HasSpell(spellId))
             {
@@ -513,6 +513,11 @@ namespace Giny.World.Managers.Entities.Characters
                 {
                     RefreshSpells();
                 }
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
         public bool HasSpell(short spellId)

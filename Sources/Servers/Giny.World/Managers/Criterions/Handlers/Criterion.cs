@@ -63,6 +63,9 @@ namespace Giny.World.Managers.Criterions.Handlers
                 case 'X':
                     Operator = CriterionComparaisonOperator.X;
                     break;
+                case '~':
+                    Operator = CriterionComparaisonOperator.Tilde;
+                    break;
 
                 default:
                     throw new NotImplementedException("Unhandled criterion operator : " + rawOperator);

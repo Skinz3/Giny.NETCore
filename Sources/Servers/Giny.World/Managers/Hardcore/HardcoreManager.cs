@@ -30,7 +30,7 @@ namespace Giny.World.Managers.Hardcore
     /// </summary>
     public class HardcoreManager : Singleton<HardcoreManager>
     {
-        private short    ReplayLevel = ConfigManager<WorldConfig>.Instance.StartLevel;
+        private short ReplayLevel = ConfigManager<WorldConfig>.Instance.StartLevel;
 
         public void OnCharacterLooseFight(CharacterFighter fighter)
         {
@@ -104,7 +104,7 @@ namespace Giny.World.Managers.Hardcore
             record.MapId = ConfigManager<WorldConfig>.Instance.SpawnMapId;
             record.CellId = ConfigManager<WorldConfig>.Instance.SpawnCellId;
 
-            CharacterItemRecord.RemoveCharacterItems(record.Id);
+            CharacterItemRecord.RemoveCharacterItemsLater(record.Id);
 
             record.UpdateLater();
         }

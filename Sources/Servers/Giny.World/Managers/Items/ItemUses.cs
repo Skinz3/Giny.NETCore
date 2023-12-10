@@ -5,6 +5,7 @@ using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Stats;
 using Giny.World.Records.Items;
 using Giny.World.Records.Maps;
+using Giny.World.Records.Spells;
 using Giny.World.Records.Tinsel;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,14 @@ namespace Giny.World.Managers.Items
 {
     public class ItemUses
     {
+        [ItemUsageHandler(EffectsEnum.Effect_LearnSpell)]
+        public static bool LearnSpell(Character character, EffectInteger effect)
+        {
+            var level = SpellLevelRecord.GetSpellLevel(effect.Value);
+            var record = SpellRecord.GetSpellRecord(level.SpellId);
+
+            return character.LearnSpell(record.Id, true);
+        }
         [ItemUsageHandler(EffectsEnum.Effect_AddTitle)]
         public static bool AddTitle(Character character, EffectInteger effect)
         {

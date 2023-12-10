@@ -107,6 +107,16 @@ namespace Giny.World.Records.Items
             return new CharacterItemRecord(CharacterId, ItemsManager.Instance.PopItemUID(), GId, Position, Quantity, this.Effects.Clone(), AppearanceId, Look);
         }
 
+        [PerformanceIssue]
+        public static void RemoveCharacterItemsLater(long characterId)
+        {
+            var items = CharacterItems.Values.Where(x => x.CharacterId == characterId).ToList();
+
+            foreach (var item in items)
+            {
+                item.RemoveLater();
+            }
+        }
         public static void RemoveCharacterItems(long characterId)
         {
             DatabaseWriter.Delete<CharacterItemRecord>("CharacterId", characterId);

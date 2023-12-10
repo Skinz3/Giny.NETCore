@@ -22,6 +22,6 @@ namespace Giny.Uplauncher
         {
             get;
             set;
-        } = "overflow35";
+        } = "test";
     }
 }

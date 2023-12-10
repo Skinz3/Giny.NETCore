@@ -385,7 +385,7 @@ namespace Giny.World.Managers.Items.Collections
                 AddItem(newItem);
                 UpdateItemQuantity(item);
             }
-
+                
             item.UpdateLater();
 
             OnItemMoved(item, lastPosition);

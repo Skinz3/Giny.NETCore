@@ -402,6 +402,7 @@ namespace Giny.World.Managers.Items
                     }
                     else
                     {
+                        character.ReplyWarning("No method found to handle item usage");
                         return false;
 
                     }
