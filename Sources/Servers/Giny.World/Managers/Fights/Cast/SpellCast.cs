@@ -175,6 +175,7 @@ namespace Giny.World.Managers.Fights.Cast
             return deep;
         }
 
+      
         public Mark? GetInitialMarkSource()
         {
             if (MarkSource != null)
@@ -218,6 +219,7 @@ namespace Giny.World.Managers.Fights.Cast
         {
             return Spell.Record.Name;
         }
+
 
     }
 }

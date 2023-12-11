@@ -66,6 +66,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
     [SpellEffectHandler(EffectsEnum.Effect_IncreaseSpellDamage)]
     [SpellEffectHandler(EffectsEnum.Effect_IncreaseFinalDamages)]
     [SpellEffectHandler(EffectsEnum.Effect_AddErosion)]
+    [SpellEffectHandler(EffectsEnum.Effect_AddComboBonus)]
     public class StatsBuff : SpellEffectHandler
     {
  
@@ -85,7 +86,6 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
                 Characteristic characteristic = target.Stats[GetAssociatedCharacteristicEnum()];
                 AddStatBuff(target, (short)delta, characteristic, Effect.DispellableEnum);
             }
-
         }
 
 

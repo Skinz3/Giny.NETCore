@@ -468,9 +468,9 @@ namespace Giny.World.Managers.Fights.Fighters
         {
 
 
-            Character.Reply("Lifepoints :" + Stats.LifePoints);
-            Character.Reply("MaxLifepoints:" + Stats.MaxLifePoints);
-            Character.Reply("Erroded" + Stats.Life.Eroded);
+            /*Character.Reply("Lifepoints :" + Stats.LifePoints);
+            Character.Reply("MaxLifepoints :" + Stats.MaxLifePoints);
+            Character.Reply("Erroded :" + Stats.Life.Eroded); */
 
             if (Disconnected)
             {
@@ -486,6 +486,9 @@ namespace Giny.World.Managers.Fights.Fighters
                     PassTurn();
                 }
             }
+
+
+            
         }
         public override void OnTurnEnded()
         {

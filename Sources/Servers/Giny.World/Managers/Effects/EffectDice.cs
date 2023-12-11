@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Giny.Core.Extensions;
 using Giny.Core.Time;
-using Giny.IO.D2OClasses;
 using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
 using Giny.Protocol.Types;
 using Giny.World.Managers.Effects.Targets;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Records.Effects;
+using Giny.World.Records.Spells;
 using ProtoBuf;
 
 namespace Giny.World.Managers.Effects
@@ -157,6 +157,11 @@ namespace Giny.World.Managers.Effects
                 result = EffectEnum.ToString().Replace("Effect_", "");
             }
             return result;
+        }
+
+        public Spell GetSpell()
+        {
+            return new Spell(SpellRecord.GetSpellRecord((short)Min), (byte)Max);
         }
     }
 }

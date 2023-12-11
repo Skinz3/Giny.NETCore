@@ -29,7 +29,11 @@ namespace Giny.World.Managers.Fights.Zones
             FromCaster = fromCaster;
             StopAtTarget = stopAtTarget;
         }
-
+        public Line(byte minRadius, byte radius, bool fromCaster, bool stopAtTarget,DirectionsEnum direction):
+            this(minRadius,radius,fromCaster, stopAtTarget)
+        {
+            Direction = direction;
+        }
         public override CellRecord[] GetCells(CellRecord centerCell, CellRecord casterCell, MapRecord map)
         {
             short distance = 0;

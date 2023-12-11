@@ -197,6 +197,11 @@ namespace Giny.World.Managers.Fights.Units
             }
 
 
+            if (Source is SummonedBomb bomb)
+            {
+                jet.ApplyMultiplicator(bomb.GetTotalComboBonus());
+            }
+
             jet.ApplyMultiplicator(Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER].TotalInContext());
 
         }

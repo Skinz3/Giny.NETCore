@@ -1224,7 +1224,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
             return set;
         }
-        private int GetSpellMinimalRange(SpellLevelRecord level)
+        public int GetSpellMinimalRange(SpellLevelRecord level)
         {
             short? setModifier = SpellModifiers.GetModifierSet(level.SpellId, SpellModifierTypeEnum.RANGE_MIN);
 
@@ -1237,7 +1237,7 @@ namespace Giny.World.Managers.Fights.Fighters
             range += SpellModifiers.GetModifierBoost(level.SpellId, SpellModifierTypeEnum.RANGE_MIN);
             return range;
         }
-        private int GetSpellRange(SpellLevelRecord level)
+        public int GetSpellRange(SpellLevelRecord level)
         {
             short? setModifier = SpellModifiers.GetModifierSet(level.SpellId, SpellModifierTypeEnum.RANGE_MAX);
 

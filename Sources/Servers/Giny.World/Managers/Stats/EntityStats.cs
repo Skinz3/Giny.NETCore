@@ -363,6 +363,7 @@ namespace Giny.World.Managers.Stats
             stats[CharacteristicEnum.SHIELD] = Characteristic.Zero();
             stats[CharacteristicEnum.PERMANENT_DAMAGE_PERCENT] = ErosionCharacteristic.New(FighterStats.NaturalErosion);
             stats[CharacteristicEnum.HEAL_MULTIPLIER] = DetailedCharacteristic.New(100);
+            stats[CharacteristicEnum.BOMB_COMBO_BONUS] = DetailedCharacteristic.New(100);
             stats.Initialize();
 
             return stats;

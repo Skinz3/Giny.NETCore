@@ -762,13 +762,20 @@ namespace Giny.World.Managers.Fights
         {
             return Marks.OfType<T>().Any(markExist);
         }
+        /// <summary>
+        /// Mark.ShouldTriggerOnMove() (abstract)
+        /// </summary>
+        /// <param name="oldCell"></param>
+        /// <param name="cellId"></param>
+        /// <returns></returns>
         public bool ShouldTriggerOnMove(short oldCell, short cellId)
         {
             bool flag1 = Marks.OfType<Glyph>().Any(x => x.StopMovement &&
             (!x.ContainsCell(oldCell) && x.ContainsCell(cellId) || x.ContainsCell(oldCell) && !x.ContainsCell(cellId)));
             bool flag2 = Marks.OfType<Trap>().Any(x => x.StopMovement && x.ContainsCell(cellId));
+            bool flag3 = Marks.OfType<Wall>().Any(x => x.StopMovement && x.ContainsCell(cellId));
 
-            return flag1 || flag2;
+            return flag1 || flag2 || flag3;
         }
         private void OnTurnPassed()
         {
@@ -1163,6 +1170,11 @@ namespace Giny.World.Managers.Fights
                 return false;
             }
             return monsterTeam.GetFighters<MonsterFighter>().Any(x => x.Record.IsBoss);
+        }
+
+        internal void UpdateWalls()
+        {
+            throw new NotImplementedException();
         }
     }
 }

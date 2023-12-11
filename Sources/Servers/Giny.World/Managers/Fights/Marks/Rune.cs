@@ -21,7 +21,9 @@ namespace Giny.World.Managers.Fights.Marks
             get;
             set;
         }
-        public Rune(int id, EffectDice effect, Zone zone, MarkTriggerType triggers, Color color, Fighter source, CellRecord centerCell, SpellRecord spellRecord, SpellLevelRecord spellLevel) : base(id, effect, zone, triggers, color, source, centerCell, spellRecord, spellLevel)
+        public Rune(int id, EffectDice effect, Zone zone, MarkTriggerType triggers, Color color,
+            Fighter source, CellRecord centerCell, Spell markSpell, Spell triggerSpell) :
+            base(id, effect, zone, triggers, color, source, centerCell, markSpell, triggerSpell)
         {
             this.Duration = effect.Duration;
         }

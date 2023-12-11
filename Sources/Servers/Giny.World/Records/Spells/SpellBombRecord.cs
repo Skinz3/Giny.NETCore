@@ -55,5 +55,17 @@ namespace Giny.World.Records.Spells
             get;
             set;
         }
+
+        public static SpellBombRecord? GetSpellBomb(long id)
+        {
+            if (SpellBombs.ContainsKey(id))
+            {
+                return SpellBombs[id];
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

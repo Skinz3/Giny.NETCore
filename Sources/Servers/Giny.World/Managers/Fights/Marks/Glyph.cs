@@ -18,7 +18,7 @@ namespace Giny.World.Managers.Fights.Marks
 {
     public class Glyph : Mark
     {
-        public Glyph(int id, EffectDice effect, Zone zone, MarkTriggerType triggers, Color color, Fighter source, CellRecord centerCell, SpellRecord spellRecord, SpellLevelRecord spellLevel) : base(id, effect, zone, triggers, color, source, centerCell, spellRecord, spellLevel)
+        public Glyph(int id, EffectDice effect, Zone zone, MarkTriggerType triggers, Color color, Fighter source, CellRecord centerCell, Spell markSpell, Spell triggerSpell) : base(id, effect, zone, triggers, color, source, centerCell, markSpell, triggerSpell)
         {
             this.Duration = effect.Duration;
         }
@@ -53,7 +53,7 @@ namespace Giny.World.Managers.Fights.Marks
 
         }
 
-       
+
         public override void OnRemoved()
         {
 

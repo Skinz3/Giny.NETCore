@@ -1,6 +1,7 @@
 ﻿using Giny.Core.DesignPattern;
 using Giny.Protocol.Custom.Enums;
 using Giny.World.Managers.Effects;
+using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Zones;
 using Giny.World.Records.Maps;
@@ -18,7 +19,7 @@ namespace Giny.World.Managers.Fights.Marks
             get;
             set;
         }
-        public GlyphAura(int id, EffectDice effect, Zone zone, MarkTriggerType triggers, Color color, Fighter source, CellRecord centerCell, SpellRecord spellRecord, SpellLevelRecord spellLevel) : base(id, effect, zone, triggers, color, source, centerCell, spellRecord, spellLevel)
+        public GlyphAura(int id, EffectDice effect, Zone zone, MarkTriggerType triggers, Color color, Fighter source, CellRecord centerCell, Spell markSpell,Spell triggerSpell) : base(id, effect, zone, triggers, color, source, centerCell, markSpell, triggerSpell)
         {
             this.AffectedFighters = new List<Fighter>();
         }

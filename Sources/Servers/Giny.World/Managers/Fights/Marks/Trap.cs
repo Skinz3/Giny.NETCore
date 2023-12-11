@@ -1,5 +1,4 @@
-﻿using Giny.IO.D2OClasses;
-using Giny.Protocol.Custom.Enums;
+﻿using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Types;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
@@ -22,8 +21,9 @@ namespace Giny.World.Managers.Fights.Marks
 
         public override GameActionMarkTypeEnum Type => GameActionMarkTypeEnum.TRAP;
 
-        public Trap(int id, EffectDice effect, MarkTriggerType triggers, Zone zone, Color color, Fighter source, CellRecord centerCell, SpellRecord spellRecord, SpellLevelRecord spellLevel) :
-            base(id, effect, zone, triggers, color, source, centerCell, spellRecord, spellLevel)
+        public Trap(int id, EffectDice effect, MarkTriggerType triggers, Zone zone, Color color,
+            Fighter source, CellRecord centerCell, Spell markSpell,Spell triggerSpell) :
+            base(id, effect, zone, triggers, color, source, centerCell, markSpell, triggerSpell)
         {
 
         }

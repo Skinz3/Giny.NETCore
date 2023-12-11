@@ -283,6 +283,9 @@ namespace Giny.World.Managers.Fights.Effects
                 case EffectsEnum.Effect_AddErosion:
                     return CharacteristicEnum.PERMANENT_DAMAGE_PERCENT;
 
+                case EffectsEnum.Effect_AddComboBonus:
+                    return CharacteristicEnum.BOMB_COMBO_BONUS;
+
 
 
             }

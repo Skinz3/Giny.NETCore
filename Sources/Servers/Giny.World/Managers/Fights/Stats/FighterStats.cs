@@ -224,6 +224,7 @@ namespace Giny.World.Managers.Fights.Stats
             this[CharacteristicEnum.SHIELD] = Characteristic.New(0);
             this[CharacteristicEnum.PERMANENT_DAMAGE_PERCENT] = ErosionCharacteristic.New(NaturalErosion);
             this[CharacteristicEnum.HEAL_MULTIPLIER] = DetailedCharacteristic.New(100);
+            this[CharacteristicEnum.BOMB_COMBO_BONUS] = DetailedCharacteristic.New(100);
 
             InvisibilityState = GameActionFightInvisibilityStateEnum.VISIBLE;
 

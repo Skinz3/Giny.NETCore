@@ -21,7 +21,7 @@ namespace Giny.World.Managers.Fights.Marks
 
         public override GameActionMarkTypeEnum Type => GameActionMarkTypeEnum.PORTAL;
 
-        public Portal(int id, short bonusDamagePercent, EffectDice effect, Zone zone, MarkTriggerType triggers, Color color, Fighter source, CellRecord centerCell, SpellRecord spellRecord, SpellLevelRecord spellLevel) : base(id, effect, zone, triggers, color, source, centerCell, spellRecord, spellLevel)
+        public Portal(int id, short bonusDamagePercent, EffectDice effect, Zone zone, MarkTriggerType triggers, Color color, Fighter source, CellRecord centerCell, Spell markSpell, Spell triggerSpell) : base(id, effect, zone, triggers, color, source, centerCell, markSpell, triggerSpell)
         {
             this.BonusDamagePercent = bonusDamagePercent;
         }
@@ -68,7 +68,7 @@ namespace Giny.World.Managers.Fights.Marks
         }
         public override void OnRemoved()
         {
-           
+
         }
 
         public override void Trigger(Fighter target, MarkTriggerType triggerType)

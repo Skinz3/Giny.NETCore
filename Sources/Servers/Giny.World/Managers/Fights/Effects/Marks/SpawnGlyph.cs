@@ -30,7 +30,7 @@ namespace Giny.World.Managers.Fights.Effects.Marks
             Color color = Color.FromArgb(Effect.Value);
 
             Glyph glyph = new Glyph(Source.Fight.PopNextMarkId(), Effect,
-                 zone, GetTriggerType(), color, Source, TargetCell, CastHandler.Cast.Spell.Record, CastHandler.Cast.Spell.Level);
+                 zone, GetTriggerType(), color, Source, TargetCell, CastHandler.Cast.Spell,Effect.GetSpell());
 
             Source.Fight.AddMark(glyph);
         }

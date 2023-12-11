@@ -119,7 +119,7 @@ namespace Giny.World.Managers.Fights.Cast
         }
         private static void Roublard(CharacterFighter fighter)
         {
-            fighter.ExecuteSpell(20683, 1, fighter.Cell);
+            fighter.ExecuteSpell(20488, 1, fighter.Cell);
         }
         private static void Ecaflip(CharacterFighter fighter)
         {

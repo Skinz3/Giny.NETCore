@@ -48,12 +48,23 @@ namespace Giny.World.Managers.Fights.Marks
             get;
             private set;
         }
+        protected CellRecord? TargetCell
+        {
+            get;
+            set;
+        } = null;
+
         public Spell MarkSpell
         {
             get;
             private set;
         }
         protected Spell TriggerSpell
+        {
+            get;
+            private set;
+        }
+        protected Effect Effect
         {
             get;
             private set;
@@ -68,33 +79,37 @@ namespace Giny.World.Managers.Fights.Marks
             get;
             set;
         }
-        private CellRecord[] Cells
+        protected CellRecord[] Cells
         {
             get;
-            set;
+            private set;
         }
         public MarkTriggerType Triggers
         {
             get;
             private set;
         }
-        public Mark(int id, EffectDice effect, Zone zone, MarkTriggerType triggers, Color color, Fighter source, CellRecord centerCell, SpellRecord spellRecord, SpellLevelRecord spellLevel)
+
+        public Mark(int id, EffectDice effect, Zone zone, MarkTriggerType triggers, Color color, Fighter source, CellRecord centerCell, Spell markSpell, Spell triggerSpell, CellRecord? targetCell = null)
+
         {
             this.Id = id;
             this.Color = color;
             this.Triggers = triggers;
             this.Source = source;
             this.CenterCell = centerCell;
-            this.MarkSpell = new Spell(spellRecord, spellLevel);
-            var triggerSpellRecord = SpellRecord.GetSpellRecord((short)effect.Min);
-            this.TriggerSpell = new Spell(triggerSpellRecord, triggerSpellRecord.GetLevel((byte)effect.Max));
+            this.Effect = effect;
+            this.MarkSpell = markSpell;
+            this.TriggerSpell = triggerSpell;
             this.Active = true;
+            this.TargetCell = targetCell;
             this.BuildShapes(zone);
         }
 
+
         private void BuildShapes(Zone zone)
         {
-            this.Cells = zone.GetCells(CenterCell, CenterCell, Source.Fight.Map);
+            this.Cells = zone.GetCells(CenterCell, TargetCell == null ? CenterCell : TargetCell, Source.Fight.Map);
 
             Shapes = new List<MarkShape>();
 
@@ -102,6 +117,10 @@ namespace Giny.World.Managers.Fights.Marks
             {
                 Shapes.Add(new MarkShape(Source.Fight, Cells[i], Color));
             }
+        }
+        protected virtual Fighter GetTriggerCastSource()
+        {
+            return Source;
         }
         public GameActionMark GetGameActionMark()
         {
@@ -142,7 +161,7 @@ namespace Giny.World.Managers.Fights.Marks
 
         protected SpellCast CreateSpellCast()
         {
-            SpellCast cast = new SpellCast(Source, TriggerSpell, CenterCell);
+            SpellCast cast = new SpellCast(GetTriggerCastSource(), TriggerSpell, CenterCell);
             cast.CastCell = CenterCell;
             cast.MarkSource = this;
             return cast;
@@ -153,7 +172,7 @@ namespace Giny.World.Managers.Fights.Marks
             SpellCast cast = CreateSpellCast();
             cast.CastCell = CenterCell;
             cast.Force = true;
-            Source.CastSpell(cast);
+            GetTriggerCastSource().CastSpell(cast);
         }
         protected void ApplyEffects(Fighter fighter)
         {

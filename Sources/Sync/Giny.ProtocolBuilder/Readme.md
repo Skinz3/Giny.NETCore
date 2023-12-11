@@ -92,6 +92,8 @@ static infos a rajouter (non static)
 
 ## Edit client to get protocol values
 
+GameActionMarkedCell.as
+
 ````pcode
 getlex QName(PackageNamespace("com.ankamagames.jerakine.logger"),"Log")
 pushstring "test"

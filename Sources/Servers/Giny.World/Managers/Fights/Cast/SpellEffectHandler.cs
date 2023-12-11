@@ -339,6 +339,7 @@ namespace Giny.World.Managers.Fights.Cast
         }
 
 
+        
         public T GetTriggerToken<T>() where T : ITriggerToken
         {
             return (T)TriggerToken;

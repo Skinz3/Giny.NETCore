@@ -36,6 +36,11 @@ namespace Giny.World.Managers.Fights.Cast
             this.Record = record;
             this.Level = level;
         }
+        public Spell(SpellRecord record, byte grade)
+        {
+            this.Record = record;
+            this.Level = record.GetLevel(grade);
+        }
 
         public override string ToString()
         {
@@ -43,6 +48,6 @@ namespace Giny.World.Managers.Fights.Cast
         }
 
 
-       
+
     }
 }

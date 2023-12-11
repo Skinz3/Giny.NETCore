@@ -37,8 +37,8 @@ namespace Giny.World.Managers.Fights.Effects.Marks
 
             Rune rune = new Rune(Source.Fight.PopNextMarkId(), Effect,
                 zone, MarkTriggerType.None, color,
-                Source, TargetCell, CastHandler.Cast.Spell.Record,
-                CastHandler.Cast.Spell.Level);
+                Source, TargetCell, CastHandler.Cast.Spell,
+                Effect.GetSpell());
 
             Source.Fight.AddMark(rune);
         }

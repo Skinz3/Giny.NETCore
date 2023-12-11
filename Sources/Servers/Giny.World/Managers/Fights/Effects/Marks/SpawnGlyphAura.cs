@@ -29,7 +29,7 @@ namespace Giny.World.Managers.Fights.Effects.Marks
                 Color color = Color.FromArgb(Effect.Value);
 
                 GlyphAura glyph = new GlyphAura(Source.Fight.PopNextMarkId(), Effect,
-                   zone, MarkTriggerType.OnMove, color, Source, TargetCell, CastHandler.Cast.Spell.Record, CastHandler.Cast.Spell.Level);
+                   zone, MarkTriggerType.OnMove, color, Source, TargetCell, CastHandler.Cast.Spell, Effect.GetSpell());
 
                 Source.Fight.AddMark(glyph);
             }

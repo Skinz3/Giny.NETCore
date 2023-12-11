@@ -150,7 +150,7 @@ namespace Giny.World.Managers.Fights
             Fight.OnFighterJoined(fighter);
         }
 
-        public void ShowCell(CharacterFighter source, short cellId)
+        public void ShowCell(Fighter source, short cellId)
         {
             this.Send(new ShowCellMessage(source.Id, cellId));
         }
