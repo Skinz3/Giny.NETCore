@@ -37,6 +37,11 @@ namespace Giny.World.Managers.Fights.Marks
 
         public override GameActionMarkTypeEnum Type => GameActionMarkTypeEnum.WALL;
 
+       
+        public override bool OnTurnBegin()
+        {
+            return false;
+        }
         public override bool IsVisibleFor(CharacterFighter fighter)
         {
             return true;

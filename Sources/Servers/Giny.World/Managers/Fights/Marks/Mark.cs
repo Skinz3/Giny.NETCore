@@ -106,6 +106,10 @@ namespace Giny.World.Managers.Fights.Marks
             this.BuildShapes(zone);
         }
 
+        /// <summary>
+        /// Return true = remove mark
+        /// </summary>
+        public abstract bool OnTurnBegin();
 
         private void BuildShapes(Zone zone)
         {

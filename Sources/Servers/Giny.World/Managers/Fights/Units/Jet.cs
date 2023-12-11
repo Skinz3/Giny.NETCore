@@ -63,6 +63,11 @@ namespace Giny.World.Managers.Fights.Units
             Min = Min * (value / 100d);
             Max = Max * (value / 100d);
         }
+        public void ApplyBonus(int value)
+        {
+            Min = Min + (Min * (value / 100d));
+            Max = Max + (Max * (value / 100d));
+        }
         public int Generate(Random random, bool hasRandDownModifier, bool hasRandUpModifier)
         {
             if (Min == Max)

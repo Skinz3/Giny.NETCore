@@ -363,7 +363,7 @@ namespace Giny.World.Managers.Stats
             stats[CharacteristicEnum.SHIELD] = Characteristic.Zero();
             stats[CharacteristicEnum.PERMANENT_DAMAGE_PERCENT] = ErosionCharacteristic.New(FighterStats.NaturalErosion);
             stats[CharacteristicEnum.HEAL_MULTIPLIER] = DetailedCharacteristic.New(100);
-            stats[CharacteristicEnum.BOMB_COMBO_BONUS] = DetailedCharacteristic.New(100);
+            stats[CharacteristicEnum.BOMB_COMBO_BONUS] = DetailedCharacteristic.New(0);
             stats.Initialize();
 
             return stats;
@@ -371,6 +371,10 @@ namespace Giny.World.Managers.Stats
 
         public T GetCharacteristic<T>(CharacteristicEnum characteristicEnum) where T : Characteristic
         {
+            if (characteristicEnum == CharacteristicEnum.HIT_POINT_LOSS)
+            {
+                return Characteristics[CharacteristicEnum.HIT_POINTS] as T;
+            }
             return Characteristics[characteristicEnum] as T;
         }
         public EffectSchoolEnum GetBestElement()

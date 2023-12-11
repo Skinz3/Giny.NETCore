@@ -571,8 +571,17 @@ namespace Giny.World.Managers.Fights
                     this.DecrementBuffsDuration(buffs);
 
                 }
-                this.DecrementMarkDurations(FighterPlaying);
+
+                foreach (var mark in FighterPlaying.GetMarks().ToArray())
+                {
+                    if (mark.OnTurnBegin())
+                    {
+                        RemoveMark(mark);
+                    }
+                }
+
                 this.TriggerMarks(FighterPlaying, MarkTriggerType.OnTurnBegin);
+
                 FighterPlaying.TriggerBuffs(TriggerTypeEnum.OnTurnBegin, null);
 
                 FighterPlaying.TriggerBuffs(TriggerTypeEnum.AfterTurnBegin, null);
@@ -871,23 +880,7 @@ namespace Giny.World.Managers.Fights
 
             mark.OnRemoved();
         }
-        private void DecrementMarkDurations(Fighter fighterPlaying)
-        {
-            foreach (var rune in fighterPlaying.GetMarks<Rune>().ToArray())
-            {
-                if (rune.DecrementDuration())
-                {
-                    RemoveMark(rune);
-                }
-            }
-            foreach (var glyph in fighterPlaying.GetMarks<Glyph>().ToArray())
-            {
-                if (glyph.DecrementDuration())
-                {
-                    RemoveMark(glyph);
-                }
-            }
-        }
+        
 
 
         public void AddSummon(Fighter source, SummonedFighter fighter)

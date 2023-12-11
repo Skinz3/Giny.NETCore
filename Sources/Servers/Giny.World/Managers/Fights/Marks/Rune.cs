@@ -57,5 +57,10 @@ namespace Giny.World.Managers.Fights.Marks
         {
             return this.Duration != -1 && (this.Duration -= 1) <= 0;
         }
+
+        public override bool OnTurnBegin()
+        {
+            return DecrementDuration();
+        }
     }
 }
