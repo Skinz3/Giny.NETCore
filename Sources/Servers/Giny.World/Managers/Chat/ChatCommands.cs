@@ -522,12 +522,8 @@ namespace Giny.World.Managers.Chat
         public static void TestCommand(WorldClient client)
         {
 
-            client.Character.Stats[CharacteristicEnum.BOMB_COMBO_BONUS].Base = 0;
-
-
-
-
-            client.Character.RefreshStats();
+            IEnumerable<MonsterRecord> records = MonsterRecord.GetMonsterRecords().Where(x => x.IsBoss == true).Shuffle().Take(5);
+            MonstersManager.Instance.AddFixedMonsterGroup(client.Character.Map.Instance, client.Character.CellId, records.ToArray());
             return;
 
             if (client.Character.Fighter == null)
@@ -548,14 +544,6 @@ namespace Giny.World.Managers.Chat
 
             // 22777 ok
 
-            return;
-
-
-
-
-            return;
-            IEnumerable<MonsterRecord> records = MonsterRecord.GetMonsterRecords().Where(x => x.IsBoss == true).Shuffle().Take(8);
-            MonstersManager.Instance.AddFixedMonsterGroup(client.Character.Map.Instance, client.Character.CellId, records.ToArray());
         }
 
 

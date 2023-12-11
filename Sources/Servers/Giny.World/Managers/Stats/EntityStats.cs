@@ -371,9 +371,9 @@ namespace Giny.World.Managers.Stats
 
         public T GetCharacteristic<T>(CharacteristicEnum characteristicEnum) where T : Characteristic
         {
-            if (characteristicEnum == CharacteristicEnum.HIT_POINT_LOSS)
+            if (!Characteristics.ContainsKey(characteristicEnum))
             {
-                return Characteristics[CharacteristicEnum.HIT_POINTS] as T;
+                return null;
             }
             return Characteristics[characteristicEnum] as T;
         }

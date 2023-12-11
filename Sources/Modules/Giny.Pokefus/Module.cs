@@ -25,7 +25,7 @@ namespace Giny.Pokefus
         public void CreateHooks()
         {
             FightEventApi.OnPlayerResultApplied += PokefusManager.Instance.OnPlayerResultApplied;
-            CharacterEventApi.OnHumanOptionsCreated += PokefusManager.Instance.OnHumanOptionsCreated;
+           // CharacterEventApi.OnHumanOptionsCreated += PokefusManager.Instance.OnHumanOptionsCreated;
             FightEventApi.OnFighterJoined += PokefusManager.Instance.OnFighterJoined;
             InventoryEventApi.CanEquipItem += PokefusManager.Instance.CanEquipItem;
             FightEventApi.OnSpellCasting += PokefusManager.Instance.OnSpellCasting;

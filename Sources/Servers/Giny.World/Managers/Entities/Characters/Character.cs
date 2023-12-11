@@ -382,7 +382,6 @@ namespace Giny.World.Managers.Entities.Characters
 
             this.Inventory = new Inventory(this, CharacterItemRecord.GetCharacterItems(this.Id));
 
-            this.Inventory.ApplyEquipementItemsEffects();
 
             this.BankItems = new BankItemCollection(this, BankItemRecord.GetBankItems(Client.Account.Id));
             this.GuestedParties = new List<Party>();

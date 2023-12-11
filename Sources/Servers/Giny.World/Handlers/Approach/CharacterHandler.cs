@@ -242,9 +242,10 @@ namespace Giny.World.Handlers.Approach
             client.Character.RefreshSpells();
             client.Character.RefreshGuild();
             client.Character.RefreshEmotes();
-            client.Character.Inventory.Refresh();
-            client.Character.RefreshShortcuts();
             client.Character.CreateHumanOptions();
+            client.Character.Inventory.Refresh();
+            client.Character.Inventory.ApplyEquipementItemsEffects();
+            client.Character.RefreshShortcuts();
             client.Character.RefreshArenaInfos();
             client.Character.SendKnownZaapList();
             client.Character.SendServerExperienceModificator();

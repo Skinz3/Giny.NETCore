@@ -59,7 +59,7 @@ namespace Giny.Pokefus
 
         }
 
-        public void OnHumanOptionsCreated(Character character)
+     /*   public void OnHumanOptionsCreated(Character character)
         {
             foreach (var item in GetPokefusItems(character.Inventory))
             {
@@ -67,7 +67,7 @@ namespace Giny.Pokefus
                 MonsterRecord monsterRecord = MonsterRecord.GetMonsterRecord(pokefusEffect.MonsterId);
                 character.AddFollower(monsterRecord.Look);
             }
-        }
+        } */
         public void OnPlayerResultApplied(FightPlayerResult result)
         {
             if (result.Fight.Winners == result.Fighter.Team)
