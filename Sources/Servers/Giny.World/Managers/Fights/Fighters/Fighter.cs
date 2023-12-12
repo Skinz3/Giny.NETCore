@@ -1925,7 +1925,7 @@ namespace Giny.World.Managers.Fights.Fighters
             TriggerBuffs(TriggerTypeEnum.LifeAffected, null);
             TriggerBuffs(TriggerTypeEnum.LifePointsAffected, null);
 
-            RefreshStats(CharacteristicEnum.HIT_POINT_LOSS);
+            RefreshStats(CharacteristicEnum.HIT_POINTS);
 
         }
         public void AddVitality(short delta)
@@ -1935,7 +1935,7 @@ namespace Giny.World.Managers.Fights.Fighters
             TriggerBuffs(TriggerTypeEnum.LifeAffected, null);
             TriggerBuffs(TriggerTypeEnum.LifePointsAffected, null);
 
-            RefreshStats(CharacteristicEnum.HIT_POINT_LOSS);
+            RefreshStats(CharacteristicEnum.HIT_POINTS);
         }
 
         public void AddMaxVitality(short delta)

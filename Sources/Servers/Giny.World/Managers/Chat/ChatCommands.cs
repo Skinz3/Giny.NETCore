@@ -11,6 +11,7 @@ using Giny.World.Managers.Entities.Npcs;
 using Giny.World.Managers.Experiences;
 using Giny.World.Managers.Fights;
 using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Managers.Fights.Marks;
 using Giny.World.Managers.Fights.Results;
 using Giny.World.Managers.Fights.Units;
 using Giny.World.Managers.Fights.Zones;
@@ -521,8 +522,11 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
-
-            IEnumerable<MonsterRecord> records = MonsterRecord.GetMonsterRecords().Where(x => x.IsBoss == true).Shuffle().Take(5);
+            client.Character.Fighter.Fight.SequenceManager.StartSequence(Fights.Sequences.SequenceTypeEnum.SEQUENCE_SPELL);
+            WallManager.Instance.UpdateWalls(client.Character.Fighter.Fight);
+            client.Character.Fighter.Fight.SequenceManager.EndAllSequences();
+            return;
+            IEnumerable<MonsterRecord> records = MonsterRecord.GetMonsterRecords().Where(x => x.IsBoss == true).Shuffle().Take(3);
             MonstersManager.Instance.AddFixedMonsterGroup(client.Character.Map.Instance, client.Character.CellId, records.ToArray());
             return;
 

@@ -104,6 +104,8 @@ namespace Giny.World.Managers.Fights.Marks
 
         public void UpdateWalls(Fight fight)
         {
+            fight.Warn("Update walls");
+
             var oldWalls = fight.GetMarks<Wall>().ToList();
 
             var newWalls = new List<Wall>();
@@ -117,7 +119,7 @@ namespace Giny.World.Managers.Fights.Marks
             {
                 var old = oldWalls.FirstOrDefault(x => x.CompareCells(newWall));
 
-                if (old != null)
+                if (old != null && old.Valid())
                 {
                     oldWalls.Remove(old);
                     continue;
@@ -128,8 +130,11 @@ namespace Giny.World.Managers.Fights.Marks
                 }
                 else
                 {
+                    if(newWall.Valid())
+                    {
+                        fight.AddMark(newWall);
+                    }
 
-                    fight.AddMark(newWall);
                 }
             }
 
