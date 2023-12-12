@@ -87,9 +87,17 @@ namespace Giny.World.Managers.Fights.Cast
                 case BreedEnum.Enutrof:
                     Enutrof(fighter);
                     break;
+
+                case BreedEnum.Eliotrope:
+                    Eliotrope(fighter);
+                    break;
             }
         }
 
+        private static void Eliotrope(CharacterFighter fighter)
+        {
+            fighter.ExecuteSpell(14631, 1, fighter.Cell);
+        }
         private static void Enutrof(CharacterFighter fighter)
         {
             /*

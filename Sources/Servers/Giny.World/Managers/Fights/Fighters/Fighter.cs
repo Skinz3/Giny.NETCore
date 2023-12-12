@@ -943,8 +943,10 @@ namespace Giny.World.Managers.Fights.Fighters
             if (!FightEventApi.CanCastSpell(cast))
                 return false;
 
-            cast.Target = Fight.GetFighter(cast.TargetCell.Id); // sure about that ? (friction)
 
+            PortalManager.Instance.TeleportCast(cast);
+
+            cast.Target = Fight.GetFighter(cast.TargetCell.Id); // sure about that ? (friction)
 
             using (Fight.SequenceManager.StartSequence(SequenceTypeEnum.SEQUENCE_SPELL))
             {
@@ -1270,17 +1272,17 @@ namespace Giny.World.Managers.Fights.Fighters
         {
             TriggerBuffs(TriggerTypeEnum.OnStateAdded, buff, (short)buff.Record.Id);
         }
-        [Annotation("remove this tuple")]
         public void TeleportToPortal(Fighter source)
         {
-            Tuple<Portal, Portal> pair = PortalManager.Instance.GetPortalsTuple(Fight, this.Cell.Id);
+            Portal entrance = source.GetMarks<Portal>().FirstOrDefault(x => x.CenterCell.Id == Cell.Id);
 
-            pair.Item1.Disable();
-            pair.Item2.Disable();
+            PortalPair pair = PortalManager.Instance.GetPortalPair(entrance);
 
-            CellRecord cell = source.Fight.Map.GetCell(pair.Item2.CenterCell.Id);
+            pair.In.Disable();
+            pair.Out.Disable();
 
-            this.Teleport(source, cell);
+
+            this.Teleport(source, pair.Out.CenterCell);
 
             this.TriggerBuffs(TriggerTypeEnum.OnTeleportPortal, null);
         }
@@ -2042,7 +2044,7 @@ namespace Giny.World.Managers.Fights.Fighters
                     }
                     else
                     {
-                        Stats.Life.Eroded += permanentDamages;  
+                        Stats.Life.Eroded += permanentDamages;
                         Stats.Life.Current -= num;
                     }
 

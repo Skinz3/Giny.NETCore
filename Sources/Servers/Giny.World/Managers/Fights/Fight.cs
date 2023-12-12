@@ -767,6 +767,10 @@ namespace Giny.World.Managers.Fights
         {
             return this.Marks;
         }
+        public T? GetMark<T>(Func<T,bool> predicate) where T : Mark
+        {
+            return GetMarks<T>().FirstOrDefault(predicate);
+        }
         public bool MarkExist<T>(Func<T, bool> markExist) where T : Mark
         {
             return Marks.OfType<T>().Any(markExist);

@@ -25,7 +25,6 @@ namespace Giny.World.Managers.Fights.Effects.Movements
             {
                 return;
             }
-
             foreach (var target in targets)
             {
                 target.TeleportToPortal(Source);

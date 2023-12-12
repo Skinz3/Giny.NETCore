@@ -1,5 +1,6 @@
 ﻿using Giny.Core.DesignPattern;
 using Giny.Protocol.Enums;
+using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Maps;
 using System;
@@ -11,7 +12,25 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Marks
 {
-    [Annotation]
+    public class PortalPair
+    {
+        public Portal In
+        {
+            get;
+            private set;
+        }
+        public Portal Out
+        {
+            get;
+            private set;
+        }
+
+        public PortalPair(Portal @in, Portal @out)
+        {
+            this.In = @in;
+            this.Out = @out;
+        }
+    }
     public class PortalManager : Singleton<PortalManager>
     {
         private const int Same = 0;
@@ -26,11 +45,12 @@ namespace Giny.World.Managers.Fights.Marks
 
         public const short PortalTeleportSpellId = 14573;
 
-        public Tuple<Portal, Portal> GetPortalsTuple(Fight fight, short cellId)
+        public PortalPair? GetPortalPair(Portal enter)
         {
+            var fight = enter.Source.Fight;
+
             var portals = fight.GetMarks<Portal>().ToList();
 
-            var enter = portals.FirstOrDefault(x => x.CenterCell.Id == cellId);
 
             if (enter == null)
             {
@@ -39,7 +59,8 @@ namespace Giny.World.Managers.Fights.Marks
 
             var checkPoints = portals.FindAll(x => x.Source.Id == enter.Source.Id && x.Active).Select(x => new MapPoint(x.CenterCell.Id)).ToList();
             MapPoint startPoint = new MapPoint(enter.CenterCell.Id);
-            MapPoint next = null;
+            MapPoint? next = null;
+
             int index = 0;
 
             if (checkPoints.Count() == 1 && startPoint.CellId == checkPoints[0].CellId)
@@ -55,34 +76,37 @@ namespace Giny.World.Managers.Fights.Marks
                     pointsList.Add(checkPoints[i]);
                 }
             }
-            List<uint> res = new List<uint>();
+            List<MapPoint> res = new List<MapPoint>();
             MapPoint current = startPoint;
             int maxTry = pointsList.Count + 1;
+
             while (maxTry > 0)
             {
                 maxTry--;
-                res.Add((uint)current.CellId);
+                res.Add(current);
                 index = pointsList.IndexOf(current);
                 if (index != -1)
                 {
                     pointsList.RemoveAt(index);
                 }
-                next = getClosestPortal(current, pointsList);
+                next = GetClosestPortal(current, pointsList);
                 if (next == null)
                 {
                     break;
                 }
                 current = next;
             }
+
             if (res.Count < 2)
             {
                 return null;
             }
-            return new Tuple<Portal, Portal>(GetPortal(enter.Source, (short)res.First()), GetPortal(enter.Source, (short)res.Last()));
+
+            return new PortalPair(GetPortal(enter.Source,res.First()), GetPortal(enter.Source, res.Last()));
         }
-        public Portal GetPortal(Fighter owner, short cellId)
+        public Portal? GetPortal(Fighter owner, MapPoint point)
         {
-            return owner.Fight.GetMarks<Portal>().FirstOrDefault(x => x.Source.Id == owner.Id && x.CenterCell.Id == cellId);
+            return owner.Fight.GetMark<Portal>(x => x.Source.Id == owner.Id && x.CenterCell.Id == point.CellId);
         }
         public int GetCasesCount(Fight fight, short cellId)
         {
@@ -120,7 +144,7 @@ namespace Giny.World.Managers.Fights.Marks
                 {
                     pointsList.RemoveAt(index);
                 }
-                next = getClosestPortal(current, pointsList);
+                next = GetClosestPortal(current, pointsList);
                 if (next == null)
                 {
                     break;
@@ -140,7 +164,7 @@ namespace Giny.World.Managers.Fights.Marks
             return casesCount;
         }
 
-        private MapPoint getClosestPortal(MapPoint refMapPoint, List<MapPoint> portals)
+        private MapPoint GetClosestPortal(MapPoint refMapPoint, List<MapPoint> portals)
         {
             int dist = 0;
             List<MapPoint> closests = new List<MapPoint>();
@@ -167,10 +191,10 @@ namespace Giny.World.Managers.Fights.Marks
             {
                 return closests[0];
             }
-            return getBestNextPortal(refMapPoint, closests);
+            return GetBestNextPortal(refMapPoint, closests);
         }
 
-        private MapPoint getBestNextPortal(MapPoint refCell, List<MapPoint> closests)
+        private MapPoint GetBestNextPortal(MapPoint refCell, List<MapPoint> closests)
         {
             Point refCoord = new Point();
             Point nudge = new Point();
@@ -186,7 +210,7 @@ namespace Giny.World.Managers.Fights.Marks
                 double tap = GetOrientedAngle(refCoord, nudge, new Point(o1.X, o1.Y)) - GetOrientedAngle(refCoord, nudge, new Point(o2.X, o2.Y));
                 return tap > 0 ? 1 : tap < 0 ? -1 : 0;
             });
-            MapPoint res = getBestPortalWhenRefIsNotInsideClosests(refCell, closests);
+            MapPoint res = GetBestPortalWhenRefIsNotInsideClosests(refCell, closests);
             if (res != null)
             {
                 return res;
@@ -194,7 +218,7 @@ namespace Giny.World.Managers.Fights.Marks
             return closests[0];
         }
 
-        private MapPoint getBestPortalWhenRefIsNotInsideClosests(MapPoint refCell, List<MapPoint> sortedClosests)
+        private MapPoint GetBestPortalWhenRefIsNotInsideClosests(MapPoint refCell, List<MapPoint> sortedClosests)
         {
             if (sortedClosests.Count < 2)
             {
@@ -203,7 +227,7 @@ namespace Giny.World.Managers.Fights.Marks
             MapPoint prev = sortedClosests[sortedClosests.Count - 1];
             foreach (var portal in sortedClosests)
             {
-                switch (compareAngles(refCell.Coordinates, prev.Coordinates, portal.Coordinates))
+                switch (CompareAngles(refCell.Coordinates, prev.Coordinates, portal.Coordinates))
                 {
                     case Opposite:
                         if (sortedClosests.Count <= 2)
@@ -223,7 +247,7 @@ namespace Giny.World.Managers.Fights.Marks
 
         private double GetOrientedAngle(Point refCell, Point cellA, Point cellB)
         {
-            switch (compareAngles(refCell, cellA, cellB))
+            switch (CompareAngles(refCell, cellA, cellB))
             {
                 case Same:
                     return 0;
@@ -251,10 +275,10 @@ namespace Giny.World.Managers.Fights.Marks
             return Math.Sqrt(Math.Pow(ref_start.X - ref_end.X, 2) + Math.Pow(ref_start.Y - ref_end.Y, 2));
         }
 
-        private int compareAngles(Point refe, Point start, Point end)
+        private int CompareAngles(Point refe, Point start, Point end)
         {
-            Point aVec = vector(refe, start);
-            Point bVec = vector(refe, end);
+            Point aVec = Vector(refe, start);
+            Point bVec = Vector(refe, end);
             int det = GetDeterminant(aVec, bVec);
             if (det != 0)
             {
@@ -268,7 +292,7 @@ namespace Giny.World.Managers.Fights.Marks
             return aVec.X * bVec.Y - aVec.Y * bVec.X;
         }
 
-        private Point vector(Point start, Point end)
+        private Point Vector(Point start, Point end)
         {
             return new Point(end.X - start.X, end.Y - start.Y);
         }
@@ -282,6 +306,31 @@ namespace Giny.World.Managers.Fights.Marks
                     return Color.Blue;
             }
             throw new Exception("Unknown team side. Unable to compute portal color.");
+        }
+
+        public void TeleportCast(SpellCast cast)
+        {
+            var fight = cast.Source.Fight;
+
+            Portal? portal = fight.GetMark<Portal>(x => x.CenterCell.Id == cast.TargetCell.Id);
+
+            if (portal != null && portal.Active && !cast.Force)
+            {
+                PortalPair? exit = PortalManager.Instance.GetPortalPair(portal);
+
+                if (exit != null && exit.Out != null)
+                {
+                    MapPoint targetPoint = cast.Source.Cell.Point.GetCellSymetrieByPortail(cast.TargetCell.Point, exit.Out.CenterCell.Point);
+
+                    if (targetPoint != null)
+                    {
+                        cast.TargetCell = cast.Source.Fight.Map.GetCell(targetPoint);
+                        cast.ThroughPortal = true;
+
+                    }
+                }
+
+            }
         }
     }
 }

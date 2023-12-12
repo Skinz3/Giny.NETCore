@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ubiety.Dns.Core.Common;
 
 namespace Giny.World.Managers.Effects.Targets
 {
@@ -24,7 +25,7 @@ namespace Giny.World.Managers.Effects.Targets
         [Annotation("todo")]
         public override bool IsTargetValid(Fighter actor, SpellEffectHandler handler)
         {
-            return true;
+            return handler.CastHandler.Cast.ThroughPortal == Required;
         }
         public override string ToString()
         {

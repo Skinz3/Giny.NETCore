@@ -120,6 +120,11 @@ namespace Giny.World.Managers.Fights.Cast
             get;
             set;
         }
+        public bool ThroughPortal
+        {
+            get;
+            set;
+        } = false;
 
         public SpellCast(Fighter source, Spell spell, CellRecord targetCell, SpellCast parent = null)
         {
