@@ -1,5 +1,6 @@
 ﻿using Giny.Core.DesignPattern;
 using Giny.Protocol.Enums;
+using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Maps;
@@ -45,6 +46,8 @@ namespace Giny.World.Managers.Fights.Marks
 
         public const short PortalTeleportSpellId = 14573;
 
+        public const byte MaxPortalPerTeam = 4;
+
         public PortalPair? GetPortalPair(Portal enter)
         {
             var fight = enter.Source.Fight;
@@ -57,7 +60,7 @@ namespace Giny.World.Managers.Fights.Marks
                 return null;
             }
 
-            var checkPoints = portals.FindAll(x => x.Source.Id == enter.Source.Id && x.Active).Select(x => new MapPoint(x.CenterCell.Id)).ToList();
+            var checkPoints = portals.FindAll(x => x.Source.IsFriendlyWith(enter.Source) && x.Active).Select(x => new MapPoint(x.CenterCell.Id)).ToList();
             MapPoint startPoint = new MapPoint(enter.CenterCell.Id);
             MapPoint? next = null;
 
@@ -102,11 +105,11 @@ namespace Giny.World.Managers.Fights.Marks
                 return null;
             }
 
-            return new PortalPair(GetPortal(enter.Source,res.First()), GetPortal(enter.Source, res.Last()));
+            return new PortalPair(GetPortal(enter.Source, res.First()), GetPortal(enter.Source, res.Last()));
         }
         public Portal? GetPortal(Fighter owner, MapPoint point)
         {
-            return owner.Fight.GetMark<Portal>(x => x.Source.Id == owner.Id && x.CenterCell.Id == point.CellId);
+            return owner.Fight.GetMark<Portal>(x => x.Source.IsFriendlyWith(owner) && x.CenterCell.Id == point.CellId);
         }
         public int GetCasesCount(Fight fight, short cellId)
         {
@@ -116,7 +119,7 @@ namespace Giny.World.Managers.Fights.Marks
             var enter = portals.FirstOrDefault(x => x.CenterCell.Id == cellId);
             if (enter == null)
                 return casesCount;
-            var checkPoints = portals.FindAll(x => x.Source.Id == enter.Source.Id && x.Active).Select(x => new MapPoint(x.CenterCell.Id)).ToList();
+            var checkPoints = portals.FindAll(x => x.Source.IsFriendlyWith(enter.Source) && x.Active).Select(x => new MapPoint(x.CenterCell.Id)).ToList();
             MapPoint startPoint = new MapPoint(enter.CenterCell.Id);
             MapPoint next = null;
             int index = 0;
@@ -310,11 +313,26 @@ namespace Giny.World.Managers.Fights.Marks
 
         public void TeleportCast(SpellCast cast)
         {
+            /*
+             * The information should be somewhere in the client ? didnt found it
+             */
+            short[] forbiddenProjectionSpells = new short[]
+            {
+                14573, // Téléportail,
+                14582, // Neutral
+                0,
+            };
+
+
+            if (forbiddenProjectionSpells.Contains(cast.SpellId))
+            {
+                return;
+            }
             var fight = cast.Source.Fight;
 
             Portal? portal = fight.GetMark<Portal>(x => x.CenterCell.Id == cast.TargetCell.Id);
 
-            if (portal != null && portal.Active && !cast.Force)
+            if (portal != null && portal.Active)
             {
                 PortalPair? exit = PortalManager.Instance.GetPortalPair(portal);
 
@@ -326,6 +344,13 @@ namespace Giny.World.Managers.Fights.Marks
                     {
                         cast.TargetCell = cast.Source.Fight.Map.GetCell(targetPoint);
                         cast.ThroughPortal = true;
+
+                        var portalCoeff = portal.MarkSpell.Level.Effects.GetFirst<EffectDice>(EffectsEnum.Effect_SpawnPortal).Value;
+
+                        var finalCoeff = 1d + (portalCoeff + 2d * GetCasesCount(fight, portal.CenterCell.Id)) / 100d;
+
+                        cast.PortalDamageMultiplier = (int)(finalCoeff * 100);
+
 
                     }
                 }

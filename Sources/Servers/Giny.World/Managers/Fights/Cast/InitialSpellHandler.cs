@@ -97,6 +97,22 @@ namespace Giny.World.Managers.Fights.Cast
         private static void Eliotrope(CharacterFighter fighter)
         {
             fighter.ExecuteSpell(14631, 1, fighter.Cell);
+
+
+            CharacterSpell treeSpell = fighter.Character.GetSpellByBase(14574)!;
+
+            /*
+             * Portail flexible
+             */
+            if (!treeSpell.Variant)
+            {
+                fighter.ExecuteSpell(24955, treeSpell.GetGrade(fighter.Character), fighter.Cell);
+            }
+            else
+            {
+                fighter.ExecuteSpell(24956, treeSpell.GetGrade(fighter.Character), fighter.Cell);
+            }
+
         }
         private static void Enutrof(CharacterFighter fighter)
         {

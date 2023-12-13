@@ -73,11 +73,6 @@ namespace Giny.World.Managers.Fights.Cast
             get;
             private set;
         }
-        public bool IsCastByPortal
-        {
-            get;
-            set;
-        } = false;
 
         protected virtual bool Reveals => false;
 

@@ -126,6 +126,12 @@ namespace Giny.World.Managers.Fights.Cast
             set;
         } = false;
 
+        public int PortalDamageMultiplier
+        {
+            get;
+            set;
+        } = 100;
+
         public SpellCast(Fighter source, Spell spell, CellRecord targetCell, SpellCast parent = null)
         {
             if (parent != null)

@@ -25,6 +25,15 @@ namespace Giny.World.Managers.Fights.Effects.Marks
         {
             if (!Source.Fight.MarkExist<Portal>(x => x.CenterCell == TargetCell))
             {
+
+                IEnumerable<Portal> teamPortals = Source.Fight.GetMarks<Portal>().Where(x => x.Source.IsFriendlyWith(Source));
+
+                if (teamPortals.Count() >= PortalManager.MaxPortalPerTeam)
+                {
+                    var removedPortal = teamPortals.First();
+                    Source.Fight.RemoveMark(removedPortal);
+                }
+
                 Zone zone = Effect.GetZone();
 
                 Color color = PortalManager.Instance.GetPortalColor(Source.Team.TeamId);

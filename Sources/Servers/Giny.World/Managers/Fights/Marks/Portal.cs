@@ -84,12 +84,22 @@ namespace Giny.World.Managers.Fights.Marks
                 cast.Force = true;
                 Source.CastSpell(cast);
 
+                if (this.Active)
+                {
+                    this.Disable();
+                }
+
             }
+
         }
 
         public override bool OnTurnBegin()
         {
-            this.Enable();
+            if (Source.Fight.IsCellFree(CenterCell))
+            {
+                Enable();
+            }
+
             return false;
         }
     }

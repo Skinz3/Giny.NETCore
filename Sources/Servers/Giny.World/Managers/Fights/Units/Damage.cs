@@ -145,7 +145,8 @@ namespace Giny.World.Managers.Fights.Units
 
             jet.ValidateBounds();
 
-            // Source.Fight.Reply("Min:" + jet.Min + " Max:" + jet.Max, System.Drawing.Color.Red);
+             Source.Fight.Reply("Jet <b>(" + Math.Round(jet.Min,1).ToString().Replace(",",".") + 
+                 " - " + Math.Round(jet.Max,1).ToString().Replace(",", ".") + ")</b>", System.Drawing.Color.FromArgb(232, 149, 90));
 
             Computed = jet.Generate(Source.Random, Source.HasRandDownModifier(), Source.HasRandUpModifier());
 
@@ -200,6 +201,11 @@ namespace Giny.World.Managers.Fights.Units
             if (Source is SummonedBomb bomb)
             {
                 jet.ApplyBonus(bomb.GetTotalComboBonus());
+            }
+
+            if (EffectHandler.CastHandler.Cast.ThroughPortal)
+            {
+                jet.ApplyMultiplicator(EffectHandler.CastHandler.Cast.PortalDamageMultiplier);
             }
 
             jet.ApplyMultiplicator(Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER].TotalInContext());

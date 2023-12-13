@@ -21,9 +21,11 @@ namespace Giny.World.Managers.Fights.Effects.Marks
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
-            Portal portal = Source.GetMarks<Portal>().FirstOrDefault(x => x.CenterCell.Id == TargetCell.Id);
+            var affectedPoints = GetAffectedCells().Select(x => x.Point);
 
-            if (portal != null)
+            var portals = Source.GetMarks<Portal>().Where(x => affectedPoints.Contains(x.CenterCell.Point));
+
+            foreach (var portal in portals)
             {
                 portal.Disable();
             }
