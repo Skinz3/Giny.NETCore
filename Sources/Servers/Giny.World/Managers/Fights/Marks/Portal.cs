@@ -73,7 +73,7 @@ namespace Giny.World.Managers.Fights.Marks
 
         public override void Trigger(Fighter target, MarkTriggerType triggerType)
         {
-            if (Active) // TODO 'TP' TRIGGER
+            if (Active)
             {
                 SpellRecord spellRecord = SpellRecord.GetSpellRecord(PortalManager.PortalTeleportSpellId);
                 SpellLevelRecord spellLevel = spellRecord.Levels.Last();
@@ -84,9 +84,9 @@ namespace Giny.World.Managers.Fights.Marks
                 cast.Force = true;
                 Source.CastSpell(cast);
 
-                if (this.Active)
+                if (Active)
                 {
-                    this.Disable();
+                    Disable();
                 }
 
             }

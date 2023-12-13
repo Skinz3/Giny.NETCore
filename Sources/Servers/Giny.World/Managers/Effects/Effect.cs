@@ -246,7 +246,7 @@ namespace Giny.World.Managers.Effects
                 case "EOFF":
                     return new Trigger(TriggerTypeEnum.OnStateRemoved, parameter);
                 case "TP":
-                    return new Trigger(TriggerTypeEnum.OnTeleportPortal); // <---- TODO
+                    return new Trigger(TriggerTypeEnum.OnTeleportPortal); 
                 case "ATB":
                     return new Trigger(TriggerTypeEnum.AfterTurnBegin);
                 case "MPA":
