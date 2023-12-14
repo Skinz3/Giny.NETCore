@@ -343,11 +343,14 @@ namespace Giny.World.Managers.Fights.Marks
                     if (targetPoint != null)
                     {
                         cast.TargetCell = cast.Source.Fight.Map.GetCell(targetPoint);
+
                         cast.ThroughPortal = true;
+
+                        cast.CastCell = exit.Out.CenterCell;
 
                         var portalCoeff = portal.MarkSpell.Level.Effects.GetFirst<EffectDice>(EffectsEnum.Effect_SpawnPortal).Value;
 
-                        var finalCoeff = 1d + (portalCoeff + 2d * GetCasesCount(fight, portal.CenterCell.Id)) / 100d;
+                        var finalCoeff = 1d +   (portalCoeff + 2d * GetCasesCount(fight, portal.CenterCell.Id)) / 100d;
 
                         cast.PortalDamageMultiplier = (int)(finalCoeff * 100);
 

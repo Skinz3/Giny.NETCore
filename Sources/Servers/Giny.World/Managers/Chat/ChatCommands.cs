@@ -18,6 +18,7 @@ using Giny.World.Managers.Fights.Zones;
 using Giny.World.Managers.Generic;
 using Giny.World.Managers.Items;
 using Giny.World.Managers.Maps;
+using Giny.World.Managers.Maps.Elements;
 using Giny.World.Managers.Maps.Npcs;
 using Giny.World.Managers.Maps.Paths;
 using Giny.World.Managers.Maps.Teleporters;
@@ -522,6 +523,7 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
+          
             client.Character.Fighter.Fight.SequenceManager.StartSequence(Fights.Sequences.SequenceTypeEnum.SEQUENCE_SPELL);
             WallManager.Instance.UpdateWalls(client.Character.Fighter.Fight);
             client.Character.Fighter.Fight.SequenceManager.EndAllSequences();

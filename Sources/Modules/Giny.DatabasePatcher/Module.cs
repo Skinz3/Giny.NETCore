@@ -42,6 +42,7 @@ namespace Giny.DatabasePatcher
             LivingObjects.Patch();
             SkillBones.Patch();
             InteractiveElements.Patch();
+            Paddocks.Patch();
             MonsterSpawns.Patch();
             Teleporters.Patch();
             MapPlacements.Patch();

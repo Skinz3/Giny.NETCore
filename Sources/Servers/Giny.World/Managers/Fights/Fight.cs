@@ -788,7 +788,10 @@ namespace Giny.World.Managers.Fights
             bool flag2 = Marks.OfType<Trap>().Any(x => x.StopMovement && x.ContainsCell(cellId));
             bool flag3 = Marks.OfType<Wall>().Any(x => x.StopMovement && x.ContainsCell(cellId));
 
-            return flag1 || flag2 || flag3;
+            bool flag4  = Marks.OfType<Portal>().Any(x => x.StopMovement &&  x.ContainsCell(cellId));   
+
+
+            return flag1 || flag2 || flag3 || flag4;
         }
         private void OnTurnPassed()
         {

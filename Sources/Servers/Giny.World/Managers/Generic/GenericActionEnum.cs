@@ -30,5 +30,6 @@ namespace Giny.World.Managers.Generic
         RuneTrade,
         PokefusWish,
         Unhandled,
+        Paddock,
     }
 }

@@ -209,9 +209,15 @@ namespace Giny.Auth.Handlers
 
         private static void Login(AuthClient client, bool autoconnect)
         {
+            if (client.Ip == null)
+            {
+                Logger.Write("Aborted connexion of invalid client.", Channels.Warning);
+                return;
+            }
             if (!client.Account.IPs.Contains(client.Ip))
             {
                 client.Account.IPs.Add(client.Ip);
+
                 client.Account.UpdateNow();
             }
 
