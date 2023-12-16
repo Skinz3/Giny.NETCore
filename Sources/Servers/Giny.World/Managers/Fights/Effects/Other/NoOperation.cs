@@ -12,7 +12,7 @@ namespace Giny.World.Managers.Fights.Effects.Other
 {
     /*
      * Nothing to do...
-     * Probably spell animations
+     * Spell animations client side
      */
     [SpellEffectHandler(EffectsEnum.Effect_NoOperation)]
     public class NoOperation : SpellEffectHandler

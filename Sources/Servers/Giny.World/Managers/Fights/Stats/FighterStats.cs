@@ -40,14 +40,6 @@ namespace Giny.World.Managers.Fights.Stats
             get;
             set;
         }
-        /// <summary>
-        /// Do the cliet have received life 
-        /// </summary>
-        public bool LifeSended
-        {
-            get;
-            set;
-        } = false;
 
         public void SetShield(int delta)
         {
@@ -290,14 +282,11 @@ namespace Giny.World.Managers.Fights.Stats
             bool summoned = summoner != null;
             var summonerId = summoned ? summoner.Id : 0;
 
-            var result = new GameFightCharacteristics(new CharacterCharacteristics(owner.Stats.GetAllCharacterCharacteristics(!LifeSended)),
+            var result = new GameFightCharacteristics(new CharacterCharacteristics(owner.Stats.GetAllCharacterCharacteristics()),
                 summonerId, summoned,
                 (byte)owner.GetInvisibilityStateFor(target));
 
-            if (!LifeSended)
-            {
-              //  LifeSended = true;
-            }
+          
 
             return result;
         }
@@ -315,5 +304,6 @@ namespace Giny.World.Managers.Fights.Stats
                 (byte)owner.GetInvisibilityStateFor(target));
         }
 
+       
     }
 }

@@ -67,6 +67,8 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
     [SpellEffectHandler(EffectsEnum.Effect_IncreaseFinalDamages)]
     [SpellEffectHandler(EffectsEnum.Effect_AddErosion)]
     [SpellEffectHandler(EffectsEnum.Effect_AddComboBonus)]
+    [SpellEffectHandler(EffectsEnum.Effect_AddSummonLimit)]
+    [SpellEffectHandler(EffectsEnum.Effect_AddProspecting)]
     public class StatsBuff : SpellEffectHandler
     {
  

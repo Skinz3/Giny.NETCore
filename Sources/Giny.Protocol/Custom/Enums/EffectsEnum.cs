@@ -93,7 +93,7 @@
         /// <summary>
         /// #1{~1~2 à }#2 (PV rendus)
         /// </summary>
-        Effect_HealHP_81 = 81,
+        Effect_HealHPNoElement = 81,
         /// <summary>
         /// #1{~1~2 à }#2 PV (vol Neutre fixe)
         /// </summary>
@@ -105,23 +105,23 @@
         /// <summary>
         /// #1{~1~2 à }#2% des PV de l'attaquant (dommages Eau)
         /// </summary>
-        Effect_DamagePercentWater = 85,
+        Effect_DamagePercentCasterWater = 85,
         /// <summary>
         /// #1{~1~2 à }#2% des PV de l'attaquant (dommages Terre)
         /// </summary>
-        Effect_DamagePercentEarth = 86,
+        Effect_DamagePercentCasterEarth = 86,
         /// <summary>
         /// #1{~1~2 à }#2% des PV de l'attaquant (dommages Air)
         /// </summary>
-        Effect_DamagePercentAir = 87,
+        Effect_DamagePercentCasterAir = 87,
         /// <summary>
         /// #1{~1~2 à }#2% des PV de l'attaquant (dommages Feu)
         /// </summary>
-        Effect_DamagePercentFire = 88,
+        Effect_DamagePercentCasterFire = 88,
         /// <summary>
         /// #1{~1~2 à }#2% des PV de l'attaquant (dommages Neutre)
         /// </summary>
-        Effect_DamagePercentNeutral = 89,
+        Effect_DamagePercentCasterNeutral = 89,
         /// <summary>
         /// Donne #1{~1~2 à }#2 % de sa vie
         /// </summary>
@@ -187,7 +187,7 @@
         /// <summary>
         /// #1{~1~2 à }#2 (PV rendus)
         /// </summary>
-        Effect_HealHP_108 = 108,
+        Effect_HealHPFire = 108,
         /// <summary>
         /// #1{~1~2 à }#2 (dommages au lanceur)
         /// </summary>
@@ -323,7 +323,7 @@
         /// <summary>
         /// #1{~1~2 à }#2 (PV rendus)
         /// </summary>
-        Effect_HealHP_143 = 143,
+        Effect_HealHPWithoutBoost = 143,
         /// <summary>
         /// #1{~1~2 à }#2 (dommages Neutre fixe)
         /// </summary>
@@ -860,7 +860,7 @@
         /// <summary>
         /// #1{~1~2 à }#2 (PV rendus)
         /// </summary>
-        Effect_HealHP_407 = 407,
+        Effect_HealHPFix = 407,
         /// <summary>
         /// #1{~1~2 à }#2 Retrait PA
         /// </summary>
@@ -952,11 +952,11 @@
         /// <summary>
         /// Vole #1{~1~2 à }#2 PA
         /// </summary>
-        Effect_StealAP_440 = 440,
+        Effect_StealAPFix = 440,
         /// <summary>
         /// Vole #1{~1~2 à }#2 PM
         /// </summary>
-        Effect_StealMP_441 = 441,
+        Effect_StealMPFix = 441,
         /// <summary>
         /// Positionne la boussole
         /// </summary>
@@ -1697,15 +1697,15 @@
         /// <summary>
         /// Repousse de #1 case(s)
         /// </summary>
-        Effect_Pushback_1021 = 1021,
+        Effect_PushbackForced = 1021,
         /// <summary>
         /// Attire de #1 case(s)
         /// </summary>
-        Effect_PullForward_1022 = 1022,
+        Effect_PullForwardForced = 1022,
         /// <summary>
         /// Échange de positions
         /// </summary>
-        Effect_SwitchPosition_1023 = 1023,
+        Effect_SwitchPositionForced = 1023,
         /// <summary>
         /// Crée des illusions
         /// </summary>
@@ -1737,7 +1737,7 @@
         /// <summary>
         /// Termine le tour
         /// </summary>
-        Effect_SkipTurn_1031 = 1031,
+        Effect_EndTurn = 1031,
         /// <summary>
         /// (not found)
         /// </summary>

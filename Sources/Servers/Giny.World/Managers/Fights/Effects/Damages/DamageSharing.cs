@@ -32,8 +32,8 @@ namespace Giny.World.Managers.Fights.Effects.Damages
 
                 foreach (var ally in fighters)
                 {
-                    Damage sharedDamage = new Damage(damage.Source, ally, damage.EffectSchool, 0, 0,
-                        damage.EffectHandler);
+                    Damage sharedDamage = new Damage(damage.Source, ally, damage.Element, 0, 0,
+                        damage.Handler);
 
                     sharedDamage.Computed = sharedDelta;
                     sharedDamage.IgnoreBoost = true;

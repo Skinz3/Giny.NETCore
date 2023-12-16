@@ -50,22 +50,22 @@ namespace Giny.World.Managers.Fights.Effects.Damages
             }
         }
 
-        private EffectSchoolEnum GetEffectSchool(EffectsEnum effectEnum)
+        private EffectElementEnum GetEffectSchool(EffectsEnum effectEnum)
         {
             switch (effectEnum)
             {
                 case EffectsEnum.Effect_DamageNeutralRemainingMP:
-                    return EffectSchoolEnum.Neutral;
+                    return EffectElementEnum.Neutral;
                 case EffectsEnum.Effect_DamageAirRemainingMP:
-                    return EffectSchoolEnum.Air;
+                    return EffectElementEnum.Air;
                 case EffectsEnum.Effect_DamageWaterRemainingMP:
-                    return EffectSchoolEnum.Water;
+                    return EffectElementEnum.Water;
                 case EffectsEnum.Effect_DamageFireRemainingMP:
-                    return EffectSchoolEnum.Fire;
+                    return EffectElementEnum.Fire;
                 case EffectsEnum.Effect_DamageEarthRemainingMP:
-                    return EffectSchoolEnum.Earth;
+                    return EffectElementEnum.Earth;
             }
-            return EffectSchoolEnum.Unknown;
+            return EffectElementEnum.Undefined;
         }
     }
 }

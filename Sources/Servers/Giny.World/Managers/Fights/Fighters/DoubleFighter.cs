@@ -16,9 +16,14 @@ namespace Giny.World.Managers.Fights.Fighters
 {
     public class DoubleFighter : SummonedFighter
     {
-        public DoubleFighter(Fighter owner, SpellEffectHandler summoningEffect, CellRecord cell) : base(owner, summoningEffect, cell)
+        private bool SummonSlot
         {
-
+            get;
+            set;
+        }
+        public DoubleFighter(Fighter owner, SpellEffectHandler summoningEffect, CellRecord cell, bool useSummonSlot) : base(owner, summoningEffect, cell)
+        {
+            this.SummonSlot = useSummonSlot;
         }
 
         public override string Name => Summoner.Name;
@@ -75,9 +80,14 @@ namespace Giny.World.Managers.Fights.Fighters
             return base.ToString() + " (Double)";
         }
 
-        public override void OnSummoned()
+        public override bool UseSummonSlot()
         {
+            return SummonSlot;
+        }
 
+        public override void CastInitialSpells()
+        {
+           
         }
     }
 }

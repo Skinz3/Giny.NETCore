@@ -53,7 +53,7 @@
 
             <MudList Dense="true" Clickable="true">
                 <MudListSubheader>
-                    <MudText>@SelectedEffect</MudText>
+                    <MudText Typo="Typo.caption">@SelectedEffect</MudText>
                 </MudListSubheader>
 
                 <div style="height:80vh;overflow-y:scroll">
@@ -134,12 +134,6 @@
     }
     string GetSpellName(SpellRecord record)
     {
-        var result = SpellHelper.GetSpellDescriptionWithBreed(record);
-
-        if (result != null)
-        {
-            return result;
-        }
 
         return record.ToString();
     }

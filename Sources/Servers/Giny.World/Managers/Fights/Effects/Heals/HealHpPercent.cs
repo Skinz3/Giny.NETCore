@@ -24,7 +24,7 @@ namespace Giny.World.Managers.Fights.Effects.Heals
             foreach (var target in targets)
             {
                 double delta = target.Stats.MaxLifePoints * (Effect.Min / 100d);
-                target.Heal(new Healing(Source, target, EffectSchoolEnum.Fix, delta, delta, this));
+                target.Heal(new Healing(Source, target, EffectElementEnum.None, delta, delta, this, true));
             }
         }
     }

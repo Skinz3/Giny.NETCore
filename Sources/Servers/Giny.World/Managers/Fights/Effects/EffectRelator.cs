@@ -237,8 +237,8 @@ namespace Giny.World.Managers.Fights.Effects
                 case EffectsEnum.Effect_SubWaterResistPercent:
                     return CharacteristicEnum.WATER_ELEMENT_RESIST_PERCENT;
 
-
-
+                case EffectsEnum.Effect_AddSummonLimit:
+                    return CharacteristicEnum.MAX_SUMMONED_CREATURES_BOOST;
 
                 case EffectsEnum.Effect_SubAPAttack:
                     return CharacteristicEnum.AP_REDUCTION;
@@ -285,6 +285,15 @@ namespace Giny.World.Managers.Fights.Effects
 
                 case EffectsEnum.Effect_AddComboBonus:
                     return CharacteristicEnum.BOMB_COMBO_BONUS;
+
+                case EffectsEnum.Effect_SubCriticalDamageBonus:
+                    return CharacteristicEnum.CRITICAL_DAMAGE_BONUS;
+
+                case EffectsEnum.Effect_SubVitality:
+                    return CharacteristicEnum.VITALITY;
+
+                case EffectsEnum.Effect_AddProspecting:
+                    return CharacteristicEnum.MAGIC_FIND;
 
 
 

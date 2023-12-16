@@ -104,8 +104,6 @@ namespace Giny.World.Managers.Fights.Marks
 
         public void UpdateWalls(Fight fight)
         {
-            fight.Warn("Update walls");
-
             var oldWalls = fight.GetMarks<Wall>().ToList();
 
             var newWalls = new List<Wall>();

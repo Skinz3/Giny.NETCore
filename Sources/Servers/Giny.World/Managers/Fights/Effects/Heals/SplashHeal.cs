@@ -35,7 +35,7 @@ namespace Giny.World.Managers.Fights.Effects.Heals
                     foreach (var target in targets)
                     {
                         var delta = result.Total * (Effect.Min / 100d);
-                        target.Heal(new Healing(Source, target, EffectSchoolEnum.Fix, delta, delta, this));
+                        target.Heal(new Healing(Source, target, damage.Element, delta, delta, this, true)); ;
                     }
                 };
             }
@@ -44,7 +44,7 @@ namespace Giny.World.Managers.Fights.Effects.Heals
                 foreach (var target in targets)
                 {
                     double delta = Source.TotalDamageReceivedSequenced * (Effect.Min / 100d);
-                    target.Heal(new Healing(Source, target, EffectSchoolEnum.Fix, delta, delta, this));
+                    target.Heal(new Healing(Source, target, damage.Element, delta, delta, this, true));
                 }
             }
 

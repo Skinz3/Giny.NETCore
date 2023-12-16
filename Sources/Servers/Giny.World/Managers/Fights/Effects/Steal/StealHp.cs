@@ -32,7 +32,7 @@ namespace Giny.World.Managers.Fights.Effects.Damages
 
                 double healDelta = result.LifeLoss / 2d;
 
-                Source.Heal(new Healing(Source, target, EffectSchoolEnum.Fix, healDelta, healDelta, this));
+                Source.Heal(new Healing(Source, target, GetEffectSchool(), healDelta, healDelta, this, true));
             }
         }
 
@@ -40,24 +40,24 @@ namespace Giny.World.Managers.Fights.Effects.Damages
         {
             return new Damage(Source, target, GetEffectSchool(), Effect.Min, Effect.Max, this);
         }
-        private EffectSchoolEnum GetEffectSchool()
+        private EffectElementEnum GetEffectSchool()
         {
             switch (Effect.EffectEnum)
             {
                 case EffectsEnum.Effect_StealHPEarth:
-                    return EffectSchoolEnum.Earth;
+                    return EffectElementEnum.Earth;
                 case EffectsEnum.Effect_StealHPWater:
-                    return EffectSchoolEnum.Water;
+                    return EffectElementEnum.Water;
                 case EffectsEnum.Effect_StealHPFire:
-                    return EffectSchoolEnum.Fire;
+                    return EffectElementEnum.Fire;
                 case EffectsEnum.Effect_StealHPAir:
-                    return EffectSchoolEnum.Air;
+                    return EffectElementEnum.Air;
                 case EffectsEnum.Effect_StealHPNeutral:
-                    return EffectSchoolEnum.Neutral;
+                    return EffectElementEnum.Neutral;
                 case EffectsEnum.Effect_StealHPFix:
-                    return EffectSchoolEnum.Fix;
+                    return EffectElementEnum.None;
             }
-            return EffectSchoolEnum.Unknown;
+            return EffectElementEnum.Undefined;
         }
     }
 }

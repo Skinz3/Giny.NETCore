@@ -163,7 +163,10 @@ namespace Giny.World.Managers.Fights.Fighters
             {
                 summon.SwitchContext();
             }
+        }
 
+        public override void CastInitialSpells()
+        {
             foreach (var item in Character.Inventory.GetSpellCastItems())
             {
                 EffectDice effect = item.Effects.GetFirst<EffectDice>(Inventory.ItemCastEffect);
@@ -175,14 +178,8 @@ namespace Giny.World.Managers.Fights.Fighters
             }
 
 
-
-
             InitialSpellHandler.Execute(this);
-
-
-
         }
-
         public override void OnJoined()
         {
             SendGameFightJoinMessage();

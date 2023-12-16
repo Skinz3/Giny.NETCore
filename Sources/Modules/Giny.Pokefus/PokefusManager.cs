@@ -241,7 +241,7 @@ namespace Giny.Pokefus
                         result = false;
                     }
                 }
-                if (effect.EffectEnum == EffectsEnum.Effect_SkipTurn || effect.EffectEnum == EffectsEnum.Effect_SkipTurn_1031)
+                if (effect.EffectEnum == EffectsEnum.Effect_SkipTurn || effect.EffectEnum == EffectsEnum.Effect_EndTurn)
                 {
                     result = false;
                 }

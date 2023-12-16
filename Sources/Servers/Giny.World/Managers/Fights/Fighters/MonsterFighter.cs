@@ -188,10 +188,8 @@ namespace Giny.World.Managers.Fights.Fighters
         {
 
         }
-        public override void OnFightStarted()
+        public override void CastInitialSpells()
         {
-            base.OnFightStarted();
-            
             CastSpell(Grade.StartingSpellLevelId);
         }
     }

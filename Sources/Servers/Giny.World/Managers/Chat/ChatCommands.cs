@@ -1,5 +1,6 @@
 ﻿using Giny.Core.Extensions;
 using Giny.Core.IO.Configuration;
+using Giny.Core.Time;
 using Giny.ORM;
 using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
@@ -299,7 +300,7 @@ namespace Giny.World.Managers.Chat
                 client.Character.ReplyWarning("This title do not exists.");
             }
         }
-        [ChatCommand("guild",ServerRoleEnum.Administrator)]
+        [ChatCommand("guild", ServerRoleEnum.Administrator)]
         public static void GuildCommand(WorldClient client)
         {
             client.Character.Inventory.AddItem(1575, 1);
@@ -523,10 +524,35 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
-          
-            client.Character.Fighter.Fight.SequenceManager.StartSequence(Fights.Sequences.SequenceTypeEnum.SEQUENCE_SPELL);
-            WallManager.Instance.UpdateWalls(client.Character.Fighter.Fight);
-            client.Character.Fighter.Fight.SequenceManager.EndAllSequences();
+
+
+
+            for (int i = 0; i < 1; i++)
+            {
+                foreach (var target in client.Character.Fighter.EnemyTeam.GetFighters())
+                {
+                    using (var seq = client.Character.Fighter.Fight.SequenceManager.StartSequence(Fights.Sequences.SequenceTypeEnum.SEQUENCE_SPELL))
+                    {
+
+                        target.ExecuteSpell(13437, 1, target.Cell);
+
+                        System.Threading.Thread.Sleep(300);
+
+
+                    }
+
+                    using (var seq = client.Character.Fighter.Fight.SequenceManager.StartSequence(Fights.Sequences.SequenceTypeEnum.SEQUENCE_SPELL))
+                    {
+                        target.ExecuteSpell(13434, 1, target.Cell);
+
+                        System.Threading.Thread.Sleep(300);
+
+
+                    }
+                }
+
+            }
+
             return;
             IEnumerable<MonsterRecord> records = MonsterRecord.GetMonsterRecords().Where(x => x.IsBoss == true).Shuffle().Take(3);
             MonstersManager.Instance.AddFixedMonsterGroup(client.Character.Map.Instance, client.Character.CellId, records.ToArray());
@@ -537,7 +563,7 @@ namespace Giny.World.Managers.Chat
 
             using (var seq = client.Character.Fighter.Fight.SequenceManager.StartSequence(Fights.Sequences.SequenceTypeEnum.SEQUENCE_SPELL))
             {
-                client.Character.Fighter.InflictDamage(new Damage(client.Character.Fighter, client.Character.Fighter, EffectSchoolEnum.Fix, 300, 300));
+                client.Character.Fighter.InflictDamage(new Damage(client.Character.Fighter, client.Character.Fighter, EffectElementEnum.None, 300, 300, null, true));
             }
 
 

@@ -50,6 +50,9 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
     [SpellEffectHandler(EffectsEnum.Effect_SubMeleeDamageReceivedMultiplier)]
     [SpellEffectHandler(EffectsEnum.Effect_SubRangeDamageReceivedMultiplier)]
     [SpellEffectHandler(EffectsEnum.Effect_SubSpellReceivedDamageMultiplier)]
+    [SpellEffectHandler(EffectsEnum.Effect_SubWeaponDamageMultiplier)]
+    [SpellEffectHandler(EffectsEnum.Effect_SubCriticalDamageBonus)]
+    [SpellEffectHandler(EffectsEnum.Effect_SubVitality)] // Possibilitée d'avoir une vie max négative !
     public class StatsDebuff : SpellEffectHandler
     {
 

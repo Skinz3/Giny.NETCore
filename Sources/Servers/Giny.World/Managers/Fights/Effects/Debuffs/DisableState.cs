@@ -37,6 +37,8 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
                         target.RemoveAndDispellBuff(Source, oldBuff);
                     }
 
+                
+
                     int id = target.BuffIdProvider.Pop();
                     Buff buff = new DisableStateBuff(id, stateId, target, this, Effect.DispellableEnum,
                         (short)ActionsEnum.ACTION_FIGHT_DISABLE_STATE);

@@ -78,7 +78,7 @@ namespace Giny.SmithmagicMonsters
 
             if (item == null)
             {
-                result.Character.ReplyWarning("Aucune statistique n'a pu être augmenté. Vous ne possedez d'objet elligible.");
+                result.Character.ReplyWarning("Aucune statistique n'a pu être augmenté. Vous ne possedez pas d'objet elligible.");
                 return;
             }
 
@@ -150,7 +150,7 @@ namespace Giny.SmithmagicMonsters
 
                 var description = GetAddEffectDescription(boostedEffect.EffectEnum, difference);
 
-                character.Reply($"<b>{description}</b> a été ajouté à <b>[{item.Record.Name}]</b> !");
+                character.Reply($"Votre <b>[{item.Record.Name}]</b> à obtenu <b>{description}</b> !");
 
             }
 

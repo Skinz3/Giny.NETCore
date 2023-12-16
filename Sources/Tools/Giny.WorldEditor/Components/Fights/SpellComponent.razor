@@ -2,8 +2,11 @@
 @using Giny.IO.D2OClasses;
 @using Giny.Protocol.Enums;
 @using Giny.World.Managers.Effects;
+@using Giny.World.Records.Breeds;
+@using Giny.World.Records.Monsters;
 @using Giny.World.Records.Spells;
 @using Giny.WorldEditor.Caching;
+@using System.Text;
 
 @if (SelectedSpell != null)
 {
@@ -29,9 +32,16 @@
 
                 <MudTextField Label="Description" @bind-Value="SelectedSpell.Description"></MudTextField>
                 <MudField Label="Category">@SelectedSpell.Category.ToString()</MudField>
+
+                @foreach (var owner in GetOwners())
+                {
+                    <MudChip  Class="mt-2" Color="Color.Primary" Variant="Variant.Text">
+                      @owner
+                        </MudChip>
+                }
             </MudCardContent>
         </MudCard>
-        
+
     </div>
 
     <br />
@@ -384,6 +394,32 @@
         }
     }
 
+    private List<string> GetOwners()
+    {
+
+
+        List<string> results = new List<string>();
+
+        foreach (var monster in MonsterRecord.GetMonsterRecords())
+        {
+            if (monster.Spells.Any(x => x == SelectedSpell.Id))
+            {
+                results.Add(monster.ToString());
+            }
+        }
+
+        foreach (var breed in BreedRecord.GetBreeds())
+        {
+            if (breed.SpellIds.Any(x=>x == SelectedSpell.Id))
+            {
+                results.Add(breed.Name);
+            }
+        }
+
+
+        return results;
+
+    }
     public void SelectEffect(EffectDice effect)
     {
         SelectedEffect = effect;

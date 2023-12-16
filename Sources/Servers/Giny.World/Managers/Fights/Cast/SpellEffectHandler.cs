@@ -131,17 +131,17 @@ namespace Giny.World.Managers.Fights.Cast
             return result & result2;
         }
 
-        private IEnumerable<Fighter> GetAffectedFighters()
+        protected List<Fighter> GetAffectedFighters()
         {
             List<CellRecord> affectedCells = GetAffectedCells();
-            
-           /* if (Effect.EffectEnum == EffectsEnum.Effect_Teleport)
-            {
-                foreach (var cell in affectedCells)
-                {
-                    this.CastHandler.Cast.Source.Fight.Send(new ShowCellMessage(this.Source.Id, cell.Id));
-                }
-            } */
+
+            /* if (Effect.EffectEnum == EffectsEnum.Effect_Teleport)
+             {
+                 foreach (var cell in affectedCells)
+                 {
+                     this.CastHandler.Cast.Source.Fight.Send(new ShowCellMessage(this.Source.Id, cell.Id));
+                 }
+             } */
             if (Targets.Any(x => x is TargetTypeCriterion && ((TargetTypeCriterion)x).TargetType == SpellTargetType.SELF_ONLY) && !affectedCells.Contains(Source.Cell))
             {
                 affectedCells.Add(Source.Cell);
@@ -149,19 +149,21 @@ namespace Giny.World.Managers.Fights.Cast
 
             if (Targets.Any(x => x is LastAttackerCriterion && ((LastAttackerCriterion)x).Required))
             {
-                var lastAtkSource = LastAttackerCriterion.GetLastAttackerSource(this); 
+                var lastAtkSource = LastAttackerCriterion.GetLastAttackerSource(this);
 
                 if (lastAtkSource.LastAttacker != null && !affectedCells.Contains(lastAtkSource.LastAttacker.Cell))
                     affectedCells.Add(lastAtkSource.LastAttacker.Cell);
             }
 
-            var fighters = Source.Fight.GetFighters(affectedCells);
+            IEnumerable<Fighter> fighters = Source.Fight.GetFighters(affectedCells);
 
-            var results = fighters.Where(entry => entry.Alive && !entry.IsCarried() && IsValidTarget(entry)).ToList();
+            IEnumerable<Fighter> results = fighters.Where(entry => entry.Alive && !entry.IsCarried() && IsValidTarget(entry));
 
-            SortTargets(results);
+            results = results.Where(x => !x.IsImmuneToSpell(CastHandler.Cast.SpellId));
 
-            return results;
+            SortTargets(results.ToList());
+
+            return results.ToList();
         }
         /// <summary>
         /// Tri les cibles de l'effet par cercles concentriques
@@ -289,7 +291,7 @@ namespace Giny.World.Managers.Fights.Cast
             {
                 foreach (var target in targets)
                 {
-                    AddTriggerBuff(target, FightDispellableEnum.REALLY_NOT_DISPELLABLE, Trigger.Singleton(TriggerTypeEnum.Delayed), delegate (TriggerBuff buff, ITriggerToken token)
+                    AddTriggerBuff(target, FightDispellableEnum.REALLY_NOT_DISPELLABLE, Trigger.Singleton(TriggerTypeEnum.Delayed), delegate (TriggerBuff buff, ITriggerToken? token)
                       {
                           InternalApply(new Fighter[] { target });
                           return false;
@@ -308,13 +310,13 @@ namespace Giny.World.Managers.Fights.Cast
         {
             if (Trigger.IsInstant(Effect.Triggers))
             {
-                Apply(targets);
+                Apply(targets); 
             }
             else
             {
                 foreach (var target in targets)
                 {
-                    AddTriggerBuff(target, FightDispellableEnum.REALLY_NOT_DISPELLABLE, Effect.Triggers, delegate (TriggerBuff buff, ITriggerToken token)
+                    AddTriggerBuff(target, FightDispellableEnum.REALLY_NOT_DISPELLABLE, Effect.Triggers, delegate (TriggerBuff buff, ITriggerToken? token)
                     {
                         this.TriggerToken = token;
                         Apply(new Fighter[] { target });
@@ -334,10 +336,10 @@ namespace Giny.World.Managers.Fights.Cast
         }
 
 
-        
-        public T GetTriggerToken<T>() where T : ITriggerToken
+
+        public T? GetTriggerToken<T>() where T : ITriggerToken
         {
-            return (T)TriggerToken;
+            return (T?)TriggerToken;
         }
         public void SetTriggerToken(ITriggerToken token)
         {

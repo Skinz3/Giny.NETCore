@@ -23,7 +23,7 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
 
             foreach (var target in targets)
             {
-                foreach (var buff in target.GetBuffs().Where(buff => buff.Dispellable == FightDispellableEnum.DISPELLABLE).Where(buff => buff.Duration > 0 && !buff.HasDelay()).ToArray())
+                foreach (var buff in target.GetBuffs(false).Where(buff => buff.Dispellable == FightDispellableEnum.DISPELLABLE).Where(buff => buff.Duration > 0 && !buff.HasDelay()).ToArray())
                 {
                     buff.Duration -= delta;
 

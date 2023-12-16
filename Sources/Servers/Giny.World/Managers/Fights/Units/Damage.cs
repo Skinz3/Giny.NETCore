@@ -44,12 +44,12 @@ namespace Giny.World.Managers.Fights.Units
             get;
             set;
         }
-        public EffectSchoolEnum EffectSchool
+        public EffectElementEnum Element
         {
             get;
             private set;
         }
-        public SpellEffectHandler EffectHandler
+        public SpellEffectHandler Handler
         {
             get;
             private set;
@@ -75,19 +75,31 @@ namespace Giny.World.Managers.Fights.Units
             set;
         }
 
+        public bool Fix
+        {
+            get;
+            set;
+        }
+        public bool FromPushback
+        {
+            get;
+            set;
+        }
+
         public event Action<DamageResult> Applied;
 
-        public Damage(Fighter source, Fighter target, EffectSchoolEnum school, double min, double max, SpellEffectHandler effectHandler = null)
+        public Damage(Fighter source, Fighter target, EffectElementEnum school, double min, double max, SpellEffectHandler effectHandler = null, bool fix = false)
         {
             this.Source = source;
             this.Target = target;
             this.BaseMaxDamages = max;
             this.BaseMinDamages = min;
-            this.EffectSchool = school;
-            this.EffectHandler = effectHandler;
+            this.Element = school;
+            this.Handler = effectHandler;
             this.IgnoreBoost = false;
             this.IgnoreResistances = false;
             this.WontTriggerBuffs = false;
+            this.Fix = fix;
         }
 
         public void OnApplied(DamageResult applied)
@@ -100,17 +112,17 @@ namespace Giny.World.Managers.Fights.Units
             {
                 return;
             }
-            if (EffectSchool == EffectSchoolEnum.Unknown)
+            if (Element == EffectElementEnum.Undefined)
             {
                 throw new Exception("Unknown Effect school. Cannot compute damages.");
             }
 
-            if (EffectSchool == EffectSchoolEnum.Fix)
+            if (Fix)
             {
                 Computed = new Jet(BaseMinDamages, BaseMaxDamages).Generate(Source.Random, Source.HasRandDownModifier(), Source.HasRandUpModifier());
                 return;
             }
-            if (EffectSchool == EffectSchoolEnum.Pushback)
+            if (FromPushback)
             {
                 if (BaseMinDamages != BaseMaxDamages)
                 {
@@ -132,7 +144,7 @@ namespace Giny.World.Managers.Fights.Units
             if (!IgnoreBoost)
                 ComputeCriticalDamageBonus(jet);
 
-            jet.ComputeShapeEfficiencyModifiers(Target, EffectHandler);
+            jet.ComputeShapeEfficiencyModifiers(Target, Handler);
 
             if (!IgnoreResistances)
                 ComputeDamageResistances(jet);
@@ -145,8 +157,8 @@ namespace Giny.World.Managers.Fights.Units
 
             jet.ValidateBounds();
 
-             Source.Fight.Reply("Jet <b>(" + Math.Round(jet.Min,1).ToString().Replace(",",".") + 
-                 " - " + Math.Round(jet.Max,1).ToString().Replace(",", ".") + ")</b>", System.Drawing.Color.FromArgb(232, 149, 90));
+            /*Source.Fight.Reply("Jet <b>(" + Math.Round(jet.Min, 1).ToString().Replace(",", ".") +
+                " - " + Math.Round(jet.Max, 1).ToString().Replace(",", ".") + ")</b>", System.Drawing.Color.FromArgb(232, 149, 90)); */
 
             Computed = jet.Generate(Source.Random, Source.HasRandDownModifier(), Source.HasRandUpModifier());
 
@@ -154,7 +166,7 @@ namespace Giny.World.Managers.Fights.Units
 
         private void ComputeCriticalDamageBonus(Jet jet)
         {
-            if (this.EffectHandler.CastHandler.Cast.IsCriticalHit)
+            if (this.Handler.CastHandler.Cast.IsCriticalHit)
             {
                 jet.Min += this.Source.Stats[CharacteristicEnum.CRITICAL_DAMAGE_BONUS].TotalInContext();
                 jet.Max += this.Source.Stats[CharacteristicEnum.CRITICAL_DAMAGE_BONUS].TotalInContext();
@@ -162,7 +174,7 @@ namespace Giny.World.Managers.Fights.Units
         }
         private void ComputeCriticalDamageReduction(Jet jet)
         {
-            if (this.EffectHandler.CastHandler.Cast.IsCriticalHit)
+            if (this.Handler.CastHandler.Cast.IsCriticalHit)
             {
                 jet.Min -= this.Target.Stats[CharacteristicEnum.CRITICAL_DAMAGE_REDUCTION].TotalInContext();
                 jet.Max -= this.Target.Stats[CharacteristicEnum.CRITICAL_DAMAGE_REDUCTION].TotalInContext();
@@ -184,7 +196,7 @@ namespace Giny.World.Managers.Fights.Units
 
             }
 
-            if (this.EffectHandler.CastHandler.Cast.Weapon)
+            if (this.Handler.CastHandler.Cast.Weapon)
             {
                 jet.ApplyMultiplicator(Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER_WEAPON].TotalInContext());
                 jet.ApplyMultiplicator(Target.Stats[CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_WEAPON].TotalInContext());
@@ -203,9 +215,9 @@ namespace Giny.World.Managers.Fights.Units
                 jet.ApplyBonus(bomb.GetTotalComboBonus());
             }
 
-            if (EffectHandler.CastHandler.Cast.ThroughPortal)
+            if (Handler.CastHandler.Cast.ThroughPortal)
             {
-                jet.ApplyMultiplicator(EffectHandler.CastHandler.Cast.PortalDamageMultiplier);
+                jet.ApplyMultiplicator(Handler.CastHandler.Cast.PortalDamageMultiplier);
             }
 
             jet.ApplyMultiplicator(Source.Stats[CharacteristicEnum.DEALT_DAMAGE_MULTIPLIER].TotalInContext());
@@ -217,25 +229,25 @@ namespace Giny.World.Managers.Fights.Units
             int resistPercent = 0;
             int reduction = 0;
 
-            switch (EffectSchool)
+            switch (Element)
             {
-                case EffectSchoolEnum.Earth:
+                case EffectElementEnum.Earth:
                     resistPercent = Target.Stats[CharacteristicEnum.EARTH_ELEMENT_RESIST_PERCENT].TotalInContext();
                     reduction = Target.Stats[CharacteristicEnum.EARTH_ELEMENT_REDUCTION].TotalInContext();
                     break;
-                case EffectSchoolEnum.Air:
+                case EffectElementEnum.Air:
                     resistPercent = Target.Stats[CharacteristicEnum.AIR_ELEMENT_RESIST_PERCENT].TotalInContext();
                     reduction = Target.Stats[CharacteristicEnum.AIR_ELEMENT_REDUCTION].TotalInContext();
                     break;
-                case EffectSchoolEnum.Water:
+                case EffectElementEnum.Water:
                     resistPercent = Target.Stats[CharacteristicEnum.WATER_ELEMENT_RESIST_PERCENT].TotalInContext();
                     reduction = Target.Stats[CharacteristicEnum.WATER_ELEMENT_REDUCTION].TotalInContext();
                     break;
-                case EffectSchoolEnum.Fire:
+                case EffectElementEnum.Fire:
                     resistPercent = Target.Stats[CharacteristicEnum.FIRE_ELEMENT_RESIST_PERCENT].TotalInContext();
                     reduction = Target.Stats[CharacteristicEnum.FIRE_ELEMENT_REDUCTION].TotalInContext();
                     break;
-                case EffectSchoolEnum.Neutral:
+                case EffectElementEnum.Neutral:
                     resistPercent = Target.Stats[CharacteristicEnum.NEUTRAL_ELEMENT_RESIST_PERCENT].TotalInContext();
                     reduction = Target.Stats[CharacteristicEnum.NEUTRAL_ELEMENT_REDUCTION].TotalInContext();
                     break;
@@ -248,7 +260,7 @@ namespace Giny.World.Managers.Fights.Units
         public Jet EvaluateConcreteJet()
         {
 
-            short boost = Source.SpellModifiers.GetModifierBoost(EffectHandler.CastHandler.Cast.SpellId, SpellModifierTypeEnum.BASE_DAMAGE);
+            short boost = Source.SpellModifiers.GetModifierBoost(Handler.CastHandler.Cast.SpellId, SpellModifierTypeEnum.BASE_DAMAGE);
 
             if (BaseMaxDamages == 0 || BaseMaxDamages <= BaseMinDamages)
             {
@@ -271,11 +283,11 @@ namespace Giny.World.Managers.Fights.Units
         }
         public bool IsSpellDamage()
         {
-            return EffectHandler != null && !EffectHandler.CastHandler.Cast.Weapon;
+            return Handler != null && !Handler.CastHandler.Cast.Weapon;
         }
         public bool IsWeaponDamage()
         {
-            return EffectHandler != null && EffectHandler.CastHandler.Cast.Weapon;
+            return Handler != null && Handler.CastHandler.Cast.Weapon;
         }
         private int GetJetDelta(double jet)
         {
@@ -286,7 +298,7 @@ namespace Giny.World.Managers.Fights.Units
             double allDamageBonus = 0;
             double elementDelta = 0;
 
-            if (this.EffectHandler.CastHandler.Cast.Weapon)
+            if (this.Handler.CastHandler.Cast.Weapon)
             {
                 weaponDamageBonus = Source.Stats[CharacteristicEnum.WEAPON_POWER].TotalInContext();
             }
@@ -303,25 +315,25 @@ namespace Giny.World.Managers.Fights.Units
 
             if (!IgnoreBoost)
             {
-                switch (EffectSchool)
+                switch (Element)
                 {
-                    case EffectSchoolEnum.Neutral:
+                    case EffectElementEnum.Neutral:
                         elementDelta = Source.Stats.Strength.TotalInContext();
                         elementDamageBonus = Source.Stats[CharacteristicEnum.NEUTRAL_DAMAGE_BONUS].TotalInContext();
                         break;
-                    case EffectSchoolEnum.Earth:
+                    case EffectElementEnum.Earth:
                         elementDelta = Source.Stats.Strength.TotalInContext();
                         elementDamageBonus = Source.Stats[CharacteristicEnum.EARTH_DAMAGE_BONUS].TotalInContext();
                         break;
-                    case EffectSchoolEnum.Water:
+                    case EffectElementEnum.Water:
                         elementDelta = Source.Stats.Chance.TotalInContext();
                         elementDamageBonus = Source.Stats[CharacteristicEnum.WATER_DAMAGE_BONUS].TotalInContext();
                         break;
-                    case EffectSchoolEnum.Air:
+                    case EffectElementEnum.Air:
                         elementDelta = Source.Stats.Agility.TotalInContext();
                         elementDamageBonus = Source.Stats[CharacteristicEnum.AIR_DAMAGE_BONUS].TotalInContext();
                         break;
-                    case EffectSchoolEnum.Fire:
+                    case EffectElementEnum.Fire:
                         elementDelta = Source.Stats.Intelligence.TotalInContext();
                         elementDamageBonus = Source.Stats[CharacteristicEnum.FIRE_DAMAGE_BONUS].TotalInContext();
                         break;

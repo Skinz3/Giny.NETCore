@@ -24,7 +24,7 @@ namespace Giny.World.Managers.Fights.Effects.Heals
         {
             double delta = Source.Stats.LifePoints * (Effect.Min / 100d);
 
-            Damage damage = new Damage(Source, Source, EffectSchoolEnum.Fix, delta, delta, this);
+            Damage damage = new Damage(Source, Source, EffectElementEnum.None, delta, delta, this, true);
             damage.IgnoreShield = true;
             Source.InflictDamage(damage);
 
@@ -32,7 +32,7 @@ namespace Giny.World.Managers.Fights.Effects.Heals
             {
                 if (target != Source)
                 {
-                    target.Heal(new Healing(Source, target, EffectSchoolEnum.Fix, delta, delta, this));
+                    target.Heal(new Healing(Source, target, EffectElementEnum.None, delta, delta, this, true));
                 }
             }
         }

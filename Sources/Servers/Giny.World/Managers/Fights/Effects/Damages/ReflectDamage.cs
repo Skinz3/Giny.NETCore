@@ -39,7 +39,7 @@ namespace Giny.World.Managers.Fights.Effects.Damages
         private void ReflectDamages(Damage damage)
         {
             short reflected = (short)Effect.Min;
-            Damage reflectDamage = new Damage(damage.Target, damage.Source, damage.EffectSchool, reflected, reflected, damage.EffectHandler);
+            Damage reflectDamage = new Damage(damage.Target, damage.Source, damage.Element, reflected, reflected, damage.Handler);
             reflectDamage.IgnoreBoost = true;
             reflectDamage.IgnoreResistances = true;
             damage.Source.InflictDamage(reflectDamage);

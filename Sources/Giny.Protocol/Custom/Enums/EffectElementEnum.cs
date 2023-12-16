@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 
 namespace Giny.Protocol.Custom.Enums
 {
-    public enum EffectSchoolEnum
+    public enum EffectElementEnum
     {
+        Multi = -2,
+        Undefined = -1,
         Neutral = 0,
         Earth = 1,
         Water = 3,
         Air = 4,
         Fire = 2,
-        Pushback = 5,
-        Fix = 7,
-        Unknown = 8,
+        None = 5,
+        Best = 6,
+        Worst = 7,
     }
 }

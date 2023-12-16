@@ -131,6 +131,11 @@ namespace Giny.World.Managers.Fights.Cast
             get;
             set;
         } = 100;
+        public bool PassTurn
+        {
+            get;
+            set;
+        }
 
         public SpellCast(Fighter source, Spell spell, CellRecord targetCell, SpellCast parent = null)
         {
@@ -186,7 +191,7 @@ namespace Giny.World.Managers.Fights.Cast
             return deep;
         }
 
-      
+
         public Mark? GetInitialMarkSource()
         {
             if (MarkSource != null)
@@ -218,6 +223,11 @@ namespace Giny.World.Managers.Fights.Cast
             }
 
             return childs;
+        }
+
+        public bool RequireTurnPass()
+        {
+            return Parent == null && (PassTurn || GetAllChilds().Any(x => x.PassTurn));
         }
 
 

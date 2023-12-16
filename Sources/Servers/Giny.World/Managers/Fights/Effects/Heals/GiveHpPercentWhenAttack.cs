@@ -34,7 +34,7 @@ namespace Giny.World.Managers.Fights.Effects.Heals
             double delta = token.Computed.Value * (Effect.Min / 100d);
 
             var healTarget = token.GetSource();
-            healTarget.Heal(new Healing(Source, healTarget, EffectSchoolEnum.Fix, delta, delta, this));
+            healTarget.Heal(new Healing(Source, healTarget, EffectElementEnum.None, delta, delta, this, true));
 
         }
     }

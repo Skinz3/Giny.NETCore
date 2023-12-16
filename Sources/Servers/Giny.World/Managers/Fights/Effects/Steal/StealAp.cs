@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Steal
 {
+    [SpellEffectHandler(EffectsEnum.Effect_StealAPFix)]
     [SpellEffectHandler(EffectsEnum.Effect_StealAP_84)]
     public class StealAp : SpellEffectHandler
     {
@@ -24,14 +25,25 @@ namespace Giny.World.Managers.Fights.Effects.Steal
         {
             foreach (var target in targets)
             {
-                short delta = RollAP(target, Effect.Min);
+                short delta = 0;
 
-                int dodged = Effect.Min - delta;
-
-                if (dodged > 0)
+                if (Effect.EffectEnum == EffectsEnum.Effect_StealAP_84)
                 {
-                    target.OnDodge(Source, ActionsEnum.ACTION_FIGHT_SPELL_DODGED_PA, dodged);
+                    delta = RollAP(target, Effect.Min);
+
+                    int dodged = Effect.Min - delta;
+                    
+                    if (dodged > 0)
+                    {
+                        target.OnDodge(Source, ActionsEnum.ACTION_FIGHT_SPELL_DODGED_PA, dodged);
+                    }
                 }
+                else if (Effect.EffectEnum == EffectsEnum.Effect_StealAPFix)
+                {
+                    delta = (short)Effect.Min;
+                }
+
+
 
                 if (delta > 0)
                 {

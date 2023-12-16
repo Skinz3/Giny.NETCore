@@ -138,7 +138,7 @@ namespace Giny.World.Managers.Fights.Fighters
         public DateTime? DeathTime
         {
             get;
-            set;
+            private set;
         }
         public bool IsReady
         {
@@ -297,6 +297,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
         }
 
+        public abstract void CastInitialSpells();
 
         public abstract FighterStats CreateStats();
 
@@ -646,7 +647,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public void RemoveSpellEffects(Fighter source, short spellId)
         {
-            IEnumerable<Buff> buffs = this.Buffs.Where(x => x.Cast.SpellId == spellId);
+            IEnumerable<Buff> buffs = GetBuffs(false).Where(x => x.Cast.SpellId == spellId);
 
             foreach (var buff in buffs.ToArray())
             {
@@ -665,7 +666,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public bool HasBuff(Buff buff)
         {
-            return Buffs.Contains(buff);
+            return GetBuffs(false).Contains(buff);
         }
 
         public void RemoveBuff(Fighter source, Buff buff)
@@ -687,7 +688,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
             if (BuffMaxStackReached(buff)) // WIP censer cumuler la durée ?
             {
-                Buff oldBuff = Buffs.First(x => x.IsSimilar(buff));
+                Buff oldBuff = GetBuffs(false).First(x => x.IsSimilar(buff));
                 RemoveAndDispellBuff(this, oldBuff);
             }
 
@@ -750,13 +751,20 @@ namespace Giny.World.Managers.Fights.Fighters
             return result;
         }
 
-        public IEnumerable<T> GetBuffs<T>() where T : Buff
+        public IEnumerable<T> GetBuffs<T>(bool enabledOnly = true) where T : Buff
         {
-            return Buffs.OfType<T>();
+            return GetBuffs(enabledOnly).OfType<T>();
         }
-        public IEnumerable<Buff> GetBuffs()
+        public IEnumerable<Buff> GetBuffs(bool enabledOnly = true)
         {
-            return Buffs;
+            if (enabledOnly)
+            {
+                return Buffs.Where(x => !x.Disabled);
+            }
+            else
+            {
+                return Buffs;
+            }
         }
         public bool BuffMaxStackReached(Buff buff)
         {
@@ -830,6 +838,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 ShowFighter(characterFighter);
             }
         }
+
 
         public void RefreshStats(CharacteristicEnum characteristic)
         {
@@ -991,7 +1000,17 @@ namespace Giny.World.Managers.Fights.Fighters
 
 
 
-            Fight.CheckFightEnd();
+
+
+            if (!Fight.CheckFightEnd())
+            {
+                if (cast.RequireTurnPass())
+                {
+                    PassTurn();
+                }
+            }
+
+
 
             return true;
         }
@@ -1259,9 +1278,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public bool HasState(int stateId)
         {
-            bool hasState = GetBuffs<StateBuff>().Any(x => x.Record.Id == stateId);
-            bool isStateDisabled = GetBuffs<DisableStateBuff>().Any(x => x.StateId == stateId);
-            return hasState && !isStateDisabled;
+            return GetBuffs<StateBuff>().Any(x => x.Record.Id == stateId);
         }
         public void OnStateRemoved(StateBuff buff)
         {
@@ -1434,7 +1451,9 @@ namespace Giny.World.Managers.Fights.Fighters
 
             short delta = (short)num2;
 
-            this.InflictDamage(new Damage(source, this, EffectSchoolEnum.Pushback, delta, delta, null));
+            var damages = new Damage(source, this, EffectElementEnum.Neutral, delta, delta, null, true);
+            damages.FromPushback = true;
+            this.InflictDamage(damages);
         }
         public void UpdateLook(Fighter source)
         {
@@ -1551,11 +1570,11 @@ namespace Giny.World.Managers.Fights.Fighters
         }
         public bool HasRandDownModifier()
         {
-            return Buffs.OfType<RandModifierBuff>().Any(x => !x.Up);
+            return GetBuffs().OfType<RandModifierBuff>().Any(x => !x.Up);
         }
         public bool HasRandUpModifier()
         {
-            return Buffs.OfType<RandModifierBuff>().Any(x => x.Up);
+            return GetBuffs().OfType<RandModifierBuff>().Any(x => x.Up);
         }
         public short GetApCost(SpellLevelRecord level)
         {
@@ -1771,6 +1790,7 @@ namespace Giny.World.Managers.Fights.Fighters
         public virtual void OnFightStarted()
         {
             FightStartCell = this.Cell;
+            CastInitialSpells();
         }
 
         public virtual void OnFightEnding()
@@ -1790,10 +1810,14 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public void DispelState(Fighter source, int stateId)
         {
-            foreach (var buff in GetBuffs<StateBuff>().Where(x => x.Record.Id == stateId).ToArray())
+            foreach (var buff in GetBuffs<StateBuff>(false).Where(x => x.Record.Id == stateId).ToArray())
             {
                 RemoveAndDispellBuff(source, buff);
             }
+        }
+        public bool IsImmuneToSpell(short spellId)
+        {
+            return GetBuffs<SpellImmunityBuff>().Any(x => x.SpellId == spellId);
         }
         public virtual bool CanUsePortal()
         {
@@ -1969,6 +1993,43 @@ namespace Giny.World.Managers.Fights.Fighters
                 sourceId = source.Id,
             });
         }
+
+        public bool Revive(Fighter source, CellRecord targetCell, int lifePercent)
+        {
+            if (Alive)
+            {
+                return false;
+            }
+
+
+            Cell = targetCell;
+            Alive = true;
+
+            var newLife = Stats.MaxLifePoints * (lifePercent / 100d);
+
+            Stats.Life.Loss = (int)(Stats.MaxLifePoints - newLife);
+
+            DeathTime = null;
+
+
+            foreach (var characterFighter in Fight.GetAllConnectedFighters())
+            {
+                var action = ActionsEnum.ACTION_CHARACTER_SUMMON_DEAD_ALLY_AS_SUMMON_IN_FIGHT;
+
+                characterFighter.Send(new GameActionFightSummonMessage(
+                    new GameFightFighterInformations[] { GetFightFighterInformations(characterFighter) },
+                (short)action, source.Id));
+            }
+
+
+
+
+            Fight.UpdateTimeLine();
+
+            CastInitialSpells();
+
+            return true;
+        }
         [Annotation("only spell damage reflection are mutlplied by wisdom")] // verify this information
         public virtual int CalculateDamageReflection(int damage)
         {
@@ -2024,7 +2085,7 @@ namespace Giny.World.Managers.Fights.Fighters
                     Fight.Send(new GameActionFightLifeAndShieldPointsLostMessage()
                     {
                         actionId = 0,
-                        elementId = (int)damage.EffectSchool,
+                        elementId = (int)damage.Element,
                         loss = num,
                         shieldLoss = (short)Stats.ShieldPoints,
                         permanentDamages = permanentDamages,
@@ -2055,7 +2116,7 @@ namespace Giny.World.Managers.Fights.Fighters
                     Fight.Send(new GameActionFightLifeAndShieldPointsLostMessage()
                     {
                         actionId = 0,
-                        elementId = (int)damage.EffectSchool,
+                        elementId = (int)damage.Element,
                         loss = 0,
                         permanentDamages = 0,
                         shieldLoss = (short)delta,
@@ -2080,7 +2141,7 @@ namespace Giny.World.Managers.Fights.Fighters
                         sourceId = damage.Source.Id,
                         targetId = this.Id,
                         actionId = 0,
-                        elementId = (int)damage.EffectSchool,
+                        elementId = (int)damage.Element,
                         loss = Stats.LifePoints,
                         permanentDamages = permanentDamages,
                     });
@@ -2098,7 +2159,7 @@ namespace Giny.World.Managers.Fights.Fighters
                     Fight.Send(new GameActionFightLifePointsLostMessage()
                     {
                         actionId = 0,
-                        elementId = (int)damage.EffectSchool,
+                        elementId = (int)damage.Element,
                         loss = delta,
                         permanentDamages = permanentDamages,
                         sourceId = damage.Source.Id,
@@ -2111,8 +2172,8 @@ namespace Giny.World.Managers.Fights.Fighters
 
             if (reflected > 0)
             {
-                damage.Source.InflictDamage(new Damage(this, damage.Source, EffectSchoolEnum.Fix,
-                    reflected, reflected));
+                damage.Source.InflictDamage(new Damage(this, damage.Source, EffectElementEnum.None,
+                    reflected, reflected, null, true));
                 OnDamageReflected(damage.Source);
             }
 
@@ -2174,19 +2235,19 @@ namespace Giny.World.Managers.Fights.Fighters
         private void TriggerBuffs(Damage damage)
         {
 
-            if (damage.EffectSchool == EffectSchoolEnum.Fix || damage.WontTriggerBuffs)
+            if (damage.WontTriggerBuffs || damage.Fix)
             {
                 return;
             }
 
-            if (damage.EffectHandler != null)
+            if (damage.Handler != null)
             {
-                if (damage.EffectHandler.Effect.Duration > 0)
+                if (damage.Handler.Effect.Duration > 0)
                 {
                     return;
                 }
 
-                Mark? markSource = damage.EffectHandler.CastHandler.Cast.GetInitialMarkSource();
+                Mark? markSource = damage.Handler.CastHandler.Cast.GetInitialMarkSource();
 
                 if (markSource != null)
                 {
@@ -2225,39 +2286,41 @@ namespace Giny.World.Managers.Fights.Fighters
                 TriggerBuffs(TriggerTypeEnum.OnDamagedBySummon, damage);
             }
 
-
-            switch (damage.EffectSchool)
+            if (damage.FromPushback)
             {
-                case EffectSchoolEnum.Pushback:
+                if (damage.Source.IsFriendlyWith(this))
+                {
+                    TriggerBuffs(TriggerTypeEnum.OnDamagedByAllyPush, damage);
+                }
+                else
+                {
+                    TriggerBuffs(TriggerTypeEnum.OnDamagedByEnemyPush, damage);
+                }
 
-                    if (damage.Source.IsFriendlyWith(this))
-                    {
-                        TriggerBuffs(TriggerTypeEnum.OnDamagedByAllyPush, damage);
-                    }
-                    else
-                    {
-                        TriggerBuffs(TriggerTypeEnum.OnDamagedByEnemyPush, damage);
-                    }
+                TriggerBuffs(TriggerTypeEnum.OnDamagedByPush, damage);
+            }
 
-                    TriggerBuffs(TriggerTypeEnum.OnDamagedByPush, damage);
+            switch (damage.Element)
+            {
+                case EffectElementEnum.None:
                     break;
-                case EffectSchoolEnum.Neutral:
+                case EffectElementEnum.Neutral:
                     damage.Source.TriggerBuffs(TriggerTypeEnum.CasterInflictDamageNeutral, damage);
                     TriggerBuffs(TriggerTypeEnum.OnDamagedNeutral, damage);
                     break;
-                case EffectSchoolEnum.Earth:
+                case EffectElementEnum.Earth:
                     damage.Source.TriggerBuffs(TriggerTypeEnum.CasterInflictDamageEarth, damage);
                     TriggerBuffs(TriggerTypeEnum.OnDamagedEarth, damage);
                     break;
-                case EffectSchoolEnum.Water:
+                case EffectElementEnum.Water:
                     damage.Source.TriggerBuffs(TriggerTypeEnum.CasterInflictDamageWater, damage);
                     TriggerBuffs(TriggerTypeEnum.OnDamagedWater, damage);
                     break;
-                case EffectSchoolEnum.Air:
+                case EffectElementEnum.Air:
                     damage.Source.TriggerBuffs(TriggerTypeEnum.CasterInflictDamageAir, damage);
                     TriggerBuffs(TriggerTypeEnum.OnDamagedAir, damage);
                     break;
-                case EffectSchoolEnum.Fire:
+                case EffectElementEnum.Fire:
                     damage.Source.TriggerBuffs(TriggerTypeEnum.CasterInflictDamageFire, damage);
                     TriggerBuffs(TriggerTypeEnum.OnDamagedFire, damage);
                     break;
@@ -2301,7 +2364,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 damage.Source.TriggerBuffs(TriggerTypeEnum.CasterInflictDamageAlly, damage);
             }
 
-            if (damage.EffectHandler != null && damage.EffectHandler.CastHandler.Cast.IsCriticalHit)
+            if (damage.Handler != null && damage.Handler.CastHandler.Cast.IsCriticalHit)
             {
                 damage.Source.TriggerBuffs(TriggerTypeEnum.OnCriticalHit, damage);
 
@@ -2341,11 +2404,12 @@ namespace Giny.World.Managers.Fights.Fighters
                 summon.Die(this);
             }
         }
-        public void RemoveAndDispellAllBuffs(Fighter source, FightDispellableEnum dispellable = FightDispellableEnum.REALLY_NOT_DISPELLABLE)
+
+        public void RemoveAndDispellAllBuffs(FightDispellableEnum dispellable = FightDispellableEnum.REALLY_NOT_DISPELLABLE)
         {
-            foreach (var buff in Buffs.Where(x => x.Cast.Source == source && x.Dispellable <= dispellable).ToArray())
+            foreach (var buff in GetBuffs(false).Where(x => x.Dispellable <= dispellable).ToArray())
             {
-                RemoveAndDispellBuff(source, buff);
+                RemoveAndDispellBuff(this, buff);
             }
         }
         public void RemoveAllCastedBuffs()
@@ -2353,6 +2417,13 @@ namespace Giny.World.Managers.Fights.Fighters
             foreach (Fighter current in this.Fight.GetFighters<Fighter>())
             {
                 current.RemoveAndDispellAllBuffs(this);
+            }
+        }
+        private void RemoveAndDispellAllBuffs(Fighter source, FightDispellableEnum dispellable = FightDispellableEnum.REALLY_NOT_DISPELLABLE)
+        {
+            foreach (var buff in GetBuffs(false).Where(x => x.Cast.Source == source && x.Dispellable <= dispellable).ToArray())
+            {
+                RemoveAndDispellBuff(source, buff);
             }
         }
         public IEnumerable<T> GetMarks<T>() where T : Mark
@@ -2553,7 +2624,7 @@ namespace Giny.World.Managers.Fights.Fighters
         public virtual bool MustSkipTurn()
         {
 
-            return (!Alive) || Buffs.OfType<SkipTurnBuff>().Any();
+            return (!Alive) || GetBuffs().OfType<SkipTurnBuff>().Any();
         }
         public override string ToString()
         {
@@ -2567,9 +2638,18 @@ namespace Giny.World.Managers.Fights.Fighters
             && x.Cast == effect.CastHandler.Cast);
         }
 
-
-
-
+        public void DisableBuff(Buff buff)
+        {
+            buff.Disabled = true;
+            buff.Dispell();
+            Fight.Send(new GameActionFightDispellEffectMessage(buff.Id, 0, buff.Cast.Source.Id, buff.Target.Id, true));
+        }
+        public void EnableBuff(Buff buff)
+        {
+            buff.Apply();
+            buff.Disabled = false;
+            OnBuffAdded(buff);
+        }
     }
 
 }

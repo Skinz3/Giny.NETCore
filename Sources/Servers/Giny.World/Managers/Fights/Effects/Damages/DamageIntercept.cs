@@ -26,7 +26,7 @@ namespace Giny.World.Managers.Fights.Effects.Damages
 
             if (damage != null && Source != damage.Target)
             {
-                Damage newDamages = new Damage(damage.Source, Source, damage.EffectSchool, damage.BaseMinDamages, damage.BaseMaxDamages, this);
+                Damage newDamages = new Damage(damage.Source, Source, damage.Element, damage.BaseMinDamages, damage.BaseMaxDamages, this);
                 newDamages.Computed = damage.Computed;
                 Source.InflictDamage(newDamages);
 

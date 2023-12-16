@@ -35,23 +35,23 @@ namespace Giny.World.Managers.Fights.Effects.Damages
                 target.InflictDamage(damages);
             }
         }
-        private EffectSchoolEnum GetEffectSchool()
+        private EffectElementEnum GetEffectSchool()
         {
             switch (Effect.EffectEnum)
             {
                 case EffectsEnum.Effect_DamageAirPerCasterHPEroded:
-                    return EffectSchoolEnum.Air;
+                    return EffectElementEnum.Air;
                 case EffectsEnum.Effect_DamageWaterPerCasterHPEroded:
-                    return EffectSchoolEnum.Water;
+                    return EffectElementEnum.Water;
                 case EffectsEnum.Effect_DamageFirePerCasterHPEroded:
-                    return EffectSchoolEnum.Fire;
+                    return EffectElementEnum.Fire;
                 case EffectsEnum.Effect_DamageNeutralPerCasterHPEroded:
-                    return EffectSchoolEnum.Neutral;
+                    return EffectElementEnum.Neutral;
                 case EffectsEnum.Effect_DamageEarthPerCasterHPEroded:
-                    return EffectSchoolEnum.Earth;
+                    return EffectElementEnum.Earth;
             }
 
-            return EffectSchoolEnum.Unknown;
+            return EffectElementEnum.Undefined;
         }
     }
 }

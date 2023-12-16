@@ -131,27 +131,27 @@ namespace Giny.ProtocolBuilder.Converters
                 sb.AppendLine("[D2OIgnore]");
                 sb.AppendLine("public " + GetConvertedType(field.Variable.Type) + " " + variableName);
                 sb.AppendLine("{");
-                
+
                 sb.AppendLine("get");
                 sb.AppendLine("{");
-              
+
                 sb.AppendLine("return " + VerifyVariableName(field.Variable.Name) + ";");
-            
+
                 sb.AppendLine("}");
                 sb.AppendLine("set");
                 sb.AppendLine("{");
-               
+
                 sb.AppendLine(VerifyVariableName(field.Variable.Name) + " = value;");
-                
+
                 sb.AppendLine("}");
-               
+
                 sb.AppendLine("}");
             }
             return sb.ToString();
         }
         protected override List<AS3Field> SelectFieldsToWrite()
         {
-            return File.GetFields(x => (AS3AccessorsEnum.@public).HasFlag(x.Accessor) && x.Modifiers == AS3ModifiersEnum.None).ToList();
+            return File.GetFields(x => x.Modifiers == AS3ModifiersEnum.None).ToList();
         }
 
         public override void PostPrepare()

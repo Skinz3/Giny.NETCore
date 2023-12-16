@@ -24,6 +24,8 @@ namespace Giny.World.Managers.Stats
     [ProtoContract]
     public class EntityStats
     {
+     
+
         public const short BaseSummonsCount = 1;
 
         public int LifePoints => Life.Current;
@@ -218,12 +220,22 @@ namespace Giny.World.Managers.Stats
 
         public CharacterCharacteristic[] GetCharacterCharacteristics(CharacteristicEnum characteristicEnum)
         {
+            if (characteristicEnum == CharacteristicEnum.HIT_POINTS)
+            {
+                return new CharacterCharacteristic[]
+                {
+                    Life.GetCharacterCharacteristic(CharacteristicEnum.HIT_POINTS),
+                    Life.GetHitpointLossCharactersitic(),
+                    Life.GetErodedLifeCharacteristic(),
+                };
+            }
             var characterCharateristic = this.GetCharacteristic<Characteristic>(characteristicEnum).GetCharacterCharacteristic(characteristicEnum);
             return new CharacterCharacteristic[] { characterCharateristic };
 
         }
 
-        public CharacterCharacteristic[] GetAllCharacterCharacteristics(bool life)
+
+        public CharacterCharacteristic[] GetAllCharacterCharacteristics()
         {
             List<CharacterCharacteristic> results = new List<CharacterCharacteristic>();
 
@@ -231,11 +243,6 @@ namespace Giny.World.Managers.Stats
             {
                 if (stat.Key == CharacteristicEnum.HIT_POINTS)
                 {
-                    if (!life)
-                    {
-                        continue;
-                    }
-
                     results.Add(Life.GetHitpointLossCharactersitic());
                     results.Add(Life.GetErodedLifeCharacteristic());
                 }
@@ -259,7 +266,7 @@ namespace Giny.World.Managers.Stats
             {
                 alignmentInfos = alignementInfos,
                 experienceBonusLimit = 0,
-                characteristics = GetAllCharacterCharacteristics(true),
+                characteristics = GetAllCharacterCharacteristics(),
                 probationTime = 0,
                 spellModifiers = new SpellModifierMessage[0],
                 criticalHitWeapon = CriticalHitWeapon,
@@ -377,19 +384,23 @@ namespace Giny.World.Managers.Stats
             }
             return Characteristics[characteristicEnum] as T;
         }
-        public EffectSchoolEnum GetBestElement()
+        public EffectElementEnum GetBestElement()
         {
-            Dictionary<EffectSchoolEnum, Characteristic> values = new Dictionary<EffectSchoolEnum, Characteristic>
+            return GetPrimaryElements().OrderByDescending(x => x.Value.TotalInContext()).First().Key; // context of context free ?
+        }
+        public EffectElementEnum GetWorstElement()
+        {
+            return GetPrimaryElements().OrderBy(x => x.Value.TotalInContext()).First().Key; // context of context free ?
+        }
+        private Dictionary<EffectElementEnum,Characteristic> GetPrimaryElements()
+        {
+            return new Dictionary<EffectElementEnum, Characteristic>
             {
-                { EffectSchoolEnum.Earth, Strength },
-                { EffectSchoolEnum.Fire, Intelligence },
-                { EffectSchoolEnum.Air,  Agility },
-                { EffectSchoolEnum.Water,Chance },
+                { EffectElementEnum.Earth, Strength },
+                { EffectElementEnum.Fire, Intelligence },
+                { EffectElementEnum.Air,  Agility },
+                { EffectElementEnum.Water,Chance },
             };
-
-            EffectSchoolEnum result = values.OrderByDescending(x => x.Value.TotalInContext()).First().Key; // context of context free ?
-
-            return result;
         }
 
         public Dictionary<CharacteristicEnum, T> GetCharacteristics<T>() where T : Characteristic

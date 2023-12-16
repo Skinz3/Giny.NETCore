@@ -31,8 +31,7 @@ namespace Giny.World.Managers.Fights.Effects.Damages
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
-         
-            foreach (var fighter in targets)
+            foreach (var fighter in targets) 
             {
                 fighter.InflictDamage(CreateDamage(fighter));
             }
@@ -42,23 +41,23 @@ namespace Giny.World.Managers.Fights.Effects.Damages
             return new Damage(Source, target, GetEffectSchool(Effect.EffectEnum), (short)Effect.Min, (short)Effect.Max, this);
         }
 
-        public static EffectSchoolEnum GetEffectSchool(EffectsEnum effect)
+        public static EffectElementEnum GetEffectSchool(EffectsEnum effect)
         {
             switch (effect)
             {
                 case EffectsEnum.Effect_DamageWater:
-                    return EffectSchoolEnum.Water;
+                    return EffectElementEnum.Water;
                 case EffectsEnum.Effect_DamageFire:
-                    return EffectSchoolEnum.Fire;
+                    return EffectElementEnum.Fire;
                 case EffectsEnum.Effect_DamageAir:
-                    return EffectSchoolEnum.Air;
+                    return EffectElementEnum.Air;
                 case EffectsEnum.Effect_DamageEarth:
-                    return EffectSchoolEnum.Earth;
+                    return EffectElementEnum.Earth;
                 case EffectsEnum.Effect_DamageNeutral:
-                    return EffectSchoolEnum.Neutral;
+                    return EffectElementEnum.Neutral;
 
             }
-            return EffectSchoolEnum.Unknown;
+            return EffectElementEnum.Undefined;
         }
     }
 }

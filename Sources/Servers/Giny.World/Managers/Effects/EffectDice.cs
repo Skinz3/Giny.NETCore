@@ -38,6 +38,9 @@ namespace Giny.World.Managers.Effects
             set => base.Value = value;
         }
 
+
+        public bool IsDice => Max > Min;
+
         public EffectDice(EffectsEnum effectsEnum, int min, int max, int value) : base((short)effectsEnum, value)
         {
             this.Min = min;

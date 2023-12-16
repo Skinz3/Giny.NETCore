@@ -259,6 +259,10 @@ namespace Giny.World.Managers.Fights
             return Fighters.Sum(x => x.Level);
         }
 
+        public Fighter? GetLastDeadFighter()
+        {
+            return GetDeads().OrderByDescending(x => x.DeathTime).FirstOrDefault();
+        }
     }
 }
 

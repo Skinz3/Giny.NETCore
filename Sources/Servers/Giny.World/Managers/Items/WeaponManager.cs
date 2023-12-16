@@ -31,7 +31,7 @@ namespace Giny.World.Managers.Items
             EffectsEnum.Effect_RemoveAP,
             EffectsEnum.Effect_RemainingFights,
             EffectsEnum.Effect_StealKamas,
-            EffectsEnum.Effect_HealHP_108,
+            EffectsEnum.Effect_HealHPFire,
         };
 
         private readonly EffectsEnum[] WeaponBoostableEffects = new EffectsEnum[]
@@ -46,7 +46,7 @@ namespace Giny.World.Managers.Items
             EffectsEnum.Effect_StealHPAir,
             EffectsEnum.Effect_StealHPFire,
             EffectsEnum.Effect_StealHPNeutral,
-            EffectsEnum.Effect_HealHP_108,
+            EffectsEnum.Effect_HealHPFire,
         };
 
         private readonly Dictionary<ItemTypeEnum, string> RawZones = new Dictionary<ItemTypeEnum, string>()

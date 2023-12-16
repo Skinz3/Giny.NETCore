@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Debuffs
 {
+    [SpellEffectHandler(EffectsEnum.Effect_SubVitalityPercent)]
     [SpellEffectHandler(EffectsEnum.Effect_SubVitalityPercent_1048)]
     [SpellEffectHandler(EffectsEnum.Effect_SubVitalityPercent_2845)]
     public class SubVitalityPercent : SpellEffectHandler
@@ -30,6 +31,8 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
         {
             foreach (var target in targets)
             {
+
+
                 short delta = 0;
 
                 if (Effect.EffectEnum == EffectsEnum.Effect_SubVitalityPercent_1048)
@@ -40,11 +43,18 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
                 {
                     delta = (short)(-target.Stats.MaxLifePoints * (double)Effect.Min / 100.0d);
                 }
+                else if (Effect.EffectEnum == EffectsEnum.Effect_SubVitalityPercent)
+                {
+                    delta = (short)(-target.Stats.LifePoints * (double)Effect.Min / 100.0d);
+                }
+
 
                 VitalityDebuff buff = new VitalityDebuff(target.BuffIdProvider.Pop(), delta, target, this,
-                   Effect.DispellableEnum, ActionId);
+              Effect.DispellableEnum, ActionId);
 
                 target.AddBuff(buff);
+
+
             }
         }
     }

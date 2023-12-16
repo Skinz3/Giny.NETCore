@@ -41,24 +41,30 @@ namespace Giny.World.Managers.Fights.Units
             get;
             set;
         }
-        private SpellEffectHandler EffectHandler
+        private SpellEffectHandler Handler
         {
             get;
             set;
         }
-        private EffectSchoolEnum EffectSchool
+        private EffectElementEnum Element
         {
             get;
             set;
         }
-        public Healing(Fighter source, Fighter target, EffectSchoolEnum effectSchool, double baseMin, double baseMax, SpellEffectHandler effectHandler)
+        public bool Fix
+        {
+            get;
+            set;
+        }
+        public Healing(Fighter source, Fighter target, EffectElementEnum effectSchool, double baseMin, double baseMax, SpellEffectHandler? effectHandler = null,bool fix = false)
         {
             this.Source = source;
             this.Target = target;
             this.BaseMinHeal = baseMin;
             this.BaseMaxHeal = baseMax;
-            this.EffectHandler = effectHandler;
-            this.EffectSchool = effectSchool;
+            this.Handler = effectHandler;
+            this.Element = effectSchool;
+            this.Fix = fix;
         }
 
 
@@ -70,7 +76,7 @@ namespace Giny.World.Managers.Fights.Units
                 return;
             }
 
-            if (EffectSchool == EffectSchoolEnum.Fix)
+            if (Fix)
             {
                 Computed = new Jet(BaseMinHeal, BaseMaxHeal).Generate(Source.Random, Source.HasRandDownModifier(), Source.HasRandUpModifier());
                 return;
@@ -79,7 +85,7 @@ namespace Giny.World.Managers.Fights.Units
             Jet jet = EvaluateConcreteJet();
 
 
-            jet.ComputeShapeEfficiencyModifiers(Target, EffectHandler);
+            jet.ComputeShapeEfficiencyModifiers(Target, Handler);
 
             jet.ApplyMultiplicator(Source.Stats[CharacteristicEnum.HEAL_MULTIPLIER].TotalInContext());
 
@@ -112,22 +118,22 @@ namespace Giny.World.Managers.Fights.Units
 
             var bonus = Source.Stats[CharacteristicEnum.HEAL_BONUS].TotalInContext();
 
-            switch (EffectSchool)
+            switch (Element)
             {
-                case EffectSchoolEnum.Earth:
+                case EffectElementEnum.Earth:
                     result = jet * ((100d + Source.Stats.Strength.TotalInContext()) / 100d) + bonus;
                     break;
-                case EffectSchoolEnum.Water:
+                case EffectElementEnum.Water:
                     result = jet * ((100d + Source.Stats.Chance.TotalInContext()) / 100d) + bonus;
                     break;
-                case EffectSchoolEnum.Air:
+                case EffectElementEnum.Air:
                     result = jet * ((100d + Source.Stats.Agility.TotalInContext()) / 100d) + bonus;
                     break;
-                case EffectSchoolEnum.Fire:
+                case EffectElementEnum.Fire:
                     result = jet * ((100d + Source.Stats.Intelligence.TotalInContext()) / 100d) + bonus;
                     break;
                 default:
-                    throw new InvalidOperationException("Invalid healing effect school : " + EffectSchool);
+                    throw new InvalidOperationException("Invalid healing effect school : " + Element);
             }
 
             return (int)result;

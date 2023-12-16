@@ -31,7 +31,7 @@ namespace Giny.World.Managers.Fights.Effects.Steal
 
                 double healDelta = result.Total / 2d;
 
-                Source.Heal(new Healing(Source, target, EffectSchoolEnum.Fix, healDelta, healDelta, this));
+                Source.Heal(new Healing(Source, target, EffectElementEnum.None, healDelta, healDelta, this,true));
             }
         }
 

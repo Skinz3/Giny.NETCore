@@ -68,7 +68,13 @@ namespace Giny.World.Managers.Fights.Buffs
         {
             get;
             private set;
-        }
+        } = false;
+
+        public bool Disabled
+        {
+            get;
+            set;
+        } = false;
 
         /// <summary>
         /// Silent or verbose ?

@@ -131,7 +131,7 @@ namespace Giny.World.Managers.Fights.Buffs
 
         private int[] GetClientParams()
         {
-            if (DirectDamage.GetEffectSchool(Effect.EffectEnum) != EffectSchoolEnum.Unknown)
+            if (DirectDamage.GetEffectSchool(Effect.EffectEnum) != EffectElementEnum.Undefined)
             {
                 return new int[] { Effect.Max - Effect.Min, 0, Effect.Min };
             }

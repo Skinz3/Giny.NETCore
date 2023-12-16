@@ -197,7 +197,7 @@ namespace Giny.World.Managers.Fights.Marks
         {
             using (fighter.Fight.SequenceManager.StartSequence(SequenceTypeEnum.SEQUENCE_GLYPH_TRAP))
             {
-                var buffs = fighter.GetBuffs().Where(x => x.Cast.Spell.Level.Id == this.TriggerSpell.Level.Id);
+                var buffs = fighter.GetBuffs(false).Where(x => x.Cast.Spell.Level.Id == this.TriggerSpell.Level.Id);
 
                 foreach (var buff in buffs.ToArray())
                 {

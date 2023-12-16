@@ -15,6 +15,7 @@ namespace Giny.World.Managers.Fights.Effects.Heals
     [SpellEffectHandler(EffectsEnum.Effect_LifePointsWinFromEarth)]
     [SpellEffectHandler(EffectsEnum.Effect_LifePointsWinFromWater)]
     [SpellEffectHandler(EffectsEnum.Effect_LifePointsWinFromAir)]
+    [SpellEffectHandler(EffectsEnum.Effect_LifePointsWinFromNeutral)]
     public class LifePointsWinFromElement : SpellEffectHandler
     {
         public LifePointsWinFromElement(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
@@ -29,16 +30,18 @@ namespace Giny.World.Managers.Fights.Effects.Heals
             }
         }
 
-        private EffectSchoolEnum GetEffectSchool()
+        private EffectElementEnum GetEffectSchool()
         {
             switch (Effect.EffectEnum)
             {
                 case EffectsEnum.Effect_LifePointsWinFromEarth:
-                    return EffectSchoolEnum.Earth;
+                    return EffectElementEnum.Earth;
                 case EffectsEnum.Effect_LifePointsWinFromWater:
-                    return EffectSchoolEnum.Water;
+                    return EffectElementEnum.Water;
                 case EffectsEnum.Effect_LifePointsWinFromAir:
-                    return EffectSchoolEnum.Air;
+                    return EffectElementEnum.Air;
+                case EffectsEnum.Effect_LifePointsWinFromNeutral:
+                    return EffectElementEnum.Neutral;
             }
 
             throw new InvalidOperationException("Unable to compute effect school from effect " + Effect.EffectEnum);

@@ -168,7 +168,10 @@ namespace Giny.World.Managers.Fights.Fighters
             return Controller;
         }
 
-        public abstract void OnSummoned();
+        public virtual void OnSummoned()
+        {
+            CastInitialSpells();
+        }
 
     }
 }

@@ -13,10 +13,10 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Heals
 {
-    [Annotation("heal zone efficiency (éni)")] // Verifier le calcul pour tout ces effets
-    [SpellEffectHandler(EffectsEnum.Effect_HealHP_143)]
-    [SpellEffectHandler(EffectsEnum.Effect_HealHP_81)]
-    [SpellEffectHandler(EffectsEnum.Effect_HealHP_108)]
+    [SpellEffectHandler(EffectsEnum.Effect_HealHPWithoutBoost)] // ?? 
+    [SpellEffectHandler(EffectsEnum.Effect_HealHPNoElement)]
+    [SpellEffectHandler(EffectsEnum.Effect_HealHPFire)]
+    [SpellEffectHandler(EffectsEnum.Effect_HealHPFix)]
     public class HealHp : SpellEffectHandler
     {
         public HealHp(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
@@ -26,9 +26,22 @@ namespace Giny.World.Managers.Fights.Effects.Heals
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
+            bool fix = false;
+
+            EffectElementEnum element = EffectElementEnum.Fire;
+
+            if (Effect.EffectEnum == EffectsEnum.Effect_HealHPFix)
+            {
+                fix = true;
+            }
+            if (Effect.EffectEnum == EffectsEnum.Effect_HealHPNoElement)
+            {
+                element = EffectElementEnum.None;
+            }
+
             foreach (var target in targets)
             {
-                target.Heal(new Healing(Source, target, EffectSchoolEnum.Fire, Effect.Min, Effect.Max, this));
+                target.Heal(new Healing(Source, target, element, Effect.Min, Effect.Max, this, fix));
             }
         }
     }

@@ -31,7 +31,7 @@ namespace Giny.World.Managers.Effects
             EffectsEnum.Effect_RemoveAP,
             EffectsEnum.Effect_RemainingFights,
             EffectsEnum.Effect_StealKamas,
-            EffectsEnum.Effect_HealHP_108,
+            EffectsEnum.Effect_HealHPFire,
         };
 
         [ProtoMember(1)]

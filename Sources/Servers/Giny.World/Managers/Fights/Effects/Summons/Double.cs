@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Summons
 {
+    [SpellEffectHandler(EffectsEnum.Effect_DoubleNoSummonSlot)]
     [SpellEffectHandler(EffectsEnum.Effect_Double)]
     public class Double : SpellEffectHandler
     {
@@ -19,7 +20,10 @@ namespace Giny.World.Managers.Fights.Effects.Summons
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
-            SummonedFighter fighter = new DoubleFighter(Source, this, TargetCell);
+
+            bool summonSlot = Effect.EffectEnum == EffectsEnum.Effect_DoubleNoSummonSlot ? false : true;
+
+            SummonedFighter fighter = new DoubleFighter(Source, this, TargetCell, summonSlot);
             Source.Fight.AddSummon(Source, fighter);
         }
     }

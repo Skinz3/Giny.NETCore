@@ -68,9 +68,16 @@ namespace Giny.World.Records.Npcs
         {
             return Npcs.ContainsKey(templateId);
         }
-        public static NpcRecord GetNpcRecord(short templateId)
+        public static NpcRecord? GetNpcRecord(short templateId)
         {
-            return Npcs[templateId];
+            if (Npcs.ContainsKey(templateId))
+            {
+                return Npcs[templateId];
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

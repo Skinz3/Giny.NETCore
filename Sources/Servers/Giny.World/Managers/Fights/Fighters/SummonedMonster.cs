@@ -41,7 +41,7 @@ namespace Giny.World.Managers.Fights.Fighters
         public override FighterStats CreateStats()
         {
             double statsCoeff = 1 + (Summoner.Level / 100d);
-            return new FighterStats(Grade, Summoner, statsCoeff); 
+            return new FighterStats(Grade, Summoner, statsCoeff);
         }
         public override void Initialize()
         {
@@ -53,7 +53,7 @@ namespace Giny.World.Managers.Fights.Fighters
         }
 
         public override bool CanBePushed()
-        {   
+        {
             return base.CanBePushed() && Record.CanBePushed;
         }
         public override bool CanTackle()
@@ -128,11 +128,9 @@ namespace Giny.World.Managers.Fights.Fighters
         }
 
 
-        public override void OnSummoned()
+        public override void CastInitialSpells()
         {
-           
             this.CastSpell(Grade.StartingSpellLevelId);
-
         }
     }
 }

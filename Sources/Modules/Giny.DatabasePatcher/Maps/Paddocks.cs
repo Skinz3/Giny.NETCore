@@ -24,6 +24,7 @@ namespace Giny.DatabasePatcher.Maps
             260106, // bonta (public)
             58492, // brakmar (private)
             22192, // Frigost (private)
+            17971, // Otomai (private)
     };
 
 
