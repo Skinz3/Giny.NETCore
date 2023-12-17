@@ -187,7 +187,7 @@ namespace Giny.ORM.IO
             {
                 return Enum.Parse(property.PropertyType, obj.ToString());
             }
-            else if (property.CustomAttributes.Count() > 0 && property.GetCustomAttribute<ProtoSerializeAttribute>() != null)
+            else if (property.CustomAttributes.Count() > 0 && property.GetCustomAttribute<BlobAttribute>() != null)
             {
                 if (obj is DBNull)
                 {

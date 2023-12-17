@@ -189,14 +189,14 @@ namespace Giny.World.Records.Spells
             get;
             set;
         } = new int[0];
-        [ProtoSerialize]
+        [Blob]
         [D2OField("effects")]
         public EffectCollection Effects
         {
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [D2OField("criticalEffect")]
         public EffectCollection CriticalEffects
         {

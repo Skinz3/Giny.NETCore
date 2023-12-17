@@ -1,0 +1,162 @@
+﻿@using Giny.Protocol.Custom.Enums;
+@using Giny.World.Records.Npcs;
+@using Giny.World.Records.Quests;
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+<MudGrid>
+    <MudItem xs="3">
+
+        <MudPaper Style="height:90vh;" Outlined=true>
+            <MudList  Color="Color.Success" Dense="true" Clickable="true">
+                <MudListSubheader>
+                    <MudTextField Label="Search" TextChanged=OnSearchTextChanged @bind-Value="@Search"
+                                  AdornmentColor="Color.Primary" AdornmentIcon="@Icons.Filled.Search"
+                                  Adornment="Adornment.End" Immediate="true" Variant="Variant.Outlined" />
+                </MudListSubheader>
+
+                <div style="height:80vh;overflow-y:scroll">
+                    <Virtualize Items="@SearchResults">
+                        <MudListItem OnClick="() => SelectQuest(context)" Text=@context.ToString() />
+                    </Virtualize>
+                </div>
+
+            </MudList>
+
+        </MudPaper>
+    </MudItem>
+
+    @if (SelectedQuest != null)
+    {
+
+        <MudItem xs="3">
+            <div class="d-flex flex-grow-1  flex-column gap-2 mb-2" style="height:90vh">
+                <MudPaper style="height:50%" Class="d-flex flex-column justify-space-between" Outlined=true>
+                    <MudList Dense="true" Clickable="true" Style="overflow-y:scroll">
+                        <MudListSubheader>
+                            Steps
+                        </MudListSubheader>
+
+
+                        @foreach (var step in SelectedQuest.Steps)
+                        {
+                            <MudListItem OnClick="() => SelectStep(step)" IconColor="Color.Primary" Text=@step.ToString() />
+                        }
+
+
+
+                    </MudList>
+
+
+                    <div class="d-flex flex-column gap-2 pa-2">
+                        <MudButton Class="flex-grow-1" IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Add" Variant="Variant.Filled">Add</MudButton>
+                        <MudButton Class="flex-grow-1" IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Delete" Variant="Variant.Filled">Delete</MudButton>
+                    </div>
+
+                </MudPaper>
+                <MudPaper style="height:50%" Class="d-flex flex-column justify-space-between" Outlined=true>
+                    <MudList Dense="true" DisableGutters=false Color=Color.Secondary Clickable="true" Style="overflow-y:scroll">
+                        <MudListSubheader>
+                            Objectives
+                        </MudListSubheader>
+                        @foreach (var objective in SelectedStep.Objectives)
+                        {
+                            <MudListItem IconSize="Size.Medium" Style="font-weight:bold" Icon="@GetObjectiveIcon(objective.Type)" OnClick="() => SelectObjective(objective)" IconColor="Color.Primary">
+                                <MudText Style="font-weight:400;font-size:15px">@objective</MudText>
+
+                            </MudListItem>
+                        }
+
+
+
+                    </MudList>
+
+                    <div class="d-flex flex-column gap-2 pa-2">
+                        <MudButton Class="flex-grow-1" IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Add" Variant="Variant.Filled">Add</MudButton>
+                        <MudButton Class="flex-grow-1" IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Delete" Variant="Variant.Filled">Delete</MudButton>
+                    </div>
+
+                </MudPaper>
+            </div>
+        </MudItem>
+
+    }
+
+</MudGrid>
+
+@code {
+    private List<QuestRecord> SearchResults
+    {
+        get;
+        set;
+    } = new List<QuestRecord>();
+
+    private QuestRecord SelectedQuest
+    {
+        get;
+        set;
+    }
+
+    private QuestStepRecord SelectedStep
+    {
+        get;
+        set;
+    }
+    private QuestObjectiveRecord SelectedObjective
+    {
+        get;
+        set;
+    }
+    private string Search
+    {
+        get;
+        set;
+    } = "";
+
+    public string GetObjectiveIcon(QuestObjectiveTypeEnum type)
+    {
+        switch (type)
+        {
+            case QuestObjectiveTypeEnum.None:
+                return Icons.Material.Outlined.MiscellaneousServices;
+
+            case QuestObjectiveTypeEnum.DiscoverMap:
+                return Icons.Outlined.RemoveRedEye;
+
+            case QuestObjectiveTypeEnum.NpcTalkBack:
+            case QuestObjectiveTypeEnum.GoToNpc:
+                return Icons.Filled.Face3;
+            //   return Icons.Outlined.EmojiPeople;
+
+
+            case QuestObjectiveTypeEnum.GiveItemToNpc:
+            case QuestObjectiveTypeEnum.BringItemToNpc:
+                return Icons.Outlined.Diamond;
+
+            case QuestObjectiveTypeEnum.DefeatMonsters:
+            case QuestObjectiveTypeEnum.DefeatMonsterOneFight:
+                return @Icons.Material.Filled.CrueltyFree;
+        }
+
+        return "";
+    }
+    public void SelectQuest(QuestRecord quest)
+    {
+        this.SelectedQuest = quest;
+        this.SelectedStep = SelectedQuest.Steps.FirstOrDefault();
+    }
+    public void SelectStep(QuestStepRecord step)
+    {
+        this.SelectedStep = step;
+        this.SelectedObjective = step.Objectives.FirstOrDefault();
+    }
+    public void SelectObjective(QuestObjectiveRecord objective)
+    {
+        this.SelectedObjective = objective;
+    }
+
+    private void OnSearchTextChanged()
+    {
+        SearchResults = QuestRecord.GetQuests().Where(x => x.ToString().ToLower().Contains(Search.ToLower())).ToList();
+        StateHasChanged();
+    }
+
+}

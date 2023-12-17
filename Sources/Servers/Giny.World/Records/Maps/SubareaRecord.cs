@@ -57,21 +57,21 @@ namespace Giny.World.Records.Maps
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [D2OField("monsters")]
         public short[] MonsterIds
         {
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [D2OField("quests")]
         public ObjectMapPosition[] QuestIds
         {
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [D2OField("npcs")]
         public ObjectMapPosition[] NpcIds
         {

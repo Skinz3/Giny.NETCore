@@ -16,9 +16,7 @@ namespace Giny.IO.D2OClasses
         public bool isDefaultPreviewZoneHidden;
         public string casterMask;
         public string activationMask;
-
         public string rawDisplayZone;
-
         public string rawActivationZone;
 
         [D2OIgnore]
@@ -69,7 +67,6 @@ namespace Giny.IO.D2OClasses
                 activationMask = value;
             }
         }
-
         [D2OIgnore]
         public string RawDisplayZone
         {
@@ -82,7 +79,6 @@ namespace Giny.IO.D2OClasses
                 rawDisplayZone = value;
             }
         }
-
         [D2OIgnore]
         public string RawActivationZone
         {

@@ -6,6 +6,7 @@
 @using Giny.World.Managers.Effects
 @using Giny.World.Records.Items
 @using Giny.World.Records.Npcs;
+@using Giny.WorldEditor.Components.Roleplay.Dialogs;
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @inject IDialogService DialogService
 @using Giny.ORM;
@@ -17,7 +18,7 @@
 
     <div class="d-flex flex-row gap-4">
 
-        <MudTextField Lines="5" TextChanged="OnNpcMessageChanged"  Label="Message" @bind-Value="NpcMessage"></MudTextField>
+        <MudTextField Lines="5" TextChanged="OnNpcMessageChanged" Label="Message" @bind-Value="NpcMessage"></MudTextField>
         <MudButton StartIcon="@Icons.Material.Filled.CompareArrows" IconColor="Color.Primary" Variant="Variant.Filled">Select</MudButton>
     </div>
 
@@ -118,9 +119,7 @@
         parameters.Add(x => x.D2ONpc, D2ONpc);
         parameters.Add(x => x.Replies, replies);
 
-        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, CloseButton = true, ClassBackground = "dialog-open" };
-        var dialog = DialogService.Show<ModifyReplyDialog>("Modify reply", parameters, options);
-        var result = await dialog.Result;
+        var result = await DialogHelper.OpenDialog<ModifyReplyDialog>(DialogService, parameters, "Modify reply");
 
         if (!result.Cancelled)
         {

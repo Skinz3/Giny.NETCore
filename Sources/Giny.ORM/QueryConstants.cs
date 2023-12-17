@@ -55,7 +55,7 @@ namespace Giny.ORM
             {
                 return attribute.NewType;
             }
-            else if (property.GetCustomAttribute<ProtoSerializeAttribute>() != null)
+            else if (property.GetCustomAttribute<BlobAttribute>() != null)
             {
                 return BinaryType;
             }

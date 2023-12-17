@@ -5,12 +5,16 @@
 @using Giny.Protocol.Custom.Enums;
 @using Giny.World.Managers.Effects
 @using Giny.World.Records.Items
+@using Giny.ORM
 @using Giny.World.Records.Npcs;
 @using Giny.WorldEditor.Caching;
+@using Giny.WorldEditor.Components.Roleplay.Dialogs;
 @using Microsoft.AspNetCore.Components.Web.Virtualization
+@inject IDialogService DialogService
 
-<MudPaper Class="flex-1 pa-4" Outlined=true>
+<MudPaper Class="d-flex flex-column gap-4 flex-1 pa-4" Outlined=true>
 
+    <MudButton OnClick="AddItem" IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Add" Variant="Variant.Filled">Add item</MudButton>
 
     <MudDataGrid Style="max-height:500px;overflow-y:scroll" Dense=true Hover=true Striped=false Bordered=true Items="@Items">
         <Columns>
@@ -25,13 +29,19 @@
             </TemplateColumn>
 
             <PropertyColumn Property="x => x.Name" />
-            <PropertyColumn Property="x => x.Price" />
+
+            <TemplateColumn Title="Price">
+                <CellTemplate>
+                    <MudNumericField HideSpinButtons=true @bind-Value=context.Item.Price></MudNumericField>
+                </CellTemplate>
+            </TemplateColumn>
+
             <PropertyColumn Property="x => x.Level" />
 
             <TemplateColumn Title="Actions">
                 <CellTemplate>
                     <MudStack Row>
-                        <MudButton Size="@Size.Small" StartIcon="@Icons.Material.Filled.Delete" IconColor="Color.Primary" Variant="@Variant.Text" Color="@Color.Primary">Delete</MudButton>
+                        <MudButton @onclick="()=>DeleteItem(context.Item)" Size="@Size.Small" StartIcon="@Icons.Material.Filled.Delete" IconColor="Color.Primary" Variant="@Variant.Text" Color="@Color.Primary">Delete</MudButton>
                     </MudStack>
                 </CellTemplate>
             </TemplateColumn>
@@ -63,7 +73,32 @@
         get;
         set;
     }
+    private void DeleteItem(ItemRecord record)
+    {
+        Items.Remove(record);
+        UpdateRecord();
+        StateHasChanged();
+    }
 
+    private void UpdateRecord()
+    {
+        NpcAction.Param1 = string.Join(",", Items.Select(x => x.Id));
+
+        NpcAction.UpdateLater();
+    }
+
+    private async void AddItem()
+    {
+        var result = await DialogHelper.OpenDialog<SelectItemDialog>(DialogService, new DialogParameters<SelectItemDialog>(), "Select item");
+
+        if (!result.Cancelled)
+        {
+            var item = (ItemRecord)result.Data;
+            Items.Add(item);
+        }
+        UpdateRecord();
+        StateHasChanged();
+    }
     private string GetItemIcon(ItemRecord item)
     {
         Item d2oItem = D2OCache.GetItem((int)item.Id);

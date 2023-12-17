@@ -40,7 +40,7 @@ namespace Giny.DatabaseSynchronizer
     class Program
     {
         public static bool SYNC_D2O = true;
-        public static bool SYNC_MAPS = true;
+        public static bool SYNC_MAPS = false;
 
         static void Main(string[] args)
         {
@@ -56,7 +56,6 @@ namespace Giny.DatabaseSynchronizer
 
             if (SYNC_D2O)
             {
-
                 DatabaseManager.Instance.DropTableIfExists<RecipeRecord>();
                 DatabaseManager.Instance.DropTableIfExists<SubareaRecord>();
                 DatabaseManager.Instance.DropTableIfExists<AreaRecord>();
@@ -71,6 +70,7 @@ namespace Giny.DatabaseSynchronizer
                 DatabaseManager.Instance.DropTableIfExists<ItemRecord>();
                 DatabaseManager.Instance.DropTableIfExists<QuestStepRecord>();
                 DatabaseManager.Instance.DropTableIfExists<QuestStepRewardRecord>();
+                DatabaseManager.Instance.DropTableIfExists<QuestObjectiveRecord>();
                 DatabaseManager.Instance.DropTableIfExists<QuestRecord>();
                 DatabaseManager.Instance.DropTableIfExists<SpellStateRecord>();
                 DatabaseManager.Instance.DropTableIfExists<WeaponRecord>();

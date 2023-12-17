@@ -1,0 +1,103 @@
+﻿@using Giny.IO.D2I;
+@using Giny.IO.D2OClasses;
+@using Giny.ORM;
+@using Giny.World.Records.Items;
+@using Giny.World.Records.Npcs;
+
+@using Giny.Protocol.Custom.Enums
+@using Giny.WorldEditor.Caching;
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+
+<MudDialog>
+    <DialogContent>
+        <MudPaper Style="width:800px" Outlined=true>
+            <MudTextField Label="Search" Class="pa-4" TextChanged=OnSearchTextChanged @bind-Value="@Search"
+                          AdornmentColor="Color.Primary" AdornmentIcon="@Icons.Filled.Search"
+                          Adornment="Adornment.End" Immediate="true" Variant="Variant.Text" />
+            <MudList Clickable="true" Dense=true @bind-SelectedValue="selectedItem" Color="Color.Primary">
+
+                <div style="height:50vh;overflow-y:scroll">
+
+                    <Virtualize Items="@SearchResults">
+
+                        <MudListItem Value="context">
+
+                            <div class="d-flex flex-row gap-2 align-center">
+                                <MudImage Width="50" Height="50" Src="@GetItemIcon(context)" />
+                                <MudText Style="font-weight:600">(@context.Id)</MudText>
+                                <MudText>@context.Name</MudText>
+                            </div>
+
+                        </MudListItem>
+                    </Virtualize>
+                </div>
+
+            </MudList>
+
+        </MudPaper>
+
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+
+        @if (SelectedItem != null)
+        {
+            <MudButton OnClick="Confirm">Select</MudButton>
+
+        }
+    </DialogActions>
+</MudDialog>
+@code {
+
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public List<ItemRecord> SearchResults
+    {
+        get;
+        set;
+    } = new();
+
+    private ItemRecord? SelectedItem
+    {
+        get
+        {
+            return (ItemRecord?)selectedItem;
+        }
+        set
+        {
+            selectedItem = value;
+        }
+    }
+    private object? selectedItem;
+
+    private string Search
+    {
+        get;
+        set;
+    } = "";
+
+
+
+    private void OnSearchTextChanged()
+    {
+        SearchResults = ItemRecord.GetItems().Where(x => x.ToString().ToLower().Contains(Search.ToLower())).ToList();
+        StateHasChanged();
+    }
+    private string GetItemIcon(ItemRecord item)
+    {
+        Item d2oItem = D2OCache.GetItem((int)item.Id);
+
+        var base64image = ExternalResources.GetItemIcon((int)d2oItem.IconId);
+        var source = string.Format("data:image/png;base64,{0}", base64image);
+
+        return source;
+    }
+
+
+    void Confirm() => MudDialog.Close<ItemRecord>
+        (SelectedItem);
+
+    void Cancel() => MudDialog.Cancel();
+}

@@ -17,9 +17,9 @@ namespace Giny.ProtocolBuilder
 
         public const string TEMPLATES_PATH = "Templates/";
 
-        public const string MESSAGES_OUTPUT_PATH = "Ouput/Messages/";
-        public const string TYPES_OUTPUT_PATH = "Ouput/Types/";
-        public const string ENUMS_OUTPUT_PATH = "Ouput/Enums/";
-        public const string DATACENTER_OUTPUT_PATH = "Ouput/D2OClasses/";
+        public const string MESSAGES_OUTPUT_PATH = "Output/Messages/";
+        public const string TYPES_OUTPUT_PATH = "Output/Types/";
+        public const string ENUMS_OUTPUT_PATH = "Output/Enums/";
+        public const string DATACENTER_OUTPUT_PATH = "Output/D2OClasses/";
     }
 }

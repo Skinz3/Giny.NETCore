@@ -38,6 +38,11 @@ namespace Giny.World.Managers.Generic
                 }
             }
         }
+        [GenericActionHandler(GenericActionEnum.StartQuest)]
+        public static void HandleStartQuest(Character character, IGenericAction parameter)
+        {
+            character.StartQuest(long.Parse(parameter.Param1));
+        }
         [GenericActionHandler(GenericActionEnum.AddItem)]
         public static void HandleAddItem(Character character, IGenericAction parameter)
         {
@@ -180,7 +185,7 @@ namespace Giny.World.Managers.Generic
         {
             character.DisplayNotification(parameter.Param1);
         }
-       
+
         [GenericActionHandler(GenericActionEnum.Fight)]
         public static void HandleFight(Character character, IGenericAction parameter)
         {

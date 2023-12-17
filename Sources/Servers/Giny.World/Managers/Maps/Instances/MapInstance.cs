@@ -130,11 +130,17 @@ namespace Giny.World.Managers.Maps.Instances
         {
             if (!m_entities.ContainsKey(entity.Id))
             {
-                var informations = entity.GetActorInformations();
-                Send(new GameRolePlayShowActorMessage(informations));
-
+                ShowActor(entity);
                 m_entities.TryAdd(entity.Id, entity);
                 OnEntitiesUpdated();
+            }
+        }
+        private void ShowActor(Entity actor)
+        {
+            foreach (var character in GetEntities<Character>())
+            {
+                var informations = actor.GetActorInformations(character);
+                Send(new GameRolePlayShowActorMessage(informations));
             }
         }
         private void OnEntitiesUpdated()
@@ -282,9 +288,9 @@ namespace Giny.World.Managers.Maps.Instances
         {
             client.Send(GetMapComplementaryInformationsDataMessage(client.Character));
         }
-        protected GameRolePlayActorInformations[] GetGameRolePlayActorsInformations()
+        protected GameRolePlayActorInformations[] GetGameRolePlayActorsInformations(Character target)
         {
-            return m_entities.Values.Select(x => x.GetActorInformations()).ToArray();
+            return m_entities.Values.Select(x => x.GetActorInformations(target)).ToArray();
         }
         protected MapObstacle[] GetMapObstacles()
         {
@@ -331,7 +337,7 @@ namespace Giny.World.Managers.Maps.Instances
         }
         protected InteractiveElement[] GetInteractiveElements(Character character)
         {
-            return GetElements<MapInteractiveElement>().Select(x => x.GetInteractiveElement(character)).ToArray(); 
+            return GetElements<MapInteractiveElement>().Select(x => x.GetInteractiveElement(character)).ToArray();
         }
         protected StatedElement[] GetStatedElements()
         {

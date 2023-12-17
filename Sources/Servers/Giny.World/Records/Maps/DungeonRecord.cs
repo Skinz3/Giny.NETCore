@@ -57,9 +57,9 @@ namespace Giny.World.Records.Maps
         }
 
         [D2OField("mapIds")]
-        [ProtoSerialize]
+        [Blob]
         [Update]
-        public Dictionary<long, MonsterRoom> Rooms
+        public List<MonsterRoom> Rooms
         {
             get;
             set;
@@ -69,15 +69,15 @@ namespace Giny.World.Records.Maps
         {
             int index = 0;
 
-            foreach (var mapId in Rooms.Keys)
+            foreach (var room in Rooms)
             {
-                if (mapId == currentMapId)
+                if (room.MapId == currentMapId)
                 {
-                    if (index >= Rooms.Keys.Count - 1)
+                    if (index >= Rooms.Count - 1)
                     {
                         return ExitMapId;
                     }
-                    return Rooms.Keys.ElementAt(index + 1);
+                    return Rooms.ElementAt(index + 1).MapId;
                 }
 
                 index++;
@@ -99,7 +99,7 @@ namespace Giny.World.Records.Maps
         }
         public static DungeonRecord GetDungeonByMapId(long mapId)
         {
-            return Dungeons.Values.FirstOrDefault(x => x.Rooms.ContainsKey(mapId));
+            return Dungeons.Values.FirstOrDefault(x => x.Rooms.Any(x => x.MapId == mapId));
         }
         public static bool IsDungeonEntrance(long id)
         {
@@ -130,14 +130,23 @@ namespace Giny.World.Records.Maps
             get;
             set;
         }
+
+        [ProtoMember(3)]
+        public long MapId
+        {
+            get;
+            set;
+        }
+
         public MonsterRoom()
         {
             RespawnDelay = DefaultRespawnDelay;
             this.MonsterIds = new List<short>();
         }
-        public MonsterRoom(float respawnDelay, params short[] monsters)
+        public MonsterRoom(float respawnDelay, long mapId, params short[] monsters)
         {
             this.RespawnDelay = respawnDelay;
+            this.MapId = mapId;
             this.MonsterIds = monsters.ToList();
         }
 

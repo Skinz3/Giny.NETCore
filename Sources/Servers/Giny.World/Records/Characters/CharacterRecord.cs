@@ -13,6 +13,7 @@ using Giny.World.Managers.Shortcuts;
 using Giny.World.Managers.Spells;
 using Giny.World.Managers.Stats;
 using Giny.World.Network;
+using Giny.World.Records.Quests;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -102,7 +103,7 @@ namespace Giny.World.Records.Characters
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [Update]
         public EntityStats Stats
         {
@@ -116,14 +117,14 @@ namespace Giny.World.Records.Characters
             set;
         }
 
-        [ProtoSerialize]
+        [Blob]
         [Update]
         public List<short> KnownEmotes
         {
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [Update]
         public List<CharacterShortcut> Shortcuts
         {
@@ -136,7 +137,7 @@ namespace Giny.World.Records.Characters
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [Update]
         public List<short> KnownOrnaments
         {
@@ -149,14 +150,14 @@ namespace Giny.World.Records.Characters
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [Update]
         public List<CharacterSpell> Spells
         {
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [Update]
         public List<short> KnownTitles
         {
@@ -169,7 +170,7 @@ namespace Giny.World.Records.Characters
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [Update]
         public List<CharacterJob> Jobs
         {
@@ -184,7 +185,7 @@ namespace Giny.World.Records.Characters
             set;
         }
 
-        [ProtoSerialize]
+        [Blob]
         [Update]
         public List<CharacterAchievement> Achievements
         {
@@ -193,8 +194,16 @@ namespace Giny.World.Records.Characters
         }
 
         [Update]
-        [ProtoSerialize]
+        [Blob]
         public HardcoreInformations HardcoreInformations
+        {
+            get;
+            set;
+        }
+
+        [Update]
+        [Blob]
+        public List<CharacterQuestRecord> Quests
         {
             get;
             set;

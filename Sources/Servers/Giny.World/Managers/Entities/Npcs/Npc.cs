@@ -1,5 +1,7 @@
-﻿using Giny.ORM;
+﻿using Giny.IO.D2OClasses;
+using Giny.ORM;
 using Giny.Protocol.Custom.Enums;
+using Giny.Protocol.Messages;
 using Giny.Protocol.Types;
 using Giny.World.Managers.Criterias;
 using Giny.World.Managers.Entities.Characters;
@@ -87,10 +89,13 @@ namespace Giny.World.Managers.Entities.Npcs
             }
         }
 
+
+
         public Npc(NpcSpawnRecord spawnRecord, MapRecord map) : base(map)
         {
             this.SpawnRecord = spawnRecord;
             this.m_Id = this.Map.Instance.PopNextNPEntityId();
+
         }
 
         public void InteractWith(Character character, NpcActionsEnum actionType)
@@ -117,10 +122,26 @@ namespace Giny.World.Managers.Entities.Npcs
                 character.ReplyWarning("No (" + actionType + ") action linked to this npc...(" + SpawnRecord.Id + ")");
             }
         }
-        public override GameRolePlayActorInformations GetActorInformations()
+        public override GameRolePlayActorInformations GetActorInformations(Character target)
         {
-            return new GameRolePlayNpcInformations()
+            var allQuests = NpcReplyRecord.GetQuestsFromSpawnId(SpawnRecord.Id);
+
+            var targetQuests = allQuests.Where(x => !target.HasQuest(x));
+
+            
+            List<short> questToValid = new List<short>();
+
+            foreach (var quest in target.GetActiveQuests())
             {
+                if (quest.Objectives.Any(x => !x.Done && quest.Available(x) && x.InvolveNpc(Template.Id)))
+                {
+                    questToValid.Add((short)quest.QuestId);
+                }
+            }
+
+            return new GameRolePlayNpcWithQuestInformations()
+            {
+                questFlag = new GameRolePlayNpcQuestFlag(questToValid.ToArray(), targetQuests.ToArray()),
                 contextualId = Id,
                 disposition = new EntityDispositionInformations(CellId, (byte)Direction),
                 look = Look.ToEntityLook(),

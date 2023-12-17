@@ -11,10 +11,10 @@ namespace Giny.IO.D2OClasses
     {
         public const string MODULE = "Collectables";
 
-        public int Id => entityId;
+        public int Id => throw new NotImplementedException();
 
         public int entityId;
-        public string name;
+        public int name;
         public int typeId;
         public int gfxId;
         public int order;
@@ -33,7 +33,7 @@ namespace Giny.IO.D2OClasses
             }
         }
         [D2OIgnore]
-        public string Name
+        public int Name
         {
             get
             {

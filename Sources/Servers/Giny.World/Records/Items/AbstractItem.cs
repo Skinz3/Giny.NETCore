@@ -74,7 +74,7 @@ namespace Giny.World.Records.Items
             set;
         }
 
-        [ProtoSerialize, Update]
+        [Blob, Update]
         public EffectCollection Effects
         {
             get;

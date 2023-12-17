@@ -78,13 +78,13 @@ namespace Giny.World.Records.Maps
             get;
             set;
         }
-        [ProtoSerialize, Update]
+        [Blob, Update]
         public CellRecord[] Cells
         {
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         public InteractiveElementRecord[] Elements
         {
             get;
@@ -159,7 +159,7 @@ namespace Giny.World.Records.Maps
         public bool IsDungeonMap => Dungeon != null;
 
         [Ignore]
-        public MonsterRoom MonsterRoom => Dungeon.Rooms[Id];
+        public MonsterRoom? MonsterRoom => Dungeon.Rooms.FirstOrDefault(x => x.MapId == Id);
 
         [Ignore]
         public bool IsDungeonEntrance

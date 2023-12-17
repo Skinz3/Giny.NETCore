@@ -41,5 +41,10 @@ namespace Giny.World.Records.Characters
         {
             return Emotes[id];
         }
+
+        public static bool Exists(short id)
+        {
+            return Emotes.ContainsKey(id);
+        }
     }
 }

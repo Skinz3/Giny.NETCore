@@ -1,4 +1,5 @@
-﻿using Giny.IO.D2O;
+﻿using Giny.Core.DesignPattern;
+using Giny.IO.D2O;
 using Giny.ORM.Attributes;
 using Giny.ORM.Interfaces;
 using System;
@@ -37,6 +38,13 @@ namespace Giny.World.Records.Quests
         {
             get;
             set;
+        }
+
+        [Ignore]
+        public List<QuestStepRecord> Steps
+        {
+            get;
+            private set;
         }
 
         [D2OField("categoryId")]
@@ -102,5 +110,48 @@ namespace Giny.World.Records.Quests
             set;
         }
 
+        [StartupInvoke("Quest members", StartupInvokePriority.SixthPath)]
+        public static void Initialize()
+        {
+            foreach (var quest in Quests.Values)
+            {
+                quest.ReloadMembers();
+            }
+        }
+
+        private void ReloadMembers()
+        {
+            this.Steps = new List<QuestStepRecord>();
+
+            foreach (var stepId in StepIds)
+            {
+                var step = QuestStepRecord.GetQuestStep(stepId);
+
+                step.ReloadMembers();
+
+                Steps.Add(step);
+            }
+        }
+
+        public override string ToString()
+        {
+            return $"({Id}) {Name}";
+        }
+
+        public static QuestRecord GetQuest(long questId)
+        {
+            if (Quests.ContainsKey(questId))
+            {
+                return Quests[questId];
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public static List<QuestRecord> GetQuests()
+        {
+            return Quests.Values.ToList();
+        }
     }
 }

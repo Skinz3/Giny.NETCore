@@ -30,7 +30,7 @@ namespace Giny.World.Records.Guilds
             set;
         }
 
-        [ProtoSerialize]
+        [Blob]
         public GuildEmblemRecord Emblem
         {
             get;
@@ -51,7 +51,7 @@ namespace Giny.World.Records.Guilds
         }
 
         [Update]
-        [ProtoSerialize]
+        [Blob]
         public List<GuildMemberRecord> Members
         {
             get;
@@ -59,7 +59,7 @@ namespace Giny.World.Records.Guilds
         }
 
         [Update]
-        [ProtoSerialize]
+        [Blob]
         public GuildMotd Motd
         {
             get;

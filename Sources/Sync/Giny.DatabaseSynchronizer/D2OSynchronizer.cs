@@ -4,6 +4,7 @@ using Giny.IO;
 using Giny.IO.D2I;
 using Giny.IO.D2O;
 using Giny.IO.D2OClasses;
+using Giny.IO.D2OTypes;
 using Giny.ORM;
 using Giny.ORM.Interfaces;
 using Giny.ORM.IO;
@@ -16,6 +17,8 @@ using Giny.World.Records.Characters;
 using Giny.World.Records.Items;
 using Giny.World.Records.Maps;
 using Giny.World.Records.Monsters;
+using Giny.World.Records.Quests;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -49,26 +52,44 @@ namespace Giny.DatabaseSynchronizer
 
             Logger.Write("Building D2O", Channels.Info);
 
-            foreach (var reader in d2oReaders)
+            var tables = DatabaseManager.Instance.TableTypes.OrderBy(x => x.Name);
+
+            foreach (var tableType in tables)
             {
-                Logger.Write(string.Join(",", reader.Classes.Select(x => x.Value.Name)));
-            }
+                var attributes = tableType.GetCustomAttributes<D2OClassAttribute>();
 
-            return;
-
-            foreach (var tableType in DatabaseManager.Instance.TableTypes.OrderBy(x => x.Name))
-            {
-                var attribute = tableType.GetCustomAttribute<D2OClassAttribute>();
-
-                if (attribute != null)
+                foreach (var attribute in attributes)
                 {
-                    var reader = d2oReaders.FirstOrDefault(x => x.Classes.Values.Any(j => j.Name == attribute.Name));
-                    Logger.Write("Building " + tableType.Name + "...");
+                    if (attribute != null)
+                    {
+                        var reader = d2oReaders.FirstOrDefault(x => x.Classes.Values.Any(j => j.Name == attribute.Name));
 
-                    var objects = reader.EnumerateObjects().Where(x => x.GetType().Name == attribute.Name).ToArray();
+                        if (reader == null)
+                        {
+                            Logger.Write($"Unable to find D2O class '{attribute.Name}' in D2O files", Channels.Critical);
+                            Console.ReadLine();
+                            Environment.Exit(0);
+                        }
+                        Logger.Write("Building " + tableType.Name + "...");
 
-                    BuildFromObjects(objects, tableType);
+                        IEnumerable<object> d2o = null;
+
+                        if (attribute.Types == null || attribute.Types.Length == 0)
+                        {
+                            d2o = reader.EnumerateObjects().Where(x => x.GetType().Name == attribute.Name);
+
+                        }
+                        else
+                        {
+                            d2o = reader.EnumerateObjects().Where(x => attribute.Types.Contains(x.GetType()));
+                        }
+
+                        var objects = d2o.ToArray();
+
+                        BuildFromObjects(objects, tableType);
+                    }
                 }
+
             }
 
         }
@@ -85,7 +106,7 @@ namespace Giny.DatabaseSynchronizer
             foreach (var obj in objects)
             {
                 current++;
-                IRecord table = (IRecord)Convert.ChangeType(Activator.CreateInstance(tableType), tableType);
+                IRecord record = (IRecord)Convert.ChangeType(Activator.CreateInstance(tableType), tableType);
 
                 foreach (var property in tableType.GetProperties())
                 {
@@ -106,18 +127,27 @@ namespace Giny.DatabaseSynchronizer
                         if (i18nField != null)
                         {
                             int key = int.Parse(d2oField.GetValue(obj).ToString()); // uint / int cast
-                            property.SetValue(table, D2IManager.GetText(key));
+                            property.SetValue(record, D2IManager.GetText(key));
                         }
                         else
                         {
                             var value = d2oField.GetValue(obj);
 
-                            if (value.GetType() == property.PropertyType)
+                            if (value == null)
                             {
-                                property.SetValue(table, Convert.ChangeType(value, property.PropertyType));
+                                property.SetValue(record, null);
                                 continue;
                             }
-                            if (property.PropertyType == typeof(StatUpgradeCost[]))
+                            if (value.GetType() == property.PropertyType)
+                            {
+                                property.SetValue(record, Convert.ChangeType(value, property.PropertyType));
+                                continue;
+                            }
+                            if (value.GetType() == typeof(Point))
+                            {
+                                value = ConvertPoint((Point)value);
+                            }
+                            else if (property.PropertyType == typeof(StatUpgradeCost[]))
                             {
                                 value = ConvertToStatUpgradeCost(value);
                             }
@@ -129,7 +159,6 @@ namespace Giny.DatabaseSynchronizer
                             {
                                 value = ConvertToServerEffects(((IEnumerable)value).Cast<EffectInstance>());
                             }
-
                             else if (property.PropertyType == typeof(ServerEntityLook))
                             {
                                 value = EntityLookManager.Instance.Parse(value.ToString());
@@ -142,7 +171,7 @@ namespace Giny.DatabaseSynchronizer
                             {
                                 value = ConvertToMonsterGrades((List<IO.D2OClasses.MonsterGrade>)value);
                             }
-                            else if (property.PropertyType == typeof(Dictionary<long, MonsterRoom>))
+                            else if (property.PropertyType == typeof(List<MonsterRoom>))
                             {
                                 value = ConvertMonsterRooms((List<double>)value);
                             }
@@ -153,6 +182,14 @@ namespace Giny.DatabaseSynchronizer
                             else if (property.PropertyType == typeof(List<EffectCollection>))
                             {
                                 value = ConvertItemSetEffects((List<List<EffectInstance>>)value);
+                            }
+                            else if (property.PropertyType == typeof(QuestObjectiveParametersRecord))
+                            {
+                                value = ConvertQuestObjectiveParameters((QuestObjectiveParameters)value);
+                            }
+                            else if (property.PropertyType == typeof(List<ItemWithQuantity>))
+                            {
+                                value = ConvertItemWithQuantities((List<List<uint>>)value);
                             }
                             else if (value.GetType().IsGenericType)
                             {
@@ -184,7 +221,7 @@ namespace Giny.DatabaseSynchronizer
                             }
                             try
                             {
-                                property.SetValue(table, Convert.ChangeType(value, property.PropertyType));
+                                property.SetValue(record, Convert.ChangeType(value, property.PropertyType));
                             }
                             catch (Exception ex)
                             {
@@ -195,18 +232,40 @@ namespace Giny.DatabaseSynchronizer
                 }
 
                 logger.WriteProgressBar(current, objects.Length);
-                TableManager.Instance.GetWriter(tableType).Use(new IRecord[] { table }, DatabaseAction.Add);
+                TableManager.Instance.GetWriter(tableType).Use(new IRecord[] { record }, DatabaseAction.Add);
             }
             logger.Flush();
         }
 
-        private static Dictionary<long, MonsterRoom> ConvertMonsterRooms(List<double> mapIds)
+        private static List<ItemWithQuantity> ConvertItemWithQuantities(List<List<uint>> items)
         {
-            var results = new Dictionary<long, MonsterRoom>();
-
-            foreach (var map in mapIds)
+            return items.Select(x => new ItemWithQuantity((short)x[0], (int)x[1])).ToList();
+        }
+        private static QuestObjectiveParametersRecord ConvertQuestObjectiveParameters(QuestObjectiveParameters value)
+        {
+            return new QuestObjectiveParametersRecord()
             {
-                results.Add((long)map, new MonsterRoom(10f, new short[0]));
+                DungeonOnly = value.DungeonOnly,
+                NumParams = value.NumParams,
+                Param0 = value.parameter0,
+                Param1 = value.parameter1,
+                Param2 = value.parameter2,
+                Param3 = value.parameter3,
+                Param4 = value.parameter4,
+            };
+        }
+
+        private static PointRecord ConvertPoint(Point? point)
+        {
+            return new PointRecord(point.y, point.x);
+        }
+        private static List<MonsterRoom> ConvertMonsterRooms(List<double> mapIds)
+        {
+            var results = new List<MonsterRoom>();
+
+            foreach (long map in mapIds)
+            {
+                results.Add(new MonsterRoom(10f, map, new short[0]));
             }
             return results;
         }

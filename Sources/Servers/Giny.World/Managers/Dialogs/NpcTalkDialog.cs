@@ -86,7 +86,7 @@ namespace Giny.World.Managers.Dialogs
         }
         private IEnumerable<NpcReplyRecord> GetValidReply(IEnumerable<NpcReplyRecord> replies)
         {
-            return replies.Where(entry => CriteriaExpression.Eval(entry.Criteria,Character.Client));
+            return replies.Where(entry => CriteriaExpression.Eval(entry.Criteria, Character.Client));
 
         }
     }

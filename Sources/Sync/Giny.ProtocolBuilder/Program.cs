@@ -24,10 +24,25 @@ namespace Giny.ProtocolBuilder
             Stopwatch stopwatch = Stopwatch.StartNew();
 
 
-          //  BuildEnums();
-           // BuildMessages();
-           // BuildTypes();
+            //  BuildEnums();
+            // BuildMessages();
+            // BuildTypes();
             BuildDatacenter();
+
+
+            var folder = "C:\\Users\\olivi\\Desktop\\Giny .NET Core\\Sources\\Sync\\Giny.ProtocolBuilder\\bin\\Debug\\net6.0\\Output\\D2OClasses";
+
+            var target = "C:\\Users\\olivi\\Desktop\\Giny .NET Core\\Sources\\Giny.IO\\D2OClasses";
+
+
+            if (Directory.Exists(target))
+            {
+                Directory.Delete(target, true);
+            }
+
+
+
+            Directory.Move(folder, target);
 
             Logger.WriteColor1(string.Format("Build finished in {0}s", stopwatch.Elapsed.Seconds));
 

@@ -1,19 +1,22 @@
 ﻿using Giny.IO.D2O;
 using Giny.ORM.Attributes;
 using Giny.ORM.Interfaces;
+using ProtoBuf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Giny.World.Records.Quests
 {
+    [D2OClass("QuestStepRewards")]
     [Table("quest_step_rewards")]
     public class QuestStepRewardRecord : IRecord
     {
         [Container]
-        private static Dictionary<long, QuestStepRewardRecord> StepRewards = new Dictionary<long, QuestStepRewardRecord>();
+        private static Dictionary<long, QuestStepRewardRecord> QuestStepRewards = new Dictionary<long, QuestStepRewardRecord>();
 
         [Primary]
         [D2OField("id")]
@@ -65,9 +68,9 @@ namespace Giny.World.Records.Quests
             get;
             set;
         }
-
+        [Blob]
         [D2OField("itemsReward")]
-        public List<int> ItemRewards
+        public List<ItemWithQuantity> ItemRewards
         {
             get;
             set;
@@ -102,5 +105,42 @@ namespace Giny.World.Records.Quests
             get;
             set;
         }
+
+        public static QuestStepRewardRecord GetQuestStepReward(long rewardId)
+        {
+            return QuestStepRewards[rewardId];
+        }
+
+        public override string ToString()
+        {
+            return $"({Id})";
+        }
     }
+    [ProtoContract]
+    public class ItemWithQuantity
+    {
+        [ProtoMember(1)]
+        public short ItemId
+        {
+            get;
+            set;
+        }
+        [ProtoMember(2)]
+        public int Quantity
+        {
+            get;
+            set;
+        }
+
+        public ItemWithQuantity()
+        {
+
+        }
+        public ItemWithQuantity(short itemId, int quantity)
+        {
+            ItemId = itemId;
+            Quantity = quantity;
+        }
+    }
+
 }

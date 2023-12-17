@@ -45,7 +45,7 @@ namespace Giny.World.Records.Spells
             set;
         }
         [D2OField("spellLevels")]
-        [ProtoSerialize]
+        [Blob]
         public int[] SpellLevels
         {
             get;
@@ -139,6 +139,10 @@ namespace Giny.World.Records.Spells
         public static SpellRecord GetSpellRecord(string name)
         {
             return Spells.Values.FirstOrDefault(x => x.Name == name);
+        }
+        public static bool Exists(short spellId)
+        {
+            return Spells.ContainsKey(spellId);
         }
     }
 }

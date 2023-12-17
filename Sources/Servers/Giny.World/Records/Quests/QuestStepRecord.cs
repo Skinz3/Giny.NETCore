@@ -73,11 +73,53 @@ namespace Giny.World.Records.Quests
             set;
         }
 
+        [Ignore]
+        public List<QuestObjectiveRecord> Objectives
+        {
+            get;
+            private set;
+        }
+
         [D2OField("rewardsIds")]
         public List<long> RewardIds
         {
             get;
             set;
+        }
+
+        [Ignore]
+        public List<QuestStepRewardRecord> Rewards
+        {
+            get;
+            private set;
+        }
+        public static QuestStepRecord GetQuestStep(long id)
+        {
+            return Steps[id];
+        }
+
+        public void ReloadMembers()
+        {
+            Objectives = new List<QuestObjectiveRecord>();
+            Rewards = new List<QuestStepRewardRecord>();
+
+            foreach (var objectiveId in ObjectiveIds)
+            {
+                QuestObjectiveRecord record = QuestObjectiveRecord.GetQuestObjective(objectiveId);
+                Objectives.Add(record);
+            }
+
+            foreach (var rewardId in RewardIds)
+            {
+                QuestStepRewardRecord record = QuestStepRewardRecord.GetQuestStepReward(rewardId);
+                Rewards.Add(record);
+            }
+
+        }
+
+        public override string ToString()
+        {
+            return $"({Id}) {Name}";
         }
     }
 }

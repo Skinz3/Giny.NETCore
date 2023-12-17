@@ -13,6 +13,7 @@ using Giny.World.Modules;
 using Giny.World.Network;
 using Giny.World.Records.Maps;
 using Giny.World.Records.Npcs;
+using Giny.World.Records.Quests;
 using System.Configuration;
 using System.Reflection;
 using static System.Net.Mime.MediaTypeNames;
@@ -27,7 +28,7 @@ namespace Giny.World
     {
         static void Main(string[] args)
         {
-            
+
 
             /* WIPManager.Analyse(Assembly.GetExecutingAssembly());
               Console.Read(); */
@@ -39,7 +40,7 @@ namespace Giny.World
             ConsoleCommandsManager.Instance.ReadCommand();
         }
 
-       
+
 
         [StartupInvoke("Protocol", StartupInvokePriority.SecondPass)]
         public static void InitializeProtocolManager()

@@ -154,7 +154,7 @@ namespace Giny.World.Managers.Monsters
         {
             return Monsters.Select(x => x.CreateFighter(team));
         }
-        public override GameRolePlayActorInformations GetActorInformations()
+        public override GameRolePlayActorInformations GetActorInformations(Character target)
         {
             return new GameRolePlayGroupMonsterInformations()
             {

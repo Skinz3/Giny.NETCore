@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Giny.World.Records.Quests
+namespace Giny.ORM.Attributes
 {
-    public abstract class QuestObjectiveParameterRecord
+    public class BlobAttribute : Attribute
     {
 
     }

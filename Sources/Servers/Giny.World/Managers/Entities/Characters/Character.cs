@@ -33,6 +33,7 @@ using Giny.World.Managers.Maps;
 using Giny.World.Managers.Maps.Elements;
 using Giny.World.Managers.Maps.Teleporters;
 using Giny.World.Managers.Parties;
+using Giny.World.Managers.Quests;
 using Giny.World.Managers.Shortcuts;
 using Giny.World.Managers.Skills;
 using Giny.World.Managers.Spells;
@@ -47,7 +48,9 @@ using Giny.World.Records.Guilds;
 using Giny.World.Records.Items;
 using Giny.World.Records.Maps;
 using Giny.World.Records.Npcs;
+using Giny.World.Records.Quests;
 using Giny.World.Records.Spells;
+using Giny.World.Records.Tinsel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -490,9 +493,9 @@ namespace Giny.World.Managers.Entities.Characters
             }
             RefreshShortcuts();
         }
-        public bool LearnSpell(short spellId, bool notify)
+        public bool LearnSpell(short spellId, bool notify = true)
         {
-            if (!HasSpell(spellId))
+            if (!HasSpell(spellId) && SpellRecord.Exists(spellId))
             {
                 var spell = new CharacterSpell(spellId);
                 Record.Spells.Add(spell);
@@ -527,6 +530,70 @@ namespace Giny.World.Managers.Entities.Characters
         {
             Client.Send(new SpellListMessage(false, Record.Spells.Select(x => x.GetSpellItem(this)).ToArray()));
         }
+        public bool StartQuest(long questId)
+        {
+            if (Record.Quests.Any(x => x.QuestId == questId))
+            {
+                return false;
+            }
+
+            QuestRecord record = QuestRecord.GetQuest(questId);
+
+            if (record == null)
+            {
+                return false;
+            }
+
+            var characterQuest = QuestManager.Instance.CreateCharacterQuest(record);
+            Record.Quests.Add(characterQuest);
+
+            Client.Send(new QuestStartedMessage((short)characterQuest.QuestId));
+
+            TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_MESSAGE, 54, characterQuest.QuestId);
+
+            return true;
+        }
+        public CharacterQuestRecord GetQuest(short questId)
+        {
+            return Record.Quests.FirstOrDefault(x => x.QuestId == questId);
+        }
+
+        public List<CharacterQuestRecord> GetActiveQuests()
+        {
+            return Record.Quests.Where(x => !x.Finished()).ToList();
+        }
+        public List<CharacterQuestRecord> GetFinishedQuests()
+        {
+            return Record.Quests.Where(x => x.Finished()).ToList();
+        }
+        public void CompleteQuestObjective(CharacterQuestRecord quest, CharacterQuestObjectiveRecord objective)
+        {
+            objective.Done = true;
+            Client.Send(new QuestObjectiveValidatedMessage((short)quest.QuestId, (short)objective.ObjectiveId));
+
+
+
+            if (quest.Objectives.All(x => x.Done))
+            {
+                quest.NextStep();
+            }
+
+            if (quest.Finished())
+            {
+                QuestManager.Instance.ApplyRewards(this, quest);
+                Client.Send(new QuestValidatedMessage((short)quest.QuestId));
+                TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_MESSAGE, 56, quest.QuestId);
+            }
+            else
+            {
+                TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_MESSAGE, 55, quest.QuestId);
+            }
+        }
+        public bool HasQuest(short id)
+        {
+            return Record.Quests.Any(x => x.QuestId == id);
+        }
+
         public void OnExchangeError(ExchangeErrorEnum error)
         {
             this.Client.Send(new ExchangeErrorMessage((byte)error));
@@ -698,6 +765,7 @@ namespace Giny.World.Managers.Entities.Characters
         public void TalkToNpc(Npc npc, NpcActionRecord action)
         {
             this.OpenDialog(new NpcTalkDialog(this, npc, action));
+            QuestManager.Instance.OnNpcTalk(this, npc);
         }
 
         public void OpenDialog(Dialog dialog)
@@ -976,7 +1044,7 @@ namespace Giny.World.Managers.Entities.Characters
         }
         public bool LearnEmote(short id)
         {
-            if (!Record.KnownEmotes.Contains(id))
+            if (!Record.KnownEmotes.Contains(id) && EmoteRecord.Exists(id))
             {
                 Record.KnownEmotes.Add(id);
                 Client.Send(new EmoteAddMessage(id));
@@ -1258,7 +1326,7 @@ namespace Giny.World.Managers.Entities.Characters
         {
             return new ActorAlignmentInformations(0, 0, 0, 0);
         }
-        public override GameRolePlayActorInformations GetActorInformations()
+        public override GameRolePlayActorInformations GetActorInformations(Character target)
         {
             return new GameRolePlayCharacterInformations(GetActorAlignmentInformations(),
                  Id, new EntityDispositionInformations(CellId, (byte)Direction),
@@ -1328,7 +1396,7 @@ namespace Giny.World.Managers.Entities.Characters
         }
         public bool LearnTitle(short id)
         {
-            if (!Record.KnownTitles.Contains(id))
+            if (!Record.KnownTitles.Contains(id) && TitleRecord.Exists(id))
             {
                 Record.KnownTitles.Add(id);
                 Client.Send(new TitleGainedMessage(id));
@@ -1651,6 +1719,7 @@ namespace Giny.World.Managers.Entities.Characters
                 AddExperience(experience);
             }
         }
+
 
 
         [Annotation("still working?")]

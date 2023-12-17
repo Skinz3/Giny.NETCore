@@ -6,6 +6,7 @@ using Giny.Protocol.Types;
 using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Entities.Look;
 using Giny.World.Managers.Maps;
+using Giny.World.Network;
 using Giny.World.Records;
 using Giny.World.Records.Maps;
 using System;
@@ -61,7 +62,7 @@ namespace Giny.World.Managers.Entities
             this.Map = map;
         }
 
-        public abstract GameRolePlayActorInformations GetActorInformations();
+        public abstract GameRolePlayActorInformations GetActorInformations(Character target);
 
         public void SendMap(NetworkMessage message)
         {
@@ -75,7 +76,10 @@ namespace Giny.World.Managers.Entities
 
         public void RefreshActorOnMap()
         {
-            SendMap(new GameRolePlayShowActorMessage(GetActorInformations()));
+            foreach (var character in Map.Instance.GetEntities<Character>())
+            {
+                SendMap(new GameRolePlayShowActorMessage(GetActorInformations(character)));
+            }
         }
         public void Say(string msg)
         {

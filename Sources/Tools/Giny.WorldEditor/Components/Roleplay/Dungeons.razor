@@ -4,12 +4,14 @@
 @using Giny.World.Records.Maps;
 @using Giny.World.Records.Monsters;
 @using Giny.WorldEditor.Caching;
+@using Giny.WorldEditor.Components.Roleplay.Dialogs;
 @using Giny.WorldEditor.Config;
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using Microsoft.AspNetCore.Components;
 @using MudBlazor.Services;
 @using System.Reflection;
 @using System.Collections;
+@using Giny.ORM;
 @inject IDialogService DialogService
 
 
@@ -59,7 +61,7 @@
 
                     @foreach (var room in SelectedDungeon.Rooms)
                     {
-                        <MudTabPanel Text="@("Room "+(SelectedDungeon.Rooms.Keys.ToList().IndexOf(room.Key)+1).ToString())">
+                        <MudTabPanel Text="@("Room "+(SelectedDungeon.Rooms.IndexOf(room)+1).ToString())">
 
 
 
@@ -67,22 +69,22 @@
                             @if (RoomIndex >= 0)
                             {
                                 <div class="d-flex pa-2">
-                                    <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.DriveFileRenameOutline" ReadOnly=@true Value="@MapPositionRecord.GetMapName(CurrentRoom.Key)" Label="Name" />
+                                    <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.DriveFileRenameOutline" ReadOnly=@true Value="@MapPositionRecord.GetMapName(CurrentRoom.MapId)" Label="Name" />
 
                                 </div>
                                 <div class="d-flex gap-4 pa-2">
-                                    <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Outlined.LocationOn" ReadOnly=@true Value="@CurrentRoom.Key" Label="MapId" />
-                                    <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Outlined.Timer" @bind-Value="@CurrentRoom.Value.RespawnDelay" Label="Respawn delay" />
+                                    <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Outlined.LocationOn" ReadOnly=@true Value="@CurrentRoom.MapId" Label="MapId" />
+                                    <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Outlined.Timer" @bind-Value="@CurrentRoom.RespawnDelay" Label="Respawn delay" />
 
                                 </div>
 
-                                @if (CurrentRoom.Value.MonsterIds.Count > 0)
+
+
+                                @if (CurrentRoom.MonsterIds.Count > 0)
                                 {
 
-                                    <MudDataGrid Class="mt-3" Dense=true Hover=true Striped=false Bordered=true Items="room.Value.MonsterIds">
+                                    <MudDataGrid Class="mt-3" Dense=true Hover=true Striped=false Bordered=true Items="room.MonsterIds">
                                         <Columns>
-
-                                            <PropertyColumn Title="Id" Property="x => x.ToString()" />
 
                                             <TemplateColumn Title="Icon">
                                                 <CellTemplate>
@@ -90,13 +92,23 @@
                                                 </CellTemplate>
                                             </TemplateColumn>
 
+                                            <TemplateColumn Title="Name">
+                                                <CellTemplate>
+                                                    <div class="d-flex gap-2">
+                                                        <MudText Style="font-weight:600">(@context.Item)</MudText>
+                                                        <MudText Style="font-weight:500">@MonsterRecord.GetMonsterRecord(context.Item).Name</MudText>
+                                                    </div>
 
-                                            <PropertyColumn Property="x => MonsterRecord.GetMonsterRecord(x).Name" />
+                                                </CellTemplate>
+                                            </TemplateColumn>
+
+
+
 
                                             <TemplateColumn Title="Actions">
                                                 <CellTemplate>
                                                     <MudStack Row>
-                                                    <MudButton Size="@Size.Small" StartIcon="@Icons.Material.Filled.Delete" IconColor="Color.Primary" Variant="@Variant.Text" Color="@Color.Primary">Delete</MudButton>
+                                                    <MudButton @onclick="()=> this.DeleteMonster(context.Item)" Size="@Size.Small" StartIcon="@Icons.Material.Filled.Delete" IconColor="Color.Primary" Variant="@Variant.Text" Color="@Color.Primary">Delete</MudButton>
                                                 </MudStack>
                                             </CellTemplate>
                                         </TemplateColumn>
@@ -109,8 +121,9 @@
                                     <MudChip Class="mt-2" Color="Color.Primary" Variant="Variant.Text">No monsters in this room</MudChip>
                                 }
 
-                                                    }
+                            }
 
+                            <MudButton StartIcon="@Icons.Material.Filled.Add" OnClick="AddMonster" Variant="Variant.Text" Color="Color.Primary">Add monster</MudButton>
 
                         </MudTabPanel>
                     }
@@ -119,38 +132,6 @@
                 </MudTabs>
 
 
-
-                <MudGrid Class="pa-3">
-                    <MudItem xs="6">
-                        <MudTextField Variant="Variant.Text" Immediate="true" Label="Nom" @bind-Value="MonsterSearch"></MudTextField>
-                    </MudItem>
-                    <MudItem xs="2">
-                        <MudButton StartIcon="@Icons.Material.Filled.Add" OnClick="AddMonster" Variant="Variant.Text" Color="Color.Primary">Ajouter</MudButton>
-                    </MudItem>
-                </MudGrid>
-
-
-
-                <MudGrid Class="pa-3">
-                    <MudItem xs="6">
-                        <MudPaper Outlined="true">
-
-                            <MudList Color="Color.Secondary" Clickable="true">
-
-
-                                @if (SearchResults.Count == 0)
-                                {
-                                    <MudText class="ml-2" Typo="Typo.caption">...</MudText>
-                                }
-                                <Virtualize Items="@SearchResults">
-                                    <MudListItem OnClick="@(()=>{AddedMonster = context;MonsterSearch = AddedMonster.ToString();})">@context.ToString()</MudListItem>
-                                </Virtualize>
-
-                            </MudList>
-
-                        </MudPaper>
-                    </MudItem>
-                </MudGrid>
 
             </MudPaper>
 
@@ -163,62 +144,39 @@
 
 @code {
 
-    string m_searchValue
-    {
-        get;
-        set;
-    }
-    string MonsterSearch
-    {
-        get
-        {
-            return m_searchValue;
-        }
-        set
-        {
-            m_searchValue = value;
-            OnMonsterSearchChange();
-        }
-    }
 
-    MonsterRecord AddedMonster
-    {
-        get;
-        set;
-    }
     List<MonsterRecord> SearchResults
     {
         get;
         set;
     } = new List<MonsterRecord>();
 
-    void OnMonsterSearchChange()
-    {
-        if (MonsterSearch == "")
-        {
-            this.SearchResults = new List<MonsterRecord>();
-            return;
-        }
-        this.SearchResults = MonsterRecord.GetMonsterRecords().Where(x => x.Name.ToLower().Contains(MonsterSearch.ToLower())).ToList();
-    }
-
     string GetMonsterIcon(short monsterId)
     {
         var source = string.Format("data:image/png;base64,{0}", ExternalResources.GetMonsterIcon(monsterId));
         return source;
     }
-    void AddMonster()
+    void DeleteMonster(short monsterId)
     {
+        CurrentRoom.MonsterIds.Remove(monsterId);
+        StateHasChanged();
+        SelectedDungeon.UpdateLater();
+    }
+    async void AddMonster()
+    {
+        var result = await DialogHelper.OpenDialog<SelectMonsterDialog>(DialogService, new DialogParameters<SelectMonsterDialog>(), "Select monster");
 
-        CurrentRoom.Value.MonsterIds.Add((short)AddedMonster.Id);
-        StateHasChanged();
+        if (!result.Cancelled)
+        {
+            var record = (MonsterRecord)result.Data;
+            CurrentRoom.MonsterIds.Add((short)record.Id);
+            StateHasChanged();
+        }
+
+        SelectedDungeon.UpdateLater();
+
     }
-    public void Closed(MudChip chip)
-    {
-        var record = (MonsterRecord)chip.Value;
-        CurrentRoom.Value.MonsterIds.Remove((short)record.Id);
-        StateHasChanged();
-    }
+
 
 
     private string Search
@@ -241,7 +199,7 @@
         set;
     } = new List<DungeonRecord>();
 
-    public KeyValuePair<long, MonsterRoom> CurrentRoom => SelectedDungeon.Rooms.ElementAt(RoomIndex);
+    public MonsterRoom CurrentRoom => SelectedDungeon.Rooms.ElementAt(RoomIndex);
 
     private void SelectDungeon(DungeonRecord dungeon)
     {

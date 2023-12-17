@@ -30,7 +30,7 @@ namespace Giny.World.Records.Spells
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [D2OField("spellIds")]
         public short[] SpellIds
         {

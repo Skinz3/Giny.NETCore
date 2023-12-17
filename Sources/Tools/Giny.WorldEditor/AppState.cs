@@ -37,11 +37,7 @@ namespace Giny.WorldEditor
             get;
             set;
         }
-        public long ExecutionTime
-        {
-            get;
-            set;
-        }
+   
         public LoadingStep(string name, Action func)
         {
             Name = name;

@@ -86,6 +86,10 @@ namespace Giny.ProtocolBuilder.Converters
             {
                 return "List<" + GetConvertedType(new AS3Type(type.GetGenericType())) + ">";
             }
+            if (type.RawType.Contains("com."))
+            {
+                return type.RawType.Split(".").Last();
+            }
             return base.GetConvertedType(type);
         }
         public string GetD2OClassProperties()
@@ -151,7 +155,7 @@ namespace Giny.ProtocolBuilder.Converters
         }
         protected override List<AS3Field> SelectFieldsToWrite()
         {
-            return File.GetFields(x => x.Modifiers == AS3ModifiersEnum.None).ToList();
+            return File.GetFields(x => (AS3AccessorsEnum.@public).HasFlag(x.Accessor) && x.Modifiers == AS3ModifiersEnum.None).ToList();
         }
 
         public override void PostPrepare()
@@ -159,6 +163,13 @@ namespace Giny.ProtocolBuilder.Converters
             if (GetClassName() == "EffectInstance")
             {
                 AddPrivateField("_rawZone");
+
+            }
+
+            if (GetClassName() == "EffectZone")
+            {
+                AddPrivateField("_rawDisplayZone");
+                AddPrivateField("_rawActivationZone");
             }
 
             if (GetClassName() == "CensoredContent")
@@ -173,6 +184,8 @@ namespace Giny.ProtocolBuilder.Converters
             {
                 AddPrivateField("_categoryId");
             }
+
+
 
         }
 

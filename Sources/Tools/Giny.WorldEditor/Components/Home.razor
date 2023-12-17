@@ -4,6 +4,7 @@
 @using Giny.WorldEditor.Components.Fights
 @using Giny.WorldEditor.Components.Roleplay
 @using Giny.WorldEditor.Components.Roleplay.Npcs
+@using Giny.WorldEditor.Components.Roleplay.Quests
 @using Microsoft.AspNetCore.Components.Routing
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using MudBlazor
@@ -24,9 +25,10 @@
 
 
 <style>
-    body{
-        overflow-x : hidden;
+    body {
+        overflow-x: hidden;
     }
+
     .dialog-open {
         backdrop-filter: blur(5px);
     }
@@ -43,7 +45,8 @@
 </style>
 
 
-<MudLayout   > <!-- Style="position:fixed" -->
+<MudLayout>
+    <!-- Style="position:fixed" -->
 
 
     <MudPaper Elevation="1">
@@ -82,7 +85,7 @@
 
             </MudDrawerHeader>
             <MudNavMenu>
-                <MudTreeView Style="max-height:700px;overflow-y:scroll;padding-bottom:50px" Color=Color.Primary T="string">
+                <MudTreeView Style="overflow-y:scroll;padding-bottom:50px" Color=Color.Primary T="string">
                     <MudTreeViewItem Icon="@Icons.Outlined.LocalFireDepartment" Value="@("Fights")">
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.SpellExplorer)" Match="NavLinkMatch.All">Spells</MudNavLink>
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.EffectsRelator)" Match="NavLinkMatch.All">Spells by effects</MudNavLink>
@@ -92,6 +95,7 @@
                     <MudTreeViewItem Icon="@Icons.Outlined.Brightness4" Value="@("Roleplay")">
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Dungeons)" Match="NavLinkMatch.All">Dungeons</MudNavLink>
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Items)" Match="NavLinkMatch.All">Items</MudNavLink>
+                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Quests)" Match="NavLinkMatch.All">Quests</MudNavLink>
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Npcs)" Match="NavLinkMatch.All">Npcs</MudNavLink>
                     </MudTreeViewItem>
 
@@ -166,6 +170,10 @@
             else if (AppState.Page == PageEnum.Server)
             {
                 <RealtimeInspector></RealtimeInspector>
+            }
+            else if (AppState.Page == PageEnum.Quests)
+            {
+                <Quests></Quests>
             }
 
         </CascadingValue>
@@ -267,8 +275,8 @@
     }
     private void OpenRequiresLoadingDialog()
     {
-        DialogOptions options = new DialogOptions() { ClassBackground = "dialog-open" };
-        DialogService.ShowMessageBox("Loading", "Please wait for the application to finish loading.", "OK", null, null, options);
+        DialogHelper.OpenDialog(DialogService, "Loading", "Please wait for the application to finish loading.");
+
     }
     public void Navigate(PageEnum page)
     {

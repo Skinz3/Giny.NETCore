@@ -21,6 +21,7 @@ namespace Giny.WorldEditor
         D2P,
         SWL,
         MapEditor,
-        Server
+        Server,
+        Quests,
     }
 }

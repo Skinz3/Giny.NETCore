@@ -107,7 +107,7 @@ namespace Giny.World.Records.Items
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [D2OField("dropMonsterIds")]
         public short[] DropMonsterIds
         {
@@ -121,14 +121,14 @@ namespace Giny.World.Records.Items
             set;
         }
         [D2OField("recipeIds")]
-        [ProtoSerialize]
+        [Blob]
         public uint[] RecipeIds
         {
             get;
             set;
         }
         [Update]
-        [ProtoSerialize]
+        [Blob]
         [D2OField("possibleEffects")]
         public EffectCollection Effects
         {

@@ -38,10 +38,6 @@ namespace Giny.IO.D2OClasses
         public int startingSpellId;
         public MonsterBonusCharacteristics bonusCharacteristics;
 
-        public override string ToString()
-        {
-            return "Spell : " + startingSpellId;
-        }
         [D2OIgnore]
         public uint Grade
         {

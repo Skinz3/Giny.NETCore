@@ -1,6 +1,7 @@
 ﻿@using Giny.Core.IO.Configuration;
 @using Giny.Core.Network;
 @using Giny.IO.D2O;
+@using Giny.World.Records.Quests;
 @using Giny.WorldEditor.Caching;
 @using Giny.Core.IO.Configuration;
 @using Giny.IO.D2I;
@@ -61,7 +62,7 @@
             {
                 <MudTimelineItem Elevation="25" TimelineAlign="@align" Size="Size.Small" Color="Color.Success">
                     <ItemContent>
-                        <MudAlert Severity="Severity.Success">@("Finished in " + step.ExecutionTime + "s")</MudAlert>
+                        <MudAlert  Severity="Severity.Success">Loaded</MudAlert>
                         </ItemContent>
                         <ItemOpposite>
                             <MudText Typo="Typo.button" Color="Color.Success">@step.Name</MudText>
@@ -158,7 +159,7 @@
         new LoadingStep("D2O Files",LoadD2O ),
         new LoadingStep("Client resources",ExternalResources.Initialize),
         new LoadingStep("Spells",LoadSpells),
-        new LoadingStep("Npcs",LoadNpcs),
+        new LoadingStep("Quests & Npcs",LoadQuestsAndNpcs),
         new LoadingStep("Other records",LoadRoleplayMisc),
         new LoadingStep("Links", LoadLinks),
 
@@ -218,7 +219,6 @@
 
                foreach (var step in Steps)
                {
-                   Stopwatch st = Stopwatch.StartNew();
                    try
                    {
                        step.Execute();
@@ -235,7 +235,6 @@
                        AppState.Initialized = true;
                        return;
                    }
-                   step.ExecutionTime = (long)Math.Round(st.Elapsed.TotalSeconds);
                    OnStepReached();
                }
 
@@ -270,6 +269,7 @@
         NpcSpawnRecord.Initialize();
         SpellEffectManager.Instance.Initialize();
         SpellRecord.Initialize();
+        QuestRecord.Initialize();
 
     }
     private static void LoadRoleplayMisc()
@@ -289,9 +289,12 @@
         DatabaseManager.Instance.LoadTable<SpellLevelRecord>();
         DatabaseManager.Instance.LoadTable<SpellStateRecord>();
     }
-    private static void LoadNpcs()
+    private static void LoadQuestsAndNpcs()
     {
-
+        DatabaseManager.Instance.LoadTable<QuestRecord>();
+        DatabaseManager.Instance.LoadTable<QuestStepRecord>();
+        DatabaseManager.Instance.LoadTable<QuestObjectiveRecord>();
+        DatabaseManager.Instance.LoadTable<QuestStepRewardRecord>();
         DatabaseManager.Instance.LoadTable<NpcSpawnRecord>();
         DatabaseManager.Instance.LoadTable<NpcActionRecord>();
         DatabaseManager.Instance.LoadTable<NpcReplyRecord>();

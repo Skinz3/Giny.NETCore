@@ -24,9 +24,9 @@ namespace Giny.DungeonZaap
                     continue;
                 }
 
-                var mapId = dungeon.Rooms.Keys.FirstOrDefault();
+                var room = dungeon.Rooms.FirstOrDefault();
 
-                var targetMap = MapRecord.GetMap(mapId);
+                var targetMap = MapRecord.GetMap(room.MapId);
 
                 if (targetMap == null)
                 {
@@ -34,7 +34,7 @@ namespace Giny.DungeonZaap
                 }
 
 
-                Destinations.Add(mapId, new TeleportDestination()
+                Destinations.Add(room.MapId, new TeleportDestination()
                 {
                     cost = GetCost(targetMap, character.Map),
                     level = 1,

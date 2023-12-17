@@ -8,11 +8,12 @@
 @using Giny.World.Records.Items
 @using Giny.World.Records.Npcs;
 @using Giny.WorldEditor.Caching;
+@using Giny.WorldEditor.Components.Roleplay.Dialogs;
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using Giny.ORM;
 @inject ISnackbar Snackbar
 
-<MudGrid >
+<MudGrid>
     <MudItem xs="3">
 
         <MudPaper Outlined=true>
@@ -92,7 +93,7 @@
             @if (SelectedAction != null)
             {
                 <MudItem>
-                    <div >
+                    <div>
                         @if (SelectedAction.Action == NpcActionsEnum.EXCHANGE)
                         {
                             <Exchange NpcAction="SelectedAction" NpcSpawn="SelectedSpawn"></Exchange>
@@ -180,13 +181,13 @@
     }
     private async void AddAction()
     {
-        var parameters = new DialogParameters<AddNpcActionDialog>();
-        parameters.Add(x => x.SpawnRecord, SelectedSpawn);
 
-        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, CloseButton = true, ClassBackground = "dialog-open" };
-        var dialog = DialogService.Show<AddNpcActionDialog>("Add action", parameters, options);
+        DialogParameters<AddNpcActionDialog> parameters = new DialogParameters<AddNpcActionDialog>()
+        {
+           { x => x.SpawnRecord,SelectedSpawn }
+        };
 
-        var result = await dialog.Result;
+        var result = await DialogHelper.OpenDialog<AddNpcActionDialog>(DialogService, parameters, "Add action");
 
         if (!result.Cancelled)
         {
@@ -248,6 +249,8 @@
         D2ONpc = D2OCache.GetNpc((int)SelectedSpawn.Template.Id);
 
         LoadNpcIcon();
+
+       
 
     }
     private void LoadNpcIcon()

@@ -191,7 +191,7 @@ namespace Giny.ORM.IO
             {
                 value = Convert.ToByte(value);
             }
-            else if (property.CustomAttributes.Count() > 0 && property.GetCustomAttribute<ProtoSerializeAttribute>() != null)
+            else if (property.CustomAttributes.Count() > 0 && property.GetCustomAttribute<BlobAttribute>() != null)
             {
                 byte[] content = Protobuf.Serialize(value);
                 return content;

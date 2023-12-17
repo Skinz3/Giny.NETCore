@@ -34,7 +34,7 @@ namespace Giny.World.Records.Items
             set;
         }
 
-        [ProtoSerialize]
+        [Blob]
         [D2OField("items")]
         public List<int> Items
         {
@@ -42,7 +42,7 @@ namespace Giny.World.Records.Items
             set;
         }
 
-        [ProtoSerialize]
+        [Blob]
         [D2OField("effects")]
         public List<EffectCollection> Effects
         {

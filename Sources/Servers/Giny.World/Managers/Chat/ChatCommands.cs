@@ -31,6 +31,7 @@ using Giny.World.Records.Items;
 using Giny.World.Records.Jobs;
 using Giny.World.Records.Maps;
 using Giny.World.Records.Monsters;
+using Giny.World.Records.Quests;
 using Giny.World.Records.Spells;
 using Giny.World.Records.Tinsel;
 using System;
@@ -521,11 +522,38 @@ namespace Giny.World.Managers.Chat
         {
             client.Character.Teleport(224920584);
         }
+        [ChatCommand("quest", ServerRoleEnum.Administrator)]
+        public static void QuestCommand(WorldClient client, short id)
+        {
+            client.Character.StartQuest(id);
+        }
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
+            /*foreach (var questObjective in QuestObjectiveRecord.GetQuestObjectives())
+            {
+                if (questObjective.Type == QuestObjectiveTypeEnum.GoToNpc ||
+                    questObjective.Type == QuestObjectiveTypeEnum.NpcTalkBack)
+                {
+                    var npcId = questObjective.Parameters.Param0;
 
+                    var mapId = questObjective.MapId;
 
+                    var map = MapRecord.GetMap(mapId);
+
+                    if (map == null)
+                        continue;
+                    if (map.Instance.GetEntities<Npc>().Where(x => x.Template.Id == npcId).Count() == 0)
+                    {
+                        NpcsManager.Instance.AddNpc((int)map.Id, map.RandomWalkableCell().Id, DirectionsEnum.DIRECTION_SOUTH_WEST, (short)npcId); ;
+
+                    }
+
+                }
+            }
+            client.Character.Reply("OK");*/
+            client.Character.Record.Quests.Clear();
+            return;
 
             for (int i = 0; i < 1; i++)
             {

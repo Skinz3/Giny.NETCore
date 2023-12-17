@@ -51,63 +51,63 @@ namespace Giny.World.Records.Breeds
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [D2OField("statsPointsForStrength")]
         public StatUpgradeCost[] StatsPointForStrength
         {
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [D2OField("statsPointsForIntelligence")]
         public StatUpgradeCost[] StatsPointForIntelligence
         {
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [D2OField("statsPointsForChance")]
         public StatUpgradeCost[] StatsPointForChance
         {
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [D2OField("statsPointsForAgility")]
         public StatUpgradeCost[] StatsPointForAgility
         {
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [D2OField("statsPointsForVitality")]
         public StatUpgradeCost[] StatsPointForVitality
         {
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [D2OField("statsPointsForWisdom")]
         public StatUpgradeCost[] StatsPointForWisdom
         {
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [D2OField("maleColors")]
         public int[] MaleColors
         {
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [D2OField("maleColors")]
         public int[] FemaleColors
         {
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [D2OField("breedSpellsId")]
         public short[] SpellIds
         {

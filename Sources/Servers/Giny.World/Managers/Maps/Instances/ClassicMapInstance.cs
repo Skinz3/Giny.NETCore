@@ -23,7 +23,7 @@ namespace Giny.World.Managers.Maps.Instances
 
         public override MapComplementaryInformationsDataMessage GetMapComplementaryInformationsDataMessage(Character character)
         {
-            return new MapComplementaryInformationsDataMessage(character.Map.SubareaId, Record.Id, GetHousesInformations(), GetGameRolePlayActorsInformations(),
+            return new MapComplementaryInformationsDataMessage(character.Map.SubareaId, Record.Id, GetHousesInformations(), GetGameRolePlayActorsInformations(character),
               GetInteractiveElements(character), GetStatedElements(), GetMapObstacles(), GetFightsCommonInformations(), HasAgressiveMonsters(),
               GetFightStartingPositions());
         }

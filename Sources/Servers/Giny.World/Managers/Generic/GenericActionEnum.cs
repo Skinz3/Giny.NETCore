@@ -31,5 +31,6 @@ namespace Giny.World.Managers.Generic
         PokefusWish,
         Unhandled,
         Paddock,
+        StartQuest,
     }
 }

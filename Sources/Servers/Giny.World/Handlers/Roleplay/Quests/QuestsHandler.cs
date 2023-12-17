@@ -15,27 +15,32 @@ namespace Giny.World.Handlers.Quests
         [MessageHandler]
         public static void HandleQuestListRequestMessage(QuestListRequestMessage message, WorldClient client)
         {
-            var activeQuests = new QuestActiveInformations[1];
-            activeQuests[0] = new QuestActiveDetailedInformations(2083, new QuestObjectiveInformations[]
-            {
-                new QuestObjectiveInformations(8107,false,new string[0]),
-                       new QuestObjectiveInformations(8108,true,new string[] {"hello"})
-            }, 1463);
+            var activeQuests = client.Character.GetActiveQuests().Select(x => x.GetQuestActiveInformations()).ToArray();
 
+            var finishedQuests = client.Character.GetFinishedQuests().Select(x => (short)x.QuestId).ToArray();
 
-
-            client.Send(new QuestListMessage(new short[0], new short[0], activeQuests, new short[0]));
+            client.Send(new QuestListMessage(finishedQuests, new short[0], activeQuests, new short[0]));
         }
 
         [MessageHandler]
         public static void HandleQuestStepInfoRequestMessage(QuestStepInfoRequestMessage message, WorldClient client)
         {
-            
-            client.Send(new QuestStepInfoMessage(new QuestActiveDetailedInformations(2083, new QuestObjectiveInformations[]
+            if (message.questId == 0)
             {
-                new QuestObjectiveInformations(8107,true,new string[] {"hello"}),
-                 new QuestObjectiveInformations(8108,true,new string[] {"hello"})
-            }, 1463)));
+                foreach (var quest in client.Character.GetActiveQuests())
+                {
+                    client.Send(new QuestStepInfoMessage(quest.GetQuestActiveInformations()));
+                }
+                return;
+            }
+            else
+            {
+                var quest = client.Character.GetQuest(message.questId);
+
+                client.Send(new QuestStepInfoMessage(quest.GetQuestActiveInformations()));
+            }
+
+           
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Giny.World.Records.Monsters
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [D2OField("spells")]
         public long[] Spells
         {
@@ -135,14 +135,14 @@ namespace Giny.World.Records.Monsters
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [D2OField("drops")]
         public List<MonsterDrop> Drops
         {
             get;
             set;
         }
-        [ProtoSerialize]
+        [Blob]
         [D2OField("grades")]
         public List<MonsterGrade> Grades
         {

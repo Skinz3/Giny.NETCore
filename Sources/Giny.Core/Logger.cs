@@ -21,7 +21,7 @@ namespace Giny.Core
         {
            // {ConsoleColor.DarkBlue,ConsoleColor.Blue },
            // {ConsoleColor.DarkGreen,ConsoleColor.Green },
-            {ConsoleColor.DarkMagenta,ConsoleColor.Magenta },
+            {ConsoleColor.DarkCyan,ConsoleColor.Blue  },
         };
         static Logger()
         {
@@ -103,9 +103,9 @@ namespace Giny.Core
             WriteColor2(@"    ..|'''.|   ||                    ");
             WriteColor2(@"   .|'     '  ...  .. ...   .... ... ");
             WriteColor2(@"   ||    ....  ||   ||  ||   '|.  |  ");
-            WriteColor1(@"   '|.    ||   ||   ||  ||    '|.|   ");
+            WriteColor2(@"   '|.    ||   ||   ||  ||    '|.|   ");
             WriteColor1(@"    ''|...'|  .||. .||. ||.    '|    ");
-            WriteColor1(@"                            .. |     ");
+            WriteColor1(@"                   by Skinz .. |     ");
             WriteColor1(@"                             ''      ");
             WriteColor1("");
 

@@ -14,7 +14,7 @@ namespace Giny.IO.D2OClasses
         public int Id => throw new NotImplementedException();
 
         public int typeId;
-        public string name;
+        public int name;
         public string criterion;
         public List<Collectable> collectables;
 
@@ -31,7 +31,7 @@ namespace Giny.IO.D2OClasses
             }
         }
         [D2OIgnore]
-        public string Name
+        public int Name
         {
             get
             {
