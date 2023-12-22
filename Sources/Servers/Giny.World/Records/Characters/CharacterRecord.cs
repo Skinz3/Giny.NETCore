@@ -307,6 +307,7 @@ namespace Giny.World.Records.Characters
                 GuildId = 0,
                 HardcoreInformations = new HardcoreInformations(),
                 ContextualLook = null,
+                Quests = new List<CharacterQuestRecord>(),
             };
         }
         public static CharacterRecord GetCharacterRecord(long id)

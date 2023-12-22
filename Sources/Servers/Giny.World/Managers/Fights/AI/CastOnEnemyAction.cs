@@ -116,6 +116,10 @@ namespace Giny.World.Managers.Fights.AI
                         targetCell = Fighter.Fight.Map.GetCell(Fighter.GetSpellZone(spell.Level, Fighter.Cell.Point).EnumerateValidPoints().Random(random));
                     }
 
+                    if (spellRecord.Category == SpellCategoryEnum.Agressive && target.IsInvulnerable())
+                    {
+                        continue;
+                    }
                     SpellCast cast = new SpellCast(Fighter, spell, targetCell);
                     cast.CastCell = cell;
 

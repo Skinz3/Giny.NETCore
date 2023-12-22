@@ -36,7 +36,7 @@ namespace Giny.World.Managers.Effects
             }
             set
             {
-                EffectId = (short)value;  
+                EffectId = (short)value;
             }
         }
         [ProtoMember(1)]
@@ -116,7 +116,7 @@ namespace Giny.World.Managers.Effects
         {
             get
             {
-                return  (FightDispellableEnum)Dispellable;
+                return (FightDispellableEnum)Dispellable;
             }
             set
             {
@@ -246,7 +246,7 @@ namespace Giny.World.Managers.Effects
                 case "EOFF":
                     return new Trigger(TriggerTypeEnum.OnStateRemoved, parameter);
                 case "TP":
-                    return new Trigger(TriggerTypeEnum.OnTeleportPortal); 
+                    return new Trigger(TriggerTypeEnum.OnTeleportPortal);
                 case "ATB":
                     return new Trigger(TriggerTypeEnum.AfterTurnBegin);
                 case "MPA":
@@ -258,13 +258,13 @@ namespace Giny.World.Managers.Effects
                     return new Trigger(TriggerTypeEnum.CasterInflictDamageEnnemy);
                 case "CDBA":
                     return new Trigger(TriggerTypeEnum.CasterInflictDamageAlly);
-             
+
                 case "R":
                     return new Trigger(TriggerTypeEnum.OnRangeLost);
                 case "CMPA":
-                    return new Trigger(TriggerTypeEnum.OnCasterRemoveMpAttempt); 
+                    return new Trigger(TriggerTypeEnum.OnCasterRemoveMpAttempt);
                 case "CAPA":
-                    return new Trigger(TriggerTypeEnum.OnCasterRemoveApAttempt); 
+                    return new Trigger(TriggerTypeEnum.OnCasterRemoveApAttempt);
                 case "CAP":
                     return new Trigger(TriggerTypeEnum.OnCasterUseAp);
                 case "MS":
@@ -318,7 +318,7 @@ namespace Giny.World.Managers.Effects
 
                 case "DTE":
                     return new Trigger(TriggerTypeEnum.OnDamagedTurnEnd);
-                
+
                     /* 
                      * Not sure about how it works
                      * 
@@ -396,7 +396,8 @@ namespace Giny.World.Managers.Effects
                 case EffectsEnum.Effect_CasterExecuteSpell:
                 case EffectsEnum.Effect_SourceExecuteSpellOnSource:
                 case EffectsEnum.Effect_SourceExecuteSpellOnTarget:
-
+                case EffectsEnum.Effect_Rune:
+                case EffectsEnum.Effect_TurnEndGlyph:
                 case EffectsEnum.Effect_TargetExecuteSpellOnSource:
                 case EffectsEnum.Effect_TargetExecuteSpellGlobalLimitation:
                 case EffectsEnum.Effect_TargetExecuteSpellOnSourceGlobalLimitation:

@@ -24,6 +24,10 @@ namespace Giny.DungeonZaap
                     continue;
                 }
 
+                if (dungeon.Rooms.All(x => x.MonsterIds.Count == 0))
+                {
+                    continue;
+                }
                 var room = dungeon.Rooms.FirstOrDefault();
 
                 var targetMap = MapRecord.GetMap(room.MapId);

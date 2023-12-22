@@ -1,0 +1,60 @@
+﻿@using Giny.Core.IO.Configuration;
+@using MudBlazor
+<MudDialog>
+    <DialogContent>
+        <div class="d-flex flex-column gap-2" style="width:600px">
+            <MudCheckBox @bind-Value=Config.StartAllInstances T="bool" Label="Connecter tous les comptes" />
+
+            <MudText>Wallpaper :</MudText>
+            <div class="d-flex flex-row gap-2" style="flex-wrap:wrap;height:300px;overflow-y:auto">
+                @foreach (var image in Wallpapers)
+                {
+                    <MudButton OnClick="()=>SelectImage(image)">
+                        <MudImage Width=240 Height=160 Src="@image"
+                                  ObjectFit="ObjectFit.Cover"
+                                  ObjectPosition="ObjectPosition.Center"
+                                  Elevation="25" Class="rounded-lg" />
+                    </MudButton>
+                }
+
+            </div>
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Submit">Appliquer</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    public UplConfig Config => ConfigManager<UplConfig>.Instance;
+
+    void Submit()
+    {
+        MainLayout.UpdateState();
+        ConfigManager<UplConfig>.Save(UplConfig.Filepath);
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    string[] Wallpapers = new string[]
+    {
+        "https://i.imgur.com/bvuxYI9.jpeg",
+        "https://i.imgur.com/9eMnv7A.jpeg",
+        "https://i.imgur.com/fUODvXP.jpeg",
+        "https://i.imgur.com/QvEfrLJ.jpeg",
+
+    };
+
+    [Parameter]
+    public MainLayout MainLayout
+    {
+        get;
+        set;
+    }
+
+    void SelectImage(string src)
+    {
+        Config.Wallpaper = src;
+        MainLayout.UpdateState();
+    }
+}

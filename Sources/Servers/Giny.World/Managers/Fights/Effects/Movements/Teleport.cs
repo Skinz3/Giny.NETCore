@@ -15,6 +15,10 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Movements
 {
+    /// <summary>
+    /// Sort Arrivée fracassante.
+    /// 
+    /// </summary>
     [SpellEffectHandler(EffectsEnum.Effect_Teleport)]
     public class Teleport : SpellEffectHandler
     {
@@ -27,6 +31,7 @@ namespace Giny.World.Managers.Fights.Effects.Movements
         {
             var targetCells = base.GetAffectedCells();
 
+
             if (targetCells.Count == 0)
             {
                 return null;
@@ -36,8 +41,6 @@ namespace Giny.World.Managers.Fights.Effects.Movements
                 return targetCells.First();
             }
 
-
-           
             for (int i = targetCells.Count - 1; i >= 0; i--)
             {
                 var cellFree = Source.Fight.IsCellFree(targetCells[i]);

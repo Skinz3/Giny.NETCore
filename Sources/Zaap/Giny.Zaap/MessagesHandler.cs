@@ -38,12 +38,12 @@ namespace Giny.Zaap
 
         private static void HandleAuthGetGameToken(ZaapClient client, AuthGetGameToken message)
         {
-            client.Send(new AuthGetGameTokenResult(client.Password));
+            client.Send(new AuthGetGameTokenResult(client.Account.Password));
         }
 
         private static void HandleUserInfoGet(ZaapClient client, UserInfoGet message)
         {
-            client.Send(new UserInfosGetResult(client.Username));
+            client.Send(new UserInfosGetResult(client.Account.Username));
         }
 
         private static void HandleSettingsGet(ZaapClient client, SettingsGet message)
@@ -70,6 +70,8 @@ namespace Giny.Zaap
 
         private static void HandleConnectArgs(ZaapClient client, ConnectArgs message)
         {
+            client.InstanceId = message.InstanceId;
+            client.Account = ZaapServer.Instance.AccountProvider.GetAccount(message.InstanceId);
             client.Send(new ConnectResult());
         }
 

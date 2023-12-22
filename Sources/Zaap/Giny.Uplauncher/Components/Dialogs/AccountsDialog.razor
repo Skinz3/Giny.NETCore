@@ -1,0 +1,105 @@
+﻿@using Giny.Core.IO.Configuration;
+@using Giny.Zaap.Accounts;
+@using MudBlazor
+<MudDialog>
+    <DialogContent>
+
+        <MudPaper Style="width:500px">
+            <MudList @bind-SelectedValue="selectedItem" Color=Color.Primary Clickable="true">
+                <MudListSubheader>
+                    Comptes
+                </MudListSubheader>
+                @foreach (var account in Accounts)
+                {
+                    <MudListItem Value="account">
+                        <div class="d-flex justify-space-between align-center">
+
+                            <div class="d-flex align-center gap-3">
+                                <MudAvatar Color="Color.Primary">@account.AvatarLetter</MudAvatar>
+                                <div class="d-flex flex-column ">
+                                    <MudText Style="font-weight:500">@account.Username</MudText>
+                                    <MudText Typo="Typo.caption">@account.Nickname</MudText>
+                                </div>
+
+                            </div>
+                            <div>
+                                <MudIconButton OnClick="()=>DeleteAccount(account)" Color=Color.Primary Icon="@Icons.Material.Outlined.Delete"></MudIconButton>
+                            </div>
+                        </div>
+
+
+                    </MudListItem>
+                }
+
+
+
+                <MudListItem OnClick="LoginClick">
+                    <div class="d-flex align-center gap-3">
+                        <MudIcon Icon="@Icons.Filled.Add" Color="Color.Primary"></MudIcon>
+                        <div class="d-flex flex-column ">
+                            <MudText Style="font-weight:500">Ajouter</MudText>
+                        </div>
+
+                    </div>
+
+                </MudListItem>
+
+            </MudList>
+        </MudPaper>
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    @inject IDialogService DialogService;
+
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public MainLayout MainLayout
+    {
+        get;
+        set;
+    }
+
+    private List<WebAccount> Accounts => ConfigManager<UplConfig>.Instance.Accounts;
+
+    object selectedItem;
+
+    private WebAccount SelectedAccount => (WebAccount)selectedItem;
+
+    void LoginClick()
+    {
+
+        this.Cancel();
+
+        MainLayout.Navigate(PageEnum.Login);
+    }
+
+    void DeleteAccount(WebAccount account)
+    {
+        var config = ConfigManager<UplConfig>.Instance;
+
+        config.Accounts.Remove(account);
+
+        ConfigManager<UplConfig>.Save(UplConfig.Filepath);
+
+        MainLayout.UpdateState();
+
+        if (config.Accounts.Count == 0)
+        {
+            this.Cancel();
+            MainLayout.Navigate(PageEnum.Login);
+        }
+    }
+    protected override void OnInitialized()
+    {
+        selectedItem = ConfigManager<UplConfig>.Instance.GetSelectedAccount();
+        base.OnInitialized();
+    }
+    void Submit() => MudDialog.Close(DialogResult.Ok<WebAccount>(SelectedAccount));
+    void Cancel() => MudDialog.Cancel();
+}

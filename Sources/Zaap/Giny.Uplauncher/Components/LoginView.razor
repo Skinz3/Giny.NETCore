@@ -1,0 +1,141 @@
+﻿@using Giny.Core.IO.Configuration;
+@using Giny.Zaap.Accounts;
+@using Microsoft.AspNetCore.Components.Web;
+@using MudBlazor;
+<div class="d-flex align-center justify-center pa-13">
+
+    <div class="container pa-1" style="gap:0px;padding:0px;align-items:center;width:380px">
+        <MudImage Width=300 Height=300 Class="pa-2" Fluid=true ObjectFit=ObjectFit.Cover ObjectPosition=ObjectPosition.Center
+                  Src="https://i.imgur.com/vjCw7cz.png"></MudImage>
+
+
+        <div class="d-flex flex-column px-1 gap-1;background-color:red;">
+            <MudTextField Immediate=true Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.AccountCircle" Variant=Variant.Filled Label="Nom de compte" @bind-Value="Login"></MudTextField>
+            <MudTextField Immediate=true
+                          OnKeyDown="OnKeyDown" Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Outlined.Password"
+                          Variant=Variant.Filled InputType=InputType.Password
+                          Label="Mot de passe" @bind-Value="Password"></MudTextField>
+            <div class="d-flex flex-column gap-3 my-2">
+                <MudButton OnClick="ConnectClick" Variant="Variant.Filled" Color="Color.Primary">
+
+                    @if (Processing)
+                    {
+                        <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                    }
+                    else
+                    {
+                        <MudIcon Icon="@Icons.Material.Outlined.Login"></MudIcon>
+                    }
+                    <MudText Class="ms-2">Connexion</MudText>
+
+
+                </MudButton>
+                <MudButton OnClick="RegisterClick" StartIcon="@Icons.Material.Outlined.AppRegistration" Variant="Variant.Text" Color="Color.Primary">
+                    Inscription
+                </MudButton>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+    <div></div>
+</div>
+@inject IDialogService DialogService;
+
+@code {
+    [Parameter]
+    public MainLayout Parent
+    {
+        get;
+        set;
+    }
+    string Login
+    {
+        get;
+        set;
+    }
+    string Password
+    {
+        get;
+        set;
+    }
+
+    private bool Processing
+    {
+        get;
+        set;
+    }
+
+    private void OnKeyDown(KeyboardEventArgs args)
+    {
+        if (args.Code == "Enter")
+        {
+            ConnectClick();
+        }
+    }
+    private void WrongCredentials()
+    {
+        DialogHelper.OpenDialog(DialogService, "Erreur", "Connexion impossible, nom de compte ou mot de passe incorrect.");
+        Processing = false;
+        StateHasChanged();
+    }
+    void RegisterClick()
+    {
+        Parent.Navigate(PageEnum.Register);
+    }
+    async void ConnectClick()
+    {
+        var config = ConfigManager<UplConfig>.Instance;
+
+        var account = config.Accounts.FirstOrDefault(x => x.Username == Login);
+
+        if (account != null)
+        {
+            config.SelectAccount(account);
+
+            Parent.Navigate(PageEnum.Home);
+            return;
+        }
+        Processing = true;
+
+        WebAccount? result = null;
+
+        try
+        {
+            result = await AuthApi.Authentificate(Login, Password);
+        }
+        catch (Exception ex)
+        {
+            DialogHelper.OpenDialog(DialogService, "Erreur", $"Impossible de se connecter au serveur : {ex.Message}");
+            Processing = false;
+            StateHasChanged();
+            return;
+        }
+
+        if (result != null)
+        {
+            config.Accounts.Add(result);
+
+            config.SelectAccount(result);
+
+            ConfigManager<UplConfig>.Save(UplConfig.Filepath);
+
+            Parent.UpdateState();
+
+            Parent.Navigate(PageEnum.Home);
+        }
+        else
+        {
+            WrongCredentials();
+        }
+
+
+
+
+    }
+
+}

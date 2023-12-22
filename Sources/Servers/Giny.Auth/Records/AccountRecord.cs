@@ -1,5 +1,6 @@
 ﻿using Giny.Auth.Network;
 using Giny.Core.Extensions;
+using Giny.ORM;
 using Giny.ORM.Attributes;
 using Giny.ORM.Interfaces;
 using Giny.ORM.IO;
@@ -105,10 +106,32 @@ namespace Giny.Auth.Records
         {
             return DatabaseReader.ReadFirst<AccountRecord>("Username", username);
         }
-
+        public static bool UsernameExist(string username)
+        {
+            return ReadAccount(username) != null;
+        }
         public static bool NicknameExist(string nickname)
         {
             return DatabaseReader.ReadFirst<AccountRecord>("Nickname", nickname) != null;
+        }
+
+        public static AccountRecord CreateAccount(string username, string password, ServerRoleEnum role)
+        {
+            AccountRecord account = new AccountRecord()
+            {
+                Banned = false,
+                CharacterSlots = 5,
+                Role = role,
+                Id = (int)TableManager.Instance.GetNextIdFromQuery<AccountRecord>(),
+                IPs = new List<string>(),
+                LastSelectedServerId = 0,
+                Nickname = null,
+                Ogrines = 0,
+                Password = password,
+                Username = username,
+            };
+
+            return account;
         }
 
     }

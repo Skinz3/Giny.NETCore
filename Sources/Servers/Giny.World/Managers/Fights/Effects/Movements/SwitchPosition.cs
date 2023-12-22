@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Effects.Movements
 {
+    [SpellEffectHandler(EffectsEnum.Effect_SwitchPositionForced)]
     [SpellEffectHandler(EffectsEnum.Effect_SwitchPosition)]
     public class SwitchPosition : SpellEffectHandler
     {
@@ -19,10 +20,12 @@ namespace Giny.World.Managers.Fights.Effects.Movements
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
+            bool forced = Effect.EffectEnum == EffectsEnum.Effect_SwitchPositionForced;
+
             if (targets.Count() > 0)
             {
                 var target = targets.First();
-                Source.SwitchPosition(target);
+                Source.SwitchPosition(target, true, forced);
             }
         }
     }

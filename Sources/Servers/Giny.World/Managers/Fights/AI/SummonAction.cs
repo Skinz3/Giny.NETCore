@@ -2,6 +2,7 @@
 using Giny.Protocol.Enums;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Maps;
+using Giny.World.Records.Monsters;
 using Giny.World.Records.Spells;
 using System;
 using System.Collections.Generic;
@@ -21,10 +22,7 @@ namespace Giny.World.Managers.Fights.AI
 
         protected override void Apply()
         {
-            if (!Fighter.CanSummon())
-            {
-                return;
-            }
+
 
             foreach (var spellRecord in GetSpells().Where(x => x.Category == SpellCategoryEnum.Summon).Shuffle())
             {
@@ -41,6 +39,13 @@ namespace Giny.World.Managers.Fights.AI
                     {
                         continue;
                     }
+
+                    if (!Fighter.CanSummon()) // check if use the target summon use summon slot !
+                    {
+                        return;
+                    }
+
+
 
                     Fighter.CastSpell(spellRecord.Id, targetPoint.CellId);
                 }

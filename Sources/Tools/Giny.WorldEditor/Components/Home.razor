@@ -86,20 +86,20 @@
             </MudDrawerHeader>
             <MudNavMenu>
                 <MudTreeView Style="overflow-y:scroll;padding-bottom:50px" Color=Color.Primary T="string">
-                    <MudTreeViewItem Icon="@Icons.Outlined.LocalFireDepartment" Value="@("Fights")">
+                    <MudTreeViewItem Icon="@Icons.Custom.Uncategorized.ChessBishop" Value="@("Fights")">
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.SpellExplorer)" Match="NavLinkMatch.All">Spells</MudNavLink>
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.EffectsRelator)" Match="NavLinkMatch.All">Spells by effects</MudNavLink>
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.TriggersRelator)" Match="NavLinkMatch.All">Spells by triggers</MudNavLink>
                     </MudTreeViewItem>
 
-                    <MudTreeViewItem Icon="@Icons.Outlined.Brightness4" Value="@("Roleplay")">
+                    <MudTreeViewItem Icon="@Icons.Material.Outlined.Public" Value="@("Roleplay")">
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Dungeons)" Match="NavLinkMatch.All">Dungeons</MudNavLink>
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Items)" Match="NavLinkMatch.All">Items</MudNavLink>
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Quests)" Match="NavLinkMatch.All">Quests</MudNavLink>
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Npcs)" Match="NavLinkMatch.All">Npcs</MudNavLink>
                     </MudTreeViewItem>
 
-                    <MudTreeViewItem Icon="@Icons.Outlined.FilterDrama" Value="@("Server")">
+                    <MudTreeViewItem Icon="@Icons.Custom.Brands.MicrosoftVisualStudio" Value="@("Server")">
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Server)" Match="NavLinkMatch.All">Realtime inspector</MudNavLink>
                     </MudTreeViewItem>
 

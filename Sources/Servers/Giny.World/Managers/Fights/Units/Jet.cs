@@ -85,6 +85,10 @@ namespace Giny.World.Managers.Fights.Units
                     return (int)Max;
                 }
 
+                if (Min > Max)
+                {
+                    return (int)Min;
+                }
 
                 return (int)random.Next((int)Min, (int)Max + 1);
             }

@@ -1,71 +1,104 @@
-﻿@using Giny.Zaap;
+﻿@using Giny.Core.IO.Configuration;
+@using Giny.Uplauncher.Components.Dialogs;
+@using Giny.Zaap;
 @using Microsoft.AspNetCore.Components.Web
 @using MudBlazor
+@using System.Diagnostics;
+@using Giny.Zaap.Accounts;
+@page "/home"
 
 @inject IDialogService DialogService
 @inherits LayoutComponentBase
 
-<MudThemeProvider />
+<style>
+    body {
+        overflow: hidden;
+    }
+
+    .play-button {
+        background-color: rgb(230,230,230);
+        border-radius: 24px;
+    }
+
+    .container {
+        background-color: rgba(30,30,30,0.6);
+        border-radius: 24px;
+        padding: 12px;
+        display: flex;
+        backdrop-filter: blur(5px);
+        flex-direction: column;
+        gap: 10px;
+    }
+
+</style>
+<MudThemeProvider Theme="AppState.GinyTheme" @bind-IsDarkMode="@DarkMode" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 
-<MudLayout>
+<MudLayout Style="display:flex;flex-grow:1;flex-direction:column;height:100vh;">
 
     <MudPaper>
-        <MudToolBar>
-            <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Class="mr-5" />
-            <MudIconButton Icon="@Icons.Material.Outlined.Add" />
-            <MudIconButton Icon="@Icons.Material.Outlined.Edit" />
-            <MudIconButton Icon="@Icons.Material.Outlined.Remove" Color="Color.Inherit" />
-            <MudIconButton Icon="@Icons.Material.Outlined.Settings" Color="Color.Inherit" />
+        <MudToolBar @onmousedown=OnMouseDown>
+
+            <MudAvatar Class="ms-2" Color="Color.Primary">
+                <MudImage Src="https://i.imgur.com/WJITCaD.png"></MudImage>
+            </MudAvatar>
+            @if (MainAccount != null)
+            {
+                <div class="d-flex flex-column pl-4 pr-2 justify-center">
+                    <MudText Style="font-weight:500;line-height:15px">@MainAccount.Username</MudText>
+                    <MudText Style="line-height:15px" Typo="Typo.caption">@MainAccount.Nickname</MudText>
+                </div>
+            }
+            <MudToggleIconButton @bind-Toggled=@DarkMode
+                                 Icon="@Icons.Filled.LightMode" Title="Off"
+                                 ToggledIcon="@Icons.Filled.DarkMode" ToggledTitle="On" />
+            <MudIconButton OnClick="OpenSettings" Icon="@Icons.Material.Outlined.Settings" Color="Color.Inherit" />
+
             <MudSpacer />
-            <MudAvatar Color="Color.Primary">M</MudAvatar>
-            <MudIconButton Icon="@Icons.Material.Outlined.MoreVert" Color="Color.Inherit" />
+            <MudIconButton OnClick="GoHome" Icon="@Icons.Material.Outlined.Home" Color="Color.Inherit" />
+
+
+            <MudIconButton @onclick=Minimize Icon="@Icons.Material.Filled.Minimize" />
+            <MudIconButton @onclick=Close Icon="@Icons.Material.Outlined.Close" />
+
         </MudToolBar>
 
 
     </MudPaper>
 
 
-    <MudCarousel Class="mud-width-full" Style="height:200px;" ShowArrows="true" ShowBullets="true" AutoCycle="true" TData="object">
-        <MudCarouselItem Transition="Transition.Slide" Color="@Color.Primary">
-            <div class="d-flex" style="height:100%">
-                <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" />
-            </div>
-        </MudCarouselItem>
-        <MudCarouselItem Transition="Transition.Slide" Color="@Color.Secondary">
-            <div class="d-flex" style="height:100%">
-                <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Size="@Size.Large" />
-            </div>
-        </MudCarouselItem>
-        <MudCarouselItem Transition="Transition.Slide">
-            <div class="d-flex" style="height:100%">
-                <MudIcon Class="mx-auto my-auto" Icon="@Icons.Custom.Brands.MudBlazor" Color="@Color.Primary" Size="@Size.Large" />
-            </div>
-        </MudCarouselItem>
+    <div class="d-flex flex-column flex-grow-1 ">
+        <div style="position:absolute;z-index:-1">
+            <MudImage Style="filter:brightness(70%)" Fluid=true ObjectFit=ObjectFit.Cover ObjectPosition=ObjectPosition.Center
+            @bind-Src=Config.Wallpaper></MudImage>
 
-    </MudCarousel>
+        </div>
 
-
-    <MudProgressLinear Color="Color.Primary" Value="@Value" Class="my-7" />
-
-    <MudButton OnClick="OpenDialog" Variant="Variant.Filled" Color="Color.Primary">
-        Open Simple Dialog
-    </MudButton>
-
-
-    <MudButton Disabled="@_processing" OnClick="ProcessSomething" Variant="Variant.Filled" Color="Color.Primary">
-        @if (_processing)
+        @if (AppState.Page == PageEnum.Home)
         {
-            <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
-            <MudText Class="ms-2">Lancement en cours</MudText>
+            <HomeView Parent="this"></HomeView>
         }
-        else
+        else if (AppState.Page == PageEnum.Login)
         {
-            <MudText>Lancer Dofus</MudText>
+            <LoginView Parent="this"></LoginView>
         }
-    </MudButton>
+        else if (AppState.Page == PageEnum.Register)
+        {
+            <RegisterView Parent="this"></RegisterView>
+        }
+
+
+
+    </div>
+
+
+
+
+
+
+
 
 
 </MudLayout>
@@ -73,61 +106,96 @@
 
 @code {
 
-    private bool _processing = false;
 
-    async Task ProcessSomething()
+
+    private bool DarkMode
     {
-        StartDofus();
-        _processing = true;
-        await Task.Delay(2000);
-        _processing = false;
+        get;
+        set;
+    } = true;
+
+    public UplConfig Config => ConfigManager<UplConfig>.Instance;
+
+    public WebAccount? MainAccount => Config.GetSelectedAccount();
+
+    void OpenSettings()
+    {
+        DialogHelper.OpenDialog<SettingsDialog>(DialogService, new DialogParameters<SettingsDialog>() { { x => x.MainLayout, this } }, "Paramètres");
     }
-
-    private void StartDofus()
+    void GoHome()
     {
-        string ClientPath = @"C:\Users\Skinz\Desktop\Giny .NET Core\Dofus";
-        Utils.StartClient(ClientPath, AppState.Port, 1);
-    }
 
-    private void OpenDialog()
-    {
-        var options = new DialogOptions { CloseOnEscapeKey = true };
-        DialogService.Show<Dialog>("Informations", options);
-    }
 
-    public int Value { get; set; }
-
-    public async void SimulateProgress()
-    {
-        Value = 0;
-        do
+        if (AppState.Page == PageEnum.Home)
         {
-            if (_disposed)
-            {
-                return;
-            }
+            return;
+        }
 
-            Value += 4;
-            StateHasChanged();
-            await Task.Delay(500);
+        if ((AppState.Page == PageEnum.Login || AppState.Page == PageEnum.Register) && Config.Accounts.Count > 0)
+        {
+            Navigate(PageEnum.Home);
+        }
+
+        if (AppState.Page == PageEnum.Register && Config.Accounts.Count == 0)
+        {
+
+            Navigate(PageEnum.Login);
+        }
 
 
-        } while (Value < 100);
 
+    }
+    void Minimize()
+    {
+        MainForm.Instance.WindowState = FormWindowState.Minimized;
+    }
+    void Close()
+    {
+        foreach (var process in Process.GetProcessesByName("Dofus"))
+        {
+            process.Kill();
+        }
 
-        SimulateProgress();
+        MainForm.Instance.Close();
     }
 
+    void OnMouseDown(MouseEventArgs args)
+    {
+        if (args.CtrlKey)
+            MainForm.HandleMouseMove();
+    }
+
+
+    public void Navigate(PageEnum page)
+    {
+        AppState.Page = page;
+        UpdateState();
+    }
+
+
+
+    public void UpdateState()
+    {
+        StateHasChanged();
+    }
     protected override void OnInitialized()
     {
-        ZaapServer server = new ZaapServer();
-        server.Start(AppState.Port);
-        server.SetCredentials(AppState.Username, AppState.Password);
-        SimulateProgress();
+        ZaapServer.Instance.Start(AppState.Port, Config);
+
+        UpdateState();
+
+        if (Config.Accounts.Count > 0)
+        {
+            Navigate(PageEnum.Home);
+        }
+        else
+        {
+            Navigate(PageEnum.Login);
+        }
+
+
     }
 
-    bool _disposed;
-    public void Dispose() => _disposed = true;
 
 }
 

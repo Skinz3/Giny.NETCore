@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Giny.Core.IO;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -38,6 +39,28 @@ namespace Giny.Core.Network
             var response = await client.PostAsync(url, content);
             var responseString = await response.Content.ReadAsStringAsync();
             return responseString;
+        }
+
+        public static async Task<T> PostAsync<T>(string url, HttpClient client, dynamic obj) where T : class
+        {
+            using StringContent jsonContent = new(
+         Json.Serialize(obj), Encoding.UTF8, "application/json");
+
+            using HttpResponseMessage response = await client.PostAsync(
+               url,
+                jsonContent);
+
+
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+
+            if (response.Content.Headers.ContentLength > 0 && response.StatusCode == HttpStatusCode.OK)
+            {
+                return Json.Deserialize<T>(jsonResponse);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

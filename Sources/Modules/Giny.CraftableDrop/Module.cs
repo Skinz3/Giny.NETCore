@@ -27,11 +27,11 @@ namespace Giny.AdditionalDrop
 
         const double UpperBoundDropRateItem = 7d;
 
-        const double LowerBoundsDropRateItem = 1d;
+        const double LowerBoundsDropRateItem = 0.1d;
 
         const double UpperBoundDropRateMonster = 5d;
 
-        const double LowerBoundsDropRateMonster = 1d;
+        const double LowerBoundsDropRateMonster = 0.5d;
 
         public void CreateHooks()
         {

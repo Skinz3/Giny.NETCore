@@ -41,7 +41,7 @@ namespace Giny.World.Records.Maps
             get;
             set;
         }
-        [D2OField("entranceMapId")]
+        [D2OField("exitMapId")]
         [Update]
         public long ExitMapId
         {

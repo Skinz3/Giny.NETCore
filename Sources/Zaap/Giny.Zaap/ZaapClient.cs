@@ -2,6 +2,7 @@
 using Giny.Core.IO;
 using Giny.Core.Network;
 using Giny.Core.Network.Messages;
+using Giny.Zaap.Accounts;
 using Giny.Zaap.Network;
 using Giny.Zaap.Protocol;
 using System;
@@ -16,28 +17,25 @@ namespace Giny.Zaap
 {
     public class ZaapClient : TcpClient
     {
-        public string Username
-        {
-            get;
-            private set;
-        }
-        public string Password
-        {
-            get;
-            private set;
-        }
         private TProtocol TProtocol
         {
             get;
             set;
         }
-        public ZaapClient(Socket socket, string username, string password) : base(socket)
+        public int InstanceId
+        {
+            get;
+            set;
+        }
+        public WebAccount Account
+        {
+            get;
+            set;
+        }
+
+        public ZaapClient(Socket socket) : base(socket)
         {
             TProtocol = new TProtocol();
-
-            Username = username;
-            Password = password;
-
             this.BeginReceive();
         }
         public override void OnConnected()
@@ -48,6 +46,7 @@ namespace Giny.Zaap
         public override void OnConnectionClosed()
         {
             Console.WriteLine("Client disconnected.");
+            ZaapServer.Instance.RemoveClient(this);
         }
 
         public void Send(ZaapMessage message)

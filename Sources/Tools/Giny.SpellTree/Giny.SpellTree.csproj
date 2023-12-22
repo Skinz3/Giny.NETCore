@@ -5,11 +5,16 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>glide-g (2).ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Fonts\Jost-Light.ttf" />
     <None Remove="Fonts\Jost-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="glide-g (2).ico" />
   </ItemGroup>
 
   <ItemGroup>

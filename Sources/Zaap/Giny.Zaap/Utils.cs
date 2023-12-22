@@ -10,7 +10,7 @@ namespace Giny.Zaap
 {
     public class Utils
     {
-        public static void StartClient(string clientPath, int port, int instanceId)
+        public static Process StartClient(string clientPath, int port, int instanceId)
         {
             var dofusPath = Path.Combine(clientPath, ClientConstants.ExePath);
             ProcessStartInfo ps = new ProcessStartInfo();
@@ -19,6 +19,7 @@ namespace Giny.Zaap
             Process process = new Process();
             process.StartInfo = ps;
             process.Start();
+            return process;
         }
     }
 }

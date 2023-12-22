@@ -1,0 +1,226 @@
+﻿@using Giny.Zaap.Accounts;
+@using MudBlazor;
+@using Giny.Core.IO.Configuration;
+@using Giny.Uplauncher.Components.Dialogs;
+@using Giny.Zaap;
+@using MudBlazor;
+
+<style>
+    .main {
+        transition: 0.5s;
+    }
+
+        .main:hover {
+            background-color: rgba(84, 108, 0,0.6);
+            transform: scale(1.015);
+        }
+</style>
+
+<div class="d-flex flex-column justify-space-between flex-grow-1">
+
+    <div class="d-flex justify-space-between pa-13">
+
+        <div class="container main align-center ">
+            <MudImage Width=300 Height=300 Fluid=true ObjectFit=ObjectFit.Cover ObjectPosition=ObjectPosition.Center
+                      Src="https://i.imgur.com/vjCw7cz.png"></MudImage>
+
+            @if (!Config.StartAllInstances)
+            {
+                <MudText>Se connecter avec <b>@Parent.MainAccount.Username</b></MudText>
+
+            }
+            else
+            {
+                <MudText>Connecter <b>@Config.Accounts.Count</b> compte(s).</MudText>
+            }
+            <MudButton Style="flex-grow:1" Disabled="!Ready || StartingClient" OnClick=Play Variant="Variant.Filled" Color="Color.Primary">
+
+                @if (StartingClient)
+                {
+                    <MudProgressCircular Size="Size.Small" Indeterminate="true" />
+                }
+                else
+                {
+                    <MudIcon Icon="@Icons.Material.Outlined.PlayArrow"></MudIcon>
+                }
+                <MudText Class="ms-2">Jouer</MudText>
+
+            </MudButton>
+
+            <div class="d-flex justify-space-evenly">
+
+                <MudIconButton Icon="@Icons.Material.Outlined.Settings" OnClick=OpenSettings Color="Color.Inherit" />
+                <MudIconButton Icon="@Icons.Material.Outlined.SupervisorAccount" OnClick=OpenAccountsDialog Color="Color.Inherit" />
+                <MudIconButton Icon="@Icons.Custom.Brands.Discord" Color="Color.Inherit" />
+                <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" />
+            </div>
+        </div>
+
+        <div>
+        </div>
+
+    </div>
+
+
+    <div class="container gap-1 justify-end mx-4 " Style="border-radius:12px">
+        <MudText Typo="Typo.caption">@StateText</MudText>
+        <MudProgressLinear Color="Color.Primary" Indeterminate="ProgressIndeterminate" Value="@ProgressValue" Class="my-1" />
+    </div>
+
+</div>
+@code {
+
+    [Parameter]
+    public MainLayout Parent
+    {
+        get;
+        set;
+    }
+
+    private bool Ready
+    {
+        get;
+        set;
+    }
+    private bool StartingClient
+    {
+        get;
+        set;
+    }
+
+
+    @inject IDialogService DialogService;
+
+    private int ProgressValue
+    {
+        get;
+        set;
+    }
+    private bool ProgressIndeterminate
+    {
+        get;
+        set;
+    } = true;
+
+    private string StateText
+    {
+        get;
+        set;
+    } = "En attente...";
+
+    protected override void OnInitialized()
+    {
+        if (!AppState.UpToDate)
+        {
+            ClientUpdater = new();
+            ClientUpdater.OnStatusUpdate += OnStatusUpdate;
+
+            Task.Run(() =>
+            {
+                ClientUpdater.Update();
+            });
+        }
+        else
+        {
+            OnStatusUpdate(UpdateStatusEnum.Ready, null);
+        }
+
+
+        base.OnInitialized();
+    }
+
+    private UplConfig Config => ConfigManager<UplConfig>.Instance;
+
+    private ClientUpdater ClientUpdater
+    {
+        get;
+        set;
+    }
+
+    void OnStatusUpdate(UpdateStatusEnum status, object token)
+    {
+        InvokeAsync(() =>
+        {
+            Ready = status == UpdateStatusEnum.Ready;
+
+            switch (status)
+            {
+                case UpdateStatusEnum.Error:
+                    StateText = "Erreur : " + ((Exception)token).Message;
+                    ProgressIndeterminate = false;
+                    ProgressValue = 0;
+                    break;
+                case UpdateStatusEnum.VersionCheck:
+                    StateText = "Recherche de mise a jour...";
+                    ProgressIndeterminate = true;
+                    break;
+
+                case UpdateStatusEnum.Ready:
+                    StateText = $"Version : {Config.LocalVersion}";
+                    ProgressIndeterminate = false;
+                    ProgressValue = 100;
+                    AppState.UpToDate = true;
+                    break;
+
+            }
+            StateHasChanged();
+        });
+    }
+    void OpenSettings()
+    {
+        DialogHelper.OpenDialog<SettingsDialog>(DialogService, new DialogParameters<SettingsDialog>() { { x => x.MainLayout, Parent } }, "Paramètres");
+    }
+
+    async void OpenAccountsDialog()
+    {
+        var dialog = new DialogParameters<AccountsDialog>();
+        dialog.Add(x => x.MainLayout, Parent);
+        var result = await DialogHelper.OpenDialog<AccountsDialog>(DialogService, dialog, "Connexion");
+
+        if (!result.Cancelled)
+        {
+            if (result.Data != null && result.Data is WebAccount acc)
+            {
+                Config.SelectAccount(acc);
+                Parent.UpdateState();
+            }
+        }
+    }
+    private async void Play()
+    {
+        StartingClient = true;
+
+        if (!Config.StartAllInstances)
+        {
+            await StartClient(Config.GetSelectedAccount());
+        }
+        else
+        {
+            foreach (var account in Config.Accounts)
+            {
+                await StartClient(account);
+            }
+        }
+
+        StartingClient = false;
+
+        StateHasChanged();
+
+    }
+
+    private Task StartClient(WebAccount account)
+    {
+        var process = Utils.StartClient(Config.ClientPath, AppState.Port, Config.GetIndex(account));
+
+        return Task.Run(async () =>
+          {
+              while (process.MainWindowHandle == IntPtr.Zero)
+              {
+                  await Task.Delay(300);
+              }
+
+
+          });
+    }
+}
+}

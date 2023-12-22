@@ -1,4 +1,5 @@
 ﻿using Giny.Core.Extensions;
+using Giny.Protocol.Enums;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Triggers;
 using Giny.World.Records.Spells;
@@ -26,17 +27,11 @@ namespace Giny.SpellTree.Graphics
 
         public const double ChipNodeRadius = 15;
 
-        public const double LinkStrokeThickness = 5d;
-
         public static double InitialDistanceYBetweenNode = 700d;
 
         public static Color NodeDefaultColor = Color.FromArgb(255, 54, 54, 54);
 
         public const double StrokeSize = 5d;
-
-        public const double LineOpacityNormal = 0.6d;
-
-        public const double LineOpacityTriggers = 0.2d;
 
         public Ellipse Circle
         {
@@ -88,7 +83,7 @@ namespace Giny.SpellTree.Graphics
             get;
             set;
         }
-        public List<Line> Lines
+        public List<NodeLine> Lines
         {
             get;
             set;
@@ -133,7 +128,7 @@ namespace Giny.SpellTree.Graphics
             this.DeepLevel = deepLevel;
             Parent = parent;
             Parent?.Childs.Add(this);
-            Lines = new List<Line>();
+            Lines = new List<NodeLine>();
             Childs = new List<Node>();
             SpellLevel = spellLevel;
             Spell = spellRecord;
@@ -275,6 +270,21 @@ namespace Giny.SpellTree.Graphics
             Circle.StrokeThickness = StrokeSize;
         }
 
+        private string? GetNodeLabel()
+        {
+            if (SpellLevel == null)
+            {
+                return null;
+            }
+
+            return SpellLevel.Effects.Count().ToString();
+
+            if (Parent.Effect.EffectEnum == EffectsEnum.Effect_CasterExecuteSpell)
+            {
+                return "R";
+            }
+            return null;
+        }
         public void Draw(Canvas canvas)
         {
             this.Circle = CanvasDraw.Circle(X, Y, NodeRadius, new SolidColorBrush(NodeDefaultColor), canvas);
@@ -282,6 +292,13 @@ namespace Giny.SpellTree.Graphics
             if (NodeColor != null)
             {
                 Circle.Fill = new SolidColorBrush(NodeColor.Value);
+            }
+
+            var label = GetNodeLabel();
+
+            if (label != null)
+            {
+                CanvasDraw.Text(label, X, Y, Brushes.White, canvas);
             }
 
 
@@ -292,13 +309,8 @@ namespace Giny.SpellTree.Graphics
 
             foreach (var child in Childs)
             {
-                var line = CanvasDraw.Line(X, Y, child.X, child.Y, new SolidColorBrush(Colors.Black), canvas, LineOpacityNormal, LinkStrokeThickness); ;
-
-                if (child.Effect.RawTriggers != "I")
-                {
-                    line.Opacity = LineOpacityTriggers;
-                    line.Stroke = new SolidColorBrush(Colors.Black);
-                }
+                var line = new NodeLine(this, child);
+                line.Draw(canvas);
                 Lines.Add(line);
             }
 
@@ -322,27 +334,24 @@ namespace Giny.SpellTree.Graphics
                 OnNodeMouseLeave(canvas);
             };
 
-            foreach (var line in Lines)
+            foreach (var nodeLine in Lines)
             {
                 var child = Childs[index];
 
-                line.MouseEnter += ((object sender, MouseEventArgs e) =>
+                nodeLine.OnMouseEnter += ((MouseEventArgs e) =>
                 {
                     var mp = e.GetPosition(canvas);
                     Mouse.OverrideCursor = Cursors.Hand;
                     Popup.Open(canvas, GetLinkDescription(child), mp.X, mp.Y + 20);
-                    line.Opacity = 1;
-                    line.Stroke = Brushes.Orange;
-                    line.StrokeThickness = LinkStrokeThickness + 3;
+                    nodeLine.Select();
+
                 });
 
-                line.MouseLeave += ((object sender, MouseEventArgs e) =>
+                nodeLine.OnMouseLeave += ((MouseEventArgs e) =>
                 {
                     Popup.Close(canvas);
                     Mouse.OverrideCursor = Cursors.Arrow;
-                    line.Opacity = child.Effect.RawTriggers != "I" ? LineOpacityTriggers : LineOpacityNormal;
-                    line.Stroke = Brushes.Black;
-                    line.StrokeThickness = LinkStrokeThickness;
+                    nodeLine.Unselect();
                 });
 
                 index++;
@@ -359,16 +368,10 @@ namespace Giny.SpellTree.Graphics
         /// <param name="amount"></param>
         public void GrowChildDistance(double amount)
         {
-
-
             if (Childs.Count == 0)
             {
                 return;
             }
-
-
-
-
 
             var minY = Childs.Min(x => x.Y);
             var maxY = Childs.Max(x => x.Y);

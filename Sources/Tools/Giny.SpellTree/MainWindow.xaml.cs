@@ -26,6 +26,7 @@ using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
+using Giny.IO.D2OClasses;
 
 namespace Giny.SpellTree
 {
@@ -70,15 +71,11 @@ namespace Giny.SpellTree
 
             Tree = new Tree(canvas);
 
-            DatabaseManager.Instance.Initialize(Assembly.GetAssembly(typeof(SpellRecord)), "127.0.0.1", "giny_world", "root", "");
-
-            DatabaseManager.Instance.LoadTable<SpellRecord>();
-            DatabaseManager.Instance.LoadTable<SpellLevelRecord>();
-            DatabaseManager.Instance.LoadTable<SpellStateRecord>();
-            DatabaseManager.Instance.LoadTable<MonsterRecord>();
-            SpellRecord.Initialize();
+            LoadApp();
 
             Tree.NodeClick += TreeNodeClick;
+
+
 
             DisplaySearchResults(SpellRecord.GetSpellRecords());
 
@@ -98,6 +95,41 @@ namespace Giny.SpellTree
             set;
         } = new List<Node>();
 
+        private void LoadApp()
+        {
+            DatabaseManager.Instance.Initialize(Assembly.GetAssembly(typeof(SpellRecord)), "127.0.0.1", "giny_world", "root", "");
+
+            search.Visibility = Visibility.Hidden;
+            spells.Visibility = Visibility.Hidden;
+            spellName.Visibility = Visibility.Hidden;
+            gradeSelect.Visibility = Visibility.Hidden;
+            effectProps.Visibility = Visibility.Hidden;
+            effects.Visibility = Visibility.Hidden;
+
+            Task.Run(() =>
+            {
+
+
+                DatabaseManager.Instance.LoadTable<SpellRecord>();
+                DatabaseManager.Instance.LoadTable<SpellLevelRecord>();
+                DatabaseManager.Instance.LoadTable<SpellStateRecord>();
+                DatabaseManager.Instance.LoadTable<MonsterRecord>();
+                SpellRecord.Initialize();
+
+                Dispatcher.Invoke(() =>
+                {
+                    spells.Visibility = Visibility.Visible;
+                    search.Visibility = Visibility.Visible;
+                    loadingLabel.Visibility = Visibility.Hidden;
+                    spellName.Visibility = Visibility.Visible;
+                    gradeSelect.Visibility = Visibility.Visible;
+                    effectProps.Visibility = Visibility.Visible;
+                    effects.Visibility = Visibility.Visible;
+                    OnSearchChange();
+                });
+            });
+
+        }
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Mouse.OverrideCursor = Cursors.ScrollAll;
@@ -207,16 +239,33 @@ namespace Giny.SpellTree
         }
         private void effects_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            foreach (var n in Tree.Nodes)
+            {
+                foreach (var line in n.Lines)
+                {
+                    line.Unselect();
+                }
+            }
+
+
             CurrentEffect = (EffectDice)effects.SelectedItem;
 
             effectProps.Items.Clear();
 
-            // var node = Tree.Nodes.First().FindNode(x => x.Effect == CurrentEffect);
+            var node = Tree.Nodes.First().FindNode(x => x.Effect == CurrentEffect);
 
             if (CurrentEffect == null)
             {
                 return;
             }
+            if (node != null)
+            {
+                var line = node.Parent.Lines.FirstOrDefault(x => x.Effect == CurrentEffect);
+                line.Select();
+            }
+
+
+
 
 
             effectProps.Items.Add("Effect : " + CurrentEffect.EffectEnum);
@@ -302,6 +351,11 @@ namespace Giny.SpellTree
         }
 
         private void spellInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            OnSearchChange();
+        }
+
+        private void OnSearchChange()
         {
             var searchText = search.Text.ToLower();
 

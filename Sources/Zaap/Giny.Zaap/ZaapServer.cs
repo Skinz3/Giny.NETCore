@@ -1,6 +1,7 @@
 ﻿using Giny.Core.DesignPattern;
 using Giny.Core.Network;
 using Giny.Core.Network.Messages;
+using Giny.Zaap.Accounts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +11,9 @@ using System.Threading.Tasks;
 
 namespace Giny.Zaap
 {
-    public class ZaapServer
+    public class ZaapServer : Singleton<ZaapServer>
     {
-        private string Username
-        {
-            get;
-            set;
-        }
-        private string Password
+        private List<ZaapClient> Clients
         {
             get;
             set;
@@ -27,23 +23,41 @@ namespace Giny.Zaap
             get;
             set;
         }
-
-        public void Start(int port)
+        public IAccountProvider AccountProvider
         {
+            get;
+            private set;
+        }
+
+        public void Start(int port, IAccountProvider accountProvider)
+        {
+            Clients = new List<ZaapClient>();
             Server = new TcpServer("127.0.0.1", port);
-            Server.OnSocketConnected += Server_OnSocketConnected;
+            AccountProvider = accountProvider;
+            Server.OnSocketConnected += OnSocketConnected;
             Server.Start();
         }
 
-        public void SetCredentials(string username, string password)
+
+        private void OnSocketConnected(System.Net.Sockets.Socket obj)
         {
-            this.Username = username;
-            this.Password = password;
+            ZaapClient client = new ZaapClient(obj);
+            AddClient(client);
         }
 
-        private void Server_OnSocketConnected(System.Net.Sockets.Socket obj)
+        public void AddClient(ZaapClient client)
         {
-            var zaapClient = new ZaapClient(obj, Username, Password);
+            lock (Clients)
+            {
+                Clients.Add(client);
+            }
+        }
+        public void RemoveClient(ZaapClient client)
+        {
+            lock (Clients)
+            {
+                Clients.Remove(client);
+            }
         }
     }
 }

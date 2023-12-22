@@ -14,7 +14,9 @@
         <TextBox FontFamily="{StaticResource Jost}" Opacity="0.7" FontSize="16" Name="search" TextChanged="spellInput_TextChanged"   HorizontalAlignment="Right" Margin="0,10,7,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="397" Height="28"/>
 
         <ScrollViewer Name="scrollView" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"  Margin="0,30,410,0">
-            <Canvas x:Name="canvas"  Width="8000" Height="8000"  Background="White"/>
+            <Canvas x:Name="canvas"  Width="8000" Height="8000"  Background="White">
+                <TextBlock FontFamily="{StaticResource Jost}" x:Name="loadingLabel" TextWrapping="Wrap" Text="Chargement..."  FontSize="20" HorizontalAlignment="Left" Canvas.Left="10" Canvas.Top="10" VerticalAlignment="Top"/>
+            </Canvas>
         </ScrollViewer>
 
         <ListBox FontFamily="{StaticResource Jost}" Opacity="0.7" FontSize="16" SelectionChanged="effects_SelectionChanged" x:Name="effects"  Margin="0,360,4,0" Height="172" VerticalAlignment="Top" HorizontalAlignment="Right" Width="400"/>

@@ -12,6 +12,7 @@
 @using System.Reflection;
 @using System.Collections;
 @using Giny.ORM;
+@using System.Text.RegularExpressions;
 @inject IDialogService DialogService
 
 
@@ -28,7 +29,7 @@
 
                 <div style="height:70vh;overflow-y:scroll">
                     <Virtualize Items="@DungeonSearchResults">
-                        <MudListItem OnClick="() => SelectDungeon(context)" Text=@(context.Name + " ("+context.Rooms.Count+")") />
+                        <MudListItem IconColor="@GetDungeonIconColor(context)" Icon="@GetDungeonIcon(context)" OnClick="() => SelectDungeon(context)" Text=@(context.Name + " ("+context.Rooms.Count+")") />
                     </Virtualize>
                 </div>
 
@@ -56,22 +57,26 @@
                 </div>
 
 
-                <MudTabs AlwaysShowScrollButtons="false" Color="Color.Surface" @bind-ActivePanelIndex="@RoomIndex" Elevation="0" Outlined=true Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-4">
+                <MudTabs @ref="@tabs" AlwaysShowScrollButtons="true" ApplyEffectsToContainer=true Color="Color.Surface" DisableRipple=false @bind-ActivePanelIndex="@RoomIndex" Elevation="0" Outlined=true Rounded="true" PanelClass="pa-4">
 
 
                     @foreach (var room in SelectedDungeon.Rooms)
                     {
                         <MudTabPanel Text="@("Room "+(SelectedDungeon.Rooms.IndexOf(room)+1).ToString())">
 
-
-
-
                             @if (RoomIndex >= 0)
                             {
-                                <div class="d-flex pa-2">
+                                <div class="d-flex justify-space-between align-center gap-4 pa-2">
+                                    <MudIconButton @onclick="() => MoveRoomLeft(CurrentRoom)" Color=Color.Primary Icon="@Icons.Material.Filled.ArrowBackIos"></MudIconButton>
                                     <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.DriveFileRenameOutline" ReadOnly=@true Value="@MapPositionRecord.GetMapName(CurrentRoom.MapId)" Label="Name" />
-
+                                    <MudIconButton @onclick="() => MoveRoomRight(CurrentRoom)" Color=Color.Primary Icon="@Icons.Material.Filled.ArrowForwardIos"></MudIconButton>
                                 </div>
+
+
+
+
+
+
                                 <div class="d-flex gap-4 pa-2">
                                     <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Outlined.LocationOn" ReadOnly=@true Value="@CurrentRoom.MapId" Label="MapId" />
                                     <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Outlined.Timer" @bind-Value="@CurrentRoom.RespawnDelay" Label="Respawn delay" />
@@ -82,33 +87,35 @@
 
                                 @if (CurrentRoom.MonsterIds.Count > 0)
                                 {
-
-                                    <MudDataGrid Class="mt-3" Dense=true Hover=true Striped=false Bordered=true Items="room.MonsterIds">
+                                    <MudDataGrid Class="mt-3" Dense=true Hover=true Striped=false Bordered=true T="KeyValuePair<int,MonsterRecord>" Items="RoomMonsters">
                                         <Columns>
 
                                             <TemplateColumn Title="Icon">
                                                 <CellTemplate>
-                                                    <MudImage Src="@(GetMonsterIcon(context.Item))" />
+                                                    <MudImage Src="@(GetMonsterIcon((short)context.Item.Value.Id))" />
                                                 </CellTemplate>
                                             </TemplateColumn>
 
                                             <TemplateColumn Title="Name">
                                                 <CellTemplate>
                                                     <div class="d-flex gap-2">
-                                                        <MudText Style="font-weight:600">(@context.Item)</MudText>
-                                                        <MudText Style="font-weight:500">@MonsterRecord.GetMonsterRecord(context.Item).Name</MudText>
+                                                        <MudText Style="font-weight:600">(@context.Item.Value.Id)</MudText>
+                                                        <MudText Style="font-weight:500">@context.Item.Value.Name</MudText>
                                                     </div>
 
                                                 </CellTemplate>
                                             </TemplateColumn>
 
 
-
-
                                             <TemplateColumn Title="Actions">
                                                 <CellTemplate>
                                                     <MudStack Row>
-                                                    <MudButton @onclick="()=> this.DeleteMonster(context.Item)" Size="@Size.Small" StartIcon="@Icons.Material.Filled.Delete" IconColor="Color.Primary" Variant="@Variant.Text" Color="@Color.Primary">Delete</MudButton>
+
+
+                                                    <MudIconButton @onclick="()=> this.MoveUpMonster(context.Item.Key)" Color=Color.Primary Icon="@Icons.Material.Filled.ArrowUpward"></MudIconButton>
+                                                    <MudIconButton @onclick="()=> this.MoveDownMonster(context.Item.Key)" Color=Color.Primary Icon="@Icons.Material.Filled.ArrowDownward"></MudIconButton>
+                                                    <MudButton @onclick="()=> this.DeleteMonster(context.Item.Key)" Size="@Size.Small" StartIcon="@Icons.Material.Filled.Delete" IconColor="Color.Primary" Variant="@Variant.Text" Color="@Color.Primary">Delete</MudButton>
+
                                                 </MudStack>
                                             </CellTemplate>
                                         </TemplateColumn>
@@ -124,6 +131,8 @@
                             }
 
                             <MudButton StartIcon="@Icons.Material.Filled.Add" OnClick="AddMonster" Variant="Variant.Text" Color="Color.Primary">Add monster</MudButton>
+
+                            <MudButton StartIcon="@Icons.Material.Filled.Add" OnClick="FromJeuOnline" Variant="Variant.Text" Color="Color.Primary">From JeuOnline</MudButton>
 
                         </MudTabPanel>
                     }
@@ -145,23 +154,163 @@
 @code {
 
 
+    MudTabs tabs;
+
     List<MonsterRecord> SearchResults
     {
         get;
         set;
     } = new List<MonsterRecord>();
 
+    Dictionary<int, MonsterRecord> RoomMonsters
+    {
+        get
+        {
+            Dictionary<int, MonsterRecord> result = new();
+
+            for (int i = 0; i < CurrentRoom.MonsterIds.Count; i++)
+            {
+                result.Add(i, MonsterRecord.GetMonsterRecord(CurrentRoom.MonsterIds[i]));
+            }
+
+            return result;
+        }
+    }
+
+    void MoveRoomRight(MonsterRoom room)
+    {
+        var roomIndex = SelectedDungeon.Rooms.IndexOf(room);
+
+        if (roomIndex < SelectedDungeon.Rooms.Count - 1)
+        {
+            var previous = SelectedDungeon.Rooms[roomIndex + 1];
+            SelectedDungeon.Rooms[roomIndex + 1] = room;
+            SelectedDungeon.Rooms[roomIndex] = previous;
+            StateHasChanged();
+            RoomIndex++;
+            tabs.ActivatePanel(RoomIndex);
+            SelectedDungeon.UpdateLater();
+        }
+    }
+    void MoveRoomLeft(MonsterRoom room)
+    {
+        var roomIndex = SelectedDungeon.Rooms.IndexOf(room);
+
+        if (roomIndex > 0)
+        {
+            var previous = SelectedDungeon.Rooms[roomIndex - 1];
+            SelectedDungeon.Rooms[roomIndex - 1] = room;
+            SelectedDungeon.Rooms[roomIndex] = previous;
+            StateHasChanged();
+            RoomIndex--;
+
+            tabs.ActivatePanel(RoomIndex);
+
+            SelectedDungeon.UpdateLater();
+
+        }
+    }
+
+    Color GetDungeonIconColor(DungeonRecord record)
+    {
+        if (record.Rooms.All(x => x.MonsterIds.Count == 0))
+        {
+            return Color.Warning;
+        }
+        else
+        {
+            return Color.Success;
+        }
+    }
+    string GetDungeonIcon(DungeonRecord record)
+    {
+        if (record.Rooms.All(x => x.MonsterIds.Count == 0))
+        {
+            return Icons.Outlined.BuildCircle;
+        }
+        else
+        {
+            return Icons.Outlined.CheckCircle;
+        }
+    }
+
+
     string GetMonsterIcon(short monsterId)
     {
         var source = string.Format("data:image/png;base64,{0}", ExternalResources.GetMonsterIcon(monsterId));
         return source;
     }
-    void DeleteMonster(short monsterId)
+    async void FromJeuOnline()
     {
-        CurrentRoom.MonsterIds.Remove(monsterId);
+        var result = await DialogHelper.OpenDialog<TextInputDialog>(DialogService, new DialogParameters<TextInputDialog>(), "Dialog");
+
+        if (!result.Cancelled)
+        {
+
+            var array = result.Data.ToString().Split('\n');
+
+            foreach (var item in array)
+            {
+                var name = item.Replace("(", "");
+                name = name.Replace(")", "");
+                name = new string(name.Where(c => !char.IsDigit(c)).ToArray());
+                name = name.Trim();
+
+                var record = MonsterRecord.GetMonsterRecords().FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
+
+                if (record != null)
+                {
+                    CurrentRoom.MonsterIds.Add((short)record.Id);
+                }
+                else
+                {
+
+                }
+
+            }
+            StateHasChanged();
+            SelectedDungeon.UpdateLater();
+        }
+
+    }
+    void DeleteMonster(int index)
+    {
+        CurrentRoom.MonsterIds.RemoveAt(index);
         StateHasChanged();
         SelectedDungeon.UpdateLater();
     }
+    void MoveUpMonster(int index)
+    {
+        if (index == 0)
+        {
+            return;
+        }
+
+        var previous = CurrentRoom.MonsterIds[index - 1];
+
+        CurrentRoom.MonsterIds[index - 1] = CurrentRoom.MonsterIds[index];
+        CurrentRoom.MonsterIds[index] = previous;
+
+        StateHasChanged();
+
+
+    }
+    void MoveDownMonster(int index)
+    {
+        if (index == CurrentRoom.MonsterIds.Count - 1)
+        {
+            return;
+        }
+
+        var next = CurrentRoom.MonsterIds[index + 1];
+
+        CurrentRoom.MonsterIds[index + 1] = CurrentRoom.MonsterIds[index];
+        CurrentRoom.MonsterIds[index] = next;
+
+        StateHasChanged();
+
+    }
+
     async void AddMonster()
     {
         var result = await DialogHelper.OpenDialog<SelectMonsterDialog>(DialogService, new DialogParameters<SelectMonsterDialog>(), "Select monster");
@@ -171,9 +320,9 @@
             var record = (MonsterRecord)result.Data;
             CurrentRoom.MonsterIds.Add((short)record.Id);
             StateHasChanged();
+            SelectedDungeon.UpdateLater();
         }
 
-        SelectedDungeon.UpdateLater();
 
     }
 
@@ -201,10 +350,25 @@
 
     public MonsterRoom CurrentRoom => SelectedDungeon.Rooms.ElementAt(RoomIndex);
 
+    public List<MonsterRecord> Monsters
+    {
+        get
+        {
+            return CurrentRoom.MonsterIds.Select(x => MonsterRecord.GetMonsterRecord(x)).ToList();
+        }
+    }
+
     private void SelectDungeon(DungeonRecord dungeon)
     {
-        this.SelectedDungeon = dungeon;
+        if (tabs != null)
+        {
+            tabs.ActivatePanel(0);
+        }
         RoomIndex = 0;
+
+        StateHasChanged();
+
+        this.SelectedDungeon = dungeon;
     }
     private void OnSearchTextChanged()
     {

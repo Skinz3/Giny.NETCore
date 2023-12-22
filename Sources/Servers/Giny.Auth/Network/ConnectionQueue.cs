@@ -18,7 +18,7 @@ namespace Giny.Auth.Network
 
         public const double QueueRefreshDelaySeconds = 0.2f;
 
-        [StartupInvoke("Connection Queue", StartupInvokePriority.Last)]
+        [StartupInvoke("Connection Queue", StartupInvokePriority.FifthPass)]
         public static void CreateTask()
         {
             Task.Factory.StartNewDelayed((int)(QueueRefreshDelaySeconds * 1000), RefreshQueue);

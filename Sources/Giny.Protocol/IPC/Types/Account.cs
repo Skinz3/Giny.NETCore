@@ -10,15 +10,35 @@ namespace Giny.Protocol.IPC.Types
 {
     public class Account
     {
-        public int Id;
+        public int Id
+        {
+            get;
+            set;
+        }
 
-        public string Username;
+        public string Username
+        {
+            get;
+            set;
+        }
 
-        public string Nickname;
+        public string Nickname
+        {
+            get;
+            set;
+        }
 
-        public byte CharacterSlots;
+        public byte CharacterSlots
+        {
+            get;
+            set;
+        }
 
-        public ServerRoleEnum Role;
+        public ServerRoleEnum Role
+        {
+            get;
+            set;
+        }
 
         public Account(int id, string username, string nickname, byte characterSlots, ServerRoleEnum role)
         {

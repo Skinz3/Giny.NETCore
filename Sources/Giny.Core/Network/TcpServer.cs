@@ -39,7 +39,7 @@ namespace Giny.Core.Network
             }
             catch (Exception ex)
             {
-                OnServerFailedToStart(ex);
+                OnServerFailedToStart?.Invoke(ex);
                 return;
             }
             Socket.Listen(100);

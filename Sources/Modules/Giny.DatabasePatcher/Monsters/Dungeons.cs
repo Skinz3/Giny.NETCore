@@ -32,7 +32,7 @@ namespace Giny.DatabasePatcher.Monsters
             /* Tournesol Sauvage,Pissenlit Diabolique,Rose Démoniaque,Épouvanteur,Pissenlit Diabolique,Tournesol Sauvage,Épouvanteur,Rose Démoniaque*/
             dungeon.Rooms.Add(new MonsterRoom(10, 190317568, 48, 79, 78, 4820, 79, 48, 4820, 78));
             /* Tournesol Affamé,Gardienne Champêtre,Rose Démoniaque,Pissenlit Diabolique,Gardienne Champêtre,Gardienne Champêtre,Rose Démoniaque,Pissenlit Diabolique*/
-            dungeon.Rooms.Add(new MonsterRoom(10, 799, 4821, 78, 79, 4821, 4821, 78, 79));
+            dungeon.Rooms.Add(new MonsterRoom(10, 190318592, 799, 4821, 78, 79, 4821, 4821, 78, 79));
             dungeon.Rooms.Add(new MonsterRoom(10, 190318594));
 
             /* Centre du Labyrinthe du Minotoror */

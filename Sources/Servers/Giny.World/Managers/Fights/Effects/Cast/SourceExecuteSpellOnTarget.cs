@@ -18,7 +18,7 @@ namespace Giny.World.Managers.Fights.Effects.Cast
     {
         public SourceExecuteSpellOnTarget(EffectDice effect, SpellCastHandler castHandler) : base(effect, castHandler)
         {
-
+           
         }
 
         protected override void Apply(IEnumerable<Fighter> targets)

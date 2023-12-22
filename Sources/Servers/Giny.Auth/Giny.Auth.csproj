@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Giny.Core\Giny.Core.csproj" />
     <ProjectReference Include="..\..\Giny.IO\Giny.IO.csproj" />
     <ProjectReference Include="..\..\Giny.ORM\Giny.ORM.csproj" />

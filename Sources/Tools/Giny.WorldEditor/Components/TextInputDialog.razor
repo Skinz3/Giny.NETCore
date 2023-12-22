@@ -1,0 +1,44 @@
+﻿@using Giny.IO.D2I;
+@using Giny.IO.D2OClasses;
+@using Giny.ORM;
+@using Giny.World.Records.Items;
+@using Giny.World.Records.Npcs;
+
+@using Giny.Protocol.Custom.Enums
+@using Giny.WorldEditor.Caching;
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+
+<MudDialog>
+    <DialogContent>
+        <MudPaper  Style="width:500px" Outlined=false Elevation="10">
+
+            <MudTextField Label="Text" Lines=15  Variant=Variant.Text Class="pa-4" MaxLines="50" @bind-Value=Text></MudTextField>
+
+        </MudPaper>
+
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+
+        <MudButton OnClick="Confirm">Ok</MudButton>
+
+    </DialogActions>
+</MudDialog>
+@code {
+
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    public string Text
+    {
+        get;
+        set;
+    }
+
+
+
+    void Confirm() => MudDialog.Close<string>
+        (Text);
+
+    void Cancel() => MudDialog.Cancel();
+}

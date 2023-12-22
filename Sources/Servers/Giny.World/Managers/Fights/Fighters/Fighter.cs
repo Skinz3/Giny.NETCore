@@ -1684,14 +1684,14 @@ namespace Giny.World.Managers.Fights.Fighters
             MovementHistory.OnCellChanged(oldCell);
         }
         [Annotation("teleport triggered")]
-        public void SwitchPosition(Fighter target, bool register = true)
+        public void SwitchPosition(Fighter target, bool register = true, bool forced = false)
         {
-            if (!CanSwitchPosition() || !CanBeMoved() || !target.CanSwitchPosition() || !target.CanBeMoved())
-                return;
+            if (!forced)
+            {
+                if (!CanSwitchPosition() || !CanBeMoved() || !target.CanSwitchPosition() || !target.CanBeMoved())
+                    return;
+            }
 
-            /*
-             * 
-             */
             if (LastExchangedPositionSequenced != null && target.LastExchangedPositionSequenced != null &&
                 LastExchangedPositionSequenced == target.Cell && target.LastExchangedPositionSequenced == this.Cell)
             {

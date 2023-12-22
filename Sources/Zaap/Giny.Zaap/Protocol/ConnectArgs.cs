@@ -18,15 +18,15 @@ namespace Giny.Zaap.Protocol
             HASH = 4,
         }
 
-        private string GameName;
+        public string GameName;
 
-        private string ReleaseName;
+        public string ReleaseName;
 
-        private int InstanceId;
+        public int InstanceId;
 
-        private string Hash;
+        public string Hash;
 
-        public ConnectArgs() 
+        public ConnectArgs()
         {
 
         }

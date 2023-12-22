@@ -46,12 +46,12 @@ namespace Giny.Auth
             ProtocolMessageManager.Initialize(Assembly.GetAssembly(typeof(RawDataMessage)), Assembly.GetAssembly(typeof(Program)));
             ProtocolTypeManager.Initialize();
         }
-        [StartupInvoke("SWF patches", StartupInvokePriority.Last)]
+        [StartupInvoke("SWF patches", StartupInvokePriority.ThirdPass)]
         public static void InitializeRawPatches()
         {
             RawPatchManager.Instance.Initialize();
         }
-        [StartupInvoke("Console commands", StartupInvokePriority.Last)]
+        [StartupInvoke("Console commands", StartupInvokePriority.FourthPass)]
         public static void InitializeConsoleCommand()
         {
             ConsoleCommandsManager.Instance.Initialize(Assembly.GetExecutingAssembly().GetTypes());
