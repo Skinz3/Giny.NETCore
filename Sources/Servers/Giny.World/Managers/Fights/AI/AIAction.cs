@@ -50,7 +50,10 @@ namespace Giny.World.Managers.Fights.AI
             MapPoint targetPoint = points.Shuffle().FirstOrDefault(predicate);
             return targetPoint;
         }
-
+        protected int GetMaxAgressiveRange()
+        {
+            return Fighter.GetSpells().Select(x => Fighter.GetSpell(x.Id)).Where(x => x.Record.Category == SpellCategoryEnum.Agressive).Max(x => Fighter.GetSpellRange(x.Level));
+        }
         protected IEnumerable<CellRecord> EnumeratePossiblePosition()
         {
             if (Fighter.IsTackled())

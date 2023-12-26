@@ -18,7 +18,7 @@ namespace Giny.World.Handlers.Fights
         [MessageHandler]
         public static void HandleChallengeBonusChoiceMessage(ChallengeBonusChoiceMessage message, WorldClient client)
         {
-            if (!client.Character.Fighting)
+            if (!client.Character.Fighting || client.Character.Fighter.Team.Leader != client.Character.Fighter.Team.Leader)
             {
                 return;
             }
@@ -40,9 +40,21 @@ namespace Giny.World.Handlers.Fights
             {
                 return;
             }
-            client.Character.Fighter.ChallengeMod = (ChallengeModEnum)message.challengeMod;
 
-            client.Send(new ChallengeModSelectedMessage(message.challengeMod));
+
+
+            if (client.Character.Fighter.Fight is FightPvM fightPvM)
+            {
+
+                if (client.Character.Fighter.IsTeamLeader())
+                {
+                    fightPvM.Challenges.ChallengeMod = (ChallengeModEnum)message.challengeMod;
+                }
+
+
+                client.Character.Fighter.Team.Send(new ChallengeModSelectedMessage((byte)fightPvM.Challenges.ChallengeMod));
+            }
+
         }
 
         [MessageHandler]
@@ -114,7 +126,7 @@ namespace Giny.World.Handlers.Fights
                 return;
             }
 
-            
+
             var fight = client.Character.Fighter.Fight as FightPvM;
 
             if (fight == null)
@@ -139,28 +151,23 @@ namespace Giny.World.Handlers.Fights
                 return;
             }
 
-            var fight = client.Character.Fighter.Fight as FightPvM;
 
-            if (fight == null)
-            {
-                return;
-            }
 
             if (client.Character.Fighter != client.Character.Fighter.Team.Leader)
             {
                 return;
             }
 
-
-            client.Character.Fighter.ChallengeMod = (ChallengeModEnum)message.challengeMod;
-
-            if (client.Character.Fighter.ChallengeMod == ChallengeModEnum.CHALLENGE_CHOICE)
+            if (client.Character.Fighter.Fight is FightPvM fightPvM)
             {
-                fight.Challenges.DisplayChallengeProposal();
+                fightPvM.Challenges.ChallengeMod = (ChallengeModEnum)message.challengeMod;
 
+                if (fightPvM.Challenges.ChallengeMod == ChallengeModEnum.CHALLENGE_CHOICE)
+                {
+                    fightPvM.Challenges.DisplayChallengeProposal();
+
+                }
             }
-
-
         }
     }
 }

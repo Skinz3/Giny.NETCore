@@ -41,14 +41,14 @@ namespace Giny.World.Managers.Fights.Fighters
         public override void TriggerMovementBuffs(Movement movement)
         {
             base.TriggerMovementBuffs(movement);
-            WallManager.Instance.UpdateWalls(this.Fight);
+            // WallManager.Instance.UpdateWalls(this.Fight);
         }
 
         private IEnumerable<Wall> GetWalls()
         {
-            return Fight.GetMarks<Wall>().Where(x => x.IsWallAuthor(this));
+            return Fight.GetMarks<Wall>().Where(x => x.IsWallMember(this));
         }
-        
+
 
         public void Trigger(Fighter source)
         {

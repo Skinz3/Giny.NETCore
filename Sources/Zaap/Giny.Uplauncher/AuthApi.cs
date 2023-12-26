@@ -17,7 +17,7 @@ namespace Giny.Uplauncher
         private static HttpClient HttpClient = new HttpClient();
         public static string GetRemoteVersion()
         {
-            return Http.Get($"{Config.AuthHost}/version/launcher");
+            return Http.Get($"{Config.GetSelectedHost().GetApiUri()}/version/launcher");
         }
         public static async Task<WebAccount?> Authentificate(string username, string password)
         {
@@ -26,7 +26,7 @@ namespace Giny.Uplauncher
                 Username = username,
                 Password = password,
             };
-            WebAccount? result = await Http.PostAsync<WebAccount?>($"{Config.AuthHost}/account/auth", HttpClient, request);
+            WebAccount? result = await Http.PostAsync<WebAccount?>($"{Config.GetSelectedHost().GetApiUri()}/account/auth", HttpClient, request);
 
             if (result != null)
             {
@@ -43,7 +43,7 @@ namespace Giny.Uplauncher
                 Username = username,
                 Password = password,
             };
-            WebAccount? result = await Http.PostAsync<WebAccount?>($"{Config.AuthHost}/account/register", HttpClient, request);
+            WebAccount? result = await Http.PostAsync<WebAccount?>($"{Config.GetSelectedHost().GetApiUri()}/account/register", HttpClient, request);
 
             if (result != null)
             {

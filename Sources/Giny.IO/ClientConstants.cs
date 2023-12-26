@@ -12,6 +12,9 @@ namespace Giny.IO
         public const string i18nPath = "data/i18n/";
 
         public const string D2oDirectory = "data/common/";
+
+        public const string ConfigPath = "config.xml";
+
         public const string ExePath = "Dofus.exe";
 
         public const string Gfx0Path = @"content/gfx/world/gfx0.d2p";

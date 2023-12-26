@@ -35,6 +35,7 @@ namespace Giny.World.Managers.Monsters
             }
         }
 
+
         public MonsterGroup(MapRecord map, short cellId) : base(map)
         {
             this.CellId = cellId;
@@ -95,6 +96,7 @@ namespace Giny.World.Managers.Monsters
             get;
             private set;
         }
+        public virtual bool RespawnOnVictory => true;
 
         public void AddMonster(Monster monster)
         {
@@ -163,13 +165,18 @@ namespace Giny.World.Managers.Monsters
                 disposition = new EntityDispositionInformations(CellId, (byte)Direction),
                 hasHardcoreDrop = false,
                 look = Look.ToEntityLook(),
-                lootShare =0,
+                lootShare = 0,
                 staticInfos = GetGroupMonsterStaticInformations(),
             };
         }
         public override string ToString()
         {
             return "Monsters (" + Name + "' group)";
+        }
+
+        public virtual void OnAggressed()
+        {
+
         }
 
         public void Agress(Character character)
@@ -197,11 +204,18 @@ namespace Giny.World.Managers.Monsters
 
                 fight.StartPlacement();
 
+                OnAggressed();
+
             }
             else
             {
                 character.TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_ERROR, 456);
             }
+        }
+
+        public virtual void OnFightStarted(FightPvM fight)
+        {
+
         }
     }
 }

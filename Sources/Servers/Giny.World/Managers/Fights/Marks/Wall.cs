@@ -33,11 +33,11 @@ namespace Giny.World.Managers.Fights.Marks
             this.SecondBomb = secondBomb;
         }
 
-        public override bool StopMovement => true;
+        public override bool InterceptMovement => true;
 
         public override GameActionMarkTypeEnum Type => GameActionMarkTypeEnum.WALL;
 
-       
+
         public override bool OnTurnBegin()
         {
             return false;
@@ -52,7 +52,7 @@ namespace Giny.World.Managers.Fights.Marks
         {
             return bomb == FirstBomb ? SecondBomb : FirstBomb;
         }
-        public bool IsWallAuthor(SummonedBomb bomb)
+        public bool IsWallMember(Fighter bomb)
         {
             return FirstBomb == bomb || SecondBomb == bomb;
         }
@@ -74,8 +74,20 @@ namespace Giny.World.Managers.Fights.Marks
                 }
             }
 
+            foreach (var point in FirstBomb.Cell.Point.GetCellsOnLineBetween(SecondBomb.Cell.Point))
+            {
+                if (!Cells.Any(x => x.Point.CellId == point.CellId))
+                {
+                    return false;
+                }
+            }
+
             return sameLine && distance <= WallManager.WallMaxRange && FirstBomb.AliveSafe && SecondBomb.AliveSafe;
 
+        }
+        public override bool ShouldTriggerOnMove(Fighter target, short oldCellId, short cellId)
+        {
+            return base.ShouldTriggerOnMove(target, oldCellId, cellId) && !IsWallMember(target);
         }
         public override void OnAdded()
         {
@@ -123,6 +135,11 @@ namespace Giny.World.Managers.Fights.Marks
         public bool CompareCells(Wall wall)
         {
             return wall.Cells.Select(x => x.Id).OrderBy(x => x).SequenceEqual(this.Cells.Select(x => x.Id).OrderBy(x => x));
+        }
+
+        public override void OnUpdated()
+        {
+
         }
     }
 }

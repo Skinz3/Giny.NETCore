@@ -16,12 +16,12 @@
         }
 </style>
 
-<div class="d-flex flex-column justify-space-between flex-grow-1">
+<div class="d-flex flex-column justify-space-between flex-grow-1 pa-4 gap-3">
 
-    <div class="d-flex justify-space-between pa-13">
+    <div class="d-flex  flex-grow-1 align-center pl-10">
 
         <div class="container main align-center ">
-            <MudImage Width=300 Height=300 Fluid=true ObjectFit=ObjectFit.Cover ObjectPosition=ObjectPosition.Center
+            <MudImage Width=280 Height=280 Fluid=true ObjectFit=ObjectFit.Cover ObjectPosition=ObjectPosition.Center
                       Src="https://i.imgur.com/vjCw7cz.png"></MudImage>
 
             @if (!Config.StartAllInstances)
@@ -62,9 +62,9 @@
     </div>
 
 
-    <div class="container gap-1 justify-end mx-4 " Style="border-radius:12px">
+    <div class="container gap-1 justify-end " Style="border-radius:12px">
         <MudText Typo="Typo.caption">@StateText</MudText>
-        <MudProgressLinear Color="Color.Primary" Indeterminate="ProgressIndeterminate" Value="@ProgressValue" Class="my-1" />
+        <MudProgressLinear Color="Color.Primary" Indeterminate="ProgressIndeterminate" Value="@ProgressValue" />
     </div>
 
 </div>
@@ -110,6 +110,14 @@
 
     protected override void OnInitialized()
     {
+
+        Update();
+
+        base.OnInitialized();
+    }
+
+    private void Update()
+    {
         if (!AppState.UpToDate)
         {
             ClientUpdater = new();
@@ -124,9 +132,6 @@
         {
             OnStatusUpdate(UpdateStatusEnum.Ready, null);
         }
-
-
-        base.OnInitialized();
     }
 
     private UplConfig Config => ConfigManager<UplConfig>.Instance;
@@ -166,9 +171,18 @@
             StateHasChanged();
         });
     }
+
+    public void Reload()
+    {
+        AppState.UpToDate = false;
+        Update();
+    }
     void OpenSettings()
     {
-        DialogHelper.OpenDialog<SettingsDialog>(DialogService, new DialogParameters<SettingsDialog>() { { x => x.MainLayout, Parent } }, "Paramètres");
+        DialogHelper.OpenDialog<SettingsDialog>(DialogService, new DialogParameters<SettingsDialog>() {
+            { x => x.MainLayout, Parent },
+        { x => x.HomeView ,this
+        }}, "Paramètres");
     }
 
     async void OpenAccountsDialog()
@@ -223,4 +237,4 @@
           });
     }
 }
-}
+

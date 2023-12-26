@@ -1,4 +1,5 @@
-﻿using Giny.Protocol.Custom.Enums;
+﻿using Giny.IO.DLM;
+using Giny.Protocol.Custom.Enums;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
@@ -23,7 +24,7 @@ namespace Giny.World.Managers.Fights.Marks
             this.Duration = effect.Duration;
         }
 
-        public override bool StopMovement => false;
+        public override bool InterceptMovement => false;
 
         public override GameActionMarkTypeEnum Type => GameActionMarkTypeEnum.GLYPH;
 
@@ -59,9 +60,18 @@ namespace Giny.World.Managers.Fights.Marks
 
         }
 
+        public override bool ShouldTriggerOnMove(Fighter target, short oldCellId, short cellId)
+        {
+            return (!ContainsCell(oldCellId) && ContainsCell(cellId) || ContainsCell(oldCellId) && !ContainsCell(cellId));
+        }
         public override bool OnTurnBegin()
         {
             return DecrementDuration();
+        }
+
+        public override void OnUpdated()
+        {
+
         }
     }
 }

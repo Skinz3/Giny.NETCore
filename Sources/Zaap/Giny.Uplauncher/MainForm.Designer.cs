@@ -33,13 +33,14 @@
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(12F, 30F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
             BackColor = Color.FromArgb(30, 30, 30);
-            ClientSize = new Size(1941, 1118);
+            ClientSize = new Size(1062, 519);
             FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(5, 6, 5, 6);
+            Margin = new Padding(2);
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Giny.Uplauncher";

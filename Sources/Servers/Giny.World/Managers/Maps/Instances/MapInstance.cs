@@ -91,6 +91,10 @@ namespace Giny.World.Managers.Maps.Instances
                 MonstersManager.Instance.SpawnDungeonGroup(Record);
             }
         }
+        private void SpawnStaticGroups()
+        {
+
+        }
         private void SpawnMonsterGroup()
         {
             if (this.MonsterGroupCount < MonstersManager.MaxGroupPerMap)

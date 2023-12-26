@@ -83,27 +83,7 @@ namespace Giny.World.Managers.Chat
             ItemsManager.Instance.Reload();
             client.Character.Reply("Items reloaded.");
         }
-        [ChatCommand("bonta", ServerRoleEnum.Player)]
-        public static void BontaCommand(WorldClient client)
-        {
-            const int targetMapId = 147768;
 
-            if (client.Character.Map.Id == targetMapId)
-            {
-                return;
-            }
-            if (client.Character.HasParty)
-            {
-                foreach (var member in client.Character.Party.Members.Values)
-                {
-                    member.Teleport(targetMapId);
-                }
-            }
-            else
-            {
-                client.Character.Teleport(targetMapId);
-            }
-        }
 
         [ChatCommand("npcs", ServerRoleEnum.Administrator)]
         public static void ReloadNpcs(WorldClient client)

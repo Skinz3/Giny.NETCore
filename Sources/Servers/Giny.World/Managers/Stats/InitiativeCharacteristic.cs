@@ -85,5 +85,9 @@ namespace Giny.World.Managers.Stats
             }
             return total > Limit.Value ? Limit.Value : total;
         }
+        public override int TotalInContext()
+        {
+            throw new InvalidOperationException();
+        }
     }
 }

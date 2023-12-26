@@ -306,7 +306,10 @@ namespace Giny.World.Managers.Fights
                     fighter.LastExchangedPositionSequenced = null;
                     fighter.TotalDamageReceivedSequenced = 0;
                 }
+
+                WallManager.Instance.UpdateWalls(this);
             }
+
         }
         public virtual void OnSetReady(Fighter fighter, bool isReady)
         {
@@ -536,7 +539,7 @@ namespace Giny.World.Managers.Fights
                 UpdateRound();
             }
 
-            Synchronize();
+            // Synchronize();
 
             this.Send(new GameFightTurnStartMessage(this.FighterPlaying.Id, Fight.TurnTime * 10));
 
@@ -693,7 +696,13 @@ namespace Giny.World.Managers.Fights
 
             TurnEnded?.Invoke(FighterPlaying);
 
-            FighterPlaying.Stats.ResetUsedPoints();
+
+           /* using (SequenceManager.StartSequence(SequenceTypeEnum.SEQUENCE_TURN_END))
+            {
+               FighterPlaying.Stats.ResetUsedPoints();
+
+            } */
+
             PassTurn();
         }
         public TimeSpan GetTurnTimeLeft()
@@ -767,7 +776,7 @@ namespace Giny.World.Managers.Fights
         {
             return this.Marks;
         }
-        public T? GetMark<T>(Func<T,bool> predicate) where T : Mark
+        public T? GetMark<T>(Func<T, bool> predicate) where T : Mark
         {
             return GetMarks<T>().FirstOrDefault(predicate);
         }
@@ -781,17 +790,9 @@ namespace Giny.World.Managers.Fights
         /// <param name="oldCell"></param>
         /// <param name="cellId"></param>
         /// <returns></returns>
-        public bool ShouldTriggerOnMove(short oldCell, short cellId)
+        public bool ShouldTriggerOnMove(Fighter fighter, short oldCell, short cellId)
         {
-            bool flag1 = Marks.OfType<Glyph>().Any(x => x.StopMovement &&
-            (!x.ContainsCell(oldCell) && x.ContainsCell(cellId) || x.ContainsCell(oldCell) && !x.ContainsCell(cellId)));
-            bool flag2 = Marks.OfType<Trap>().Any(x => x.StopMovement && x.ContainsCell(cellId));
-            bool flag3 = Marks.OfType<Wall>().Any(x => x.StopMovement && x.ContainsCell(cellId));
-
-            bool flag4  = Marks.OfType<Portal>().Any(x => x.StopMovement &&  x.ContainsCell(cellId));   
-
-
-            return flag1 || flag2 || flag3 || flag4;
+            return Marks.Any(x => x.InterceptMovement && x.ShouldTriggerOnMove(fighter, oldCell, cellId));
         }
         private void OnTurnPassed()
         {
@@ -824,7 +825,7 @@ namespace Giny.World.Managers.Fights
             using (SequenceManager.StartSequence(SequenceTypeEnum.SEQUENCE_TURN_END))
             {
                 FighterPlaying.IsSequencingTurnEnd = true;
-
+                
                 if (FighterPlaying.Alive)
                 {
                     TriggerMarks(FighterPlaying, MarkTriggerType.OnTurnEnd);
@@ -833,7 +834,7 @@ namespace Giny.World.Managers.Fights
 
                     FighterPlaying.WasTeleportedInInvalidCell = false;
                 }
-
+                FighterPlaying.Stats.ResetUsedPoints();
                 FighterPlaying.IsSequencingTurnEnd = false;
             }
 
@@ -887,9 +888,20 @@ namespace Giny.World.Managers.Fights
 
             mark.OnRemoved();
         }
-        
 
 
+        public void UpdateMark(Mark mark)
+        {
+            this.Send(new GameActionFightUnmarkCellsMessage((short)mark.Id, 0, mark.Source.Id));
+
+            foreach (var fighter in GetAllConnectedFighters())
+            {
+                var gameActionMark = GetGameActionMark(fighter, mark);
+                fighter.Send(new GameActionFightMarkCellsMessage(gameActionMark, 0, mark.Source.Id));
+            }
+
+            mark.OnUpdated();
+        }
         public void AddSummon(Fighter source, SummonedFighter fighter)
         {
             AddSummons(source, new SummonedFighter[] { fighter });
@@ -1172,9 +1184,6 @@ namespace Giny.World.Managers.Fights
             return monsterTeam.GetFighters<MonsterFighter>().Any(x => x.Record.IsBoss);
         }
 
-        internal void UpdateWalls()
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

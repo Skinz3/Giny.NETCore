@@ -26,7 +26,7 @@ namespace Giny.World.Managers.Fights.Zones
                 case DirectionsEnum.DIRECTION_SOUTH:
                     return new[] { DirectionsEnum.DIRECTION_SOUTH_WEST, DirectionsEnum.DIRECTION_SOUTH_EAST };
                 default:
-                    return new[] { direction };
+                    throw new InvalidOperationException("Unable to decompose non diagonal direction.");
             }
         }
     }

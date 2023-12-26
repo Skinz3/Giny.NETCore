@@ -22,4 +22,10 @@
 		<ProjectReference Include="..\Giny.Zaap\Giny.Zaap.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Content Update="wwwroot\index.html">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
 </Project>

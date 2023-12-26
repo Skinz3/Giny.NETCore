@@ -1,4 +1,5 @@
 ﻿using Giny.Core.DesignPattern;
+using Giny.IO.D2OClasses;
 using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
 using Giny.World.Managers.Effects;
@@ -56,7 +57,7 @@ namespace Giny.World.Managers.Fights.Units
             get;
             set;
         }
-        public Healing(Fighter source, Fighter target, EffectElementEnum effectSchool, double baseMin, double baseMax, SpellEffectHandler? effectHandler = null,bool fix = false)
+        public Healing(Fighter source, Fighter target, EffectElementEnum effectSchool, double baseMin, double baseMax, SpellEffectHandler? effectHandler = null, bool fix = false)
         {
             this.Source = source;
             this.Target = target;
@@ -68,7 +69,7 @@ namespace Giny.World.Managers.Fights.Units
         }
 
 
-     
+
         public void Compute()
         {
             if (Computed.HasValue)
@@ -84,12 +85,14 @@ namespace Giny.World.Managers.Fights.Units
 
             Jet jet = EvaluateConcreteJet();
 
+            if (Handler.CastHandler.Cast.Weapon)
+            {
+                jet.ApplyBonus(Source.Stats[CharacteristicEnum.WEAPON_POWER].TotalInContext());
+            }
 
             jet.ComputeShapeEfficiencyModifiers(Target, Handler);
 
             jet.ApplyMultiplicator(Source.Stats[CharacteristicEnum.HEAL_MULTIPLIER].TotalInContext());
-
-            //Target.Fight.Warn("Min :" + (int)jet.Min + " Max:" + (int)  jet.Max);
 
             Computed = jet.Generate(Source.Random, Source.HasRandDownModifier(), Source.HasRandUpModifier());
         }
@@ -109,7 +112,7 @@ namespace Giny.World.Managers.Fights.Units
             }
         }
 
-       
+
 
 
         private int GetJetDelta(double jet)
@@ -118,6 +121,7 @@ namespace Giny.World.Managers.Fights.Units
 
             var bonus = Source.Stats[CharacteristicEnum.HEAL_BONUS].TotalInContext();
 
+         
             switch (Element)
             {
                 case EffectElementEnum.Earth:

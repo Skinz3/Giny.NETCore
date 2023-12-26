@@ -47,11 +47,17 @@ namespace Giny.Uplauncher
             set;
         } = @"C:\Users\olivi\Desktop\Giny .NET Core\Dofus";
 
-        public string AuthHost
+
+        public List<AuthHost> Hosts = new List<AuthHost>()
+        {
+
+        };
+        public int HostIndex
         {
             get;
             set;
-        } = "http://localhost:9001";
+        }
+
 
         public WebAccount GetSelectedAccount()
         {
@@ -65,6 +71,25 @@ namespace Giny.Uplauncher
             }
 
             return Accounts[AccountIndex];
+        }
+
+        public AuthHost GetSelectedHost()
+        {
+            if (Hosts.Count == 0)
+            {
+                return null;
+            }
+            if (HostIndex > Accounts.Count - 1)
+            {
+                HostIndex = 0;
+            }
+
+            return Hosts[HostIndex];
+        }
+
+        public void SelectHost(AuthHost host)
+        {
+            HostIndex = Hosts.IndexOf(host);
         }
 
 
@@ -91,5 +116,36 @@ namespace Giny.Uplauncher
         {
             return Accounts[instanceId];
         }
+    }
+
+    public class AuthHost
+    {
+        public string Ip
+        {
+            get;
+            set;
+        }
+
+        public int Port
+        {
+            get;
+            set;
+        }
+
+        public int ApiPort
+        {
+            get;
+            set;
+        }
+
+        public string GetApiUri()
+        {
+            return $"http://{Ip}:{ApiPort}";
+        }
+        public string GetClientUri()
+        {
+            return $"JMBouftou:{Ip}:{Port}";
+        }
+
     }
 }

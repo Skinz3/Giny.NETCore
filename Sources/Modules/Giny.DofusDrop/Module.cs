@@ -16,7 +16,7 @@ namespace Giny.DofusDrop
     [Module("Dofus drop")]
     public class Module : IModule
     {
-        private const double DofusDropPercentage = 0.2d;
+        private const double DofusDropPercentage = 1.5d;
 
         private const string DropMessage = "<b>{0}</b> vient de drop le <b>{1}</b>. Félicitation a lui !";
 

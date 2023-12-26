@@ -67,8 +67,6 @@ namespace Giny.SpellTree
 
             AppFont = (FontFamily)FindResource("Jost");
 
-            var path = Environment.CurrentDirectory + "/Icons/sword.png";
-
             Tree = new Tree(canvas);
 
             LoadApp();

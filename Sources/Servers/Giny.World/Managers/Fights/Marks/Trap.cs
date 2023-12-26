@@ -17,7 +17,7 @@ namespace Giny.World.Managers.Fights.Marks
 {
     public class Trap : Mark
     {
-        public override bool StopMovement => true;
+        public override bool InterceptMovement => true;
 
         public override GameActionMarkTypeEnum Type => GameActionMarkTypeEnum.TRAP;
 
@@ -52,6 +52,11 @@ namespace Giny.World.Managers.Fights.Marks
         public override bool OnTurnBegin()
         {
             return false;
+        }
+
+        public override void OnUpdated()
+        {
+           
         }
     }
 }

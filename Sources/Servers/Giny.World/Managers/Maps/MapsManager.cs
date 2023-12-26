@@ -37,17 +37,6 @@ namespace Giny.World.Managers.Maps
             foreach (var record in maps)
             {
                 record.Instance = new ClassicMapInstance(record);
-
-                AsyncRandom random = new AsyncRandom();
-
-                if (record.IsDungeonMap)
-                {
-                    MonstersManager.Instance.SpawnDungeonGroup(record);
-                }
-                else if (record.CanSpawnMonsters)
-                {
-                    MonstersManager.Instance.SpawnMonsterGroups(record, random);
-                }
                 progressLogger.WriteProgressBar(n++, maps.Length);
             }
 

@@ -17,7 +17,7 @@ namespace Giny.World.Managers.Fights.Marks
 {
     public class Portal : Mark
     {
-        public override bool StopMovement => Active;
+        public override bool InterceptMovement => Active;
 
         public override GameActionMarkTypeEnum Type => GameActionMarkTypeEnum.PORTAL;
 
@@ -101,6 +101,11 @@ namespace Giny.World.Managers.Fights.Marks
             }
 
             return false;
+        }
+
+        public override void OnUpdated()
+        {
+          
         }
     }
 }

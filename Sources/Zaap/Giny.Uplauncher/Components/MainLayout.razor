@@ -11,8 +11,14 @@
 @inherits LayoutComponentBase
 
 <style>
+
+    .dialog-open {
+        backdrop-filter: blur(5px);
+    }
+
     body {
         overflow: hidden;
+        
     }
 
     .play-button {
@@ -70,8 +76,8 @@
 
 
     <div class="d-flex flex-column flex-grow-1 ">
-        <div style="position:absolute;z-index:-1">
-            <MudImage Style="filter:brightness(70%)" Fluid=true ObjectFit=ObjectFit.Cover ObjectPosition=ObjectPosition.Center
+        <div class="" style="position:absolute;z-index:-1;width:100%;height:100%">
+            <MudImage Style="filter:brightness(70%);" Fluid=true ObjectFit=ObjectFit.Fill ObjectPosition=ObjectPosition.Center
             @bind-Src=Config.Wallpaper></MudImage>
 
         </div>
@@ -171,6 +177,8 @@
         AppState.Page = page;
         UpdateState();
     }
+
+   
 
 
 

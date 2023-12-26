@@ -24,7 +24,7 @@ namespace Giny.World.Managers.Fights.Marks
             this.AffectedFighters = new List<Fighter>();
         }
 
-        public override bool StopMovement => true;
+        public override bool InterceptMovement => true;
 
         public override GameActionMarkTypeEnum Type => GameActionMarkTypeEnum.GLYPH;
 

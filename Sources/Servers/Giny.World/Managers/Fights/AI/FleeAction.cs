@@ -21,6 +21,8 @@ namespace Giny.World.Managers.Fights.AI
             {
                 return;
             }
+
+
             var mp = Fighter.Stats.MovementPoints.TotalInContext();
 
 

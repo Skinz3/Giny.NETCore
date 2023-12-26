@@ -87,12 +87,6 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public override BreedEnum Breed => (BreedEnum)Character.Record.BreedId;
 
-        public ChallengeModEnum ChallengeMod
-        {
-            get;
-            set;
-        }
-
         public ChallengeBonusEnum ChallengeBonus
         {
             get;
@@ -112,8 +106,6 @@ namespace Giny.World.Managers.Fights.Fighters
         public override void Initialize()
         {
             this.Id = (int)Character.Id;
-
-
 
             if (Character.Inventory.HasWeaponEquiped)
             {

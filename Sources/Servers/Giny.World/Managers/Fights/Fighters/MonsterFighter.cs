@@ -55,11 +55,15 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public override ServerEntityLook CreateLook()
         {
-            return Record.Look.Clone(); 
+            return Record.Look.Clone();
         }
         public override FighterStats CreateStats()
         {
             return new FighterStats(Grade, null);
+        }
+        public override bool CanMove()
+        {
+            return base.CanMove();
         }
         public override bool CanBePushed()
         {
@@ -134,7 +138,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
             var items = new List<DroppedItem>();
 
-            var prospectingSum = EnemyTeam.GetFighters<CharacterFighter>(false).Sum(entry => entry.Stats[CharacteristicEnum.MAGIC_FIND].TotalInContext());;
+            var prospectingSum = EnemyTeam.GetFighters<CharacterFighter>(false).Sum(entry => entry.Stats[CharacteristicEnum.MAGIC_FIND].TotalInContext()); ;
 
             foreach (var droppableItem in Monster.Record.Drops.Where(droppableItem => !droppableItem.HasCriteria && prospectingSum >= droppableItem.ProspectingLock).Shuffle())
             {
@@ -183,7 +187,7 @@ namespace Giny.World.Managers.Fights.Fighters
             return Record.SpellRecords.Values;
         }
 
-        
+
         public override void OnTurnEnded()
         {
 

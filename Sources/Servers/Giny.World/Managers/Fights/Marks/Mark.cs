@@ -5,6 +5,7 @@ using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Sequences;
 using Giny.World.Managers.Fights.Zones;
+using Giny.World.Managers.Formulas;
 using Giny.World.Managers.Maps;
 using Giny.World.Managers.Spells;
 using Giny.World.Records.Maps;
@@ -20,7 +21,7 @@ namespace Giny.World.Managers.Fights.Marks
 {
     public abstract class Mark
     {
-        public abstract bool StopMovement
+        public abstract bool InterceptMovement
         {
             get;
         }
@@ -79,7 +80,7 @@ namespace Giny.World.Managers.Fights.Marks
             get;
             set;
         }
-        protected CellRecord[] Cells
+        public CellRecord[] Cells
         {
             get;
             private set;
@@ -103,7 +104,7 @@ namespace Giny.World.Managers.Fights.Marks
             this.TriggerSpell = triggerSpell;
             this.Active = true;
             this.TargetCell = targetCell;
-            this.BuildShapes(zone);
+            this.Build(zone);
         }
 
         /// <summary>
@@ -111,16 +112,28 @@ namespace Giny.World.Managers.Fights.Marks
         /// </summary>
         public abstract bool OnTurnBegin();
 
-        private void BuildShapes(Zone zone)
+        private void Build(Zone zone)
         {
             this.Cells = zone.GetCells(CenterCell, TargetCell == null ? CenterCell : TargetCell, Source.Fight.Map);
+            BuildShapes();
 
+        }
+        private void BuildShapes()
+        {
             Shapes = new List<MarkShape>();
 
             for (int i = 0; i < Cells.Length; i++)
             {
                 Shapes.Add(new MarkShape(Source.Fight, Cells[i], Color));
             }
+        }
+
+        public void UpdateCells(CellRecord centerCell, IEnumerable<CellRecord> cells)
+        {
+            this.CenterCell = centerCell;
+            this.Cells = cells.ToArray();
+            this.BuildShapes();
+            Source.Fight.UpdateMark(this);
         }
         protected virtual Fighter GetTriggerCastSource()
         {
@@ -162,6 +175,13 @@ namespace Giny.World.Managers.Fights.Marks
         public abstract void OnAdded();
 
         public abstract void OnRemoved();
+
+        public abstract void OnUpdated();
+
+        public virtual bool ShouldTriggerOnMove(Fighter target, short oldCellId, short cellId)
+        {
+            return ContainsCell(cellId);
+        }
 
         protected SpellCast CreateSpellCast()
         {

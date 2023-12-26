@@ -1,6 +1,8 @@
-﻿using Giny.Core.DesignPattern;
+﻿using Giny.Core;
+using Giny.Core.DesignPattern;
 using Giny.Core.Extensions;
 using Giny.Core.Time;
+using Giny.IO.D2OClasses;
 using Giny.World.Managers.Entities;
 using Giny.World.Managers.Entities.Monsters;
 using Giny.World.Managers.Experiences;
@@ -27,7 +29,32 @@ namespace Giny.World.Managers.Monsters
 
         private const int MaxMonstersPerGroup = 8;
 
-        public void SpawnMonsterGroups(MapRecord map, AsyncRandom random)
+        [StartupInvoke("Monster spawns", StartupInvokePriority.FifthPass)]
+        public void Initialize()
+        {
+            Random random = new Random();
+
+            foreach (var map in MapRecord.GetMaps())
+            {
+                if (map.IsDungeonMap)
+                {
+                    SpawnDungeonGroup(map);
+                }
+                else if (map.CanSpawnMonsters)
+                {
+                    SpawnMonsterGroups(map, random);
+                }
+            }
+
+            foreach (var spawn in MonsterStaticSpawnRecord.GetStaticSpawns())
+            {
+                MapRecord? map = MapRecord.GetMap(spawn.MapId);
+                SpawnStaticMonsters(spawn, map);
+            }
+
+
+        }
+        public void SpawnMonsterGroups(MapRecord map, Random random)
         {
             if (map.Subarea.Monsters.Length > 0)
             {
@@ -49,11 +76,11 @@ namespace Giny.World.Managers.Monsters
             }
             return gradeId;
         }
-        public void SpawnMonsterGroup(MapRecord map, AsyncRandom random)
+        public void SpawnMonsterGroup(MapRecord map, Random random)
         {
             AddGeneratedMonsterGroup(map.Instance, map.Subarea.Monsters, random);
         }
-        public void AddGeneratedMonsterGroup(MapInstance instance, MonsterSpawnRecord[] spawns, AsyncRandom random)
+        public void AddGeneratedMonsterGroup(MapInstance instance, MonsterSpawnRecord[] spawns, Random random)
         {
             MonsterGroup group = new MonsterGroup(instance.Record, instance.FindMonsterGroupCell(random).Id);
             group.Direction = Entity.RandomDirection4D(random);
@@ -78,7 +105,7 @@ namespace Giny.World.Managers.Monsters
 
             foreach (var monsterSpawn in shuffled)
             {
-                double num = random.NextDouble(0, 1);
+                double num = random.NextDouble();
 
                 if (num2 == monsterCount)
                 {
@@ -183,6 +210,42 @@ namespace Giny.World.Managers.Monsters
                     break;
                 }
             }
+        }
+
+        public void SpawnStaticMonsters(MonsterStaticSpawnRecord spawn, MapRecord? map)
+        {
+            if (spawn.Monsters.Count != spawn.Grades.Count)
+            {
+                Logger.Write($"Invalid static spawn. 'Monsters' and 'Grades' collections should have the same length.", Channels.Warning);
+                return;
+            }
+
+            if (map == null)
+            {
+                Logger.Write($"Invalid static spawn. Unable to find map {spawn.MapId}.", Channels.Warning);
+                return;
+            }
+            StaticMonsterGroup group = new StaticMonsterGroup(map, spawn.CellId, spawn);
+
+            group.Direction = spawn.Direction;
+
+            for (int i = 0; i < spawn.Monsters.Count; i++)
+            {
+                var monsterId = spawn.Monsters[i];
+                var gradeId = spawn.Grades[i];
+
+                MonsterRecord record = MonsterRecord.GetMonsterRecord(monsterId);
+
+                if (record == null)
+                {
+                    Logger.Write($"Invalid static spawn. Unable to find monster {monsterId}.", Channels.Warning);
+                    continue;
+                }
+                Monster monster = new Monster(record, group.GetCell(), gradeId);
+                group.AddMonster(monster);
+            }
+
+            map.Instance.AddEntity(group);
         }
     }
 }

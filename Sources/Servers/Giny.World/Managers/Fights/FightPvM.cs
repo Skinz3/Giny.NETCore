@@ -88,7 +88,7 @@ namespace Giny.World.Managers.Fights
         {
             if (ShowBlades && (this.Map.Instance.MonsterGroupCount < MonstersManager.MaxGroupPerMap))
             {
-                if (Winners == GetTeam(TeamTypeEnum.TEAM_TYPE_MONSTER) || !Started)
+                if (Winners == GetTeam(TeamTypeEnum.TEAM_TYPE_MONSTER) || !Started && MonsterGroup.RespawnOnVictory)
                 {
                     Map.Instance.AddEntity(MonsterGroup);
                 }
@@ -190,6 +190,7 @@ namespace Giny.World.Managers.Fights
         public override void OnFightStarted()
         {
             Challenges.OnFightStart();
+            MonsterGroup?.OnFightStarted(this);
         }
     }
 }

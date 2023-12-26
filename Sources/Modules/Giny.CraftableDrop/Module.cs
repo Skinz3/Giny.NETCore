@@ -25,11 +25,11 @@ namespace Giny.AdditionalDrop
     {
         private Dictionary<MonsterRecord, List<ItemRecord>> Drops = new Dictionary<MonsterRecord, List<ItemRecord>>();
 
-        const double UpperBoundDropRateItem = 7d;
+        const double UpperBoundDropRateItem = 10d;
 
-        const double LowerBoundsDropRateItem = 0.1d;
+        const double LowerBoundsDropRateItem = 0.2d;
 
-        const double UpperBoundDropRateMonster = 5d;
+        const double UpperBoundDropRateMonster = 10d;
 
         const double LowerBoundsDropRateMonster = 0.5d;
 
@@ -50,8 +50,6 @@ namespace Giny.AdditionalDrop
                 return;
             }
 
-            Random random = new Random();
-
             var monsterTeam = result.Fight.GetTeam(TeamTypeEnum.TEAM_TYPE_MONSTER);
 
             foreach (var monster in monsterTeam.GetFighters<MonsterFighter>(false))
@@ -61,7 +59,7 @@ namespace Giny.AdditionalDrop
 
                     var monsterDropProbability = ComputeMonsterDropProbability(monster);
 
-                    if (random.Next(0, 101) < monsterDropProbability)
+                    if (result.Fighter.Random.Next(0, 101) < monsterDropProbability)
                     {
                         continue;
                     }
@@ -80,7 +78,7 @@ namespace Giny.AdditionalDrop
 
                     foreach (var pair in dropRates)
                     {
-                        var chance = random.Next(0, 100 + 1);
+                        var chance = result.Fighter.Random.Next(0, 100 + 1);
 
                         if (chance < pair.Value)
                         {

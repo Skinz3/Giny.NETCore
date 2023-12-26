@@ -28,7 +28,7 @@ namespace Giny.World.Managers.Fights.Marks
             this.Duration = effect.Duration;
         }
 
-        public override bool StopMovement => false;
+        public override bool InterceptMovement => false;
 
         public override GameActionMarkTypeEnum Type => GameActionMarkTypeEnum.RUNE;
 
@@ -61,6 +61,11 @@ namespace Giny.World.Managers.Fights.Marks
         public override bool OnTurnBegin()
         {
             return DecrementDuration();
+        }
+
+        public override void OnUpdated()
+        {
+           
         }
     }
 }

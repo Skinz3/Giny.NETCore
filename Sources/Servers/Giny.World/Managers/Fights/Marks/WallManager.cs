@@ -110,15 +110,21 @@ namespace Giny.World.Managers.Fights.Marks
 
             foreach (var summonedBomb in fight.GetFighters<SummonedBomb>(x => x.AliveSafe))
             {
-                newWalls.AddRange(WallManager.Instance.GetWalls(summonedBomb));
+                newWalls.AddRange(GetWalls(summonedBomb));
             }
 
             foreach (var newWall in newWalls)
             {
-                var old = oldWalls.FirstOrDefault(x => x.CompareCells(newWall));
 
-                if (old != null && old.Valid())
+                var old = oldWalls.FirstOrDefault(x => x.FirstBomb == newWall.FirstBomb && x.SecondBomb ==
+                newWall.SecondBomb);
+
+                if (old != null)
                 {
+                    if (!old.Valid()) // le mur n'est plus valide il faut update les cellules
+                    {
+                        old.UpdateCells(newWall.CenterCell, newWall.Cells);
+                    }
                     oldWalls.Remove(old);
                     continue;
                 }
@@ -126,9 +132,10 @@ namespace Giny.World.Managers.Fights.Marks
                 {
                     continue;
                 }
+
                 else
                 {
-                    if(newWall.Valid())
+                    if (newWall.Valid())
                     {
                         fight.AddMark(newWall);
                     }

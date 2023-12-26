@@ -1,36 +1,111 @@
 ﻿@using Giny.Core.IO.Configuration;
+@using Giny.IO;
 @using MudBlazor
 <MudDialog>
     <DialogContent>
-        <div class="d-flex flex-column gap-2" style="width:600px">
-            <MudCheckBox @bind-Value=Config.StartAllInstances T="bool" Label="Connecter tous les comptes" />
+        <div class="d-flex flex-column gap-2" style="width:700px;min-height:300px">
+            <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-4">
+                <MudTabPanel Icon="@Icons.Material.Filled.Build" Text="Général">
+                    <MudCheckBox @bind-Value=Config.StartAllInstances T="bool" Label="Connecter tous les comptes" />
 
-            <MudText>Wallpaper :</MudText>
-            <div class="d-flex flex-row gap-2" style="flex-wrap:wrap;height:300px;overflow-y:auto">
-                @foreach (var image in Wallpapers)
-                {
-                    <MudButton OnClick="()=>SelectImage(image)">
-                        <MudImage Width=240 Height=160 Src="@image"
-                                  ObjectFit="ObjectFit.Cover"
-                                  ObjectPosition="ObjectPosition.Center"
-                                  Elevation="25" Class="rounded-lg" />
-                    </MudButton>
-                }
+                </MudTabPanel>
+                <MudTabPanel Icon="@Icons.Material.Outlined.Palette" Text="Apparence">
+                    <div class="d-flex flex-row gap-2" style="flex-wrap:wrap;height:200px;overflow-y:auto">
+                        @foreach (var image in Wallpapers)
+                        {
+                            <MudButton OnClick="()=>SelectImage(image)">
+                                <MudImage Width=180 Height=100 Src="@image"
+                                          ObjectFit="ObjectFit.Cover"
+                                          ObjectPosition="ObjectPosition.Center"
+                                          Elevation="25" Class="rounded-lg" />
+                            </MudButton>
+                        }
 
-            </div>
+                    </div>
+                </MudTabPanel>
+                <MudTabPanel Icon="@Icons.Material.Filled.Webhook" Text="Hôtes">
+                    <MudList @bind-SelectedValue=selectedHost Color=Color.Primary  Clickable=true>
+
+                        <div style="height:150px;overflow-y:auto">
+                        
+                        @foreach (var host in Config.Hosts)
+                        {
+                            <MudListItem OnClick="()=>SelectedHostChanged(host)" Value="host">
+                                <div class="d-flex justify-space-between align-center">
+
+                                    <div class="d-flex align-center gap-3">
+                                        <MudIcon Icon="@Icons.Material.Filled.Webhook"></MudIcon>
+
+                                        <div class="d-flex flex-column">
+                                            <MudText Style="font-weight:600">@host.Ip</MudText>
+                                            <MudText Typo="Typo.caption">Auth : @host.Port - Api : @host.ApiPort</MudText>
+
+                                        </div>
+                                    </div>
+                                    <MudIconButton OnClick="()=>DeleteHost(host)" Color=Color.Primary Icon="@Icons.Material.Outlined.Delete"></MudIconButton>
+                                </div>
+                            </MudListItem>
+                        }
+                        </div>
+                        <MudListItem OnClick="AddHost">
+                            <div class="d-flex align-center gap-3">
+                                <MudIcon Icon="@Icons.Filled.Add" Color="Color.Primary"></MudIcon>
+                                <div class="d-flex flex-column ">
+                                    <MudText Style="font-weight:500">Ajouter</MudText>
+                                </div>
+
+                            </div>
+
+                        </MudListItem>
+                    </MudList>
+                </MudTabPanel>
+            </MudTabs>
+
+
+
+
         </div>
     </DialogContent>
     <DialogActions>
         <MudButton Color="Color.Primary" OnClick="Submit">Appliquer</MudButton>
     </DialogActions>
 </MudDialog>
+
+@inject IDialogService DialogService;
+
 @code {
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
     public UplConfig Config => ConfigManager<UplConfig>.Instance;
 
+    object selectedHost;
+
+    private AuthHost SelectedHost
+    {
+
+        get
+        {
+            return (AuthHost)selectedHost;
+        }
+        set
+        {
+            selectedHost = value;
+        }
+    }
     void Submit()
     {
+        var configPath = Path.Combine(Config.ClientPath, ClientConstants.ConfigPath);
+        ClientConfiguration configuration = new ClientConfiguration(configPath);
+        configuration.Set("connection.host", Config.GetSelectedHost().GetClientUri());
+        configuration.Save();
+
+        AppState.UpToDate = false;
+
+        if (HomeView != null)
+        {
+            HomeView.Reload();
+        }
+
         MainLayout.UpdateState();
         ConfigManager<UplConfig>.Save(UplConfig.Filepath);
         MudDialog.Close(DialogResult.Ok(true));
@@ -42,6 +117,9 @@
         "https://i.imgur.com/9eMnv7A.jpeg",
         "https://i.imgur.com/fUODvXP.jpeg",
         "https://i.imgur.com/QvEfrLJ.jpeg",
+        "https://i.imgur.com/Ds71XvH.jpeg",
+        "https://i.imgur.com/PhjuxKA.jpeg",
+        "https://i.imgur.com/QGwmN8F.jpeg",
 
     };
 
@@ -52,6 +130,38 @@
         set;
     }
 
+    [Parameter]
+    public HomeView HomeView
+    {
+        get;
+        set;
+    }
+    void SelectedHostChanged(AuthHost host)
+    {
+        Config.SelectHost(host);
+
+
+    }
+    protected override void OnInitialized()
+    {
+        SelectedHost = Config.GetSelectedHost();
+        base.OnInitialized();
+    }
+    void DeleteHost(AuthHost host)
+    {
+        Config.Hosts.Remove(host);
+    }
+    async void AddHost()
+    {
+        var result = await DialogHelper.OpenDialog<AddHostDialog>(DialogService, new DialogParameters<AddHostDialog>(), "Hôtes");
+
+        if (!result.Cancelled)
+        {
+            var host = (AuthHost)result.Data;
+            Config.Hosts.Add(host);
+            StateHasChanged();
+        }
+    }
     void SelectImage(string src)
     {
         Config.Wallpaper = src;

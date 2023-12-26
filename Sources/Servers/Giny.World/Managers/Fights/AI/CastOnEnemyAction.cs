@@ -42,6 +42,8 @@ namespace Giny.World.Managers.Fights.AI
 
             allCasts.AddRange(GetSpellCasts(Fighter.Cell));
 
+
+         
             var bestCast = allCasts.MaxBy(x => GetEfficiency(x));
 
 
@@ -93,7 +95,7 @@ namespace Giny.World.Managers.Fights.AI
                 if (spell.Level.MaxRange == 0)
                 {
                     SpellCast cast = new SpellCast(Fighter, spell, Fighter.Cell);
-                    cast.CastCell = Fighter.Cell;
+                    cast.CastCell = cell;
                     cast.Target = Fighter;
 
                     if (Fighter.CanCastSpell(cast) == SpellCastResult.OK)

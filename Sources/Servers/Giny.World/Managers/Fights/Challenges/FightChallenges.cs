@@ -47,6 +47,11 @@ namespace Giny.World.Managers.Fights.Challenges
             get;
             set;
         }
+        public ChallengeModEnum ChallengeMod
+        {
+            get;
+            set;
+        }
 
         public FightChallenges(Fight fight)
         {

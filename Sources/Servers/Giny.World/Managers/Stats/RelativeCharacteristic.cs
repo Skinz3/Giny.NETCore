@@ -82,7 +82,20 @@ namespace Giny.World.Managers.Stats
         }
         public override int Total()
         {
-            return  RelativDelta + Base + Additional + Objects;
+            return RelativDelta + Base + Additional + Objects;
+        }
+        public override int TotalInContext()
+        {
+            var totalContext = RelativDelta + Base + Additional + ObjectsWithLimit + Context;
+
+            if (ContextualLimit && Limit.HasValue)
+            {
+                return totalContext > Limit.Value ? Limit.Value : totalContext;
+            }
+            else
+            {
+                return totalContext;
+            }
         }
     }
 }

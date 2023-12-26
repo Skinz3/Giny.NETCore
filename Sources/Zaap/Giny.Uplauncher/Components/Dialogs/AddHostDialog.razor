@@ -1,0 +1,57 @@
+﻿@using Giny.Core.IO.Configuration;
+@using Giny.Zaap.Accounts;
+@using MudBlazor
+<MudDialog>
+    <DialogContent>
+
+        <MudPaper Style="width:500px">
+            <MudTextField Placeholder="127.0.0.1" Immediate=true Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Http" Variant=Variant.Text Label="Adresse" @bind-Value="Ip"></MudTextField>
+            <MudTextField Placeholder="443" Immediate=true Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Key" Variant=Variant.Text Label="Port Authentification" @bind-Value="AuthPort"></MudTextField>
+            <MudTextField Placeholder="9001" Immediate=true Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Api" Variant=Variant.Text Label="Port API" @bind-Value="ApiPort"></MudTextField>
+        </MudPaper>
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Annuler</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    @inject IDialogService DialogService;
+
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public MainLayout MainLayout
+    {
+        get;
+        set;
+    }
+
+    string Ip
+    {
+        get;
+        set;
+    }
+
+    int AuthPort
+    {
+        get;
+        set;
+    }
+
+    int ApiPort
+    {
+        get;
+        set;
+    }
+
+
+    void Submit() => MudDialog.Close(DialogResult.Ok<AuthHost>(new AuthHost()
+        {
+            ApiPort = ApiPort,
+            Ip = Ip,
+            Port = AuthPort,
+        }));
+    void Cancel() => MudDialog.Cancel();
+}

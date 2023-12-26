@@ -438,9 +438,13 @@ namespace Giny.World.Managers.Fights.Fighters
         {
             double result = 1;
 
+            var tackleEvade = Stats[CharacteristicEnum.TACKLE_EVADE].TotalInContext();
+
             foreach (var tackler in tacklers)
             {
-                result *= (Stats[CharacteristicEnum.TACKLE_EVADE].TotalInContext() + 2) / (2d * (tackler.Stats[CharacteristicEnum.TACKLE_BLOCK].TotalInContext() + 2));
+                var tackleBlock = tackler.Stats[CharacteristicEnum.TACKLE_BLOCK].TotalInContext();
+
+                result *= (tackleEvade + 2) / (2d * (tackleBlock + 2));
             }
 
             short looseAp = 0;
@@ -465,6 +469,10 @@ namespace Giny.World.Managers.Fights.Fighters
 
         public virtual void Move(List<CellRecord> path)
         {
+            if (!CanMove())
+            {
+                return;
+            }
             path.Insert(0, this.Cell);
 
             if (path.Count <= 1)
@@ -494,7 +502,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
             for (int i = 1; i < path.Count; i++)
             {
-                if (Fight.ShouldTriggerOnMove(path[i - 1].Id, path[i].Id))
+                if (Fight.ShouldTriggerOnMove(this, path[i - 1].Id, path[i].Id))
                 {
                     if (i + 1 <= path.Count)
                     {
@@ -555,6 +563,10 @@ namespace Giny.World.Managers.Fights.Fighters
             }
         }
 
+        public bool IsTeamLeader()
+        {
+            return Team.Leader == this;
+        }
         public bool IsFriendlyWith(Fighter actor)
         {
             return actor.Team == this.Team;
@@ -1605,11 +1617,25 @@ namespace Giny.World.Managers.Fights.Fighters
                 MapPoint oldPoint = destinationPoint;
                 MapPoint targetPoint = destinationPoint.GetCellInDirection(direction, 1);
 
-                if (targetPoint != null && Fight.IsCellFree(targetPoint.CellId))
+                bool diagonalCollision = false;
+
+                if (direction.IsDiagonal())
+                {
+                    var composition = direction.GetDiagonalDecomposition();
+
+                    MapPoint p1 = oldPoint.GetCellInDirection(composition[0], 1);
+                    MapPoint p2 = oldPoint.GetCellInDirection(composition[1], 1);
+
+                    if ((p1 == null || !Fight.IsCellFree(p1.CellId)) || (p2 == null || !Fight.IsCellFree(p2.CellId)))
+                    {
+                        diagonalCollision = true;
+                    }
+                }
+                if (targetPoint != null && Fight.IsCellFree(targetPoint.CellId) && !diagonalCollision)
                 {
                     destinationPoint = targetPoint;
 
-                    if (Fight.ShouldTriggerOnMove(oldPoint.CellId, targetPoint.CellId))
+                    if (Fight.ShouldTriggerOnMove(this, oldPoint.CellId, targetPoint.CellId))
                     {
                         break;
                     }
@@ -1818,6 +1844,10 @@ namespace Giny.World.Managers.Fights.Fighters
         public bool IsImmuneToSpell(short spellId)
         {
             return GetBuffs<SpellImmunityBuff>().Any(x => x.SpellId == spellId);
+        }
+        public virtual bool CanMove()
+        {
+            return true;
         }
         public virtual bool CanUsePortal()
         {
