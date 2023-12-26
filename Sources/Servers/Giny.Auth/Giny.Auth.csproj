@@ -5,11 +5,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <ApplicationIcon>giny.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="icon.ico" />
+    <Content Include="giny.ico" />
   </ItemGroup>
 
   <ItemGroup>

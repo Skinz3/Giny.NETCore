@@ -188,9 +188,8 @@ namespace Giny.Core.Extensions
                 yield return element;
             }
         }
-        public static IEnumerable<T> ShuffleWithProbabilities<T>(this IEnumerable<T> enumerable, IEnumerable<int> probabilities)
+        public static IEnumerable<T> ShuffleWithProbabilities<T>(this IEnumerable<T> enumerable, Random rand, IEnumerable<int> probabilities)
         {
-            var rand = new Random();
             var elements = enumerable.ToList();
             var result = new T[elements.Count];
             var indices = probabilities.ToList();

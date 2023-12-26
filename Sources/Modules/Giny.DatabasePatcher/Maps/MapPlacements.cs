@@ -20,7 +20,7 @@ namespace Giny.DatabasePatcher.Maps
     {
         public static bool SortByComplexity = true;
 
-        public static byte SearchDeep = 5;
+        public static byte SearchDeep = 10;
 
         public static string PlacementPatternDirectory = "PlacementPatterns/";
 
@@ -68,6 +68,11 @@ namespace Giny.DatabasePatcher.Maps
 
             foreach (var map in maps)
             {
+                if (map.Cells.Where(x => x.Blue).Count() > 0 && map.Cells.Where(x => x.Red).Count() > 0)
+                {
+                    continue;
+                }
+
                 foreach (var cell in map.Cells)
                 {
                     cell.Blue = false;
@@ -81,7 +86,7 @@ namespace Giny.DatabasePatcher.Maps
                                                     select entry.Complexity).ToArray<int>();
                     PlacementPattern[] relativPatterns = (from entry in patterns
                                                           where entry.Relativ
-                                                          select entry).ShuffleWithProbabilities(relativePatternsComplx).ToArray<PlacementPattern>();
+                                                          select entry).ShuffleWithProbabilities(rand, relativePatternsComplx).ToArray<PlacementPattern>();
                     Lozenge searchZone = new Lozenge(0, SearchDeep);
 
                     var centerCell = map.GetCell(300);

@@ -40,7 +40,7 @@ namespace Giny.DatabaseSynchronizer
     class Program
     {
         public static bool SYNC_D2O = true;
-        public static bool SYNC_MAPS = false;
+        public static bool SYNC_MAPS = true;
 
         static void Main(string[] args)
         {

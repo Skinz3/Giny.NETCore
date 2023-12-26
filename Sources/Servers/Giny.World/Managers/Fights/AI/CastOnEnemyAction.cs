@@ -16,6 +16,11 @@ namespace Giny.World.Managers.Fights.AI
     {
         public const int MaxIterations = 20;
 
+        private Fighter? WeakerEnemy
+        {
+            get;
+            set;
+        }
         public CastOnEnemyAction(AIFighter fighter) : base(fighter)
         {
 
@@ -24,6 +29,8 @@ namespace Giny.World.Managers.Fights.AI
 
         protected override void Apply()
         {
+            WeakerEnemy = Fighter.EnemyTeam.GetFighters().OrderBy(x => x.Stats.Life.Percentage).FirstOrDefault();
+
             CastSpells();
 
         }
@@ -42,8 +49,6 @@ namespace Giny.World.Managers.Fights.AI
 
             allCasts.AddRange(GetSpellCasts(Fighter.Cell));
 
-
-         
             var bestCast = allCasts.MaxBy(x => GetEfficiency(x));
 
 
@@ -76,6 +81,11 @@ namespace Giny.World.Managers.Fights.AI
             double value = cast.CastCell.Point.ManhattanDistanceTo(Fighter.Cell.Point);
 
             if (cast.Target != null && !cast.Target.IsSummoned())
+            {
+                value += 10;
+            }
+
+            if (cast.Target.Stats.Life.Percentage < 15d && WeakerEnemy != null && cast.Target == WeakerEnemy)
             {
                 value += 10;
             }

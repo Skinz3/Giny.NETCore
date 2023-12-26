@@ -53,7 +53,7 @@ namespace Giny.World.Managers.Stats
         }
         public override CharacterCharacteristicDetailed GetCharacterCharacteristic(CharacteristicEnum characteristic)
         {
-            return new CharacterCharacteristicDetailed((short)(Base + RelativDelta), Additional, Objects, Context, Context, (short)characteristic);
+            return new CharacterCharacteristicDetailed(Base + RelativDelta, Additional, Objects, Context, Context, (short)characteristic);
         }
         public static new RelativeCharacteristic Zero()
         {
