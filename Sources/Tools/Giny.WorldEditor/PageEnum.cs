@@ -23,5 +23,7 @@ namespace Giny.WorldEditor
         MapEditor,
         Server,
         Quests,
+        MonsterSpawns,
+        MonsterDrops,
     }
 }

@@ -1,0 +1,192 @@
+﻿@using Giny.AdditionalDrop;
+@using Giny.IO.D2OClasses;
+@using Giny.World.Records.Items;
+@using Giny.World.Records.Monsters;
+@using Giny.WorldEditor.Caching;
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+<MudGrid>
+    <MudItem xs="3">
+
+        <MudPaper Outlined=true>
+            <MudList Dense="true" Clickable="true">
+                <MudListSubheader>
+                    <MudTextField Label="Search" TextChanged=OnSearchTextChanged @bind-Value="@Search"
+                                  AdornmentColor="Color.Primary" AdornmentIcon="@Icons.Filled.Search"
+                                  Adornment="Adornment.End" Immediate="true" Variant="Variant.Outlined" />
+                </MudListSubheader>
+
+                <div style="height:80vh;overflow-y:scroll">
+                    @if (Loading)
+                    {
+                        <div class="d-flex align-center justify-center">
+                            <MudProgressCircular Indeterminate="true" Color="Color.Primary"></MudProgressCircular>
+
+                        </div>
+                    }
+                    <Virtualize Items="@SearchResults">
+
+
+                        <MudListItem OnClick="() => SelectMonster(context)" Value="context">
+
+                            <div class="d-flex flex-row gap-2 align-center">
+
+
+                                <MudImage ObjectFit="ObjectFit.Fill" Width="60" Height="60" Src="@GetMonsterIcon((short)context.Id)" />
+
+                                <div class="d-flex flex-column">
+                                    <MudText Style="font-size:14px;font-weight:600;line-height:16px">@context.Name</MudText>
+                                    <MudText Typo=Typo.caption Style="line-height:16px">@Math.Round(Module.ComputeMonsterDropProbability(context.Grades.Last().Level),1) %</MudText>
+
+                                </div>
+                            </div>
+
+                        </MudListItem>
+
+                    </Virtualize>
+                </div>
+
+            </MudList>
+
+        </MudPaper>
+
+
+    </MudItem>
+
+    <MudItem xs="9">
+        @if (SelectedMonster != null)
+        {
+
+            <MudDataGrid Height="90vh" Class="mt-3" Hover=true Striped=false ColumnResizeMode=ResizeMode.Column Bordered=true Items="GetSelectedDrops()">
+
+
+                <Columns>
+                    <TemplateColumn Title="Picture">
+                        <CellTemplate>
+                            <MudImage Width="40" Height="40" Src="@GetItemIcon(context.Item)" />
+
+                        </CellTemplate>
+                    </TemplateColumn>
+
+
+                    <TemplateColumn Title="Name">
+                        <CellTemplate>
+                            <div class="d-flex flex-column gap-2">
+                                <MudText Style="font-weight:500;line-height:16px">@context.Item.Name</MudText>
+
+                                <MudText Style="line-height:16px" Typo="Typo.caption">@context.Item.Id</MudText>
+                            </div>
+
+                        </CellTemplate>
+                    </TemplateColumn>
+                    <TemplateColumn Title="Drop probability">
+                        <CellTemplate>
+                            <MudText Style="font-weight:500;line-height:16px">@Math.Round(Module.ComputeItemDropProbability(context.Item),1) %</MudText>
+                        </CellTemplate>
+                    </TemplateColumn>
+
+                    <TemplateColumn Title="Final Drop probability">
+                        <CellTemplate>
+                            <MudText Style="font-weight:500;line-height:16px">@GetFinalDroprate(context.Item) %</MudText>
+                        </CellTemplate>
+                    </TemplateColumn>
+
+
+
+                </Columns>
+
+            </MudDataGrid>
+        }
+
+    </MudItem>
+</MudGrid>
+@code {
+    [Inject] private IDialogService DialogService { get; set; }
+
+    [CascadingParameter]
+    public Home Parent
+    {
+        get;
+        set;
+    }
+
+    private MonsterRecord SelectedMonster
+    {
+        get;
+        set;
+    }
+    private List<MonsterRecord> SearchResults
+    {
+        get;
+        set;
+    } = new List<MonsterRecord>();
+
+    private string Search
+    {
+        get;
+        set;
+    } = "";
+
+    private bool Loading = true;
+
+    private void OnSearchTextChanged()
+    {
+        SearchResults = MonsterRecord.GetMonsterRecords().Where(x => x.ToString().ToLower().Contains(Search.ToLower())).ToList();
+        StateHasChanged();
+    }
+
+    private CraftableDropModule Module
+    {
+        get;
+        set;
+
+    }
+    private List<ItemRecord> GetSelectedDrops()
+    {
+        var drops = SelectedMonster.Drops.Select(x => ItemRecord.GetItem(x.ItemGId));
+
+        var additional = Module.GetDrops(SelectedMonster);
+
+        return drops.Concat(additional).ToList();
+    }
+    private double GetFinalDroprate(ItemRecord item)
+    {
+        var itemRate = Module.ComputeItemDropProbability(item) / 100d;
+        var monsterRate = Module.ComputeMonsterDropProbability(SelectedMonster.Grades.Last().Level) / 100d;
+
+        return Math.Round((itemRate * monsterRate) * 100d,1);
+    }
+    private void SelectMonster(MonsterRecord item)
+    {
+        SelectedMonster = item;
+    }
+    private string GetItemIcon(ItemRecord item)
+    {
+        Item d2oItem = D2OCache.GetItem((int)item.Id);
+
+        var base64image = ExternalResources.GetItemIcon((int)d2oItem.IconId);
+        var source = string.Format("data:image/png;base64,{0}", base64image);
+
+        return source;
+    }
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (Loading)
+        {
+            Module = ModuleHost.Instance.InitModule<CraftableDropModule>();
+            Loading = false;
+            StateHasChanged();
+
+        }
+
+        base.OnAfterRender(firstRender);
+    }
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+    string GetMonsterIcon(short monsterId)
+    {
+        var source = string.Format("data:image/png;base64,{0}", ExternalResources.GetMonsterIcon(monsterId));
+        return source;
+    }
+}

@@ -15,9 +15,23 @@
                                   Adornment="Adornment.End" Immediate="true" Variant="Variant.Outlined" />
                 </MudListSubheader>
 
-                <div style="height:70vh;overflow-y:scroll">
+                <div style="height:80vh;overflow-y:scroll">
                     <Virtualize Items="@SearchResults">
-                        <MudListItem Typo="Typo.body2" OnClick="() => spellComponent.SelectSpell(context)" Text=@context.ToString() />
+
+                        <MudListItem OnClick="() => spellComponent.SelectSpell(context)" Value="context">
+
+                            <div class="d-flex flex-row gap-3 align-center">
+                                <MudIcon Icon="@Icons.Outlined.Workspaces" />
+                                <div class="d-flex flex-column">
+                                    <MudText Style="font-size:14px;line-height:16px;font-weight:600;">@context.Name</MudText>
+                                    <MudText Typo=Typo.caption Style="line-height:16px">@(string.IsNullOrWhiteSpace(context.Description) ? "" : context.Description)</MudText>
+
+                                </div>
+                            </div>
+
+                        </MudListItem>
+
+
                     </Virtualize>
                 </div>
 
@@ -66,7 +80,7 @@
     }
     protected override void OnAfterRender(bool firstRender)
     {
-       
+
     }
 
 

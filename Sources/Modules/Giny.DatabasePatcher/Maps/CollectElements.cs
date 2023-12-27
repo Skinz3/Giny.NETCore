@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Giny.DatabasePatcher.Maps
 {
-    public class InteractiveElements
+    public class CollectElements
     {
         public static void Patch()
         {

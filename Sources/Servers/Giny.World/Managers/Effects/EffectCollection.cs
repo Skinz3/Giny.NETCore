@@ -32,6 +32,8 @@ namespace Giny.World.Managers.Effects
             EffectsEnum.Effect_RemainingFights,
             EffectsEnum.Effect_StealKamas,
             EffectsEnum.Effect_HealHPFire,
+            EffectsEnum.Effect_SpellAnim,
+            EffectsEnum.Effect_ChallengeMonster,
         };
 
         [ProtoMember(1)]

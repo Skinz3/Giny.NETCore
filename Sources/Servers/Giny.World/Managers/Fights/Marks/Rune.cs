@@ -50,7 +50,7 @@ namespace Giny.World.Managers.Fights.Marks
         public override void Trigger(Fighter target, MarkTriggerType triggerType)
         {
             Source.Fight.RemoveMark(this);
-            ApplyEffects();
+            ApplyEffects(Source.Cell);
         }
 
         public bool DecrementDuration()
@@ -65,7 +65,7 @@ namespace Giny.World.Managers.Fights.Marks
 
         public override void OnUpdated()
         {
-           
+
         }
     }
 }

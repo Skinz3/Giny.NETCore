@@ -85,7 +85,7 @@ namespace Giny.World.Managers.Fights.AI
                 value += 10;
             }
 
-            if (cast.Target.Stats.Life.Percentage < 15d && WeakerEnemy != null && cast.Target == WeakerEnemy)
+            if (cast.Target != null && cast.Target.Stats.Life.Percentage < 15d && WeakerEnemy != null && cast.Target == WeakerEnemy)
             {
                 value += 10;
             }

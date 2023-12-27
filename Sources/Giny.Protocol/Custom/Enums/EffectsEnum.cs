@@ -584,6 +584,8 @@
         /// #1 Énergie Perdue
         /// </summary>
         Effect_230 = 230,
+
+        Effect_SpellAnim = 237,
         /// <summary>
         /// (not found)
         /// </summary>
@@ -1434,7 +1436,7 @@
         /// <summary>
         /// Lance un combat contre #2
         /// </summary>
-        Effect_905 = 905,
+        Effect_ChallengeMonster = 905,
         /// <summary>
         /// 
         /// </summary>

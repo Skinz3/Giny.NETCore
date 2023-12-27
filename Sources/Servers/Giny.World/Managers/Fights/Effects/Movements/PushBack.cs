@@ -24,7 +24,7 @@ namespace Giny.World.Managers.Fights.Effects.Movements
 
         protected override void Apply(IEnumerable<Fighter> targets)
         {
-            foreach (var target in targets)
+            foreach (var target in targets) 
             {
                 target.PushBack(Source, CastCell, (short)Effect.Min, TargetCell);
             }

@@ -36,6 +36,8 @@ namespace Giny.World.Records.Monsters
             get;
             set;
         }
+
+      
         public static int Count()
         {
             return MonsterSpawns.Count;

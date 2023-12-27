@@ -27,9 +27,24 @@
                                   Adornment="Adornment.End" Immediate="true" Variant="Variant.Outlined" />
                 </MudListSubheader>
 
-                <div style="height:70vh;overflow-y:scroll">
+                <div style="height:80vh;overflow-y:scroll">
                     <Virtualize Items="@DungeonSearchResults">
-                        <MudListItem IconColor="@GetDungeonIconColor(context)" Icon="@GetDungeonIcon(context)" OnClick="() => SelectDungeon(context)" Text=@(context.Name + " ("+context.Rooms.Count+")") />
+
+                        <MudListItem OnClick="() => SelectDungeon(context)" Value="context">
+
+                            <div class="d-flex flex-row gap-2 align-center">
+
+                                <MudImage ObjectFit="ObjectFit.Fill" Width="60" Height="60" Src="@GetDungeonIcon(context)" />
+
+                                <div class="d-flex flex-column">
+                                    <MudText Style="font-size:14px;font-weight:600;line-height:16px">@context.Name</MudText>
+                                    <MudText Typo=Typo.caption Style="line-height:16px">@context.Rooms.Count salles</MudText>
+
+                                </div>
+                            </div>
+
+                        </MudListItem>
+
                     </Virtualize>
                 </div>
 
@@ -224,15 +239,25 @@
     }
     string GetDungeonIcon(DungeonRecord record)
     {
-        if (record.Rooms.All(x => x.MonsterIds.Count == 0))
+        for (int i = record.Rooms.Count-1; i >= 0; i--)
         {
-            return Icons.Outlined.BuildCircle;
+            var room = record.Rooms[i];
+
+            foreach (var monsterId in room.MonsterIds)
+            {
+                MonsterRecord monster = MonsterRecord.GetMonsterRecord(monsterId);
+
+                if (monster.IsBoss)
+                {
+                    return GetMonsterIcon(monsterId);
+                }
+            }
         }
-        else
-        {
-            return Icons.Outlined.CheckCircle;
-        }
+       
+
+        return GetMonsterIcon(5814);
     }
+
 
 
     string GetMonsterIcon(short monsterId)

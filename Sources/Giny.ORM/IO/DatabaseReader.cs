@@ -117,7 +117,8 @@ namespace Giny.ORM.IO
                     while (this.m_reader.Read())
                     {
                         var obj = new object[this.Properties.Length];
-                        for (var i = 0; i < this.m_reader.FieldCount; i++)
+
+                        for (var i = 0; i < this.Properties.Length; i++)
                             obj[i] = ConvertObject(this.m_reader[i], Properties[i]);
 
                         var irecord = (IRecord)Activator.CreateInstance(Type); // expressions?

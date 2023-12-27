@@ -40,7 +40,21 @@
                 <div style="height:70vh;overflow-y:scroll">
 
                     <Virtualize Items="@SearchResults">
-                        <MudListItem OnClick="() => SelectTrigger(context)" Text=@context.ToString() />
+
+                        <MudListItem OnClick="() => SelectTrigger(context)" Value="context">
+
+                            <div class="d-flex flex-row gap-3 align-center">
+                                <MudIcon Icon="@Icons.Outlined.Bolt" />
+                                <div class="d-flex flex-column">
+                                    <MudText Style="font-size:14px;line-height:16px;font-weight:600;">@context.Split(' ')[0]</MudText>
+                                    <MudText Typo=Typo.caption Style="line-height:16px">@context.Split(' ')[1]</MudText>
+
+                                </div>
+                            </div>
+
+                        </MudListItem>
+
+                     
                     </Virtualize>
                 </div>
 
@@ -60,7 +74,21 @@
                 <div style="height:80vh;overflow-y:scroll">
 
                     <Virtualize Items="@DisplayedSpells">
-                        <MudListItem OnClick="() => DisplaySpell(context)" Text=@(GetSpellName(context)) />
+
+                        <MudListItem OnClick="() => DisplaySpell(context)" Value="context">
+
+                            <div class="d-flex flex-row gap-3 align-center">
+                                <MudIcon Icon="@Icons.Outlined.Workspaces" />
+                                <div class="d-flex flex-column">
+                                    <MudText Style="font-size:14px;line-height:16px;font-weight:600;">@context.Name</MudText>
+                                    <MudText Typo=Typo.caption Style="line-height:16px">@(string.IsNullOrWhiteSpace(context.Description) ? "" : context.Description)</MudText>
+
+                                </div>
+                            </div>
+
+                        </MudListItem>
+
+                       
                     </Virtualize>
                 </div>
 

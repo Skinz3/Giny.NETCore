@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Giny.DatabasePatcher.Maps
 {
-    public class Bidshops
+    public class BidshopElements
     {
         public static void Patch()
         {

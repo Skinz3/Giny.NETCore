@@ -48,11 +48,6 @@ namespace Giny.World.Records.Monsters
             get;
             set;
         }
-        public short RespawnDelay
-        {
-            get;
-            set;
-        }
 
         public static List<MonsterStaticSpawnRecord> GetStaticSpawns()
         {

@@ -22,7 +22,21 @@
 
                 <div style="height:70vh;overflow-y:scroll">
                     <Virtualize Items="@SearchResults">
-                        <MudListItem OnClick="() => SelectItem(context)" Text=@context.ToString() />
+                        <MudListItem OnClick="() => SelectItem(context)" Value="context">
+
+                            <div class="d-flex flex-row gap-3 align-center">
+                                <MudImage Width="40" Height="40" Src="@GetItemIcon(context)" />
+
+                                <div class="d-flex flex-column">
+                                    <MudText Style="font-size:14px;font-weight:600;line-height:16px">@context.Name</MudText>
+                                    <MudText Typo=Typo.caption Style="line-height:16px">(@context.Id)</MudText>
+
+                                </div>
+                            </div>
+
+                        </MudListItem>
+
+                      
                     </Virtualize>
                 </div>
 
@@ -148,7 +162,15 @@
             return effects;
         return effects.Where(x => x.ToString().Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
+    private string GetItemIcon(ItemRecord item)
+    {
+        Item d2oItem = D2OCache.GetItem((int)item.Id);
 
+        var base64image = ExternalResources.GetItemIcon((int)d2oItem.IconId);
+        var source = string.Format("data:image/png;base64,{0}", base64image);
+
+        return source;
+    }
     private ItemRecord SelectedItem
     {
         get;

@@ -26,7 +26,20 @@
 
                 <div style="height:70vh;overflow-y:scroll">
                     <Virtualize Items="@SearchResults">
-                        <MudListItem OnClick="() => SelectNpcSpawn(context)" Text=@context.ToString() />
+                        <MudListItem OnClick="() => SelectNpcSpawn(context)" Value="context">
+
+                            <div class="d-flex flex-row gap-3 align-center">
+
+                                <div class="d-flex flex-column">
+                                    <MudText Style="font-size:14px;font-weight:600;line-height:16px">@context.Template.Name</MudText>
+                                    <MudText Typo=Typo.caption Style="line-height:16px">(@context.Id)</MudText>
+
+                                </div>
+                            </div>
+
+                        </MudListItem>
+
+
                     </Virtualize>
                 </div>
 
@@ -250,7 +263,7 @@
 
         LoadNpcIcon();
 
-       
+
 
     }
     private void LoadNpcIcon()

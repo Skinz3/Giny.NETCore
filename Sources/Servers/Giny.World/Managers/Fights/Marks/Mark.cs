@@ -183,18 +183,26 @@ namespace Giny.World.Managers.Fights.Marks
             return ContainsCell(cellId);
         }
 
-        protected SpellCast CreateSpellCast()
+        protected SpellCast CreateSpellCast(CellRecord castCell)
         {
             SpellCast cast = new SpellCast(GetTriggerCastSource(), TriggerSpell, CenterCell);
-            cast.CastCell = CenterCell;
+            cast.CastCell = castCell;
             cast.MarkSource = this;
             return cast;
+        }
+        protected SpellCast CreateSpellCast()
+        {
+            return CreateSpellCast(CenterCell);
         }
 
         public void ApplyEffects()
         {
+            ApplyEffects(CenterCell);
+        }
+        public void ApplyEffects(CellRecord castCell)
+        {
             SpellCast cast = CreateSpellCast();
-            cast.CastCell = CenterCell;
+            cast.CastCell = castCell;
             cast.Force = true;
             GetTriggerCastSource().CastSpell(cast);
         }

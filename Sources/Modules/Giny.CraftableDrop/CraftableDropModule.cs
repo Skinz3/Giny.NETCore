@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 namespace Giny.AdditionalDrop
 {
     [Module("Craftable Drop")]
-    public class Module : IModule
+    public class CraftableDropModule : IModule
     {
         private Dictionary<MonsterRecord, List<ItemRecord>> Drops = new Dictionary<MonsterRecord, List<ItemRecord>>();
 
@@ -33,6 +33,10 @@ namespace Giny.AdditionalDrop
 
         const double LowerBoundsDropRateMonster = 0.5d;
 
+        public List<ItemRecord> GetDrops(MonsterRecord monster)
+        {
+            return Drops.ContainsKey(monster) ? Drops[monster] : new List<ItemRecord>();
+        }
         public void CreateHooks()
         {
             FightEventApi.OnPlayerResultApplied += OnPlayerResultApplied;
@@ -57,7 +61,7 @@ namespace Giny.AdditionalDrop
                 if (Drops.ContainsKey(monster.Record))
                 {
 
-                    var monsterDropProbability = ComputeMonsterDropProbability(monster);
+                    var monsterDropProbability = ComputeMonsterDropProbability(monster.Level);
 
                     if (result.Fighter.Random.Next(0, 101) < monsterDropProbability)
                     {
@@ -100,7 +104,7 @@ namespace Giny.AdditionalDrop
 
         }
 
-        private double ComputeItemDropProbability(ItemRecord item)
+        public double ComputeItemDropProbability(ItemRecord item)
         {
             double a = (LowerBoundsDropRateItem - UpperBoundDropRateItem) / 199d;
             double b = UpperBoundDropRateItem - a;
@@ -110,12 +114,12 @@ namespace Giny.AdditionalDrop
             return (a * level) + b;
         }
 
-        private double ComputeMonsterDropProbability(MonsterFighter monster)
+        public double ComputeMonsterDropProbability(short monsterLevel)
         {
             double a = (LowerBoundsDropRateMonster - UpperBoundDropRateMonster) / 199d;
             double b = UpperBoundDropRateMonster - a;
 
-            double level = Math.Min(200d, monster.Level);
+            double level = Math.Min(200d, monsterLevel);
 
             return (a * level) + b;
         }
@@ -142,16 +146,10 @@ namespace Giny.AdditionalDrop
                             continue;
                         }
 
-                        if (monster.Drops.Any(x => x.ItemGId == recipe.ResultId))
-                        {
-                            continue;
-                        }
+                        monster.Drops.RemoveAll(x => x.ItemGId == recipe.ResultId);
+
                         var item = ItemRecord.GetItem(recipe.ResultId);
 
-                        if (item.DropMonsterIds.Length > 0)
-                        {
-                            continue;
-                        }
                         if (!item.Exchangeable)
                         {
                             continue;

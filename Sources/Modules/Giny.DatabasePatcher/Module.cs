@@ -32,7 +32,7 @@ namespace Giny.DatabasePatcher
         {
             Logger.Write("Patching world database ...", Channels.Info);
 
-            Bidshops.Patch();
+            BidshopElements.Patch();
             LevelAchievements.Patch();
             SubareaAchievements.Patch();
             Dungeons.Patch();
@@ -41,10 +41,11 @@ namespace Giny.DatabasePatcher
             ItemAppearances.Patch();
             LivingObjects.Patch();
             SkillBones.Patch();
-            InteractiveElements.Patch();
-            Paddocks.Patch();
+            CollectElements.Patch();
+            CraftTableElements.Patch();
+            PaddockElements.Patch();
             MonsterSpawns.Patch();
-            Teleporters.Patch();
+            TeleporterElements.Patch();
             MapPlacements.Patch();
             SpellCategories.Patch();
             MonsterKamas.Patch();

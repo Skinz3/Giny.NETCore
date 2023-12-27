@@ -80,6 +80,11 @@ namespace Giny.World.Managers.Items
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.INITIATIVE).Objects += (short)delta;
         }
+        [ItemEffect(EffectsEnum.Effect_SubInitiative)]
+        public static void SubInitiative(Character character, int delta)
+        {
+            character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.INITIATIVE).Objects -= (short)delta;
+        }
 
         [ItemEffect(EffectsEnum.Effect_AddRange)]
         public static void AddRange(Character character, int delta)

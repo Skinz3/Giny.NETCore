@@ -1,0 +1,139 @@
+﻿@using Giny.World.Records.Maps;
+@using Giny.World.Records.Monsters;
+@using Giny.WorldEditor.Caching;
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+<MudGrid>
+    <MudItem xs="3">
+
+        <MudPaper Outlined=true>
+            <MudList Color="Color.Success" Dense="true" Clickable="true">
+                <MudListSubheader>
+                    <MudTextField Label="Search" TextChanged=OnSearchTextChanged @bind-Value="@Search"
+                                  AdornmentColor="Color.Primary" AdornmentIcon="@Icons.Filled.Search"
+                                  Adornment="Adornment.End" Immediate="true" Variant="Variant.Outlined" />
+                </MudListSubheader>
+
+                <div style="height:80vh;overflow-y:scroll">
+                    <Virtualize Items="@SearchResults">
+
+                        <MudListItem OnClick="() => SelectSubarea(context)" Value="context">
+
+                            <div class="d-flex flex-row gap-3 align-center">
+                                <MudIcon Icon="@Icons.Outlined.LocationOn" />
+                                <div class="d-flex flex-column">
+                                    <MudText Style="font-size:14px;line-height:16px;font-weight:600;">@context.Name</MudText>
+                                    <MudText Typo=Typo.caption Style="line-height:16px">@context.Monsters.Length monsters</MudText>
+
+                                </div>
+                            </div>
+
+                        </MudListItem>
+                    </Virtualize>
+                </div>
+
+            </MudList>
+
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="9">
+        @if (SelectedSubarea != null)
+        {
+
+            <MudDataGrid Height="90vh" Class="mt-3" Hover=true Striped=false ColumnResizeMode=ResizeMode.Column Bordered=true T="MonsterSpawnRecord" Items="SelectedSubarea.Monsters">
+
+
+                <Columns>
+
+                    <TemplateColumn Title="Icon">
+                        <CellTemplate>
+                            <MudImage Src="@(GetMonsterIcon((short)context.Item.MonsterId))" />
+                        </CellTemplate>
+                    </TemplateColumn>
+
+                    <TemplateColumn Title="Name">
+                        <CellTemplate>
+                            <div class="d-flex flex-column gap-2">
+                                <MudText Style="font-weight:500;line-height:16px">@MonsterRecord.GetMonsterRecord(context.Item.MonsterId).Name</MudText>
+
+                                <MudText Style="line-height:16px" Typo="Typo.caption">(@context.Item.Id)</MudText>
+                            </div>
+
+                        </CellTemplate>
+                    </TemplateColumn>
+
+                    <TemplateColumn Title="Probability">
+                        <CellTemplate>
+                            <MudTextField AdornmentText="%" Adornment="Adornment.End" @bind-Value=@context.Item.Probability Immediate=true Style="font-weight:500;line-height:16px"></MudTextField>
+
+
+                        </CellTemplate>
+                    </TemplateColumn>
+
+
+                    <TemplateColumn Title="Actions">
+                        <CellTemplate>
+                            <MudStack Row>
+
+
+                            <MudButton Size="@Size.Small" StartIcon="@Icons.Material.Filled.Delete" IconColor="Color.Primary" Variant="@Variant.Text" Color="@Color.Primary">Delete</MudButton>
+
+                        </MudStack>
+                    </CellTemplate>
+                </TemplateColumn>
+
+            </Columns>
+
+        </MudDataGrid>
+        }
+
+    </MudItem>
+</MudGrid>
+@code {
+    [Inject] private IDialogService DialogService { get; set; }
+
+    [CascadingParameter]
+    public Home Parent
+    {
+        get;
+        set;
+    }
+
+    private SubareaRecord SelectedSubarea
+    {
+        get;
+        set;
+    }
+    private MonsterSpawnRecord SelectedSpawn
+    {
+        get;
+        set;
+    }
+    private List<SubareaRecord> SearchResults
+    {
+        get;
+        set;
+    } = new List<SubareaRecord>();
+
+    private string Search
+    {
+        get;
+        set;
+    } = "";
+
+    private void OnSearchTextChanged()
+    {
+        SearchResults = SubareaRecord.GetSubareas().Where(x => x.ToString().ToLower().Contains(Search.ToLower())).ToList();
+        StateHasChanged();
+    }
+
+    private void SelectSubarea(SubareaRecord item)
+    {
+        SelectedSubarea = item;
+    }
+    string GetMonsterIcon(short monsterId)
+    {
+        var source = string.Format("data:image/png;base64,{0}", ExternalResources.GetMonsterIcon(monsterId));
+        return source;
+    }
+}

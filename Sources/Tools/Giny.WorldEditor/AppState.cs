@@ -37,7 +37,7 @@ namespace Giny.WorldEditor
             get;
             set;
         }
-   
+
         public LoadingStep(string name, Action func)
         {
             Name = name;
@@ -45,7 +45,7 @@ namespace Giny.WorldEditor
             Func = func;
         }
 
-     
+
         public void Execute()
         {
             this.Running = true;
@@ -68,7 +68,26 @@ namespace Giny.WorldEditor
             set;
         } = PageEnum.Loader;
 
-        
+        public static MudTheme GinyTheme = new MudTheme()
+        {
+            Palette = new PaletteLight(),
+            PaletteDark = new PaletteDark()
+            {
+              //  Background = new MudBlazor.Utilities.MudColor(39, 39, 47, 255),
+                //Primary = new MudBlazor.Utilities.MudColor(134, 158, 0, 255),
+                AppbarBackground = new MudBlazor.Utilities.MudColor(19, 19, 27, 255),
+              //  Surface = new MudBlazor.Utilities.MudColor(49, 49, 57, 255), 
+
+
+            },
+
+            LayoutProperties = new LayoutProperties()
+            {
+                DrawerWidthLeft = "260px",
+                DrawerWidthRight = "300px"
+            }
+        };
+
 
     }
 }

@@ -1,10 +1,15 @@
-﻿using Giny.Protocol.Custom.Enums;
+﻿using Giny.Core.Extensions;
+using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Entities.Characters;
+using Giny.World.Managers.Fights;
+using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Managers.Monsters;
 using Giny.World.Managers.Stats;
 using Giny.World.Records.Items;
 using Giny.World.Records.Maps;
+using Giny.World.Records.Monsters;
 using Giny.World.Records.Spells;
 using Giny.World.Records.Tinsel;
 using System;
@@ -143,6 +148,36 @@ namespace Giny.World.Managers.Items
         {
             character.Inventory.AddItem(6671, 10);
             return true;
+        }
+
+        [ItemUsageHandler(EffectsEnum.Effect_SpellAnim)]
+        public static bool SpellAnim(Character character, EffectInteger effect)
+        {
+            if (effect is EffectDice dice)
+            {
+                character.PlaySpellAnimOnMap(character.CellId, (short)dice.Max, 1, (DirectionsEnum)dice.Value);
+                return true;
+            }
+            return false;
+        }
+
+        [ItemUsageHandler(EffectsEnum.Effect_ChallengeMonster)]
+        public static bool ChallengeMonster(Character character, EffectInteger effect)
+        {
+            if (effect is EffectDice dice)
+            {
+                MonsterRecord record = MonsterRecord.GetMonsterRecord((short)dice.Max);
+                Monster monster = new Monster(record, character.GetCell(), (byte)dice.Min);
+
+                var fight = FightManager.Instance.CreateFightContextual(character);
+                fight.BlueTeam.AddFighter(character.CreateFighter(fight.BlueTeam));
+
+                fight.RedTeam.AddFighter(new MonsterFighter(fight.RedTeam, character.GetCell(), monster));
+
+                fight.StartPlacement();
+                return true;
+            }
+            return false;
         }
     }
 }

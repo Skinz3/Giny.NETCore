@@ -949,7 +949,7 @@ namespace Giny.World.Managers.Fights
             }
         }
         /// <summary>
-        /// Unused anymore?
+        /// Obsolete ?
         /// </summary>
         public void Synchronize(CharacterFighter fighter)
         {

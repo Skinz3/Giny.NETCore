@@ -58,7 +58,19 @@
 
                         @foreach (SpellLevelRecord level in SelectedSpell.Levels)
                         {
-                            <MudListItem OnClick="() => SelectSpellLevel(level)" Text=@level.ToString() />
+                            <MudListItem OnClick="() => SelectSpellLevel(level)" Value="level">
+
+                            <div class="d-flex flex-row gap-3 align-center">
+                                <div class="d-flex flex-column">
+                                    <MudText Style="font-size:14px;line-height:16px;font-weight:600;">Grade @level.Grade</MudText>
+                                    <MudText Typo=Typo.caption Style="line-height:16px">@level.Id</MudText>
+
+                                </div>
+                            </div>
+
+                        </MudListItem>
+
+                         
                         }
                         <div class="d-flex flex-row gap-2 pa-2">
                             <MudButton IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Add" Variant="Variant.Filled">Add</MudButton>

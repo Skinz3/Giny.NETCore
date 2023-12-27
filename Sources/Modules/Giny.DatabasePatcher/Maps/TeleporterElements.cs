@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Giny.DatabasePatcher.Maps
 {
-    class Teleporters
+    class TeleporterElements
     {
         private static int[] ZaapiGfxIds = new int[]
         {
@@ -52,7 +52,7 @@ namespace Giny.DatabasePatcher.Maps
             int count = 0;
             foreach (var map in MapRecord.GetMaps())
             {
-             
+
                 foreach (var element in map.Elements)
                 {
 
@@ -70,7 +70,7 @@ namespace Giny.DatabasePatcher.Maps
                             count++;
                         }
                     }
-                   
+
                     if ((ZaapBones.Contains(element.BonesId) || ZaapGfxIds.Contains(element.GfxId)) && element.IsInMap())
                     {
                         if (map.Subarea.AreaId == 58) // havre sacs

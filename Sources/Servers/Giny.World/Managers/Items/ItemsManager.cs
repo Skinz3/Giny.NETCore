@@ -18,6 +18,7 @@ using Giny.Core.Extensions;
 using System.Text;
 using System.Threading.Tasks;
 using Giny.World.Modules;
+using Giny.Core;
 
 namespace Giny.World.Managers.Items
 {
@@ -394,7 +395,8 @@ namespace Giny.World.Managers.Items
                         }
                         catch (Exception ex)
                         {
-                            character.ReplyError(ex.ToString());
+                            Logger.Write("Item usage (" + item.Record.Id + ") : " + ex, Channels.Warning);
+                            character.ReplyError("Error on item usage.");
                             return false;
                         }
 

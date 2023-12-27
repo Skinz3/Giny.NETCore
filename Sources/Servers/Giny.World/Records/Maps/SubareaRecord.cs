@@ -123,7 +123,10 @@ namespace Giny.World.Records.Maps
                 AchievementRecord = AchievementRecord.GetAchievement(AchievementId);
             }
         }
-
+        public override string ToString()
+        {
+            return $"({Id}) {Name}";
+        }
         public static SubareaRecord GetSubarea(short id)
         {
             SubareaRecord result = null;
@@ -134,6 +137,7 @@ namespace Giny.World.Records.Maps
         {
             return Subareas.Values;
         }
+        
     }
     [ProtoContract]
     public struct ObjectMapPosition

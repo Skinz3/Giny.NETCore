@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Giny.ORM\Giny.ORM.csproj" />
+    <ProjectReference Include="..\..\Modules\Giny.CraftableDrop\Giny.CraftableDrop.csproj" />
     <ProjectReference Include="..\..\Servers\Giny.World\Giny.World.csproj" />
   </ItemGroup>
 

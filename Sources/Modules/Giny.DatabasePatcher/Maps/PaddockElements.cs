@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Giny.DatabasePatcher.Maps
 {
-    public class Paddocks
+    public class PaddockElements
     {
         private static int[] PaddockGfxId = new int[]
     {
