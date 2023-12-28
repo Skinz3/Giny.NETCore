@@ -60,7 +60,7 @@ namespace Giny.SpellTree
 
                     if (!results.Contains(record))
                     {
-                        results.Add(record);    
+                        results.Add(record);
                     }
                 }
             }

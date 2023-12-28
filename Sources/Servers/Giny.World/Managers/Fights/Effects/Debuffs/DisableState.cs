@@ -4,6 +4,7 @@ using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Buffs;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Managers.Fights.Triggers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,22 +27,27 @@ namespace Giny.World.Managers.Fights.Effects.Debuffs
 
             foreach (var target in targets)
             {
-                if (Effect.Duration == -1 || Effect.EffectEnum == EffectsEnum.Effect_DispelState)
+                if (Effect.EffectEnum == EffectsEnum.Effect_DispelState)
                 {
                     target.DispelState(Source, stateId);
                 }
-                else
+
+                else if (Effect.EffectEnum == EffectsEnum.Effect_DisableState)
                 {
                     foreach (var oldBuff in target.GetBuffs<DisableStateBuff>().Where(x => x.StateId == stateId).ToArray())
                     {
                         target.RemoveAndDispellBuff(Source, oldBuff);
                     }
 
-                
-
                     int id = target.BuffIdProvider.Pop();
                     Buff buff = new DisableStateBuff(id, stateId, target, this, Effect.DispellableEnum,
                         (short)ActionsEnum.ACTION_FIGHT_DISABLE_STATE);
+
+                    if (buff.Duration == -1 && !Trigger.IsInstant(Effect.Triggers))
+                    {
+                        buff.Duration = 1; // Inimouth (Royalmouth)
+                    }
+
                     target.AddBuff(buff);
                 }
             }

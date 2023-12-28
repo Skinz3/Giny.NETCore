@@ -4,6 +4,7 @@ using Giny.World.Managers.Effects;
 
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Records.Maps;
 using Giny.World.Records.Monsters;
 using System;
 using System.Collections.Generic;
@@ -21,21 +22,27 @@ namespace Giny.World.Managers.Fights.Effects.Summons
 
         }
 
+
         protected override void Apply(IEnumerable<Fighter> targets)
         {
             MonsterRecord record = MonsterRecord.GetMonsterRecord((short)Effect.Min);
 
-            if (record != null && Source.Fight.IsCellFree(CastHandler.Cast.BaseTargetCell))
+            if (record != null)
             {
-                SummonedMonster summon = CreateSummon(record, (byte)Effect.Max);
+                var summonCell = GetSummonCell();
 
-                if (Source.CanSummon() || !summon.UseSummonSlot())
+                if (summonCell != null)
                 {
-                    Source.Fight.AddSummon(Source, summon);
+                    SummonedMonster summon = CreateSummon(record, (byte)Effect.Max, summonCell);
+
+                    if (Source.CanSummon() || !summon.UseSummonSlot())
+                    {
+                        Source.Fight.AddSummon(Source, summon);
+                    }
                 }
             }
 
-            
+
         }
     }
 }

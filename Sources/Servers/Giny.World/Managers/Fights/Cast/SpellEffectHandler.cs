@@ -165,6 +165,11 @@ namespace Giny.World.Managers.Fights.Cast
 
             return results.ToList();
         }
+        protected CellRecord? GetSummonCell()
+        {
+            var cells = GetAffectedCells().OrderBy(x => x.Point.ManhattanDistanceTo(TargetCell.Point));
+            return cells.FirstOrDefault(x => Source.Fight.IsCellFree(x));
+        }
         /// <summary>
         /// Tri les cibles de l'effet par cercles concentriques
         /// en partant de π/2
@@ -310,7 +315,7 @@ namespace Giny.World.Managers.Fights.Cast
         {
             if (Trigger.IsInstant(Effect.Triggers))
             {
-                Apply(targets); 
+                Apply(targets);
             }
             else
             {
@@ -329,9 +334,9 @@ namespace Giny.World.Managers.Fights.Cast
         }
         protected abstract void Apply(IEnumerable<Fighter> targets);
 
-        protected SummonedMonster CreateSummon(MonsterRecord record, byte grade)
+        protected SummonedMonster CreateSummon(MonsterRecord record, byte grade, CellRecord cell)
         {
-            SummonedMonster fighter = new SummonedMonster(Source, record, this, grade, CastHandler.Cast.BaseTargetCell);
+            SummonedMonster fighter = new SummonedMonster(Source, record, this, grade, cell);
             return fighter;
         }
 

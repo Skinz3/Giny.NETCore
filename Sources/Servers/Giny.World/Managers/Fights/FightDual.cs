@@ -45,6 +45,7 @@ namespace Giny.World.Managers.Fights
         protected override IEnumerable<IFightResult> GenerateResults()
         {
             return from entry in base.GetFighters<Fighter>(false)
+                   where !entry.IsSummoned()
                    select entry into fighter
                    select fighter.GetFightResult();
         }

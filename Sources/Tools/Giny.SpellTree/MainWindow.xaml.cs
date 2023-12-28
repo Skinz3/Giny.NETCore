@@ -114,6 +114,20 @@ namespace Giny.SpellTree
                 DatabaseManager.Instance.LoadTable<MonsterRecord>();
                 SpellRecord.Initialize();
 
+                foreach (var level in SpellLevelRecord.GetSpellLevels())
+                {
+                    var test = SpellRecord.GetSpellRecord(level.SpellId);
+
+                    foreach (var eff in level.Effects.OfType<EffectDice>())
+                    {
+
+                        if (eff.EffectEnum == EffectsEnum.Effect_Summon && eff.RawZone != "P1")
+                        {
+                            break;
+                        }
+                    }
+                }
+
                 Dispatcher.Invoke(() =>
                 {
                     spells.Visibility = Visibility.Visible;
