@@ -42,6 +42,8 @@ namespace Giny.AdditionalDrop
 
         const double LowerBoundsDropRateMonster = 0.01d;
 
+        const double Base = 0.99d;
+
         public List<ItemRecord> GetDrops(MonsterRecord monster)
         {
             return Drops.ContainsKey(monster) ? Drops[monster] : new List<ItemRecord>();
@@ -148,12 +150,10 @@ namespace Giny.AdditionalDrop
 
         public double ComputeMonsterDropProbability(short monsterLevel)
         {
-            double a = (LowerBoundsDropRateMonster - UpperBoundDropRateMonster) / 199d;
-            double b = UpperBoundDropRateMonster - a;
-
-            double level = Math.Min(200d, monsterLevel);
-
-            return (a * level) + b;
+            return UpperBoundDropRateMonster +
+                (Math.Pow(Base, monsterLevel - 1) - 1) *
+                ((LowerBoundsDropRateMonster - UpperBoundDropRateMonster) /
+                (Math.Pow(Base, 199d) - 1d));
         }
 
 
