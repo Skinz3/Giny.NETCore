@@ -79,7 +79,7 @@ namespace Giny.World.Managers.Fights.Buffs.SpellModification
             {
                 if (action == SpellModifierActionTypeEnum.ACTION_SET && Math.Abs(value) != Math.Abs(previous.Value))
                 {
-                    throw new NotImplementedException("Modification set overlap for spellId " + spellId);
+                    //throw new NotImplementedException("Modification set overlap for spellId " + spellId);
                 }
 
 
