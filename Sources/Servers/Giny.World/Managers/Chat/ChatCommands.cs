@@ -510,7 +510,7 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
-            client.Character.Reply(client.Character.Stats[CharacteristicEnum.TACKLE_BLOCK].TotalInContext());
+            client.Character.Reply(client.Character.Fighter.Fight.Stats[CharacteristicEnum.TACKLE_BLOCK].TotalInContext());
             return;
 
             for (int i = 0; i < 1; i++)
