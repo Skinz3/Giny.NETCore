@@ -209,9 +209,9 @@ namespace Giny.World.Managers.Fights.Cast
                     a1 = a2;
                 }
 
-                var d1 = cell1.Point.DistanceTo(centerCell.Point);
+                var d1 = cell1.Point.ManhattanDistanceTo(centerCell.Point);
 
-                var d2 = cell2.Point.DistanceTo(centerCell.Point);
+                var d2 = cell2.Point.ManhattanDistanceTo(centerCell.Point);
 
                 if (d1 == d2)
                 {
@@ -225,15 +225,17 @@ namespace Giny.World.Managers.Fights.Cast
                      */
                     if (InvertTargetsSort)
                     {
-                        return cell2.Point.DistanceTo(centerCell.Point).CompareTo(cell1.Point.DistanceTo(centerCell.Point));
+                        return cell2.Point.ManhattanDistanceTo(centerCell.Point).CompareTo(cell1.Point.ManhattanDistanceTo(centerCell.Point));
                     }
                     else
                     {
-                        return cell1.Point.DistanceTo(centerCell.Point).CompareTo(cell2.Point.DistanceTo(centerCell.Point));
+                        return cell1.Point.ManhattanDistanceTo(centerCell.Point).CompareTo(cell2.Point.ManhattanDistanceTo(centerCell.Point));
                     }
                 }
 
             });
+
+          
 
         }
         public bool IsValidTarget(Fighter actor)

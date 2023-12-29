@@ -2265,7 +2265,7 @@ namespace Giny.World.Managers.Fights.Fighters
         private void TriggerBuffs(Damage damage)
         {
 
-            if (damage.WontTriggerBuffs || damage.Fix)
+            if (damage.WontTriggerBuffs || (damage.Fix && !damage.FromPushback))
             {
                 return;
             }
