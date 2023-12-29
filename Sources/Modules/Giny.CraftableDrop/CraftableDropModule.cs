@@ -39,9 +39,9 @@ namespace Giny.AdditionalDrop
         /// <summary>
         /// Pourcentage (unitée fixe)
         /// </summary>
-        const double UpperBoundDropRateMonster = 0.12d;
+        const double UpperBoundDropRateMonster = 0.15d; // 0.12
 
-        const double LowerBoundsDropRateMonster = 0.04d;
+        const double LowerBoundsDropRateMonster = 0.07d; // 0.04d
 
         public List<ItemRecord> GetDrops(MonsterRecord monster)
         {
@@ -234,7 +234,7 @@ namespace Giny.AdditionalDrop
                 }
             }
 
-            Logger.Write(Drops.Count + " monsters has drop(s).");
+            Logger.Write($"{Drops.Count} monsters has drop(s). (Bounds : {Math.Round(LowerBoundsDropRateMonster * 100d, 2)}% - {Math.Round(UpperBoundDropRateMonster * 100d, 2)}%)");
         }
     }
 }

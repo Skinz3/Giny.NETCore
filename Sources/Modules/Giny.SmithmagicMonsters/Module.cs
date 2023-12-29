@@ -40,7 +40,7 @@ namespace Giny.SmithmagicMonsters
             EffectsEnum.Effect_AddRange,
         };
 
-        private const int ExoRate = 15;
+        private const double ExoRate = 0.10d;
 
         private const int ItemUpgradeToleranceLevel = 30;
 
@@ -98,7 +98,7 @@ namespace Giny.SmithmagicMonsters
 
             character.Inventory.Unequip(item.PositionEnum);
 
-            var valExo = random.Next(0, 101);
+            var valExo = random.NextDouble();
 
             if (valExo <= ExoRate && dungeon.OptimalPlayerLevel == 200 && !ItemHasExo(item))
             {

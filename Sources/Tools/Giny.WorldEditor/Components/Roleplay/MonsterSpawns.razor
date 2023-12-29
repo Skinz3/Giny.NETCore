@@ -47,7 +47,7 @@
 
                     <TemplateColumn Title="Icon">
                         <CellTemplate>
-                            <MudImage Src="@(GetMonsterIcon((short)context.Item.MonsterId))" />
+                            <MudImage Src="@(IconHelper.GetMonsterIcon((short)context.Item.MonsterId))" />
                         </CellTemplate>
                     </TemplateColumn>
 
@@ -131,9 +131,5 @@
     {
         SelectedSubarea = item;
     }
-    string GetMonsterIcon(short monsterId)
-    {
-        var source = string.Format("data:image/png;base64,{0}", ExternalResources.GetMonsterIcon(monsterId));
-        return source;
-    }
+   
 }

@@ -53,7 +53,7 @@ namespace Giny.World.Modules
                     }
                 }
             }
-
+            Logger.Write($"{m_modules.Count} module(s) found.");
             AssemblyCore.OnAssembliesLoaded();
         }
 
@@ -62,7 +62,7 @@ namespace Giny.World.Modules
         {
             foreach (var module in m_modules)
             {
-                Logger.WriteColor2("Applying '" + module.Key + "'");
+                Logger.Write("Loading module '" + module.Key + "'", Channels.Info);
                 module.Value.Initialize();
                 module.Value.CreateHooks();
             }
@@ -78,7 +78,6 @@ namespace Giny.World.Modules
 
             string moduleName = type.GetCustomAttribute<ModuleAttribute>().ModuleName;
             IModule module = (IModule)Activator.CreateInstance(type);
-            Logger.Write("Module '" + moduleName + "' loaded");
             m_modules.Add(moduleName, module);
         }
     }

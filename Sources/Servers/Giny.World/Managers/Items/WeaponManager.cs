@@ -132,7 +132,7 @@ namespace Giny.World.Managers.Items
                 InitialCooldown = 0,
                 MaxCastPerTarget = 0,
                 MaxRange = weapon.MaxRange,
-                
+
                 MaxStack = 0,
                 MinCastInterval = 0,
                 MinPlayerLevel = 0,
@@ -146,7 +146,7 @@ namespace Giny.World.Managers.Items
                 StatesAuthorized = new int[0],
                 StatesForbidden = new int[0], // affaiblie
                 StatesRequired = new int[0],
-                StatesCriterion ="",
+                StatesCriterion = "",
             };
         }
 

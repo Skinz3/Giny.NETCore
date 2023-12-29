@@ -16,7 +16,7 @@ namespace Giny.DofusDrop
     [Module("Dofus drop")]
     public class Module : IModule
     {
-        private const double DofusDropPercentage = 1.5d;
+        private const double DofusDropPercentage = 0.015d;
 
         private const string DropMessage = "<b>{0}</b> vient de drop le <b>{1}</b>. Félicitation a lui !";
 
@@ -48,10 +48,10 @@ namespace Giny.DofusDrop
                 {
                     var dofusItem = items.Random(random);
 
-                    var chance = (random.Next(0, 100) + random.NextDouble());
-                    var dropRate = DofusDropPercentage;
+                    var chance = random.NextDouble();
 
-                    if (!(dropRate >= chance))
+
+                    if (!(DofusDropPercentage >= chance))
                         return;
 
                     result.Character.Inventory.AddItem((short)dofusItem.Id, 1);
@@ -68,7 +68,7 @@ namespace Giny.DofusDrop
 
         public void Initialize()
         {
-            Logger.Write("Dofus loot chance : " + DofusDropPercentage + "%");
+            Logger.Write("Dofus loot chance : " + Math.Round(DofusDropPercentage * 100d, 2) + "%");
         }
 
     }

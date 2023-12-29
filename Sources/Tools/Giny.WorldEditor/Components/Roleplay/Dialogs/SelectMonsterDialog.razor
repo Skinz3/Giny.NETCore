@@ -24,7 +24,7 @@
                         <MudListItem Value="context" @onclick=Confirm>
 
                             <div class="d-flex flex-row gap-2 align-center">
-                                <MudImage Width="50" Height="50" Src="@GetMonsterIcon(context)" />
+                                <MudImage Width="50" Height="50" Src="@IconHelper.GetMonsterIcon((short)context.Id)" />
                                 <MudText Style="font-weight:600">(@context.Id)</MudText>
                                 <MudText>@context.Name</MudText>
                             </div>
@@ -89,13 +89,7 @@
         SearchResults = MonsterRecord.GetMonsterRecords().Where(x => x.ToString().ToLower().Contains(Search.ToLower())).ToList();
         StateHasChanged();
     }
-    private string GetMonsterIcon(MonsterRecord monster)
-    {
-        var base64image = ExternalResources.GetMonsterIcon((short)monster.Id);
-        var source = string.Format("data:image/png;base64,{0}", base64image);
 
-        return source;
-    }
 
 
     void Confirm() => MudDialog.Close<MonsterRecord>

@@ -31,7 +31,7 @@
                             <div class="d-flex flex-row gap-2 align-center">
 
 
-                                <MudImage ObjectFit="ObjectFit.Fill" Width="60" Height="60" Src="@GetMonsterIcon((short)context.Id)" />
+                                <MudImage ObjectFit="ObjectFit.Fill" Width="60" Height="60" Src="@IconHelper.GetMonsterIcon((short)context.Id)" />
 
                                 <div class="d-flex flex-column">
                                     <MudText Style="font-size:14px;font-weight:600;line-height:16px">@context.Name</MudText>
@@ -62,7 +62,7 @@
                 <Columns>
                     <TemplateColumn Title="Picture">
                         <CellTemplate>
-                            <MudImage Width="40" Height="40" Src="@GetItemIcon(context.Item)" />
+                            <MudImage Width="40" Height="40" Src="@IconHelper.GetItemIcon(context.Item)" />
 
                         </CellTemplate>
                     </TemplateColumn>
@@ -84,11 +84,7 @@
                         </CellTemplate>
                     </TemplateColumn>
 
-                    <TemplateColumn Title="Final Drop probability">
-                        <CellTemplate>
-                            <MudText Style="font-weight:500;line-height:16px">@GetFinalDroprate(context.Item) %</MudText>
-                        </CellTemplate>
-                    </TemplateColumn>
+                  
 
 
 
@@ -144,26 +140,12 @@
     {
         return Module.GetDrops(SelectedMonster);
     }
-    private double GetFinalDroprate(ItemRecord item)
-    {
-        var itemRate = Module.ComputeItemDropWeight(item);
-        var monsterRate = Module.ComputeMonsterDropProbability(SelectedMonster.Grades.Last().Level) / 100d;
-
-        return Math.Round((itemRate * monsterRate) * 100d, 1);
-    }
+   
     private void SelectMonster(MonsterRecord item)
     {
         SelectedMonster = item;
     }
-    private string GetItemIcon(ItemRecord item)
-    {
-        Item d2oItem = D2OCache.GetItem((int)item.Id);
-
-        var base64image = ExternalResources.GetItemIcon((int)d2oItem.IconId);
-        var source = string.Format("data:image/png;base64,{0}", base64image);
-
-        return source;
-    }
+   
     protected override void OnAfterRender(bool firstRender)
     {
         if (Loading)
@@ -180,10 +162,6 @@
     {
         base.OnInitialized();
     }
-    string GetMonsterIcon(short monsterId)
-    {
-        var source = string.Format("data:image/png;base64,{0}", ExternalResources.GetMonsterIcon(monsterId));
-        return source;
-    }
+   
 }
 

@@ -107,7 +107,7 @@
 
                                             <TemplateColumn Title="Icon">
                                                 <CellTemplate>
-                                                    <MudImage Src="@(GetMonsterIcon((short)context.Item.Value.Id))" />
+                                                    <MudImage Src="@(IconHelper.GetMonsterIcon((short)context.Item.Value.Id))" />
                                                 </CellTemplate>
                                             </TemplateColumn>
 
@@ -249,22 +249,17 @@
 
                 if (monster.IsBoss)
                 {
-                    return GetMonsterIcon(monsterId);
+                    return IconHelper.GetMonsterIcon(monsterId);
                 }
             }
         }
        
 
-        return GetMonsterIcon(5814);
+        return IconHelper.GetMonsterIcon(5814);
     }
 
 
 
-    string GetMonsterIcon(short monsterId)
-    {
-        var source = string.Format("data:image/png;base64,{0}", ExternalResources.GetMonsterIcon(monsterId));
-        return source;
-    }
     async void FromJeuOnline()
     {
         var result = await DialogHelper.OpenDialog<TextInputDialog>(DialogService, new DialogParameters<TextInputDialog>(), "Dialog");

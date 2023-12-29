@@ -1,6 +1,7 @@
 ﻿using Giny.Core;
 using Giny.Core.DesignPattern;
 using Giny.Core.Extensions;
+using Giny.Core.Logging;
 using Giny.Core.Time;
 using Giny.IO.D2OClasses;
 using Giny.World.Managers.Entities;
@@ -34,7 +35,11 @@ namespace Giny.World.Managers.Monsters
         {
             Random random = new Random();
 
-            foreach (var map in MapRecord.GetMaps())
+            ProgressLogger logger = new ProgressLogger();
+
+            var maps = MapRecord.GetMaps();
+            int i = 0;
+            foreach (var map in maps)
             {
                 if (map.IsDungeonMap)
                 {
@@ -44,7 +49,10 @@ namespace Giny.World.Managers.Monsters
                 {
                     SpawnMonsterGroups(map, random);
                 }
+                logger.WriteProgressBar(i++, maps.Count());
             }
+
+            logger.Flush();
 
             foreach (var spawn in MonsterStaticSpawnRecord.GetStaticSpawns())
             {

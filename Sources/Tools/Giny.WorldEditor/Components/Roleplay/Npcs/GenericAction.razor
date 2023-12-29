@@ -1,28 +1,73 @@
-﻿@using Giny.World.Managers.Generic;
-<MudPaper MinWidth="200px" Class="pa-3">
+﻿@using Giny.IO.D2OClasses;
+@using Giny.World.Managers.Generic;
+@using Giny.World.Records.Items;
+@using Giny.WorldEditor.Caching;
+@using Giny.WorldEditor.Components.Roleplay.Dialogs;
+<MudPaper MinWidth="500px" Class="d-flex flex-column justify-start gap-3 pa-3">
 
-    <MudSelect @bind-Value="Action.ActionIdentifier" Label="Action">
+
+    <MudButton Style="width:100%" StartIcon="@Icons.Material.Filled.Copyright" IconColor="Color.Primary" Variant="Variant.Filled">Criteria</MudButton>
+
+    <MudSelect @bind-Value="Action.ActionIdentifier" Immediate=true Label="Action">
         @foreach (GenericActionEnum item in Enum.GetValues(typeof(GenericActionEnum)))
         {
             <MudSelectItem Value="@item">@item</MudSelectItem>
         }
     </MudSelect>
 
-    @if (GetParam1Label() != null)
-    {
-        <MudTextField Label="@GetParam1Label()" @bind-Value="Action.Param1"></MudTextField>
+    <MudPaper Elevation=0 Class="d-flex flex-column justify-start gap-1 ">
 
-    }
 
-    @if (GetParam2Label() != null)
-    {
-        <MudTextField Label="@GetParam2Label()" @bind-Value="Action.Param2"></MudTextField>
-    }
-    @if (GetParam3Label() != null)
-    {
-        <MudTextField Label="Param3" @bind-Value="Action.Param3"></MudTextField>
-    }
+        @if (Action.ActionIdentifier == GenericActionEnum.RemoveItem || Action.ActionIdentifier == GenericActionEnum.AddItem)
+        {
+            <div class="d-flex flex-row justify-space-between  gap-1 align-center">
+
+                @if (!string.IsNullOrEmpty(Action.Param1) && ItemRecord.GetItem(long.Parse(Action.Param1)) != null)
+                {
+
+                    <div class="d-flex flex-row gap-3 align-center">
+                        <MudImage Width="50" Height="50" Src="@IconHelper.GetItemIcon(ItemRecord.GetItem(long.Parse(Action.Param1)))" />
+
+                        <div class="d-flex flex-column">
+                            <MudText Style="font-size:14px;font-weight:600;line-height:16px">@ItemRecord.GetItem(long.Parse(Action.Param1)).Name</MudText>
+                            <MudText Typo=Typo.caption Style="line-height:16px">(@ItemRecord.GetItem(long.Parse(Action.Param1)).Id)</MudText>
+
+                        </div>
+                    </div>
+                }
+
+                <div>
+                    <MudButton OnClick="()=> SelectItem()" StartIcon="@Icons.Material.Filled.Edit" IconColor="Color.Primary" Variant="Variant.Filled">Modifier</MudButton>
+                </div>
+
+            </div>
+
+            <MudTextField Label="Quantitée" @bind-Value=Action.Param2 Variant="Variant.Text"></MudTextField>
+        }
+        else if (Action.ActionIdentifier == GenericActionEnum.Teleport)
+        {
+            <MudTextField Label="MapId" @bind-Value=Action.Param1 Variant="Variant.Text"></MudTextField>
+            <MudTextField Label="CellId" @bind-Value=Action.Param2 Variant="Variant.Text"></MudTextField>
+        }
+        else if (Action.ActionIdentifier == GenericActionEnum.LearnOrnament
+        || Action.ActionIdentifier == GenericActionEnum.LearnTitle || Action.ActionIdentifier == GenericActionEnum.StartQuest)
+        {
+            <MudTextField Label="Id" @bind-Value=Action.Param1 Variant="Variant.Text"></MudTextField>
+        }
+        else if (Action.ActionIdentifier == GenericActionEnum.AddKamas || Action.ActionIdentifier == GenericActionEnum.AddExperience)
+        {
+            <MudTextField Label="Amount" @bind-Value=Action.Param1 Variant="Variant.Text"></MudTextField>
+        }
+        else if (Action.ActionIdentifier == GenericActionEnum.PokefusWish)
+        {
+            <MudTextField Label="WishId" @bind-Value=Action.Param1 Variant="Variant.Text"></MudTextField>
+        }
+
+    </MudPaper>
+
 </MudPaper>
+
+@inject IDialogService DialogService;
 
 @code {
     [Parameter]
@@ -31,49 +76,17 @@
         get;
         set;
     }
-    public string GetParam3Label()
-    {
-        return null;
-    }
 
-
-    public string GetParam2Label()
+    private async void SelectItem()
     {
-        switch (Action.ActionIdentifier)
+        var result = await DialogHelper.OpenDialog<SelectItemDialog>(DialogService, new DialogParameters<SelectItemDialog>(), "SelectItem");
+
+        if (!result.Cancelled)
         {
-            case GenericActionEnum.RemoveItem:
-            case GenericActionEnum.AddItem:
-                return "Quantity";
-            case GenericActionEnum.Teleport:
-                return "CellId";
-
+            Action.Param1 = (result.Data as ItemRecord).Id.ToString();
+            StateHasChanged();
         }
-
-        return null;
     }
 
-    public string GetParam1Label()
-    {
-        switch (Action.ActionIdentifier)
-        {
-            case GenericActionEnum.Zaap:
-                return "Zone";
-            case GenericActionEnum.AddKamas:
-                return "Amount";
-            case GenericActionEnum.RemoveItem:
-            case GenericActionEnum.AddItem:
-                return "ItemId";
-            case GenericActionEnum.Teleport:
-                return "MapId";
-            case GenericActionEnum.LearnTitle:
-                return "TitleId";
-            case GenericActionEnum.PokefusWish:
-                return "Wish count";
-            case GenericActionEnum.StartQuest:
-                return "Quest Id";
 
-        }
-
-        return null;
-    }
 }

@@ -19,7 +19,20 @@
                     <div style="max-height:200px;overflow-y:scroll">
                         @foreach (var replyRecord in Replies)
                         {
-                            <MudListItem Icon="@Icons.Material.Filled.Build" IconColor=Color.Primary Typo="Typo.body2" OnClick="() =>SelectReply(replyRecord)" Text=@replyRecord.ActionIdentifier.ToString() />
+                            <MudListItem OnClick="() =>SelectReply(replyRecord)" Value="replyRecord">
+
+                                <div class="d-flex flex-row gap-3 align-center">
+                                    <MudIcon Icon="@Icons.Material.Filled.Build" Color=Color.Primary />
+
+                                    <div class="d-flex flex-column">
+                                        <MudText Style="font-size:14px;font-weight:600;line-height:16px">@replyRecord.ActionIdentifier.ToString()</MudText>
+                                        <MudText Typo=Typo.caption Style="line-height:16px">@replyRecord.Criteria</MudText>
+
+                                    </div>
+                                </div>
+
+                            </MudListItem>
+
                         }
                     </div>
                     <MudListItem>
@@ -28,8 +41,10 @@
                     </MudListItem>
                 </MudList>
             </MudPaper>
+            <div>
+                <GenericAction Action="SelectedReply"></GenericAction>
 
-            <GenericAction Action="SelectedReply"></GenericAction>
+            </div>
 
         </div>
     </DialogContent>
