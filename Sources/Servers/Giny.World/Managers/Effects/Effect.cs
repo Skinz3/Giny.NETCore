@@ -185,11 +185,12 @@ namespace Giny.World.Managers.Effects
                     return new Trigger(TriggerTypeEnum.OnTeleportPortal);
                 case "CT":
                     return new Trigger(TriggerTypeEnum.OnTackle);
+                case "T":
+                    return new Trigger(TriggerTypeEnum.OnTackled);
                 case "CI":
                     return new Trigger(TriggerTypeEnum.OnSummon);
                 case "H":
                     return new Trigger(TriggerTypeEnum.OnHealed);
-
                 case "LPU":
                     return new Trigger(TriggerTypeEnum.CasterHealedTotalRegen);
                 case "P":
@@ -240,6 +241,8 @@ namespace Giny.World.Managers.Effects
                     return new Trigger(TriggerTypeEnum.OnCriticalHit);
                 case "M":
                     return new Trigger(TriggerTypeEnum.OnMoved);
+                case "PO":
+                    return new Trigger(TriggerTypeEnum.OnCasterMoveNoWalk);
                 case "X":
                     return new Trigger(TriggerTypeEnum.OnDeath);
                 case "I":

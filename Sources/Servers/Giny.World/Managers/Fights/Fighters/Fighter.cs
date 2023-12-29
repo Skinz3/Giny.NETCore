@@ -388,6 +388,8 @@ namespace Giny.World.Managers.Fights.Fighters
                 tackler.TriggerBuffs(TriggerTypeEnum.OnTackle, null);
             }
 
+            TriggerBuffs(TriggerTypeEnum.OnTackled, null);
+
             Tackled?.Invoke(this);
         }
         private List<CellRecord> ApplyTackle(List<CellRecord> path)
@@ -1539,6 +1541,11 @@ namespace Giny.World.Managers.Fights.Fighters
                 this.TriggerBuffs(TriggerTypeEnum.OnSwitchPosition, movement);
             }
 
+            if (movement.Type == MovementType.SwitchPosition || movement.Type == MovementType.Push ||
+                 movement.Type == MovementType.Pull)
+            {
+                source.TriggerBuffs(TriggerTypeEnum.OnCasterMoveTarget, movement);
+            }
             if (movement.Type == MovementType.Walk)
             {
                 for (int i = 0; i < movement.MpCost; i++)

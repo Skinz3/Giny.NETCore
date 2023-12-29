@@ -90,8 +90,9 @@ namespace Giny.World.Managers.Fights.Triggers
 
         OnPushed, // P
         OnMoved, // M
-        OnTackled, // tF
-        OnTackle, // tS
+        OnCasterMoveTarget, // PO
+        OnTackled, // T
+        OnTackle, // CT
 
         CasterCriticalHitOnAlly, // DCCBA
         CasterCriticalHitOnEnemy,// DCCBE
