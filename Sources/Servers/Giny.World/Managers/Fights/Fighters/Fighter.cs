@@ -1008,6 +1008,17 @@ namespace Giny.World.Managers.Fights.Fighters
                 // this.RefreshStats();
 
                 OnSpellCasted(handler);
+
+                if (cast.IsCriticalHit)
+                {
+                    this.TriggerBuffs(TriggerTypeEnum.OnCriticalHit, null);
+
+                    if (cast.Target != null && cast.Target.IsFriendlyWith(this))
+                    {
+                        this.TriggerBuffs(TriggerTypeEnum.CasterCriticalHitOnAlly, null);
+                    }
+                }
+
             }
 
 
@@ -2394,15 +2405,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 damage.Source.TriggerBuffs(TriggerTypeEnum.CasterInflictDamageAlly, damage);
             }
 
-            if (damage.Handler != null && damage.Handler.CastHandler.Cast.IsCriticalHit)
-            {
-                damage.Source.TriggerBuffs(TriggerTypeEnum.OnCriticalHit, damage);
 
-                if (damage.Source.IsFriendlyWith(this))
-                {
-                    this.TriggerBuffs(TriggerTypeEnum.CasterCriticalHitOnAlly, damage);
-                }
-            }
 
         }
         public void OnStatsBuff(EffectsEnum effectEnum)
