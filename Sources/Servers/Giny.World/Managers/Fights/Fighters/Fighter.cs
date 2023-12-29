@@ -1790,6 +1790,13 @@ namespace Giny.World.Managers.Fights.Fighters
             if (oldState == GameActionFightInvisibilityStateEnum.INVISIBLE && state == GameActionFightInvisibilityStateEnum.VISIBLE)
             {
                 ShowFighter();
+                TriggerBuffs(TriggerTypeEnum.OnReveals, null);
+
+            }
+
+            if (state == GameActionFightInvisibilityStateEnum.INVISIBLE)
+            {
+                TriggerBuffs(TriggerTypeEnum.OnInvisible, null);
             }
         }
         public GameActionFightInvisibilityStateEnum GetInvisibilityStateFor(Fighter fighter)

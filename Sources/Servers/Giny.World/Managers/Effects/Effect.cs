@@ -319,6 +319,12 @@ namespace Giny.World.Managers.Effects
                 case "DTE":
                     return new Trigger(TriggerTypeEnum.OnDamagedTurnEnd);
 
+                case "IOFF":
+                    return new Trigger(TriggerTypeEnum.OnReveals);
+
+                case "ION":
+                    return new Trigger(TriggerTypeEnum.OnInvisible);
+
                     /* 
                      * Not sure about how it works
                      * 

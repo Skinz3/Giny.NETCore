@@ -107,6 +107,9 @@ namespace Giny.World.Managers.Fights.Triggers
 
         OnTeleportPortal, // TP
 
+        OnReveals,
+        OnInvisible,
+
         /*
          * Custom
          */
