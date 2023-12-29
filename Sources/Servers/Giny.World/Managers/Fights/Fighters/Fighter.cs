@@ -1939,6 +1939,8 @@ namespace Giny.World.Managers.Fights.Fighters
                 delta = Stats.MaxLifePoints - Stats.LifePoints;
             }
 
+            var oldLife = Stats.Life.Current;
+
 
             if (delta > 0)
             {
@@ -1949,6 +1951,11 @@ namespace Giny.World.Managers.Fights.Fighters
 
                 TriggerBuffs(TriggerTypeEnum.LifeAffected, null); // not sure about this one!!
                 TriggerBuffs(TriggerTypeEnum.LifePointsAffected, null);
+
+                if (oldLife < Stats.Life.Current && Stats.Life.Percentage == 100)
+                {
+                    TriggerBuffs(TriggerTypeEnum.CasterHealedTotalRegen, null);
+                }
             }
 
 
@@ -2412,6 +2419,19 @@ namespace Giny.World.Managers.Fights.Fighters
                 damage.Source.TriggerBuffs(TriggerTypeEnum.CasterInflictDamageAlly, damage);
             }
 
+            if (damage.Handler != null && damage.Handler.CastHandler.Cast.IsCriticalHit)
+            {
+                damage.Source.TriggerBuffs(TriggerTypeEnum.OnCriticalHit, damage);
+
+                if (damage.Source.IsFriendlyWith(this))
+                {
+                    damage.Source.TriggerBuffs(TriggerTypeEnum.CasterCriticalHitOnAlly, damage);
+                }
+                else
+                {
+                    damage.Source.TriggerBuffs(TriggerTypeEnum.CasterCriticalHitOnEnemy, damage);
+                }
+            }
 
 
         }

@@ -34,6 +34,7 @@ namespace Giny.World.Managers.Fights.Triggers
         LifeAffected, // V
 
         CasterHealed, // CH
+        CasterHealedTotalRegen, // LPU
 
         OnDamaged, // D
         OnDamagedAir, // DA
@@ -93,11 +94,12 @@ namespace Giny.World.Managers.Fights.Triggers
         OnTackle, // tS
 
         CasterCriticalHitOnAlly, // DCCBA
+        CasterCriticalHitOnEnemy,// DCCBE
 
         CasterAddShield, // CS
         OnShieldApplied, // S
 
-     
+
 
 
         // CMPAS :  si le lanceur réussit sa prochaine tentative de retrait de PM (caster)

@@ -189,6 +189,9 @@ namespace Giny.World.Managers.Effects
                     return new Trigger(TriggerTypeEnum.OnSummon);
                 case "H":
                     return new Trigger(TriggerTypeEnum.OnHealed);
+
+                case "LPU":
+                    return new Trigger(TriggerTypeEnum.CasterHealedTotalRegen);
                 case "P":
                     return new Trigger(TriggerTypeEnum.OnPushed);
                 case "TE":
@@ -277,6 +280,9 @@ namespace Giny.World.Managers.Effects
                     return new Trigger(TriggerTypeEnum.OnMpUsed);
                 case "DCCBA":
                     return new Trigger(TriggerTypeEnum.CasterCriticalHitOnAlly);
+
+                case "DCCBE":
+                    return new Trigger(TriggerTypeEnum.CasterCriticalHitOnEnemy);
 
                 case "CDE":
                     return new Trigger(TriggerTypeEnum.CasterInflictDamageEarth);
