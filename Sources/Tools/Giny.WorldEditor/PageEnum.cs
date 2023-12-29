@@ -24,6 +24,6 @@ namespace Giny.WorldEditor
         Server,
         Quests,
         MonsterSpawns,
-        MonsterDrops,
+        MonsterDropsModule,
     }
 }

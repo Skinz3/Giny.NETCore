@@ -242,7 +242,7 @@ namespace Giny.World.Managers.Effects
                 case "M":
                     return new Trigger(TriggerTypeEnum.OnMoved);
                 case "PO":
-                    return new Trigger(TriggerTypeEnum.OnCasterMoveNoWalk);
+                    return new Trigger(TriggerTypeEnum.OnCasterMoveTarget);
                 case "X":
                     return new Trigger(TriggerTypeEnum.OnDeath);
                 case "I":

@@ -35,7 +35,7 @@
 
                                 <div class="d-flex flex-column">
                                     <MudText Style="font-size:14px;font-weight:600;line-height:16px">@context.Name</MudText>
-                                    <MudText Typo=Typo.caption Style="line-height:16px">@Math.Round(Module.ComputeMonsterDropProbability(context.Grades.Last().Level),1) %</MudText>
+                                    <MudText Typo=Typo.caption Style="line-height:16px">@(Math.Round(Module.ComputeMonsterDropProbability(context.Grades.Last().Level) * 100d, 2)) %</MudText>
 
                                 </div>
                             </div>
@@ -142,18 +142,14 @@
     }
     private List<ItemRecord> GetSelectedDrops()
     {
-        var drops = SelectedMonster.Drops.Select(x => ItemRecord.GetItem(x.ItemGId));
-
-        var additional = Module.GetDrops(SelectedMonster);
-
-        return drops.Concat(additional).ToList();
+        return Module.GetDrops(SelectedMonster);
     }
     private double GetFinalDroprate(ItemRecord item)
     {
-        var itemRate = Module.ComputeItemDropWeight(item) / 100d;
+        var itemRate = Module.ComputeItemDropWeight(item);
         var monsterRate = Module.ComputeMonsterDropProbability(SelectedMonster.Grades.Last().Level) / 100d;
 
-        return Math.Round((itemRate * monsterRate) * 100d,1);
+        return Math.Round((itemRate * monsterRate) * 100d, 1);
     }
     private void SelectMonster(MonsterRecord item)
     {

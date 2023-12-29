@@ -38,8 +38,23 @@
 
                 <div style="height:70vh;overflow-y:scroll">
 
+
+
                     <Virtualize Items="@SearchResults">
-                        <MudListItem OnClick="() => SelectEffect(context)" Text=@context.ToString() />
+                        <MudListItem OnClick="() => SelectEffect(context)" Value="context">
+
+                            <div class="d-flex flex-row gap-3 align-center">
+                                <MudIcon Icon="@Icons.Outlined.HorizontalRule" />
+                                <div class="d-flex flex-column">
+                                    <MudText Style="font-size:14px;line-height:16px;font-weight:600;">@context.ToString().Replace("Effect_","")</MudText>
+                                    <MudText Typo=Typo.caption Style="line-height:16px">@(Effects.ContainsKey(context) ? Effects[context].Count : "0") sorts</MudText>
+
+                                </div>
+                            </div>
+
+                        </MudListItem>
+
+
                     </Virtualize>
                 </div>
 
@@ -59,7 +74,7 @@
                 <div style="height:80vh;overflow-y:scroll">
 
                     <Virtualize Items="@DisplayedSpells">
-                         <MudListItem OnClick="() => DisplaySpell(context)" Value="context">
+                        <MudListItem OnClick="() => DisplaySpell(context)" Value="context">
 
                             <div class="d-flex flex-row gap-3 align-center">
                                 <MudIcon Icon="@Icons.Outlined.Workspaces" />
@@ -67,28 +82,28 @@
                                     <MudText Style="font-size:14px;line-height:16px;font-weight:600;">@context.Name</MudText>
                                     <MudText Typo=Typo.caption Style="line-height:16px">@(string.IsNullOrWhiteSpace(context.Description) ? "" : context.Description)</MudText>
 
+                                    </div>
                                 </div>
-                            </div>
 
-                        </MudListItem>
+                            </MudListItem>
 
-                    </Virtualize>
-                </div>
+                        </Virtualize>
+                    </div>
 
-            </MudList>
+                </MudList>
 
-        </MudPaper>
-    </MudItem>
+            </MudPaper>
+        </MudItem>
 
-    <MudItem xs="8">
-        <SpellComponent @ref="spellComponent"></SpellComponent>
-    </MudItem>
-
-
-</MudGrid>
+        <MudItem xs="8">
+            <SpellComponent @ref="spellComponent"></SpellComponent>
+        </MudItem>
 
 
-@code {
+    </MudGrid>
+
+
+    @code {
     [CascadingParameter]
     public Home Parent
     {

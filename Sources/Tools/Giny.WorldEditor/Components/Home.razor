@@ -115,7 +115,8 @@
                     <MudTreeViewItem Icon="@Icons.Outlined.LensBlur" Value="@("Monsters")">
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.MonsterSpawns)" Match="NavLinkMatch.All">Spawns</MudNavLink>
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Dungeons)" Match="NavLinkMatch.All">Dungeons</MudNavLink>
-                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.MonsterDrops)" Match="NavLinkMatch.All">Drops</MudNavLink>
+                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" Match="NavLinkMatch.All">Drops</MudNavLink>
+                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.MonsterDropsModule)" Match="NavLinkMatch.All">Drops (Module)</MudNavLink>
                     </MudTreeViewItem>
 
                     <MudTreeViewItem Icon="@Icons.Outlined.LensBlur" Value="@("Items")">
@@ -209,7 +210,7 @@
             {
                 <MonsterSpawns></MonsterSpawns>
             }
-            else if (AppState.Page == PageEnum.MonsterDrops)
+            else if (AppState.Page == PageEnum.MonsterDropsModule)
             {
                 <MonsterDrops></MonsterDrops>
             }
