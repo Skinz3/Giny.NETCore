@@ -780,10 +780,10 @@ namespace Giny.World.Managers.Fights.Fighters
         }
         public bool BuffMaxStackReached(Buff buff)
         {
-            bool result = buff.Cast.Spell.Level.MaxStack > 0 &&
+            bool flag2 = buff.Cast.Spell.Level.MaxStack > 0 &&
                 buff.Cast.Spell.Level.MaxStack <= this.Buffs.Count((Buff entry) => entry.IsSimilar(buff));
 
-            return result;
+            return flag2;
         }
 
         public void SwapPlacementPosition(Fighter target)

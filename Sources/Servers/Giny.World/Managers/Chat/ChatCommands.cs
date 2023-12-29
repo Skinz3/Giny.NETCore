@@ -510,7 +510,19 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
-            client.Character.Reply(client.Character.Fighter.Fight.Stats[CharacteristicEnum.TACKLE_BLOCK].TotalInContext());
+            List<SpellRecord> spells = new List<SpellRecord>();
+
+            foreach (var level in SpellLevelRecord.GetSpellLevels())
+            {
+                if (level.MaxStack == -1)
+                {
+                    var s = SpellRecord.GetSpellRecord(level.SpellId);
+
+                    if (!spells.Contains(s))
+                        spells.Add(s);
+                }
+            }
+
             return;
 
             for (int i = 0; i < 1; i++)

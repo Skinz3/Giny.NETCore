@@ -38,7 +38,7 @@ namespace Giny.AdditionalDrop
         /// <summary>
         /// Pourcentage (unitée fixe)
         /// </summary>
-        const double UpperBoundDropRateMonster = 0.06d;
+        const double UpperBoundDropRateMonster = 0.10d;
 
         const double LowerBoundsDropRateMonster = 0.01d;
 
@@ -74,7 +74,7 @@ namespace Giny.AdditionalDrop
                     // first pass
                     double monsterDropProbability = ComputeMonsterDropProbability(monster.Level);
 
-                    if (result.Fighter.Random.NextDouble() < monsterDropProbability)
+                    if (result.Fighter.Random.NextDouble() > monsterDropProbability)
                     {
                         continue;
                     }

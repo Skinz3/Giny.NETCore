@@ -625,9 +625,6 @@ namespace Giny.World.Managers.Fights
             TurnStarted?.Invoke(this, FighterPlaying);
 
 
-            var test = FighterPlaying.Stats[
-                CharacteristicEnum.TACKLE_BLOCK].TotalInContext();
-
 
         }
 
