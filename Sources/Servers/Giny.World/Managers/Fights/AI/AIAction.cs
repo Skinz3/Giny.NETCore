@@ -44,11 +44,16 @@ namespace Giny.World.Managers.Fights.AI
 
         protected MapPoint GetTargetPoint(short spellId, Func<MapPoint, bool> predicate)
         {
+            IEnumerable<MapPoint> points = GetTargetPoints(spellId);
+            MapPoint targetPoint = points.Shuffle().FirstOrDefault(predicate);
+            return targetPoint;
+        }
+        protected IEnumerable<MapPoint> GetTargetPoints(short spellId)
+        {
             var spell = Fighter.GetSpell(spellId);
             Set zone = Fighter.GetSpellZone(spell.Level, Fighter.Cell.Point);
             IEnumerable<MapPoint> points = zone.EnumerateValidPoints();
-            MapPoint targetPoint = points.Shuffle().FirstOrDefault(predicate);
-            return targetPoint;
+            return points;
         }
         protected int GetMaxAgressiveRange()
         {

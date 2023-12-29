@@ -2,6 +2,7 @@
 using Giny.Core.Extensions;
 using Giny.IO.D2O;
 using Giny.IO.D2OClasses;
+using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
 using Giny.World.Api;
 using Giny.World.Managers.Experiences;
@@ -42,6 +43,25 @@ namespace Giny.AdditionalDrop
         const double UpperBoundDropRateMonster = 0.15d; // 0.12
 
         const double LowerBoundsDropRateMonster = 0.07d; // 0.04d
+
+
+        private ItemTypeEnum[] DroppableItemTypes = new ItemTypeEnum[]
+       {
+            ItemTypeEnum.AXE,
+            ItemTypeEnum.BOW,
+            ItemTypeEnum.DAGGER,
+            ItemTypeEnum.SHOVEL,
+            ItemTypeEnum.SHIELD,
+            ItemTypeEnum.RING,
+            ItemTypeEnum.HAT,
+            ItemTypeEnum.AMULET,
+            ItemTypeEnum.BOOTS,
+            ItemTypeEnum.CLOAK,
+            ItemTypeEnum.SWORD,
+            ItemTypeEnum.PET,
+            ItemTypeEnum.TROPHY,
+
+       };
 
         public List<ItemRecord> GetDrops(MonsterRecord monster)
         {
@@ -139,12 +159,24 @@ namespace Giny.AdditionalDrop
 
         public double ComputeItemDropWeight(ItemRecord item)
         {
-            double a = (LowerBoundDropWeightItem - UpperBoundDropWeightItem) / 199d;
-            double b = UpperBoundDropWeightItem - a;
+            const double LevelMax = (double)ExperienceManager.MaxLevel;
 
-            double level = Math.Min(200d, item.Level);
+            const double FalloffCenter = 50;
 
-            return (a * level) + b;
+            // plus la valeur est grande, plus la chute courbe est adoucie
+            const double FalloffIntensity = 30;
+
+            var a = UpperBoundDropWeightItem;
+
+            var b = (LowerBoundDropWeightItem - UpperBoundDropWeightItem);
+
+            var c = Math.Atan(-(item.Level - FalloffCenter) / FalloffIntensity) - Math.Atan(FalloffCenter / FalloffIntensity);
+
+            var d = Math.Atan((FalloffCenter - LevelMax) / FalloffIntensity) - Math.Atan(FalloffCenter / FalloffIntensity);
+
+            var res = a + b * (c / d);
+
+            return res;
         }
 
         /* public double ComputeMonsterDropProbability(short level)
@@ -214,6 +246,10 @@ namespace Giny.AdditionalDrop
                             continue;
                         }
                         if (item.Usable)
+                        {
+                            continue;
+                        }
+                        if (!DroppableItemTypes.Contains(item.TypeEnum))
                         {
                             continue;
                         }

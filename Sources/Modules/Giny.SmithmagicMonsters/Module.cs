@@ -24,12 +24,13 @@ namespace Giny.SmithmagicMonsters
             ItemTypeEnum.BOW,
             ItemTypeEnum.DAGGER,
             ItemTypeEnum.SHOVEL,
-
+            ItemTypeEnum.SHIELD,
             ItemTypeEnum.RING,
             ItemTypeEnum.HAT,
             ItemTypeEnum.AMULET,
             ItemTypeEnum.BOOTS,
             ItemTypeEnum.CLOAK,
+            ItemTypeEnum.SWORD,
 
         };
 

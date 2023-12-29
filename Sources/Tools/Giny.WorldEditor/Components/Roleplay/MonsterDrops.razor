@@ -84,7 +84,7 @@
                         </CellTemplate>
                     </TemplateColumn>
 
-                  
+
 
 
 
@@ -127,6 +127,7 @@
     private void OnSearchTextChanged()
     {
         SearchResults = MonsterRecord.GetMonsterRecords().Where(x => x.ToString().ToLower().Contains(Search.ToLower())).ToList();
+
         StateHasChanged();
     }
 
@@ -140,12 +141,12 @@
     {
         return Module.GetDrops(SelectedMonster);
     }
-   
+
     private void SelectMonster(MonsterRecord item)
     {
         SelectedMonster = item;
     }
-   
+
     protected override void OnAfterRender(bool firstRender)
     {
         if (Loading)
@@ -162,6 +163,6 @@
     {
         base.OnInitialized();
     }
-   
+
 }
 

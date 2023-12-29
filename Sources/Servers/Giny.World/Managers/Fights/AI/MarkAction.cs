@@ -26,7 +26,14 @@ namespace Giny.World.Managers.Fights.AI
             }
             foreach (var spellRecord in GetSpells().Where(x => x.Category == SpellCategoryEnum.Mark).Shuffle())
             {
-                var targetPoint = GetTargetPoint(spellRecord.Id, x => Fighter.Fight.IsCellFree(x.CellId));
+                var points = GetTargetPoints(spellRecord.Id).Where(x => Fighter.Fight.IsCellFree(x.CellId));
+
+                if (points.Count() == 0)
+                {
+                    continue;
+                }
+
+                var targetPoint = points.OrderBy(x => x.ManhattanDistanceTo(target.Cell.Point)).First();
 
                 if (targetPoint != null)
                 {
