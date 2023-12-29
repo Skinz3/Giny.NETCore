@@ -28,7 +28,7 @@ namespace Giny.World.Managers.Fights.Effects.Summons
 
             MonsterRecord record = MonsterRecord.GetMonsterRecord((short)Effect.Min);
 
-            CellRecord summonCell = GetSummonCell();
+            CellRecord? summonCell = GetSummonCell();
 
             if (record != null && summonCell != null)
             {

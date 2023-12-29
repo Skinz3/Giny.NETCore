@@ -42,6 +42,21 @@
             display: none;
         }
 
+    .indicator {
+        background-color: #e6a147;
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+    }
+
+    .red {
+        background-color: #f55454;
+    }
+
+    .green {
+        background-color: #6ab968;
+    }
+
 </style>
 
 
@@ -57,11 +72,16 @@
 
             <MudSpacer />
 
+
             @if (Notification != null)
             {
-                <MudAlert Dense=true Severity="@NotificationSeverity.Value">@Notification</MudAlert>
+                <MudAlert class="mx-2" Dense=true Severity="@NotificationSeverity.Value">@Notification</MudAlert>
             }
 
+            <div class="d-flex gap-1 align-center">
+                <div class="@GetIndicatorClass()"></div>
+                <MudText Style="font-weight:600" Typo="Typo.caption">World API</MudText>
+            </div>
 
             <MudToggleIconButton @bind-Toggled=@DarkMode
                                  Icon="@Icons.Filled.LightMode" Title="Off"
@@ -84,27 +104,27 @@
                 </div>
 
             </MudDrawerHeader>
-            <MudNavMenu>
+            <MudNavMenu Color="Color.Primary">
                 <MudTreeView Style="overflow-y:scroll;padding-bottom:50px" Color=Color.Primary T="string">
-                    <MudTreeViewItem Icon="@Icons.Outlined.Webhook" Value="@("Spells")">
+                    <MudTreeViewItem Icon="@Icons.Outlined.LensBlur" Value="@("Spells")">
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.SpellExplorer)" Match="NavLinkMatch.All">Spells</MudNavLink>
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.EffectsRelator)" Match="NavLinkMatch.All">Spells by effects</MudNavLink>
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.TriggersRelator)" Match="NavLinkMatch.All">Spells by triggers</MudNavLink>
                     </MudTreeViewItem>
 
-                    <MudTreeViewItem Icon="@Icons.Outlined.Webhook" Value="@("Monsters")">
+                    <MudTreeViewItem Icon="@Icons.Outlined.LensBlur" Value="@("Monsters")">
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.MonsterSpawns)" Match="NavLinkMatch.All">Spawns</MudNavLink>
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Dungeons)" Match="NavLinkMatch.All">Dungeons</MudNavLink>
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.MonsterDrops)" Match="NavLinkMatch.All">Drops</MudNavLink>
                     </MudTreeViewItem>
 
-                    <MudTreeViewItem Icon="@Icons.Outlined.Webhook" Value="@("Items")">
+                    <MudTreeViewItem Icon="@Icons.Outlined.LensBlur" Value="@("Items")">
 
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Items)" Match="NavLinkMatch.All">Items</MudNavLink>
 
                     </MudTreeViewItem>
 
-                    <MudTreeViewItem Icon="@Icons.Outlined.Webhook" Value="@("Npcs")">
+                    <MudTreeViewItem Icon="@Icons.Outlined.LensBlur" Value="@("Npcs")">
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Quests)" Match="NavLinkMatch.All">Quests</MudNavLink>
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Npcs)" Match="NavLinkMatch.All">Npcs</MudNavLink>
                     </MudTreeViewItem>
@@ -226,6 +246,42 @@
         set;
     }
 
+    public bool? ApiAvailable
+    {
+        get;
+        set;
+    }
+    string GetIndicatorClass()
+    {
+        if (ApiAvailable == null)
+        {
+            return "indicator";
+        }
+        return ApiAvailable.Value ? "indicator green" : "indicator red";
+    }
+    public async Task<bool?> TryToConnectApi()
+    {
+        return await Task.Run(() =>
+          {
+              ApiAvailable = null;
+              InvokeAsync(() => { StateHasChanged(); });
+
+              if (WorldApi.Available())
+              {
+                  ApiAvailable = true;
+                  InvokeAsync(() => { StateHasChanged(); });
+              }
+              else
+              {
+                  ApiAvailable = false;
+                  InvokeAsync(() => { StateHasChanged(); });
+              }
+              return ApiAvailable;
+          });
+
+
+    }
+
 
     private void CloseClient()
     {
@@ -273,13 +329,19 @@
             OpenRequiresLoadingDialog();
             return;
         }
-        Task.Run(() =>
+
+
+        Task.Run(async () =>
        {
+           await this.SetNotification("Saving...", Severity.Info);
+
+           var api = await TryToConnectApi();
+
            WorldManager.SaveDatabase(this);
 
            WorldManager.SaveI18N(this);
 
-           if (WorldApi.Available())
+           if (api.HasValue && api.Value)
            {
                WorldManager.RequestReload(this);
 

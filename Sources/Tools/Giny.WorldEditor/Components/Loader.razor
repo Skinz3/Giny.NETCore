@@ -166,17 +166,7 @@
 
     };
 
-    private void TryToConnectApi()
-    {
-        if (WorldApi.Available())
-        {
-            Snackbar.Add("Connection with the world server established.", Severity.Success);
-        }
-        else
-        {
-            Snackbar.Add("Unable to connect to the world server, verify that the server is online or edit the configuration.", Severity.Info);
-        }
-    }
+
 
     protected override void OnInitialized()
     {
@@ -209,10 +199,7 @@
 
         DatabaseManager.Instance.OnStartLoadTable += OnStartLoadTable;
 
-        Task.Run(() =>
-        {
-            TryToConnectApi();
-        });
+        Parent.TryToConnectApi();
 
         LoadTask = Task.Run(() =>
            {

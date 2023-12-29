@@ -3,22 +3,22 @@
 <div class="d-flex flex-column gap-4 pa-4">
 
 
-    
+
 
     <div class="d-flex align-center gap-4 justify-space-between">
         <MudText Typo="Typo.h5">Realtime inspector</MudText>
         <MudButton style="width:10%" OnClick=Update Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Autorenew" IconColor="Color.Primary" Size="Size.Large">Update</MudButton>
 
     </div>
-    
-    @if (!ApiAvailable)
+
+    @if (Parent.ApiAvailable.HasValue && !Parent.ApiAvailable.Value)
     {
         <MudAlert Severity="Severity.Warning">Unable to connect to world server via web API. Please check that the server is running or modifying the configuration.</MudAlert>
     }
 
-    @if (ApiAvailable)
+    @if (Parent.ApiAvailable.HasValue && Parent.ApiAvailable.Value)
     {
-        <MudSimpleTable  Dense=false Bordered=true Hover=true>
+        <MudSimpleTable Dense=false Bordered=true Hover=true>
             <thead>
                 <tr>
                     <th>Description</th>
@@ -30,33 +30,33 @@
                 <tr>
                     <td>Api Host</td>
                     <td><MudLink>@(ConfigManager<WorldViewConfig>.Instance.WorldApiUrl)</MudLink></td>
-                </tr>
-                <tr>
-                    <td>Date</td>
-                    <td>@LastTimestamp</td>
-                </tr>
-                <tr>
-                    <td>Number of clients</td>
-                    <td>@Stats.Online</td>
-                </tr>
-                <tr>
-                    <td>Number of ip(s)</td>
-                    <td>@Stats.OnlineIps</td>
-                </tr>
-                <tr>
-                    <td>Client peak</td>
-                    <td>@Stats.Peak</td>
-                </tr>
-                <tr>
-                    <td>Fights</td>
-                    <td>@Stats.Fights</td>
-                </tr>
-                <tr>
-                    <td>Memory</td>
-                    <td><b>@Stats.Memory</b></td>
-                </tr>
-            </tbody>
-        </MudSimpleTable>
+                    </tr>
+                    <tr>
+                        <td>Date</td>
+                        <td>@LastTimestamp</td>
+                    </tr>
+                    <tr>
+                        <td>Number of clients</td>
+                        <td>@Stats.Online</td>
+                    </tr>
+                    <tr>
+                        <td>Number of ip(s)</td>
+                        <td>@Stats.OnlineIps</td>
+                    </tr>
+                    <tr>
+                        <td>Client peak</td>
+                        <td>@Stats.Peak</td>
+                    </tr>
+                    <tr>
+                        <td>Fights</td>
+                        <td>@Stats.Fights</td>
+                    </tr>
+                    <tr>
+                        <td>Memory</td>
+                        <td><b>@Stats.Memory</b></td>
+                    </tr>
+                </tbody>
+            </MudSimpleTable>
     }
 
 
@@ -65,17 +65,19 @@
 
 @code {
 
+    [CascadingParameter]
+    public Home Parent
+    {
+        get;
+        set;
+    }
     private Stats Stats
     {
         get;
         set;
     }
 
-    public bool ApiAvailable
-    {
-        get;
-        set;
-    }
+
 
     private DateTime LastTimestamp
     {
@@ -83,11 +85,11 @@
         set;
     }
 
-    private void Update()
+    private async void Update()
     {
-        this.ApiAvailable = WorldApi.Available();
+        var result = await Parent.TryToConnectApi();
 
-        if (ApiAvailable)
+        if (result.HasValue && result.Value)
         {
             this.Stats = WorldApi.GetStats();
 

@@ -1,6 +1,7 @@
 ﻿using Giny.Core;
 using Giny.Core.Extensions;
 using Giny.IO.D2O;
+using Giny.IO.D2OClasses;
 using Giny.Protocol.Enums;
 using Giny.World.Api;
 using Giny.World.Managers.Fights;
@@ -11,10 +12,12 @@ using Giny.World.Modules;
 using Giny.World.Records.Items;
 using Giny.World.Records.Jobs;
 using Giny.World.Records.Monsters;
+using MySqlX.XDevAPI.Common;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,13 +28,19 @@ namespace Giny.AdditionalDrop
     {
         private Dictionary<MonsterRecord, List<ItemRecord>> Drops = new Dictionary<MonsterRecord, List<ItemRecord>>();
 
-        const double UpperBoundDropRateItem = 10d;
+        /// <summary>
+        /// Pondération (unitée relative)
+        /// </summary>
+        const double UpperBoundDropWeightItem = 10d;
 
-        const double LowerBoundsDropRateItem = 0.2d;
+        const double LowerBoundDropWeightItem = 0.2d;
 
-        const double UpperBoundDropRateMonster = 10d;
+        /// <summary>
+        /// Pourcentage (unitée fixe)
+        /// </summary>
+        const double UpperBoundDropRateMonster = 0.06d;
 
-        const double LowerBoundsDropRateMonster = 0.5d;
+        const double LowerBoundsDropRateMonster = 0.01d;
 
         public List<ItemRecord> GetDrops(MonsterRecord monster)
         {
@@ -58,56 +67,79 @@ namespace Giny.AdditionalDrop
 
             foreach (var monster in monsterTeam.GetFighters<MonsterFighter>(false))
             {
+                // Monster has craftable drop
+
                 if (Drops.ContainsKey(monster.Record))
                 {
+                    // first pass
+                    double monsterDropProbability = ComputeMonsterDropProbability(monster.Level);
 
-                    var monsterDropProbability = ComputeMonsterDropProbability(monster.Level);
-
-                    if (result.Fighter.Random.Next(0, 101) < monsterDropProbability)
+                    if (result.Fighter.Random.NextDouble() < monsterDropProbability)
                     {
                         continue;
                     }
 
-
-                    var drops = Drops[monster.Record];
-
-                    Dictionary<ItemRecord, double> dropRates = new Dictionary<ItemRecord, double>();
-
-                    foreach (var item in drops)
+                    else
                     {
-                        dropRates.Add(item, ComputeItemDropProbability(item) / drops.Count);
+                        PerformDrop(result, monster);
                     }
-
-                    Dictionary<ItemRecord, double> results = new Dictionary<ItemRecord, double>();
-
-                    foreach (var pair in dropRates)
-                    {
-                        var chance = result.Fighter.Random.Next(0, 100 + 1);
-
-                        if (chance < pair.Value)
-                        {
-                            results.Add(pair.Key, pair.Value);
-                        }
-                    }
-
-
-                    if (results.Count > 0)
-                    {
-                        var droppedItem = results.OrderBy(x => x.Value).First().Key;
-                        result.Character.Inventory.AddItem((short)droppedItem.Id, 1);
-                        result.Loot.AddItem((short)droppedItem.Id, 1);
-                    }
-
 
                 }
             }
-
         }
 
-        public double ComputeItemDropProbability(ItemRecord item)
+        private void PerformDrop(FightPlayerResult result, MonsterFighter monster)
         {
-            double a = (LowerBoundsDropRateItem - UpperBoundDropRateItem) / 199d;
-            double b = UpperBoundDropRateItem - a;
+
+            // Liste des items droppable sur un monstre
+            List<ItemRecord> drops = Drops[monster.Record];
+
+            Dictionary<ItemRecord, double> dropRates = new Dictionary<ItemRecord, double>();
+
+
+            // Calcul des taux de pondération pour chaque item 
+
+            foreach (var item in drops)
+            {
+                dropRates.Add(item, ComputeItemDropWeight(item));
+            }
+
+            // Calcul de la somme des taux
+
+            double weightTotal = dropRates.Sum(x => x.Value);
+
+            // Normalization des taux 
+
+            foreach (var item in dropRates.Keys)
+            {
+                dropRates[item] = dropRates[item] / weightTotal;
+            }
+
+
+            double num = result.Fighter.Random.NextDouble();
+
+
+            double dropRangeMax = 0;
+
+            foreach (var pair in dropRates)
+            {
+                dropRangeMax += pair.Value;
+
+                if (num <= dropRangeMax)
+                {
+                    var droppedItem = pair.Key;
+                    result.Character.Inventory.AddItem((short)droppedItem.Id, 1);
+                    result.Loot.AddItem((short)droppedItem.Id, 1);
+                    break;
+                }
+
+            }
+        }
+
+        public double ComputeItemDropWeight(ItemRecord item)
+        {
+            double a = (LowerBoundDropWeightItem - UpperBoundDropWeightItem) / 199d;
+            double b = UpperBoundDropWeightItem - a;
 
             double level = Math.Min(200d, item.Level);
 

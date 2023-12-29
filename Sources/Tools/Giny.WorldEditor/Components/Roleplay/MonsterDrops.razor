@@ -80,7 +80,7 @@
                     </TemplateColumn>
                     <TemplateColumn Title="Drop probability">
                         <CellTemplate>
-                            <MudText Style="font-weight:500;line-height:16px">@Math.Round(Module.ComputeItemDropProbability(context.Item),1) %</MudText>
+                            <MudText Style="font-weight:500;line-height:16px">@Math.Round(Module.ComputeItemDropWeight(context.Item),1) %</MudText>
                         </CellTemplate>
                     </TemplateColumn>
 
@@ -150,7 +150,7 @@
     }
     private double GetFinalDroprate(ItemRecord item)
     {
-        var itemRate = Module.ComputeItemDropProbability(item) / 100d;
+        var itemRate = Module.ComputeItemDropWeight(item) / 100d;
         var monsterRate = Module.ComputeMonsterDropProbability(SelectedMonster.Grades.Last().Level) / 100d;
 
         return Math.Round((itemRate * monsterRate) * 100d,1);

@@ -35,9 +35,9 @@
 
                 @foreach (var owner in GetOwners())
                 {
-                    <MudChip  Class="mt-2" Color="Color.Primary" Variant="Variant.Text">
-                      @owner
-                        </MudChip>
+                    <MudChip Class="mt-2" Color="Color.Primary" Variant="Variant.Text">
+                        @owner
+                    </MudChip>
                 }
             </MudCardContent>
         </MudCard>
@@ -60,17 +60,17 @@
                         {
                             <MudListItem OnClick="() => SelectSpellLevel(level)" Value="level">
 
-                            <div class="d-flex flex-row gap-3 align-center">
-                                <div class="d-flex flex-column">
-                                    <MudText Style="font-size:14px;line-height:16px;font-weight:600;">Grade @level.Grade</MudText>
-                                    <MudText Typo=Typo.caption Style="line-height:16px">@level.Id</MudText>
+                                <div class="d-flex flex-row gap-3 align-center">
+                                    <div class="d-flex flex-column">
+                                        <MudText Style="font-size:14px;line-height:16px;font-weight:600;">Grade @level.Grade</MudText>
+                                        <MudText Typo=Typo.caption Style="line-height:16px">@level.Id</MudText>
 
+                                    </div>
                                 </div>
-                            </div>
 
-                        </MudListItem>
+                            </MudListItem>
 
-                         
+
                         }
                         <div class="d-flex flex-row gap-2 pa-2">
                             <MudButton IconColor="Color.Primary" StartIcon="@Icons.Material.Filled.Add" Variant="Variant.Filled">Add</MudButton>
@@ -88,7 +88,11 @@
                             </MudListSubheader>
                             @foreach (EffectDice effect in SelectedSpellLevel.Effects)
                             {
-                                <MudListItem OnClick="() => SelectEffect(effect)" Text=@effect.GetDescription() />
+                                <MudListItem OnClick="() => SelectEffect(effect)">
+
+                                    <MudText Style="font-weight:500;font-size:14px">@effect.GetDescription()</MudText>
+
+                                </MudListItem>
                             }
 
                             <div class="d-flex flex-row gap-2 pa-2">
@@ -422,7 +426,7 @@
 
         foreach (var breed in BreedRecord.GetBreeds())
         {
-            if (breed.SpellIds.Any(x=>x == SelectedSpell.Id))
+            if (breed.SpellIds.Any(x => x == SelectedSpell.Id))
             {
                 results.Add(breed.Name);
             }
