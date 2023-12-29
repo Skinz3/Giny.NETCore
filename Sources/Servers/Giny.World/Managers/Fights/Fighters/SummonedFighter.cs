@@ -140,7 +140,7 @@ namespace Giny.World.Managers.Fights.Fighters
         }
         private void ChangeContextIfNeeded()
         {
-            if (Controller != null)
+            if (Controller != null && Controller != Fight.FighterPlaying)
             {
                 var nextSummon = Controller.GetNextControlableSummon(1);
 

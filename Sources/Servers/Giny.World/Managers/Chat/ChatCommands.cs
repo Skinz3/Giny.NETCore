@@ -510,29 +510,7 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
-            /*foreach (var questObjective in QuestObjectiveRecord.GetQuestObjectives())
-            {
-                if (questObjective.Type == QuestObjectiveTypeEnum.GoToNpc ||
-                    questObjective.Type == QuestObjectiveTypeEnum.NpcTalkBack)
-                {
-                    var npcId = questObjective.Parameters.Param0;
-
-                    var mapId = questObjective.MapId;
-
-                    var map = MapRecord.GetMap(mapId);
-
-                    if (map == null)
-                        continue;
-                    if (map.Instance.GetEntities<Npc>().Where(x => x.Template.Id == npcId).Count() == 0)
-                    {
-                        NpcsManager.Instance.AddNpc((int)map.Id, map.RandomWalkableCell().Id, DirectionsEnum.DIRECTION_SOUTH_WEST, (short)npcId); ;
-
-                    }
-
-                }
-            }
-            client.Character.Reply("OK");*/
-            client.Character.Record.Quests.Clear();
+            client.Character.Reply(client.Character.Stats[CharacteristicEnum.TACKLE_BLOCK].TotalInContext());
             return;
 
             for (int i = 0; i < 1; i++)
