@@ -4,6 +4,7 @@ using Giny.IO.D2O;
 using Giny.IO.D2OClasses;
 using Giny.Protocol.Enums;
 using Giny.World.Api;
+using Giny.World.Managers.Experiences;
 using Giny.World.Managers.Fights;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Managers.Fights.Results;
@@ -38,11 +39,9 @@ namespace Giny.AdditionalDrop
         /// <summary>
         /// Pourcentage (unitée fixe)
         /// </summary>
-        const double UpperBoundDropRateMonster = 0.10d;
+        const double UpperBoundDropRateMonster = 0.12d;
 
-        const double LowerBoundsDropRateMonster = 0.01d;
-
-        const double Base = 0.99d;
+        const double LowerBoundsDropRateMonster = 0.04d;
 
         public List<ItemRecord> GetDrops(MonsterRecord monster)
         {
@@ -148,12 +147,40 @@ namespace Giny.AdditionalDrop
             return (a * level) + b;
         }
 
-        public double ComputeMonsterDropProbability(short monsterLevel)
+        /* public double ComputeMonsterDropProbability(short level)
+         {
+                 level = (short)Math.Min(200, level);
+
+             const double Base = 0.99d;
+
+             return UpperBoundDropRateMonster +
+                 (Math.Pow(Base, level - 1) - 1) *
+                 ((LowerBoundsDropRateMonster - UpperBoundDropRateMonster) /
+                 (Math.Pow(Base, 199d) - 1d));
+         } */
+
+        public double ComputeMonsterDropProbability(short level)
         {
-            return UpperBoundDropRateMonster +
-                (Math.Pow(Base, monsterLevel - 1) - 1) *
-                ((LowerBoundsDropRateMonster - UpperBoundDropRateMonster) /
-                (Math.Pow(Base, 199d) - 1d));
+            const double LevelMax = (double)ExperienceManager.MaxLevel;
+
+            level = (short)Math.Min(LevelMax, level);
+
+            const double FalloffCenter = 70;
+
+            // plus la valeur est grande, plus la chute courbe est adoucie
+            const double FalloffIntensity = 30;
+
+            var a = UpperBoundDropRateMonster;
+
+            var b = (LowerBoundsDropRateMonster - UpperBoundDropRateMonster);
+
+            var c = Math.Atan(-(level - FalloffCenter) / FalloffIntensity) - Math.Atan(FalloffCenter / FalloffIntensity);
+
+            var d = Math.Atan((FalloffCenter - LevelMax) / FalloffIntensity) - Math.Atan(FalloffCenter / FalloffIntensity);
+
+            var res = a + b * (c / d);
+
+            return res;
         }
 
 
