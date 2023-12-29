@@ -78,7 +78,7 @@ namespace Giny.World.Managers.Fights.AI
 
         private double GetEfficiency(SpellCast cast)
         {
-            double value = cast.CastCell.Point.ManhattanDistanceTo(Fighter.Cell.Point);
+            double value = -cast.CastCell.Point.ManhattanDistanceTo(Fighter.Cell.Point);
 
             if (cast.Target != null && !cast.Target.IsSummoned())
             {
