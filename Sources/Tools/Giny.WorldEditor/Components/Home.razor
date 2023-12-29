@@ -104,7 +104,7 @@
                 </div>
 
             </MudDrawerHeader>
-            <MudNavMenu Color="Color.Primary">
+            <MudNavMenu>
                 <MudTreeView Style="overflow-y:scroll;padding-bottom:50px" Color=Color.Primary T="string">
                     <MudTreeViewItem Icon="@Icons.Outlined.LensBlur" Value="@("Spells")">
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.SpellExplorer)" Match="NavLinkMatch.All">Spells</MudNavLink>
@@ -115,7 +115,6 @@
                     <MudTreeViewItem Icon="@Icons.Outlined.LensBlur" Value="@("Monsters")">
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.MonsterSpawns)" Match="NavLinkMatch.All">Spawns</MudNavLink>
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.Dungeons)" Match="NavLinkMatch.All">Dungeons</MudNavLink>
-                        <MudNavLink Icon="@Icons.Outlined.ArrowRight" Match="NavLinkMatch.All">Drops</MudNavLink>
                         <MudNavLink Icon="@Icons.Outlined.ArrowRight" OnClick="() => Navigate(PageEnum.MonsterDropsModule)" Match="NavLinkMatch.All">Drops (Module)</MudNavLink>
                     </MudTreeViewItem>
 

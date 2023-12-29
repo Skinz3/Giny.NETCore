@@ -157,13 +157,13 @@ namespace Giny.World.Managers.Fights.Cast
 
             IEnumerable<Fighter> fighters = Source.Fight.GetFighters(affectedCells);
 
-            IEnumerable<Fighter> results = fighters.Where(entry => entry.Alive && !entry.IsCarried() && IsValidTarget(entry));
+            List<Fighter> results = fighters.Where(entry => entry.Alive && !entry.IsCarried() && IsValidTarget(entry)).ToList();
 
-            results = results.Where(x => !x.IsImmuneToSpell(CastHandler.Cast.SpellId));
+            results = results.Where(x => !x.IsImmuneToSpell(CastHandler.Cast.SpellId)).ToList();
 
-            SortTargets(results.ToList());
+            SortTargets(results);
 
-            return results.ToList();
+            return results;
         }
         protected CellRecord? GetSummonCell()
         {
@@ -235,7 +235,7 @@ namespace Giny.World.Managers.Fights.Cast
 
             });
 
-          
+
 
         }
         public bool IsValidTarget(Fighter actor)
