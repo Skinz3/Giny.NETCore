@@ -1108,7 +1108,7 @@ namespace Giny.World.Managers.Fights.Fighters
             {
                 if (handler.GetEffectHandlers().Contains(summon.GetSummoningEffect()))
                 {
-                    Fight.TriggerMarks(summon, MarkTriggerType.OnMove);
+                    Fight.TriggerMarks(summon, MarkTriggerType.OnMove, null);
                 }
             }
         }
@@ -1556,7 +1556,7 @@ namespace Giny.World.Managers.Fights.Fighters
                 this.TriggerBuffs(TriggerTypeEnum.OnMpUsed, movement);
             }
 
-            Fight.TriggerMarks(this, MarkTriggerType.OnMove);
+            Fight.TriggerMarks(this, MarkTriggerType.OnMove, movement);
 
             Moved?.Invoke(this);
 

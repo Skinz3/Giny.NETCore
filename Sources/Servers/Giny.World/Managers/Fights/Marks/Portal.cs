@@ -71,7 +71,7 @@ namespace Giny.World.Managers.Fights.Marks
 
         }
 
-        public override void Trigger(Fighter target, MarkTriggerType triggerType)
+        public override void Trigger(Fighter target, MarkTriggerType triggerType, ITriggerToken? token)
         {
             if (Active)
             {

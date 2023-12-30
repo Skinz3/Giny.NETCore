@@ -240,7 +240,7 @@ namespace Giny.World.Managers.Fights.Marks
             return Cells.Any(x => x.Id == cellId);
         }
 
-        public abstract void Trigger(Fighter target, MarkTriggerType triggerType);
+        public abstract void Trigger(Fighter target, MarkTriggerType triggerType, ITriggerToken? token);
 
     }
 }

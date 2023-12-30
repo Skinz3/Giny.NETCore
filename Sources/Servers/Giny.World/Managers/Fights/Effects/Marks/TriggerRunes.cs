@@ -32,7 +32,7 @@ namespace Giny.World.Managers.Fights.Effects.Marks
                 foreach (var rune in runes.ToArray())
                 {
                     Fighter target = Source.Fight.GetFighter(rune.CenterCell.Id);
-                    rune.Trigger(target, MarkTriggerType.None);
+                    rune.Trigger(target, MarkTriggerType.None, null);
                 }
             }
         }

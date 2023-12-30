@@ -38,7 +38,7 @@ namespace Giny.World.Managers.Fights.Marks
             return true;
         }
 
-        public override void Trigger(Fighter target, MarkTriggerType triggerType)
+        public override void Trigger(Fighter target, MarkTriggerType triggerType, ITriggerToken? token)
         {
             ApplyEffects(target);
 

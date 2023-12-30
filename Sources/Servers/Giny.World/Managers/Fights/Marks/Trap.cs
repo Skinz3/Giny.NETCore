@@ -3,6 +3,7 @@ using Giny.Protocol.Types;
 using Giny.World.Managers.Effects;
 using Giny.World.Managers.Fights.Cast;
 using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Managers.Fights.Movements;
 using Giny.World.Managers.Fights.Zones;
 using Giny.World.Records.Maps;
 using Giny.World.Records.Spells;
@@ -22,7 +23,7 @@ namespace Giny.World.Managers.Fights.Marks
         public override GameActionMarkTypeEnum Type => GameActionMarkTypeEnum.TRAP;
 
         public Trap(int id, EffectDice effect, MarkTriggerType triggers, Zone zone, Color color,
-            Fighter source, CellRecord centerCell, Spell markSpell,Spell triggerSpell) :
+            Fighter source, CellRecord centerCell, Spell markSpell, Spell triggerSpell) :
             base(id, effect, zone, triggers, color, source, centerCell, markSpell, triggerSpell)
         {
 
@@ -33,20 +34,27 @@ namespace Giny.World.Managers.Fights.Marks
             return Source.IsFriendlyWith(fighter);
         }
 
-        public override void Trigger(Fighter target, MarkTriggerType triggerType)
+        public override void Trigger(Fighter target, MarkTriggerType triggerType, ITriggerToken? token)
         {
+            if (token != null && triggerType == MarkTriggerType.OnMove && token is Movement movement)
+            {
+                if (movement.Type == MovementType.SwitchPosition)
+                {
+                    return;
+                }
+            }
             Source.Fight.RemoveMark(this);
             ApplyEffects();
         }
 
         public override void OnAdded()
         {
-          
+
         }
 
         public override void OnRemoved()
         {
-            
+
         }
 
         public override bool OnTurnBegin()
@@ -56,7 +64,7 @@ namespace Giny.World.Managers.Fights.Marks
 
         public override void OnUpdated()
         {
-           
+
         }
     }
 }

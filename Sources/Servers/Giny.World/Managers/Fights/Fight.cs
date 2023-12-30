@@ -584,7 +584,7 @@ namespace Giny.World.Managers.Fights
                     }
                 }
 
-                this.TriggerMarks(FighterPlaying, MarkTriggerType.OnTurnBegin);
+                this.TriggerMarks(FighterPlaying, MarkTriggerType.OnTurnBegin, null);
 
                 FighterPlaying.TriggerBuffs(TriggerTypeEnum.OnTurnBegin, null);
 
@@ -697,11 +697,11 @@ namespace Giny.World.Managers.Fights
             TurnEnded?.Invoke(FighterPlaying);
 
 
-           /* using (SequenceManager.StartSequence(SequenceTypeEnum.SEQUENCE_TURN_END))
-            {
-               FighterPlaying.Stats.ResetUsedPoints();
+            /* using (SequenceManager.StartSequence(SequenceTypeEnum.SEQUENCE_TURN_END))
+             {
+                FighterPlaying.Stats.ResetUsedPoints();
 
-            } */
+             } */
 
             PassTurn();
         }
@@ -756,7 +756,7 @@ namespace Giny.World.Managers.Fights
             StartTurn();
         }
 
-        public void TriggerMarks(Fighter target, MarkTriggerType triggerType)
+        public void TriggerMarks(Fighter target, MarkTriggerType triggerType, ITriggerToken? token)
         {
             Mark[] marks = Marks.Where(x => x.Triggers.HasFlag(triggerType) && x.ContainsCell(target.Cell.Id)).ToArray();
 
@@ -764,7 +764,7 @@ namespace Giny.World.Managers.Fights
             {
                 using (this.SequenceManager.StartSequence(SequenceTypeEnum.SEQUENCE_GLYPH_TRAP))
                 {
-                    mark.Trigger(target, triggerType);
+                    mark.Trigger(target, triggerType, token);
                 }
             }
         }
@@ -825,10 +825,10 @@ namespace Giny.World.Managers.Fights
             using (SequenceManager.StartSequence(SequenceTypeEnum.SEQUENCE_TURN_END))
             {
                 FighterPlaying.IsSequencingTurnEnd = true;
-                
+
                 if (FighterPlaying.Alive)
                 {
-                    TriggerMarks(FighterPlaying, MarkTriggerType.OnTurnEnd);
+                    TriggerMarks(FighterPlaying, MarkTriggerType.OnTurnEnd, null);
                     FighterPlaying.TriggerBuffs(TriggerTypeEnum.OnTurnEnd, null);
                     FighterPlaying.OnTurnEnded();
 
@@ -877,7 +877,7 @@ namespace Giny.World.Managers.Fights
 
             if (mark.Triggers == MarkTriggerType.Instant)
             {
-                mark.Trigger(mark.Source, MarkTriggerType.Instant);
+                mark.Trigger(mark.Source, MarkTriggerType.Instant, null);
             }
         }
         public void RemoveMark(Mark mark)

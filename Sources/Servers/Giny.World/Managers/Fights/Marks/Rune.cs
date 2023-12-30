@@ -47,7 +47,7 @@ namespace Giny.World.Managers.Fights.Marks
 
         }
 
-        public override void Trigger(Fighter target, MarkTriggerType triggerType)
+        public override void Trigger(Fighter target, MarkTriggerType triggerType, ITriggerToken? token)
         {
             Source.Fight.RemoveMark(this);
             ApplyEffects(Source.Cell);
