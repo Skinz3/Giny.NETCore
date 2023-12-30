@@ -1,0 +1,73 @@
+﻿@using Giny.IO.D2I;
+@using Giny.IO.D2OClasses;
+@using Giny.ORM;
+@using Giny.World.Records.Npcs;
+<MudDialog>
+    <DialogContent>
+        <MudPaper Elevation="0" Outlined=false>
+            <MudDataGrid Outlined=true Elevation="0" Style="max-height:500px;overflow-y:scroll" Dense=true Hover=true Striped=false Bordered=true Items="@PossibleMessages">
+                <Columns>
+
+                    <PropertyColumn Title="Id" Property="x => x.Key" />
+                    <PropertyColumn Title="Text" Property="x => x.Value" />
+
+                    <TemplateColumn Title="Actions">
+                        <CellTemplate>
+                            <MudStack Row>
+                                <MudButton OnClick="()=>SelectReply(context.Item.Key)" Size="Size.Small" StartIcon="@Icons.Material.Filled.ArrowCircleRight" IconColor="Color.Primary" Variant="@Variant.Text" Color="@Color.Primary">Select</MudButton>
+                            </MudStack>
+                        </CellTemplate>
+                    </TemplateColumn>
+
+                </Columns>
+            </MudDataGrid>
+        </MudPaper>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public Npc D2ONpc
+    {
+        get;
+        set;
+    }
+
+    [Parameter]
+    public NpcSpawnRecord SpawnRecord
+    {
+        get;
+        set;
+    }
+
+    [Parameter]
+    public NpcActionRecord ActionRecord
+    {
+        get;
+        set;
+    }
+
+    private Dictionary<int, string> PossibleMessages = new();
+
+    private void SelectReply(int messageId)
+    {
+        ActionRecord.Param1 = messageId.ToString();
+        ActionRecord.UpdateLater();
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+    protected override void OnInitialized()
+    {
+        foreach (var reply in D2ONpc.DialogMessages)
+        {
+            PossibleMessages.Add(reply[0], D2IManager.GetText(reply[1]));
+        }
+
+        base.OnInitialized();
+    }
+
+    void Cancel() => MudDialog.Cancel();
+}

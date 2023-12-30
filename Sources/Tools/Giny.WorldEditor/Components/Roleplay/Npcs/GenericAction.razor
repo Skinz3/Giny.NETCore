@@ -6,7 +6,7 @@
 <MudPaper MinWidth="500px" Class="d-flex flex-column justify-start gap-3 pa-3">
 
 
-    <MudButton Style="width:100%" StartIcon="@Icons.Material.Filled.Copyright" IconColor="Color.Primary" Variant="Variant.Filled">Criteria</MudButton>
+    <MudTextField Label="Criteria" @bind-Value=Action.Criteria></MudTextField>
 
     <MudSelect @bind-Value="Action.ActionIdentifier" Immediate=true Label="Action">
         @foreach (GenericActionEnum item in Enum.GetValues(typeof(GenericActionEnum)))

@@ -38,11 +38,11 @@ namespace Giny.World.Managers.Maps.Elements
 
             if (IsSkillEnabled(character, Record.Skill.Record))
             {
-                return new InteractiveElement((int)Record.Identifier, (int)Record.Skill.Type, skills, new InteractiveElementSkill[0], Record.IsInMap());
+                return new InteractiveElement((int)Record.Identifier, (int)Record.Skill.Type, skills, new InteractiveElementSkill[0], true);
             }
             else
             {
-                return new InteractiveElement((int)Record.Identifier, (int)Record.Skill.Type, new InteractiveElementSkill[0], skills, Record.IsInMap());
+                return new InteractiveElement((int)Record.Identifier, (int)Record.Skill.Type, new InteractiveElementSkill[0], skills, true);
             }
         }
     }

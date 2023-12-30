@@ -30,6 +30,8 @@ namespace Giny.ORM
         {
             CyclicSaveTask.Instance.UpdateElement(table);
         }
+
+        
         public static void AddNow<T>(this T table) where T : IRecord
         {
             TableManager.Instance.GetWriter(typeof(T)).Use(new IRecord[] { table }, DatabaseAction.Add);

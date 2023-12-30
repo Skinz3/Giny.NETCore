@@ -710,15 +710,15 @@ namespace Giny.DatabasePatcher.Monsters
             /* Aquadôme de Merkator */
 
             dungeon = DungeonRecord.GetDungeon(73);
-            dungeon.Rooms.Clear();
+            dungeon.Rooms.Clear();  
             /* Krabouilleur,Krabouilleur,Harpo,Pikoleur,Krabouilleur,Pikoleur,Harpo,Eskoglyphe*/
-            dungeon.Rooms.Add(new MonsterRoom(10f, 11927603310, 3542, 3542, 3538, 3535, 3542, 3535, 3538, 3543)); ;
+            dungeon.Rooms.Add(new MonsterRoom(10f, 119276033, 3542, 3542, 3538, 3535, 3542, 3535, 3538, 3543)); ;
             /* Eskoglyphe,Eskoglyphe,Harpo,Cyclophandre,Eskoglyphe,Cyclophandre,Harpo,Krabouilleur*/
-            dungeon.Rooms.Add(new MonsterRoom(10f, 11927603310, 3543, 3543, 3538, 3544, 3543, 3544, 3538, 3542));
+            dungeon.Rooms.Add(new MonsterRoom(10f, 119276033, 3543, 3543, 3538, 3544, 3543, 3544, 3538, 3542));
             /* Cyclophandre,Cyclophandre,Harpo,Pikoleur,Cyclophandre,Pikoleur,Harpo,Krabouilleur*/
-            dungeon.Rooms.Add(new MonsterRoom(10f, 11927603310, 3544, 3544, 3538, 3535, 3544, 3535, 3538, 3542));
+            dungeon.Rooms.Add(new MonsterRoom(10f, 119276033, 3544, 3544, 3538, 3535, 3544, 3535, 3538, 3542));
             /* Harpo,Harpo,Pikoleur,Eskoglyphe,Harpo,Eskoglyphe,Pikoleur,Krabouilleur*/
-            dungeon.Rooms.Add(new MonsterRoom(10f, 11927603310, 3538, 3538, 3535, 3543, 3538, 3543, 3535, 3542));
+            dungeon.Rooms.Add(new MonsterRoom(10f, 119276033, 3538, 3538, 3535, 3543, 3538, 3543, 3535, 3542));
             /* Merkator,Harpo,Cyclophandre,Eskoglyphe,Harpo,Cyclophandre,Pikoleur,Krabouilleur*/
             dungeon.Rooms.Add(new MonsterRoom(10, 119278081, 3534, 3538, 3544, 3543, 3538, 3544, 3535, 3542));
             dungeon.Rooms.Add(new MonsterRoom(10, 119278083));

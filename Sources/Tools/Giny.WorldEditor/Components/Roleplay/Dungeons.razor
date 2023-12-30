@@ -66,8 +66,8 @@
 
 
                 <div class="d-flex pa-2 gap-4">
-                    <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Outlined.LocationOn" ReadOnly=@true Value="@SelectedDungeon.EntranceMapId" Label="Entrée" />
-                    <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Outlined.LocationOn" ReadOnly=@true Value="@SelectedDungeon.ExitMapId" Label="Sortie" />
+                    <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Outlined.LocationOn" @bind-Value="@SelectedDungeon.EntranceMapId" Label="Entrée" />
+                    <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Outlined.LocationOn" @bind-Value="@SelectedDungeon.ExitMapId" Label="Sortie" />
 
                 </div>
 
@@ -84,20 +84,17 @@
                                 <div class="d-flex justify-space-between align-center gap-4 pa-2">
                                     <MudIconButton @onclick="() => MoveRoomLeft(CurrentRoom)" Color=Color.Primary Icon="@Icons.Material.Filled.ArrowBackIos"></MudIconButton>
                                     <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.DriveFileRenameOutline" ReadOnly=@true Value="@MapPositionRecord.GetMapName(CurrentRoom.MapId)" Label="Name" />
+                                    <MudIconButton  @onclick="() => DeleteRoom(CurrentRoom)" Icon="@Icons.Filled.Delete" Color="Color.Error"></MudIconButton>
                                     <MudIconButton @onclick="() => MoveRoomRight(CurrentRoom)" Color=Color.Primary Icon="@Icons.Material.Filled.ArrowForwardIos"></MudIconButton>
                                 </div>
 
 
 
-
-
-
                                 <div class="d-flex gap-4 pa-2">
-                                    <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Outlined.LocationOn" ReadOnly=@true Value="@CurrentRoom.MapId" Label="MapId" />
+                                    <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Outlined.LocationOn"  @bind-Value="@CurrentRoom.MapId" Label="MapId" />
                                     <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Outlined.Timer" @bind-Value="@CurrentRoom.RespawnDelay" Label="Respawn delay" />
 
                                 </div>
-
 
 
                                 @if (CurrentRoom.MonsterIds.Count > 0)
@@ -192,6 +189,10 @@
         }
     }
 
+    void DeleteRoom(MonsterRoom room)
+    {
+        SelectedDungeon.Rooms.Remove(room);
+    }
     void MoveRoomRight(MonsterRoom room)
     {
         var roomIndex = SelectedDungeon.Rooms.IndexOf(room);
@@ -204,7 +205,6 @@
             StateHasChanged();
             RoomIndex++;
             tabs.ActivatePanel(RoomIndex);
-            SelectedDungeon.UpdateLater();
         }
     }
     void MoveRoomLeft(MonsterRoom room)
@@ -221,7 +221,6 @@
 
             tabs.ActivatePanel(RoomIndex);
 
-            SelectedDungeon.UpdateLater();
 
         }
     }
@@ -239,7 +238,7 @@
     }
     string GetDungeonIcon(DungeonRecord record)
     {
-        for (int i = record.Rooms.Count-1; i >= 0; i--)
+        for (int i = record.Rooms.Count - 1; i >= 0; i--)
         {
             var room = record.Rooms[i];
 
@@ -253,7 +252,7 @@
                 }
             }
         }
-       
+
 
         return IconHelper.GetMonsterIcon(5814);
     }
@@ -289,7 +288,6 @@
 
             }
             StateHasChanged();
-            SelectedDungeon.UpdateLater();
         }
 
     }
@@ -297,7 +295,7 @@
     {
         CurrentRoom.MonsterIds.RemoveAt(index);
         StateHasChanged();
-        SelectedDungeon.UpdateLater();
+  
     }
     void MoveUpMonster(int index)
     {
@@ -340,7 +338,6 @@
             var record = (MonsterRecord)result.Data;
             CurrentRoom.MonsterIds.Add((short)record.Id);
             StateHasChanged();
-            SelectedDungeon.UpdateLater();
         }
 
 
@@ -389,6 +386,7 @@
         StateHasChanged();
 
         this.SelectedDungeon = dungeon;
+        SelectedDungeon.UpdateLater();
     }
     private void OnSearchTextChanged()
     {

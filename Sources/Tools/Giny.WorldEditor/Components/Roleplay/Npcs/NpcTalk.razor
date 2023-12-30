@@ -19,7 +19,7 @@
     <div class="d-flex flex-row gap-4">
 
         <MudTextField Lines="5" TextChanged="OnNpcMessageChanged" Label="Message" @bind-Value="NpcMessage"></MudTextField>
-        <MudButton StartIcon="@Icons.Material.Filled.CompareArrows" IconColor="Color.Primary" Variant="Variant.Filled">Select</MudButton>
+        <MudButton StartIcon="@Icons.Material.Filled.CompareArrows" OnClick="ModifyNpcMessageClick" IconColor="Color.Primary" Variant="Variant.Filled">Select</MudButton>
     </div>
 
     <MudTextField Label="Action criteria" @bind-Value="NpcAction.Criteria"></MudTextField>
@@ -135,16 +135,28 @@
         parameters.Add(x => x.ActionRecord, NpcAction);
         parameters.Add(x => x.D2ONpc, D2ONpc);
 
-        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Large, CloseButton = true, ClassBackground = "dialog-open" };
-        var dialog = DialogService.Show<AddReplyDialog>("Add reply", parameters, options);
-        var result = await dialog.Result;
+        var result = await DialogHelper.OpenDialog<AddReplyDialog>(DialogService, parameters, "Add reply");
 
         if (!result.Cancelled)
         {
             RefreshData();
             StateHasChanged();
         }
+    }
+    private async void ModifyNpcMessageClick()
+    {
+        var parameters = new DialogParameters<SelectNpcMessageDialog>();
+        parameters.Add(x => x.SpawnRecord, NpcSpawn);
+        parameters.Add(x => x.ActionRecord, NpcAction);
+        parameters.Add(x => x.D2ONpc, D2ONpc);
 
+        var result = await DialogHelper.OpenDialog<SelectNpcMessageDialog>(DialogService, parameters, "Modify message");
+
+        if (!result.Cancelled)
+        {
+            RefreshData();
+            StateHasChanged();
+        }
     }
 
     private string GetReplyText(NpcReplyRecord reply)

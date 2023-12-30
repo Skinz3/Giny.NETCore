@@ -261,6 +261,8 @@
 
         D2ONpc = D2OCache.GetNpc((int)SelectedSpawn.Template.Id);
 
+        SelectedSpawn.UpdateLater();
+
         LoadNpcIcon();
 
 
@@ -304,7 +306,7 @@
     private void SelectAction(NpcActionRecord action)
     {
         SelectedAction = action;
-
+        SelectedAction.UpdateLater();
 
     }
 }
