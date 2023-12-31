@@ -236,6 +236,21 @@ namespace Giny.World.Managers.Fights.Cast
             return Parent;
         }
 
+        public List<SpellCast> GetParents()
+        {
+            List<SpellCast> results = new List<SpellCast>();
+
+            SpellCast current = this;
+
+            while (current.Parent != null)
+            {
+                current = current.Parent;
+                results.Add(current);
+            }
+            return results;
+
+        }
+         
         public override string ToString()
         {
             return Spell.Record.Name;

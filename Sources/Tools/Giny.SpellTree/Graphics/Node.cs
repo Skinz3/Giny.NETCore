@@ -159,7 +159,7 @@ namespace Giny.SpellTree.Graphics
             if (Spell.Description != string.Empty)
             {
                 sb.AppendLine();
-                sb.AppendLine(Spell.Description.AddLineBreaks(' ', 7));
+                sb.AppendLine(Spell.Description);
             }
 
             var displayedEffects = SpellLevel.Effects.OfType<EffectDice>().Where(x => PopupHelper.IsDisplayed(x));
@@ -174,7 +174,7 @@ namespace Giny.SpellTree.Graphics
             {
                 if (PopupHelper.IsDisplayed(effect))
                 {
-                    sb.AppendLine(PopupHelper.GetDescription(effect));
+                    sb.AppendLine(effect.GetDescription());
                 }
             }
 

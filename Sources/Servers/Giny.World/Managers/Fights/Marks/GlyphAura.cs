@@ -19,7 +19,7 @@ namespace Giny.World.Managers.Fights.Marks
             get;
             set;
         }
-        public GlyphAura(int id, EffectDice effect, Zone zone, MarkTriggerType triggers, Color color, Fighter source, CellRecord centerCell, Spell markSpell,Spell triggerSpell) : base(id, effect, zone, triggers, color, source, centerCell, markSpell, triggerSpell)
+        public GlyphAura(int id, EffectDice effect, Zone zone, MarkTriggerType triggers, Color color, Fighter source, CellRecord centerCell, Spell markSpell, Spell triggerSpell) : base(id, effect, zone, triggers, color, source, centerCell, markSpell, triggerSpell)
         {
             this.AffectedFighters = new List<Fighter>();
         }
@@ -33,7 +33,7 @@ namespace Giny.World.Managers.Fights.Marks
             return true;
         }
 
-        public override void Trigger(Fighter target, MarkTriggerType triggerType)
+        public override void Trigger(Fighter target, MarkTriggerType triggerType, ITriggerToken? token)
         {
             if (!AffectedFighters.Contains(target))
             {

@@ -27,7 +27,7 @@ namespace Giny.World.Managers.Fights.Buffs.SpellBoost
         }
         public override void Execute()
         {
-            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.AP_COST, ActionType, GetDelta());
+            Target.SpellModifiers.ApplySpellModification(SpellId, SpellModifierTypeEnum.AP_COST, ActionType, (short)GetDelta());
             base.Execute();
         }
         public override void Dispell()

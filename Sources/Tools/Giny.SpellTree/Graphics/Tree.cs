@@ -139,33 +139,7 @@ namespace Giny.SpellTree.Graphics
                 return null;
             }
 
-            var similars = Nodes.Where(x => x.Effect == effect && x.SpellLevel == level);
-
-            if (similars.Count() > 0)
-            {
-
-                var n2 = new Node(deepLevel, parent, level, targetSpell, effect, x, y);
-                n2.SetChipColor(Colors.Snow);
-                Nodes.Add(n2);
-
-                foreach (var similar in similars)
-                {
-                    similar.SetChipColor(Colors.Snow);
-                }
-
-                var sources = Nodes.Where(x => x.SpellLevel.Grade == effect.Max && x.Spell.Id == effect.Min);
-
-                foreach (var source in sources)
-                {
-                    if (source != null && source.Parent != null)
-                    {
-                        source.Parent.SetChipColor(Colors.CornflowerBlue);
-                    }
-                }
-
-
-                return null;
-            }
+            
 
             var node = new Node(deepLevel, parent, level, targetSpell, effect, x, y);
 

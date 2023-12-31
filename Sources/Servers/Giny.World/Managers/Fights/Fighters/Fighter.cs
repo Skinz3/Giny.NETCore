@@ -695,10 +695,6 @@ namespace Giny.World.Managers.Fights.Fighters
         [Annotation("voir dofus nébuleux (Fight.Timeline.IndexOf(buff.Target) < Fight.Timeline.Index) ?")]
         public void AddBuff(Buff buff)
         {
-            /*if (buff.GetSource() == this && buff.Cast.GetParent() == null && IsSequencingTurnEnd) Fix harmonie Sadida ...
-            {
-                buff.Duration++;
-            }*/
 
             if (BuffMaxStackReached(buff)) // WIP censer cumuler la durée ?
             {
@@ -782,6 +778,8 @@ namespace Giny.World.Managers.Fights.Fighters
         }
         public bool BuffMaxStackReached(Buff buff)
         {
+
+
             bool flag2 = buff.Cast.Spell.Level.MaxStack > 0 &&
                 buff.Cast.Spell.Level.MaxStack <= this.Buffs.Count((Buff entry) => entry.IsSimilar(buff));
 

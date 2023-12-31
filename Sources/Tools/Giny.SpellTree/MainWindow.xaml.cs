@@ -112,6 +112,7 @@ namespace Giny.SpellTree
                 DatabaseManager.Instance.LoadTable<SpellLevelRecord>();
                 DatabaseManager.Instance.LoadTable<SpellStateRecord>();
                 DatabaseManager.Instance.LoadTable<MonsterRecord>();
+                DatabaseManager.Instance.LoadTable<EffectRecord>();
                 SpellRecord.Initialize();
 
                 foreach (var level in SpellLevelRecord.GetSpellLevels())
@@ -248,6 +249,8 @@ namespace Giny.SpellTree
 
             gradeSelect.SelectionChanged += gradeSelect_SelectionChanged;
 
+            effects.SelectedItem = node.SpellLevel.Effects.First();
+
         }
         private void effects_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -298,7 +301,6 @@ namespace Giny.SpellTree
             effectProps.Items.Add("Triggers Enum : " + string.Join(',', CurrentEffect.Triggers));
             effectProps.Items.Add("Raw Zone : " + CurrentEffect.RawZone);
             effectProps.Items.Add("Order : " + CurrentEffect.Order);
-
             effectProps.Items.Add("Group : " + CurrentEffect.Group);
             effectProps.Items.Add("TargetId : " + CurrentEffect.TargetId);
             effectProps.Items.Add("Dispellable : " + (FightDispellableEnum)CurrentEffect.Dispellable);

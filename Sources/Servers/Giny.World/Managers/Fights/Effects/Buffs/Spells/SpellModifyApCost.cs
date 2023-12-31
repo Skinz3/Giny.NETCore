@@ -41,9 +41,9 @@ namespace Giny.World.Managers.Fights.Effects.Buffs.Spells
             switch (Effect.EffectEnum)
             {
                 case EffectsEnum.Effect_ReduceSpellApCost:
-                    return SpellModifierActionTypeEnum.ACTION_DEBOOST;
-                case EffectsEnum.Effect_IncreaseSpellAPCost:
                     return SpellModifierActionTypeEnum.ACTION_BOOST;
+                case EffectsEnum.Effect_IncreaseSpellAPCost:
+                    return SpellModifierActionTypeEnum.ACTION_DEBOOST;
             }
 
             throw new InvalidOperationException("Unable to compute spell modifier action from effect.");

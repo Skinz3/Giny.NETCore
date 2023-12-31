@@ -147,9 +147,20 @@ namespace Giny.World.Managers.Fights.Cast
         }
         private static void Ecaflip(CharacterFighter fighter)
         {
+            /*
+             * Mésaventure
+             */
             if (fighter.Character.HasSpell(12879))
             {
                 fighter.ExecuteSpell(17019, 1, fighter.Cell);
+            }
+
+            /*
+             * Tromperie
+             */
+            if (fighter.Character.HasSpell(12881))
+            {
+                fighter.ExecuteSpell(17020, 1, fighter.Cell);
             }
         }
         private static void Huppermage(CharacterFighter fighter)
