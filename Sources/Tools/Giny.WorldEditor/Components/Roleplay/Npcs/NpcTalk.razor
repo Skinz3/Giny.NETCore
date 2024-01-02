@@ -193,7 +193,13 @@
         }
 
         Replies = NpcReplyRecord.GetNpcReplies(NpcAction.NpcSpawnId, messageId).ToList();
+    }
+    public void UpdateAction(NpcActionRecord action)
+    {
+        NpcAction = action;
+        RefreshData();
         StateHasChanged();
+
     }
     protected override void OnInitialized()
     {

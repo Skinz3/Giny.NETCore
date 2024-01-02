@@ -80,13 +80,13 @@
                 </MudCard>
 
                 <MudPaper Class="" Outlined=true>
-                    <MudList Class="d-flex flex-column" Dense="true" Clickable="true">
+                    <MudList @bind-SelectedValue=selectedAction Color="Color.Primary" Class="d-flex flex-column" Dense="true" Clickable="true">
                         <MudListSubheader>
                             Actions
                         </MudListSubheader>
                         @foreach (NpcActionRecord action in SelectedSpawn.Actions)
                         {
-                            <MudListItem Icon="@Icons.Material.Filled.Build" IconColor=Color.Primary OnClick="() => SelectAction(action)" Text=@GetActionText(action.Action) />
+                            <MudListItem Value="action" Icon="@Icons.Material.Filled.Build" IconColor=Color.Primary OnClick="() => SelectAction(action)" Text=@GetActionText(action.Action) />
                         }
 
 
@@ -155,6 +155,9 @@
         get;
         set;
     }
+
+    private object selectedAction;
+
     private NpcSpawnRecord SelectedSpawn
     {
         get;
@@ -310,16 +313,21 @@
     }
     private void SelectAction(NpcActionRecord action)
     {
+        bool talkUpdate = false;
+
+        if (SelectedAction != null && SelectedAction.Action == NpcActionsEnum.TALK && action.Action == NpcActionsEnum.TALK)
+        {
+            talkUpdate = true;
+        }
 
         SelectedAction = action;
         SelectedAction.UpdateLater();
 
         StateHasChanged();
 
-
         if (NpcTalk != null)
         {
-            NpcTalk.RefreshData();
+            NpcTalk.UpdateAction(action);
         }
 
     }
