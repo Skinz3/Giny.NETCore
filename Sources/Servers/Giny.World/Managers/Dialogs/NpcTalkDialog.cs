@@ -23,10 +23,10 @@ namespace Giny.World.Managers.Dialogs
             }
         }
 
-        private Npc Npc
+        public Npc Npc
         {
             get;
-            set;
+            private set;
         }
 
         private NpcActionRecord Action
@@ -71,9 +71,12 @@ namespace Giny.World.Managers.Dialogs
         }
         public void Reply(int replyId)
         {
-            this.Close();
-
             IEnumerable<NpcReplyRecord> replies = Replies.Where(x => x.ReplyId == replyId);
+
+            if (!replies.Any(x => x.ActionIdentifier == GenericActionEnum.ContinueDialog))
+            {
+                this.Close();
+            }
 
             foreach (var reply in replies)
             {
@@ -89,5 +92,7 @@ namespace Giny.World.Managers.Dialogs
             return replies.Where(entry => CriteriaExpression.Eval(entry.Criteria, Character.Client));
 
         }
+
+
     }
 }

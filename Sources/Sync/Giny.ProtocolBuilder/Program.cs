@@ -24,10 +24,10 @@ namespace Giny.ProtocolBuilder
             Stopwatch stopwatch = Stopwatch.StartNew();
 
 
-            //  BuildEnums();
-            // BuildMessages();
-            // BuildTypes();
-            BuildDatacenter();
+            BuildEnums();
+            //    BuildMessages();
+            BuildTypes();
+            //  BuildDatacenter();
 
             Logger.WriteColor1(string.Format("Build finished in {0}s", stopwatch.Elapsed.Seconds));
 

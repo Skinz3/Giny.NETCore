@@ -50,7 +50,9 @@
             <MudTextField Label="CellId" @bind-Value=Action.Param2 Variant="Variant.Text"></MudTextField>
         }
         else if (Action.ActionIdentifier == GenericActionEnum.LearnOrnament
-        || Action.ActionIdentifier == GenericActionEnum.LearnTitle || Action.ActionIdentifier == GenericActionEnum.StartQuest)
+        || Action.ActionIdentifier == GenericActionEnum.LearnTitle ||
+        Action.ActionIdentifier == GenericActionEnum.LearnSpell ||
+        Action.ActionIdentifier == GenericActionEnum.StartQuest)
         {
             <MudTextField Label="Id" @bind-Value=Action.Param1 Variant="Variant.Text"></MudTextField>
         }
@@ -62,7 +64,10 @@
         {
             <MudTextField Label="WishId" @bind-Value=Action.Param1 Variant="Variant.Text"></MudTextField>
         }
-
+        else if (Action.ActionIdentifier == GenericActionEnum.ContinueDialog)
+        {
+            <MudTextField Label="MessageId" @bind-Value=Action.Param1 Variant="Variant.Text"></MudTextField>
+        }
     </MudPaper>
 
 </MudPaper>

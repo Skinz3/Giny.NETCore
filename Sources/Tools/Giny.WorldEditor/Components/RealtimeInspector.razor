@@ -16,7 +16,7 @@
         <MudAlert Severity="Severity.Warning">Unable to connect to world server via web API. Please check that the server is running or modifying the configuration.</MudAlert>
     }
 
-    @if (Parent.ApiAvailable.HasValue && Parent.ApiAvailable.Value)
+    @if (Stats != null)
     {
         <MudSimpleTable Dense=false Bordered=true Hover=true>
             <thead>
@@ -94,6 +94,8 @@
             this.Stats = WorldApi.GetStats();
 
             this.LastTimestamp = DateTime.Now;
+
+            StateHasChanged();
         }
 
     }

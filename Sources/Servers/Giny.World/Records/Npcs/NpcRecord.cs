@@ -40,6 +40,7 @@ namespace Giny.World.Records.Npcs
             get;
             set;
         }
+
         [D2OField("gender")]
         public bool Sex
         {

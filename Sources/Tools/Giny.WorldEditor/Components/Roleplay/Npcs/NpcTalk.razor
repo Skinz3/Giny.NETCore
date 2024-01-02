@@ -18,7 +18,7 @@
 
     <div class="d-flex flex-row gap-4">
 
-        <MudTextField Lines="5" TextChanged="OnNpcMessageChanged" Label="Message" @bind-Value="NpcMessage"></MudTextField>
+        <MudTextField Lines="5" TextChanged="OnNpcMessageChanged" Label="@("Message : "+NpcAction.Param1)" @bind-Value="NpcMessage"></MudTextField>
         <MudButton StartIcon="@Icons.Material.Filled.CompareArrows" OnClick="ModifyNpcMessageClick" IconColor="Color.Primary" Variant="Variant.Filled">Select</MudButton>
     </div>
 
@@ -66,7 +66,8 @@
     {
         get;
         set;
-    }
+    } = new List<NpcReplyRecord>();
+
     [Parameter]
     public NpcActionRecord NpcAction
     {
@@ -128,6 +129,10 @@
         }
     }
 
+    public void UpdateState()
+    {
+        StateHasChanged();
+    }
     private async void AddReplyClick()
     {
         var parameters = new DialogParameters<AddReplyDialog>();
@@ -176,7 +181,7 @@
         return text;
     }
 
-    private void RefreshData()
+    public void RefreshData()
     {
         if (int.TryParse(NpcAction.Param1, out var messageId))
         {
@@ -188,6 +193,7 @@
         }
 
         Replies = NpcReplyRecord.GetNpcReplies(NpcAction.NpcSpawnId, messageId).ToList();
+        StateHasChanged();
     }
     protected override void OnInitialized()
     {

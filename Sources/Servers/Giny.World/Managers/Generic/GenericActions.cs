@@ -1,4 +1,6 @@
-﻿using Giny.World.Managers.Entities.Characters;
+﻿using Giny.Protocol.Messages;
+using Giny.World.Managers.Dialogs;
+using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Fights;
 using Giny.World.Managers.Maps.Elements;
 using Giny.World.Managers.Monsters;
@@ -18,7 +20,17 @@ namespace Giny.World.Managers.Generic
 {
     public class GenericActions
     {
+        [GenericActionHandler(GenericActionEnum.ContinueDialog)]
+        public static void HandleContinueDialog(Character character, IGenericAction parameter)
+        {
+            var messageId = int.Parse(parameter.Param1);
 
+            if (character.IsInDialog<NpcTalkDialog>())
+            {
+                var dialog = character.GetDialog<NpcTalkDialog>();
+                dialog.Npc.ContinueDialoging(character, messageId);
+            }
+        }
         [GenericActionHandler(GenericActionEnum.Unhandled)]
         public static void HandleUnhandled(Character character, IGenericAction parameter)
         {

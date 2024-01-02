@@ -113,7 +113,7 @@
                         }
                         else if (SelectedAction.Action == NpcActionsEnum.TALK)
                         {
-                            <NpcTalk NpcAction="SelectedAction" NpcSpawn="SelectedSpawn"></NpcTalk>
+                            <NpcTalk @ref=NpcTalk NpcAction="SelectedAction" NpcSpawn="SelectedSpawn"></NpcTalk>
 
                         }
                         else if (SelectedAction.Action == NpcActionsEnum.BUYSELL)
@@ -178,6 +178,11 @@
         set;
     }
 
+    private NpcTalk NpcTalk
+    {
+        get;
+        set;
+    }
     private void OnNpcNameChanged()
     {
         SelectedSpawn.Template.UpdateLater();
@@ -305,8 +310,17 @@
     }
     private void SelectAction(NpcActionRecord action)
     {
+
         SelectedAction = action;
         SelectedAction.UpdateLater();
+
+        StateHasChanged();
+
+
+        if (NpcTalk != null)
+        {
+            NpcTalk.RefreshData();
+        }
 
     }
 }

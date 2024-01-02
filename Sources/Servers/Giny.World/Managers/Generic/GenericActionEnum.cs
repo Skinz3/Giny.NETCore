@@ -32,5 +32,6 @@ namespace Giny.World.Managers.Generic
         Unhandled,
         Paddock,
         StartQuest,
+        ContinueDialog,
     }
 }

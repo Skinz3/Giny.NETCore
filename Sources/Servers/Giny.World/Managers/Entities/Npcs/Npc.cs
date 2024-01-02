@@ -4,6 +4,7 @@ using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Messages;
 using Giny.Protocol.Types;
 using Giny.World.Managers.Criterias;
+using Giny.World.Managers.Dialogs;
 using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Entities.Look;
 using Giny.World.Managers.Maps.Npcs;
@@ -98,6 +99,26 @@ namespace Giny.World.Managers.Entities.Npcs
 
         }
 
+        public void ContinueDialoging(Character character, int messageId)
+        {
+            if (!character.IsInDialog<NpcTalkDialog>())
+            {
+                return;
+            }
+
+            var action = SpawnRecord.Actions.FirstOrDefault(x => x.Action == NpcActionsEnum.TALK && int.Parse(x.Param1) == messageId);
+
+            if (action == null)
+            {
+                character.ReplyWarning("Unable to continue dialoging, no talk action with message " + messageId + " for spawn " + SpawnRecord.Id);
+                return;
+            }
+
+            var dialog = new NpcTalkDialog(character, this, action);
+            character.Dialog = dialog;
+            dialog.DialogQuestion();
+        }
+
         public void InteractWith(Character character, NpcActionsEnum actionType)
         {
             if (character.Busy)
@@ -108,7 +129,6 @@ namespace Giny.World.Managers.Entities.Npcs
             if (actions.Count() > 1)
             {
                 character.ReplyWarning("Multiple actions (" + actionType + ") for npc " + SpawnRecord.Id);
-                return;
             }
 
             NpcActionRecord action = actions.FirstOrDefault();
@@ -128,7 +148,7 @@ namespace Giny.World.Managers.Entities.Npcs
 
             var targetQuests = allQuests.Where(x => !target.HasQuest(x));
 
-            
+
             List<short> questToValid = new List<short>();
 
             foreach (var quest in target.GetActiveQuests())

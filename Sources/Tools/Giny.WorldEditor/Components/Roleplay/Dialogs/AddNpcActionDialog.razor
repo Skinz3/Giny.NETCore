@@ -35,7 +35,7 @@
 </MudDialog>
 @code {
 
- 
+
 
 
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
@@ -58,18 +58,11 @@
         get;
         set;
     }
-    private List<NpcActionsEnum> GetActions()
-    {
-        var list = SpawnRecord.Template.Actions.Select(x => (NpcActionsEnum)x).ToList();
 
-        list.RemoveAll(x => SpawnRecord.Actions.Any(y => y.Action == x));
-
-        return list;
-    }
 
     protected override void OnInitialized()
     {
-        this.Actions = GetActions();
+        this.Actions = SpawnRecord.Template.Actions.Select(x => (NpcActionsEnum)x).ToList();
 
         if (Actions.Count > 0)
         {
