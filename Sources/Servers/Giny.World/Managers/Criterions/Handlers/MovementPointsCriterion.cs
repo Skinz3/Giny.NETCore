@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criterion("CM")]
+    [CriterionHandler("CM")]
     public class MovementPointsCriterion : Criterion
     {
         public MovementPointsCriterion(string criteriaFull) : base(criteriaFull)

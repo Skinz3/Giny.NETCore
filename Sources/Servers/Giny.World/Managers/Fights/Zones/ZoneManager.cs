@@ -101,7 +101,7 @@ namespace Giny.World.Managers.Fights.Zones
                     };
                     break;
                 case ZoneEnum.D:
-                    result = new Cross(0, zoneSize);
+                    result = new Chessboard(zoneSize);
                     break;
                 case ZoneEnum.C:
                     result = new Lozenge(zoneMinSize, zoneSize);

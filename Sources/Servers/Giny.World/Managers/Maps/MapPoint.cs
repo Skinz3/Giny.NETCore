@@ -31,7 +31,7 @@ namespace Giny.World.Managers.Maps
 
         public Point Coordinates
         {
-            get 
+            get
             {
                 return new Point(X, Y);
             }
@@ -476,7 +476,7 @@ namespace Giny.World.Managers.Maps
         }
         public static void AddCellIfValid(int x, int y, MapRecord map, IList<CellRecord> container)
         {
-            if (MapPoint.IsInMap(x, y))
+            if (MapPoint.IsInMap(x, y) && map.IsValidFightCell(MapPoint.CoordToCellId(x, y)))
             {
                 container.Add(map.GetCell(x, y));
             }

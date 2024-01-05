@@ -1916,21 +1916,22 @@ namespace Giny.World.Managers.Entities.Characters
         }
         public void OnGuildJoined(Guild guild, GuildMemberRecord memberRecord)
         {
-            this.Guild = guild;
-            this.GuildMember = memberRecord;
-            this.Record.GuildId = Guild.Id;
+            Guild = guild;
+            GuildMember = memberRecord;
+            Record.GuildId = Guild.Id;
 
-            this.AddHumanOption(HumanOptionsManager.Instance.CreateHumanOptionGuild(), true);
+            Client.Send(Guild.GetGuildJoinedMessage(memberRecord));
 
-            Client.Send(new GuildJoinedMessage(Guild.GetGuildInformations(), memberRecord.Rank));
+            AddHumanOption(HumanOptionsManager.Instance.CreateHumanOptionGuild(), true);
         }
         public void OnGuildKick(Guild guild)
         {
             Guild = null;
             GuildMember = null;
             Record.GuildId = 0;
-            RemoveAllHumanOption<CharacterHumanOptionGuild>(true);
             Client.Send(new GuildLeftMessage());
+            TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_MESSAGE, 1431, guild.Record.Name);
+            RemoveAllHumanOption<CharacterHumanOptionGuild>(true);
         }
 
         public CharacterMinimalInformations GetCharacterMinimalInformations()

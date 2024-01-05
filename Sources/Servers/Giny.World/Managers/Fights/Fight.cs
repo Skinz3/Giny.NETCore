@@ -532,7 +532,6 @@ namespace Giny.World.Managers.Fights
 
         private void OnTurnStarted()
         {
-
             SequenceManager.ResetSequences();
 
             if (Timeline.NewRound)

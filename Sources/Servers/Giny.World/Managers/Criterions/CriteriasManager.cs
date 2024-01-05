@@ -21,7 +21,7 @@ namespace Giny.World.Managers.Criterias
         {
             foreach (var type in AssemblyCore.GetTypes())
             {
-                CriterionAttribute attribute = type.GetCustomAttribute<CriterionAttribute>();
+                CriterionHandlerAttribute attribute = type.GetCustomAttribute<CriterionHandlerAttribute>();
 
                 if (attribute != null)
                 {
@@ -44,9 +44,9 @@ namespace Giny.World.Managers.Criterias
             }
         }
 
-     
+
     }
-    public class CriterionAttribute : Attribute
+    public class CriterionHandlerAttribute : Attribute
     {
         public string Identifier
         {
@@ -54,7 +54,7 @@ namespace Giny.World.Managers.Criterias
             set;
         }
 
-        public CriterionAttribute(string indentifier)
+        public CriterionHandlerAttribute(string indentifier)
         {
             this.Identifier = indentifier;
         }

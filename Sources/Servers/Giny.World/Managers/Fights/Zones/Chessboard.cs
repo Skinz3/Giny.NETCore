@@ -1,34 +1,30 @@
-using Giny.Protocol.Custom.Enums;
-using Giny.World.Managers.Fights.Cast;
-using Giny.World.Managers.Maps;
+﻿using Giny.World.Managers.Maps;
 using Giny.World.Records.Maps;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Fights.Zones
 {
-    public class Square : Zone
+    public class Chessboard : Zone
     {
-        public Square(byte minRadius, byte radius)
+        public Chessboard(byte radius)
         {
-            MinRadius = minRadius;
-            Radius = radius;
+            this.Radius = radius;
         }
-
-        public bool DiagonalFree
-        {
-            get;
-            set;
-        }
-
         public override CellRecord[] GetCells(CellRecord centerCell, CellRecord casterCell, MapRecord map)
         {
+
             var centerPoint = new MapPoint(centerCell.Id);
             var result = new List<CellRecord>();
 
+            bool inverted = Radius % 2 == 0;
+
             if (Radius == 0)
             {
-                if (MinRadius == 0 && !DiagonalFree)
+                if (MinRadius == 0)
                     result.Add(centerCell);
 
                 return result.ToArray();
@@ -41,9 +37,17 @@ namespace Giny.World.Managers.Fights.Zones
                 y = (int)(centerPoint.Y - Radius);
                 while (y <= centerPoint.Y + Radius)
                 {
-                    if (MinRadius == 0 || Math.Abs(centerPoint.X - x) + Math.Abs(centerPoint.Y - y) >= MinRadius)
-                        if (!DiagonalFree || Math.Abs(centerPoint.X - x) != Math.Abs(centerPoint.Y - y))
-                            MapPoint.AddCellIfValid(x, y, map, result);
+                    bool even = (x % 2 != 0 && y % 2 == 0) || (x % 2 == 0 && y % 2 != 0);
+
+                    if (inverted)
+                    {
+                        even = !even;
+                    }
+                    if (even)
+                    {
+                        MapPoint.AddCellIfValid(x, y, map, result);
+                    }
+
 
                     y++;
                 }
@@ -54,6 +58,6 @@ namespace Giny.World.Managers.Fights.Zones
             return result.ToArray();
         }
 
- 
+
     }
 }

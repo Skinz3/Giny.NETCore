@@ -115,7 +115,6 @@ namespace Giny.DatabasePatcher.Spells
         private static readonly EffectsEnum[] DebuffEffects = new EffectsEnum[]
         {
             EffectsEnum.Effect_SubAP,
-            EffectsEnum.Effect_AddState,
             EffectsEnum.Effect_SubMP,
             EffectsEnum.Effect_RemoveAP,
             EffectsEnum.Effect_StealAPFix,
@@ -181,8 +180,6 @@ namespace Giny.DatabasePatcher.Spells
             EffectsEnum.Effect_AddErosion,
             EffectsEnum.Effect_RandDownModifier,
             EffectsEnum.Effect_ReturnToOriginalPos,
-            EffectsEnum.Effect_DispelState,
-            EffectsEnum.Effect_DisableState,
             EffectsEnum.Effect_EndTurn,
             EffectsEnum.Effect_SubVitalityPercent,
             EffectsEnum.Effect_SubVitality_1047,
@@ -423,6 +420,10 @@ namespace Giny.DatabasePatcher.Spells
             {
                 var effectCategory = GetEffectCategory(effect.EffectEnum);
 
+                if (effectCategory == SpellCategoryEnum.None)
+                {
+                    continue;
+                }
                 if (categories.ContainsKey(effectCategory))
                 {
                     categories[effectCategory] += 1;

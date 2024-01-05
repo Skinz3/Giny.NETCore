@@ -32,7 +32,7 @@ namespace Giny.World.Managers.Fights.Effects.Other
 
             }
 
-        
+
 
         }
     }

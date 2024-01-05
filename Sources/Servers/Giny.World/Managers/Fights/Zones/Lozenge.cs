@@ -40,7 +40,7 @@ namespace Giny.World.Managers.Fights.Zones
                 while (y <= i)
                 {
                     if (MinRadius == 0 || Math.Abs(centerCell.Point.X - x) + Math.Abs(y) >= MinRadius)
-                        AddCellIfValid(x, y + centerCell.Point.Y, map, result);
+                        MapPoint.AddCellIfValid(x, y + centerCell.Point.Y, map, result);
 
                     y++;
                 }
@@ -59,14 +59,7 @@ namespace Giny.World.Managers.Fights.Zones
 
             return result.ToArray();
         }
-
-        private static void AddCellIfValid(int x, int y, MapRecord map, IList<CellRecord> container)
-        {
-            if (!MapPoint.IsInMap(x, y))
-                return;
-
-            container.Add(map.Cells[MapPoint.CoordToCellId(x, y)]);
-        }
+ 
 
     }
 }

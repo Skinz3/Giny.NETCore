@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criterion("Pk")]
+    [CriterionHandler("Pk")]
     public class ItemSetCriterion : Criterion
     {
         public ItemSetCriterion(string criteriaFull) : base(criteriaFull)

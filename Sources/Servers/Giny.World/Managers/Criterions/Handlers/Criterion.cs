@@ -1,4 +1,5 @@
-﻿using Giny.World.Network;
+﻿using Giny.World.Managers.Fights.Fighters;
+using Giny.World.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,6 +74,11 @@ namespace Giny.World.Managers.Criterions.Handlers
         }
 
         public abstract bool Eval(WorldClient client);
+
+        public virtual bool Eval(Fighter fighter)
+        {
+            return true;
+        }
 
         protected bool ArithmeticEval(int delta)
         {

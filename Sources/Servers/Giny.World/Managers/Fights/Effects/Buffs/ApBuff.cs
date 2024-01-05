@@ -27,7 +27,7 @@ namespace Giny.World.Managers.Fights.Effects.Buffs
         {
             foreach (var target in targets)
             {
-                if (this.Effect.Duration > 0)
+                if (this.Effect.Duration != 0)
                 {
                     base.AddStatBuff(target, (short)Effect.Min, target.Stats.ActionPoints, Effect.DispellableEnum);
                 }

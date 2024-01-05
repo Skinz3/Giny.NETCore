@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criterion("PP")]
+    [CriterionHandler("PP")]
     public class AlignmentCriterion : Criterion
     {
         public AlignmentCriterion(string criteriaFull) : base(criteriaFull)

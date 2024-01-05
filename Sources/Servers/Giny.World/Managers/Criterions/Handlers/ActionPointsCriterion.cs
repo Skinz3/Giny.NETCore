@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criterion("CP")]
+    [CriterionHandler("CP")]
     public class ActionPointsCriterion : Criterion
     {
         public ActionPointsCriterion(string criteriaFull) : base(criteriaFull)

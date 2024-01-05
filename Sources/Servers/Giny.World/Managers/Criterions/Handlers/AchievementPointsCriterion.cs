@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criterion("Oa")]
+    [CriterionHandler("Oa")]
     public class AchievementPointsCriterion : Criterion
     {
         public AchievementPointsCriterion(string criteriaFull) : base(criteriaFull)
@@ -22,7 +22,7 @@ namespace Giny.World.Managers.Criterions.Handlers
             var required = short.Parse(Value);
 
             return ArithmeticEval(client.Character.AchievementPoints.Value);
-            
+
         }
         public override short GetCurrentValue(WorldClient client)
         {

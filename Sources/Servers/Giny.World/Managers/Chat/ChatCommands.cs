@@ -510,19 +510,8 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
-            List<SpellRecord> spells = new List<SpellRecord>();
-
-            foreach (var level in SpellLevelRecord.GetSpellLevels())
-            {
-                if (level.MaxStack == -1)
-                {
-                    var s = SpellRecord.GetSpellRecord(level.SpellId);
-
-                    if (!spells.Contains(s))
-                        spells.Add(s);
-                }
-            }
-
+            client.Character.Fighter.ExecuteSpell(1075, 1, client.Character.Fighter.Cell);
+          
             return;
 
             for (int i = 0; i < 1; i++)

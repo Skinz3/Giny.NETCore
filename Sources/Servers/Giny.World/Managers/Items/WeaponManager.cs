@@ -143,9 +143,6 @@ namespace Giny.World.Managers.Items
                 RangeCanBeBoosted = false,
                 SpellBreed = 0,
                 SpellId = 0,
-                StatesAuthorized = new int[0],
-                StatesForbidden = new int[0], // affaiblie
-                StatesRequired = new int[0],
                 StatesCriterion = "",
             };
         }

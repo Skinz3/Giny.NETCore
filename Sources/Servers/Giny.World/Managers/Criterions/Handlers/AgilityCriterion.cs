@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criterion("ca")]
+    [CriterionHandler("ca")]
     public class AgilityCriterion : Criterion
     {
         public AgilityCriterion(string criteriaFull) : base(criteriaFull)
@@ -20,7 +20,7 @@ namespace Giny.World.Managers.Criterions.Handlers
             return ArithmeticEval(client.Character.Record.Stats.Agility.Additional);
         }
     }
-    [Criterion("CA")]
+    [CriterionHandler("CA")]
     public class TotalAgilityCriterion : Criterion
     {
         public TotalAgilityCriterion(string criteriaFull) : base(criteriaFull)

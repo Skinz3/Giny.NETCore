@@ -2,6 +2,7 @@
 using Giny.Protocol.Custom.Enums;
 using Giny.Protocol.Enums;
 using Giny.Protocol.Messages;
+using Giny.Protocol.Types;
 using Giny.World.Managers.Dialogs;
 using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Guilds;
@@ -18,11 +19,7 @@ namespace Giny.World.Handlers.Roleplay.Guilds
 {
     class GuildsHandler
     {
-        [MessageHandler]
-        public static void HandleStopListenGuildChestStructureMessage(StopListenGuildChestStructureMessage message,WorldClient client)
-        {
-
-        }
+        
         [MessageHandler]
         public static void HandleGuildCreationRequest(GuildCreationValidMessage message, WorldClient client)
         {
@@ -40,15 +37,111 @@ namespace Giny.World.Handlers.Roleplay.Guilds
         }
 
         [MessageHandler]
+        public static void HandleGuildBulletinSetRequestMessage(GuildBulletinSetRequestMessage message, WorldClient client)
+        {
+            if (client.Character.HasGuild)
+            {
+                client.Character.Guild.SetBulletin(client.Character, message.content);
+            }
+        }
+
+        [MessageHandler]
+        public static void HandleCreateGuildRankRequestMessage(CreateGuildRankRequestMessage message, WorldClient client)
+        {
+            if (client.Character.HasGuild)
+            {
+                Guild guild = client.Character.Guild;
+                GuildMemberRecord member = client.Character.GuildMember;
+
+                if (member.HasRight(GuildRightsEnum.RIGHT_MANAGE_RANKS_AND_RIGHTS, guild))
+                {
+                    GuildRankRecord parentRank = guild.GetGuildRank(message.parentRankId);
+
+                    if (parentRank == null)
+                        guild.CreateRank(guild.GetRankNextOrder(), message.gfxId, true, new GuildRightsEnum[0], guild.GetRankNextId(), message.name);
+                    else
+                        guild.CreateRank(guild.GetRankNextOrder(), message.gfxId, true, parentRank.Rights, guild.GetRankNextId(), message.name);
+                }
+            }
+        }
+
+        [MessageHandler]
+        public static void HandleUpdateGuildRankRequestMessage(UpdateGuildRankRequestMessage message, WorldClient client)
+        {
+            if (client.Character.HasGuild)
+            {
+                GuildMemberRecord member = client.Character.GuildMember;
+
+                if (member != null)
+                {
+                    client.Character.Guild.ChangeRank(member, message.rank);
+                }
+            }
+        }
+
+        [MessageHandler]
+        public static void HandleUpdateGuildRightsMessage(UpdateGuildRightsMessage message, WorldClient client)
+        {
+            if (client.Character.HasGuild)
+            {
+                GuildMemberRecord member = client.Character.GuildMember;
+
+                if (member != null)
+                {
+                    client.Character.Guild.ChangeRights(member, message.rankId, message.rights);
+                }
+            }
+        }
+
+        [MessageHandler]
+        public static void HandleGuildGetPlayerApplicationMessage(GuildGetPlayerApplicationMessage message, WorldClient client)
+        {
+            client.Send(new GuildPlayerNoApplicationInformationMessage());
+        }
+
+        [MessageHandler]
+        public static void HandleGuildRanksRequestMessage(GuildRanksRequestMessage message, WorldClient client)
+        {
+            if (client.Character.HasGuild)
+            {
+                client.Send(client.Character.Guild.GetGuildRanksMessage());
+            }
+        }
+
+        [MessageHandler]
+        public static void HandleGuildSummaryRequestMessage(GuildSummaryRequestMessage message, WorldClient client)
+        {
+            client.Send(GuildsManager.Instance.GetGuildSummaryMessage());
+        }
+
+        [MessageHandler]
+        public static void HandleGuildFactsRequestMessage(GuildFactsRequestMessage message, WorldClient client)
+        {
+            var guild = GuildsManager.Instance.GetGuild(message.guildId);
+
+            if (guild != null)
+            {
+                client.Send(guild.GetGuildFactsMessage());
+            }
+        }
+
+        [MessageHandler]
+        public static void HandleGuildLogbookInformationRequestMessage(GuildLogbookInformationRequestMessage message, WorldClient client)
+        {
+            if (client.Character.HasGuild)
+            {
+                client.Send(client.Character.Guild.GetGuildLogbookInformationMessage());
+            }
+        }
+
+        [MessageHandler]
         public static void HandleGuildGetInformationsMessage(GuildGetInformationsMessage message, WorldClient client)
         {
-            if (client.Character.Guild == null)
-            {
-                client.Character.ReplyWarning("Client request GuildGetInformationsMessage but no guild... why?");
+            if (!client.Character.HasGuild)
                 return;
 
-              
-            }
+            client.Character.RefreshGuild();
+
             switch ((GuildInformationsTypeEnum)message.infoType)
             {
                 case GuildInformationsTypeEnum.INFO_GENERAL:
@@ -60,23 +153,49 @@ namespace Giny.World.Handlers.Roleplay.Guilds
                 case GuildInformationsTypeEnum.INFO_BOOSTS:
                     break;
                 case GuildInformationsTypeEnum.INFO_PADDOCKS:
+                    client.Send(client.Character.Guild.GetGuildInformationsPaddocksMessage());
                     break;
                 case GuildInformationsTypeEnum.INFO_HOUSES:
+                    client.Send(client.Character.Guild.GetGuildHousesInformationMessage());
+                    break;
+
+
+
+                case GuildInformationsTypeEnum.INFO_RECRUITMENT:
+                    client.Send(client.Character.Guild.GetRecruitmentInformationMessage());
                     break;
                 default:
+                    client.Character.ReplyWarning("Unhandled " + (GuildInformationsTypeEnum)message.infoType);
                     break;
             }
         }
+
         [MessageHandler]
-        public static void GuildChangeMemberParameters(GuildChangeMemberParametersMessage message, WorldClient client)
+        public static void HandleGuildUpdateNoteMessage(GuildUpdateNoteMessage message, WorldClient client)
         {
             if (client.Character.HasGuild)
             {
-                GuildMemberRecord member = client.Character.Guild.Record.GetMember((long)message.memberId);
+                GuildMemberRecord member = client.Character.GuildMember;
+                GuildMemberRecord target = client.Character.Guild.Record.GetMember(message.memberId);
 
                 if (member != null)
                 {
-                    client.Character.Guild.ChangeParameters(member, message.experienceGivenPercent, message.rankId);
+                    client.Character.Guild.ChangeNote(member, target, message.note);
+                }
+            }
+        }
+
+        [MessageHandler]
+        public static void HandleGuildChangeMemberParameters(GuildChangeMemberParametersMessage message, WorldClient client)
+        {
+            if (client.Character.HasGuild)
+            {
+                GuildMemberRecord member = client.Character.GuildMember;
+                GuildMemberRecord target = client.Character.Guild.Record.GetMember(message.memberId);
+
+                if (member != null)
+                {
+                    client.Character.Guild.ChangeParameters(member, target, message.experienceGivenPercent, message.rankId);
                 }
             }
         }
@@ -106,11 +225,18 @@ namespace Giny.World.Handlers.Roleplay.Guilds
                 else
                     client.Character.RequestBox.Deny();
             }
+
+            if (client.Character.HasGuild && client.Character.HasRequestBoxOpen<GuildInvitationRequest>())
+            {
+                if (!message.accept)
+                    client.Character.RequestBox.Cancel();
+            }
         }
+
         [MessageHandler]
         public static void HandleGuildInvitation(GuildInvitationMessage message, WorldClient client)
         {
-            if (client.Character.GuildMember.HasRight(GuildRightsEnum.RIGHT_MANAGE_APPLY_AND_INVITATION))
+            if (client.Character.GuildMember.HasRight(GuildRightsEnum.RIGHT_MANAGE_APPLY_AND_INVITATION, client.Character.Guild))
             {
                 var target = WorldServer.Instance.GetOnlineClient(x => x.Character.Id == message.targetId);
 

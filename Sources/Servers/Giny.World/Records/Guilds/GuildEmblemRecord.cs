@@ -49,7 +49,7 @@ namespace Giny.World.Records.Guilds
             this.BackgroundColor = backgroundColor;
         }
 
-        public SocialEmblem ToGuildEmblem()
+        public SocialEmblem ToSocialEmblem()
         {
             return new SocialEmblem()
             {

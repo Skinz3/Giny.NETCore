@@ -9,7 +9,7 @@ using Giny.World.Network;
 
 namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criterion("BI")]
+    [CriterionHandler("BI")]
     public class NotEquipableCriterion : Criterion
     {
         public NotEquipableCriterion(string criteriaFull) : base(criteriaFull)

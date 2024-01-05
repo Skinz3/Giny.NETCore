@@ -363,6 +363,7 @@ namespace Giny.World.Managers.Fights.Fighters
             return new DroppedItem[0];
         }
 
+
         public virtual void OnMoveFailed(MovementFailedReason reason)
         {
 
@@ -1188,16 +1189,11 @@ namespace Giny.World.Managers.Fights.Fighters
                 return SpellCastResult.CELL_NOT_FREE;
             }
 
-            if (!cast.IsConditionBypassed(SpellCastResult.STATE_FORBIDDEN) && spellLevel.StatesForbidden.Any(HasState))
+            if (!cast.IsConditionBypassed(SpellCastResult.STATE_FORBIDDEN) && !spellLevel.EvaluateStateCriterions(this))
             {
                 return SpellCastResult.STATE_FORBIDDEN;
             }
 
-            if (!cast.IsConditionBypassed(SpellCastResult.STATE_REQUIRED) &&
-                spellLevel.StatesRequired.Any(state => !HasState(state)))
-            {
-                return SpellCastResult.STATE_REQUIRED;
-            }
 
             if (!cast.IsConditionBypassed(SpellCastResult.NOT_IN_ZONE) &&
                 !IsInCastZone(spellLevel, cast.CastCell.Point, cast.TargetCell.Point))

@@ -102,6 +102,8 @@ namespace Giny.World.Managers.Fights.AI
             {
                 var spell = Fighter.GetSpell(spellRecord.Id);
 
+                if (spell.Level.Effects.Any(x => x.EffectEnum == Protocol.Enums.EffectsEnum.Effect_Kill))
+                    continue;
                 if (spell.Level.MaxRange == 0)
                 {
                     SpellCast cast = new SpellCast(Fighter, spell, Fighter.Cell);

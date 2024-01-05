@@ -5,6 +5,7 @@ using Giny.World.Records.Maps;
 using Giny.World.Managers.Fights.Cast;
 using System.Collections;
 using System.Collections.Generic;
+using Giny.Core;
 
 namespace Giny.World.Managers.Fights.Zones
 {

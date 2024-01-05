@@ -1,7 +1,9 @@
 ﻿using Giny.IO.D2O;
 using Giny.ORM.Attributes;
 using Giny.ORM.Interfaces;
+using Giny.World.Managers.Criterias;
 using Giny.World.Managers.Effects;
+using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Records.Maps;
 using System;
@@ -171,24 +173,7 @@ namespace Giny.World.Records.Spells
             get;
             set;
         }
-        [Ignore]
-        public int[] StatesRequired
-        {
-            get;
-            set;
-        } = new int[0];
-        [Ignore]
-        public int[] StatesAuthorized
-        {
-            get;
-            set;
-        } = new int[0];
-        [Ignore]
-        public int[] StatesForbidden
-        {
-            get;
-            set;
-        } = new int[0];
+
         [Blob]
         [D2OField("effects")]
         public EffectCollection Effects
@@ -215,7 +200,10 @@ namespace Giny.World.Records.Spells
             SpellsLevels.TryGetValue(levelId, out result);
             return result;
         }
-
+        public bool EvaluateStateCriterions(Fighter fighter)
+        {
+            return CriteriaExpression.Eval(this.StatesCriterion, fighter);
+        }
 
         public static List<SpellLevelRecord> GetLevelsCastingSpell(int targetSpellId, byte? grade = null)
         {
@@ -250,5 +238,7 @@ namespace Giny.World.Records.Spells
         {
             return SpellsLevels.Values;
         }
+
+
     }
 }

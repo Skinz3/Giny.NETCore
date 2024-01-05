@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criterion("PZ")]
+    [CriterionHandler("PZ")]
     public class SubscribedCriterion : Criterion
     {
         public SubscribedCriterion(string criteriaFull) : base(criteriaFull)

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criterion("cw")]
+    [CriterionHandler("cw")]
     public class WisdomCriterion : Criterion
     {
         public WisdomCriterion(string criteriaFull) : base(criteriaFull)
@@ -20,7 +20,7 @@ namespace Giny.World.Managers.Criterions.Handlers
             return ArithmeticEval(client.Character.Record.Stats.Wisdom.Additional);
         }
     }
-    [Criterion("CW")]
+    [CriterionHandler("CW")]
     public class TotalWisdomCriterion : Criterion
     {
         public TotalWisdomCriterion(string criteriaFull) : base(criteriaFull)

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criterion("cs")]
+    [CriterionHandler("cs")]
     public class StrengthCriterion : Criterion
     {
         public StrengthCriterion(string criteriaFull) : base(criteriaFull)
@@ -20,7 +20,7 @@ namespace Giny.World.Managers.Criterions.Handlers
             return ArithmeticEval(client.Character.Record.Stats.Strength.Additional);
         }
     }
-    [Criterion("CS")]
+    [CriterionHandler("CS")]
     public class TotalStrengthCriterion : Criterion
     {
         public TotalStrengthCriterion(string criteriaFull) : base(criteriaFull)

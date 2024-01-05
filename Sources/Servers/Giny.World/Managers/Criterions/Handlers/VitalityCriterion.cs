@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criterion("cv")]
+    [CriterionHandler("cv")]
     public class VitalityCriterion : Criterion
     {
         public VitalityCriterion(string criteriaFull) : base(criteriaFull)
@@ -22,7 +22,7 @@ namespace Giny.World.Managers.Criterions.Handlers
             return ArithmeticEval(client.Character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.VITALITY).Additional);
         }
     }
-    [Criterion("CV")]
+    [CriterionHandler("CV")]
     public class TotalVitalityCriterion : Criterion
     {
         public TotalVitalityCriterion(string criteriaFull) : base(criteriaFull)

@@ -57,28 +57,28 @@ namespace Giny.World.Managers.Fights.Zones
                 switch (this.Direction)
                 {
                     case DirectionsEnum.DIRECTION_WEST:
-                        AddCellIfValid(x - r, y - r, map, aCells);
+                        MapPoint.AddCellIfValid(x - r, y - r, map, aCells);
                         break;
                     case DirectionsEnum.DIRECTION_NORTH:
-                        AddCellIfValid(x - r, y + r, map, aCells);
+                        MapPoint.AddCellIfValid(x - r, y + r, map, aCells);
                         break;
                     case DirectionsEnum.DIRECTION_EAST:
-                        AddCellIfValid(x + r, y + r, map, aCells);
+                        MapPoint.AddCellIfValid(x + r, y + r, map, aCells);
                         break;
                     case DirectionsEnum.DIRECTION_SOUTH:
-                        AddCellIfValid(x + r, y - r, map, aCells);
+                        MapPoint.AddCellIfValid(x + r, y - r, map, aCells);
                         break;
                     case DirectionsEnum.DIRECTION_NORTH_WEST:
-                        AddCellIfValid(x - r, y, map, aCells);
+                        MapPoint.AddCellIfValid(x - r, y, map, aCells);
                         break;
                     case DirectionsEnum.DIRECTION_SOUTH_WEST:
-                        AddCellIfValid(x, y - r, map, aCells);
+                        MapPoint.AddCellIfValid(x, y - r, map, aCells);
                         break;
                     case DirectionsEnum.DIRECTION_SOUTH_EAST:
-                        AddCellIfValid(x + r, y, map, aCells);
+                        MapPoint.AddCellIfValid(x + r, y, map, aCells);
                         break;
                     case DirectionsEnum.DIRECTION_NORTH_EAST:
-                        AddCellIfValid(x, y + r, map, aCells);
+                        MapPoint.AddCellIfValid(x, y + r, map, aCells);
                         break;
                 }
             }
@@ -87,12 +87,6 @@ namespace Giny.World.Managers.Fights.Zones
             return aCells.ToArray();
         }
 
-        private static void AddCellIfValid(int x, int y, MapRecord map, IList<CellRecord> container)
-        {
-            if (!MapPoint.IsInMap(x, y))
-                return;
-
-            container.Add(map.Cells[MapPoint.CoordToCellId(x, y)]);
-        }
+      
     }
 }

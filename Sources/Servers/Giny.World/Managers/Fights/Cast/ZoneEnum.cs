@@ -33,5 +33,6 @@ namespace Giny.World.Managers.Fights.Cast
         semicolon = 59,
         empty = 32,
         l = 108,
+
     }
 }

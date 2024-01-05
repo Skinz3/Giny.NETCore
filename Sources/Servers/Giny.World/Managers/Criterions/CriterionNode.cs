@@ -1,5 +1,6 @@
 ﻿using Giny.World.Managers.Criterias;
 using Giny.World.Managers.Criterions.Handlers;
+using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Network;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,10 @@ namespace Giny.World.Managers.Criterions
         {
             return CriterionHandler.Eval(client);
         }
+        public override bool Eval(Fighter fighter)
+        {
+            return CriterionHandler.Eval(fighter);
+        }
 
         public override string ToString()
         {
@@ -44,5 +49,7 @@ namespace Giny.World.Managers.Criterions
         {
             return new Criterion[] { CriterionHandler };
         }
+
+
     }
 }

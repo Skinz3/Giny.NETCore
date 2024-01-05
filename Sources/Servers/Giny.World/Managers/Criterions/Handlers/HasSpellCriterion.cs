@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criterion("PT")]
+    [CriterionHandler("PT")]
     public class HasSpellCriterion : Criterion
     {
         public HasSpellCriterion(string raw) : base(raw)

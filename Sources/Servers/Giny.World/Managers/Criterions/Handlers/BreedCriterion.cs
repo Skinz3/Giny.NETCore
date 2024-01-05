@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criterion("PG")]
+    [CriterionHandler("PG")]
     public class BreedCriterion : Criterion
     {
         public BreedCriterion(string criteriaFull) : base(criteriaFull)

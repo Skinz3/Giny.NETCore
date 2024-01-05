@@ -37,6 +37,14 @@ namespace Giny.World.Records.Guilds
             set;
         }
 
+        [Update]
+        [Blob]
+        public List<GuildRankRecord> Ranks
+        {
+            get;
+            set;
+        }
+
         public DateTime CreationDate
         {
             get;
@@ -60,11 +68,36 @@ namespace Giny.World.Records.Guilds
 
         [Update]
         [Blob]
-        public GuildMotd Motd
+        public GuildMotdRecord Motd
         {
             get;
             set;
         }
+
+        [Update]
+        [Blob]
+        public GuildBulletinRecord Bulletin
+        {
+            get;
+            set;
+        }
+
+        [Update]
+        [Blob]
+        public List<GuildGlobalActivityRecord> GlobalActivities
+        {
+            get;
+            set;
+        }
+
+        [Update]
+        [Blob]
+        public List<GuildChestActivityRecord> ChestActivities
+        {
+            get;
+            set;
+        }
+
         public static bool Exists(string guildName)
         {
             return Guilds.Values.Any(x => x.Name == guildName);

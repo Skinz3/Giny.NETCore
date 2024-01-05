@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criterion("OR")]
+    [CriterionHandler("OR")]
     public class HasOrnamentCriterion : Criterion
     {
         public HasOrnamentCriterion(string criteriaFull) : base(criteriaFull)

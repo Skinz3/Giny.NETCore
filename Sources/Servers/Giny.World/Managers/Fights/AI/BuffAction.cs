@@ -1,4 +1,5 @@
-﻿using Giny.World.Managers.Fights.Fighters;
+﻿using Giny.Core.Extensions;
+using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Records.Spells;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,8 @@ namespace Giny.World.Managers.Fights.AI
         {
             foreach (var spellRecord in Fighter.GetSpells().Where(x => x.Category.HasFlag(SpellCategoryEnum.Buff) && !x.Category.HasFlag(SpellCategoryEnum.Debuff) && !x.Category.HasFlag(SpellCategoryEnum.Agressive)))
             {
-                foreach (var ally in Fighter.Team.GetFighters<Fighter>().ToArray())
+                // target in priority target mask 
+                foreach (var ally in Fighter.Team.GetFighters<Fighter>().Shuffle().ToArray())
                 {
                     Fighter.CastSpell(spellRecord.Id, ally.Cell.Id);
                 }

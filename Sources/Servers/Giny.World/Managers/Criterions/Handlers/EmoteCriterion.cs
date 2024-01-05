@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criterion("PE")]
+    [CriterionHandler("PE")]
     public class EmoteCriterion : Criterion
     {
         public EmoteCriterion(string criteriaFull) : base(criteriaFull)

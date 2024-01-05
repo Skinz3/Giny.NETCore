@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Giny.World.Managers.Criterions.Handlers;
 using Giny.ORM.Attributes;
+using Giny.World.Managers.Fights.Fighters;
 
 namespace Giny.World.Managers.Criterias
 {
@@ -108,10 +109,18 @@ namespace Giny.World.Managers.Criterias
         {
             return new CriteriaExpression(expression).Eval(client);
         }
+        public static bool Eval(string expression, Fighter fighter)
+        {
+            return new CriteriaExpression(expression).Eval(fighter);
+        }
 
         public bool Eval(WorldClient client)
         {
             return Tree.Eval(client);
+        }
+        public bool Eval(Fighter fighter)
+        {
+            return Tree.Eval(fighter);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Giny.World.Managers.Criterions.Handlers;
+using Giny.World.Managers.Fights.Fighters;
 using Giny.World.Network;
 using System;
 using System.Collections.Generic;
@@ -53,6 +54,25 @@ namespace Giny.World.Managers.Criterions
                 throw new InvalidOperationException("Unsupported operator: " + Operator);
             }
         }
+
+        public override bool Eval(Fighter fighter)
+        {
+            bool leftValue = Left.Eval(fighter);
+            bool rightValue = Right.Eval(fighter);
+
+            if (Operator == '&')
+            {
+                return leftValue && rightValue;
+            }
+            else if (Operator == '|')
+            {
+                return leftValue || rightValue;
+            }
+            else
+            {
+                throw new InvalidOperationException("Unsupported operator: " + Operator);
+            }
+        }
         public override string ToString()
         {
             return this.Operator.ToString();
@@ -62,5 +82,6 @@ namespace Giny.World.Managers.Criterions
         {
             return Right.FindCriterionHandlers().Concat(Left.FindCriterionHandlers());
         }
+
     }
 }

@@ -30,6 +30,7 @@ namespace Giny.World.Managers.Effects.Targets
 
         public override bool IsTargetValid(Fighter actor, SpellEffectHandler handler)
         {
+           
             if (Caster)
                 actor = handler.Source;
 

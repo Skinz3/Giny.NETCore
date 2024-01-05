@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criterion("Pw")]
+    [CriterionHandler("Pw")]
     public class HasGuildCriterion : Criterion
     {
         public HasGuildCriterion(string criteriaFull) : base(criteriaFull)
@@ -21,7 +21,7 @@ namespace Giny.World.Managers.Criterions.Handlers
             return client.Character.HasGuild;
         }
     }
-    [Criterion("Py")]
+    [CriterionHandler("Py")]
     public class GuildLevelCriterion : Criterion
     {
         public GuildLevelCriterion(string criteriaFull) : base(criteriaFull)

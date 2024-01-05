@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criterion("cc")]
+    [CriterionHandler("cc")]
     public class ChanceCriterion : Criterion
     {
         public ChanceCriterion(string criteriaFull) : base(criteriaFull)
@@ -20,7 +20,7 @@ namespace Giny.World.Managers.Criterions.Handlers
             return ArithmeticEval(client.Character.Record.Stats.Chance.Additional);
         }
     }
-    [Criterion("CC")]
+    [CriterionHandler("CC")]
     public class TotalChanceCriterion : Criterion
     {
         public TotalChanceCriterion(string criteriaFull) : base(criteriaFull)

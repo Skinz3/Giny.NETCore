@@ -11,7 +11,7 @@ using Giny.Protocol.Enums;
 
 namespace Giny.World.Managers.Criterions.Handlers
 {
-    [Criterion("Ef")]
+    [CriterionHandler("Ef")]
     public class KillMonsterWithChallengeCriterion : Criterion
     {
         private short MonsterId

@@ -710,7 +710,7 @@ namespace Giny.DatabasePatcher.Monsters
             /* Aquadôme de Merkator */
 
             dungeon = DungeonRecord.GetDungeon(73);
-            dungeon.Rooms.Clear();  
+            dungeon.Rooms.Clear();
             /* Krabouilleur,Krabouilleur,Harpo,Pikoleur,Krabouilleur,Pikoleur,Harpo,Eskoglyphe*/
             dungeon.Rooms.Add(new MonsterRoom(10f, 119276033, 3542, 3542, 3538, 3535, 3542, 3535, 3538, 3543)); ;
             /* Eskoglyphe,Eskoglyphe,Harpo,Cyclophandre,Eskoglyphe,Cyclophandre,Harpo,Krabouilleur*/
