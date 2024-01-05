@@ -1922,7 +1922,23 @@ namespace Giny.World.Managers.Entities.Characters
 
             Client.Send(Guild.GetGuildJoinedMessage(memberRecord));
 
+            SendGuildMembership();
+
             AddHumanOption(HumanOptionsManager.Instance.CreateHumanOptionGuild(), true);
+
+            Client.Send(Guild.GetGuildRanksMessage());
+            Client.Send(Guild.GetGuildInformationsMembersMessage());
+            Client.Send(Guild.GetGuildInformationsGeneralMessage());
+
+            if (Guild.Record.Bulletin.Content != string.Empty)
+                Guild.RefreshMotd(this);
+
+            if (Guild.Record.Motd.Content != string.Empty)
+                Guild.RefreshBulletin(this);
+
+            //// ALLIANCES
+
+            Guild.RefreshMember(memberRecord);
         }
         public void OnGuildKick(Guild guild)
         {
@@ -1933,6 +1949,7 @@ namespace Giny.World.Managers.Entities.Characters
             TextInformation(TextInformationTypeEnum.TEXT_INFORMATION_MESSAGE, 1431, guild.Record.Name);
             RemoveAllHumanOption<CharacterHumanOptionGuild>(true);
         }
+
 
         public CharacterMinimalInformations GetCharacterMinimalInformations()
         {

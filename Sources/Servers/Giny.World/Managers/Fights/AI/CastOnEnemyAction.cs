@@ -49,7 +49,20 @@ namespace Giny.World.Managers.Fights.AI
 
             allCasts.AddRange(GetSpellCasts(Fighter.Cell));
 
-            var bestCast = allCasts.MaxBy(x => GetEfficiency(x));
+
+            if (allCasts.Count == 0)
+            {
+                return;
+            }
+            Dictionary<SpellCast, double> castEfficiencies = new Dictionary<SpellCast, double>();
+
+
+            foreach (var cast in allCasts)
+            {
+                castEfficiencies.Add(cast, GetEfficiency(cast));
+            }
+
+            var bestCast = castEfficiencies.MaxBy(x => x.Value).Key;
 
 
             if (bestCast != null)
@@ -80,7 +93,7 @@ namespace Giny.World.Managers.Fights.AI
         {
             double value = -cast.CastCell.Point.ManhattanDistanceTo(Fighter.Cell.Point);
 
-            if (cast.Target != null && !cast.Target.IsSummoned())
+            if (cast.Target != null && !cast.Target.IsSummoned() && !cast.Target.IsFriendlyWith(Fighter))
             {
                 value += 10;
             }

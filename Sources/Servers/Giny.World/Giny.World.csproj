@@ -35,4 +35,8 @@
 		<ProjectReference Include="..\..\Giny.Protocol\Giny.Protocol.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Managers\Entities\TaxCollectors\" />
+	</ItemGroup>
+
 </Project>
