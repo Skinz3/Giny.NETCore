@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Giny.World.Managers.Criterions.Handlers;
 using Giny.ORM.Attributes;
 using Giny.World.Managers.Fights.Fighters;
+using System.Text.RegularExpressions;
 
 namespace Giny.World.Managers.Criterias
 {
@@ -37,6 +38,36 @@ namespace Giny.World.Managers.Criterias
 
 
 
+        private string RemoveParenthesis(string input)
+        {
+            if (input.StartsWith("("))
+            {
+                input = input.Substring(1, input.Length - 1);
+            }
+            else
+            {
+                return input;
+            }
+
+            StringBuilder result = new StringBuilder();
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                result.Append(input[i]);
+
+                if (input[i] == ')')
+                {
+
+                    break;
+                }
+
+
+            }
+
+            return RemoveParenthesis(result.ToString());
+
+        }
+
         private Node BuildNode(string expression)
         {
             if (expression == null || expression == "null" || string.IsNullOrWhiteSpace(expression))
@@ -46,7 +77,8 @@ namespace Giny.World.Managers.Criterias
 
             if (expression.StartsWith("(") && expression.EndsWith(")"))
             {
-                expression = expression.Substring(1, expression.Length - 2); // Remove outer parentheses
+                // Remove outer parentheses
+                expression = Regex.Replace(expression.Substring(1, expression.Length - 2), @"[\(\)]", "");
             }
 
             int operatorIndex = FindOutermostOperator(expression);
