@@ -38,36 +38,6 @@ namespace Giny.World.Managers.Criterias
 
 
 
-        private string RemoveParenthesis(string input)
-        {
-            if (input.StartsWith("("))
-            {
-                input = input.Substring(1, input.Length - 1);
-            }
-            else
-            {
-                return input;
-            }
-
-            StringBuilder result = new StringBuilder();
-
-            for (int i = 0; i < input.Length; i++)
-            {
-                result.Append(input[i]);
-
-                if (input[i] == ')')
-                {
-
-                    break;
-                }
-
-
-            }
-
-            return RemoveParenthesis(result.ToString());
-
-        }
-
         private Node BuildNode(string expression)
         {
             if (expression == null || expression == "null" || string.IsNullOrWhiteSpace(expression))
@@ -77,7 +47,7 @@ namespace Giny.World.Managers.Criterias
 
             if (expression.StartsWith("(") && expression.EndsWith(")"))
             {
-                // Remove outer parentheses
+                /* Parenthesis priorities? */
                 expression = Regex.Replace(expression.Substring(1, expression.Length - 2), @"[\(\)]", "");
             }
 

@@ -349,7 +349,7 @@ namespace Giny.World.Managers.Fights
         }
         public short GetPlacementTimeLeft()
         {
-            if (GetPlacementDelay() == 0)
+            if (GetPlacementDelay() == 0 || PlacementTimer == null)
             {
                 return 0;
             }
