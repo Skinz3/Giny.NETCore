@@ -24,6 +24,7 @@ using Org.BouncyCastle.Asn1.X509;
 using Giny.World.Managers.Fights.Effects;
 using MySqlX.XDevAPI.Common;
 using Giny.Protocol.Messages;
+using Giny.World.Managers.Fights.Effects.Debuffs;
 
 namespace Giny.World.Managers.Fights.Cast
 {
@@ -313,9 +314,16 @@ namespace Giny.World.Managers.Fights.Cast
             }
 
         }
+        private bool BypassTriggers()
+        {
+            var type = SpellEffectManager.Instance.GetHandlerType(Effect.EffectEnum);
+
+            return Effect.Triggers.Any(x => x.Type == TriggerTypeEnum.OnTurnBegin) && Effect.Duration > 0 && (type == typeof(StatBuff)
+                 || type == typeof(StatsDebuff));
+        }
         private void InternalApply(IEnumerable<Fighter> targets)
         {
-            if (Trigger.IsInstant(Effect.Triggers))
+            if (Trigger.IsInstant(Effect.Triggers) || BypassTriggers())
             {
                 Apply(targets);
             }
@@ -323,9 +331,9 @@ namespace Giny.World.Managers.Fights.Cast
             {
                 foreach (var target in targets)
                 {
-                    AddTriggerBuff(target, FightDispellableEnum.REALLY_NOT_DISPELLABLE, Effect.Triggers, delegate (TriggerBuff buff, ITriggerToken? token)
+                    AddTriggerBuff(target, Effect.DispellableEnum, Effect.Triggers, delegate (TriggerBuff buff, ITriggerToken? token)
                     {
-                        this.TriggerToken = token;
+                        TriggerToken = token;
                         Apply(new Fighter[] { target });
                         return false;
 

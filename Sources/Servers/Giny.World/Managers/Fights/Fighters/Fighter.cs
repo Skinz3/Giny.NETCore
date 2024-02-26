@@ -720,7 +720,6 @@ namespace Giny.World.Managers.Fights.Fighters
             {
                 var abstractFightDispellableEffect = buff.GetAbstractFightDispellableEffect();
 
-
                 Fight.Send(new GameActionFightDispellableEffectMessage()
                 {
                     actionId = buff.GetActionId(),
@@ -751,6 +750,7 @@ namespace Giny.World.Managers.Fights.Fighters
 
             foreach (var buff in buffs)
             {
+               
                 buff.LastTriggeredSequence = Fight.SequenceManager.CurrentSequence;
 
                 if (buff.Apply(token))

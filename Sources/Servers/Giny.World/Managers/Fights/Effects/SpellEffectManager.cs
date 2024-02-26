@@ -37,16 +37,21 @@ namespace Giny.World.Managers.Fights.Effects
         {
             return m_handlers.ContainsKey(effect);
         }
-        public SpellEffectHandler GetSpellEffectHandler(Effect effect, SpellCastHandler castHandler)
+        public Type GetHandlerType(EffectsEnum effectEnum)
         {
             Type type = null;
 
-            if (!m_handlers.TryGetValue(effect.EffectEnum, out type))
+            if (!m_handlers.TryGetValue(effectEnum, out type))
             {
                 return null;
             }
 
-            return (SpellEffectHandler)Activator.CreateInstance(type, new object[] { effect, castHandler, });
+            return type;
+        }
+        public SpellEffectHandler GetSpellEffectHandler(Effect effect, SpellCastHandler castHandler)
+        {
+            var type = GetHandlerType(effect.EffectEnum);
+            return (SpellEffectHandler)Activator.CreateInstance(type, new object[] { effect, castHandler });
         }
     }
 }
