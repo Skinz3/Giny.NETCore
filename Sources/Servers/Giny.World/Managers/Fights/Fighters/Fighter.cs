@@ -171,7 +171,7 @@ namespace Giny.World.Managers.Fights.Fighters
             get;
             set;
         }
-        public UniqueIdProvider BuffIdProvider
+        public BuffIdProvider BuffIdProvider
         {
             get;
             private set;
@@ -289,7 +289,7 @@ namespace Giny.World.Managers.Fights.Fighters
             this.Loot = new Loot();
             this.Buffs = new List<Buff>();
             this.Cell = Team.GetPlacementCell();
-            this.BuffIdProvider = new UniqueIdProvider();
+            this.BuffIdProvider = new BuffIdProvider();
             this.SpellHistory = new SpellHistory(this);
             this.SpellModifiers = new SpellModifiers(this);
             this.WasTeleportedInInvalidCell = false;
