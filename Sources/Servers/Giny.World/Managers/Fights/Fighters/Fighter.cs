@@ -750,13 +750,14 @@ namespace Giny.World.Managers.Fights.Fighters
 
             foreach (var buff in buffs)
             {
-               
+
                 buff.LastTriggeredSequence = Fight.SequenceManager.CurrentSequence;
 
                 if (buff.Apply(token))
                 {
                     result = true;
                 }
+
             }
 
             return result;
@@ -2381,16 +2382,21 @@ namespace Giny.World.Managers.Fights.Fighters
                     TriggerBuffs(TriggerTypeEnum.OnDamagedFire, damage);
                     break;
             }
-            if (damage.Source.IsMeleeWith(this))
+
+            if (!damage.FromPushback)
             {
-                damage.Source.TriggerBuffs(TriggerTypeEnum.CasterInflictDamageMelee, damage);
-                TriggerBuffs(TriggerTypeEnum.OnDamagedMelee, damage);
+                if (damage.Source.IsMeleeWith(this))
+                {
+                    damage.Source.TriggerBuffs(TriggerTypeEnum.CasterInflictDamageMelee, damage);
+                    TriggerBuffs(TriggerTypeEnum.OnDamagedMelee, damage);
+                }
+                else
+                {
+                    damage.Source.TriggerBuffs(TriggerTypeEnum.CasterInflictDamageRange, damage);
+                    TriggerBuffs(TriggerTypeEnum.OnDamagedRange, damage);
+                }
             }
-            else
-            {
-                damage.Source.TriggerBuffs(TriggerTypeEnum.CasterInflictDamageRange, damage);
-                TriggerBuffs(TriggerTypeEnum.OnDamagedRange, damage);
-            }
+
 
             if (damage.IsSpellDamage())
             {

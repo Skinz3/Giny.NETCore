@@ -31,6 +31,10 @@ namespace Giny.World.Managers.Fights.Effects.Summons
             {
                 var summonCell = GetSummonCell();
 
+                if (summonCell == null)
+                {
+                    summonCell = CastHandler.Cast.GetParents().First().BaseTargetCell;
+                }
                 if (summonCell != null)
                 {
                     SummonedMonster summon = CreateSummon(record, (byte)Effect.Max, summonCell);

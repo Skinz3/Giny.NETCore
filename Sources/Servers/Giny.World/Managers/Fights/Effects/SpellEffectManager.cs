@@ -37,7 +37,7 @@ namespace Giny.World.Managers.Fights.Effects
         {
             return m_handlers.ContainsKey(effect);
         }
-        public Type GetHandlerType(EffectsEnum effectEnum)
+        private Type GetHandlerType(EffectsEnum effectEnum)
         {
             Type type = null;
 

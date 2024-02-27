@@ -314,16 +314,10 @@ namespace Giny.World.Managers.Fights.Cast
             }
 
         }
-        private bool BypassTriggers()
-        {
-            var type = SpellEffectManager.Instance.GetHandlerType(Effect.EffectEnum);
 
-            return Effect.Triggers.Any(x => x.Type == TriggerTypeEnum.OnTurnBegin) && Effect.Duration > 0 && (type == typeof(StatBuff)
-                 || type == typeof(StatsDebuff));
-        }
         private void InternalApply(IEnumerable<Fighter> targets)
         {
-            if (Trigger.IsInstant(Effect.Triggers) || BypassTriggers())
+            if (Trigger.IsInstant(Effect.Triggers))
             {
                 Apply(targets);
             }
