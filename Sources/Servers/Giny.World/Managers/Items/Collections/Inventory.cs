@@ -146,7 +146,7 @@ namespace Giny.World.Managers.Items.Collections
             Character.Client.Send(new ObjectDeletedMessage(item.UId));
             Character.GeneralShortcutBar.OnItemRemoved(item);
             RefreshWeight();
-            Character.OnItemAdded(item);
+            Character.OnItemRemoved(item);
         }
 
         [Annotation]
