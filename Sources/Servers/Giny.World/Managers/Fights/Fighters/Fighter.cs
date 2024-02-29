@@ -716,9 +716,21 @@ namespace Giny.World.Managers.Fights.Fighters
         }
         public void OnBuffAdded(Buff buff)
         {
+
+            var similar = Buffs.Where(x => x.IsSimilar(buff) && x != buff);
+
+            var id = buff.Id;
+            
+            if (similar.Count() > 0)
+            {
+                id = similar.First().Id;
+            }
+
             //if (!buff.Silent)
             {
                 var abstractFightDispellableEffect = buff.GetAbstractFightDispellableEffect();
+
+                abstractFightDispellableEffect.uid = id;
 
                 Fight.Send(new GameActionFightDispellableEffectMessage()
                 {
