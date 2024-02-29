@@ -41,6 +41,7 @@ namespace Giny.World.Managers.Fights.Effects.Damages
             short reflected = (short)Effect.Min;
             Damage reflectDamage = new Damage(damage.Target, damage.Source, damage.Element, reflected, reflected, damage.Handler);
             reflectDamage.IgnoreBoost = true;
+            reflectDamage.WontTriggerBuffs = true;
             reflectDamage.IgnoreResistances = true;
             damage.Source.InflictDamage(reflectDamage);
             damage.Target.OnDamageReflected(damage.Source);

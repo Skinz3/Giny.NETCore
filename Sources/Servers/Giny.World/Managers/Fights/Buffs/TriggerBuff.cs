@@ -85,12 +85,10 @@ namespace Giny.World.Managers.Fights.Buffs
         }
         public bool Apply(ITriggerToken? token)
         {
-            Target.BuffIdProvider.CurrentTriggeredId = Id;
             if (this.ApplyTrigger != null)
             {
                 return this.ApplyTrigger(this, token);
             }
-            Target.BuffIdProvider.CurrentTriggeredId = null;
 
             return false;
         }

@@ -51,6 +51,11 @@ namespace Giny.World.Managers.Fights.Effects
         public SpellEffectHandler GetSpellEffectHandler(Effect effect, SpellCastHandler castHandler)
         {
             var type = GetHandlerType(effect.EffectEnum);
+
+            if (type == null)
+            {
+                return null;
+            }
             return (SpellEffectHandler)Activator.CreateInstance(type, new object[] { effect, castHandler });
         }
     }
