@@ -95,8 +95,12 @@ namespace Giny.World.Managers.Fights.Synchronisation
         }
         public void EndAllSequences()
         {
-            foreach (var sequence in m_sequencesRoot.ToArray())
-                sequence.EndSequence();
+            lock (m_sequencesRoot)
+            {
+                foreach (var sequence in m_sequencesRoot.ToArray())
+                    sequence.EndSequence();
+            }
+         
         }
 
         public void OnSequenceEnded(FightSequence sequence)
@@ -112,7 +116,11 @@ namespace Giny.World.Managers.Fights.Synchronisation
 
         public void ResetSequences()
         {
-            m_sequencesRoot.Clear();
+            lock (m_sequencesRoot)
+            {
+                m_sequencesRoot.Clear();
+
+            }
             CurrentSequence = null;
             m_nextSequenceId = 1;
         }

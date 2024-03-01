@@ -183,6 +183,10 @@ namespace Giny.World.Handlers.Maps
         [MessageHandler]
         public static void HandleChangeMap(ChangeMapMessage message, WorldClient client)
         {
+            if (client.Character.IsMoving)
+            {
+                client.Character.CancelMove(client.Character.CellId);
+            }
             MapScrollEnum scrollType = MapScrollEnum.UNDEFINED;
             if (client.Character.Map.LeftMap == message.mapId)
                 scrollType = MapScrollEnum.LEFT;
@@ -197,7 +201,14 @@ namespace Giny.World.Handlers.Maps
             {
                 int teleportMapId = MapsManager.Instance.GetNeighbourMapId(client.Character.Map, scrollType);
 
-                MapPoint cellPoint = new MapPoint(MapsManager.Instance.GetNeighbourCellId(client.Character.Record.CellId, scrollType));
+                var cellId = MapsManager.Instance.GetNeighbourCellId(client.Character.Record.CellId, scrollType);
+
+                if (cellId < 0)
+                {
+                    return;
+                }
+
+                MapPoint cellPoint = new MapPoint(cellId);
 
                 client.Character.Record.Direction = MapsManager.Instance.GetScrollDirection(scrollType);
 
