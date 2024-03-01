@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Giny.Core;
 using Giny.Core.Extensions;
 using Giny.Core.Time;
 using Giny.Protocol.Custom.Enums;
@@ -22,14 +23,35 @@ namespace Giny.World.Managers.Effects
         [ProtoMember(2)]
         public int Min
         {
-            get;
-            set;
+            get
+            {
+                if (m_min < 0)
+                {
+                    Logger.Write("DiceMin < 0 Error on effect " + EffectEnum, Channels.Critical);
+                }
+                return m_min < 0 ? 0 : m_min;
+            }
+            set
+            {
+                m_min = value;
+            }
         }
         [ProtoMember(3)]
         public int Max
         {
-            get;
-            set;
+            get
+            {
+                if (m_max < 0)
+                {
+                    Logger.Write("DiceMax < 0 Error on effect " + EffectEnum, Channels.Critical);
+                }
+
+                return m_max < 0 ? 0 : m_max;
+            }
+            set
+            {
+                m_max = value;
+            }
         }
         [ProtoMember(5)]
         public override int Value
@@ -38,6 +60,10 @@ namespace Giny.World.Managers.Effects
             set => base.Value = value;
         }
 
+
+        private int m_min;
+
+        private int m_max;
 
         public bool IsDice => Max > Min;
 
