@@ -12,6 +12,7 @@ namespace Giny.World.Managers.Fights.Synchronisation
 {
     public class SequenceManager
     {
+        private object _lock = new object();
         private List<FightSequence> m_sequencesRoot
         {
             get;
@@ -44,7 +45,10 @@ namespace Giny.World.Managers.Fights.Synchronisation
         }
         public bool AcknowledgeAction(CharacterFighter fighter, int sequenceId)
         {
-            return m_sequencesRoot.Any(x => x.Acknowledge(sequenceId, fighter));
+            lock (m_sequencesRoot)
+            {
+                return m_sequencesRoot.Any(x => x.Acknowledge(sequenceId, fighter));
+            }
         }
         public FightSequence StartSequence(SequenceTypeEnum type)
         {
@@ -64,8 +68,10 @@ namespace Giny.World.Managers.Fights.Synchronisation
                 {
                     Logger.Write($"Sequence {sequence.Type} is a root and cannot have a parent", Channels.Warning);
                 }
-
-                m_sequencesRoot.Add(sequence);
+                lock (m_sequencesRoot)
+                {
+                    m_sequencesRoot.Add(sequence);
+                }
                 CurrentRootSequence = sequence;
             }
             else
