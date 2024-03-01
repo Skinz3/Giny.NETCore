@@ -29,7 +29,7 @@ namespace Giny.World.Managers.Fights.Effects.Steal
             {
                 DamageResult result = target.InflictDamage(CreateDamage(target));
 
-                double healDelta = result.Total / 2d;
+                double healDelta = result.LifeLoss / 2d;
 
                 Source.Heal(new Healing(Source, target, EffectElementEnum.None, healDelta, healDelta, this,true));
             }
