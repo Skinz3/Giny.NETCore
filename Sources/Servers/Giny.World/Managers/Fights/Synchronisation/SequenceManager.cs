@@ -45,7 +45,7 @@ namespace Giny.World.Managers.Fights.Synchronisation
         }
         public bool AcknowledgeAction(CharacterFighter fighter, int sequenceId)
         {
-            lock (m_sequencesRoot)
+            lock (_lock)
             {
                 return m_sequencesRoot.Any(x => x.Acknowledge(sequenceId, fighter));
             }
@@ -59,7 +59,7 @@ namespace Giny.World.Managers.Fights.Synchronisation
             return sequence;
         }
 
-     
+
         private void StartSequence(FightSequence sequence)
         {
             if (!IsSequencing)
@@ -68,7 +68,7 @@ namespace Giny.World.Managers.Fights.Synchronisation
                 {
                     Logger.Write($"Sequence {sequence.Type} is a root and cannot have a parent", Channels.Warning);
                 }
-                lock (m_sequencesRoot)
+                lock (_lock)
                 {
                     m_sequencesRoot.Add(sequence);
                 }
@@ -95,12 +95,12 @@ namespace Giny.World.Managers.Fights.Synchronisation
         }
         public void EndAllSequences()
         {
-            lock (m_sequencesRoot)
+            lock (_lock)
             {
                 foreach (var sequence in m_sequencesRoot.ToArray())
                     sequence.EndSequence();
             }
-         
+
         }
 
         public void OnSequenceEnded(FightSequence sequence)
@@ -116,7 +116,7 @@ namespace Giny.World.Managers.Fights.Synchronisation
 
         public void ResetSequences()
         {
-            lock (m_sequencesRoot)
+            lock (_lock)
             {
                 m_sequencesRoot.Clear();
 

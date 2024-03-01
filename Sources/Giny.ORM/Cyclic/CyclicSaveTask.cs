@@ -55,13 +55,6 @@ namespace Giny.ORM.Cyclic
 
             lock (UpdateLock)
             {
-                lock (DeleteLock)
-                {
-                    if (ElementsToRemove.ContainsKey(type) && ElementsToRemove[type].Contains(element))
-                    {
-                        return;
-                    }
-                }
                 if (ElementsToUpdate.ContainsKey(type))
                 {
                     if (!ElementsToUpdate[type].Contains(element))
@@ -133,20 +126,16 @@ namespace Giny.ORM.Cyclic
                 updateElements = CopyElementsDictionary(ElementsToUpdate);
             }
 
-            lock (UpdateLock)
-            {
-                lock (DeleteLock)
-                {
-                    lock (InsertLock)
-                    {
-                        SaveElements(removeElements, DatabaseAction.Remove);
-                        SaveElements(addElements, DatabaseAction.Add);
-                        SaveElements(updateElements, DatabaseAction.Update);
-                    }
-                }
-            }
+            lock (DeleteLock)
+                SaveElements(removeElements, DatabaseAction.Remove);
 
-            
+            lock (InsertLock)
+                SaveElements(addElements, DatabaseAction.Add);
+
+            lock (UpdateLock)
+                SaveElements(updateElements, DatabaseAction.Update);
+
+
 
             lock (DeleteLock)
             {
