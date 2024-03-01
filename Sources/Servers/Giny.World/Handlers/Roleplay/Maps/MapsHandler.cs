@@ -203,7 +203,7 @@ namespace Giny.World.Handlers.Maps
 
                 var cellId = MapsManager.Instance.GetNeighbourCellId(client.Character.Record.CellId, scrollType);
 
-                if (cellId < 0)
+                if (cellId < 0 || cellId > 560)
                 {
                     return;
                 }

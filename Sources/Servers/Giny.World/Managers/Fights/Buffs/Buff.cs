@@ -76,6 +76,13 @@ namespace Giny.World.Managers.Fights.Buffs
             set;
         } = false;
 
+
+        public int? ClientId
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// Silent or verbose ?
         /// </summary>
