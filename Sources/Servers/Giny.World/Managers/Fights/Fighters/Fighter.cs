@@ -689,7 +689,7 @@ namespace Giny.World.Managers.Fights.Fighters
             this.Buffs.Remove(buff);
             Fight.Buffs.Remove(buff);
 
-            Fight.Send(new GameActionFightDispellEffectMessage(buff.ClientId.HasValue ? buff.ClientId.Value : buff.Id, 0, source.Id, buff.Target.Id, true));
+            Fight.Send(new GameActionFightDispellEffectMessage(buff.Id, 0, source.Id, buff.Target.Id, false));
 
             BuffIdProvider.Push(buff.Id);
         }
@@ -717,29 +717,26 @@ namespace Giny.World.Managers.Fights.Fighters
         public void OnBuffAdded(Buff buff)
         {
 
-            var similar = Buffs.Where(x => x.Cast.SpellId == buff.Cast.SpellId);
-
-            var id = buff.Id;
-
-            if (similar.Count() > 0)
-            {
-                buff.ClientId = id;
-                id = similar.First().Id;
-            }
-
-
             //if (!buff.Silent)
             {
-                var abstractFightDispellableEffect = buff.GetAbstractFightDispellableEffect();
+                var effect = buff.GetAbstractFightDispellableEffect();
 
+                if (effect is FightTemporaryBoostEffect eff)
+                {
+                    var triggerBuff = Buffs.FirstOrDefault(x => x is TriggerBuff && x.Cast.SpellId == buff.Cast.SpellId);
 
-                abstractFightDispellableEffect.uid = id;
+                    if (triggerBuff != null)
+                    {
+                        effect.uid = triggerBuff.Id;
+                    }
+                    //Fight.Warn($"Buff id : {eff.uid} delta : {eff.delta} spellId : {effect.spellId} Dispellable : {eff.dispelable}");
 
-                Fight.Warn($"Buff id : {id} target : {abstractFightDispellableEffect.targetId} spellId : {abstractFightDispellableEffect.spellId} Turn duration : {abstractFightDispellableEffect.turnDuration}");
+                }
+
                 Fight.Send(new GameActionFightDispellableEffectMessage()
                 {
                     actionId = buff.GetActionId(),
-                    effect = abstractFightDispellableEffect,
+                    effect = effect,
                     sourceId = buff.Cast.Source.Id,
                 });
             }
