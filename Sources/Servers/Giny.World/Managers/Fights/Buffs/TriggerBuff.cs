@@ -128,13 +128,29 @@ namespace Giny.World.Managers.Fights.Buffs
                 param3 = param3,
             };
         }
-
+        // WIP : Why poison are not displayed the same ? (bimbo)
+        EffectsEnum[] DirectDamageEffects = new List<EffectsEnum>()
+        {
+            EffectsEnum.Effect_DamageAir,
+            EffectsEnum.Effect_DamageEarth,
+            EffectsEnum.Effect_DamageWater,
+            EffectsEnum.Effect_DamageFire,
+            EffectsEnum.Effect_DamageNeutral
+        }.ToArray();
+        
         private int[] GetClientParams()
         {
             if (DirectDamage.GetEffectSchool(Effect.EffectEnum) != EffectElementEnum.Undefined)
             {
+                // bimbo fix Poison spells display on client side.
+                if (DirectDamageEffects.Contains(Effect.EffectEnum) && Duration > 0)
+                {
+                    return new int[] { Effect.Max - Effect.Min, 0, Effect.Min };
+                }
                 return new int[] { Effect.Max - Effect.Min, 0, Effect.Min };
             }
+        
+        
             return new int[] { Effect.Min, Effect.Max, Effect.Value };
         }
 
