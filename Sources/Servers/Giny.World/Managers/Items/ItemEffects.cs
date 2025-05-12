@@ -491,5 +491,10 @@ namespace Giny.World.Managers.Items
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.RANGE).Objects -= (short)delta;
         }
+        [ItemEffect(EffectsEnum.Effect_984)]
+        public static void BeSubscribed(Character character, int delta)
+        {
+            // Seems this effect has been removed but is still within D2oFiles
+        }
     }
 }
