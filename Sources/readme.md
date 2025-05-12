@@ -28,7 +28,7 @@ Legend :
 [X] --> Done
 
 Todo :
-[WIP] - Add missing ItemEffects.
+[] - Add missing ItemEffects.
 [] - Add commands & tools to be efficient when fixing bugs & architecture
 [] - Implement "SpellsInstance".
 [] - Fix triggerbuffs in edgecase/
