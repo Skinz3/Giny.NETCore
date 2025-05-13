@@ -344,7 +344,11 @@ namespace Giny.World.Managers.Items
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE).Objects += (short)delta;
         }
-
+        [ItemEffect(EffectsEnum.Effect_SubHealBonus)]
+        public static void SubHealBonus(Character character, int delta)
+        {
+            character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.HEAL_BONUS).Objects -= (short)delta;
+        }
 
         [ItemEffect(EffectsEnum.Effect_AddWeaponDamageMultiplier)]
         public static void AddWeaponDamageDone(Character character, int delta)
