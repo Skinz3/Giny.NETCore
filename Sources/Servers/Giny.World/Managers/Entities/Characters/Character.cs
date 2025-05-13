@@ -522,6 +522,34 @@ namespace Giny.World.Managers.Entities.Characters
                 return false;
             }
         }
+        public bool ForgetSpell(short spellId, bool notify = true)
+        {
+            if (SpellRecord.Exists(spellId))
+            {
+                CharacterSpell charSpell = Record.Spells.FirstOrDefault(x => x.SpellId == spellId);
+                if (charSpell != null)
+                {
+                    Record.Spells.Remove(charSpell);
+                }
+                SpellShortcutBar.Remove(spellId);
+                if (notify)
+                {
+                    RefreshShortcuts();
+                }
+                if (notify)
+                {
+                    RefreshSpells();
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+
         public bool HasSpell(short spellId)
         {
             return Record.Spells.Any(x => x.ActiveSpellRecord.Id == spellId);

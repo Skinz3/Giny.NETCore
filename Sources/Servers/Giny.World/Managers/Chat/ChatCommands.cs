@@ -25,6 +25,7 @@ using Giny.World.Managers.Maps.Npcs;
 using Giny.World.Managers.Maps.Paths;
 using Giny.World.Managers.Maps.Teleporters;
 using Giny.World.Managers.Monsters;
+using Giny.World.Managers.Spells;
 using Giny.World.Managers.Stats;
 using Giny.World.Network;
 using Giny.World.Records.Achievements;
@@ -84,7 +85,6 @@ namespace Giny.World.Managers.Chat
             ItemsManager.Instance.Reload();
             client.Character.Reply("Items reloaded.");
         }
-
 
         [ChatCommand("npcs", ServerRoleEnum.Administrator)]
         public static void ReloadNpcs(WorldClient client)
@@ -597,6 +597,32 @@ namespace Giny.World.Managers.Chat
                 }
             }
             character.Inventory.Refresh();
+        }
+
+        [ChatCommand("removespells", ServerRoleEnum.Administrator)]
+        public static void RemoveSpellsCommand(WorldClient client)
+        {
+            Character character = client.Character;
+            foreach (CharacterSpell charSpell in character.Record.Spells.ToArray())
+            {
+                character.ForgetSpell(charSpell.SpellId, true);
+            }
+        }
+
+        [ChatCommand("copymonsterspell", ServerRoleEnum.Administrator)]
+        public static void CopyMonsterSpellCommand(WorldClient client, short monsterId)
+        {
+            Character character = client.Character;
+            MonsterRecord monster = MonsterRecord.GetMonsterRecord(monsterId);
+            if (monster == null)
+            {
+                character.Reply("Monster " + monsterId + " not found");
+                return;
+            }
+            foreach (long monsterSpellId in monster.Spells)
+            {
+                character.LearnSpell((short)monsterSpellId, true);
+            }
         }
     }
 }
