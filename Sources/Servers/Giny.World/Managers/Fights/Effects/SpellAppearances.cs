@@ -168,5 +168,11 @@ namespace Giny.World.Managers.Fights.Effects
         {
             look.SetBones(4817);
         }
+
+        [SpellAppearance(876)]
+        public static void BoufcoolSkin(Fighter fighter, ref ServerEntityLook look)
+        {
+            look.SetBones(485);
+        }
     }
 }

@@ -344,7 +344,11 @@ namespace Giny.World.Managers.Items
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.RECEIVED_DAMAGE_MULTIPLIER_MELEE).Objects += (short)delta;
         }
-
+        [ItemEffect(EffectsEnum.Effect_SubHealBonus)]
+        public static void SubHealBonus(Character character, int delta)
+        {
+            character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.HEAL_BONUS).Objects -= (short)delta;
+        }
 
         [ItemEffect(EffectsEnum.Effect_AddWeaponDamageMultiplier)]
         public static void AddWeaponDamageDone(Character character, int delta)
@@ -490,6 +494,11 @@ namespace Giny.World.Managers.Items
         public static void SubRange(Character character, int delta)
         {
             character.Record.Stats.GetCharacteristic<DetailedCharacteristic>(CharacteristicEnum.RANGE).Objects -= (short)delta;
+        }
+        [ItemEffect(EffectsEnum.Effect_984)]
+        public static void BeSubscribed(Character character, int delta)
+        {
+            // Seems this effect has been removed but is still within D2oFiles
         }
     }
 }
