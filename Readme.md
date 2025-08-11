@@ -2,6 +2,8 @@
 
 Giny is a comprehensive and modular server emulator for the popular MMORPG, Dofus, written entirely in C# .NET. It provides a robust foundation for recreating the server-side logic of the game, allowing developers to host their own Dofus worlds. The emulator is designed with a clear separation of concerns, broken down into several distinct projects that work together to deliver a complete and extensible Dofus experience.
 
+This emulator is not based on Stump.
+
 ## Components
 
 Giny's architecture is divided into the following key components:
