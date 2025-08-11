@@ -30,6 +30,8 @@ Giny also includes a suite of powerful tools to aid in the development and custo
 
 *   **Giny.MapEditor**: A work-in-progress implementation of a Dofus map editor. This tool is intended to allow for the creation and modification of in-game maps.
 
+*   **Giny.Uplauncher**: A launcher for the game (connecting to zaap server)
+  
 *   **Giny.SpellTree**: For developers and server administrators interested in the intricate details of character abilities, Giny.SpellTree provides a visual representation of spell effects. Written in WPF, this tool helps in understanding and customizing the game's complex spell system.
 
 *   **Giny.WorldEditor**: Built with MudBlazor, this tool provides a user-friendly interface for editing both `.d2o` game files and the server's database content. This allows for easy modification of items, monsters, quests, and other game data.
