@@ -4,6 +4,8 @@ Giny is a comprehensive and modular server emulator for the popular MMORPG, Dofu
 
 This emulator is not Stump.
 
+**I am no longer maintaining this project and I am not actively working on it anymore. Please do not contact me for help, unfortunately I don’t have the time, sorry!**
+
 ## Components
 
 Giny's architecture is divided into the following key components:
