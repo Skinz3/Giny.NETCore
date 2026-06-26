@@ -2,14 +2,14 @@
 @using Giny.Zaap.Accounts;
 @using Microsoft.AspNetCore.Components.Web;
 @using MudBlazor;
-<div class="d-flex align-center justify-center pa-13">
+<div class="d-flex justify-center flex-grow-1 pa-6" style="overflow-y:auto;align-items:safe center;min-height:0;">
 
-    <div class="container pa-4" style="gap:0px;align-items:center;width:380px">
+    <div class="container pa-4" style="gap:0px;align-items:center;width:380px;margin-bottom:48px">
         <MudImage Width=300 Height=300 Class="pa-2" Fluid=true ObjectFit=ObjectFit.Cover ObjectPosition=ObjectPosition.Center
                   Src="https://i.imgur.com/vjCw7cz.png"></MudImage>
 
 
-        <div class="d-flex flex-column  gap-1;">
+        <div class="d-flex flex-column" style="gap:4px;">
 
             <MudTextField Immediate=true Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.AccountCircle" Variant=Variant.Filled Label="Nom de compte" @bind-Value="Login"></MudTextField>
 
@@ -92,7 +92,19 @@
     {
         Processing = true;
 
-        WebAccount? result = await AuthApi.Register(Login, Password);
+        WebAccount? result = null;
+
+        try
+        {
+            result = await AuthApi.Register(Login, Password);
+        }
+        catch (Exception ex)
+        {
+            DialogHelper.OpenDialog(DialogService, "Erreur", $"Impossible de se connecter au serveur : {ex.Message}");
+            Processing = false;
+            StateHasChanged();
+            return;
+        }
 
         if (result != null)
         {

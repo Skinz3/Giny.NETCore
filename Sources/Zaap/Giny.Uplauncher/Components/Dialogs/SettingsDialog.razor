@@ -94,9 +94,17 @@
     }
     void Submit()
     {
+        var selected = Config.GetSelectedHost();
+
+        if (selected == null)
+        {
+            DialogHelper.OpenDialog(DialogService, "Erreur", "Aucun hôte n'est configuré. Ajoutez-en un dans l'onglet « Hôtes ».");
+            return;
+        }
+
         var configPath = Path.Combine(Config.ClientPath, ClientConstants.ConfigPath);
         ClientConfiguration configuration = new ClientConfiguration(configPath);
-        configuration.Set("connection.host", Config.GetSelectedHost().GetClientUri());
+        configuration.Set("connection.host", selected.GetClientUri());
         configuration.Save();
 
         AppState.UpToDate = false;

@@ -45,24 +45,26 @@
 <MudLayout Style="display:flex;flex-grow:1;flex-direction:column;height:100vh;">
 
     <MudPaper>
-        <MudToolBar @onmousedown=OnMouseDown>
+        <MudToolBar>
 
-            <MudAvatar Class="ms-2" Color="Color.Primary">
-                <MudImage Src="https://i.imgur.com/WJITCaD.png"></MudImage>
-            </MudAvatar>
-            @if (MainAccount != null)
-            {
-                <div class="d-flex flex-column pl-4 pr-2 justify-center">
-                    <MudText Style="font-weight:500;line-height:15px">@MainAccount.Username</MudText>
-                    <MudText Style="line-height:15px" Typo="Typo.caption">@MainAccount.Nickname</MudText>
-                </div>
-            }
+            <div class="d-flex align-center" style="align-self:stretch;cursor:move;" @onmousedown=OnMouseDown>
+                <MudAvatar Class="ms-2" Color="Color.Primary">
+                    <MudImage Src="https://i.imgur.com/WJITCaD.png"></MudImage>
+                </MudAvatar>
+                @if (MainAccount != null)
+                {
+                    <div class="d-flex flex-column pl-4 pr-2 justify-center">
+                        <MudText Style="font-weight:500;line-height:15px">@MainAccount.Username</MudText>
+                        <MudText Style="line-height:15px" Typo="Typo.caption">@MainAccount.Nickname</MudText>
+                    </div>
+                }
+            </div>
             <MudToggleIconButton @bind-Toggled=@DarkMode
                                  Icon="@Icons.Filled.LightMode" Title="Off"
                                  ToggledIcon="@Icons.Filled.DarkMode" ToggledTitle="On" />
             <MudIconButton OnClick="OpenSettings" Icon="@Icons.Material.Outlined.Settings" Color="Color.Inherit" />
 
-            <MudSpacer />
+            <div style="flex-grow:1;align-self:stretch;cursor:move;" @onmousedown=OnMouseDown></div>
             <MudIconButton OnClick="GoHome" Icon="@Icons.Material.Outlined.Home" Color="Color.Inherit" />
 
 
@@ -167,7 +169,9 @@
 
     void OnMouseDown(MouseEventArgs args)
     {
-        if (args.CtrlKey)
+        // Left button only; the handler is bound to the drag regions of the
+        // toolbar (not the buttons), so clicks on buttons still work.
+        if (args.Button == 0)
             MainForm.HandleMouseMove();
     }
 

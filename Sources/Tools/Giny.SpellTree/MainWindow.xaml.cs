@@ -95,7 +95,7 @@ namespace Giny.SpellTree
 
         private void LoadApp()
         {
-            DatabaseManager.Instance.Initialize(Assembly.GetAssembly(typeof(SpellRecord)), "127.0.0.1", "giny_world", "root", "");
+            DatabaseManager.Instance.Initialize(Assembly.GetAssembly(typeof(SpellRecord)), "127.0.0.1", "giny_world", "root", "test");
 
             search.Visibility = Visibility.Hidden;
             spells.Visibility = Visibility.Hidden;

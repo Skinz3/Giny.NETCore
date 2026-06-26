@@ -79,7 +79,7 @@ namespace Giny.Uplauncher
             {
                 return null;
             }
-            if (HostIndex > Accounts.Count - 1)
+            if (HostIndex > Hosts.Count - 1)
             {
                 HostIndex = 0;
             }

@@ -71,6 +71,10 @@ namespace Giny.Pokefus
 
                 var indice = (int)(WishData.Data.Count % weekNum);
 
+                if (WishData.Data.Count == 0)
+                {
+                    return null;
+                }
                 var result = WishData.Data[indice == 0 ? 0 :indice - 1];
 
 

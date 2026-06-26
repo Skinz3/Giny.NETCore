@@ -31,6 +31,7 @@ namespace Giny.Pokefus
 
         public static void CreateMonsterGroup()
         {
+            return;
             if (Group != null)
             {
                 Group.Map.Instance.RemoveEntity(Group.Id);
