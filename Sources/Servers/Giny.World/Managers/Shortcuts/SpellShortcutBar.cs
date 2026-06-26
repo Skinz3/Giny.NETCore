@@ -32,7 +32,7 @@ namespace Giny.World.Managers.Shortcuts
         {
             var shortcuts = GetShortcuts(spellId);
 
-            foreach (var shortcut in shortcuts)
+            foreach (var shortcut in shortcuts.ToArray())
             {
                 Shortcuts.Remove(shortcut);
                 Character.Record.Shortcuts.Remove(shortcut);

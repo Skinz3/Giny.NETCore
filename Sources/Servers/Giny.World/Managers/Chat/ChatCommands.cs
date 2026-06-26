@@ -7,6 +7,7 @@ using Giny.Protocol.Enums;
 using Giny.Protocol.Messages;
 using Giny.Protocol.Types;
 using Giny.World.Managers.Effects;
+using Giny.World.Managers.Entities.Characters;
 using Giny.World.Managers.Entities.Look;
 using Giny.World.Managers.Entities.Npcs;
 using Giny.World.Managers.Experiences;
@@ -24,6 +25,7 @@ using Giny.World.Managers.Maps.Npcs;
 using Giny.World.Managers.Maps.Paths;
 using Giny.World.Managers.Maps.Teleporters;
 using Giny.World.Managers.Monsters;
+using Giny.World.Managers.Spells;
 using Giny.World.Managers.Stats;
 using Giny.World.Network;
 using Giny.World.Records.Achievements;
@@ -83,7 +85,6 @@ namespace Giny.World.Managers.Chat
             ItemsManager.Instance.Reload();
             client.Character.Reply("Items reloaded.");
         }
-
 
         [ChatCommand("npcs", ServerRoleEnum.Administrator)]
         public static void ReloadNpcs(WorldClient client)
@@ -510,10 +511,6 @@ namespace Giny.World.Managers.Chat
         [ChatCommand("test", ServerRoleEnum.Administrator)]
         public static void TestCommand(WorldClient client)
         {
-            client.Character.Fighter.ExecuteSpell(1075, 1, client.Character.Fighter.Cell);
-          
-            return;
-
             for (int i = 0; i < 1; i++)
             {
                 foreach (var target in client.Character.Fighter.EnemyTeam.GetFighters())
@@ -565,7 +562,67 @@ namespace Giny.World.Managers.Chat
 
         }
 
+        [ChatCommand("fight", ServerRoleEnum.Administrator)]
+        public static void SetupFights(WorldClient client)
+        {
+            Character character = client.Character;
 
+            if (character.Level < 200)
+            {
+                character.SetExperience(ExperienceManager.Instance.GetCharacterXPForLevel(200));
+            }
+            if (character.Record.Kamas < 20000000)
+            {
+                character.AddKamas(20000000);
+            }
+            if (character.Map.Id != 74186754)
+            {
+                character.Teleport(74186754);
+            }
+            Dictionary<int, CharacterInventoryPositionEnum> itemsToAdd = new Dictionary<int, CharacterInventoryPositionEnum>()
+            {
+                { 25214, CharacterInventoryPositionEnum.ACCESSORY_POSITION_AMULET },
+                { 2469, CharacterInventoryPositionEnum.INVENTORY_POSITION_RING_LEFT },
+                { 15190, CharacterInventoryPositionEnum.INVENTORY_POSITION_RING_RIGHT },
+                { 8699, CharacterInventoryPositionEnum.ACCESSORY_POSITION_HAT },
+                { 12108, CharacterInventoryPositionEnum.ACCESSORY_POSITION_CAPE },
+                { 2369, CharacterInventoryPositionEnum.ACCESSORY_POSITION_BELT }
+            };
+            foreach (int item in itemsToAdd.Keys)
+            {
+                CharacterItemRecord charItem = character.Inventory.AddItem(item, 1, true);
+                if (charItem != null)
+                {
+                    character.Inventory.SetItemPosition(charItem.UId, itemsToAdd[item], 1);
+                }
+            }
+            character.Inventory.Refresh();
+        }
 
+        [ChatCommand("removespells", ServerRoleEnum.Administrator)]
+        public static void RemoveSpellsCommand(WorldClient client)
+        {
+            Character character = client.Character;
+            foreach (CharacterSpell charSpell in character.Record.Spells.ToArray())
+            {
+                character.ForgetSpell(charSpell.SpellId, true);
+            }
+        }
+
+        [ChatCommand("copymonsterspell", ServerRoleEnum.Administrator)]
+        public static void CopyMonsterSpellCommand(WorldClient client, short monsterId)
+        {
+            Character character = client.Character;
+            MonsterRecord monster = MonsterRecord.GetMonsterRecord(monsterId);
+            if (monster == null)
+            {
+                character.Reply("Monster " + monsterId + " not found");
+                return;
+            }
+            foreach (long monsterSpellId in monster.Spells)
+            {
+                character.LearnSpell((short)monsterSpellId, true);
+            }
+        }
     }
 }

@@ -108,7 +108,9 @@ namespace Giny.World.Records.Quests
 
         public static QuestStepRewardRecord GetQuestStepReward(long rewardId)
         {
-            return QuestStepRewards[rewardId];
+            //return QuestStepRewards[rewardId];
+            // temporary fix by bimbo to debug worlds errors. I think it's missing some data in the SQL file.
+            return null;
         }
 
         public override string ToString()
