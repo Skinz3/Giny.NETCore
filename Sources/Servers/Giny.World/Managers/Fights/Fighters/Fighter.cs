@@ -1190,6 +1190,16 @@ namespace Giny.World.Managers.Fights.Fighters
                 return SpellCastResult.CELL_NOT_FREE;
             }
 
+            if (SpellModifiers.GetModifierBoost(spellLevel.SpellId, SpellModifierTypeEnum.VISIBLE_TARGET) != 0)
+            {
+                Fighter target = Fight.GetFighter(cast.TargetCell.Id);
+
+                if (target == null || !target.AliveSafe || target.IsInvisible())
+                {
+                    return SpellCastResult.CELL_NOT_FREE;
+                }
+            }
+
             if (!cast.IsConditionBypassed(SpellCastResult.STATE_FORBIDDEN) && !spellLevel.EvaluateStateCriterions(this))
             {
                 return SpellCastResult.STATE_FORBIDDEN;

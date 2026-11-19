@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 namespace Giny.World.Managers.Fights.Effects.Buffs
 {
     [SpellEffectHandler(EffectsEnum.Effect_AddVitalityPercent)]
+    [SpellEffectHandler(EffectsEnum.Effect_AddVitalityPercent_2844)]
     public class AddVitalityPercent : SpellEffectHandler
     {
         private const ActionsEnum ActionId = ActionsEnum.ACTION_CHARACTER_BOOST_VITALITY;
